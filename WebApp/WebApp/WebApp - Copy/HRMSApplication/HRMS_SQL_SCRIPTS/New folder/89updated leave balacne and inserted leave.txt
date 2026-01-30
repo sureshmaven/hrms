@@ -1,0 +1,216 @@
+CREATE TABLE [dbo].[News](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Content] [varchar](250) NULL,
+	[UpdatedBy] [varchar](150) NULL,
+	[UpdatedDate] [datetime] NULL,
+	[Subject] [varchar](250) NULL,
+	[Notes] [varchar](250) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+CREATE TABLE [dbo].[FamilyRelations](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[EmpId] [int] NULL,
+	[Relation] [varchar](50) NULL,
+	[RelationName] [varchar](50) NULL,
+	[RelationAge] [varchar](50) NULL,
+	[Occupation] [varchar](50) NULL,
+	[DeclarationType] [varchar](50) NULL,
+	[EmpWorking] [varchar](30) NULL,
+	[EmpAddress] [varchar](30) NULL,
+	[IsLiable] [varchar](30) NULL,
+	[Place] [varchar](30) NULL,
+	[LTCDate] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+drop table [Leaves_LTC];
+CREATE TABLE [dbo].[Leaves_LTC](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[EmpId] [int] NULL,
+	[ControllingAuthority] [int] NULL,
+	[SanctioningAuthority] [int] NULL,
+	[StartDate] [datetime] NULL,
+	[EndDate] [datetime] NULL,
+	[Subject] [varchar](250) NULL,
+	[Reason] [varchar](250) NULL,
+	[UpdatedBy] [int] NULL,
+	[UpdatedDate] [datetime] NULL,
+	[Status] [varchar](250) NULL,
+	[TravelAdvance] [varchar](50) NULL,
+	[ModeOfTransport] [varchar](50) NULL,
+	[PlaceOfVisits] [varchar](50) NULL,
+	[TotalExperience] [nvarchar](50) NULL,
+	[LeaveType] [varchar](50) NULL,
+	[LTCType] [varchar](50) NULL,
+	[Block_Period] [varchar](50) NULL,
+	[TotalDays] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+CREATE TABLE [dbo].[PLE_Type](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[EmpId] [int] NULL,
+	[ControllingAuthority] [int] NULL,
+	[SanctioningAuthority] [int] NULL,
+	[Subject] [varchar](250) NULL,
+	[Reason] [varchar](250) NULL,
+	[UpdatedBy] [int] NULL,
+	[UpdatedDate] [datetime] NULL,
+	[Status] [varchar](250) NULL,
+	[TravelAdvance] [varchar](50) NULL,
+	[TotalExperience] [nvarchar](50) NULL,
+	[LeaveType] [varchar](50) NULL,
+	[PLType] [varchar](50) NULL,
+	[CurrentYear] [varchar](25) NULL,
+	[TotalPL] [varchar](25) NULL,
+	[PLEncash] [varchar](25) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+
+CREATE TABLE [dbo].[LTC_Declaration_Form](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[EmpId] [int] NULL,
+	[Type] [varchar](20) NULL,
+	[Spouse] [varchar](25) NULL,
+	[EmpWorking] [varchar](25) NULL,
+	[EmpSalary] [varchar](25) NULL,
+	[EmpAddress] [varchar](25) NULL,
+	[IsLiable] [varchar](30) NULL,
+	[Place] [varchar](30) NULL,
+	[LTCDate] [datetime] NULL,
+	[UpdatedBy] [varchar](20) NULL,
+	[UpdatedDate] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+
+CREATE TABLE [dbo].[BlockPeriod](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[StartYear] [varchar](20) NULL,
+	[EndYear] [varchar](20) NULL,
+	[UpdatedBy] [varchar](50) NULL,
+	[UpdatedDate] [datetime] NULL,
+	[Block_Period] [varchar](50) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+
+ALTER TABLE [dbo].[FamilyRelations]  WITH CHECK ADD  CONSTRAINT [FK_FamilyRelations_EmpId] FOREIGN KEY([EmpId])
+REFERENCES [dbo].[Employees] ([Id])
+GO
+ALTER TABLE [dbo].[FamilyRelations] CHECK CONSTRAINT [FK_FamilyRelations_EmpId]
+GO
+ALTER TABLE [dbo].[Leaves_LTC]  WITH CHECK ADD  CONSTRAINT [FK_Leaves_LTC_ControllingAuthority] FOREIGN KEY([ControllingAuthority])
+REFERENCES [dbo].[Employees] ([Id])
+GO
+ALTER TABLE [dbo].[Leaves_LTC] CHECK CONSTRAINT [FK_Leaves_LTC_ControllingAuthority]
+GO
+ALTER TABLE [dbo].[Leaves_LTC]  WITH CHECK ADD  CONSTRAINT [FK_Leaves_LTC_EmpId] FOREIGN KEY([EmpId])
+REFERENCES [dbo].[Employees] ([Id])
+GO
+ALTER TABLE [dbo].[Leaves_LTC] CHECK CONSTRAINT [FK_Leaves_LTC_EmpId]
+GO
+ALTER TABLE [dbo].[Leaves_LTC]  WITH CHECK ADD  CONSTRAINT [FK_Leaves_LTC_SanctioningAuthority] FOREIGN KEY([SanctioningAuthority])
+REFERENCES [dbo].[Employees] ([Id])
+GO
+ALTER TABLE [dbo].[Leaves_LTC] CHECK CONSTRAINT [FK_Leaves_LTC_SanctioningAuthority]
+GO
+ALTER TABLE [dbo].[LTC_Declaration_Form]  WITH CHECK ADD FOREIGN KEY([EmpId])
+REFERENCES [dbo].[Employees] ([Id])
+GO
+ALTER TABLE [dbo].[PLE_Type]  WITH CHECK ADD  CONSTRAINT [FK_PLE_Type_ControllingAuthority] FOREIGN KEY([ControllingAuthority])
+REFERENCES [dbo].[Employees] ([Id])
+GO
+ALTER TABLE [dbo].[PLE_Type] CHECK CONSTRAINT [FK_PLE_Type_ControllingAuthority]
+GO
+ALTER TABLE [dbo].[PLE_Type]  WITH CHECK ADD  CONSTRAINT [FK_PLE_Type_EmpId] FOREIGN KEY([EmpId])
+REFERENCES [dbo].[Employees] ([Id])
+GO
+ALTER TABLE [dbo].[PLE_Type] CHECK CONSTRAINT [FK_PLE_Type_EmpId]
+GO
+ALTER TABLE [dbo].[PLE_Type]  WITH CHECK ADD  CONSTRAINT [FK_PLE_Type_SanctioningAuthority] FOREIGN KEY([SanctioningAuthority])
+REFERENCES [dbo].[Employees] ([Id])
+GO
+ALTER TABLE [dbo].[PLE_Type] CHECK CONSTRAINT [FK_PLE_Type_SanctioningAuthority]
+GO
+
+create index employees_dob_idx on employees(dob);
+
+create index Leaves_LTC_EndDate_idx on Leaves_LTC(EndDate);
+create index Leaves_LTC_EmpId_idx on Leaves_LTC(EmpId);
+create index Leaves_LTC_ControllingAuthority_idx on Leaves_LTC(ControllingAuthority);
+create index Leaves_LTC_SanctioningAuthority_idx on Leaves_LTC(SanctioningAuthority);
+create index Leaves_LTC_StartDate_idx on Leaves_LTC(StartDate);
+
+create index Leaves_StartDate_idx on Leaves(StartDate);
+create index Leaves_EndDate_idx on Leaves(EndDate);
+
+create index FamilyRelations_EmpId_idx on FamilyRelations(EmpId);
+
+create index LTC_Declaration_Form_EmpId_idx on LTC_Declaration_Form(EmpId);
+create index LTC_Declaration_Form_Spouse_idx on LTC_Declaration_Form(Spouse);
+
+create index PLE_Type_EmpId_idx on PLE_Type(EmpId);
+create index PLE_Type_ControllingAuthority_idx on PLE_Type(ControllingAuthority);
+create index PLE_Type_SanctioningAuthority_idx on PLE_Type(SanctioningAuthority);
+create index BlockPeriod_StartYear_idx on BlockPeriod(StartYear);
+create index BlockPeriod_EndYear_idx on BlockPeriod(EndYear);
+create index employees_ShortName_idx on employees(ShortName);
+create index WorkingDays_EmpId_idx on WorkingDays(EmpId);
+create index WorkingDays_UpdatedBy_idx on WorkingDays(UpdatedBy);
+create index OD_OtherDuty_VistorTo_idx on OD_OtherDuty(VistorTo);
+create index Departments_Name_idx on Departments(Name);
+create index Departments_Code_idx on Departments(Code);
+create index Designations_Name_idx on Designations(Name);
+create index Designations_Code_idx on Designations(Code);
+
+
+alter table  WorkingDays add primary key(id);
+
+
+
+CREATE view [dbo].[View_ChangingAuthority]
+as
+select e.Id,e.EmpId,e.ShortName as EmpName,b.name as BranchName,dp.name as DeptName,d.Name as Designation,
+ControllingAuthority=(select  top 1 shortname from employees where id=e.ControllingAuthority),
+ControllingEmpID=(select  top 1 EMPID from employees where id=e.ControllingAuthority),
+SanctioningAuthority=(select  top 1 shortname from employees where id=e.sanctioningauthority),
+SanctioningEmpID=(select  top 1 EMPID from employees where id=e.sanctioningauthority)
+from employees e join designations d on e.CurrentDesignation=d.id join branches b on b.id=e.branch join departments dp on dp.id=e.department 
+GO
+
+alter table employees add OtherQualification varchar(50) null; 
+
+
+insert into leaves values(43,214,223,3,'2018-07-08','2018-09-13','Approved manually',
+'To take care of baby who is not doing well. Medical certificate enclosed.',223,'2018-07-07','Approved',68,68,'2018-07-19',2018,'','');
+
+update leaves set leavedays=15,totaldays=15 where id=4682 and leavetype=5 ;
+update leaves set leavedays=181,totaldays=181,enddate='2018-06-05' where id=3251 and leavetype=4;
+update leaves set leavedays=181,totaldays=181,enddate='2018-03-31' where id=3241 and leavetype=4;
+update leaves set leavedays=40,totaldays=40 where id=496 and leavetype=3;
+
+
+insert into tscab_hrms.DB_Script(DT_Time,Type,FileName) values(Getdate(),'DDL-DML','23072018.SQL');

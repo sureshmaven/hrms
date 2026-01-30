@@ -1,0 +1,29 @@
+
+Below are the steps to Create and Insert the data into the Fact tables .
+Step 1:
+Check whether below tables are not created, if created drop the below dimensions tables and run the below files.
+1.DimensionTablesCreation
+Tables : (dim_emp,dim_branch,dim_designation,dim_department,dim_deduction_types,dim_earning_types,dim_time)
+
+Step 2:
+Check whether below tables are not created, if created drop the below fact tables and run the below files.
+Tables : (AllowanceFact,DeductionFact,Emp_fact,LoansFact,Pf_fact,TdsFact)
+
+2.Tscab_Payroll_DWH_Allowance_Fact
+3.Tscab_Payroll_DWH_Deduction_Fact
+4.Tscab_Payroll_DWH_Emp_Fact
+5.Tscab_Payroll_DWH_Loans_Fact
+6.Tscab_Payroll_DWH_PF_Fact
+7.Tscab_Payroll_DWH_Tds_Fact
+8.Allowance_Fact_UpdateQueries
+9.Deduction_Fact_UpdateQueries
+
+
+Note: Data in the Fact Tables will be inserted through service with a code: "Pr_DWH_Fact"
+
+Process of "Pr_DWH_Fact" execution
+
+1. First Fact Tables will be truncated and created.
+2. Inserts Data into Fact Tables Monthwise to current Month.
+3. Updates the records in AllowanceFact Table values with 0 instead of NULL.
+4. Updates the records in DeductionFact Table values with 0 instead of NULL.

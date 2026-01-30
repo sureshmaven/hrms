@@ -1,0 +1,37 @@
+create procedure JAIIB_CAIIB_Pro @empcode int, @year int as 
+
+create table #inc ( id int identity(1,1), fy int, fm date, eid int, Empcode int, basic_before_inc float, incr_incen_type int, no_of_inc int,Incrementamt float,
+incrementdate date,incr_WEF_date date,  active int, authorisation  int ,trans_id int);
+
+
+
+insert into #inc select 
+year(inc.Incdate) fy,
+cast(inc.Incdate as date) fm,
+inc.eid,
+mas.Empid,
+basicpbinc as basic_before_inc,
+incrince as incr_incen_type,
+Noofinc as no_of_inc,
+incamount as Incrementamt,
+cast(inc.Incdate as date) as incrementdate,
+cast(incdatewef as date) as incr_WEF_date,'1' as active, '1' as authorisation ,'101' as trans_id
+ from pempincr inc join PEMPMAST mas on inc.eid=mas.Eid where incrince in (218,219) and year(incdatewef)=@year 
+ and mas.empid=@empcode ;
+
+ insert into [pr_aug12_samanth].[dbo].pr_emp_jaib_caib_general select id,
+fy,
+fm,
+eid,
+empcode,
+basic_before_inc,
+case when incr_incen_type=218 then 'CAIIB' else 'JAIIB' end,
+no_of_inc,
+Incrementamt,
+incrementdate,
+incr_WEF_date,
+active,
+authorisation,
+trans_id from #inc;
+
+drop table #inc;

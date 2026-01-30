@@ -1,0 +1,350 @@
+﻿@model PayrollModels.Transactions.DeputationEntryModel
+@{
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+    var siteUrl = System.Configuration.ConfigurationManager.AppSettings["websiteUrl"];
+}
+<style>
+    #gridDF.dataTable tbody td:first-child + td input.form-control {
+        text-align: right !important;
+    }
+</style>
+<div class="page">
+    <div class="form-horizontal">
+        <div class="page_start">
+            <div class="leftmenu-container">
+                <div class="sidebar-menu">
+                    @{Html.RenderPartial("_PVPayrollMenu");}
+                </div>
+                <div class="sidebar-content">
+                    <div class="main_heading heading_main">
+                        <h1>Deputation <span class="year-end">@ViewBag.Env_Fm_Fy</span></h1>
+                        @{ Html.RenderPartial("_pvEmployeeSearch");}
+                        <div class="clearfix"></div>
+                        <input type="hidden" id="hdnEmpCode" />
+                        <div class="mt_10">
+                            <div class="col-md-12">
+                                <div class="inner_heading">
+                                    <h1>Deputation Details</h1>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Pay Month:</label>
+                                            @*<div class="col-sm-7">
+            <div class="fom-border" id="currentmonth"></div>
+        </div>*@
+                                            <div class="col-sm-7 input-group date" id="months">
+                                                <input type="text" class="form-control" id="months2">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            </div>
+                       
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Cheque No:</label>
+                                            <div class="col-sm-7">
+                                                <input type="text"  class="form-control" id="chequeno" maxlength = "10" >
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Amount:</label>
+                                            <div class="col-sm-7">
+                                                <input type="number" dir="rtl" class="form-control" id="chequeamount" onkeypress="javascript:return isNumber(event)">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Cash Paid On:</label>
+                                            <div class="col-sm-7 input-group date" id="cdate">
+                                                <input type="text" class="form-control" id="cashpaidon" onkeypress="javascript:return isNumber(event)">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Remark:</label>
+                                            <div class="col-sm-10">
+                                                <textarea class="form-control" rows="6" id="remarks"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="inner_heading">
+                                <div class="table-responsive">
+                                    <table id="gridDF" class="display" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Deduction</th>
+                                                <th>Amount (<i class="fa fa-rupee"></i>)</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="inner_heading">
+                                <div class="table-responsive">
+                                    <table id="gridCF" class="display" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Contribution</th>
+                                                <th>Amount (<i class="fa fa-rupee"></i>)</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt_10">
+                            <div class="pull-right">
+                                @*<button type="button" id="btnSearch" class="btn btn-default cancel">Search</button>*@
+                                <button type="reset" id="btnCancel" class="btn btn-default cancel" title="Clear the data">Cancel</button>
+                                <button type="submit" id="btnSubmit" class="btn btn-primary" onclick="showGlobalModal(msg);" title="Submit details">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var orgErlist;
+    var orgDdlist;
+    var orgDeList;
+
+    $(document).ready(function () {
+
+        $(".cashpaidon").datepicker({
+            forceParse: false
+        });
+
+
+        var dat=acivemonth = "@ViewBag.Fm_AdjustLoanDatePicker";
+        var acivemonth = [];
+        acivemonth.push(dat);
+        var datepic = acivemonth[0];
+        $('#cdate').datepicker('setDate', new Date(dat));
+        $('#cashpaidon').val('');
+
+
+        var data;
+
+        CommonApiGET('/Payroll/Transaction/GetCurrentMonth', function (respData) {
+            
+            if (respData != null) {
+                 data = respData[0].Column1;
+                $('#months2').val(data);
+            }
+
+        });
+        $('#months').datepicker({
+            
+                minViewMode: 1,
+                autoclose: true,
+                format: 'M-yyyy',
+                autoclose: true,
+                //defaultDate: '-2m',
+               // endDate: new Date(year + 1, month, '31')
+                //endDate: '+0m'
+        }).datepicker("setDate", data);
+         
+        //currentmonth();
+        clearfields();
+        $('#btnSubmit').attr('disabled', true);
+        //on page load
+        $('#gridDF').DataTable({
+            "paging": false,
+            "sort": false,
+            "searching": false,
+            "bInfo": false,
+            "language": {
+                "emptyTable": "No data available. Please enter employee code and search"
+            }
+        });
+
+        $('#gridCF').DataTable({
+            "paging": false,
+            "sort": false,
+            "searching": false,
+            "bInfo": false,
+            "language": {
+                "emptyTable": "No data available. Please enter employee code and search"
+            }
+        });
+    });
+
+    $("#btnCancel").click(function () {
+        var empid = $("#hdnEmpCode").val();
+        if (empid == "") {
+            window.location.reload();
+        }
+        else {
+            getDataAfterEmpSearch1440(empid);
+        }
+    });
+
+
+
+
+    $('#btnSubmit').click(function () {
+
+        //if ($('#chequeno').val() == '') {
+        //    showGlobalModal("I#Warning!# Please Enter Cheque No.");
+        //}
+        //else
+            if ($('#chequeamount').val() == '') {
+            showGlobalModal("I#Warning!# Please Enter Cheque Amount");
+        }
+        else if ($('#cashpaidon').val() == '') {
+            showGlobalModal("I#Warning!# Please Enter Cash Paid On Date");
+        }
+
+        else if ($("[name='14']").val() == '') {
+            showGlobalModal("I#Warning!# Please Enter Provident Fund");
+        }
+
+        else if ($("[name='7']").val() == '') {
+            showGlobalModal("I#Warning!# Please Enter PF Contribution");
+        }
+
+
+        else {
+            if ($("#hdnEmpCode").val() == "") {
+                alert("Employee Id cannot be empty");
+            }
+            else {
+                var updDElist = $('#chequeno').val() + "&" + $('#cashpaidon').val() + "&" + $("#remarks").val() + "&" + $('#chequeamount').val();
+
+                var updErList = $('#gridDF').DataTable().$('input, select').serialize();
+                var updDfList = $('#gridCF').DataTable().$('input, select').serialize();
+
+                var ModifiedErList = getModifiedDataFromJDT(updErList, orgErlist);
+                var ModifiedDfList = getModifiedDataFromJDT(updDfList, orgDdlist);
+
+                var dataToSend = JSON.stringify({
+                    'EntityId': $("#hdnEmpCode").val(),
+                    'StringData': ModifiedErList,
+                    'StringData2': ModifiedDfList,
+                    'StringData3': updDElist
+                });
+            }
+            // //
+            CommonApiPOST('/Payroll/Transaction/SaveDeputationEntryValues', dataToSend, function (isSuccess) {
+                if (isSuccess) {
+                    //window.location.reload();
+
+                    setTimeout(function () { window.location.reload(); clearfields(); }, g_pagereload_seconds);
+
+                } else { }
+            });
+        }
+
+        return false;
+    });
+
+    function getDataAfterEmpSearch1440(empcode) {
+        $("#btnsubmit").attr("disabled", false);
+        $('#hdnEmpCode').val(empcode);
+        $('#chequeno').val('');
+        $('#cashpaidon').val('');
+        $('#chequeamount').val('')
+        $('#remarks').val('');
+        CommonApiGET('/Payroll/Transaction/GetDeputationEntryFieldsDetails?EmpId=' + empcode, function (respData) {
+            fillDTDeductionTrans(respData);
+        });
+    }
+
+    function fillDTDeductionTrans(respData) {
+        $('#btnSubmit').attr('disabled', false);
+        var df = [];
+        var cf = [];
+        var de = [];
+
+        var dataObj = JSON.parse(respData);
+        df.push(dataObj.DfDetails);
+        cf.push(dataObj.CfDetails);
+        de.push(dataObj.DEfDetails);
+
+
+        var dfData = df[0];
+        var cfData = cf[0];
+        var deData = de[0];
+
+        orgErlist = dfData;
+        orgDdlist = cfData;
+        orgDeList = deData;
+
+        if (orgDeList[0] != null) {
+            $('#chequeno').val(orgDeList[0].cheque_no);
+            $('#cashpaidon').val(orgDeList[0].payment_date);
+            $('#chequeamount').val(orgDeList[0].cheque_amount)
+            $('#remarks').val(orgDeList[0].remarks);
+        }
+
+
+        $('#gridDF').DataTable({
+            "destroy": true,
+            "paging": false,
+            "sort": false,
+            "bInfo": false,
+            "searching": false,
+            data: dfData,
+
+            "columns": [
+                { "data": "name" },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data) {
+                        return getColumnNumber(data.Id, data.Value);
+                    }
+                }
+            ],
+            "order": [[0, 'asc']]
+        });
+
+        $('#gridCF').DataTable({
+            "destroy": true,
+            "paging": false,
+            "sort": false,
+            "bInfo": false,
+            "searching": false,
+            data: cfData,
+            "columns": [
+                { "data": "name" },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data) {
+                        return getColumnNumber(data.Id, data.Value);
+                    }
+                }
+            ],
+            "order": [[0, 'asc']]
+        });
+    }
+
+    function clearfields() {
+        $('#chequeno').val('');
+        $('#cashpaidon').val('');
+        $('#chequeamount').val('');
+        $("#remarks").val('');
+        $("#pvTxtEmpCode1440").val('');
+    }
+
+    function isNumber(evt) {
+        var iKeyCode = (evt.which) ? evt.which : evt.keyCode
+        if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
+            return false;
+
+        return true;
+    }
+
+      @*var dat=acivemonth = "@ViewBag.Fm_AdjustLoanDatePicker";
+    $('#cdate').datepicker('setDate', new Date(dat));
+    $('#cashpaidon').val('');*@
+ </script>
+
+

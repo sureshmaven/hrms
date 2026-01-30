@@ -1,0 +1,81 @@
+select '1' as Sno,'pr_emp_payslip' as TableName,((select count(*) from pr_emp_payslip where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_payslip where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc))) as Diff union
+select '2','pr_emp_allowances', ((select count(*) from pr_emp_allowances where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_allowances where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union 
+select '3','pr_emp_allowances_gen', ((select count(*) from pr_emp_allowances_gen where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_allowances_gen where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+select '4','pr_emp_allowances_spl', ((select count(*) from pr_emp_allowances_spl where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_allowances_spl where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+select '5','pr_emp_biological_field', ((select count(*) from pr_emp_biological_field where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_biological_field where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+select '6','pr_emp_branch_allowances', ((select count(*) from pr_emp_branch_allowances where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_branch_allowances where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+select '7','pr_emp_deductions', ((select count(*) from pr_emp_deductions where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_deductions where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+select '8','pr_emp_deput_contribution_field', ((select count(*) from pr_emp_deput_contribution_field where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_deput_contribution_field where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+select '9',
+'pr_emp_pay_field_14', ((select count(*) from pr_emp_pay_field_14 where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_pay_field_14 where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+select '10','pr_emp_deput_deduction_field', ((select count(*) from pr_emp_deput_deduction_field where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_deput_deduction_field where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+select '11','pr_emp_pay_field_11', ((select count(*) from pr_emp_pay_field_11 where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_pay_field_11 where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union 
+select '12','pr_emp_deput_det_field', ((select count(*) from pr_emp_deput_det_field where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_deput_det_field where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+select '13','pr_emp_epf_deduction_field', ((select count(*) from pr_emp_epf_deduction_field where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_epf_deduction_field where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+
+select '14','pr_emp_epf_earn_field', ((select count(*) from pr_emp_epf_earn_field where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_epf_earn_field where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+
+select '15','pr_emp_general', ((select count(*) from pr_emp_general where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_general where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+select '16','pr_emp_hfc_details', ((select count(*) from pr_emp_hfc_details where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_hfc_details where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+select '17','pr_emp_inc_anual_stag', ((select count(*) from pr_emp_inc_anual_stag where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_inc_anual_stag where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+select '18','pr_emp_adv_loans_bef_monthend', ((select count(*) from pr_emp_adv_loans_bef_monthend where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_adv_loans_bef_monthend where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc))) union
+
+select '19','pr_emp_inc_date_change', ((select count(*) from pr_emp_inc_date_change where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_inc_date_change where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+select '20','pr_emp_incometax_12b', ((select count(*) from pr_emp_incometax_12b where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_incometax_12b where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+select '21','pr_emp_incometax_12ba', ((select count(*) from pr_emp_incometax_12ba where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_incometax_12ba where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+
+select '22','pr_emp_jaib_caib_general', ((select count(*) from pr_emp_jaib_caib_general where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_jaib_caib_general where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+select '23','pr_emp_lic_details', ((select count(*) from pr_emp_lic_details where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_lic_details where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+select '24','pr_emp_loans_projection', ((select count(*) from pr_emp_loans_projection where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_loans_projection where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+select '25','pr_emp_other_tds_deductions', ((select count(*) from pr_emp_other_tds_deductions where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_other_tds_deductions where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+select '26','pr_emp_pay_field', ((select count(*) from pr_emp_pay_field where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_pay_field where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+
+select '27','pr_emp_payslip_deductions_Old', ((select count(*) from pr_emp_payslip_netSalary where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_payslip_netSalary where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+select '28','pr_emp_payslip_Old', ((select count(*) from pr_emp_payslip_Old where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_payslip_Old where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+select '29','pr_emp_perdeductions', ((select count(*) from pr_emp_perdeductions where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_perdeductions where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+select '30','pr_emp_perearning', ((select count(*) from pr_emp_perearning where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_perearning where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+
+
+select '31','pr_emp_pf_nonrepayable_loan', ((select count(*) from pr_emp_pf_nonrepayable_loan where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_pf_nonrepayable_loan where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+select '32','pr_emp_pf_repayable_loan', ((select count(*) from pr_emp_pf_repayable_loan where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_pf_repayable_loan where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+select '33','pr_emp_promotion', ((select count(*) from pr_emp_promotion where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_promotion where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+select '34','pr_emp_rent_details', ((select count(*) from pr_emp_rent_details where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_rent_details where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+
+select '35','Employee_Transfer', ((select count(*) from Employee_Transfer where fm =(select fm from pr_month_details where active=1))-(select count(*)from  Employee_Transfer where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+select '36','pr_emp_tds_process', ((select count(*) from pr_emp_tds_process where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_tds_process where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+select '37','pr_emp_tds_process_allowances', ((select count(*) from pr_emp_tds_process_allowances where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_tds_process_allowances where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+select '38','pr_emp_tds_section_deductions', ((select count(*) from pr_emp_tds_section_deductions where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_rent_details where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+
+select '39','pr_emp_tds_section_deductions', ((select count(*) from pr_month_attendance where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_month_attendance where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+
+select '40','pr_month_details', ((select count(*) from pr_month_details where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_month_details where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+select '41','pr_ob_share', ((select count(*) from pr_ob_share where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_ob_share where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+select '42','pr_ob_share_adhoc', ((select count(*) from pr_ob_share_adhoc where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_ob_share_adhoc where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+select '43','pr_ob_share_encashment', ((select count(*) from pr_ob_share_encashment where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_ob_share_encashment where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+select '44','pr_pf_nominee', ((select count(*) from pr_pf_nominee where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_pf_nominee where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+select '45','PLE_Type', ((select count(*) from PLE_Type where fm =(select fm from pr_month_details where active=1))-(select count(*)from  PLE_Type where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+select '46','pr_emp_adhoc_contribution_field', ((select count(*) from pr_emp_adhoc_contribution_field where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_adhoc_contribution_field where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+select '47','pr_emp_adhoc_deduction_field', ((select count(*) from pr_emp_adhoc_deduction_field where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_adhoc_deduction_field where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+
+select '48','pr_emp_adhoc_det_field', ((select count(*) from pr_emp_adhoc_det_field where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_adhoc_det_field where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+
+select '49','pr_emp_adhoc_earn_field', ((select count(*) from pr_emp_adhoc_earn_field where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_adhoc_earn_field where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+select '50','pr_emp_adj_contribution_field', ((select count(*) from pr_emp_adj_contribution_field where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_adj_contribution_field where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+
+select '51','pr_emp_adj_deduction_field', ((select count(*) from pr_emp_adj_deduction_field where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_adj_deduction_field where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+select '52','pr_emp_adj_earn_field', ((select count(*) from pr_emp_adj_earn_field where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_adj_earn_field where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+select '53','pr_emp_adv_loan_type', ((select count(*) from pr_emp_adv_loan_type where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_adv_loan_type where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+select '54','pr_emp_adv_loans', ((select count(*) from pr_emp_adv_loans where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_adv_loans where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+select '55','pr_emp_branch_allowances_temp', ((select count(*) from pr_emp_branch_allowances_temp where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_branch_allowances_temp where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+
+select '56','pr_emp_adv_loans_adjustments', ((select count(*) from pr_emp_adv_loans_adjustments where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_adv_loans_adjustments where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  union
+
+select '57','pr_emp_adv_loans_adjustments_bef_monthend', ((select count(*) from pr_emp_adv_loans_adjustments_bef_monthend where fm =(select fm from pr_month_details where active=1))-(select count(*)from  pr_emp_adv_loans_adjustments_bef_monthend where fm =(select top(1) fm from pr_month_details where active=0 order by fm desc)))  ;
+
+
+
+
+
+ 
+
+

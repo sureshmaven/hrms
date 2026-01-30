@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "LoanReport";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <h1>Loan Report</h1>
+                    <div class="col-md-6">
+                        <div class="inner_heading">
+                            <h1>Employees</h1>
+                            <input id="allemp" type="radio" name="allemp" value="5"><label for="allemp"><span><span></span></span>All Employees</label>
+                            <div class="clearfix"></div>
+                            <input id="selectedemp" type="radio" name="selectedemp" value="5"><label for="selectedemp"><span><span></span></span>Selected Employees</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="inner_heading">
+                            <h1>Report Destination</h1>
+                            <input id="file" type="radio" name="file" value="1"><label for="file"><span><span></span></span>File</label>
+                            <div class="clearfix"></div>
+                            <input id="print" type="radio" name="file" value="2"><label for="print"><span><span></span></span>Print</label>
+                        </div>
+                        <div class="mt_10">
+                            <input id="sum_report" type="checkbox" name="sum_report" value="1"><label for="sum_report"><span></span>Summary Report</label>
+                        </div>
+                        </div>
+                    <div class="col-md-12">
+                        <div class="pull-right">
+                            <button type="reset" class="btn btn-default cancel">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

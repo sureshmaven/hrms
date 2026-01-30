@@ -1,0 +1,540 @@
+﻿
+@{
+    ViewBag.Title = "PfNominee";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="leftmenu-container">
+                <div class="sidebar-menu">
+                    <div class="main_heading left-menu">
+                        @{Html.RenderPartial("_PVPayrollMenu");}
+                    </div>
+                </div>
+                <div class="sidebar-content">
+                    <div class="main_heading">
+                        <h1>PF NOMINEE  <span class="year-end">@ViewBag.Env_Fm_Fy</span></h1>
+                        @{ Html.RenderPartial("_pvEmployeeSearch"); }
+                        <input type="hidden" id="hdnEmpCode" />
+                        <div class="col-md-12">
+                            <div class="pull-right mb_10 mt_10">
+                                <button id="addRow" class="btn btn-default mr_0"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                            </div>
+                            <table id="PfNominee" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Member Name</th>
+                                        <th>Gender</th>
+                                        <th>Relation</th>
+                                        <th>Date Of Birth</th>
+                                        <th>Age</th>
+                                        <th>Date</th>
+                                        <th>Percentage</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+
+                            </table>
+                     
+                            <div class="col-md-3 col-md-offset-9 mt_10 mb_10">
+                                <div class=" pull-right">
+                                    <label class="col-md-12">Total Percentage =  <span id="total" style="display: contents;"></span> %</label>
+                                <label class="col-md-12">Available Percentage = <span id="avail" style="display: contents;"></span> %</label>
+                                    </div>
+                            </div>
+                                <div class="pull-right">
+                                    <button id="cancelData" class="btn btn-default">Cancel</button>
+                                    <button type="button" id="updatGridData" class="btn btn-sm btn-primary">Save</button>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var totalpercent = 100;
+    var incIndex = 0;
+    var arrDelete = [];
+    var orgCalcel;
+    var orgPflist;
+    var availablepercent = 100;
+    var usedpercentage = 0;
+    var newpercentage = 0;
+    $(document).ready(function (respData) {
+            $("#btnsubmit").attr("disabled", false);
+            $("#addRow").attr("disabled", false);
+        document.getElementById('avail').innerHTML = 0;
+        document.getElementById('total').innerHTML = 0;
+        $('#PfNominee').DataTable({
+            "paging": false,
+            "sort": false,
+            "searching": false,
+            "bInfo": false,
+            "language": {
+                "emptyTable": "No data available. Please enter employee code and search"
+            }
+        });
+    });
+
+      
+
+    function getDataAfterEmpSearch1440(empcode) {
+
+        totalpercent = 100;
+        availablepercent =100;
+        //$("#btnsubmit").attr("disabled", false);
+        $('#hdnEmpCode').val(empcode);
+        CommonApiGET('/Payroll/HRMSMasters/GetPfNomineeDEtails?EmpId=' + empcode, function (respData) {
+           
+           // $("#btnsubmit").attr("disabled", false);
+           // $("#addRow").attr("disabled", false);
+            orgCancelData = respData;
+            fillDataTables(respData);
+
+
+            var pf = [];
+            var dataObj = respData;
+            pf.push(dataObj);
+            var pfData = pf[0];
+            orgPflist = pfData;
+            orgCalcel = respData;
+
+            orgPflist.map(function (obj) {
+                
+                if (obj.percentage != "") {
+                    
+                    newpercentage = obj.percentage;
+                    availablepercent = totalpercent - obj.percentage;
+                    usedpercentage = totalpercent - availablepercent;
+                    totalpercent = availablepercent;
+                  
+                }
+
+            });
+            document.getElementById('avail').innerHTML = availablepercent;
+            document.getElementById('total').innerHTML = 100 - availablepercent;
+        });
+    }
+    var arrgender = ["Male","Female"];
+
+    function fillDataTables(respData) {
+          var PfNomineedata = respData;
+        
+        $('#PfNominee').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+            data: PfNomineedata,
+            "columns": [
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return getColumnTextbox('*' + data.id, data.membername);
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return getColumnDropdown('ldes', data.gender, arrgender);
+                    }
+                },
+               
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+
+                        return getColumnTextbox(data.id, data.relation);
+                    }
+                },
+
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+
+                        return getColumnDate(data.id, data.dob);
+                    }
+                },
+
+
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+
+                        return getColumnTextbox(data.id, data.age);
+                    }
+                },
+
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+
+                        return getColumnDate(data.id, data.date);
+                    }
+                },
+
+
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+
+                        return getColumnTextbox(data.id, data.percentage);
+                    }
+                },
+
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+
+                        return getColumnButton(data.id, data.Action);
+                    }
+                },
+            ],
+            "order": [[1, 'asc']]
+        });
+    }
+
+
+    $('#addRow').click(function () {
+        debugger;
+        if (totalpercent > 100) {
+            showGlobalModal("I#Rquired#Pf Paercentage Cannot Exceed Limit")
+            e.preventDefault();
+        }
+      
+        
+        var table = $('#PfNominee').DataTable();
+        var updateData = decodeURIComponent(table.$('input, select').serializeAndEncode());
+        var arrUpdate = updateData.split("*");
+        var arrSampleObJ = [];
+        arrUpdate.forEach(function (element) {
+            
+            if (element != "") {
+             
+                var objEf = {};
+                var strRow = element.split("&");
+                var id = strRow[0].split("=");
+                objEf.id = id[0];
+                objEf.membername = id[1];
+
+                var gender = strRow[1].split("=");
+                objEf.gender = gender[1];
+
+                var relation = strRow[2].split("=");
+                objEf.relation = relation[1];
+
+                var dob = strRow[3].split("=");
+                objEf.dob = dob[1];
+
+                var age = strRow[4].split("=");
+                objEf.age = age[1];
+
+                var date = strRow[5].split("=");
+                objEf.date = date[1];
+
+                var percen = strRow[6].split("=");
+                objEf.percentage = percen[1];
+
+                if (isNaN(id[0])) {
+                    objEf.Action = "Delete";
+                } else {
+                    objEf.Action = "Add";
+                }
+                arrSampleObJ.push(objEf);
+            }
+        });
+
+        modifiedData = arrSampleObJ;
+        var noofrows = arrSampleObJ.length;
+        
+        incIndex++;
+       // var noofrows = length ;
+        var incId = "NeW" + incIndex;
+        var row = {
+            "id": incId,
+            "membername": "",
+            "gender": "",
+            "relation": "",
+            "dob": "",
+            "age": "",
+            "date": "",
+            "percentage": "",
+            "Action": "Delete"
+        };
+        modifiedData.push(row);
+        if (noofrows > 4) {
+            return false;
+        }
+        fillDataTables(modifiedData);
+    });
+
+
+    function deleteRow(id) {
+
+        var table = $('#PfNominee').DataTable();
+        var updateData = decodeURIComponent(table.$('input, select').serializeAndEncode());
+        var arrUpdate = updateData.split("*");
+        var arrSampleObJ = [];
+        arrUpdate.forEach(function (element) {
+
+            if (element != "") {
+                
+                var objEf = {};
+                var strRow = element.split("&");
+                var id = strRow[0].split("=");
+                objEf.id = id[0];
+                objEf.membername = id[1];
+
+                var gender = strRow[1].split("=");
+                objEf.gender = gender[1];
+
+                var relation = strRow[2].split("=");
+                objEf.relation = relation[1];
+
+                var dob = strRow[3].split("=");
+                objEf.dob = dob[1];
+
+                var age = strRow[4].split("=");
+                objEf.age = age[1];
+
+                var date = strRow[5].split("=");
+                objEf.date = date[1];
+
+                var percen = strRow[6].split("=");
+                objEf.percentage = percen[1];
+
+                if (isNaN(id[0])) {
+                    objEf.Action = "Delete";
+                } else {
+                    objEf.Action = "Add";
+                }
+                arrSampleObJ.push(objEf);
+            }
+        });
+
+        modifiedData = arrSampleObJ;
+
+        modifiedData = modifiedData.filter(function (obj) {
+            return obj.id !== id;
+        });
+
+        fillDataTables(modifiedData);
+    }
+
+
+    function deleteEntireRow(id) {
+
+        var table = $('#PfNominee').DataTable();
+        var updateData = decodeURIComponent(table.$('input, select').serializeAndEncode());
+        var arrUpdate = updateData.split("*");
+        var arrSampleObJ = [];
+        arrUpdate.forEach(function (element) {
+            if (element != "") {
+                
+                var objEf = {};
+                var strRow = element.split("&");
+                var id = strRow[0].split("=");
+                objEf.id = id[0];
+                objEf.membername = id[1];
+
+                var gender = strRow[1].split("=");
+                objEf.gender = gender[1];
+
+                var relation = strRow[2].split("=");
+                objEf.relation = relation[1];
+
+                var dob = strRow[3].split("=");
+                objEf.dob = dob[1];
+
+                var age = strRow[4].split("=");
+                objEf.age = age[1];
+
+                var date = strRow[5].split("=");
+                objEf.date = date[1];
+
+                var percen = strRow[6].split("=");
+                objEf.percentage = percen[1];
+
+                if (isNaN(id[0])) {
+                    objEf.Action = "Delete";
+                } else {
+                    objEf.Action = "Add";
+                }
+                arrSampleObJ.push(objEf);
+            }
+        });
+
+        modifiedData = arrSampleObJ;
+        modifiedData = modifiedData.filter(function (obj) {
+
+            if (obj.id != "null" && id != "null") {
+                if (obj.id == id) {
+                    obj.Action = "Deleted";
+                    arrDelete.push(obj);
+                } else {
+                    return obj.loan_id !== id;
+                }
+            }
+        });
+
+        fillDataTables(modifiedData);
+    }
+
+
+    $('#updatGridData').click(function () {
+        var table = $('#PfNominee').DataTable();
+        var updateData = decodeURIComponent(table.$('input, select').serializeAndEncode());
+        var arrUpdate = updateData.split("*");
+        var arrSampleObJ = [];
+        arrUpdate.forEach(function (element) {
+            if (element != "") {
+              
+                var objEf = {};
+                var strRow = element.split("&");
+                var id = strRow[0].split("=");
+                objEf.id = id[0];
+                objEf.membername = id[1];
+
+                var gender = strRow[1].split("=");
+                objEf.gender = gender[1];
+
+                var relation = strRow[2].split("=");
+                objEf.relation = relation[1];
+
+                var dob = strRow[3].split("=");
+                objEf.dob = dob[1];
+
+                var age = strRow[4].split("=");
+                objEf.age = age[1];
+
+                var date = strRow[5].split("=");
+                objEf.date = date[1];
+
+                var percentage = strRow[6].split("=");
+                objEf.percentage = percentage[1];
+
+                if (isNaN(id[0])) {
+                    objEf.Action = "New";
+                    if (objEf.percentage > availablepercent) {
+                        showGlobalModal("I#Required#limit of pf percent exceeded");
+                        e.preventDefault();
+                    }
+                } else {
+                    objEf.Action = "Update";
+                }
+
+                if (objEf.membername == "" && objEf.gender == "" && objEf.relation == "" && objEf.dob == "" && objEf.age && objEf.date == "" && objEf.percentage=="") {
+                    console.log("row is empty");
+                }
+                else {
+
+                    orgCancelData.map(function (element) {
+                     
+                        if (element.id == objEf.id && element.membername != objEf.membername) {
+
+                            objEf.membername = objEf.membername;
+                        }
+                        else if (element.id == objEf.id && element.gender != objEf.gender) {
+
+                            objEf.gender = objEf.gender;
+                        }
+                        else if (element.id == objEf.id && element.relation != objEf.relation) {
+
+                            objEf.relation = objEf.relation;
+                        }
+                        else if (element.id == objEf.id && element.dob != objEf.dob) {
+
+                            objEf.dob = objEf.dob;
+                        }
+                        else if (element.id == objEf.id && element.age != objEf.age) {
+
+                            objEf.age = objEf.age;
+                        }
+
+                        else if (element.id == objEf.id && element.date != objEf.date) {
+
+                            objEf.date = objEf.date;
+                        }
+
+                        else if (element.id == objEf.id && element.percentage != objEf.percentage) {
+
+                            objEf.percentage = objEf.percentage;
+                        }
+                        else if (element.id == objEf.id && element.Action != objEf.Action) {
+
+                            objEf.Action = objEf.Action;
+                        }
+                        else if (element.id == objEf.id
+                            && element.membername == objEf.membername
+                            && element.gender == objEf.gender
+                            && element.relation == objEf.relation
+                            && element.dob == objEf.dob
+                            && element.age == objEf.age
+                            && element.date == objEf.date
+                            && element.percentage == objEf.percentage) {
+                            objEf = {};
+                        } else if (
+                            objEf.membername != ""
+                            || objEf.gender != ""
+                            || objEf.relation != ""
+                            || objEf.dob != ""
+                            || objEf.age != ""
+                            || objEf.date != ""
+                            || objEf.percentage != ""
+                        ) {
+                            objEf = objEf;
+                        } else {
+                            objEf = {};
+                        }
+                    });
+
+                    if (Object.keys(objEf).length > 0) {
+                        arrSampleObJ.push(objEf);
+                    }
+
+                }
+            }
+        });
+
+        arrDelete.map(function (obj) {
+            arrSampleObJ.push(obj);
+        });
+        var emp_code = $("#hdnEmpCode").val();
+       
+        var dataToSend = JSON.stringify({
+            'StringData': emp_code,
+            Objpfnominee: arrSampleObJ
+        });
+        if (emp_code != 0) {
+            CommonApiPOST("/Payroll/HRMSMasters/SaveUpdatePfNomineeData", dataToSend, function (isSuccess) {
+                if (isSuccess) {
+                  
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+        }
+    });
+
+
+    $("#cancelData").click(function () {
+
+        incIndex = 0;
+       // $('#gridNeW').empty();
+        fillDataTables(orgCalcel);
+     
+    });
+</script>

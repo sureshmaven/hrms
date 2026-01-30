@@ -1,0 +1,117 @@
+﻿
+@{
+    ViewBag.Title = "StagnationIncrement";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <h1>Basic Pay Structure for Annual Increment</h1>
+                    <div class="col-md-4">
+                        <div class="main_heading">
+                            <h1>Designation Categories</h1>
+                            <div class="col-md-12 mt_10">
+                                <table class="table table-bordered">
+                                    <tbody>
+                                        <tr><td>A.G.M</td></tr>
+                                        <tr><td>ATTD.</td></tr>
+                                        <tr><td>ATTENDER (JA SCALE)</td></tr>
+                                        <tr><td>ATTENDER(SPL GRADE POST)</td></tr>
+                                        <tr><td>ATTENDER(SPL PROMO POST)</td></tr>
+                                        <tr><td>CHIEF GENERAL MANAGER</td></tr>
+                                        <tr><td>DELETE</td></tr>
+                                        <tr><td>DEPUTY GENERAL MANAGER</td></tr>
+                                        <tr><td>DY.GENERAL MANAGER</td></tr>
+                                        <tr><td>GENERAL MANAGER</td></tr>
+                                        <tr><td>JR.STAFF ASSISTANT</td></tr>
+                                        <tr><td>ATTENDER (JA SCALE)</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="main_heading">
+                            <h1>Pay Structure Period</h1>
+                            <div class="form-horizontal">
+                                <div class="col-md-12">
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Pay Structure Period:</label>
+                                            <div class="col-sm-7 input-group">
+                                                <input type="text" class="form-control">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="main_heading">
+                            <h1>Increment Details</h1>
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table id="stagnation_increment" class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Basic</th>
+                                                <th>Increment</th>
+                                                <th>Stages</th>
+                                                <th>Increment Type</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>23700</td>
+                                                <td>980</td>
+                                                <td>7</td>
+                                                <td>TriAnually</td>
+                                            </tr>
+                                            <tr>
+                                                <td>30560</td>
+                                                <td>1145</td>
+                                                <td>2</td>
+                                                <td>TriAnually</td>
+                                            </tr>
+                                            <tr>
+                                                <td>32850</td>
+                                                <td>1310</td>
+                                                <td>7</td>
+                                                <td>TriAnually</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mt_10">
+                        <div class="pull-right">
+                            <button type="reset" class="btn btn-default calcel">Cancel</button>
+                            <button type="submit" class="btn btn-primary">New</button>
+                            <button type="submit" class="btn btn-primary">Edit</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#stagnation_increment').DataTable();
+    });
+</script>
+
+
+

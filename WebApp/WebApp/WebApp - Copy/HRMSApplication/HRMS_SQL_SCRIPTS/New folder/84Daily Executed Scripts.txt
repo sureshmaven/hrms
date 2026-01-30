@@ -1,0 +1,14 @@
+/*
+Requested: Sudha
+Description:Created db_scripts and updated emp_transfer 
+Date: 04 june 2018 6:40 PM
+*/
+update employees set branch=(select id from branches where name='OtherBranch'),department=
+(select id from departments where code='HRD-Administration'),Branch_Value1=42,branch_value_2=1 where empid=944;
+
+create table DB_Script(
+   SNo INT NOT NULL identity(1,1) primary key,
+   DT_Time datetime NOT NULL,Type VARCHAR(7) NOT NULL,FileName varchar(50) not null
+);
+
+insert into DB_Script(DT_Time,Type,FileName) values(Getdate(),'DDL-DML','14062018.SQL');

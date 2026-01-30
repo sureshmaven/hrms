@@ -1,0 +1,166 @@
+﻿
+@{
+    ViewBag.Title = "Deputation";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <h1>Deputation <span class="year-end">TGCAB 01-04-2019 - 31-04-2020</span></h1>
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-horizontal">
+                                <div class="col-md-6">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Pay Month:</label>
+                                            <div class="col-sm-7">
+                                                <label class="control-label">MAR-2019</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Employee Id:</label>
+                                            <div class="col-sm-7">
+                                                <input type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Emp Name:</label>
+                                            <div class="col-sm-7">
+                                                <label class="control-label"> </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Chq No.:</label>
+                                            <div class="col-sm-7">
+                                                <input type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Cash Paid On:</label>
+                                            <div class="col-sm-7">
+                                                <input type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Remark:</label>
+                                            <div class="col-sm-7">
+                                                <textarea class="form-control" rows="6"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="inner_heading">
+                            <h1>Deductions</h1>
+                            <div class="table-responsive">
+                                <table id="dedc" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Deduction</th>
+                                            <th> Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Income Tax</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>LIC</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>COURT Deduction</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Provident Fund</td>
+                                            <td> </td>
+                                        </tr>
+                                        <tr>
+                                            <td>GSLI</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Officers Assn Fund</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Cadre Officers Assn Fund</td>
+                                            <td> </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="inner_heading">
+                            <h1>Contributions</h1>
+                            <div class="table-responsive">
+                                <table id="contr" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Contribution</th>
+                                            <th>Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Max Pension</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>PF Contribution</td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mt_10">
+                        <div class="pull-right">
+                            <button type="reset" class="btn btn-default cancel">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#dedc').DataTable();
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('#contr').DataTable();
+    });
+</script>
+
+

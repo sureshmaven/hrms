@@ -1,0 +1,13 @@
+CREATE INDEX AllowanceFact_fm ON AllowanceFact (fm);
+CREATE INDEX AllowanceFact_emp_code ON AllowanceFact (emp_code);
+
+CREATE INDEX emp_fact_Empid ON emp_fact (Empid);
+
+CREATE INDEX pf_fact_fm ON pf_fact (fm);
+CREATE INDEX pf_fact_pf_type ON pf_fact (pf_type);
+
+CREATE INDEX DeductionFact_Emp_code ON DeductionFact (Emp_code);
+CREATE INDEX DeductionFact_fm ON DeductionFact (fm);
+
+CREATE INDEX Loansfact_emp_code ON Loansfact (emp_code);
+CREATE INDEX Loansfact_adjust_fm ON Loansfact (adjust_fm);

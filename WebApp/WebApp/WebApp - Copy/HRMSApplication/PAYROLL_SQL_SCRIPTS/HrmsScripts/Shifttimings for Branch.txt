@@ -1,0 +1,86 @@
+
+				-------------Saidabad-------------------------
+select * from shift_master where BranchId=29  
+update shift_master set validto='2021-09-30' where branchid=29 and groupname='General'
+
+insert into shift_master values('0','9:00 AM','4:00 PM',29,'General',GETDATE(),123456,'2021-10-01','2061-06-30')
+
+update shift_master set validto='2021-09-30' where branchid=29 and groupname='Attender'
+
+insert into shift_master values('1','8:30 AM','4:30 PM',29,'Attender',GETDATE(),123456,'2021-10-01','2061-06-30')
+
+
+				------------kamalanagar----------------------
+select * from shift_master where BranchId=17  
+update shift_master set validto='2021-09-30' where branchid=17 and groupname='General'
+
+insert into shift_master values('0','9:00 AM','4:00 PM',17,'General',GETDATE(),123456,'2021-10-01','2061-06-30')
+
+update shift_master set validto='2021-09-30' where branchid=17 and groupname='Attender'
+
+insert into shift_master values('1','8:30 AM','4:30 PM',17,'Attender',GETDATE(),123456,'2021-10-01','2061-06-30')
+
+				--------------------Neredmet-------------------------- 
+select * from shift_master where BranchId=28   
+update shift_master set validto='2021-09-30' where branchid=28 and groupname='General'
+
+insert into shift_master values('0','10:00 AM','5:00 PM',28,'General',GETDATE(),123456,'2021-10-01','2061-06-30')
+
+update shift_master set validto='2021-09-30' where branchid=28 and groupname='Attender'
+
+insert into shift_master values('1','9:30 AM','5:30 PM',28,'Attender',GETDATE(),123456,'2021-10-01','2061-06-30')
+
+			 --------------------Saroornagar---------------------------- 
+select * from shift_master where BranchId=30  
+update shift_master set validto='2021-09-30' where branchid=30 and groupname='General'
+
+insert into shift_master values('0','10:00 AM','5:00 PM',30,'General',GETDATE(),123456,'2021-10-01','2061-06-30')
+
+update shift_master set validto='2021-09-30' where branchid=30 and groupname='Attender'
+
+insert into shift_master values('1','9:30 AM','5:30 PM',30,'Attender',GETDATE(),123456,'2021-10-01','2061-06-30')
+
+
+			--------------------Ameerpet-----------------------------------
+select * from shift_master where BranchId=3        
+update shift_master set validto='2021-09-30' where branchid=3 and groupname='General'
+
+insert into shift_master values('0','10:00 AM','5:00 PM',3,'General',GETDATE(),123456,'2021-10-01','2061-06-30')
+
+update shift_master set validto='2021-09-30' where branchid=3 and groupname='Attender'
+
+insert into shift_master values('1','9:30 AM','5:30 PM',3,'Attender',GETDATE(),123456,'2021-10-01','2061-06-30')
+
+
+			------------------Baghlingampally-----------------------------
+select * from shift_master where BranchId=6        
+update shift_master set validto='2021-09-30' where branchid=6 and groupname='General'
+
+insert into shift_master values('0','10:00 AM','5:00 PM',6,'General',GETDATE(),123456,'2021-10-01','2061-06-30')
+
+update shift_master set validto='2021-09-30' where branchid=6 and groupname='Attender'
+
+insert into shift_master values('1','9:30 AM','5:30 PM',6,'Attender',GETDATE(),123456,'2021-10-01','2061-06-30')
+
+
+
+			-------------------Vidyutsoudha-----------------------------------
+select * from shift_master where BranchId=40         
+update shift_master set validto='2021-09-30' where branchid=40 and groupname='General'
+
+insert into shift_master values('0','10:00 AM','5:00 PM',40,'General',GETDATE(),123456,'2021-10-01','2061-06-30')
+
+update shift_master set validto='2021-09-30' where branchid=40 and groupname='Attender'
+
+insert into shift_master values('1','9:30 AM','5:30 PM',40,'Attender',GETDATE(),123456,'2021-10-01','2061-06-30')
+
+
+				--------------Secunderabad-------------------------------------
+select * from shift_master where BranchId=31         
+update shift_master set validto='2021-09-30' where branchid=31 and groupname='General'
+
+insert into shift_master values('0','10:00 AM','5:00 PM',31,'General',GETDATE(),123456,'2021-10-01','2061-06-30')
+
+update shift_master set validto='2021-09-30' where branchid=31 and groupname='Attender'
+
+insert into shift_master values('1','9:30 AM','5:30 PM',31,'Attender',GETDATE(),123456,'2021-10-01','2061-06-30')

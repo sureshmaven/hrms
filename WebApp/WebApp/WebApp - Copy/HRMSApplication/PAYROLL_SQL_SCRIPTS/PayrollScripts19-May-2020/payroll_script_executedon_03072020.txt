@@ -1,0 +1,243 @@
+
+
+--Need Confirmation to run
+
+--update pr_emp_payslip set final_process=1 where fm='2019-12-01'
+
+-- pf year rate
+
+create table pr_pf_year_rate(fy varchar(4), interest numeric(5,2),[trans_id] [int]);
+
+insert into pr_pf_year_rate values('2018',8.65,101);
+insert into pr_pf_year_rate values('2019',0,102);
+insert into pr_pf_year_rate values('2020',0,103);
+
+drop table pr_pfopeningbal;
+
+--create new table of pr_pf_open_bal_year
+
+Create table pr_pf_open_bal_year(	id	int	,
+	emp_id	int	,
+	emp_code	int	,
+	Fy	int	,
+	os_open	numeric(15,2)	,
+	os_open_int	numeric(15,2)	,
+	bs_open	numeric(15,2)	,
+	bs_open_int	numeric(15,2)	,
+	vpf_open	numeric(15,2)	,
+	vpf_open_int	numeric(15,2)	,
+	os_cur	numeric(15,2)	,
+	os_cur_int	numeric(15,2)	,
+	bs_cur	numeric(15,2)	,
+	bs_cur_int	numeric(15,2)	,
+	vpf_cur	numeric(15,2)	,
+	vpf_cur_int	numeric(15,2)	,
+	pf_int_rate	numeric(5,2)	,
+	run_date	date	,
+	trans_id	int	);
+	
+insert into new_num values('pr_pf_open_bal_year','id',0,0);
+
+
+alter table pr_pf_open_bal_year add pf_return numeric(15,2);
+alter table pr_pf_open_bal_year add vpf_return numeric(15,2);
+alter table pr_pf_open_bal_year add bank_return numeric(15,2);
+
+
+
+
+--------------------------------Added New Columns in loan tables
+
+ALTER TABLE pr_emp_adv_loans ADD disp_completed_installment int;
+
+ALTER TABLE pr_emp_adv_loans ADD disp_remaining_installment int
+
+update pr_emp_adv_loans set disp_completed_installment=0,disp_remaining_installment=0;
+update pr_emp_adv_loans set disp_completed_installment=completed_installment+1,disp_remaining_installment=remaining_installment-1;
+
+---------------------------------------------
+
+alter table pr_emp_pf_non_cert_elg add authorisation bit;
+alter table pr_emp_pf_non_cert_elg add process bit;
+
+
+------------------------------------------------
+update pr_interface_vochers_codes set vocher_name='Housing Loan Main' where id in (78,85);
+update pr_interface_vochers_codes set vocher_name='COURT DEDUCTION' where id=58;
+update pr_loan_master set active=1 where id between 16 and 21;
+
+-------------------------------------------------------	
+update branch_device set branchid =43 where branchid=42;	
+update timesheet_run_status set branch_id=43 where branch_id=42;	
+--------------------------------------------------------------------------------------------------------	
+update pr_interface_vochers_codes set fas_gl_code1='404' ,fas_gl_code2='561', vocher_type='OtherBranch'  where vocher_name in ('HO Bkg-Br');
+
+drop table pr_emp_adv_loans_bef_monthend;
+drop table pr_emp_adv_loans_child_bef_monthend;
+drop table pr_emp_adv_loans_adjustments_bef_monthend;
+
+select * into pr_emp_adv_loans_bef_monthend from pr_emp_adv_loans;
+select * into pr_emp_adv_loans_child_bef_monthend from pr_emp_adv_loans_child;
+select * into pr_emp_adv_loans_adjustments_bef_monthend from pr_emp_adv_loans_adjustments;
+
+
+insert into pr_interface_vochers_codes(vocher_name,vocher_type) values('PF Loan ST 1','PFLoanPrin');
+insert into pr_interface_vochers_codes(vocher_name,vocher_type) values('PF Loan ST2','PFLoanPrin');
+insert into pr_interface_vochers_codes(vocher_name,vocher_type) values('PF Advance LT1','PFLoanPrin');
+insert into pr_interface_vochers_codes(vocher_name,vocher_type) values(' PF Advance LT2','PFLoanPrin');
+insert into pr_interface_vochers_codes(vocher_name,vocher_type) values(' PF Advance LT3','PFLoanPrin');
+insert into pr_interface_vochers_codes(vocher_name,vocher_type) values('PF Advance LT4','PFLoanPrin');
+insert into pr_interface_vochers_codes(vocher_name,vocher_type) values('PF Loan 1','PFLoanPrin');
+insert into pr_interface_vochers_codes(vocher_name,vocher_type) values('PF Loan 2','PFLoanPrin');
+insert into pr_interface_vochers_codes(vocher_name,vocher_type) values('PF Loan ST 1','PFLoanInt');
+insert into pr_interface_vochers_codes(vocher_name,vocher_type) values('PF Loan ST2','PFLoanInt');
+insert into pr_interface_vochers_codes(vocher_name,vocher_type) values('PF Advance LT1','PFLoanInt');
+insert into pr_interface_vochers_codes(vocher_name,vocher_type) values(' PF Advance LT2','PFLoanInt');
+insert into pr_interface_vochers_codes(vocher_name,vocher_type) values(' PF Advance LT3','PFLoanInt');
+insert into pr_interface_vochers_codes(vocher_name,vocher_type) values('PF Advance LT4','PFLoanInt');
+insert into pr_interface_vochers_codes(vocher_name,vocher_type) values('PF Loan 1','PFLoanInt');
+insert into pr_interface_vochers_codes(vocher_name,vocher_type) values('PF Loan 2','PFLoanInt');
+
+update pr_interface_vochers_codes set vocher_name='COURT Deductions' where  vocher_type='Deductions' and id=58;
+
+
+update pr_deduction_field_master set code='' where  id=23 and type='EPD' and name ='Club Subscription';
+
+
+insert into pr_deduction_field_master(id,name,type,active,trans_id,code,emp_master_code)
+values ((select max(id)+1 from pr_deduction_field_master ),'VPF Deduction','adhoc',1,1000,'VPF','VPF');
+
+--pr_tax_rate
+
+
+
+CREATE TABLE [dbo].[pr_tax_rate](
+	[id] [int] identity(1,1) not NULL,
+	[fy] [int] NULL,
+	[options] [int] NULL,
+	[tax_slab] [nvarchar](50) NULL,
+	[tax_rate] [nvarchar](50) NULL,
+	[tax_rebate] [nvarchar](50) NULL,
+) ON [PRIMARY]
+
+
+insert into pr_tax_rate(fy,options,tax_slab,tax_rate,tax_rebate) values (2020,1,'0,250000','NULL','NULL')
+insert into pr_tax_rate(fy,options,tax_slab,tax_rate,tax_rebate) values (2020,1,'250000,500000','5%','12500')
+insert into pr_tax_rate(fy,options,tax_slab,tax_rate,tax_rebate) values (2020,1,'500000,750000','20%','NULL')
+insert into pr_tax_rate(fy,options,tax_slab,tax_rate,tax_rebate) values (2020,1,'750000,1000000','20%','NULL')
+insert into pr_tax_rate(fy,options,tax_slab,tax_rate,tax_rebate) values (2020,1,'1000000,1250000','30%','NULL')
+insert into pr_tax_rate(fy,options,tax_slab,tax_rate,tax_rebate) values (2020,1,'1250000,1500000','30%','NULL')
+insert into pr_tax_rate(fy,options,tax_slab,tax_rate,tax_rebate) values (2020,1,'1500000 and above','30%','NULL')
+
+insert into pr_tax_rate(fy,options,tax_slab,tax_rate,tax_rebate) values (2021,1,'0,250000','NULL','NULL')
+insert into pr_tax_rate(fy,options,tax_slab,tax_rate,tax_rebate) values (2021,1,'250000,500000','5%','12500')
+insert into pr_tax_rate(fy,options,tax_slab,tax_rate,tax_rebate) values (2021,1,'500000,750000','20%','NULL')
+insert into pr_tax_rate(fy,options,tax_slab,tax_rate,tax_rebate) values (2021,1,'750000,1000000','20%','NULL')
+insert into pr_tax_rate(fy,options,tax_slab,tax_rate,tax_rebate) values (2021,1,'1000000,1250000','30%','NULL')
+insert into pr_tax_rate(fy,options,tax_slab,tax_rate,tax_rebate) values (2021,1,'1250000,1500000','30%','NULL')
+insert into pr_tax_rate(fy,options,tax_slab,tax_rate,tax_rebate) values (2021,1,'1500000 and above','30%','NULL')
+insert into pr_tax_rate(fy,options,tax_slab,tax_rate,tax_rebate) values (2021,2,'0,250000','NULL','NULL')
+insert into pr_tax_rate(fy,options,tax_slab,tax_rate,tax_rebate) values (2021,2,'250000,500000','5%','12500')
+insert into pr_tax_rate(fy,options,tax_slab,tax_rate,tax_rebate) values (2021,2,'500000,750000','10%','NULL')
+insert into pr_tax_rate(fy,options,tax_slab,tax_rate,tax_rebate) values (2021,2,'750000,1000000','15%','NULL')
+insert into pr_tax_rate(fy,options,tax_slab,tax_rate,tax_rebate) values (2021,2,'1000000,1250000','20%','NULL')
+insert into pr_tax_rate(fy,options,tax_slab,tax_rate,tax_rebate) values (2021,2,'1250000,1500000','25%','NULL')
+insert into pr_tax_rate(fy,options,tax_slab,tax_rate,tax_rebate) values (2021,2,'1500000 and above','30%','NULL')
+
+
+update pr_pf_year_rate set interest='8.85' where fy=2019;
+update pr_pf_year_rate set interest='7.1' where fy=2020;
+
+
+--alter table employees add eid int;
+ 
+--pr_tax_option_emp_wise
+
+CREATE TABLE [dbo].[pr_tax_option_emp_wise](
+	[Id] [int] identity(1,1) NOT NULL,
+	[EmpId] [int] NOT NULL,
+	[fy] [int] NOT NULL,
+	[Option] [int] NOT NULL,
+	[trans_id] [bigint] NULL,
+	) ON [PRIMARY]
+
+
+---Inserting default option in pr_tax_option_emp_wise
+
+Select distinct Empid into #EmpTable from Employees order by Empid asc
+declare @empid int;
+declare @fy int;
+declare @transid int;
+set @transid=1;
+while exists (select * from #EmpTable)
+begin
+select top 1 @empid=Empid from #EmpTable order by Empid asc
+select @fy=(select fy from pr_month_details where active=1)
+
+if not exists(select Empid from pr_tax_option_emp_wise where Empid=@empid)
+begin
+Insert into pr_tax_option_emp_wise(EmpId,fy,[Option],trans_id) values(@empid,@fy,1,@transid)
+end
+else
+begin
+update pr_tax_option_emp_wise set EmpId=@empid,fy=@fy,[Option]=1,trans_id=@transid where EmpId=@empid;
+end
+delete #EmpTable where Empid = @empid
+set @transid=@transid+1;
+End
+drop table #EmpTable
+
+
+----For adding new sections for 2021
+
+ALter table all_constants ADD fy int
+Update all_constants  set fy=2020 where fy is NULL and functionality='IncomeTax'
+
+Insert into all_constants (app_type,functionality,constant,value,active,trans_id,fy) values ('payroll','IncomeTax','Section80CD',50000,	1,111,2021)
+Insert into all_constants (app_type,functionality,constant,value,active,trans_id,fy) values ('payroll',	'IncomeTax','Section80CCC',150000,1,111,2021)
+Insert into all_constants (app_type,functionality,constant,value,active,trans_id,fy) values ('payroll','IncomeTax','Section80C',150000,	1,	111,2021)
+Insert into all_constants (app_type,functionality,constant,value,active,trans_id,fy) values ('payroll','IncomeTax','Section80EE_HL1',200000,1,111,2021)
+Insert into all_constants (app_type,functionality,constant,value,active,trans_id,fy) values ('payroll','IncomeTax','Section80EE_HL2',250000,1,111,2021)
+Insert into all_constants (app_type,functionality,constant,value,active,trans_id,fy) values ('payroll','IncomeTax','Section80D_F',0,	1,111,2021)
+Insert into all_constants (app_type,functionality,constant,value,active,trans_id,fy) values ('payroll','IncomeTax','Section80D_P',80000,	1,111,2021)
+Insert into all_constants (app_type,functionality,constant,value,active,trans_id,fy) values ('payroll','IncomeTax','Section80DD',125000,	1,111,2021)
+Insert into all_constants (app_type,functionality,constant,value,active,trans_id,fy) values ('payroll','IncomeTax','Section80DDB',60000,	1,111,2021)
+Insert into all_constants (app_type,functionality,constant,value,active,trans_id,fy) values ('payroll','IncomeTax','Section80U',125000,	1,111,2021)
+Insert into all_constants (app_type,functionality,constant,value,active,trans_id,fy) values ('payroll','IncomeTax','Section80G',0.5,	1,111,2021)
+Insert into all_constants (app_type,functionality,constant,value,active,trans_id,fy) values ('payroll','IncomeTax','Section80GGB',1,	1,111,2021)
+Insert into all_constants (app_type,functionality,constant,value,active,trans_id,fy) values ('payroll','IncomeTax','Section80CCD',50000,	1,111,2021)
+Insert into all_constants (app_type,functionality,constant,value,active,trans_id,fy) values ('payroll','IncomeTax','Section80E','NULL',	1,111,2021)
+Insert into all_constants (app_type,functionality,constant,value,active,trans_id,fy) values ('payroll','IncomeTax','Section80EE',200000,	1,111,2021)
+Insert into all_constants (app_type,functionality,constant,value,active,trans_id,fy) values ('payroll','IncomeTax','Section80CCF',1,	1,111,2021)
+Insert into all_constants (app_type,functionality,constant,value,active,trans_id,fy) values ('payroll','IncomeTax','24(b)',1,	1,111,2021)
+Insert into all_constants (app_type,functionality,constant,value,active,trans_id,fy) values ('payroll','IncomeTax','Section24(b)',200000,	1,111,2021)
+
+
+select emp_code 
+into #ControlTable
+from pr_emp_perearning 
+where  fy=2021 and fm='2020-05-01' and m_id=27
+
+declare @empid int
+
+while exists (select * from #ControlTable)
+begin
+    select top 1 @empid = emp_code from #ControlTable order by emp_code asc
+    -- Do something with your TableID
+	--print @empid;
+	update pr_emp_perearning 
+	set amount=(select(sum(dd_provident_fund)*0.005)/0.125 from pr_emp_payslip where fy=2021 and fm < '2020-06-01' and emp_code =  @empid) 
+	where m_id=27 and fm='2020-05-01' and emp_code =  @empid
+
+	--delete from temp table to reduce the emps
+    delete #ControlTable  where emp_code = @empid
+
+end
+
+drop table #ControlTable
+
+
+Update all_constants set active=0 where app_type='payroll' and fy=2020
+
+select * into pr_ob_share_encashment from pr_ob_share where 1=2
+select * into pr_ob_share_adhoc from pr_ob_share where 1=2

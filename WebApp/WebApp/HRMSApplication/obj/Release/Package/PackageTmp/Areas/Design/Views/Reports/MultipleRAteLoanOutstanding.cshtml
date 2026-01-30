@@ -1,0 +1,71 @@
+﻿
+@{
+    ViewBag.Title = "MultipleRAteLoanOutstanding";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <h1>Multiple Rate Loan Outstanding</h1>
+                    <div class="col-md-4">
+                        <div class="col-md-12 mt_10">
+                            <div class="table-responsive month_name_tbl">
+                                <table id="single_rate" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Select Loan</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td> <input id="checkbox1" type="checkbox" name="checkbox" value="4"><label for="checkbox1"><span></span>Housing Loan - 2 6%</label></td></tr>
+                                        <tr><td> <input id="checkbox1" type="checkbox" name="checkbox" value="5"><label for="checkbox1"><span></span>Housing Loan 2A 11%</label></td></tr>
+                                        <tr><td> <input id="checkbox1" type="checkbox" name="checkbox" value="6"><label for="checkbox1"><span></span>Housing Loan 2B-2C  10% 11%</label></td></tr>
+                                        <tr><td> <input id="checkbox1" type="checkbox" name="checkbox" value="1"><label for="checkbox1"><span></span>Housing Addl. Loan - 2D 11%</label></td></tr>
+                                        <tr><td> <input id="checkbox1" type="checkbox" name="checkbox" value="2"><label for="checkbox1"><span></span>Housing Loan Commercial(14.5)</</label></td></tr>
+                                        <tr><td> <input id="checkbox1" type="checkbox" name="checkbox" value="3"><label for="checkbox1"><span></span>Hosing Loan-Plot</label></td></tr>
+                                        <tr><td> <input id="checkbox1" type="checkbox" name="checkbox" value="3"><label for="checkbox1"><span></span>Hosing Loan Main (5%)</label></td></tr>
+                                        <tr><td> <input id="checkbox1" type="checkbox" name="checkbox" value="3"><label for="checkbox1"><span></span>Hosing Loan 2 </label></td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <input id="checkbox1" type="checkbox" name="checkbox" value="2"><label for="checkbox1"><span></span>Select All</label>
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-4">
+
+                        <input id="file" type="radio" name="file" value="1"><label for="currentmonth"><span><span></span></span>Current Month</label>
+                        <div class="clearfix"></div>
+                        <input id="file" type="radio" name="file" value="1"><label for="monthly"><span><span></span></span>Monthly</label>
+
+                    </div>
+                    <div class="col-md-12">
+                        <div class="pull-right">
+                            <button type="reset" class="btn btn-default cancel">Close</button>
+                            <button type="submit" class="btn btn-primary">OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#single_rate').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+        });
+    });
+</script>

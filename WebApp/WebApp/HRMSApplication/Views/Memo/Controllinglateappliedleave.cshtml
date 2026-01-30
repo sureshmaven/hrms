@@ -1,0 +1,557 @@
+﻿<style>
+    #menuheader {
+        display: none;
+    }
+
+    .footer {
+        display: none;
+    }
+
+    .page_st {
+        background: none;
+    }
+
+    .page {
+        padding-top: 54px;
+    }
+
+    p {
+        font-size: 18px;
+        line-height: 30px;
+        color: #000;
+        text-align: justify;
+    }
+
+    .container {
+        width: 98%;
+    }
+
+    span {
+        font-size: 18px;
+        margin-bottom: 29px;
+    }
+
+    td {
+        font-size: 18px;
+    }
+
+    li {
+        font-size: 18px;
+        color: #000;
+    }
+
+    .pdf_data {
+        margin-bottom: 72px;
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    #cmd {
+        width: auto;
+        margin-right: 5%;
+        margin-bottom: 10px;
+        float: right;
+        margin-top: 14px;
+    }
+    /*new added by Raju on 25/3/2022*/
+    #cmdword {
+        width: auto;
+        margin-right: 5%;
+        margin-bottom: 10px;
+        float: right;
+        margin-top: 14px;
+    }
+
+    #CLateappliedleave {
+        display: none;
+    }
+    /*end*/
+
+    .table td {
+        border: 1px solid #000 !important;
+    }
+</style>
+@*<style type="text/css">
+        @Page word_data{size: 204.45pt 50.21pt;mso-page-orientation: portrait;}
+        div.word_data {page: word_data;}
+    </style>*@
+@* this div placed outside the main div by chaitanya on 8/5/2020 *@
+<div class="col-md-12 col-sm-12">
+    <div id="display">
+        <button id="cmd" class="btn btn-info">Print PDF</button>
+    </div>
+    <div id="displayword">
+        <button id="cmdword" class="btn btn-info" onclick="Export2Doc('CLateappliedleave');">Print Word</button>
+    </div>
+</div>
+@* end *@
+<div id="content">
+    <div class="col-md-12 col-sm-12 ">
+
+        <div class="clearfix"></div>
+        <div class="pdf_data" style="margin-bottom: 72px;">
+            <div style="margin: 0 auto;border: 1px solid #000;background: #fff;padding: 71px;">
+                <table class="table">
+                    <tr>
+                        <td rowspan="2">
+                            @* Changed below image to logo_pdf.jpg to logo.png (becoz logo_pdf.jpg is not loading in the server)*@
+                            <img src="~/Assets/images/logo.png" style="width: 70%; margin-top: 27px;">
+                        <td>
+                            <p style="font-size:34px; text-align: left; line-height: 36px;">Telangana State Co-operative<strong>Apex</strong> Bank Limited</p>
+                            <p style="font-size:16px; text-align: left;">(State Govt. Partnered Scheduled Bank)</p>
+                            <p style="text-align: left;">Troop Bazar, Hyderabad-500 001</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><p style="text-align: left;">HRD Department :: Ph: 24685526/559 :: url: https://tscab.org </p></td>
+                    </tr>
+                </table>
+                <span><strong>Ref:</strong> TGCAB/HRMD/LEAVES/2023-24 </span>
+                <span style="float:right;">Date:@ViewBag.IsDate</span>
+                <p style="font-size:20px; text-align:center;margin: 0 0 0 150px;"><strong>MEMORANDUM <span style="position: absolute; margin: 0 0 0 -156px;">_____________________</span></strong></p><br />
+                <p style="text-align:center;">
+                    <strong>Sub:</strong>
+                    HRMD –Sri/Smt/Kum @ViewBag.EmpName, @ViewBag.Designation, @ViewBag.branchname - Violation of SR Provisions while availing leave -
+                    @*Considering leave as LOP and initiation of disciplinary action -*@
+                    Forwarded by Sri @ViewBag.SA, @ViewBag.CDesignation (Controlling Officer) Initiation of disciplinary action -
+                    Explanation called for - Reg.
+                </p>
+                <br />
+                <p style="text-align:center;">
+                    <strong>Ref:</strong>
+                    Circular No. TGCAB/HRMD/Leaves/2023-24 dt.6.11.2023
+                </p>
+                <br />
+                <p style="text-align:center;">***</p><br />
+                <p>
+                    It was communicated through the above circular that a monthly report indicating the details of the employees who have applied/availed leaves not complying with the provisions of SSR and the names of controlling officers forwarding leaves not adhering to the provisions of SSR, will be placed before the Managing Director for review and taking suitable action against the employees/controlling officers concerned.
+                </p>
+                <br />
+                <p>
+                    Further, all the employees and the Controlling Officers were advised to <b> strictly adhere </b> to the provisions of SSR and instructions issued on availing leaves, failing which the management will be constrained to initiate suitable action on the employees/controlling officers concerned.
+                </p>
+                <br />
+                <p>
+                    The details of the employees who have violated the provisions of SSR while availing leaves for the Month of <strong>@ViewBag.Month,  @ViewBag.Year</strong> were placed before the Managing Director for review.
+                </p>
+                <br />
+                <p>
+                    As per the above details, Sri/Smt/Kum  @ViewBag.EmpName, @ViewBag.Designation, @ViewBag.branchname has availed leave violating the provisions of SSR on availing leaves as detailed below:
+                </p>
+                <br />
+                <table class="table" bgcolor="#3c3c3c" style="width:100%">
+                    <tr bgcolor="#ffffff">
+                        <td>Type of Leave availed</td>
+                        <td>@ViewBag.leavetype</td>
+                    </tr>
+                    <tr bgcolor="#ffffff">
+
+                        <td>No. of days availed</td>
+                        <td>@ViewBag.Noofdays</td>
+                    </tr>
+                    <tr bgcolor="#ffffff">
+                        <td>Period of leave availed</td>
+                        <td>@ViewBag.Memodetails</td>
+                    </tr>
+                    <tr bgcolor="#ffffff">
+                        <td>Purpose</td>
+                        <td>@ViewBag.reasonforleave</td>
+                    </tr>
+                    <tr bgcolor="#ffffff">
+                        <td>Date of leave applied</td>
+                        <td>@ViewBag.Leaveapplieddate</td>
+                    </tr>
+
+                    <tr bgcolor="#ffffff">
+                        <td>Provision of SSR</td>
+                        <td>@ViewBag.Provision</td>
+                    </tr>
+                    <tr bgcolor="#ffffff">
+                        <td>Violation</td>
+                        <td>
+                            @Html.Raw(@ViewBag.violation)
+                        </td>
+                    </tr>
+                    <tr bgcolor="#ffffff">
+                        <td>Forwarded by</td>
+                        <td>Sri/Smt/Kum @ViewBag.SA, @ViewBag.CDesignation</td>
+                    </tr>
+                    @*<tr bgcolor="#ffffff">
+                            <td>MemoType</td>
+                            <td>@ViewBag.MemoType</td>
+                        </tr>
+                        <tr bgcolor="#ffffff">
+                            <td>Memo Details</td>
+                            <td>@ViewBag.Memodetails</td>
+                        </tr>*@
+                </table><br />
+                <p>
+                    In view of the above Sri/Smt/Kum @ViewBag.SA, @ViewBag.CDesignation (Controlling Officer) is called upon to explain as to why the leave/s availed by Sri/Smt/Kum  @ViewBag.EmpName, @ViewBag.Designation, @ViewBag.branchname was/were forwarded against the provisions under<strong> SSR No.@ViewBag.SSRNO</strong>
+                </p>
+                <br />
+                <p>
+                    The explanation should reach the undersigned within 3 days from the date of receipt of this memorandum.
+                </p>
+                @*<br />
+                    <p>
+                        In view of the above, Sri/Smt./Kum : @ViewBag.EmpName, Emp. Code : @ViewBag.EmpCode, Designation : @ViewBag.Designation. is advised to explain as to why the above days should not be treated as leave on LOP for violating the provisions of SSR of the Bank and the instructions issued on availing leaves.  His/her explanation if any should reach the undersigned within 3 days from the date of receipt of this Memorandum.
+                    </p>*@
+                <br />
+                <br />
+                <p style="float:right; font-size:20px; font-weight:bold;">Deputy General Manager (HRMD)</p>
+                <br />
+                <br />
+                <br />
+                <br />
+                <p>To:</p>
+                <ul>
+
+                    @*<li style="list-style:none;">&#10003; Copy to the Dy General Manager (&nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp; &nbsp; &nbsp;  &nbsp;  &nbsp; &nbsp; &nbsp;  &nbsp;  &nbsp; &nbsp;               ).</li>*@
+
+                    <li style="list-style:none;">  Sri/Smt/Kum :  @ViewBag.SA, (Emp. Code @ViewBag.CEmpid),</li>
+                    <li style="list-style:none">  @ViewBag.CDesignation</li>
+                    <li style="list-style:none"> @ViewBag.cbranch branch <br> (Controlling Officer)</li>
+                    @*<li style="list-style:none;">&#10003; Copy submitted to EA to Managing Director.</li>*@
+                </ul><br /><br />
+
+                <br /><br /><br /><br /><br /><br /><br /><br /><br />
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="word_data" style="margin-bottom: 25px;" id="CLateappliedleave">
+    @*<div class="word_data1" style="margin: 0 auto;border: 1px solid #000;background: #fff;padding: 21px;">*@
+
+    <table class="table" id="tableword" border="1" cellspacing="0" cellpadding="0" colspan="10" align="center" style="font-family:HELVETICA;width:692px;height:1000px">
+        <tr>
+            <td rowspan="2" colspan="3">
+                <img src="~/Assets/images/logo.png" style="width: 20%;height:20%; margin-top: 5px;margin-bottom:5px;margin-left:5px;margin-right:5px">
+            </td>
+            <td colspan="7">
+                <p style="font-size:32px; text-align: left; line-height: 27px; margin-left:10px;">Telangana State Co-operative <br><strong>Apex </strong>Bank Limited</p>
+                <p style="font-size:14px; text-align: left; margin-left:10px">(State Govt. Partnered Scheduled Bank)</p>
+                <p style="font-size:15px;text-align: left; margin-left:10px">Troop Bazar, Hyderabad-500 001</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="7"><p style="text-align: left; margin-left:10px;font-size:14px">HRD Department :: Ph: 24685526/559 :: url: https://tscab.org </p></td>
+        </tr>
+       </table >
+        <tr>
+            <td style=" border-right:none;border-bottom:none; font-size:14px;margin-left:5px;" colspan="6"><p><strong>Ref:</strong>TGCAB/HRMD/LEAVES/2023-24</p></td>
+            <td style=" border-left:none;border-bottom:none; font-size:14px;margin-right:5px;" colspan="4"><p style="text-align:right;"><strong>Date:</strong>@ViewBag.IsDate</p></td>
+        </tr>
+       
+        <tr>
+            <td colspan="10" style="border-top:none;border-bottom:none">
+                <p style="text-align:center;font-size:14px;"><strong><u>MEMORANDUM</u></strong></p>
+                @*<p style="font-size:20px; text-align:center;margin: 0 0 0 150px;"><b><u>MEMORANDUM <span style="position: absolute; margin: 0 0 0 -156px;"></span></u></b></p>*@
+            </td>
+        </tr>
+        @*<tr>
+            <td colspan="10" style="border-top:none;border-bottom:none">&nbsp;</td>
+        </tr>*@
+        <tr>
+            <td colspan="10" style="border-top:none;border-bottom:none">
+                <p style="text-align:center;font-size:14px;">
+                    <strong>Sub:</strong>
+                    HRMD – Sri/Smt/Kum @ViewBag.EmpName, @ViewBag.Designation, @ViewBag.branchname - Violation of SR Provisions while availing leave - Forwarded by Sri/Smt/Kum @ViewBag.SA, @ViewBag.CDesignation (Controlling Officer) Initiation of disciplinary action - Explanation called for - Reg.
+                </p>
+             
+            </td>
+        </tr>
+        <tr>
+            <td colspan="10" style="border-top:none;border-bottom:none">
+                <p style="text-align:center;font-size:14px;">
+                    <strong>Ref:</strong>
+                    Circular No. TGCAB/HRMD/Leaves/2023-24 dt.6.11.2023
+                </p>
+            </td>
+        </tr>
+        @*<tr>
+            <td colspan="10" style="border-top:none;border-bottom:none;">&nbsp;</td>
+        </tr>*@
+        <tr>
+            <td colspan="10" style="border-top:none;border-bottom:none">
+                <p style="text-align:center;font-size:14px;">***</p>
+            </td>
+        </tr>
+        @*<tr>
+                <td colspan="10" style="border-top:none;border-bottom:none;font-size:14px;">&nbsp;</td>
+            </tr>*@
+        <tr>
+            <td colspan="10" style="border-top:none;border-bottom:none">
+                <p>
+                    It was communicated through the above circular that a monthly report indicating the details of the employees who have applied/availed leaves not complying with the provisions of SSR and the names of controlling officers forwarding leaves not adhering to the provisions of SSR, will be placed before the Managing Director for review and taking suitable action against the employees/controlling officers concerned.
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="10" style="border-top:none;border-bottom:none">
+                <p>
+                    Further, all the employees and the Controlling Officers were advised to <b> strictly adhere </b> to the provisions of SSR and instructions issued on availing leaves, failing which the management will be constrained to initiate suitable action on the employees/controlling officers concerned.
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="10" style="border-top:none;border-bottom:none">
+                <p>
+                    The details of the employees who have violated the provisions of SSR while availing leaves for the Month of <strong>@ViewBag.Month,  @ViewBag.Year</strong> were placed before the Managing Director for review.
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="10" style="border-top:none;border-bottom:none">
+                <p>
+                    As per the above details, Sri/Smt/Kum  @ViewBag.EmpName, @ViewBag.Designation, @ViewBag.branchname has availed leave violating the provisions of SSR on availing leaves as detailed below:
+                </p>
+            </td>
+        </tr>
+        @*<tr>
+            <td colspan="10" style="border-top:none;border-bottom:none">&nbsp;</td>
+        </tr>*@
+       
+        <table class="table" bgcolor="#3c3c3c" style="width:100%">
+            <tr bgcolor="#ffffff">
+                <td>Type of Leave availed</td>
+                <td>@ViewBag.leavetype</td>
+            </tr>
+            <tr bgcolor="#ffffff">
+
+                <td>No. of days availed</td>
+                <td>@ViewBag.Noofdays</td>
+            </tr>
+            <tr bgcolor="#ffffff">
+                <td>Period of leave availed</td>
+                <td>@ViewBag.Memodetails</td>
+            </tr>
+            <tr bgcolor="#ffffff">
+                <td>Purpose</td>
+                <td>@ViewBag.reasonforleave</td>
+            </tr>
+            <tr bgcolor="#ffffff">
+                <td>Date of leave applied</td>
+                <td>@ViewBag.Leaveapplieddate</td>
+            </tr>
+
+            <tr bgcolor="#ffffff">
+                <td>Provision of SSR</td>
+                <td>@ViewBag.Provision</td>
+            </tr>
+            <tr bgcolor="#ffffff">
+                <td>Violation</td>
+                <td>
+                    @Html.Raw(@ViewBag.violation)
+                </td>
+            </tr>
+            <tr bgcolor="#ffffff">
+                <td>Forwarded by</td>
+                <td>Sri/Smt/Kum @ViewBag.SA, @ViewBag.CDesignation</td>
+            </tr>
+            
+        </table>
+        <br />
+        <tr>
+            <td colspan="10" style="border-bottom:none">&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="10" style="border-top:none;border-bottom:none">
+                <p >
+                    In view of the above, Sri/Smt./Kum  @ViewBag.SA, @ViewBag.CDesignation (Controlling Officer) is called upon to explain as to why the leave/s availed by Sri/Smt./Kum @ViewBag.EmpName, @ViewBag.Designation, @ViewBag.branchname, was/were forwarded against the provisions under <strong>SSR No.29(v).</strong>
+                </p>
+             
+                <p>
+                    The explanation should reach the undersigned within 3 days from the date of receipt of this Memorandum.
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="10" style="border-top:none;border-bottom:none">&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="10" style="border-bottom:none">&nbsp;</td>
+        </tr>
+        <br />
+        <tr>
+            <td colspan="10" style="border-top:none;border-bottom:none;font-size:16px;">
+                <p style="text-align:right; font-size:16px; font-weight:bold;margin-right:7px;">Deputy General Manager (HRMD)</p>
+            </td>
+        </tr>
+      
+        <tr>
+            <td colspan="10" style="border-top:none;border-bottom:none;font-size:12px;">
+                <p >To:</p>
+            </td>
+        </tr>
+      
+
+        <tr>
+            <td colspan="10" style="border-top:none;">
+                <p>
+
+                    Sri/Smt/Kum : @ViewBag.SA, (Emp. Code : @ViewBag.CEmpid) <br>@ViewBag.CDesignation, <br />@ViewBag.cbranch, <br /> (Controlling Officier).
+                </p>
+                @*<li style="list-style:none;font-size:12px;">&#10003; Copy submitted to EA to Managing Director.</li>*@
+            </td>
+        </tr>
+        <tr>
+            <td colspan="10" style="border-top:none;border-bottom:none;font-size:7px;">&nbsp;</td>
+        </tr>
+    
+   
+</div>
+
+
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>*@
+@* newly added below line by chaitanya on 8/5/2020 *@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.0/jspdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.js"></script>*@
+
+<script>
+    var doc = new jsPDF();
+    var specialElementHandlers = {
+        'DIV to be rendered out': function (element, renderer) {
+            return true;
+        }
+    };
+
+    $('#cmd').click(function () {
+         
+        $('#display').hide();
+        $('#displayBack').hide();
+        $('#displayword').hide();
+        $('#CLateappliedleave').hide();
+        var canvas = $(document).find('#content');
+
+        html2canvas(document.body, {
+            onrendered: function (canvas) {
+
+                var img = canvas.toDataURL("image/jpeg");
+
+                var imgWidth = 208;
+
+                var pageHeight = 280;
+                var imgHeight = canvas.height * imgWidth / canvas.width;
+                var heightLeft = imgHeight;
+                var position = 0;
+                doc.addImage(img, 'JPEG', 0, 20, 210, 270)
+
+                $('#display').show();
+                $('#displayBack').show();
+                $('#displayword').show();
+                doc.save('CLateappliedleave.pdf');
+                //$('#display').show(); placed above the doc.save() for showing the buttons after printing the pdf;
+                //$('#displayBack').show(); placed above the doc.save() for showing the buttons after printing the pdf;
+            }
+
+        });
+
+    });
+</script>
+
+@*<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js'></script>*@
+
+@* newly added this script section for download word document *@
+<script type="text/javascript">
+    //$('#cmdword').click(
+    function Export2Doc(element, filename = '') {
+
+
+
+        //  _html_ will be replace with custom html
+        var meta = "Mime-Version: 1.0\nContent-Base: " + location.href + "\nContent-Type: Multipart/related; boundary=\"NEXT.ITEM-BOUNDARY\";type=\"text/html\"\n\n--NEXT.ITEM-BOUNDARY\nContent-Type: text/html; charset=\"utf-8\"\nContent-Location: " + location.href + "\n\n<!DOCTYPE html>\n<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word'xmlns='http://www.w3.org/TR/REC-html40'>\n_html_</html>";
+        //  _styles_ will be replaced with custome css
+        var head = "<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n <!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>90</w:Zoom><w:DoNotOptimizeForBrowser/></w:WordDocument></xml><![endif]--> <style> \n_styles_\n</style>\n</head>\n";
+        //  _body_ will be replaced with custome body html
+        var body = "<body>_body_</body>";
+        //var preHtml = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Export HTML To Doc</title></head><body>";
+        //var postHtml = "</body></html>";
+
+        //var html = preHtml + document.getElementById(element).innerHTML + postHtml;
+        var html = document.getElementById(element).innerHTML;
+
+        var blob = new Blob(['\ufeff', html], {
+            type: 'application/msword'
+        });
+
+        var css = (
+            '<style>' +
+            'img {width:300px;}' +
+            '</style>'
+        );
+        // ************ Image Area *********************
+        var options = { maxWidth: 624 };
+        var images = Array();
+        var img = $("#" + element).find("img");
+        for (var i = 0; i < img.length; i++) {
+            // Calculate dimensions of output image
+            var w = Math.min(img[i].width, options.maxWidth);
+            var h = img[i].height * (w / img[i].width);
+            // Create canvas for converting image to data URL
+            var canvas = document.createElement("CANVAS");
+            canvas.width = w;
+            canvas.height = h;
+            // Draw image to canvas
+            var context = canvas.getContext('2d');
+            context.drawImage(img[i], 0, 0, w, h);
+            // Get data URL encoding of image
+            var uri = canvas.toDataURL("image/png");
+            $(img[i]).attr("src", img[i].src);
+            img[i].width = w;
+            img[i].height = h;
+            // Save encoded image to array
+            images[i] = {
+                type: uri.substring(uri.indexOf(":") + 1, uri.indexOf(";")),
+                encoding: uri.substring(uri.indexOf(";") + 1, uri.indexOf(",")),
+                location: $(img[i]).attr("src"),
+                data: uri.substring(uri.indexOf(",") + 1)
+            };
+        }
+
+        // Prepare bottom of mhtml file with image data
+        var imgMetaData = "\n";
+        for (var i = 0; i < images.length; i++) {
+            imgMetaData += "--NEXT.ITEM-BOUNDARY\n";
+            imgMetaData += "Content-Location: " + images[i].location + "\n";
+            imgMetaData += "Content-Type: " + images[i].type + "\n";
+            imgMetaData += "Content-Transfer-Encoding: " + images[i].encoding + "\n\n";
+            imgMetaData += images[i].data + "\n\n";
+
+        }
+        imgMetaData += "--NEXT.ITEM-BOUNDARY--";
+        // ****************** end Image Area *******************
+
+        var output = meta.replace("_html_", head.replace("_styles_", css) + body.replace("_body_", html)) + imgMetaData;
+
+        var url = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(output);
+
+
+        filename = filename ? filename + '.doc' : 'CLateappliedleave.doc';
+
+
+        var downloadLink = document.createElement("a");
+
+        document.body.appendChild(downloadLink);
+
+        if (navigator.msSaveOrOpenBlob) {
+            navigator.msSaveOrOpenBlob(blob, filename);
+        } else {
+
+            downloadLink.href = url;
+            downloadLink.download = filename;
+            downloadLink.click();
+        }
+
+        document.body.removeChild(downloadLink);
+    }
+    //});
+</script>
+@* end *@
+
+
+

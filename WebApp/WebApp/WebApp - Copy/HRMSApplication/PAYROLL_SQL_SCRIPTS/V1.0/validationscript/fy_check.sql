@@ -1,0 +1,52 @@
+select max(fy) pr_emp_adhoc_contribution_field from pr_emp_adhoc_contribution_field
+select max(fy) pr_emp_adhoc_deduction_field from pr_emp_adhoc_deduction_field
+select max(fy) pr_emp_adhoc_det_field  from pr_emp_adhoc_det_field
+select max(fy) pr_emp_adhoc_earn_field from pr_emp_adhoc_earn_field
+select max(fy) pr_emp_adj_contribution_field from pr_emp_adj_contribution_field
+select max(fy) pr_emp_adj_deduction_field from pr_emp_adj_deduction_field
+ select max(fy) pr_emp_adj_earn_field from pr_emp_adj_earn_field 
+ select max(fy) pr_emp_adv_loan_type from pr_emp_adv_loan_type 
+ select max(fy) pr_emp_adv_loans from pr_emp_adv_loans
+ select max(fy) pr_emp_adv_loans_adjustments from pr_emp_adv_loans_adjustments
+ select max(fy) pr_emp_adv_loans_adjustments_bef_monthend from pr_emp_adv_loans_adjustments_bef_monthend
+ select max(fy) pr_emp_adv_loans_bef_monthend from pr_emp_adv_loans_bef_monthend
+ select max(fy) pr_emp_allowance_process from pr_emp_allowance_process
+ select max(fy) pr_emp_allowances from pr_emp_allowances
+ select max(fy) pr_emp_allowances_gen from pr_emp_allowances_gen
+ select max(fy) pr_emp_allowances_spl from pr_emp_allowances_spl
+ select max(fy) pr_emp_branch_allowances from pr_emp_branch_allowances
+ select max(fy) pr_emp_deductions from pr_emp_deductions
+ select max(fy) pr_emp_deput_contribution_field from pr_emp_deput_contribution_field
+ select max(fy) pr_emp_deput_deduction_field from pr_emp_deput_deduction_field
+ select max(fy) pr_emp_deput_det_field from pr_emp_deput_det_field
+ select max(fy) pr_emp_epf_deduction_field from pr_emp_epf_deduction_field
+ select max(fy) pr_emp_epf_earn_field from pr_emp_epf_earn_field
+ select max(fy) pr_emp_hfc_details from pr_emp_hfc_details
+ select max(fy) pr_emp_inc_anual_stag from pr_emp_inc_anual_stag
+ select max(fy) pr_emp_inc_date_change from pr_emp_inc_date_change
+ select max(fy) pr_emp_incometax_12b from pr_emp_incometax_12b
+ select max(fy) pr_emp_incometax_12ba from pr_emp_incometax_12ba
+ select max(fy) pr_emp_jaib_caib_general from pr_emp_jaib_caib_general
+ select max(fy) pr_emp_lic_details from pr_emp_lic_details
+ select max(fy) pr_emp_loans_projection from pr_emp_loans_projection
+ select max(fy) pr_emp_other_tds_deductions from pr_emp_other_tds_deductions
+ select max(fy) pr_emp_pay_field from pr_emp_pay_field
+ select max(fy) pr_emp_payslip from pr_emp_payslip
+ select max(fy) pr_emp_payslip_netSalary from pr_emp_payslip_netSalary
+ select max(fy) pr_emp_perdeductions from pr_emp_perdeductions
+ select max(fy) pr_emp_perearning from pr_emp_perearning
+ select max(fy) pr_emp_pf_nonrepayable_loan from pr_emp_pf_nonrepayable_loan
+ select max(fy) pr_emp_pf_repayable_loan from pr_emp_pf_repayable_loan
+ select max(fy) pr_emp_promotion from pr_emp_promotion
+ select max(fy) pr_emp_rent_details from pr_emp_rent_details
+ select max(fy) pr_emp_tds_process from pr_emp_tds_process
+ select max(fy) pr_emp_tds_process_allowances from pr_emp_tds_process_allowances
+ select max(fy) pr_emp_tds_section_deductions from pr_emp_tds_section_deductions
+ select max(fy) pr_form16_codes from pr_form16_codes
+ select max(fy) pr_incometax_bank_payment from pr_incometax_bank_payment
+ select max(fy) pr_month_attendance from pr_month_attendance
+ select max(fy) pr_month_details from pr_month_details
+ select max(fy) pr_ob_share from pr_ob_share
+ select max(fy) pr_ob_share_adhoc from pr_ob_share_adhoc
+ select max(fy) pr_ob_share_encashment from pr_ob_share_encashment
+ select max(fy) pr_pf_nominee from pr_pf_nominee

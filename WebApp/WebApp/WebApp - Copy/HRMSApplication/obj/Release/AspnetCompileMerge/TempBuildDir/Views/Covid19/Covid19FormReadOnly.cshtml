@@ -1,0 +1,33 @@
+﻿@model Entities.ViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var rolepages = TempData["RolePages"].ToString();
+    ViewBag.RolePages = TempData["RolePages"];
+}
+
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade  in active" id="tab2primary">
+                    <div class="page_st">
+                        <div class="page">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="main_heading">
+                                    <h1>COVID-19 Survey</h1>
+                                    <div class="col-md-12">
+                                        <div class="pull-center" style="text-align: center;">
+                                            <span style="font-size: x-large;color: orange;">Your Covid-19 Form is already Submitted, Thank You!</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

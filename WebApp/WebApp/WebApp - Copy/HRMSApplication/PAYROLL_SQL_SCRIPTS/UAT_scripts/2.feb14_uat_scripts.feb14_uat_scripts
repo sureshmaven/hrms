@@ -1,0 +1,80 @@
+insert into pr_month_attendance (id,fy,fm,emp_id,emp_code,status,status_date,leaves_available,lop_days
+,absent_days,working_days,active,trans_id,sus_per)values(2511,2021,'2020-11-01',1266,6464,'Regular',null,
+'No Leave Balance',0,0,30,1,39584,null);
+
+insert into pr_month_attendance (id,fy,fm,emp_id,emp_code,status,status_date,leaves_available,lop_days
+,absent_days,working_days,active,trans_id,sus_per)values(2512,2021,'2020-11-01',1267,6466,'Regular',null,
+'No Leave Balance',0,0,30,1,39584,null);
+
+
+update pr_emp_pay_field set amount=	13075	where emp_code=	6464	and fm='2020-11-01' and m_id=11 ;
+update pr_emp_pay_field set amount=	13075	where emp_code=	6466	and fm='2020-11-01' and m_id=11 ;
+update pr_emp_pay_field set amount=	13075	where emp_code=	6467	and fm='2020-11-01' and m_id=11 ;
+update pr_emp_pay_field set amount=	13075	where emp_code=	6468	and fm='2020-11-01' and m_id=11 ;
+update pr_emp_pay_field set amount=	8717	where emp_code=	6469	and fm='2020-11-01' and m_id=11 ;
+update pr_emp_pay_field set amount=	8281	where emp_code=	6470	and fm='2020-11-01' and m_id=11 ;
+update pr_emp_pay_field set amount=	8281	where emp_code=	6471	and fm='2020-11-01' and m_id=11 ;
+update pr_emp_pay_field set amount=	8281	where emp_code=	6472	and fm='2020-11-01' and m_id=11 ;
+update pr_emp_pay_field set amount=	8281	where emp_code=	6473	and fm='2020-11-01' and m_id=11 ;
+update pr_emp_pay_field set amount=	7845	where emp_code=	6474	and fm='2020-11-01' and m_id=11 ;
+update pr_emp_pay_field set amount=	7845	where emp_code=	6475	and fm='2020-11-01' and m_id=11 ;
+update pr_emp_pay_field set amount=	6538	where emp_code=	6476	and fm='2020-11-01' and m_id=11 ;
+update pr_emp_pay_field set amount=	6538	where emp_code=	6477	and fm='2020-11-01' and m_id=11 ;
+
+
+update employees set retirementdate='2020-10-19 00:00:00.000' where empid in (6410,6441,6451);
+update employees set retirementdate='2020-10-08 00:00:00.000' where empid in (6429,6440);
+update employees set retirementdate='2020-10-05 00:00:00.000' where empid in (6418);
+
+update pr_emp_pay_field set active=0 where fm='2020-11-01' and emp_code in (6410,6441,6451,6429,6440,6418);
+
+update pr_emp_pay_field set amount=	1308	where emp_code=	6464	and fm='2020-11-01' and m_id=24 ;
+update pr_emp_pay_field set amount=	1308	where emp_code=	6466	and fm='2020-11-01' and m_id=24 ;
+update pr_emp_pay_field set amount=	1308	where emp_code=	6467	and fm='2020-11-01' and m_id=24 ;
+update pr_emp_pay_field set amount=	1308	where emp_code=	6468	and fm='2020-11-01' and m_id=24 ;
+update pr_emp_pay_field set amount=	872	where emp_code=	6469	and fm='2020-11-01' and m_id=24 ;
+update pr_emp_pay_field set amount=	828	where emp_code=	6470	and fm='2020-11-01' and m_id=24 ;
+update pr_emp_pay_field set amount=	828	where emp_code=	6471	and fm='2020-11-01' and m_id=24 ;
+update pr_emp_pay_field set amount=	828	where emp_code=	6472	and fm='2020-11-01' and m_id=24 ;
+update pr_emp_pay_field set amount=	828	where emp_code=	6473	and fm='2020-11-01' and m_id=24 ;
+update pr_emp_pay_field set amount=	785	where emp_code=	6474	and fm='2020-11-01' and m_id=24 ;
+update pr_emp_pay_field set amount=	785	where emp_code=	6475	and fm='2020-11-01' and m_id=24 ;
+update pr_emp_pay_field set amount=	654	where emp_code=	6476	and fm='2020-11-01' and m_id=24 ;
+update pr_emp_pay_field set amount=	654	where emp_code=	6477	and fm='2020-11-01' and m_id=24 ;
+
+
+
+update pr_emp_payslip set er_cca =	313.33	where emp_code=	6469	and fm='2020-11-01';
+update pr_emp_payslip set er_cca =	297.67	where emp_code=	6470	and fm='2020-11-01';
+update pr_emp_payslip set er_cca =	297.67	where emp_code=	6471	and fm='2020-11-01';
+update pr_emp_payslip set er_cca =	297.67	where emp_code=	6472	and fm='2020-11-01';
+update pr_emp_payslip set er_cca =	297.67	where emp_code=	6473	and fm='2020-11-01';
+update pr_emp_payslip set er_cca =	282	where emp_code=	6474	and fm='2020-11-01';
+update pr_emp_payslip set er_cca =	282	where emp_code=	6475	and fm='2020-11-01';
+update pr_emp_payslip set er_cca =	235	where emp_code=	6476	and fm='2020-11-01';
+update pr_emp_payslip set er_cca =	235	where emp_code=	6477	and fm='2020-11-01';
+
+
+update pr_emp_payslip set gross_amount =	19568.58	where emp_code=	6469	and fm='2020-11-01';
+update pr_emp_payslip set gross_amount =	18589.44	where emp_code=	6470	and fm='2020-11-01';
+update pr_emp_payslip set gross_amount =	18589.44	where emp_code=	6471	and fm='2020-11-01';
+update pr_emp_payslip set gross_amount =	18589.44	where emp_code=	6472	and fm='2020-11-01';
+update pr_emp_payslip set gross_amount =	18589.44	where emp_code=	6473	and fm='2020-11-01';
+update pr_emp_payslip set gross_amount =	17611.29	where emp_code=	6474	and fm='2020-11-01';
+update pr_emp_payslip set gross_amount =	17611.29	where emp_code=	6475	and fm='2020-11-01';
+update pr_emp_payslip set gross_amount =	14676.96	where emp_code=	6476	and fm='2020-11-01';
+update pr_emp_payslip set gross_amount =	14676.96	where emp_code=	6477	and fm='2020-11-01';
+
+
+update pr_emp_payslip set net_amount =	(gross_amount-deductions_amount)	where emp_code=	6469	and fm='2020-11-01';
+update pr_emp_payslip set net_amount =	(gross_amount-deductions_amount)	where emp_code=	6470	and fm='2020-11-01';
+update pr_emp_payslip set net_amount =	(gross_amount-deductions_amount)	where emp_code=	6471	and fm='2020-11-01';
+update pr_emp_payslip set net_amount =	(gross_amount-deductions_amount)	where emp_code=	6472	and fm='2020-11-01';
+update pr_emp_payslip set net_amount =	(gross_amount-deductions_amount)	where emp_code=	6473	and fm='2020-11-01';
+update pr_emp_payslip set net_amount =	(gross_amount-deductions_amount)	where emp_code=	6474	and fm='2020-11-01';
+update pr_emp_payslip set net_amount =	(gross_amount-deductions_amount)	where emp_code=	6475	and fm='2020-11-01';
+update pr_emp_payslip set net_amount =	(gross_amount-deductions_amount)	where emp_code=	6476	and fm='2020-11-01';
+update pr_emp_payslip set net_amount =	(gross_amount-deductions_amount)	where emp_code=	6477	and fm='2020-11-01';
+
+
+

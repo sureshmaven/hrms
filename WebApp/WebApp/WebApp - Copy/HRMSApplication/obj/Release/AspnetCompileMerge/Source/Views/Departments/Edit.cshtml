@@ -1,0 +1,189 @@
+﻿@model Entities.Departments
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var rolepages = TempData["RolePages"].ToString();
+    ViewBag.RolePages = TempData["RolePages"];
+}
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-heading">
+            @{
+                <ul class="nav nav-tabs">
+                    @if (rolepages.Contains("MABAN"))
+                    {
+                        <li><a href=@Url.Action("Create", "Banks")>Bank</a></li>}
+                    @if (rolepages.Contains("MABRA"))
+                    {
+                        <li><a href=@Url.Action("Create", "Branches")>Branch</a></li>}
+
+                    @if (rolepages.Contains("MADEP"))
+                    {
+                        <li class="active"><a href=@Url.Action("Create", "Departments")>Department</a></li>}
+                    @if (rolepages.Contains("MADES"))
+                    {
+                        <li><a href=@Url.Action("Create", "Designations")>Designation</a></li>}
+                    @if (rolepages.Contains("MAROL"))
+                    {
+                        <li><a href=@Url.Action("Create", "Roles")>Role</a></li>}
+                    @if (rolepages.Contains("MALTY"))
+                    {
+                        <li><a href=@Url.Action("Create", "LeaveTypes")>LeaveType</a></li>}
+                    @if (rolepages.Contains("MAHLI"))
+                    {
+                        <li><a href=@Url.Action("Create", "HolidayLists")>HolidayList</a></li>}
+                    @if (rolepages.Contains("MACDL"))
+                    {
+                        <li><a href=@Url.Action("CreditDebitleaves", "MyLeaves")>Credit / Debit leaves</a></li>}
+                    @if (rolepages.Contains("MABCY"))
+                    {
+                        <li><a href=@Url.Action("Createbranchcount", "Branches")>Branch Category</a></li>}
+                    @if (rolepages.Contains("MAODY"))
+                    {
+                        <li><a href=@Url.Action("OtherdutyCreate", "LeaveTypes")>Other Duty</a></li>}
+                    @if (rolepages.Contains("MABPD"))
+                    {
+                        <li><a href=@Url.Action("Create", "BlockPeriod")>BlockPeriod</a></li>}
+                    @if (rolepages.Contains("MANES"))
+                    {
+                        <li><a href=@Url.Action("Create", "News")>News</a></li>}
+                </ul>
+            } 
+        </div>
+    </div>
+</div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="container">
+        <div class="page_st">
+            <div class="page col-md-12 col-sm-12">
+                <div class="main_heading">
+                    <h1>Edit Department</h1>
+                    <div class="form-horizontal col-md-offset-3 col-md-6 col-sm-9">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.Id)
+                        <div class="form-group">                       
+                            <label class="col-sm-4 control-label">Code:<span class="mandatory">*</span></label>
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "form-control", onBlur = "DeptCode()", onkeypress = "return onlyAlphabets(event)" } })
+                                @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">                          
+                            <label class="col-sm-4 control-label">Name:<span class="mandatory">*</span></label>
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", onBlur = "DeptName()", onkeypress = "return onlyAlphabets(event)" } })
+                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-sm-4" })
+                            <div class="col-sm-8">
+                                @Html.TextAreaFor(model => model.Description, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        
+                                <div class="pull-right">
+                                    <button type="reset" class="btn btn-default">Cancel</button>
+                                    <input type="submit" value="Update" onclick="return deptedit();" class="btn btn-primary" />
+                                </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+@{
+
+    var message = TempData["AlertMessage"] ?? string.Empty;
+
+}
+<script type="text/javascript">
+    var message = '@message';
+
+    if (message) alert(message);
+
+</script>
+<script>
+function DeptName() {
+
+    var x = location.hostname;
+    var url = window.location.href
+    var arr = url.split("/");
+    var textBoxValue = document.getElementById("Name").value;
+
+    //var result = "https://" + arr[2] + "/" + "Departments/Checkdept?Name=" + textBoxValue;
+    var result = "" + arr[0] +  "//" + arr[2] +  "/"+ "Departments/Checkdept?Name=" + textBoxValue;
+    $.ajax({
+        type: "GET",
+        url: result,
+
+        dataType: "json",
+        success: function (data) {
+
+            if (data.message == "use") {
+
+            }
+            if (data.message == "used") {
+
+                document.getElementById("Name").value = "";
+
+                alert("This Department Name already Exist!");
+            }
+
+        },
+        error: function () {
+
+        }
+    });
+
+
+}
+</script>
+<script>
+function DeptCode() {
+
+
+    var x = location.hostname;
+    var url = window.location.href
+    var arr = url.split("/");
+    var textBoxValue = document.getElementById("Code").value;
+
+  //  var result = "https://" + arr[2] + "/" + "Departments/Checkdeptcode?Code=" + textBoxValue;
+     var result = "" + arr[0] +  "//" + arr[2] +  "/"+ "Departments/Checkdeptcode?Code=" + textBoxValue;
+    $.ajax({
+        type: "GET",
+        url: result,
+
+        dataType: "json",
+        success: function (data) {
+
+            if (data.message == "use") {
+
+            }
+            if (data.message == "used") {
+
+                document.getElementById("Code").value = "";
+
+                alert("This Department Code already Exist!");
+            }
+
+        },
+        error: function () {
+
+        }
+    });
+
+
+}
+</script>
+
+<script>
+    document.getElementById("a2").className = "active";
+
+</script>

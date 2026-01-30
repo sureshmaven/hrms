@@ -1,0 +1,804 @@
+﻿@model Entities.Latememo
+@{
+    /**/
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var rolepages = TempData["RolePages"].ToString();
+    var dataUrl = ViewBag.DataUrl;
+    ViewBag.RolePages = TempData["RolePages"];
+}
+@{ var message = TempData["cancel"] ?? string.Empty;
+}
+@{
+    var message1 = TempData["Forward"] ?? string.Empty;
+}
+@{
+    var message2 = TempData["Approve"] ?? string.Empty;
+}
+@{
+    var message3 = TempData["Denied"] ?? string.Empty;
+}
+<script type="text/javascript">
+        var message = '@message';
+        if (message) alert(message);
+</script>
+<script type="text/javascript">
+        var message1 = '@message1';
+        if (message1) alert(message1);
+</script>
+<script type="text/javascript">
+        var message2 = '@message2';
+        if (message2) alert(message2);
+</script>
+
+<script type="text/javascript">
+        var message3 = '@message3';
+        if (message3) alert(message3);
+</script>
+
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-heading">
+            @{
+                <ul class="nav nav-tabs">
+                    @if (rolepages.Contains("LFPMain"))
+                    {
+                        <li><a href=@Url.Action("MemoCreate", "Memo")>Issue Memo</a></li>
+                        <li class="active"><a href=@Url.Action("MemoList", "Memo")>Memos Report</a></li>
+                    }
+                    @if (rolepages.Contains("LFPMain"))
+                    {
+                        <li><a href=@Url.Action("MemoReport", "Memo")>My Pending Memos</a></li>
+
+                    }
+                    @if (rolepages.Contains("MemoSuper"))
+                    {
+                        <li><a href=@Url.Action("Employeememoreport", "Memo")>My Memos History</a></li>
+                    }
+                    @if (rolepages.Contains("MemoSuper"))
+                    {
+                        <li><a href=@Url.Action("EmployeeMemo", "Memo")>Employee Memos</a></li>
+                    }
+                </ul>
+            }
+        </div>
+    </div>
+</div>
+<div class="panel-body">
+    <div class="tab-content">
+        <div class="tab-pane fade  in active" id="tab2primary">
+            <div class="page_st">
+                <div class="page">
+                    <div class="col-md-12">
+                        <div class="main_heading">
+                            <h1>Memo's List</h1>
+                            <div class="form-horizontal col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-12 col-sm-12">
+
+
+                                    <br />
+
+
+                                </div>
+
+                            </div>
+                            <br /><br />
+                            <div class="form-horizontal">
+
+
+
+                                <div class="col-md-4 col-sm-3 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label label_left">From Date:<span class="mandatory">*</span></label>
+                                        <div class="input-group date col-sm-7">
+                                            <input type="text" id="SDate" class="form-control" onkeypress="return nokeyword(event)" , onchange="return Dateevent4();"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-3 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">To Date:<span class="mandatory">*</span></label>
+                                        <div class="input-group date col-sm-8">
+                                            <input type="text" id="EDate" class="form-control" onkeypress="return nokeyword(event)" , onchange="return Dateevent2();"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+                                <div class="col-md-1">
+                                    <button class="btn btn-primary btn-sm pull-right" id="twoDtPickersearchbtn">Search</button>
+                                </div>
+
+
+
+                                <div class="branch_search">
+                                    <div class="col-sm-12">
+                                        <div class="form-horizontal">
+                                            <div id="myModal" class="modal" style="z-index: 9999999999;">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="submit" id="btnclosepop" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                        <h4 class="modal-title">Memo Details</h4>
+                                                    </div>
+                                                    <table id="myTextArea" style="margin: 25px auto;width: 92%;"></table>
+                                                    <div class="modal-footer">
+                                                        @*<button type="submit" id="btnPreviouspopup" class="btn btn-default leaveprev">Previous</button>*@
+                                                        @*<button style="margin: 0 6px 0 6px;" type="submit" id="btnApprovalspopup" class="btn btn-primary leaveapprove">Approve</button>*@
+                                                        <button type="submit" id="btncancelApprovalpopup" class="btn btn-danger memocancel">Cancel</button>
+                                                        @*<button type="submit" id="btnDenyApprovalpopup" class="btn btn-default leaveDeny">Deny</button>*@
+                                                        @*<button type="submit" id="btnNextpopup" class="btn btn-default leavenext">Next</button>*@
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="gridControlling"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <div>
+                                        <input type="button" class="btn btn-info" value="Export to Excel" id='excelExport' />
+                                    </div>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="pull-right">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#btncancelApprovalpopup").click(function () {
+
+        var rows = $("#gridControlling").jqxGrid('selectedrowindexes');
+        var lval = document.getElementById("currentpos").value;
+
+
+
+        var selectedRecords = new Array();
+        var names = '';
+        var types = '';
+        var ids = '';
+        //for (var m = 0; m < rows.length; m++) {
+        var row = $("#gridControlling").jqxGrid('getrowdata', lval);
+        selectedRecords[selectedRecords.length] = row;
+
+        names = names + row.EmpId + ',';
+        types = types + row.Code + ',';
+        ids = ids + row.Id;
+        $('.memocancel').attr("disabled", true);
+        //}
+
+        $.ajax({
+            type: "Post",
+            url: "/Memo/CancelMemo?Id=" + ids,
+            dataType: "Json",
+            success: function (response) {
+                if (response != null) {
+                    alert("Latememo Cancelled Successfully");
+                    window.location.reload();
+                    //window.location.reload();
+
+                }
+                else {
+                    // alert("Something went wrong");
+                }
+            },
+        });
+
+
+
+    });
+
+  $("#twoDtPickersearchbtn").click(function () {
+
+                var fromDate = $("#SDate").val();
+                var toDate = $("#EDate").val();
+
+                if (fromDate == "" && toDate == "") {
+                    alert("PLease select FromDate and ToDate");
+                    return false;
+                }
+                else if (fromDate == "") {
+                    alert("PLease select FromDate");
+                    return false;
+                }
+                else if (toDate == "") {
+                    alert("Please select toDate");
+                    return false;
+                }
+                var darray = document.getElementById('fromDate').value.split(" ");
+                var darraye = document.getElementById('toDate').value.split(" ");
+                var Joindate = darray[0];
+
+                var Retdate = darraye[0];
+                var date = moment(Joindate, "DD.MM.YYYY");
+
+                var currentDate1 = moment(Retdate, "DD.MM.YYYY");
+                var duration = moment.duration(date.diff(currentDate1));
+
+
+                if (duration > 0) {
+                    alert("Please ensure that To Date is greater than or equal to From Date.");
+                    return false;
+                }
+
+      var mainUr
+
+
+
+      l = '@dataUrl';
+                ajaxSpinnerShow();
+                // TODO - need dynamic way to get values and url
+
+                var fromDate = $("#fromDate").val();
+                var toDate = $("#toDate").val();
+
+                var ajaxurl = mainUrl.replace('-1', fromDate);
+                ajaxurl = ajaxurl.replace('-2', toDate);
+                ajaxurl = ajaxurl.replace('&amp;', '&');
+
+                reportMsgTop = fromDate + ' - ' + toDate ;
+
+                $('#grid').DataTable().ajax.url(ajaxurl).load(function () {
+                    ajaxSpinnerHide();
+                });
+            });
+
+</script>
+<div id="pagenation" style="visibility:hidden"></div>
+<input id="currentpos" type="hidden" />
+<script>
+    // Get the modal
+    var modal = document.getElementById('myModal');
+</script>
+<input id="currentControlling" value="@ViewBag.Controllings" type="hidden" />
+<input id="currentSanctioning" value="@ViewBag.Sanctioning" type="hidden" />
+
+<style>
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+    .modal-content {
+        margin: auto;
+        padding: 0px;
+        border: 1px solid rgb(136, 136, 136);
+        width: 50%;
+        z-index: 99999999999;
+        left: 25%;
+        background: rgb(219, 238, 247);
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .modal-header {
+        min-height: 16.42857143px;
+        padding: 13px;
+        border-bottom: 1px solid rgb(221, 221, 221);
+        background: rgba(60, 141, 188, 0.4);
+    }
+
+        .modal-header h4 {
+            font-size: 18px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgb(255, 255, 255);
+        }
+
+    #myTextArea td {
+        border: 1px solid #c2c2c2;
+        padding: 3px 5px 3px 5px;
+    }
+
+    .modal-header .close {
+        margin-top: -2px;
+        color: rgb(0, 0, 0);
+        opacity: 4;
+        /* background: rgb(0, 0, 0); */
+    }
+</style>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        ;
+        $(function () {
+
+            $('.input-group.date').datepicker({
+                calendarWeeks: true,
+                todayHighlight: true,
+                autoclose: true,
+                daysOfWeekDisabled: [0, 6]
+            });
+        });
+
+        $("#gridControlling").jqxGrid('selectrow', 0);
+        $("#gridControlling").jqxGrid('selectrow', 1);
+        // prepare the data for BankView
+        var theme = otherTheme;
+        // prepare the data
+        var url = "../Memo/MemoListData";
+        var source =
+        {
+            type: "Get",
+            datatype: "json",
+            datafields: [
+                { name: 'available', type: 'bool' },
+                { name: 'Id', type: 'int' },
+                { name: 'Empid', type: 'string' },
+                { name: 'Description', type: 'string' },
+                { name: 'ShortName', type: 'string' },
+                { name: 'Code', type: 'string' },
+                { name: 'Name', type: 'string' },
+                { name: 'IssueDate', type: 'date' },
+                { name: 'Duedate', type: 'date' },
+                { name: 'MemoType', type: 'string' },
+                { name: 'Memodetails', type: 'string' },
+                { name: 'Noofdays', type: 'int' },
+                { name: 'Clarification', type: 'string' },
+                { name: 'Responsedate', type: 'date' },
+                { name: 'Issueby', type: 'string' },
+                { name: 'Status', type: 'string' },
+                { name: 'Priornoticegivendays', type: 'int' },
+                { name: 'ReasonForLeave', type: 'string' },
+                { name: 'leavetype', type: 'string' },
+                { name: 'leaveapplieddate', type: 'date' },
+                //{ name: 'Action', type: 'string' },
+            ],
+            async: false,
+            url: url,
+            data: {
+                featureClass: "P",
+                style: "full",
+                username: "jqwidgets"
+            }
+        };
+        var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties, rowdata) {
+
+        }
+        var dataAdapter = new $.jqx.dataAdapter(source,
+            {
+                formatData: function (data) {
+                    data.ProductName = $("#oneddlempid").val();
+                    //data.ProductName = $("#searchField").val();
+                    return data;
+                }
+            }
+        );
+        // initialize jqxGrid
+        var editrowindex = -1;
+        var delrowindex = -1;
+        $("#gridControlling").jqxGrid(
+            {
+                width: '100%',
+                source: dataAdapter,
+                theme: otherTheme,// for theme refernce go to Layout.cshtml
+                autoheight: true,
+                sortable: true,
+                pageable: true,
+                columnsResize: true,
+                altRows: true,
+                filterable: true,
+                autoshowfiltericon: true,
+                editable: true,
+                selectionmode: 'multiplerows',
+                cellhover: function (element, pageX, pageY, record) {
+                    var index = $("#gridControlling").jqxGrid('hoveredrow');
+                    var data = $('#gridControlling').jqxGrid('getrowdata', index);
+                    var e_status = data.e_status; // get hover row data
+                    var Id = data.Id;
+                    var Empid = data.Empid;
+                    var Description = data.Description;
+                    var EmpName = data.ShortName;
+                    var Designation = data.Code;
+                    var Branch = data.Name;
+                    var IssueDate = data.IssueDate;
+                    var Duedate = data.Duedate;
+                    var MemoType = data.MemoType;
+                    var Memodetails = data.Memodetails;
+                    var Noofdays = data.Noofdays;
+                    var Clarification = data.Clarification;
+                    var Responsedate = data.Responsedate;
+                    var Issueby = data.Issueby;
+                    var Status = data.Status;
+                    var Priornoticegivendays = data.Priornoticegivendays;
+                    var ReasonForLeave = data.ReasonForLeave;
+                    var leavetype = data.leavetype;
+                    var leaveapplieddate = data.leaveapplieddate;
+                    //var Action = data.Action;
+                    //$("#gridControlling").jqxTooltip({
+                    //    content: '<table style="width:100%; text-align: left;"><tr><th>Employee Code :</th><td>' + Empid + '</td></tr><tr><th>IssueDate :</th><td>' + IssueDate + '</td></tr><tr><th>DueDate :</th><td>' + Duedate + '</td></tr><tr><th>MemoDetails :</th><td>' + Memodetails + '</td></tr><tr><th>NoofDays :</th><td>' + Noofdays + '</td></tr><tr><th>Clarification :</th><td>' + Clarification + '</td></tr><tr><th>ResponseDate :</th><td>' + Responsedate + '</td></tr><tr><th>IssueBy  :</th><td>' + Issueby + '</td></tr><tr><th>Status  :</th><td>' + Status + '</td></tr></table>'
+
+                    //});
+                    //$("#gridControlling").jqxTooltip('open', pageX + 15, pageY + 15);
+                },
+                ready: function () {
+                    $("#gridControlling").jqxGrid('localizestrings', localizationObject);
+                },
+                updatefilterconditions: function (type, defaultconditions) {
+                    switch (type) {
+                        case 'stringfilter':
+                            return stringcomparisonoperators;
+                        case 'numericfilter':
+                            return numericcomparisonoperators;
+                        case 'datefilter':
+                            return datecomparisonoperators;
+                        case 'booleanfilter':
+                            return booleancomparisonoperators;
+                    }
+                },
+                updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                    filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                    var index1 = 0;
+                    var index2 = 0;
+                    if (columnfilter != null) {
+                        var filter1 = columnfilter.getfilterat(0);
+                        var filter2 = columnfilter.getfilterat(1);
+                        if (filter1) {
+                            index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                            var value1 = filter1.filtervalue;
+                            filterinputfield1.val(value1);
+                        }
+                        if (filter2) {
+                            index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                            var value2 = filter2.filtervalue;
+                            filterinputfield2.val(value2);
+                        }
+                    }
+                    filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                    filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+
+                },
+                columns: [
+
+                    { text: 'Id', groupable: true, datafield: 'Id', editable: false, width: 90, hidden: true, sortable: false },
+                    { text: "EmpNo", datafield: "Empid", align: 'center', width: 60, sortable: false, editable: false },
+                    { text: "EmpName", datafield: "ShortName", align: 'center', width: 100, sortable: false, editable: false },
+                    { text: "Designation", datafield: "Code", align: 'center', width: 100, sortable: false, editable: false },
+                    { text: "Description", datafield: "Description", align: 'center', hidden: true, width: 100, sortable: false, editable: false },
+                    {
+                        text: "Branch", datafield: "Name", align: 'center', width: 100, sortable: false, editable: false,
+                        cellsrenderer: function (row) {
+
+                            var Value = $('#gridControlling').jqxGrid('getcellvalue', row, 'Name');
+                            var Value1 = $('#gridControlling').jqxGrid('getcellvalue', row, 'Description');
+                            if (Value == "OtherBranch") {
+                                return Value1;
+                            }
+                        }
+                    },
+                    { text: "Issue Date", datafield: "IssueDate", align: 'center', width: 100, sortable: false, cellsformat: 'dd/MM/yyyy', editable: false },
+                    { text: "Due Date", datafield: "Duedate", align: 'center', editable: false, width: 100, cellsformat: 'dd/MM/yyyy', sortable: false },
+                    { text: 'Memo Type', editable: false, datafield: 'MemoType', align: 'center', width: 90, sortable: false },
+                    { text: 'Memo Details', editable: false, datafield: 'Memodetails', align: 'center', width: 270, sortable: false },
+                    { text: '#Days', editable: false, datafield: 'Noofdays', align: 'center', width: 50, sortable: false },
+                    { text: 'Explanation', editable: false, datafield: 'Clarification', align: 'center', width: 270, sortable: false },
+                    { text: 'Response Date', editable: false, datafield: 'Responsedate', align: 'center', width: 100, cellsformat: 'dd/MM/yyyy', sortable: false },
+                    { text: 'Issue By', editable: false, hidden: true, datafield: 'Issueby', align: 'center', width: 60, sortable: false },
+                    { text: 'Status', cellsrenderer: cellsrenderer, editable: false, datafield: 'Status', align: 'center', width: 70, sortable: false },
+                    { text: 'Priornoticegivendays', cellsrenderer: cellsrenderer, editable: false, datafield: 'Priornoticegivendays', align: 'center', width: 70, sortable: false },
+                    { text: 'ReasonForLeave', cellsrenderer: cellsrenderer, editable: false, datafield: 'ReasonForLeave', align: 'center', width: 70, sortable: false },
+                    { text: 'Leave Type', editable: false, datafield: 'leavetype', align: 'center', width: 90, sortable: false },
+                    { text: "Leave Applied Date", datafield: "leaveapplieddate", align: 'center', width: 100, sortable: false, cellsformat: 'dd/MM/yyyy', editable: false },
+                    //{ text: 'Action', cellsrenderer: cellsrenderer, editable: false, datafield: 'Action', align: 'center', width: 70, sortable: false },
+                    {
+                        text: 'Edit', Value: 'Edit', datafield: 'Edit', sortable: false, filterable: false, columngroup: 'Actions', columntype: 'button', name: 'Edit', width: 80,
+                        cellsrenderer: function (row) {
+
+                            var Value = $('#gridControlling').jqxGrid('getcellvalue', row, 'Status');
+                            if (Value != "Cancelled") {
+                                return "Edit";
+                            }
+                        },
+                        buttonclick: function (row) {
+                            var Value = $('#gridControlling').jqxGrid('getcellvalue', row, 'Status');
+                            if (Value == "Pending" || Value == "Complete") {
+
+                                editrowindex = row;
+                                //var paginginformation = $('#gridControlling').jqxGrid('getpaginginformation');
+                                var id = $("#gridControlling").jqxGrid('getcellvalue', row, "Id");
+                                window.location = '/Memo/Edit/?id=' + id;
+
+                            }
+
+
+                        }
+                    },
+                    {
+                        text: 'Cancel', datafield: 'Cancel', columngroup: 'Actions', sortable: false, filterable: false, columntype: 'button', name: 'Cancel', width: 80, cellsrenderer: function (row) {
+                            var Value = $('#gridControlling').jqxGrid('getcellvalue', row, 'Status');
+                            if (Value != "Cancelled") {
+                                return "Cancel";
+                            }
+                        },
+                        buttonclick: function (row) {
+                            var Value = $('#gridControlling').jqxGrid('getcellvalue', row, 'Status');
+                            if (Value == "Pending" || Value == "Complete") {
+                                var res = confirm("Do you want the Cancel the Selected Memo");
+                                if (res) {
+                                    delrowindex = row;
+                                    var id = $("#gridControlling").jqxGrid('getcellvalue', row, "Id");
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "/Memo/CancelMemo?Id=" + id,
+                                        dataType: "Json",
+                                        success: function (response) {
+
+                                            if (response != null) {
+                                                alert("Latememo Cancelled Successfully");
+                                                window.location.reload();
+                                            }
+                                            else {
+                                                alert("Something went wrong");
+                                            }
+                                        },
+                                    });
+                                }
+
+                            }
+
+                        }
+                    }
+                ],
+                columngroups:
+                    [
+                        { text: 'Action', align: 'center', name: 'Actions', width: 120 },
+                    ],
+
+
+            });
+        //$("#gridControlling").on("rowselect", function (event) {
+        //    var rowindex = $('#gridControlling').jqxGrid('getselectedrowindex');
+        //    var args = event.args;
+        //    var row = args.rowindex;
+        //    var rows = $('#gridControlling').jqxGrid('getrows');
+        //    var value = rows[row].Id;
+        //    document.getElementById("currentpos").value = row;
+        //    var rowlength = $('#gridControlling').jqxGrid('getrows').length;
+        //    //if (rowlength <= 1) {
+        //    //    document.getElementById('btnPreviouspopup').style.display = 'none';
+        //    //    document.getElementById('btnNextpopup').style.display = 'none';
+        //    //}
+        //    var string = "";
+        //    for (var i = 0; i < rows.length; i++) {
+        //        string += "<input type='text' id='" + i + "' value='" + rows[i].Id + "'/>";
+        //    }
+        //    document.getElementById("pagenation").innerHTML = string;
+        //    $('.leavenext').attr("disabled", false);
+        //    $('.leaveprev').attr("disabled", false);
+        //    $.ajax({
+
+        //        url: "/Memo/MemoTooltip?MemoId=" + value,
+        //        Type: 'Get',
+        //        dataType: 'json',
+        //        success: function (response) {
+
+        //            if (response != null) {
+
+        //                if (!rows[row].available) {
+
+        //                    modal.style.display = "block";
+        //                }
+        //                for (var i = 0; i < response.length; i++) {
+
+        //                    var text =
+        //                        "<tr><td>EmployeeId:</td><td>" + " " + " " + response[i].Empid
+        //                        + "<tr><td>EmployeeName:</td><td>" + " " + " " + response[i].LastName
+        //                        + "</td></tr> <tr><td> IssueDate:</td><td>" + " " + " " + response[i].IssueDate
+        //                        + "</td></tr> <tr><td> DueDate:</td><td>" + " " + " " + response[i].Duedate
+        //                        + "</td></tr><tr><td> Memo Type:</td><td>" + " " + " " + response[i].MemoType + "</td></tr>"
+        //                        + "</td></tr><tr><td> MemoDetails:</td><td>" + " " + " " + response[i].Memodetails + "</td></tr>"
+        //                        + "</td></tr><tr><td> NoofDays:</td><td>" + " " + " " + response[i].Noofdays + "</td></tr>"
+
+        //                        + "</td></tr><tr><td> Explanation:</td><td>" + " " + " " + response[i].Clarification + "</td></tr>"
+        //                        + "</td></tr><tr><td> ResponseDate:</td><td>" + " " + " " + response[i].Responsedate + "</td></tr>"
+
+        //                        + "</td></tr><tr><td> Status:</td><td>" + " " + " " + response[i].Status + "</td></tr>";
+        //                    document.getElementById("myTextArea").innerHTML = text;
+        //                }
+        //            }
+        //        },
+        //    });
+
+        //});
+
+
+
+        //$("#excelExport").jqxButton();
+        //$("#excelExport").click(function () {
+        //    $("#gridControlling").jqxGrid('exportdata', 'xls', 'MemoReport');
+        //});
+
+
+
+        $("#gridControlling").bind('cellendedit', function (event) {
+            if (event.args.value) {
+                $("#gridControlling").jqxGrid('selectrow', event.args.rowindex);
+            }
+            else {
+                $("#gridControlling").jqxGrid('unselectrow', event.args.rowindex);
+            }
+        });
+        $("#btnclosepop").click(function () {
+            modal.style.display = "none";
+            document.getElementById("pagenation").innerHTML = '';
+        });
+    });
+</script>
+<script>
+    //var a = getElementById("tel");
+    //tel is the id of a input field
+
+
+    $("#gridControlling").on("click", "#btncancel", function () {
+        var rows = $("#gridControlling").jqxGrid('selectedrowindexes');
+        var lval = document.getElementById("currentpos").value;
+
+
+
+        var selectedRecords = new Array();
+        var names = '';
+        var types = '';
+        var ids = '';
+        //for (var m = 0; m < rows.length; m++) {
+        var row = $("#gridControlling").jqxGrid('getrowdata', lval);
+        selectedRecords[selectedRecords.length] = row;
+
+        //names = names + row.EmpId + ',';
+        //types = types + row.Code + ',';
+        ids = row.Id;
+
+        $.ajax({
+            type: "POST",
+            url: "/Memo/CancelMemo?Id=" + Id,
+            dataType: "Json",
+            success: function (response) {
+
+                if (response != null) {
+                    alert("Latememo Cancelled Successfully");
+                    window.location.reload();
+                }
+                else {
+                    alert("Something went wrong");
+                }
+            },
+        });
+    });
+
+
+</script>
+<script>
+    document.getElementById("a21").className = "active";
+
+</script>
+
+<style>
+    table, th, td {
+        border-collapse: collapse;
+    }
+
+    .activeClass {
+        background: #ffdb99;
+    }
+
+    .secondClass {
+        /*background: #FF9999;*/
+        color: red;
+    }
+</style>
+<script>
+</script>
+
+
+
+
+
+
+
+
+
+
+<!-- Include XLSX library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+<!-- Include FileSaver library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Add click event handler to the download Excel button
+        $("#excelExport").click(function () {
+            // Get filtered data from the grid
+            var filteredData = $("#gridControlling").jqxGrid('getrows');
+
+            // Process the data to convert dates to human-readable format
+            const processedData = filteredData.map(item => ({
+                ...item,
+                IssueDate: item.IssueDate ? formatDate(parseDate(item.IssueDate)) : '',
+                Duedate: item.Duedate ? formatDate(parseDate(item.Duedate)) : '',
+                Leaveapplieddate: item.Leaveapplieddate ? formatDate(parseDate(item.Leaveapplieddate)) : '',
+                Responsedate: item.Responsedate ? formatDate(parseDate(item.Responsedate)) : ''
+            }));
+
+            // Create a workbook and worksheet
+            var wb = XLSX.utils.book_new();
+            var ws = XLSX.utils.json_to_sheet(processedData);
+
+            // Add worksheet to workbook
+            XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+            // Convert workbook to binary data
+            var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+
+            // Create a Blob object from the binary data
+            var blob = new Blob([s2ab(wbout)], { type: 'application/octet-stream' });
+
+            // Trigger download
+            saveAs(blob, 'MemoReport.xlsx');
+        });
+    });
+
+    // Function to parse date string from /Date(timestamp)/ format to Date object
+    function parseDate(dateString) {
+        // Check for /Date(xxxxxxx)/ format
+        const match = /\/Date\((\d+)\)\//.exec(dateString);
+        if (match) {
+            return new Date(parseInt(match[1], 10));
+        }
+        // Check for ISO string format
+        return new Date(dateString);
+    }
+
+    // Function to format Date object to DD/MM/YYYY format
+    function formatDate(date) {
+        if (!date || isNaN(date.getTime())) return '';
+        var day = String(date.getDate()).padStart(2, '0');
+        var month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+        var year = date.getFullYear();
+        return `${day}/${month}/${year}`; // Format: DD/MM/YYYY
+    }
+
+    // Function to convert string to ArrayBuffer
+    function s2ab(s) {
+        var buf = new ArrayBuffer(s.length);
+        var view = new Uint8Array(buf);
+        for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+        return buf;
+    }
+</script>
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,44 @@
+
+-----------------------------Maven Hrms------------------------------
+select count(EmpId)as NofEmployees from Employees where RetirementDate>getdate() union all
+select count(EmpId)as NofEmployees from Employees where RetirementDate>getdate()-1 union all
+select count(EmpId)as NofEmployees from Employees where RetirementDate>getdate()-2 union all
+select count(EmpId)as NofEmployees from Employees where RetirementDate>getdate()-3 ;
+
+select count(distinct user_id) as cntofEMP, cast(getdate() as date) as [date] from timesheet_logs where cast(io_time as date)=cast(getdate() as date) and user_id not in (select empid from DCCB_employees) union all
+select COUNT( distinct user_id) as cntofEMP, cast(getdate()-1 as date) as [date] from timesheet_logs where cast(io_time as date)=cast(getdate()-1 as date)
+and user_id not in (select empid from DCCB_employees) union all
+select count(distinct user_id) as cntofEMP, cast(getdate()-2 as date) as [date] from timesheet_logs where cast(io_time as date)=cast(getdate()-2 as date) and user_id not in (select empid from DCCB_employees) union all
+select count(distinct user_id) as cntofEMP, cast(getdate()-3 as date) as [date] from timesheet_logs where cast(io_time as date)=cast(getdate()-3 as date) and user_id not in (select empid from DCCB_employees);
+
+select '02-04-2021',COUNT (*) from timesheet_Emp_Month where month=04 and year=2021 and D2_Status  in('CL','ML','PL','MTL','PTL','EOL','SCL','C-OFF','LOP') union all
+select '01-04-2021',COUNT (*) from timesheet_Emp_Month where month=04 and year=2021 and D1_Status  in('CL','ML','PL','MTL','PTL','EOL','SCL','C-OFF','LOP') union all
+select '31-03-2021',COUNT (*) from timesheet_Emp_Month where month=03 and year=2021 and D31_Status  in('CL','ML','PL','MTL','PTL','EOL','SCL','C-OFF','LOP') union all
+select '30-03-2021',COUNT (*) from timesheet_Emp_Month where month=03 and year=2021 and D30_Status  in('CL','ML','PL','MTL','PTL','EOL','SCL','C-OFF','LOP') ;
+
+select '02-04-2021',COUNT (*) from timesheet_Emp_Month where month=04 and year=2021 and D2_Status  in('AB') union all
+select '01-04-2021',COUNT (*) from timesheet_Emp_Month where month=04 and year=2021 and D1_Status  in('AB') union all
+select '31-03-2021',COUNT (*) from timesheet_Emp_Month where month=03 and year=2021 and D31_Status  in('AB') union all
+select '30-03-2021',COUNT (*) from timesheet_Emp_Month where month=03 and year=2021 and D30_Status  in('AB') ;
+
+select e.EmpId,e.ShortName, case when e.Branch=43 then d.name else b.name end as Branch, t.D2_Status,cast(getdate() as date) as [date] from Employees e  join timesheet_Emp_Month t on e.EmpId=t.UserId join Branches b on e.Branch=b.Id join Departments d on d.id=e.department where  t.month=04 and t.year=2021   and  t.D2_Status  in('CL','ML','PL','MTL','PTL','EOL','SCL','C-OFF','LOP')  union all
+select e.EmpId,e.ShortName, case when e.Branch=43 then d.name else b.name end as Branch, t.D1_Status,cast(getdate()-1 as date) as [date] from Employees e  join timesheet_Emp_Month t on e.EmpId=t.UserId join Branches b on e.Branch=b.Id join Departments d on d.id=e.department where  t.month=03 and t.year=2021   and  t.D1_Status  in('CL','ML','PL','MTL','PTL','EOL','SCL','C-OFF','LOP')  union all
+select e.EmpId,e.ShortName,case when e.Branch=43 then d.name else b.name end as Branch, t.D31_Status,cast(getdate()-2 as date) as [date] from Employees e  join timesheet_Emp_Month t on e.EmpId=t.UserId join Branches b on e.Branch=b.Id join Departments d on d.id=e.department where  t.month=03 and t.year=2021   and  t.D31_Status  in('CL','ML','PL','MTL','PTL','EOL','SCL','C-OFF','LOP') union all
+select e.EmpId,e.ShortName,case when e.Branch=43 then d.name else b.name end as Branch, t.D30_Status,cast(getdate()-3 as date) as [date] from Employees e  join timesheet_Emp_Month t on e.EmpId=t.UserId join Branches b on e.Branch=b.Id join Departments d on d.id=e.department where  t.month=03 and t.year=2021   and  t.D30_Status  in('CL','ML','PL','MTL','PTL','EOL','SCL','C-OFF','LOP') ;
+
+select e.EmpId,e.ShortName,case when e.Branch=43 then d.name else b.name end as Branch,t.D2_Status,cast(getdate() as date) as [date] from Employees e join timesheet_Emp_Month t on e.EmpId=t.UserId join Branches b on e.Branch=b.Id join Departments d on d.id=e.department where  t.month=04 and t.year=2021   and  t.D2_Status  in('AB') union all
+select e.EmpId,e.ShortName,case when e.Branch=43 then d.name else b.name end as Branch,t.D1_Status,cast(getdate()-1 as date) as [date] from Employees e join timesheet_Emp_Month t on e.EmpId=t.UserId join Branches b on e.Branch=b.Id join Departments d on d.id=e.department where  t.month=03 and t.year=2021   and  t.D1_Status  in('AB') union all
+select e.EmpId,e.ShortName,case when e.Branch=43 then d.name else b.name end as Branch,t.D31_Status,cast(getdate()-2 as date) as [date] from Employees e join timesheet_Emp_Month t on e.EmpId=t.UserId join Branches b on e.Branch=b.Id join Departments d on d.id=e.department where  t.month=03 and t.year=2021   and  t.D31_Status  in('AB') union all
+select e.EmpId,e.ShortName,case when e.Branch=43 then d.name else b.name end as Branch,t.D30_Status,cast(getdate()-3 as date) as [date] from Employees e join timesheet_Emp_Month t on e.EmpId=t.UserId join Branches b on e.Branch=b.Id join Departments d on d.id=e.department where  t.month=03 and t.year=2021   and  t.D30_Status  in('AB');
+
+------------------sssDb-----------------------------
+select count(distinct user_id) as cntofEMP ,cast(getdate() as date) as [date] from [tbl_realtime_glog] where cast(io_time as date)=cast(getdate() as date) and user_id not in (7007,7020,7022,7026,7027,7028,7030,7031,7034,7035,7036,7037,7039,7040,7041,7042,7043,7044,7045,7046,7047,7049,7024,7050,7051,7052,7053,7054,7055,7056,7057,7058,7059
+) union all
+select count(distinct user_id) as cntofEMP ,cast(getdate()-1 as date) as [date]from [tbl_realtime_glog] where cast(io_time as date)=cast(getdate()-1 as date) and user_id not in (7007,7020,7022,7026,7027,7028,7030,7031,7034,7035,7036,7037,7039,7040,7041,7042,7043,7044,7045,7046,7047,7049,7024,7050,7051,7052,7053,7054,7055,7056,7057,7058,7059
+) union all
+select count(distinct user_id) as cntofEMP,cast(getdate()-2 as date) as [date] from [tbl_realtime_glog] where cast(io_time as date)=cast(getdate()-2 as date) and user_id not in (7007,7020,7022,7026,7027,7028,7030,7031,7034,7035,7036,7037,7039,7040,7041,7042,7043,7044,7045,7046,7047,7049,7024,7050,7051,7052,7053,7054,7055,7056,7057,7058,7059
+) union all
+select count(distinct user_id)as cntofEMP ,cast(getdate()-3 as date) as [date] from [tbl_realtime_glog] where cast(io_time as date)=cast(getdate()-3 as date) and user_id not in (7007,7020,7022,7026,7027,7028,7030,7031,7034,7035,7036,7037,7039,7040,7041,7042,7043,7044,7045,7046,7047,7049,7024,7050,7051,7052,7053,7054,7055,7056,7057,7058,7059
+);
+
+

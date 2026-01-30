@@ -1,0 +1,423 @@
+﻿@model Entities.Latememo
+
+
+@{
+    /**/
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var rolepages = TempData["RolePages"].ToString();
+    ViewBag.RolePages = TempData["RolePages"];
+}
+
+@{
+    var message = TempData["AlertMessage"] ?? string.Empty;
+}
+@*<script type="text/javascript" src="~/Assets/hrms/Register.js"></script>*@
+<script type="text/javascript">
+    var message = '@message';
+    if (message) alert(message);
+
+</script>
+
+<style>
+    .closeText:before {
+        content: "Close";
+    }
+
+    .activeClass {
+        background: #ffdb99;
+    }
+
+    .secondClass {
+        /*background: #FF9999;*/
+        color: red;
+    }
+   
+</style>
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-heading">
+            @{
+            <ul class="nav nav-tabs">
+
+
+                @if (rolepages.Contains("LFPMain"))
+                {
+                    <li class="active"><a href=@Url.Action("MemoCreate", "Memo")>Issue Memo</a></li>
+                    <li><a href=@Url.Action("MemoList", "Memo")>Memos Report</a></li>
+                }
+                @if (rolepages.Contains("LFPMain"))
+                {
+                    <li><a href=@Url.Action("MemoReport", "Memo")>My Pending Memos</a></li>
+                }
+                @if (rolepages.Contains("MemoMain"))
+                {
+                    <li><a href=@Url.Action("MemoReport", "Memo")>My Pending Memos</a></li>
+                }
+                @if (rolepages.Contains("MemoSuper"))
+                {
+                    <li><a href=@Url.Action("Employeememoreport", "Memo")>My Memos History</a></li>
+                    
+
+                }
+
+            </ul>
+            }
+        </div>
+        @using (Html.BeginForm("MemoCreate", "Memo", FormMethod.Post))
+        {
+            <div class="container">
+                <div class="page_st">
+                    <div class="page">
+                        <div class="form-horizontal form-horizontal2">
+                            <div class="page_start">
+                                @{
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="main_heading">
+                                            <h1>Memo Create Form</h1>
+                                            <div class="form-horizontal col-md-12 col-sm-12 col-xs-12">
+                                                <div class="col-md-12 col-sm-12">
+                                                    <div class="main_heading">
+                                                        <h1>Issue Memo</h1>
+                                                        <br />
+                                                        <div class="form-horizontal col-md-12 col-sm-12 col-xs-12">
+                                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-4 control-label">EmpCode:<span class="mandatory">*</span></label>
+                                                                    <div class="col-sm-6">
+                                                                        @Html.TextBoxFor(model => model.Empid, new { @class = "form-control", @id = "empcode", @onkeypress = "return isNumber(event)" })
+                                                                        @Html.ValidationMessageFor(model => model.Empid, "", new { @class = "text-danger" })
+                                                                        @*<input type="text" id="empcode" name="UserId" class="form-control" onkeypress="return isNumber(event)" />*@
+                                                                    </div>
+                                                                    <div class="col-sm-2">
+                                                                        <button type="button" id="btnApplysearch" class="btn btn-primary btn-sm pull-right">Search</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+
+
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Name:</label>
+                                                                <div class="col-sm-8">
+                                                                    <input type="text" id="shortname" readonly="readonly" class="form-control" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Designation:</label>
+                                                                <div class="col-sm-8">
+                                                                    <input type="text" id="desigid" readonly="readonly" class="form-control" />
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Br/Dept:</label>
+                                                                <div class="col-sm-8">
+                                                                    <input type="text" id="branchid" readonly="readonly" class="form-control" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Sanctioning Authority:</label>
+                                                                <div class="col-sm-8">
+                                                                    <input type="text" id="SanctioningAuthority" readonly="readonly" class="form-control" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">No of Days :<span class="mandatory">*</span></label>
+                                                                <div class="col-sm-8">
+                                                                    @Html.TextBoxFor(model => model.Noofdays, new { @class = "form-control", @id = "Noofdays", @onkeypress = "return isNumber(event)" })
+                                                                    @Html.ValidationMessageFor(model => model.Noofdays, "", new { @class = "text-danger" })
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Explanation Due Date:<span class="mandatory">*</span></label>
+
+                                                                <div class="input-group date col-sm-8" id="datetimepicker2">
+
+                                                                    @Html.TextBoxFor(model => model.Duedate, new { @class = "form-control", @id = "cDuedate", @onkeypress = "return nokeyword(event)", @onchange = "return datealert();" })
+
+                                                                    @*<input type="text" id="cDuedate" class="form-control" onkeypress="return nokeyword(event)" , onchange="return dateevent();">*@
+                                                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Memo Type:<span class="mandatory">*</span></label>
+                                                                <div class="col-sm-8">
+                                                                    <select name="MemoType" class="form-control" id="cars">
+                                                                        <option value="Select">Select</option>
+                                                                        <option value="Late memo">Late memo</option>
+                                                                        <option value="Absent memo">Absent memo</option>
+                                                                        <option value="Non submission of medical certificate">Non submission of medical certificate</option>
+                                                                        <option value="Non updation of work dairy">Non updation of work dairy</option>
+                                                                    </select>
+                                                                    </div>
+                                                                    @*@Html.HiddenFor(model=>model.MemoType, new { @Id="memotype"})*@
+                                                                    @*@Html.DropDownListFor(model => model.register.state_name, Enumerable.Empty<SelectListItem>(), "Select", new { @class = "form-control", Id = "ddlstates" })*@
+
+                                                                    @*@Html.DropDownList(Enumerable.Empty<SelectListItem>(), "Select", new { @class = "form-control", @id = "cars" })*@
+                                                                </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Memo Details :<span class="mandatory">*</span></label>
+                                                                <div class="col-sm-8">
+                                                                    @Html.TextAreaFor(model => model.Memodetails, new { @class = "form-control", @id = "Memodetails", @maxlength = 2000, rows = "5" })
+                                                                    @Html.ValidationMessageFor(model => model.Memodetails, "", new { @class = "text-danger" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="col-md-12">
+                                                            <div class="pull-right">
+                                                                <button type="button" onclick="resetForm()" value="reset" class="btn btn-default">Cancel</button>
+                                                                <button type="submit" id="btsubmit" onclick="return memocreate()" class="btn btn-primary subleave">Submit</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                }
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $("#empcode").keypress(function (event) {
+        if (event.keyCode == 13) {
+            event.preventDefault();
+        }
+    });
+    $("#btnApplysearch").click(function () {
+
+        var lempid = $("#empcode").val();
+        if (lempid == "") {
+            showGlobalModal("I#Required#Please Enter EmpCode.");
+            $("#empcode").focus();
+            return false;
+        }
+        $("#shortname").val('');
+        $("#desigid").val('');
+        $("#branchid").val('');
+        $("#ControllingAuthority").val('');
+        //ajaxSpinnerShow();
+
+        $.ajax({
+
+            url: "/Memo/GetEmployeeData?empcode=" + lempid,
+            dataType: "Json",
+            cache: false,
+            success: function (response) {
+
+                if (response != null) {
+                    //ajaxSpinnerHide();
+                    var name = response.lshortnmaeAjax;
+                    $("#shortname").val(name);
+                    $("#desigid").val(response.ldesigAjax);
+                    $("#branchid").val(response.lbranchAjax);
+                    $("#SanctioningAuthority").val(response.lSanctioningAuthorityAjax);
+                    if (response.Status == "Notfound") {
+                        //ajaxSpinnerHide();
+                        showGlobalModal("I#Error#Employee doesn't exists.");
+                        $("#empcode").val('');
+                        $("#shortname").val(name);
+                        $("#desigid").val(response.ldesigAjax);
+                        $("#branchid").val(response.lbranchAjax);
+                        $("#ControllingAuthority").val(response.lcaajax);
+                    }
+                    else if (response.Status == "AlreadyRetired") {
+                        //ajaxSpinnerHide();
+                        showGlobalModal("I#Error#Employee is Retired.");
+                        $("#empcode").val('');
+                        $("#shortname").val(name);
+                        $("#desigid").val(response.ldesigAjax);
+                        $("#branchid").val(response.lbranchAjax);
+                        $("#ControllingAuthority").val(response.lcaajax);
+
+                    }
+
+
+                }
+                else {
+                    showGlobalModal("I#Error#Employee doesn't exists.");
+                    // alert("Something went wrong");
+                }
+            },
+        });
+
+
+    });
+</script>
+
+<script type="text/javascript">
+    idsearch();
+    function idsearch() {
+        var lempid = $("#empcode").val();
+        if (lempid == "") {
+            showGlobalModal("I#Required#Please Enter EmpCode.");
+            $("#empcode").focus();
+            return false;
+        }
+        else if (lempid != "") {
+            alert(lempid);
+            GetEmpData1();
+        }
+        function GetEmpData1() {
+            $.ajax({
+
+                url: "/Memo/GetEmployeeData?empcode=" + lempid,
+                dataType: "Json",
+                success: function (response) {
+
+                    if (response != null) {
+                        document.getElementById("formempId").value = lempid;
+                        document.getElementById("formempId1").value = lempid;
+                        document.getElementById("empName").value = response.lshortnmaeAjax;
+                        document.getElementById("desigid").value = response.ldesigAjax;
+                        document.getElementById("brDept").value = response.lbranchAjax;
+                        document.getElementById("TotalExperience").value = response.lTotalexpAjax;
+                        //document.getElementById("TotalCl").value = response.lcasual;
+                        //document.getElementById("TotalPl").value = response.lprivilege;
+
+                    }
+                    else {
+                        alert("Something went wrong");
+                    }
+                },
+            });
+        }
+
+    }
+
+  
+
+    $("#btnApplys").click(function () {
+
+        var lempid = $("#empcode").val();
+        if (lempid == "") {
+            showGlobalModal("I#Required#Please Enter EmpCode.");
+            $("#empcode").focus();
+            return false;
+        }
+        else if (lempid != "") {
+            alert(lempid);
+            GetEmpData();
+        }
+
+        function GetEmpData() {
+            $.ajax({
+
+                url: "/Memo/GetEmployeeData?empcode=" + lempid,
+                dataType: "Json",
+                success: function (response) {
+
+                    if (response != null) {
+                        document.getElementById("formempId").value = lempid;
+                        document.getElementById("formempId1").value = lempid;
+                        document.getElementById("empName").value = response.lshortnmaeAjax;
+                        document.getElementById("desigid").value = response.ldesigAjax;
+                        document.getElementById("brDept").value = response.lbranchAjax;
+                        document.getElementById("TotalExperience").value = response.lTotalexpAjax;
+                        //document.getElementById("TotalCl").value = response.lcasual;
+                        //document.getElementById("TotalPl").value = response.lprivilege;
+
+                    }
+                    else {
+                        alert("Something went wrong");
+                    }
+                },
+            });
+        }
+
+</script>
+
+<script>
+    var resetForm = function () {
+        $("#empcode").val('');
+        $("#shortname").val('');
+        $("#desigid").val('');
+        $("#branchid").val('');
+        $("#SanctioningAuthority").val('');
+        $("#Noofdays").val('');
+        $("#cDuedate").val('');
+        $("#Memodetails").val('');
+
+    }
+</script>
+<script>
+        var datealert = function ()
+        {
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+            var yyyy = today.getFullYear();
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }          
+            today = dd + '-' + mm + '-' + yyyy;
+            console.log(today);
+            var today1 = today.split(" ");
+            var today2 = today1[0];
+            var Duedate = document.getElementById('cDuedate').value.split(" ");            
+            var StartDate = today2;
+            var EndDate = Duedate[0];          
+            var date = moment(today2, "DD.MM.YYYY");
+            var Duedate1 = moment(Duedate, "DD.MM.YYYY");
+            var duration = moment.duration(date.diff(Duedate1));
+            console.log(duration);
+            if (duration > 0) {
+                alert("Please ensure that Explanation Due Date is greater than or equal to Today Date.");
+                document.getElementById("cDuedate").focus();
+                document.getElementById("cDuedate").value = '';
+                return false;
+
+            }
+            else {
+               
+                return true;
+
+            }
+        }
+      
+        
+</script>
+<script>
+    document.getElementById("a21").className = "active";
+
+</script>

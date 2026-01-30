@@ -1,0 +1,1901 @@
+﻿@model Entities.V_LeaveHistory
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.RolePages = TempData["RolePages"];
+    var rolepages = TempData["RolePages"].ToString();
+}
+@{
+    var message = TempData["cancel"] ?? string.Empty;
+}
+@{
+    var message1 = TempData["Forward"] ?? string.Empty;
+}
+@{
+    var message2 = TempData["Approve"] ?? string.Empty;
+}
+@{
+    var message3 = TempData["Denied"] ?? string.Empty;
+}
+<script type="text/javascript">
+    var message = '@message';
+    if (message) alert(message);
+</script>
+<script type="text/javascript">
+    var message1 = '@message1';
+    if (message1) alert(message1);
+</script>
+<script type="text/javascript">
+     var message2 = '@message2';
+     if (message2) alert(message2);
+</script>
+
+<script type="text/javascript">
+     var message3 = '@message3';
+     if (message3) alert(message3);
+</script>
+
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-heading">
+            @{
+                <ul class="nav nav-tabs">
+                    @if (rolepages.Contains("LVMLV"))
+                    {
+                        <li><a href=@Url.Action("LeaveRequest","LeaveApply")>Leave Apply</a></li>
+}
+                    @if (rolepages.Contains("LVELB"))
+                    {
+                        <li><a href=@Url.Action("LeaveBalance","LeaveBalance")>Emp Leave Balance</a></li>
+}
+                    @if (rolepages.Contains("LVLAP"))
+                    {
+                        <li class="active"><a href=@Url.Action("LeaveApproval", "LeaveApproval")>Leave Approvals</a></li>
+                        //<li><a href=@Url.Action("Leaveforemployee", "LeaveApply")>LeaveForEmployee</a></li>
+                    }
+                    @if (rolepages.Contains("LFPMain"))
+                    {
+                        <li><a href=@Url.Action("Leaveforemployee", "LeaveApply")>LeaveForEmployee</a></li>
+                    }
+                    @if (rolepages.Contains("LVMLA"))
+                    {
+                        <li><a href=@Url.Action("myleaveapproval", "Reports")>My Leave Approvals</a></li>
+}
+                </ul>
+            }
+        </div>
+    </div>
+</div>
+<div class="panel-body">
+    <div class="tab-content">
+        <div class="tab-pane fade  in active" id="tab2primary">
+            <div class="page_st">
+                <div class="page">
+                    <div class="col-md-12">
+                        <div class="main_heading">
+                            <h1>Leave Approvals List</h1>
+                            <div class="leaves_radiobtn leave_app_radio">
+                                <div class="form-horizontal">
+                                    <div class="col-md-4 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            @*<label class="col-sm-4 control-label"></label>*@
+                                            <div class="col-sm-8">
+                                                @Html.RadioButtonFor(model => model.Department, "HeadOffice", new { id = "C", onclick = "return pp()", @checked = "checked" })<label for="C" class="label_class">HeadOffice</label>
+
+                                                @Html.RadioButtonFor(model => model.Branch, "Branch", new { id = "D", onclick = "return pfp()" })<label for="D" class="label_class">Branch</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <div class="table-responsive">
+                                        <div class="branch_search">
+                                            <div class="col-sm-12">
+                                                <div class="form-horizontal">
+                                                    <div class="col-md-2 col-sm-3 col-xs-12 p-l">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-5 control-label label_left">EmpCode: </label>
+                                                            <div class="col-sm-7">
+                                                                @Html.EditorFor(model => model.EmployeeCode, new { htmlAttributes = new { @class = "form-control", maxlength = "10", onkeypress = "return isNumber(event)" } })
+                                                                @Html.ValidationMessageFor(model => model.EmployeeCode, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-sm-3 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-5 control-label p-l">Applied Date: </label>
+                                                            <div class="input-group date col-sm-7 p-l">
+                                                                <input type="text" id="ADate" class="form-control" onkeypress="return nokeyword(event)"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-sm-4 col-xs-12" id="branch">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">Branch: </label>
+                                                            <div class="col-sm-8">
+                                                                @Html.DropDownListFor(model => model.Branch, (SelectList)ViewBag.Branch, "Select", new { @class = "form-control" })
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-sm-3 col-xs-12" id="dept">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label p-l">Department:</label>
+                                                            <div class="col-sm-8">
+                                                                @Html.DropDownListFor(model => model.Department, ViewBag.Departments as SelectList, "Select", new { @class = "form-control" })
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-sm-4 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-5 control-label">Leave Type: </label>
+                                                            <div class="col-sm-7">
+                                                                @Html.DropDownListFor(model => model.LeaveType, (SelectList)ViewBag.LeaveTypes1, "Select Type", new { @class = "form-control" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <div class="form-group">
+                                                            <button type="button" id="btnApply1" class="btn btn-primary btn-sm pull-right">Search</button>
+
+                                                        </div>
+                                                    </div>
+                                                    <div id="myModal" class="modal" style="z-index: 9999999999;">
+
+                                                        <!-- Modal content -->
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="submit" id="btnclosepop" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                                <h4 class="modal-title">Leave Approval</h4>
+                                                            </div>
+
+                                                            <table id="myTextArea" style="margin: 25px auto;width: 92%;"></table>
+                                                            <table id="Reasontbl" style="margin: 25px auto;width: 92%;">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <label class="control-label">Cancel/Deny Reason: </label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div>
+                                                                                <textarea class="form-control" rows="4" id="ReasonCodepop" name="Reason" value=""></textarea>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            <div class="modal-footer">
+                                                                <button type="submit" id="btnPreviouspopup" class="btn btn-default leaveprev">Previous</button>
+                                                                <button style="margin: 0 6px 0 6px;" type="submit" id="btnApprovalspopup" class="btn btn-primary leaveapprove">Approve</button>
+                                                                <button type="submit" id="btncancelApprovalpopup" class="btn btn-danger leavecancel">Cancel</button>
+                                                                <button type="submit" id="btnDenyApprovalpopup" class="btn btn-default leaveDeny">Deny</button>
+                                                                <button type="submit" id="btnNextpopup" class="btn btn-default leavenext">Next</button>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div id="gridControlling"></div>
+                                                    <div class="col-md-12">
+                                                        <br /><br />
+                                                        <div class="row">
+                                                            <div class="col-md-5 pull-right">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label label_left">Cancel/Deny Reason: </label>
+                                                                    <div class="col-sm-7 p0">
+                                                                        <textarea class="form-control" cols="40" rows="5" id="ReasonCode" name="Reason" value=""></textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="export_btn buttons_div">
+                                                                @*<input type="button" class="btn btn-info" value="Export to Excel" id='excelExport' />*@
+                                                                <input type="button" class="btn btn-info" value="Export to Excel" id='exceltoExport' />
+                                                            </div>
+
+                                                            <div class="pull-right m_15">
+                                                                <button style="margin: 0 6px 0 6px;" type="submit" id="btnApprovals" class="btn btn-primary leaveapprove">Approve</button>
+                                                                <button type="submit" id="btncancelApproval" class="btn btn-danger leavecancel">Cancel</button>
+                                                                <button type="submit" id="btnDenyApproval" class="btn btn-default leaveDeny">Deny</button>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div id="pagenation" style="visibility:hidden"></div>
+<input id="currentpos" type="hidden" />
+
+<script>
+    // Get the modal
+    var modal = document.getElementById('myModal');
+
+</script>
+
+
+<style>
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+    .modal-content {
+        margin: auto;
+        padding: 0px;
+        border: 1px solid rgb(136, 136, 136);
+        width: 50%;
+        z-index: 99999999999;
+        left: 25%;
+        background: rgb(219, 238, 247);
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+    .modal-header {
+        min-height: 16.42857143px;
+        padding: 13px;
+        border-bottom: 1px solid rgb(221, 221, 221);
+        background: rgba(60, 141, 188, 0.4);
+    }
+
+        .modal-header h4 {
+            font-size: 18px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgb(255, 255, 255);
+        }
+
+    #myTextArea td {
+        border: 1px solid #c2c2c2;
+        padding: 3px 5px 3px 5px;
+    }
+
+    .modal-header .close {
+        margin-top: -2px;
+        color: rgb(0, 0, 0);
+        opacity: 4;
+        /* background: rgb(0, 0, 0); */
+    }
+</style>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        document.getElementById('C').checked = true;
+        document.getElementById('D').checked = false;
+
+        $("#branch").hide();
+        $("#dept").show();
+
+        $(function () {
+            $('.input-group.date').datepicker({
+                calendarWeeks: true,
+                todayHighlight: true,
+                autoclose: true,
+                daysOfWeekDisabled: [0, 6]
+            });
+        });
+
+        $("#gridControlling").jqxGrid('selectrow', 0);
+        $("#gridControlling").jqxGrid('selectrow', 1);
+        // prepare the data for BankView
+        var theme = otherTheme;
+        // prepare the data
+        var url = "../LeaveApproval/LeaveApprovalViews";
+        var source =
+        {
+            type: "Get",
+            datatype: "json",
+            datafields: [
+                { name: 'available', type: 'bool' },
+                { name: 'Id', type: 'string' },
+                { name: 'EmpId', type: 'string' },
+                { name: 'designation', type: 'string' },
+                { name: 'ShortName', type: 'string' },
+                { name: 'AppliedDate', type: 'date' },
+                { name: 'Deptbranch', type: 'string' },
+                { name: 'StartDate', type: 'date' },
+                { name: 'EndDate', type: 'date' },
+                { name: 'LeaveDays', type: 'int' },
+                { name: 'Code', type: 'string' },
+                { name: 'Reason', type: 'string' },
+                { name: 'Status', type: 'string' },
+            ],
+            async: false,
+            url: url,
+            data: {
+                featureClass: "P",
+                style: "full",
+                username: "jqwidgets"
+            }
+        };
+        var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties, rowdata) {
+            if (value == "Pending") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #FFA500;">' + value + '</span>';
+            }
+            else if (value == "Forwarded") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #33b5e5;">' + value + '</span>';
+            }
+            else if (value == "Approved") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #00C851;">' + value + '</span>';
+            }
+            else if (value == "Denied") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #8B008B;">' + value + '</span>';
+            }
+            else {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #ff4444;">' + value + '</span>';
+            }
+        }
+        var dataAdapter = new $.jqx.dataAdapter(source,
+            {
+                formatData: function (data) {
+                    data.ProductName = $("#searchField").val();
+                    return data;
+                }
+            }
+        );
+        // initialize jqxGrid
+        var editrowindex = -1;
+        var delrowindex = -1;
+        $("#gridControlling").jqxGrid(
+            {
+                width: '100%',
+                source: dataAdapter,
+                theme: otherTheme,// for theme refernce go to Layout.cshtml
+                autoheight: true,
+                sortable: true,
+                pageable: true,
+                columnsResize: true,
+                altRows: true,
+                filterable: true,
+                autoshowfiltericon: true,
+                editable: true,
+                selectionmode: 'multiplerows',
+
+                ready: function () {
+                    $("#gridControlling").jqxGrid('localizestrings', localizationObject);
+                },
+                updatefilterconditions: function (type, defaultconditions) {
+                    switch (type) {
+                        case 'stringfilter':
+                            return stringcomparisonoperators;
+                        case 'numericfilter':
+                            return numericcomparisonoperators;
+                        case 'datefilter':
+                            return datecomparisonoperators;
+                        case 'booleanfilter':
+                            return booleancomparisonoperators;
+                    }
+                },
+                updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                    filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                    var index1 = 0;
+                    var index2 = 0;
+                    if (columnfilter != null) {
+                        var filter1 = columnfilter.getfilterat(0);
+                        var filter2 = columnfilter.getfilterat(1);
+                        if (filter1) {
+                            index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                            var value1 = filter1.filtervalue;
+                            filterinputfield1.val(value1);
+                        }
+                        if (filter2) {
+                            index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                            var value2 = filter2.filtervalue;
+                            filterinputfield2.val(value2);
+                        }
+                    }
+                    filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                    filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+
+                },
+                columns: [
+                    {
+                        text: '', menu: false, sortable: false,
+                        datafield: 'available', columntype: 'checkbox', width: 40,
+                        renderer: function () {
+                            return '<div style="margin-left: 10px; margin-top: 5px;"></div>';
+                        },
+                        rendered: function (element) {
+                            $(element).jqxCheckBox({ theme: theme, width: 16, height: 16, animationShowDelay: 0, animationHideDelay: 0 });
+                            columnCheckBox = $(element);
+                            $(element).on('change', function (event) {
+                                debugger;
+                                var checked = event.args.checked;
+                                var pageinfo = $("#gridControlling").jqxGrid('getpaginginformation');
+                                var pagenum = pageinfo.pagenum;
+                                var pagesize = pageinfo.pagesize;
+                                //if (checked == null || updatingCheckState) return;
+                                //$("#gridControlling").jqxGrid('beginupdate');
+
+                                // select all rows when the column's checkbox is checked.
+                                if (checked == true) {
+                                    $("#gridControlling").jqxGrid('selectallrows');
+                                }
+                                // unselect all rows when the column's checkbox is checked.
+                                else if (checked == false) {
+                                    $("#gridControlling").jqxGrid('clearselection');
+                                }
+
+                                // update cells values.
+                                var startrow = pagenum * pagesize;
+                                for (var i = startrow; i < startrow + pagesize; i++) {
+                                    // The bound index represents the row's unique index.
+                                    // Ex: If you have rows A, B and C with bound indexes 0, 1 and 2, afer sorting, the Grid will display C, B, A i.e the C's bound index will be 2, but its visible index will be 0.
+                                    // The code below gets the bound index of the displayed row and updates the value of the row's available column.
+                                    var boundindex = $("#gridControlling").jqxGrid('getrowboundindex', i);
+                                    $("#gridControlling").jqxGrid('setcellvalue', boundindex, 'available', event.args.checked);
+                                }
+
+                                $("#gridControlling").jqxGrid('endupdate');
+                            });
+                            return true;
+                        }
+                    },
+                    //{ text: 'Action', datafield: 'available', exportable: false, columntype: 'checkbox', width: 50, sortable: false },
+                    { text: 'Leave Id', groupable: true, datafield: 'Id', editable: false, width: 90, hidden: true, sortable: false },
+                    { text: 'Emp Code', groupable: true, datafield: 'EmpId', editable: false, width: 75, sortable: false },
+                    { text: "Employee Name", datafield: "ShortName", editable: false, width: 120, sortable: false },
+                    { text: "Designation", datafield: "designation", editable: false, width: 85, sortable: false },
+                    { text: "Applied Date", datafield: "AppliedDate", editable: false, width: 90, cellsformat: 'dd/MM/yyyy', sortable: false },
+                    { text: "Department / Branch", datafield: "Deptbranch", editable: false, width: 140, sortable: false },
+                    { text: "Start Date", datafield: "StartDate", editable: false, width: 88, cellsformat: 'dd/MM/yyyy', sortable: false },
+                    { text: "End Date", datafield: "EndDate", editable: false, width: 88, cellsformat: 'dd/MM/yyyy', sortable: false },
+                    { text: "Leaves", datafield: "LeaveDays", editable: false, width: 65, sortable: false },
+                    { text: "Leave Type", datafield: "Code", editable: false, width: 80, sortable: false },
+                    { text: "Reason", datafield: "Reason", editable: false, width: 100, sortable: false },
+                    { text: "Status", datafield: "Status", editable: false, cellsrenderer: cellsrenderer, width: 100, sortable: false }
+
+                ],
+                columngroups:
+                    [
+                        { text: 'Action', align: 'center', name: 'Actions', width: 160 },
+                    ],
+
+
+            });
+
+        $("#gridControlling").on("rowselect", function (event) {
+            var rowindex = $('#gridControlling').jqxGrid('getselectedrowindex');
+            // var selectedrowindex = $(“#admission_grid_fees”).jqxGrid(‘getselectedrowindex’);
+            var args = event.args;
+            var value, row;
+            row = args.rowindex;
+            var rows = $('#gridControlling').jqxGrid('getrows');
+            var rowlength = $('#gridControlling').jqxGrid('getrows').length;
+            if (rowlength <= 1) {
+                document.getElementById('btnPreviouspopup').style.display = 'none';
+                document.getElementById('btnNextpopup').style.display = 'none';
+            }
+            // console.log(row);
+            // console.log(rows);
+            // console.log(rows[row]);
+            if (rows[row] == undefined) {
+
+                for (var p = 0; p < rows.length; p++) {
+
+                    if (parseInt(rows[p].dataindex) == parseInt(row)) {
+
+                        value = rows[p].Id;
+                        row = p;
+
+                    }
+                }
+            }
+            else {
+                var filter = $("#gridControlling").jqxGrid('getfilterinformation');
+                if (filter.length == 0) {
+                    value = rows[row].Id;
+                }
+                else {
+                    for (var p = 0; p < rows.length; p++) {
+
+                        if (parseInt(rows[p].dataindex) == parseInt(row)) {
+
+                            value = rows[p].Id;
+                            row = p;
+
+                        }
+                    }
+                }
+
+            }
+            document.getElementById("currentpos").value = row;
+            var string = "";
+            for (var i = 0; i < rows.length; i++) {
+                string += "<input type='text' id='" + i + "' value='" + rows[i].Id + "'/>";
+            }
+            document.getElementById("pagenation").innerHTML = string;
+            $('.leavenext').attr("disabled", false);
+            $('.leaveprev').attr("disabled", false);
+            $.ajax({
+                url: 'Tooltip?Empid=' + value,
+                Type: 'Get',
+                dataType: 'json',
+                success: function (response) {
+                    if (response != null) {
+                        if (!rows[row].available) {
+                            modal.style.display = "block";
+
+                        }
+
+                        var dateString = response.lstartdate.substr(6);
+                        var currentTime = new Date(parseInt(dateString));
+                        var month = currentTime.getMonth() + 1;
+                        var day = currentTime.getDate();
+                        var year = currentTime.getFullYear();
+                        var sdate = day + "-" + month + "-" + year;
+                        var dateString1 = response.lenddate.substr(6);
+                        var currentTime1 = new Date(parseInt(dateString1));
+                        var month1 = currentTime1.getMonth() + 1;
+                        var day1 = currentTime1.getDate();
+                        var year1 = currentTime1.getFullYear();
+                        var edate = day1 + "-" + month1 + "-" + year1;
+                        var text =
+                            "<tr><td>EmployeeId:</td><td>" + " " + " " + response.lEmployeeId
+                            + "</td></tr> <tr><td> EmployeeName:</td><td>" + " " + " " + response.lEmployeeName
+                            + "</td></tr> <tr><td> Designation:</td><td>" + " " + " "
+                            + response.ldesig + "</td></tr><tr><td> Branch/Dept:</td><td>" + " " + " " + response.ldeptbranch + "</td></tr>"
+                            + "</td></tr><tr><td> StartDate:</td><td>" + " " + " " + sdate + "</td></tr>"
+                            + "</td></tr><tr><td> EndDate:</td><td>" + " " + " " + edate + "</td></tr>"
+                            + "</td></tr><tr><td> Days:</td><td>" + " " + " " + response.lDays + "</td></tr>"
+                            + "</td></tr><tr><td> LeaveType:</td><td>" + " " + " " + response.LeaveType + "</td></tr>"
+                            + "</td></tr><tr><td> Reason:</td><td>" + " " + " " + response.Reason + "</td></tr>"
+                            + "</td></tr><tr><td> Status:</td><td>" + " " + " " + response.Status + "</td></tr>";
+                        document.getElementById("myTextArea").innerHTML = text;
+
+                    }
+
+                },
+            });
+
+        });
+
+
+        //$("#excelExport").jqxButton();
+        //$("#excelExport").click(function () {
+        //    $("#gridControlling").jqxGrid('exportdata', 'xls', 'LeaveApprovals');
+        });
+        $("#gridControlling").bind('cellendedit', function (event) {
+            if (event.args.value) {
+                $("#gridControlling").jqxGrid('selectrow', event.args.rowindex);
+
+
+            }
+            else {
+                $("#gridControlling").jqxGrid('unselectrow', event.args.rowindex);
+            }
+        });
+        $("#btnApprovals").click(function () {
+            debugger;
+            var rows = $("#gridControlling").jqxGrid('selectedrowindexes');
+            var myArray = new Array();
+            var names = '';
+            var types = '';
+            var ids = '';
+            var allRows = $("#gridControlling").jqxGrid('getrows');
+            for (var i = 0; i < allRows.length; i++) {
+                if (allRows[i].available == true) {
+                    myArray[myArray.length] = allRows
+                    names = names + allRows[i].EmpId + ',';
+                    types = types + allRows[i].Code + ',';
+                    ids = ids + allRows[i].Id + ',';
+                }
+            };
+            if (myArray == '' || myArray == null) {
+                alert("Please select checkbox");
+                //window.location.reload();
+            }
+
+            else {
+                $('.leaveapprove').attr("disabled", true);
+                $.ajax({
+                    type: "Post",
+                    url: "/LeaveApproval/LeaveApprovalViews?EmployeeCodey=" + names + "&leaveTypes=" + types + "&LeaveIds=" + ids,
+                    dataType: "Json",
+                    success: function (response) {
+                        if (response != null) {
+                            window.location.reload();
+
+                        }
+                        else {
+
+
+                        }
+                    },
+                });
+
+            }
+
+        });
+
+        $("#btncancelApproval").click(function () {
+            var rows = $("#gridControlling").jqxGrid('selectedrowindexes');
+            var myArray = new Array();
+            var names = '';
+            var types = '';
+            var ids = '';
+            var reason = $("#ReasonCode").val();
+            var allRows = $("#gridControlling").jqxGrid('getrows');
+            for (var i = 0; i < allRows.length; i++) {
+                if (allRows[i].available == true) {
+                    myArray[myArray.length] = allRows
+                    names = names + allRows[i].EmpId + ',';
+                    types = types + allRows[i].Code + ',';
+                    ids = ids + allRows[i].Id + ',';
+                }
+            };
+            if (reason == '' || reason == null) {
+                alert("Please Enter Cancel Reason");
+                return false;
+            }
+            if (myArray == '' || myArray == null) {
+                alert("Please select checkbox");
+                //window.location.reload();
+            }
+            else {
+                $('.leavecancel').attr("disabled", true);
+                $.ajax({
+                    type: "Post",
+                    url: "/LeaveApproval/Cancel?EmployeeCodey=" + names + "&leaveTypes=" + types + "&LeaveIds=" + ids + "&Reason=" + reason,
+                    dataType: "Json",
+                    success: function (response) {
+                        if (response != null) {
+                            window.location.reload();
+
+                        }
+                        else {
+                            // alert("Something went wrong");
+                        }
+                    },
+                });
+
+            }
+        });
+
+
+
+        $("#btnDenyApproval").click(function () {
+            debugger;
+            var rows = $("#gridControlling").jqxGrid('selectedrowindexes');
+            var myArray = new Array();
+            var names = '';
+            var types = '';
+            var ids = '';
+            var reason = $("#ReasonCode").val();
+            var allRows = $("#gridControlling").jqxGrid('getrows');
+            for (var i = 0; i < allRows.length; i++) {
+                if (allRows[i].available == true) {
+                    myArray[myArray.length] = allRows;
+                    names = names + allRows[i].EmpId + ',';
+                    types = types + allRows[i].Code + ',';
+                    ids = ids + allRows[i].Id + ',';
+                }
+            };
+            if (reason == '' || reason == null) {
+                alert("Please Enter Deny Reason");
+                return false;
+            }
+            if (myArray == '' || myArray == null) {
+                alert("Please select checkbox");
+                //window.location.reload();
+            }
+            else {
+                $('.leaveDeny').attr("disabled", true);
+                $.ajax({
+                    type: "Post",
+                    url: "/LeaveApproval/Deny?EmployeeCodey=" + names + "&leaveTypes=" + types + "&LeaveIds=" + ids + "&Reason=" + reason,
+                    dataType: "Json",
+                    success: function (response) {
+                        if (response != null) {
+                            window.location.reload();
+
+                        }
+                        else {
+                            // alert("Something went wrong");
+                        }
+                    },
+                });
+
+            }
+        });
+        $("#btnclosepop").click(function () {
+            modal.style.display = "none";
+            document.getElementById("pagenation").innerHTML = '';
+        });
+    $("#btnDenyApprovalpopup").click(function () {
+        debugger;
+        var rows = $("#gridControlling").jqxGrid('selectedrowindexes');
+        var lval = document.getElementById("currentpos").value;
+        var reason = $("#ReasonCodepop").val();
+        if (reason == '' || reason == null) {
+            alert("Please Enter Deny Reason");
+            return false;
+        }
+
+        if (rows == '' || rows == null) {
+            alert("Please select checkbox");
+            // window.location.reload();
+        }
+        else {
+            var selectedRecords = new Array();
+            var names = '';
+            var types = '';
+            var ids = '';
+            //for (var m = lval; m < rows.length; m++) {
+            var row = $("#gridControlling").jqxGrid('getrowdata', lval);
+            selectedRecords[selectedRecords.length] = row;
+            if (row == undefined) {
+                window.alert("There is no Data. Please Click on Previous button to get Data.");
+            }
+            else {
+                names = names + row.EmpId + ',';
+                types = types + row.Code + ',';
+                ids = ids + row.Id + ',';
+                $('.leaveDeny').attr("disabled", true);
+                //}
+
+                $.ajax({
+                    type: "Post",
+                    url: "/LeaveApproval/Deny?EmployeeCodey=" + names + "&leaveTypes=" + types + "&LeaveIds=" + ids + "&Reason=" + reason,
+                    dataType: "Json",
+                    success: function (response) {
+                        if (response != null) {
+                            window.location.reload();
+
+                        }
+                        else {
+                            // alert("Something went wrong");
+                        }
+                    },
+                });
+            }
+        }
+    });
+    $("#btnApprovalspopup").click(function () {
+        debugger;
+        var rows = $("#gridControlling").jqxGrid('selectedrowindexes');
+        var lval = document.getElementById("currentpos").value;
+        if (rows == '' || rows == null) {
+            alert("Please select checkbox");
+            //window.location.reload();
+        }
+        else {
+
+            var selectedRecords = new Array();
+            var names = '';
+            var types = '';
+            var ids = '';
+            //for (var m = lval; m < rows.length; m++) {
+            var row = $("#gridControlling").jqxGrid('getrowdata', lval);
+            selectedRecords[selectedRecords.length] = row;
+            if (row == undefined) {
+                window.alert("There is no Data. Please Click on Previous button to get Data.");
+            }
+            else {
+                names = names + row.EmpId + ',';
+                types = types + row.Code + ',';
+                ids = ids + row.Id + ',';
+                $('.leaveapprove').attr("disabled", true);
+
+                //}
+                $.ajax({
+                    type: "Post",
+                    url: "/LeaveApproval/LeaveApprovalViews?EmployeeCodey=" + names + "&leaveTypes=" + types + "&LeaveIds=" + ids,
+                    dataType: "Json",
+                    success: function (response) {
+                        if (response != null) {
+                            window.location.reload();
+
+                        }
+                        else {
+                            // alert("Something went wrong");
+                        }
+                    },
+                });
+            }
+        }
+    });
+    $("#btncancelApprovalpopup").click(function () {
+        debugger;
+        var rows = $("#gridControlling").jqxGrid('selectedrowindexes');
+        var lval = document.getElementById("currentpos").value;
+        var reason = $("#ReasonCodepop").val();
+        if (reason == '' || reason == null) {
+            alert("Please Enter Cancel Reason");
+            return false;
+        }
+        if (rows == '' || rows == null) {
+            alert("Please select checkbox");
+            // window.location.reload();
+        }
+        else {
+            var selectedRecords = new Array();
+            var names = '';
+            var types = '';
+            var ids = '';
+            //for (var m = 0; m < rows.length; m++) {
+            var row = $("#gridControlling").jqxGrid('getrowdata', lval);
+            selectedRecords[selectedRecords.length] = row;
+            if (row == undefined) {
+                window.alert("There is no Data. Please Click on Previous button to get Data.");
+            }
+            else {
+                names = names + row.EmpId + ',';
+                types = types + row.Code + ',';
+                ids = ids + row.Id + ',';
+                $('.leavecancel').attr("disabled", true);
+                //}
+
+                $.ajax({
+                    type: "Post",
+                    url: "/LeaveApproval/Cancel?EmployeeCodey=" + names + "&leaveTypes=" + types + "&LeaveIds=" + ids + "&Reason=" + reason,
+                    dataType: "Json",
+                    success: function (response) {
+                        if (response != null) {
+                            window.location.reload();
+
+                        }
+                        else {
+                            // alert("Something went wrong");
+                        }
+                    },
+                });
+
+            }
+        }
+    });
+
+    $("#btnNextpopup").click(function () {
+        var rows = $('#gridControlling').jqxGrid('getrows');
+        var prev;
+        var lss;
+        var lval = document.getElementById("currentpos").value - 1;
+        if (lval < rows) {
+            lss = 0;
+        }
+        else {
+            lss = 1;
+        }
+        var next = parseInt(document.getElementById("currentpos").value) + parseInt(lss);
+        document.getElementById("currentpos").value = next;
+        var rows = $('#gridControlling').jqxGrid('getrows');
+        var lcount = rows.length;
+        if (next != lcount) {
+
+            $('.leaveprev').attr("disabled", false);
+            var ss = document.getElementById(next).value;
+            var value = ss;
+            $.ajax({
+                url: 'Nexttip?Empid=' + value,
+                Type: 'Get',
+                dataType: 'json',
+                success: function (response) {
+                    if (response != null) {
+                        var dateString = response.lstartdate.substr(6);
+                        var currentTime = new Date(parseInt(dateString));
+                        var month = currentTime.getMonth() + 1;
+                        var day = currentTime.getDate();
+                        var year = currentTime.getFullYear();
+                        var sdate = day + "-" + month + "-" + year;
+                        var dateString1 = response.lenddate.substr(6);
+                        var currentTime1 = new Date(parseInt(dateString1));
+                        var month1 = currentTime1.getMonth() + 1;
+                        var day1 = currentTime1.getDate();
+                        var year1 = currentTime1.getFullYear();
+                        var edate = day1 + "-" + month1 + "-" + year1;
+                        var text = "<tr><td>EmployeeId:</td><td>" + " " + " " + response.lEmployeeId
+                            + "</td></tr> <tr><td> EmployeeName:</td><td>" + " " + " " + response.lEmployeeName
+                            + "</td></tr> <tr><td> Designation:</td><td>" + " " + " "
+                            + response.ldesig + "</td></tr><tr><td> Branch/Dept:</td><td>" + " " + " " + response.ldeptbranch + "</td></tr>"
+                            + "</td></tr><tr><td> StartDate:</td><td>" + " " + " " + sdate + "</td></tr>"
+                            + "</td></tr><tr><td> EndDate:</td><td>" + " " + " " + edate + "</td></tr>"
+                            + "</td></tr><tr><td> Days:</td><td>" + " " + " " + response.lDays + "</td></tr>"
+                            + "</td></tr><tr><td> LeaveType:</td><td>" + " " + " " + response.LeaveType + "</td></tr>"
+                            + "</td></tr><tr><td> Reason:</td><td>" + " " + " " + response.Reason + "</td></tr>"
+                            + "</td></tr><tr><td> Status:</td><td>" + " " + " " + response.Status + "</td></tr>";
+
+                        document.getElementById("myTextArea").innerHTML = text;
+                        // next button
+                        if (next == lcount - 1) {
+                            $('.leavenext').attr("disabled", true);
+                        }
+                    }
+
+                },
+            });
+        }
+        else {
+            $('.leavenext').attr("disabled", true);
+            //var text = "<tr><td>EmployeeId:</td><td>" + " " + " "
+            //    + "</td></tr> <tr><td> EmployeeName:</td><td>" + " " + " "
+            //    + "</td></tr> <tr><td> Designation:</td><td>" + " " + " "
+            //    + "</td></tr><tr><td> Branch/Dept:</td><td>" + " " + " "  + "</td></tr>"
+            //    + "</td></tr><tr><td> StartDate:</td><td>" + " " + " "  + "</td></tr>"
+            //    + "</td></tr><tr><td> EndDate:</td><td>" + " " + " "  + "</td></tr>"
+            //    + "</td></tr><tr><td> Days:</td><td>" + " " + " "  + "</td></tr>"
+            //    + "</td></tr><tr><td> LeaveType:</td><td>" + " " + " "  + "</td></tr>"
+            //    + "</td></tr><tr><td> Reason:</td><td>" + " " + " "  + "</td></tr>"
+            //    + "</td></tr><tr><td> Status:</td><td>" + " " + " "  + "</td></tr>";
+
+            //document.getElementById("myTextArea").innerHTML = text;
+        }
+    });
+
+    $("#btnPreviouspopup").click(function () {
+
+        var rows = $('#gridControlling').jqxGrid('getrows');
+        var prev;
+        var lss;
+        var lval = document.getElementById("currentpos").value - 1;
+        if (lval < rows) {
+            lss = 0;
+        }
+        else {
+            lss = 1;
+        }
+        prev = parseInt(document.getElementById("currentpos").value) - parseInt(lss);
+        document.getElementById("currentpos").value = prev;
+        var lcount = rows.length;
+        if (prev == -1) {
+            document.getElementById("currentpos").value = 0;
+            $('.leaveprev').attr("disabled", true);
+        }
+        else if (prev <= lcount) {
+            $('.leavenext').attr("disabled", false);
+            var ss = document.getElementById(prev).value;
+            var value = ss;
+            $.ajax({
+                url: 'Previoustip?Empid=' + value,
+                Type: 'Get',
+                dataType: 'json',
+                success: function (response) {
+                    if (response != null) {
+                        var dateString = response.lstartdate.substr(6);
+                        var currentTime = new Date(parseInt(dateString));
+                        var month = currentTime.getMonth() + 1;
+                        var day = currentTime.getDate();
+                        var year = currentTime.getFullYear();
+                        var sdate = day + "-" + month + "-" + year;
+                        var dateString1 = response.lenddate.substr(6);
+                        var currentTime1 = new Date(parseInt(dateString1));
+                        var month1 = currentTime1.getMonth() + 1;
+                        var day1 = currentTime1.getDate();
+                        var year1 = currentTime1.getFullYear();
+                        var edate = day1 + "-" + month1 + "-" + year1;
+                        var text = "<tr><td>EmployeeId:</td><td>" + " " + " " + response.lEmployeeId
+                            + "</td></tr> <tr><td> EmployeeName:</td><td>" + " " + " " + response.lEmployeeName
+                            + "</td></tr> <tr><td> Designation:</td><td>" + " " + " "
+                            + response.ldesig + "</td></tr><tr><td> Branch/Dept:</td><td>" + " " + " " + response.ldeptbranch + "</td></tr>"
+                            + "</td></tr><tr><td> StartDate:</td><td>" + " " + " " + sdate + "</td></tr>"
+                            + "</td></tr><tr><td> EndDate:</td><td>" + " " + " " + edate + "</td></tr>"
+                            + "</td></tr><tr><td> Days:</td><td>" + " " + " " + response.lDays + "</td></tr>"
+                            + "</td></tr><tr><td> LeaveType:</td><td>" + " " + " " + response.LeaveType + "</td></tr>"
+                            + "</td></tr><tr><td> Reason:</td><td>" + " " + " " + response.Reason + "</td></tr>"
+                            + "</td></tr><tr><td> Status:</td><td>" + " " + " " + response.Status + "</td></tr>";
+
+                        document.getElementById("myTextArea").innerHTML = text;
+                    }
+
+                },
+            });
+        }
+        else {
+            $('.leaveprev').attr("disabled", true);
+        }
+
+
+    });
+
+</script>
+<script type="text/javascript">
+    $(function () {
+        $("#btnApply1").click(function () {
+            ajaxSpinnerShow();
+
+            var employeecode = $("#EmployeeCode").val();
+            var branch = $("#Branch").val();
+            var department = $("#Department").val();
+            var Applieddate = $("#ADate").val();
+            var firstname = $("#FirstName").val();
+            var lastName = $("#LastName").val();
+            //var enddate = $("#EDate").val();
+            var leavetype = $("#LeaveType").val();
+            var startdate = $("#SDate").val();
+            var enddate = $("#EDate").val();
+            if ($('#C').attr("checked") == "checked") {
+                var brdept = 'HeadOffice';
+            }
+            else {
+                var brdept = 'Branch';
+            }
+            // prepare the data
+            var source =
+            {
+                type: "Post",
+                datatype: "json",
+                datafields: [
+                    { name: 'available', type: 'bool' },
+                    { name: 'Id', type: 'string' },
+                    { name: 'EmpId', type: 'string' },
+                    { name: 'designation', type: 'string' },
+                    { name: 'ShortName', type: 'string' },
+                    { name: 'AppliedDate', type: 'date' },
+                    { name: 'Deptbranch', type: 'string' },
+                    { name: 'StartDate', type: 'date' },
+                    { name: 'EndDate', type: 'date' },
+                    { name: 'LeaveDays', type: 'int' },
+                    { name: 'Code', type: 'string' },
+                    { name: 'Reason', type: 'string' },
+                    { name: 'Status', type: 'string' },
+
+                ],
+                async: false,
+                url: "/LeaveApproval/LeaveApprovalSearch?EmployeeCode=" + employeecode + "&FirstName=" + firstname + "&LastName=" + lastName + +  "&Branch=" + branch + "&Department=" + department + "&FromDate=" + startdate + "&ToDate=" + enddate + "&ADate=" + Applieddate + "&LeaveType=" + leavetype + "&radio=" + brdept,
+                data: {
+                    featureClass: "P",
+                    style: "full",
+                    username: "jqwidgets",
+                    EmployeeCode: employeecode,
+                    FirstName: firstname,
+                    LastName: lastName,
+                    Branch: branch,
+                    Department: department,
+                    FromDate: startdate,
+                    ToDate: enddate,
+                    LeaveType: leavetype,
+                    radio: brdept,
+                    ADate: Applieddate
+                },
+                loadComplete: function () {
+                    ajaxSpinnerHide();
+                }
+            };
+            var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties, rowdata) {
+                if (value == "Pending") {
+                    return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #FFA500;">' + value + '</span>';
+                }
+                else if (value == "Forwarded") {
+                    return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #33b5e5;">' + value + '</span>';
+                }
+                else if (value == "Approved") {
+                    return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #00C851;">' + value + '</span>';
+                }
+                else if (value == "Denied") {
+                    return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #8B008B;">' + value + '</span>';
+                }
+                else {
+                    return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #ff4444;">' + value + '</span>';
+                }
+            }
+            var dataAdapter = new $.jqx.dataAdapter(source,
+                {
+                    formatData: function (data) {
+                        data.ProductName = $("#searchField").val();
+                        return data;
+                    }
+                }
+            );
+            // initialize jqxGrid
+            var editrowindex = -1;
+            var delrowindex = -1;
+            $("#gridControlling").jqxGrid(
+                {
+                    width: '100%',
+                    source: dataAdapter,
+                    theme: otherTheme,// for theme refernce go to Layout.cshtml
+                    autoheight: true,
+                    sortable: true,
+                    pageable: true,
+                    columnsResize: true,
+                    altRows: true,
+                    filterable: true,
+                    autoshowfiltericon: true,
+
+                    ready: function () {
+                        $("#gridControlling").jqxGrid('localizestrings', localizationObject);
+                    },
+                    updatefilterconditions: function (type, defaultconditions) {
+                        switch (type) {
+                            case 'stringfilter':
+                                return stringcomparisonoperators;
+                            case 'numericfilter':
+                                return numericcomparisonoperators;
+                            case 'datefilter':
+                                return datecomparisonoperators;
+                            case 'booleanfilter':
+                                return booleancomparisonoperators;
+                        }
+                    },
+                    updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                        filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                        var index1 = 0;
+                        var index2 = 0;
+                        if (columnfilter != null) {
+                            var filter1 = columnfilter.getfilterat(0);
+                            var filter2 = columnfilter.getfilterat(1);
+                            if (filter1) {
+                                index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                                var value1 = filter1.filtervalue;
+                                filterinputfield1.val(value1);
+                            }
+                            if (filter2) {
+                                index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                                var value2 = filter2.filtervalue;
+                                filterinputfield2.val(value2);
+                            }
+                        }
+                        filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                        filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                    },
+                    columns: [
+                        { text: 'Action', datafield: 'available', exportable: false, columntype: 'checkbox', sortable: false, width: 50 },
+                        { text: 'Leave Id', groupable: true, datafield: 'Id', editable: false, width: 90, sortable: false, hidden: true },
+                        { text: 'Emp Code', groupable: true, datafield: 'EmpId', editable: false, sortable: false, width: 75 },
+                        { text: "Employee Name", datafield: "ShortName", editable: false, sortable: false, width: 120 },
+                        { text: "Designation", datafield: "designation", editable: false, sortable: false, width: 85 },
+                        { text: "Applied Date", datafield: "AppliedDate", editable: false, width: 90, sortable: false, cellsformat: 'dd/MM/yyyy' },
+                        { text: "Department/Branch", datafield: "Deptbranch", editable: false, sortable: false, width: 140 },
+                        { text: "Start Date", datafield: "StartDate", editable: false, sortable: false, width: 88, cellsformat: 'dd/MM/yyyy' },
+                        { text: "End Date", datafield: "EndDate", editable: false, sortable: false, width: 88, cellsformat: 'dd/MM/yyyy' },
+                        { text: "Leaves", datafield: "LeaveDays", editable: false, sortable: false, width: 65 },
+                        { text: "Leave Type", datafield: "Code", editable: false, sortable: false, width: 80 },
+                        { text: "Reason", datafield: "Reason", editable: false, sortable: false, width: 100 },
+                        { text: "Status", datafield: "Status", editable: false, sortable: false, cellsrenderer: cellsrenderer, width: 100 }
+                    ],
+                    columngroups:
+                        [
+                            { text: 'Action', align: 'center', name: 'Actions', width: 160 },
+                        ],
+
+
+                });
+        });
+    });
+</script>
+
+<style>
+    .activeClass {
+        background: #ffdb99;
+    }
+
+    .secondClass {
+        /*background: #FF9999;*/
+        color: red;
+    }
+</style>
+<script type='text/javascript'>
+    $(function getholidays() {
+        var active_dates = [];
+        $.ajax({
+            type: "GET",
+            async: false,
+            url: "/LeaveApproval/GetDates",
+            dataType: "Json",
+            success: function (data) {
+                datesArray = data;
+                for (i = 0; i < datesArray.length; i++) {
+                    var result = datesArray[i].replace("-", "/");
+                    var result1 = result.replace("-", "/");
+                    var strArray = result1.split("/");
+                    var cdate = strArray[0] + "/" + parseInt(strArray[1]) + "/" + strArray[2]
+                    active_dates.push(cdate);
+
+                    if (i == datesArray.length - 1) {
+                        //loadcal(active_dates);
+                    }
+                }
+
+            }
+        });
+        $('.input-group.date').datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            beforeShowDay: function nonWorkingDays(date) {
+                var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
+                var week = 0 | date.getDate() / 7 //get the week
+                var dd = date.getDate();
+                var month = date.getMonth();
+                if (dd < 10) {
+                    dd = '0' + dd
+                }
+
+                if (month < 10) {
+                    month = '0' + month
+                }
+                var sunweek = date.getDay();
+                var year = date.getFullYear();
+
+                if (dd == 14 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                if (dd == 28 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                //check if it's second week or fourth week
+                else if (week == 1 || week == 3) {
+                    if (dd == 7 && day == 6 || dd == 21 && day == 6) {
+                        //check for satruday
+
+                    }
+                    else {
+                        if (day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                    }
+
+                }
+                //check for sunday
+                if (day == 0) {
+                    return {
+                        classes: 'secondClass'
+                    };
+
+                }
+                //check for holidays
+                var d = date;
+                var curr_date = d.getDate();
+                var curr_month = d.getMonth() + 1; //Months are zero based
+                if (curr_date < 10) {
+                    curr_date = '0' + curr_date
+                }
+                var curr_year = d.getFullYear();
+                var formattedDate = curr_date + "/" + curr_month + "/" + curr_year
+
+                if ($.inArray(formattedDate, active_dates) != -1) {
+                    return {
+                        classes: 'activeClass'
+                    };
+                }
+                return [true];
+            }
+        });
+
+
+    });
+
+</script>
+<script>
+    document.getElementById("a4").className = "active";
+</script>
+
+<script>
+    function pp() {
+        document.getElementById('C').checked = true;
+        document.getElementById('D').checked = false;
+        $("#branch").hide();
+        $("#dept").show();
+        $("#Branch").val('');
+        $("#Department").val('');
+        $("#EmployeeCode").val('');
+        $("#ADate").val('');
+        $("#LeaveType").val('');
+        var theme = otherTheme;
+        // prepare the data
+        var url = "../LeaveApproval/LeaveApprovalViews";
+        var source =
+        {
+            type: "Get",
+            datatype: "json",
+            datafields: [
+                { name: 'available', type: 'bool' },
+                { name: 'Id', type: 'string' },
+                { name: 'EmpId', type: 'string' },
+                { name: 'designation', type: 'string' },
+                { name: 'ShortName', type: 'string' },
+                { name: 'AppliedDate', type: 'date' },
+                { name: 'Deptbranch', type: 'string' },
+                { name: 'StartDate', type: 'date' },
+                { name: 'EndDate', type: 'date' },
+                { name: 'LeaveDays', type: 'int' },
+                { name: 'Code', type: 'string' },
+                { name: 'Reason', type: 'string' },
+                { name: 'Status', type: 'string' },
+            ],
+            async: false,
+            url: url,
+            data: {
+                featureClass: "P",
+                style: "full",
+                username: "jqwidgets"
+            }
+        };
+        var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties, rowdata) {
+            if (value == "Pending") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #FFA500;">' + value + '</span>';
+            }
+            else if (value == "Forwarded") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #33b5e5;">' + value + '</span>';
+            }
+            else if (value == "Approved") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #00C851;">' + value + '</span>';
+            }
+            else if (value == "Denied") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #8B008B;">' + value + '</span>';
+            }
+            else {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #ff4444;">' + value + '</span>';
+            }
+        }
+        var dataAdapter = new $.jqx.dataAdapter(source,
+            {
+                formatData: function (data) {
+                    data.ProductName = $("#searchField").val();
+                    return data;
+                }
+            }
+        );
+        // initialize jqxGrid
+        var editrowindex = -1;
+        var delrowindex = -1;
+        $("#gridControlling").jqxGrid(
+            {
+                width: '100%',
+                source: dataAdapter,
+                theme: otherTheme,// for theme refernce go to Layout.cshtml
+                autoheight: true,
+                sortable: true,
+                pageable: true,
+                columnsResize: true,
+                altRows: true,
+                filterable: true,
+                autoshowfiltericon: true,
+                editable: true,
+                selectionmode: 'multiplerows',
+
+                ready: function () {
+                    $("#gridControlling").jqxGrid('localizestrings', localizationObject);
+                },
+                updatefilterconditions: function (type, defaultconditions) {
+                    switch (type) {
+                        case 'stringfilter':
+                            return stringcomparisonoperators;
+                        case 'numericfilter':
+                            return numericcomparisonoperators;
+                        case 'datefilter':
+                            return datecomparisonoperators;
+                        case 'booleanfilter':
+                            return booleancomparisonoperators;
+                    }
+                },
+                updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                    filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                    var index1 = 0;
+                    var index2 = 0;
+                    if (columnfilter != null) {
+                        var filter1 = columnfilter.getfilterat(0);
+                        var filter2 = columnfilter.getfilterat(1);
+                        if (filter1) {
+                            index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                            var value1 = filter1.filtervalue;
+                            filterinputfield1.val(value1);
+                        }
+                        if (filter2) {
+                            index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                            var value2 = filter2.filtervalue;
+                            filterinputfield2.val(value2);
+                        }
+                    }
+                    filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                    filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+
+                },
+                columns: [
+                    { text: 'Action', datafield: 'available', exportable: false, columntype: 'checkbox', width: 50, sortable: false },
+                    { text: 'Leave Id', groupable: true, datafield: 'Id', editable: false, width: 90, hidden: true, sortable: false },
+                    { text: 'Emp Code', groupable: true, datafield: 'EmpId', editable: false, width: 75, sortable: false },
+                    { text: "Employee Name", datafield: "ShortName", editable: false, width: 120, sortable: false },
+                    { text: "Designation", datafield: "designation", editable: false, width: 85, sortable: false },
+                    { text: "Applied Date", datafield: "AppliedDate", editable: false, width: 90, cellsformat: 'dd/MM/yyyy', sortable: false },
+                    { text: "Department / Branch", datafield: "Deptbranch", editable: false, width: 140, sortable: false },
+                    { text: "Start Date", datafield: "StartDate", editable: false, width: 88, cellsformat: 'dd/MM/yyyy', sortable: false },
+                    { text: "End Date", datafield: "EndDate", editable: false, width: 88, cellsformat: 'dd/MM/yyyy', sortable: false },
+                    { text: "Leaves", datafield: "LeaveDays", editable: false, width: 65, sortable: false },
+                    { text: "Leave Type", datafield: "Code", editable: false, width: 80, sortable: false },
+                    { text: "Reason", datafield: "Reason", editable: false, width: 100, sortable: false },
+                    { text: "Status", datafield: "Status", editable: false, cellsrenderer: cellsrenderer, width: 100, sortable: false }
+
+                ],
+                columngroups:
+                    [
+                        { text: 'Action', align: 'center', name: 'Actions', width: 160 },
+                    ],
+
+
+            });
+
+        $("#gridControlling").on("rowselect", function (event) {
+            var rowindex = $('#gridControlling').jqxGrid('getselectedrowindex');
+            // var selectedrowindex = $(“#admission_grid_fees”).jqxGrid(‘getselectedrowindex’);
+            var args = event.args;
+            var value, row;
+            row = args.rowindex;
+            var rows = $('#gridControlling').jqxGrid('getrows');
+            var rowlength = $('#gridControlling').jqxGrid('getrows').length;
+            if (rowlength <= 1) {
+                document.getElementById('btnPreviouspopup').style.display = 'none';
+                document.getElementById('btnNextpopup').style.display = 'none';
+            }
+            // console.log(row);
+            // console.log(rows);
+            // console.log(rows[row]);
+            if (rows[row] == undefined) {
+
+                for (var p = 0; p < rows.length; p++) {
+
+                    if (parseInt(rows[p].dataindex) == parseInt(row)) {
+
+                        value = rows[p].Id;
+                        row = p;
+
+                    }
+                }
+            }
+            else {
+                var filter = $("#gridControlling").jqxGrid('getfilterinformation');
+                if (filter.length == 0) {
+                    value = rows[row].Id;
+                }
+                else {
+                    for (var p = 0; p < rows.length; p++) {
+
+                        if (parseInt(rows[p].dataindex) == parseInt(row)) {
+
+                            value = rows[p].Id;
+                            row = p;
+
+                        }
+                    }
+                }
+
+            }
+            document.getElementById("currentpos").value = row;
+            var string = "";
+            for (var i = 0; i < rows.length; i++) {
+                string += "<input type='text' id='" + i + "' value='" + rows[i].Id + "'/>";
+            }
+            document.getElementById("pagenation").innerHTML = string;
+            $('.leavenext').attr("disabled", false);
+            $('.leaveprev').attr("disabled", false);
+            $.ajax({
+                url: 'Tooltip?Empid=' + value,
+                Type: 'Get',
+                dataType: 'json',
+                success: function (response) {
+                    if (response != null) {
+                        if (!rows[row].available) {
+                            modal.style.display = "block";
+
+                        }
+
+                        var dateString = response.lstartdate.substr(6);
+                        var currentTime = new Date(parseInt(dateString));
+                        var month = currentTime.getMonth() + 1;
+                        var day = currentTime.getDate();
+                        var year = currentTime.getFullYear();
+                        var sdate = day + "-" + month + "-" + year;
+                        var dateString1 = response.lenddate.substr(6);
+                        var currentTime1 = new Date(parseInt(dateString1));
+                        var month1 = currentTime1.getMonth() + 1;
+                        var day1 = currentTime1.getDate();
+                        var year1 = currentTime1.getFullYear();
+                        var edate = day1 + "-" + month1 + "-" + year1;
+                        var text =
+                            "<tr><td>EmployeeId:</td><td>" + " " + " " + response.lEmployeeId
+                            + "</td></tr> <tr><td> EmployeeName:</td><td>" + " " + " " + response.lEmployeeName
+                            + "</td></tr> <tr><td> Designation:</td><td>" + " " + " "
+                            + response.ldesig + "</td></tr><tr><td> Branch/Dept:</td><td>" + " " + " " + response.ldeptbranch + "</td></tr>"
+                            + "</td></tr><tr><td> StartDate:</td><td>" + " " + " " + sdate + "</td></tr>"
+                            + "</td></tr><tr><td> EndDate:</td><td>" + " " + " " + edate + "</td></tr>"
+                            + "</td></tr><tr><td> Days:</td><td>" + " " + " " + response.lDays + "</td></tr>"
+                            + "</td></tr><tr><td> LeaveType:</td><td>" + " " + " " + response.LeaveType + "</td></tr>"
+                            + "</td></tr><tr><td> Reason:</td><td>" + " " + " " + response.Reason + "</td></tr>"
+                            + "</td></tr><tr><td> Status:</td><td>" + " " + " " + response.Status + "</td></tr>";
+                        document.getElementById("myTextArea").innerHTML = text;
+
+                    }
+
+                },
+            });
+
+        });
+
+
+        //$("#excelExport").jqxButton();
+        //$("#excelExport").click(function () {
+        //    $("#gridControlling").jqxGrid('exportdata', 'xls', 'LeaveApprovals');
+        //});
+        $("#gridControlling").bind('cellendedit', function (event) {
+            if (event.args.value) {
+                $("#gridControlling").jqxGrid('selectrow', event.args.rowindex);
+
+
+            }
+            else {
+                $("#gridControlling").jqxGrid('unselectrow', event.args.rowindex);
+            }
+        });
+    }
+    function pfp() {
+        document.getElementById('C').checked = false;
+        document.getElementById('D').checked = true;
+        $("#branch").show();
+        $("#dept").hide();
+        $("#Branch").val('');
+        $("#Department").val('');
+        $("#EmployeeCode").val('');
+        $("#ADate").val('');
+        $("#LeaveType").val('');
+        var theme = otherTheme;
+        // prepare the data
+        var url = "../LeaveApproval/LeaveApprovalViews";
+        var source =
+        {
+            type: "Get",
+            datatype: "json",
+            datafields: [
+                { name: 'available', type: 'bool' },
+                { name: 'Id', type: 'string' },
+                { name: 'EmpId', type: 'string' },
+                { name: 'designation', type: 'string' },
+                { name: 'ShortName', type: 'string' },
+                { name: 'AppliedDate', type: 'date' },
+                { name: 'Deptbranch', type: 'string' },
+                { name: 'StartDate', type: 'date' },
+                { name: 'EndDate', type: 'date' },
+                { name: 'LeaveDays', type: 'int' },
+                { name: 'Code', type: 'string' },
+                { name: 'Reason', type: 'string' },
+                { name: 'Status', type: 'string' },
+            ],
+            async: false,
+            url: url,
+            data: {
+                featureClass: "P",
+                style: "full",
+                username: "jqwidgets"
+            }
+        };
+        var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties, rowdata) {
+            if (value == "Pending") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #FFA500;">' + value + '</span>';
+            }
+            else if (value == "Forwarded") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #33b5e5;">' + value + '</span>';
+            }
+            else if (value == "Approved") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #00C851;">' + value + '</span>';
+            }
+            else if (value == "Denied") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #8B008B;">' + value + '</span>';
+            }
+            else {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #ff4444;">' + value + '</span>';
+            }
+        }
+        var dataAdapter = new $.jqx.dataAdapter(source,
+            {
+                formatData: function (data) {
+                    data.ProductName = $("#searchField").val();
+                    return data;
+                }
+            }
+        );
+        // initialize jqxGrid
+        var editrowindex = -1;
+        var delrowindex = -1;
+        $("#gridControlling").jqxGrid(
+            {
+                width: '100%',
+                source: dataAdapter,
+                theme: otherTheme,// for theme refernce go to Layout.cshtml
+                autoheight: true,
+                sortable: true,
+                pageable: true,
+                columnsResize: true,
+                altRows: true,
+                filterable: true,
+                autoshowfiltericon: true,
+                editable: true,
+                selectionmode: 'multiplerows',
+
+                ready: function () {
+                    $("#gridControlling").jqxGrid('localizestrings', localizationObject);
+                },
+                updatefilterconditions: function (type, defaultconditions) {
+                    switch (type) {
+                        case 'stringfilter':
+                            return stringcomparisonoperators;
+                        case 'numericfilter':
+                            return numericcomparisonoperators;
+                        case 'datefilter':
+                            return datecomparisonoperators;
+                        case 'booleanfilter':
+                            return booleancomparisonoperators;
+                    }
+                },
+                updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                    filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                    var index1 = 0;
+                    var index2 = 0;
+                    if (columnfilter != null) {
+                        var filter1 = columnfilter.getfilterat(0);
+                        var filter2 = columnfilter.getfilterat(1);
+                        if (filter1) {
+                            index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                            var value1 = filter1.filtervalue;
+                            filterinputfield1.val(value1);
+                        }
+                        if (filter2) {
+                            index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                            var value2 = filter2.filtervalue;
+                            filterinputfield2.val(value2);
+                        }
+                    }
+                    filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                    filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+
+                },
+                columns: [
+                    { text: 'Action', datafield: 'available', exportable: false, columntype: 'checkbox', width: 50, sortable: false },
+                    { text: 'Leave Id', groupable: true, datafield: 'Id', editable: false, width: 90, hidden: true, sortable: false },
+                    { text: 'Emp Code', groupable: true, datafield: 'EmpId', editable: false, width: 75, sortable: false },
+                    { text: "Employee Name", datafield: "ShortName", editable: false, width: 120, sortable: false },
+                    { text: "Designation", datafield: "designation", editable: false, width: 85, sortable: false },
+                    { text: "Applied Date", datafield: "AppliedDate", editable: false, width: 90, cellsformat: 'dd/MM/yyyy', sortable: false },
+                    { text: "Department / Branch", datafield: "Deptbranch", editable: false, width: 140, sortable: false },
+                    { text: "Start Date", datafield: "StartDate", editable: false, width: 88, cellsformat: 'dd/MM/yyyy', sortable: false },
+                    { text: "End Date", datafield: "EndDate", editable: false, width: 88, cellsformat: 'dd/MM/yyyy', sortable: false },
+                    { text: "Leaves", datafield: "LeaveDays", editable: false, width: 65, sortable: false },
+                    { text: "Leave Type", datafield: "Code", editable: false, width: 80, sortable: false },
+                    { text: "Reason", datafield: "Reason", editable: false, width: 100, sortable: false },
+                    { text: "Status", datafield: "Status", editable: false, cellsrenderer: cellsrenderer, width: 100, sortable: false }
+
+                ],
+                columngroups:
+                    [
+                        { text: 'Action', align: 'center', name: 'Actions', width: 160 },
+                    ],
+
+
+            });
+
+        $("#gridControlling").on("rowselect", function (event) {
+            var rowindex = $('#gridControlling').jqxGrid('getselectedrowindex');
+            // var selectedrowindex = $(“#admission_grid_fees”).jqxGrid(‘getselectedrowindex’);
+            var args = event.args;
+            var value, row;
+            row = args.rowindex;
+            var rows = $('#gridControlling').jqxGrid('getrows');
+            var rowlength = $('#gridControlling').jqxGrid('getrows').length;
+            if (rowlength <= 1) {
+                document.getElementById('btnPreviouspopup').style.display = 'none';
+                document.getElementById('btnNextpopup').style.display = 'none';
+            }
+            // console.log(row);
+            // console.log(rows);
+            // console.log(rows[row]);
+            if (rows[row] == undefined) {
+
+                for (var p = 0; p < rows.length; p++) {
+
+                    if (parseInt(rows[p].dataindex) == parseInt(row)) {
+
+                        value = rows[p].Id;
+                        row = p;
+
+                    }
+                }
+            }
+            else {
+                var filter = $("#gridControlling").jqxGrid('getfilterinformation');
+                if (filter.length == 0) {
+                    value = rows[row].Id;
+                }
+                else {
+                    for (var p = 0; p < rows.length; p++) {
+
+                        if (parseInt(rows[p].dataindex) == parseInt(row)) {
+
+                            value = rows[p].Id;
+                            row = p;
+
+                        }
+                    }
+                }
+
+            }
+            document.getElementById("currentpos").value = row;
+            var string = "";
+            for (var i = 0; i < rows.length; i++) {
+                string += "<input type='text' id='" + i + "' value='" + rows[i].Id + "'/>";
+            }
+            document.getElementById("pagenation").innerHTML = string;
+            $('.leavenext').attr("disabled", false);
+            $('.leaveprev').attr("disabled", false);
+            $.ajax({
+                url: 'Tooltip?Empid=' + value,
+                Type: 'Get',
+                dataType: 'json',
+                success: function (response) {
+                    if (response != null) {
+                        if (!rows[row].available) {
+                            modal.style.display = "block";
+
+                        }
+
+                        var dateString = response.lstartdate.substr(6);
+                        var currentTime = new Date(parseInt(dateString));
+                        var month = currentTime.getMonth() + 1;
+                        var day = currentTime.getDate();
+                        var year = currentTime.getFullYear();
+                        var sdate = day + "-" + month + "-" + year;
+                        var dateString1 = response.lenddate.substr(6);
+                        var currentTime1 = new Date(parseInt(dateString1));
+                        var month1 = currentTime1.getMonth() + 1;
+                        var day1 = currentTime1.getDate();
+                        var year1 = currentTime1.getFullYear();
+                        var edate = day1 + "-" + month1 + "-" + year1;
+                        var text =
+                            "<tr><td>EmployeeId:</td><td>" + " " + " " + response.lEmployeeId
+                            + "</td></tr> <tr><td> EmployeeName:</td><td>" + " " + " " + response.lEmployeeName
+                            + "</td></tr> <tr><td> Designation:</td><td>" + " " + " "
+                            + response.ldesig + "</td></tr><tr><td> Branch/Dept:</td><td>" + " " + " " + response.ldeptbranch + "</td></tr>"
+                            + "</td></tr><tr><td> StartDate:</td><td>" + " " + " " + sdate + "</td></tr>"
+                            + "</td></tr><tr><td> EndDate:</td><td>" + " " + " " + edate + "</td></tr>"
+                            + "</td></tr><tr><td> Days:</td><td>" + " " + " " + response.lDays + "</td></tr>"
+                            + "</td></tr><tr><td> LeaveType:</td><td>" + " " + " " + response.LeaveType + "</td></tr>"
+                            + "</td></tr><tr><td> Reason:</td><td>" + " " + " " + response.Reason + "</td></tr>"
+                            + "</td></tr><tr><td> Status:</td><td>" + " " + " " + response.Status + "</td></tr>";
+                        document.getElementById("myTextArea").innerHTML = text;
+
+                    }
+
+                },
+            });
+
+        });
+
+
+        //$("#excelExport").jqxButton();
+        //$("#excelExport").click(function () {
+        //    $("#gridControlling").jqxGrid('exportdata', 'xls', 'LeaveApprovals');
+        //});
+        //$("#gridControlling").bind('cellendedit', function (event) {
+        //    if (event.args.value) {
+        //        $("#gridControlling").jqxGrid('selectrow', event.args.rowindex);
+
+
+        //    }
+        //    else {
+        //        $("#gridControlling").jqxGrid('unselectrow', event.args.rowindex);
+        //    }
+        //});
+    }
+</script>
+
+<script src="~/Assets/libs/excel/cdn_excel_0.17.js"></script>
+<script src="~/Assets/libs/excel/cdn_excel_filesaver_v_2.0.js"></script>
+<!-- Include XLSX library -->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>-->
+<!-- Include FileSaver library -->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>-->
+
+<script>
+    $(document).ready(function () {
+        // Add click event handler to the download Excel button
+        $("#exceltoExport").click(function () {
+            // Get filtered data from the grid
+            var filteredData = $("#gridControlling").jqxGrid('getrows');
+
+            // Process the data to convert dates to human-readable format
+            const processedData = filteredData.map(item => ({
+                ...item,
+                IssueDate: item.IssueDate ? formatDate(parseDate(item.IssueDate)) : '',
+                Duedate: item.Duedate ? formatDate(parseDate(item.Duedate)) : '',
+                Leaveapplieddate: item.Leaveapplieddate ? formatDate(parseDate(item.Leaveapplieddate)) : '',
+                Responsedate: item.Responsedate ? formatDate(parseDate(item.Responsedate)) : ''
+            }));
+
+            // Create a workbook and worksheet
+            var wb = XLSX.utils.book_new();
+            var ws = XLSX.utils.json_to_sheet(processedData);
+
+            // Add worksheet to workbook
+            XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+            // Convert workbook to binary data
+            var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+
+            // Create a Blob object from the binary data
+            var blob = new Blob([s2ab(wbout)], { type: 'application/octet-stream' });
+
+            // Trigger download
+            saveAs(blob, 'LeaveApprovals.xlsx');
+
+            return false;
+        });
+    });
+
+    // Function to parse date string from /Date(timestamp)/ format to Date object
+    function parseDate(dateString) {
+        // Check for /Date(xxxxxxx)/ format
+        const match = /\/Date\((\d+)\)\//.exec(dateString);
+        if (match) {
+            return new Date(parseInt(match[1], 10));
+        }
+        // Check for ISO string format
+        return new Date(dateString);
+    }
+
+    // Function to format Date object to DD/MM/YYYY format
+    function formatDate(date) {
+        if (!date || isNaN(date.getTime())) return '';
+        var day = String(date.getDate()).padStart(2, '0');
+        var month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+        var year = date.getFullYear();
+        return `${day}/${month}/${year}`; // Format: DD/MM/YYYY
+    }
+
+    // Function to convert string to ArrayBuffer
+    function s2ab(s) {
+        var buf = new ArrayBuffer(s.length);
+        var view = new Uint8Array(buf);
+        for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+        return buf;
+    }
+</script>

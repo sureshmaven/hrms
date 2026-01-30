@@ -1,0 +1,595 @@
+﻿@model Entities.Timesheet_Request_Form
+
+
+@{
+                /**/
+
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                var rolepages = TempData["RolePages"].ToString();
+                ViewBag.RolePages = TempData["RolePages"];
+
+}
+
+<style>
+    .closeText:before {
+        content: "Close";
+    }
+    .activeClass {
+        background: #ffdb99;
+    }
+
+    .secondClass {
+        /*background: #FF9999;*/
+        color: red;
+    }
+</style>
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-heading">
+            @{
+                <ul class="nav nav-tabs">
+                    @if (rolepages.Contains("ADERG"))
+                    {
+                        <li><a href=@Url.Action("InsertEmployees", "Register")>Employee Registration</a></li>
+                    }
+                    @if (rolepages.Contains("ADTPO"))
+                    {
+                        <li><a href="@Url.Action("Index","Transfer")">Transfer/Promotions</a></li>
+                    }
+                    @if (rolepages.Contains("ADCAU"))
+                    {
+                        <li><a href="@Url.Action("Index","ChangeAuthority")">Change Authority</a></li>
+                    }
+                    @if (rolepages.Contains("ADCPR"))
+                    {
+                        <li><a href="@Url.Action("Index","ChangeProfile")">Change Profile</a></li>
+                    }
+                    @if (rolepages.Contains("ADLTCA"))
+                    {
+                        <li><a href=@Url.Action("AdminLTCApply", "LeaveTravel")>Apply LTC </a></li>
+                    }
+
+                    @if (rolepages.Contains("ADPLA"))
+                    {
+                        <li><a href=@Url.Action("AdminPLApply", "PLE_Type")>Apply PL Encashment</a></li>
+                    }
+                    @if (rolepages.Contains("ADWDA"))
+                    {
+                        <li><a href=@Url.Action("WorkApprovalAdmin", "WorkDiary")>Delete Work Dairy</a></li>
+                    }
+                    @if (rolepages.Contains("ADUSRO"))
+                    {
+                        <li><a href=@Url.Action("UserRolesView", "AllReports")>User Roles</a></li>
+                    }
+                    @if (rolepages.Contains("ADCBRMG"))
+                    {
+                        <li><a href=@Url.Action("ChangeBranchManager", "ChangeBranchManager")>Change Branch Manager</a></li>
+                    }
+                    @if (rolepages.Contains("TsheetMain"))
+                    {
+                        <li class="active"><a href=@Url.Action("Timesheetrequestform", "TimeSheet")>TimeSheet Manual Form</a></li>
+                    }
+                    @if (rolepages.Contains("TsheetApp"))
+                    {
+                        <li><a href=@Url.Action("TSApprovalView", "TimeSheet")>TimeSheet Manual Approvals</a></li>
+                    }
+                </ul>
+            }
+        </div>
+        @using (Html.BeginForm())
+        {
+            <div class="container">
+                <div class="page_st">
+                    <div class="page">
+                        <div class="form-horizontal form-horizontal2">
+                            <div class="page_start">
+                                @{
+
+
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="main_heading">
+                                            <h1>Edit Timesheet Manual Form</h1>
+                                            <div class="form-horizontal col-md-12 col-sm-12 col-xs-12">
+
+                                                @*<div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Emp Code:</label>
+
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(model => model.UserId, new { @class = "form-control", @readonly = "readonly", @id = "UserId" })
+
+                </div>
+            </div>
+        </div>*@
+                                                @Html.HiddenFor(model => model.UserId)
+
+                                                <div class="form-horizontal col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">EmpCode:<span class="mandatory">*</span></label>
+                                                            <div class="col-sm-6">
+                                                                <input type="text" id="empcode" name="UserId" class="form-control" value="@ViewBag.empcode" readonly="readonly" />
+                                                                @*@Html.EditorFor(model => model.UserId, new { htmlAttributes = new { @class = "form-control", id = "empcode", onkeypress = "return isNumber(event)" } })*@
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+
+
+                                                </div>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label">Name:</label>
+
+                                                        <div class="col-sm-8">
+                                                            <input type="text" id="shortname" name="UserId" class="form-control" value="@ViewBag.shortname" readonly="readonly" />
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label">Designation:</label>
+
+                                                        <div class="col-sm-8">
+                                                            <input type="text" id="desigid" name="DesignationId" class="form-control" value="@ViewBag.designation" readonly="readonly" />
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label">Br/Dept:</label>
+
+                                                        <div class="col-sm-8">
+                                                            <input type="text" id="branchid" name="BranchId" class="form-control" value="@ViewBag.branch" readonly="readonly" />
+
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @Html.HiddenFor(model => model.UserId)
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label">Sanctioning Authority:</label>
+
+                                                        <div class="col-sm-8">
+                                                            <input type="text" id="ControllingAuthority" name="CA" class="form-control" value="@ViewBag.lca" readonly="readonly" />
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label">Request Date:<span class="mandatory">*</span></label>
+                                                        <div class="input-group date col-sm-8">
+                                                            @Html.EditorFor(model => model.ReqFromDate, new { htmlAttributes = new { @class = "form-control", @id = "edate", onkeypress = "return nokeyword(event)", onchange = "return Dateevent1()" } })
+                                                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label">Reason Type:<span class="mandatory">*</span></label>
+                                                        <div class="col-sm-8">
+
+                                                            @Html.DropDownList("Reason_Type", new[] {
+                                                           new SelectListItem() {Text = "All",Value = "All"},
+                                                                           new SelectListItem() {Text = "Machine Problem",Value = "Machine Problem"},
+                                                                            new SelectListItem() {Text = "Internet Issue",Value = "Internet Issue"},
+                                                                             new SelectListItem() {Text = "Power Problem",Value = "Power Problem"},
+                                                                             new SelectListItem() {Text = "Other",Value = "Other" },
+
+                                                }, "Select Reason", new { @class = "form-control", @id = "Type", @onchange = "reasontype();" })
+
+                                                            @Html.ValidationMessageFor(model => model.Reason_Type, "", new { @class = "text-danger", @id = "Type" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label">Entry Time:<span class="mandatory">*</span></label>
+
+                                                        <div class="col-sm-8">
+                                                            <div class='input-group' id='enpicker'>
+                                                                <input type='text' id="entime" name="entrytime"  value="@ViewBag.entry" class="form-control" onblur="Compare();" />
+                                                                <span class="input-group-addon">
+                                                                    <span class="glyphicon glyphicon-time"></span>
+                                                                </span>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label">Exit Time:<span class="mandatory">*</span></label>
+                                                        <div class="input-group  col-sm-8">
+                                                            <div class='input-group' id='expicker'>
+                                                                 <input type='text' id="extime" name="exittime" value="@ViewBag.exit" class="form-control"  onblur="Compare();" />
+                                                                <span class="input-group-addon">
+                                                                    <span class="glyphicon glyphicon-time"></span>
+                                                                </span>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+
+                                                @*<div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Description:<span class="mandatory">*</span></label>
+                <div class="col-sm-8">
+                    @Html.TextAreaFor(model => model.Reason_Desc, new { @class = "form-control", @id = "rdes", @maxlength = 500 })
+                    @Html.ValidationMessageFor(model => model.Reason_Desc, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>*@
+                                                <div class="col-md-12">
+                                                    <div class="pull-right">
+                                                        <input type="reset" value="Cancel" onclick="return resetform();" class="btn btn-default" />
+                                                        <input type="submit" value="Update" onclick="return timesheetapply1();" class="btn btn-primary" />
+                                                    </div>
+                                                </div>
+
+                                                <div class="clearfix"></div>
+                                                <div class="col-md-12">
+                                                    <div class="table-responsive m_20">
+                                                        <div id="grid"></div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                }
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@{
+
+    var message = TempData["AlertMessage"] ?? string.Empty;
+
+}
+<script type="text/javascript">
+    var message = '@message';
+
+    if (message) alert(message);
+
+</script>
+
+<script>
+    
+    $(document).ready(function () {
+  $('#enpicker').datetimepicker({
+
+        format: 'LT',
+        toolbarPlacement: 'bottom',
+        showClose: true,
+        icons: {
+            close: 'closeText'
+        }
+
+
+    });
+    $('#expicker').datetimepicker({
+
+        format: 'LT',
+        toolbarPlacement: 'bottom',
+        showClose: true,
+        icons: {
+            close: 'closeText'
+        }
+
+
+    });
+       // var Textb = document.getElementById('rdes');
+      //  var parLab = document.getElementById('Type').options[document.getElementById('Type').selectedIndex].text;
+
+        //if (parLab != 'Other') {
+        //    rdes.value = parLab;
+
+        //   // $('#rdes').attr("disabled", true)
+
+        //}
+        //else {
+
+        //    rdes.value = '';
+        //    $('#rdes').attr("disabled", false)
+        //}
+        //$(function () {
+
+        //    $.ajax({
+        //        type: "GET",
+        //        url: "/TimeSheet/GetAuthorityNamess",
+        //        dataType: "Json",
+        //        success: function (response) {
+        //            if (response != null) {
+        //                document.getElementById("UserId").value = response.luseridAjax;
+        //                document.getElementById("ControllingAuthority").value = response.lControllingAuthorityAjax;
+        //                document.getElementById("SanctioningAuthority").value = response.lSanctioningAuthorityAjax;
+        //            }
+        //            else {
+        //                // alert("Something went wrong");
+        //            }
+        //        },
+        //    });
+        //});
+    });
+</script>
+<script type='text/javascript'>
+    $(function getholidays() {
+
+        var active_dates = [];
+        $.ajax({
+            type: "GET",
+            async: false,
+            url: "/LeaveApply/GetDates",
+            dataType: "Json",
+            success: function (data) {
+                datesArray = data;
+                for (i = 0; i < datesArray.length; i++) {
+                    var result = datesArray[i].replace("-", "/");
+                    var result1 = result.replace("-", "/");
+                    var strArray = result1.split("/");
+                    var cdate = strArray[0] + "/" + parseInt(strArray[1]) + "/" + strArray[2]
+                    active_dates.push(cdate);
+
+                    if (i == datesArray.length - 1) {
+                        //loadcal(active_dates);
+                    }
+                }
+
+            }
+        });
+        $('.input-group.date').datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            beforeShowDay: function nonWorkingDays(date) {
+                var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
+                var week = 0 | date.getDate() / 7 //get the week
+                var dd = date.getDate();
+                var month = date.getMonth();
+                if (dd < 10) {
+                    dd = '0' + dd
+                }
+
+                if (month < 10) {
+                    month = '0' + month
+                }
+                var sunweek = date.getDay();
+                var year = date.getFullYear();
+
+                if (dd == 14 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                if (dd == 28 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                //check if it's second week or fourth week
+                else if (week == 1 || week == 3) {
+                    if (dd == 7 && day == 6 || dd == 21 && day == 6) {
+                        //check for satruday
+
+                    }
+                    else {
+                        if (day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                    }
+
+                }
+                //check for sunday
+                if (day == 0) {
+                    return {
+                        classes: 'secondClass'
+                    };
+
+                }
+                //check for holidays
+                var d = date;
+                var curr_date = d.getDate();
+                var curr_month = d.getMonth() + 1; //Months are zero based
+                if (curr_date < 10) {
+                    curr_date = '0' + curr_date
+                }
+                var curr_year = d.getFullYear();
+                var formattedDate = curr_date + "/" + curr_month + "/" + curr_year
+
+                if ($.inArray(formattedDate, active_dates) != -1) {
+                    return {
+                        classes: 'activeClass'
+                    };
+                }
+                return [true];
+            }
+        });
+
+
+    });
+</script>
+<script>
+    function eventvalidates() {
+         
+        var Joindate = document.getElementById("edate").value;
+        var a = moment(Joindate, "DD/MM/YYYY");
+        var b = moment(new Date());
+        var years = a.diff(b, 'year');
+        b.add(years, 'years');
+        var months = a.diff(b, 'months');
+        b.add(months, 'months');
+        if (a <= b) {
+            var days = b.diff(a, 'days') + 1;
+            var diff = (years != 0 ? years * -1 : years) + ' years ' + (months != 0 ? months * -1 : months) + ' months ' + days + ' days';
+            // document.getElementById("TotalExperience").value = diff;
+        }
+        else if (a > b) {
+            alert("Please choose upto today's Date");
+
+            document.getElementById("edate").value = "";
+        }
+    }
+    function Dateevent1() {
+         
+        $('.glyphicon glyphicon-calendar').hide();
+        datescheck1();
+        datescheck();
+    }
+</script>
+<script>
+    function datescheck() {
+         
+        eventvalidates();
+        var x = location.hostname;
+        var url = window.location.href
+        var arr = url.split("/");
+        var requestdate = document.getElementById("edate").value;
+        if (requestdate == "" || requestdate != "null") {
+        }
+        else {
+            //  var result = "https://" + arr[2] + "/" + "TimeSheet/checkForHoliday?RequestDate=" + requestdate;
+            var result = "" + arr[0] + "//" + arr[2] + "/" + "TimeSheet/checkForHoliday?RequestDate=" + requestdate;
+            $.ajax({
+                type: "GET",
+                url: result,
+
+                dataType: "json",
+                success: function (data) {
+
+                    var input = data.message;
+
+                    var fields = input.split('/');
+                    var status = fields[0];
+                    var dates = fields[1];
+
+                    if (status == "false") {
+
+                    }
+                    else
+                        if (status == "true") {
+                            document.getElementById("edate").value = "";
+                            alert(dates);
+                        }
+                },
+                error: function () {
+
+                }
+            });
+        }
+    }
+</script>
+<script>
+    function datescheck1() {
+        var x = location.hostname;
+        var url = window.location.href
+        var arr = url.split("/");
+        var requestdate = document.getElementById("edate").value;
+        if (requestdate == "" || requestdate != "null") {
+        }
+        else {
+            //var result = "https://" + arr[2] + "/" + "TimeSheet/checkForRequestDate?RequestDate=" + requestdate;
+            var result = "" + arr[0] + "//" + arr[2] + "/" + "TimeSheet/checkForRequestDate?RequestDate=" + requestdate;
+            $.ajax({
+                type: "GET",
+                url: result,
+
+                dataType: "json",
+                success: function (data) {
+
+                    var input = data.message;
+
+                    var fields = input.split('/');
+                    var status = fields[0];
+                    var dates = fields[1];
+
+                    if (status == "false") {
+
+                    }
+                    else
+                        if (status == "true") {
+                            document.getElementById("edate").value = "";
+                            alert(dates);
+                        }
+                },
+                error: function () {
+
+                }
+            });
+        }
+    }
+</script>
+<script>
+    //function resetform() {
+        //$(function () {
+        //    $.ajax({
+        //        type: "GET",
+        //        url: "/TimeSheet/GetAuthorityNamess",
+        //        dataType: "Json",
+        //        success: function (response) {
+        //            if (response != null) {                 
+        //                document.getElementById("ControllingAuthority").value = response.lControllingAuthorityAjax;
+        //            }
+        //            else {
+        //                // alert("Something went wrong");
+        //            }
+        //        },
+        //    });
+        //});
+    //}
+</script>
+<script>
+    function Compare() {
+       // alert("hi");
+    var strStartTime = document.getElementById("entime").value;
+    var strEndTime = document.getElementById("extime").value;
+  
+    var startTime = new Date().setHours(GetHours(strStartTime), GetMinutes(strStartTime), 0);
+    var endTime = new Date(startTime)
+    endTime = endTime.setHours(GetHours(strEndTime), GetMinutes(strEndTime), 0);
+    
+    if (startTime > endTime) {
+        showGlobalModal("I#Error#End Time should be greater than Start Time.");
+        document.getElementById("extime").value = '';
+    }
+}
+function GetHours(d) {
+    var h = parseInt(d.split(':')[0]);
+    if (d.split(':')[1].split(' ')[1] == "PM") {
+        h = h + 12;
+    }
+    return h;
+}
+function GetMinutes(d) {
+    return parseInt(d.split(':')[1].split(' ')[0]);
+}
+    document.getElementById("a1").className = "active";
+</script>

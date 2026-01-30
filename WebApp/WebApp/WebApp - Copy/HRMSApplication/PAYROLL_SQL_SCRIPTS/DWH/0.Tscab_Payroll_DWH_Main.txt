@@ -1,0 +1,1823 @@
+
+drop table emp_fact;
+
+select e.EmpId,CONCAT(e.FirstName,' ',e.LastName) as Name,convert(varchar,e.DOJ,105) as DOJ,convert(varchar,e.RetirementDate,105) as RetirementDate,d.Name as Designation, case when b.Name = 'OtherBranch' then dep.name  else b.Name end as [Dept/Branch]
+,ps.id,ps.fm as ps_fm,ps.working_days, ps.lop, ps.er_basic, ps.er_da, ps.er_cca, ps.er_hra, ps.er_interim_relief, ps.er_telangana_inc, ps.gross_amount, ps.dd_provident_fund, ps.dd_income_tax, ps.dd_prof_tax, ps.dd_club_subscription, ps.dd_telangana_officers_assn, ps.lop_amount, ps.deductions_amount, ps.net_amount, ps.spl_da,ps.spl_allw,ps.spl_type
+
+into Emp_fact
+ from employees e
+ inner join Designations d on e.CurrentDesignation = d.Id
+ inner join Branches b on e.Branch = b.Id
+ inner join Departments dep on e.Department = dep.Id
+ inner join pr_emp_payslip ps on e.Empid=ps.emp_code
+ where ps.fm between '2019-04-01' and '2020-12-01' and ps.spl_type='Regular';
+
+
+alter TABLE [dbo].[emp_fact]
+add 
+	[aworking_days] [int] NULL,
+	[alop] [int] NULL,
+	[aer_basic] [float] NULL,
+	[aer_da] [float] NULL,
+	[aer_cca] [float] NULL,
+	[aer_hra] [float] NULL,
+	[aer_interim_relief] [float] NULL,
+	[aer_telangana_inc] [float] NULL,
+	[agross_amount] [float] NULL,
+	[add_provident_fund] [float] NULL,
+	[add_income_tax] [float] NULL,
+	[add_prof_tax] [float] NULL,
+	[add_club_subscription] [float] NULL,
+	[add_telangana_officers_assn] [float] NULL,
+	[alop_amount] [float] NULL,
+	[adeductions_amount] [float] NULL,
+	[anet_amount] [float] NULL,
+	[aactive] [bit] NULL,
+	[atrans_id] [int] NULL,
+	[aspl_da] [float] NULL,
+	[aspl_allw] [float] NULL,
+	[aspl_type] [nvarchar](20) NULL,
+	[asentmail] [bit] NULL,
+	[adownloadpdf] [bit] NULL,
+	[afinal_process] [bit] NULL,
+	[aerr_ceoallw] [float] NULL;
+
+update emp_fact set 
+emp_fact.[aworking_days]			=		b.[working_days]	,
+emp_fact.[alop]			=		b.[lop]	,
+emp_fact.[aer_basic]			=		b.[er_basic]	,
+emp_fact.[aer_da]			=		b.[er_da]	,
+emp_fact.[aer_cca]			=		b.[er_cca]	,
+emp_fact.[aer_hra]			=		b.[er_hra]	,
+emp_fact.[aer_interim_relief]			=		b.[er_interim_relief]	,
+emp_fact.[aer_telangana_inc]			=		b.[er_telangana_inc]	,
+emp_fact.[agross_amount]			=		b.[gross_amount]	,
+emp_fact.[add_provident_fund]			=		b.[dd_provident_fund]	,
+emp_fact.[add_income_tax]			=		b.[dd_income_tax]	,
+emp_fact.[add_prof_tax]			=		b.[dd_prof_tax]	,
+emp_fact.[add_club_subscription]			=		b.[dd_club_subscription]	,
+emp_fact.[add_telangana_officers_assn]			=		b.[dd_telangana_officers_assn]	,
+emp_fact.[alop_amount]			=		b.[lop_amount]	,
+emp_fact.[adeductions_amount]			=		b.[deductions_amount]	,
+emp_fact.[anet_amount]			=		b.[net_amount]	,
+emp_fact.[aactive]			=		b.[active]	,
+emp_fact.[atrans_id]			=		b.[trans_id]	,
+emp_fact.[aspl_da]			=		b.[spl_da]	,
+emp_fact.[aspl_allw]			=		b.[spl_allw]	,
+emp_fact.[aspl_type]			=		b.[spl_type]	,
+emp_fact.[asentmail]			=		b.[sentmail]	,
+emp_fact.[adownloadpdf]			=		b.[downloadpdf]	,
+emp_fact.[afinal_process]			=		b.[final_process]	,
+emp_fact.[aerr_ceoallw]			=		b.[err_ceoallw]	
+
+from pr_emp_payslip b where emp_fact.empid=b.emp_code and b.fm=emp_fact.ps_fm and b.spl_type='Adhoc';
+
+alter TABLE [dbo].[emp_fact]
+add 
+	[eworking_days] [int] NULL,
+	[elop] [int] NULL,
+	[eer_basic] [float] NULL,
+	[eer_da] [float] NULL,
+	[eer_cca] [float] NULL,
+	[eer_hra] [float] NULL,
+	[eer_interim_relief] [float] NULL,
+	[eer_telangana_inc] [float] NULL,
+	[egross_amount] [float] NULL,
+	[edd_provident_fund] [float] NULL,
+	[edd_income_tax] [float] NULL,
+	[edd_prof_tax] [float] NULL,
+	[edd_club_subscription] [float] NULL,
+	[edd_telangana_officers_assn] [float] NULL,
+	[elop_amount] [float] NULL,
+	[edeductions_amount] [float] NULL,
+	[enet_amount] [float] NULL,
+	[eactive] [bit] NULL,
+	[etrans_id] [int] NULL,
+	[espl_da] [float] NULL,
+	[espl_allw] [float] NULL,
+	[espl_type] [nvarchar](20) NULL,
+	[esentmail] [bit] NULL,
+	[edownloadpdf] [bit] NULL,
+	[efinal_process] [bit] NULL,
+	[eerr_ceoallw] [float] NULL;
+
+update emp_fact set 
+emp_fact.[eworking_days]			=		b.[working_days]	,
+emp_fact.[elop]			=		b.[lop]	,
+emp_fact.[eer_basic]			=		b.[er_basic]	,
+emp_fact.[eer_da]			=		b.[er_da]	,
+emp_fact.[eer_cca]			=		b.[er_cca]	,
+emp_fact.[eer_hra]			=		b.[er_hra]	,
+emp_fact.[eer_interim_relief]			=		b.[er_interim_relief]	,
+emp_fact.[eer_telangana_inc]			=		b.[er_telangana_inc]	,
+emp_fact.[egross_amount]			=		b.[gross_amount]	,
+emp_fact.[edd_provident_fund]			=		b.[dd_provident_fund]	,
+emp_fact.[edd_income_tax]			=		b.[dd_income_tax]	,
+emp_fact.[edd_prof_tax]			=		b.[dd_prof_tax]	,
+emp_fact.[edd_club_subscription]			=		b.[dd_club_subscription]	,
+emp_fact.[edd_telangana_officers_assn]			=		b.[dd_telangana_officers_assn]	,
+emp_fact.[elop_amount]			=		b.[lop_amount]	,
+emp_fact.[edeductions_amount]			=		b.[deductions_amount]	,
+emp_fact.[enet_amount]			=		b.[net_amount]	,
+emp_fact.[eactive]			=		b.[active]	,
+emp_fact.[etrans_id]			=		b.[trans_id]	,
+emp_fact.[espl_da]			=		b.[spl_da]	,
+emp_fact.[espl_allw]			=		b.[spl_allw]	,
+emp_fact.[espl_type]			=		b.[spl_type]	,
+emp_fact.[esentmail]			=		b.[sentmail]	,
+emp_fact.[edownloadpdf]			=		b.[downloadpdf]	,
+emp_fact.[efinal_process]			=		b.[final_process]	,
+emp_fact.[eerr_ceoallw]			=		b.[err_ceoallw]	
+
+from pr_emp_payslip b where emp_fact.empid=b.emp_code and b.fm=emp_fact.ps_fm and b.spl_type='Encashment';
+
+--TDS Fact
+DROP TABLE TdsFact;
+
+--TDS Fact
+--DROP TABLE TdsFact;
+CREATE TABLE [dbo].[TdsFact](
+	[empcode] [int] NULL,
+	[dim_tid_ref_tds] [int] FOREIGN KEY REFERENCES dim_time(dim_tid),
+	[fm] [date] NULL,
+	[sal_basic] [float] NULL,
+	[sal_fixed_personal_allowance] [float] NULL,
+	[sal_fpa_hra_allowance] [float] NULL,
+	[sal_fpiip] [float] NULL,
+	[sal_da] [float] NULL,
+	[sal_hra] [float] NULL,
+	[sal_cca] [float] NULL,
+	[sal_interim_relief] [float] NULL,
+	[sal_telangana_increment] [float] NULL,
+	[sal_spl_allow] [float] NULL,
+	[sal_spcl_da] [float] NULL,
+	[sal_pfperks] [float] NULL,
+	[sal_loanperks] [float] NULL,
+	[sal_incentive] [float] NULL,
+	[sal_value_of_perquisites] [float] NULL,
+	[sal_profits_in_lieu_of_salary] [float] NULL,
+	[gross_salary] [float] NULL,
+	[house_rent_allowance] [float] NULL,
+	[total_of_sec10] [float] NULL,
+	[balance_gross_min_sec10] [float] NULL,
+	[standard_deductions] [float] NULL,
+	[tax_of_employement] [float] NULL,
+	[tds_aggregate] [float] NULL,
+	[income_chargeable_bal_minus_agg] [float] NULL,
+	[other_income_by_the_emp] [float] NULL,
+	[interest_on_housing] [float] NULL,
+	[gross_total_income] [float] NULL,
+	[aggregate_of_deductible] [float] NULL,
+	[total_income] [float] NULL,
+	[tax_on_total_income] [float] NULL,
+	[section_87a] [float] NULL,
+	[education_cess] [float] NULL,
+	[tax_payable] [float] NULL,
+	[tax_deducted_at_source] [float] NULL,
+	[tax_paid_by_the_employer] [float] NULL,
+	[balance_tax] [float] NULL,
+	[balance_months] [float] NULL,
+	[tds_per_month] [float] NULL
+) ON [PRIMARY];
+
+--Inserting data into TDS Fact TABLE
+
+
+INSERT INTO [dbo].[TdsFact]
+           ([empcode]
+           ,[dim_tid_ref_tds]
+           ,[fm]
+           ,[sal_basic]
+           ,[sal_fixed_personal_allowance]
+           ,[sal_fpa_hra_allowance]
+           ,[sal_fpiip]
+           ,[sal_da]
+           ,[sal_hra]
+           ,[sal_cca]
+           ,[sal_interim_relief]
+           ,[sal_telangana_increment]
+           ,[sal_spl_allow]
+           ,[sal_spcl_da]
+           ,[sal_pfperks]
+           ,[sal_loanperks]
+           ,[sal_incentive]
+           ,[sal_value_of_perquisites]
+           ,[sal_profits_in_lieu_of_salary]
+           ,[gross_salary]
+           ,[house_rent_allowance]
+           ,[total_of_sec10]
+           ,[balance_gross_min_sec10]
+           ,[standard_deductions]
+           ,[tax_of_employement]
+           ,[tds_aggregate]
+           ,[income_chargeable_bal_minus_agg]
+           ,[other_income_by_the_emp]
+           ,[interest_on_housing]
+           ,[gross_total_income]
+           ,[aggregate_of_deductible]
+           ,[total_income]
+           ,[tax_on_total_income]
+           ,[section_87a]
+           ,[education_cess]
+           ,[tax_payable]
+           ,[tax_deducted_at_source]
+           ,[tax_paid_by_the_employer]
+           ,[balance_tax]
+           ,[balance_months]
+           ,[tds_per_month])
+     SELECT
+           
+		   tds.empcode
+           ,245
+           ,tds.fm
+           ,tds.sal_basic
+           ,tds.sal_fixed_personal_allowance
+           ,tds.sal_fpa_hra_allowance
+           ,tds.sal_fpiip
+           ,tds.sal_da
+           ,tds.sal_hra
+           ,tds.sal_cca
+           ,tds.sal_interim_relief
+           ,tds.sal_telangana_increment
+           ,tds.sal_spl_allow
+           ,tds.sal_spcl_da
+           ,tds.sal_pfperks
+           ,tds.sal_loanperks
+           ,tds.sal_incentive
+           ,tds.sal_value_of_perquisites
+           ,tds.sal_profits_in_lieu_of_salary
+           ,tds.gross_salary
+           ,tds.house_rent_allowance
+           ,tds.total_of_sec10
+           ,tds.balance_gross_min_sec10
+           ,tds.standard_deductions
+           ,tds.tax_of_employement
+           ,tds.tds_aggregate
+           ,tds.income_chargeable_bal_minus_agg
+           ,tds.other_income_by_the_emp
+           ,tds.interest_on_housing
+           ,tds.gross_total_income
+           ,tds.aggregate_of_deductible
+           ,tds.total_income
+           ,tds.tax_on_total_income
+           ,tds.section_87a
+           ,tds.education_cess
+           ,tds.tax_payable
+           ,tds.tax_deducted_at_source
+           ,tds.tax_paid_by_the_employer
+           ,tds.balance_tax
+           ,tds.balance_months
+           ,tds.tds_per_month
+		   
+		   from pr_emp_tds_process tds where tds.fm between '2019-04-01' and '2020-12-01';
+
+--LoansFact
+
+CREATE TABLE [dbo].[LoansFact](
+	[emp_code] [int] NULL,
+	[dim_tid_ref_loans] int FOREIGN KEY REFERENCES dim_time (dim_tid),
+	[designation] [int] NULL,
+	[adjust_fm] [date] NULL,
+	[loan_type_mid] [int] NULL,
+	[adv_total_amount] [bigint] NULL,
+	[adv_total_installment] [int] NULL,
+	[adv_principal_installment] [int] NULL,
+	[adv_interest_installment] [int] NULL,
+	[adv_completed_installment] [int] NULL,
+	[adv_remaining_installment] [int] NULL,
+	[adv_sanction_date] [date] NULL,
+	[adv_installment_start_date] [date] NULL,
+	[adv_installment_end_date] [date] NULL,
+	[adv_method] [nvarchar](50) NOT NULL,
+	[adv_interest_rate] [float] NULL,
+	[adv_installment_amount] [float] NULL,
+	[adv_interest_installment_amount] [float] NULL,
+	[adv_total_recovered_amount] [float] NULL,
+	[adv_fm] [date] NULL,
+	[adv_active] [int] NULL,
+
+	[child_loan_amount] [int] NULL,
+	[child_interest_rate] [float] NULL,
+	[child_interest_accured] [float] NULL,
+	[child_principal_amount_recovered] [float] NULL,
+	[child_interest_amount_recovered] [float] NULL,
+	[child_total_amount_recovered] [float] NULL,
+	[child_priority] [int] NULL,
+	[child_principal_start_date] [date] NULL,
+	[child_principal_end_date] [date] NULL,
+	[child_interest_start_date] [date] NULL,
+	[interest_end_date] [date] NULL,
+	[total_principal_installments] [int] NULL,
+	[total_interest_installments] [int] NULL,
+	[os_principal_amount] [float] NULL,
+	[child_os_interest_amount] [float] NULL,
+	[child_os_this_month_interest] [float] NULL,
+	[child_os_total_amount] [float] NULL,
+
+	[adjust_emp_adv_loans_mid] [int] NOT NULL,
+	[adjust_emp_adv_loans_child_mid] [int] NOT NULL,
+	[adjust_principal_open_amount] [float] NULL,
+	[adjust_principal_paid_amount] [float] NULL,
+	[adjust_principal_balance_amount] [float] NULL,
+	[adjust_interest_accured] [float] NULL,
+	[adjuct_interest_open_amount] [float] NULL,
+	[adjust_interest_paid_amount] [float] NULL,
+	[adjust_interest_balance_amount] [float] NULL,
+	[adjust_installments_paid] [int] NULL,
+	[adjust_installments_amount] [float] NULL,
+	[adjust_installments_paid_date] [date] NULL,
+	[adjust_payment_type] [nvarchar](20) NULL,
+	[adjust_payment_mode] [nvarchar](20) NULL,
+	[adjust_cash_paid_on] [date] NULL,
+	[adjust_covered_installments] [int] NULL,
+	[adjust_amount_paid] [float] NULL
+) ON [PRIMARY]
+
+--Insertion records into LoansFact
+INSERT INTO [dbo].[LoansFact]
+           ([emp_code]
+           ,[dim_tid_ref_loans]
+           ,[designation]
+           ,[adjust_fm]
+           ,[loan_type_mid]
+           ,[adv_total_amount]
+           ,[adv_total_installment]
+           ,[adv_principal_installment]
+           ,[adv_interest_installment]
+           ,[adv_completed_installment]
+           ,[adv_remaining_installment]
+           ,[adv_sanction_date]
+           ,[adv_installment_start_date]
+           ,[adv_installment_end_date]
+           ,[adv_method]
+           ,[adv_interest_rate]
+           ,[adv_installment_amount]
+           ,[adv_interest_installment_amount]
+           ,[adv_total_recovered_amount]
+           ,[adv_fm]
+		   ,[adv_active]
+           ,[child_loan_amount]
+           ,[child_interest_rate]
+           ,[child_interest_accured]
+           ,[child_principal_amount_recovered]
+           ,[child_interest_amount_recovered]
+           ,[child_total_amount_recovered]
+           ,[child_priority]
+           ,[child_principal_start_date]
+           ,[child_principal_end_date]
+           ,[child_interest_start_date]
+           ,[interest_end_date]
+           ,[total_principal_installments]
+           ,[total_interest_installments]
+           ,[os_principal_amount]
+           ,[child_os_interest_amount]
+           ,[child_os_this_month_interest]
+           ,[child_os_total_amount]
+           ,[adjust_emp_adv_loans_mid]
+           ,[adjust_emp_adv_loans_child_mid]
+           ,[adjust_principal_open_amount]
+           ,[adjust_principal_paid_amount]
+           ,[adjust_principal_balance_amount]
+           ,[adjust_interest_accured]
+           ,[adjuct_interest_open_amount]
+           ,[adjust_interest_paid_amount]
+           ,[adjust_interest_balance_amount]
+           ,[adjust_installments_paid]
+           ,[adjust_installments_amount]
+           ,[adjust_installments_paid_date]
+           ,[adjust_payment_type]
+           ,[adjust_payment_mode]
+           ,[adjust_cash_paid_on]
+           ,[adjust_covered_installments]
+           ,[adjust_amount_paid])
+     SELECT
+           loansadv.emp_code
+           ,245
+           ,loansadv.designation
+           ,loanadjust.fm
+           ,loansadv.loan_type_mid
+           ,loansadv.total_amount
+           ,loansadv.total_installment
+           ,loansadv.principal_installment
+           ,loansadv.interest_installment
+           ,loansadv.completed_installment
+           ,loansadv.remaining_installment
+           ,loansadv.sanction_date 
+           ,loansadv.installment_start_date
+           ,loansadv.installment_end_date
+           ,loansadv.method
+           ,loansadv.interest_rate
+           ,loansadv.installment_amount 
+           ,loansadv.interest_installment_amount 
+           ,loansadv.total_recovered_amount 
+           ,loansadv.fm
+		   ,loansadv.active
+           ,loanchild.loan_amount
+           ,loanchild.interest_rate 
+           ,loanchild.interest_accured 
+           ,loanchild.principal_amount_recovered 
+           ,loanchild.interest_amount_recovered 
+           ,loanchild.total_amount_recovered 
+           ,loanchild.priority
+           ,loanchild.principal_start_date
+           ,loanchild.principal_end_date
+           ,loanchild.interest_start_date
+           ,loanchild.interest_end_date
+           ,loanchild.total_principal_installments
+           ,loanchild.total_interest_installments
+           ,loanchild.os_principal_amount 
+           ,loanchild.os_interest_amount 
+           ,loanchild.os_this_month_interest 
+           ,loanchild.os_total_amount 
+           ,loanadjust.emp_adv_loans_mid
+           ,loanadjust.emp_adv_loans_child_mid
+           ,loanadjust.principal_open_amount 
+           ,loanadjust.principal_paid_amount 
+           ,loanadjust.principal_balance_amount 
+           ,loanadjust.interest_accured 
+           ,loanadjust.interest_open_amount 
+           ,loanadjust.interest_paid_amount 
+           ,loanadjust.interest_balance_amount 
+           ,loanadjust.installments_paid
+           ,loanadjust.installments_amount 
+           ,loanadjust.installments_paid_date
+           ,loanadjust.payment_type
+           ,loanadjust.payment_mode
+           ,loanadjust.cash_paid_on
+           ,loanadjust.covered_installments
+           ,loanadjust.amount_paid 
+
+		   from pr_emp_adv_loans loansadv 
+join pr_emp_adv_loans_child loanchild on loansadv.id=loanchild.emp_adv_loans_mid 
+join pr_emp_adv_loans_adjustments loanadjust on loanchild.id=loanadjust.emp_adv_loans_child_mid  where loanadjust.fm between '2019-04-01' and '2020-12-01';
+
+--Pf Fact
+
+select a.* into Pf_fact from (
+select 'ob_share' as pf_type ,* from pr_ob_share union 
+select 'ob_share_adhoc' as pf_type,* from pr_ob_share_adhoc  union
+select 'ob_share_encashment' as pf_type,* from pr_ob_share_encashment ) as a ;
+
+
+--AllowanceFact
+
+CREATE Table AllowanceFact(		Emp_code	int	,
+		dim_tid_ref_allow	int	,
+		fm	NVARCHAR(20)	,
+		allowance_type	NVARCHAR(20)	,
+		ps_type	NVARCHAR(20)	,
+	[ABHLFHYD] NVARCHAR (20),
+	[ANNUAL INCREMENT] NVARCHAR (20),
+	[APCCADBEMP] NVARCHAR (20),
+	[APCOBEDLHNR] NVARCHAR (20),
+	[APCOBEDLHO] NVARCHAR (20),
+	[APCOBHFCHO] NVARCHAR (20),
+	[APCOBHFCLT] NVARCHAR (20),
+	[APSCBLTASSN] NVARCHAR (20),
+	[ARR_GR_AMT] NVARCHAR (20),
+	[ARREAR GROSS AMOUNT] NVARCHAR (20),
+	[BASIC] NVARCHAR (20),
+	[BR MANAGER ALLOWANCE] NVARCHAR (20),
+	[BR_MGR] NVARCHAR (20),
+	[CAIIB] NVARCHAR (20),
+	[CAIIB INCREMENT] NVARCHAR (20),
+	[CCA] NVARCHAR (20),
+	[CCSAP] NVARCHAR (20),
+	[CCSHYD] NVARCHAR (20),
+	[CD2] NVARCHAR (20),
+	[CEO ALLOWANCE] NVARCHAR (20),
+	[CEOALLW] NVARCHAR (20),
+	[CHILDREN EDUCATION ALLOWANCE] NVARCHAR (20),
+	[CODINSPRM] NVARCHAR (20),
+	[CODINSPRM1] NVARCHAR (20),
+	[CODPERKS] NVARCHAR (20),
+	[COURT] NVARCHAR (20),
+	[COURTAB] NVARCHAR (20),
+	[COURTDED] NVARCHAR (20),
+	[COURTHYD] NVARCHAR (20),
+	[COURTKADAPA] NVARCHAR (20),
+	[COURTSECBAD] NVARCHAR (20),
+	[COURTSLRPET] NVARCHAR (20),
+	[COURTTANUKU] NVARCHAR (20),
+	[COURTVIZAG] NVARCHAR (20),
+	[DA] NVARCHAR (20),
+	[DCCB] NVARCHAR (20),
+	[DEPU] NVARCHAR (20),
+	[DEPUTATION ALLOWANCE] NVARCHAR (20),
+	[DRCCSVIZAG] NVARCHAR (20),
+	[EASSNSUB] NVARCHAR (20),
+	[EDUC] NVARCHAR (20),
+	[EMPLOYEE TDS] NVARCHAR (20),
+	[ENCASHMENT] NVARCHAR (20),
+	[ESI] NVARCHAR (20),
+	[ESTT] NVARCHAR (20),
+	[EXGRATIA] NVARCHAR (20),
+	[FA] NVARCHAR (20),
+	[FACULTY ALLOWANCE] NVARCHAR (20),
+	[FAELURU] NVARCHAR (20),
+	[FAMEDHAK] NVARCHAR (20),
+	[FAONGOLE] NVARCHAR (20),
+	[FCLTYALLW] NVARCHAR (20),
+	[FEST] NVARCHAR (20),
+	[FEST. ADVANCE] NVARCHAR (20),
+	[FGPRM] NVARCHAR (20),
+	[FIXED ALLOWANCE] NVARCHAR (20),
+	[FIXED PERSONAL ALLOWANCE] NVARCHAR (20),
+	[FP INCENTIVE RECOVERY] NVARCHAR (20),
+	[FPA-HRA ALLOWANCE] NVARCHAR (20),
+	[FPIIP] NVARCHAR (20),
+	[FPIR] NVARCHAR (20),
+	[FXDALLW] NVARCHAR (20),
+	[GSLI] NVARCHAR (20),
+	[HDCF] NVARCHAR (20),
+	[HFC] NVARCHAR (20),
+	[HL2] NVARCHAR (20),
+	[HL2A] NVARCHAR (20),
+	[HL2BC] NVARCHAR (20),
+	[HLADD] NVARCHAR (20),
+	[HLCOM] NVARCHAR (20),
+	[HLPLT] NVARCHAR (20),
+	[HOUINSUPRE] NVARCHAR (20),
+	[HOUPROPINS] NVARCHAR (20),
+	[HOUS1] NVARCHAR (20),
+	[HOUS2] NVARCHAR (20),
+	[HOUS3] NVARCHAR (20),
+	[HOUSI] NVARCHAR (20),
+	[HRA] NVARCHAR (20),
+	[HRA DIFF-AUG-10] NVARCHAR (20),
+	[HYDCOURT] NVARCHAR (20),
+	[INCENTIVE] NVARCHAR (20),
+	[INCENTIVE DIFF] NVARCHAR (20),
+	[INCREMENT] NVARCHAR (20),
+	[INTEREST ON NSC (EARNING)] NVARCHAR (20),
+	[INTERIM] NVARCHAR (20),
+	[INTERIM ALLOWANCE] NVARCHAR (20),
+	[INTERIM RELIEF] NVARCHAR (20),
+	[INTERM RELIEF] NVARCHAR (20),
+	[JAIIB] NVARCHAR (20),
+	[JAIIB INCREMENT] NVARCHAR (20),
+	[JEEVAN] NVARCHAR (20),
+	[KADAPADCCB] NVARCHAR (20),
+	[KMLCOOPBANK] NVARCHAR (20),
+	[LEAVE ENCASHMENT] NVARCHAR (20),
+	[LIC] NVARCHAR (20),
+	[LIC PREMIUM] NVARCHAR (20),
+	[LICMACHILI] NVARCHAR (20),
+	[LICPENSION] NVARCHAR (20),
+	[LIFEINS] NVARCHAR (20),
+	[LOANPERKS] NVARCHAR (20),
+	[LOSS OF PAY] NVARCHAR (20),
+	[LT PF LOAN] NVARCHAR (20),
+	[LTASSNLEVY] NVARCHAR (20),
+	[LTC] NVARCHAR (20),
+	[LTC ENCASHMENT] NVARCHAR (20),
+	[LTCADVREC] NVARCHAR (20),
+	[MARR] NVARCHAR (20),
+	[MEDICAL] NVARCHAR (20),
+	[MEDICAL AID] NVARCHAR (20),
+	[MEDICAL ALLOWANCE] NVARCHAR (20),
+	[MEDICALADVANCE] NVARCHAR (20),
+	[MISCDED] NVARCHAR (20),
+	[MISCEARN] NVARCHAR (20),
+	[MISCELLAN] NVARCHAR (20),
+	[NPSG ALLOWANCE] NVARCHAR (20),
+	[NPSGA] NVARCHAR (20),
+	[OFFASSN] NVARCHAR (20),
+	[OFFASSNC] NVARCHAR (20),
+	[OFFI] NVARCHAR (20),
+	[OFFICIATING ALLOWANCE] NVARCHAR (20),
+	[ONDAYSAL] NVARCHAR (20),
+	[ONEDAYSAL] NVARCHAR (20),
+	[OT WAGES] NVARCHAR (20),
+	[PERNLON1] NVARCHAR (20),
+	[PERPAY] NVARCHAR (20),
+	[PERQPAY] NVARCHAR (20),
+	[PERS] NVARCHAR (20),
+	[PERSONAL PAY] NVARCHAR (20),
+	[PERSONAL QUAL ALLOWANCE] NVARCHAR (20),
+	[PETROL & PAPER] NVARCHAR (20),
+	[PETROL & PAPER 1] NVARCHAR (20),
+	[PF] NVARCHAR (20),
+	[PF5] NVARCHAR (20),
+	[PFHT1] NVARCHAR (20),
+	[PFHT2] NVARCHAR (20),
+	[PFLT1] NVARCHAR (20),
+	[PFLT2] NVARCHAR (20),
+	[PFLT3] NVARCHAR (20),
+	[PFLT4] NVARCHAR (20),
+	[PFPERKS] NVARCHAR (20),
+	[PH] NVARCHAR (20),
+	[PHONE] NVARCHAR (20),
+	[PHYSICALLY HANDICAPPED] NVARCHAR (20),
+	[RES. ATTENDERS ALLOWANCE] NVARCHAR (20),
+	[RESATTN] NVARCHAR (20),
+	[SBF] NVARCHAR (20),
+	[SBFLN] NVARCHAR (20),
+	[SHIFT DUTY ALLOWANCE] NVARCHAR (20),
+	[SOCIE] NVARCHAR (20),
+	[SP_ACSTI] NVARCHAR (20),
+	[SP_ARREAR] NVARCHAR (20),
+	[SP_BILLCOLL] NVARCHAR (20),
+	[SP_CARETAKE] NVARCHAR (20),
+	[SP_CASHCAD] NVARCHAR (20),
+	[SP_CASHIER] NVARCHAR (20),
+	[SP_CONVEY] NVARCHAR (20),
+	[SP_DAFTARI] NVARCHAR (20),
+	[SP_DESPATCH] NVARCHAR (20),
+	[SP_DRIVER] NVARCHAR (20),
+	[SP_ELEC] NVARCHAR (20),
+	[SP_INCENTIVE] NVARCHAR (20),
+	[SP_JAMEDAR] NVARCHAR (20),
+	[SP_KEY] NVARCHAR (20),
+	[SP_LIBRARY] NVARCHAR (20),
+	[SP_LIFT] NVARCHAR (20),
+	[SP_NONPROM] NVARCHAR (20),
+	[SP_PERPAY] NVARCHAR (20),
+	[SP_RECASST] NVARCHAR (20),
+	[SP_RECEPTION] NVARCHAR (20),
+	[SP_RECSUB] NVARCHAR (20),
+	[SP_SD_AWARD] NVARCHAR (20),
+	[SP_SD_MGR] NVARCHAR (20),
+	[SP_SHFTDUTY] NVARCHAR (20),
+	[SP_STENO] NVARCHAR (20),
+	[SP_TELEPHONE] NVARCHAR (20),
+	[SP_TYPIST] NVARCHAR (20),
+	[SP_WATCHMAN] NVARCHAR (20),
+	[SP_XEROX] NVARCHAR (20),
+	[SPCL. DA] NVARCHAR (20),
+	[SPECIAL INCREMENT] NVARCHAR (20),
+	[SPECIAL PAY] NVARCHAR (20),
+	[SPL ARREAR INCENTIVE] NVARCHAR (20),
+	[SPL BILL COLLECTOR] NVARCHAR (20),
+	[SPL CARE TAKER] NVARCHAR (20),
+	[SPL CASH CABIN] NVARCHAR (20),
+	[SPL CASHIER] NVARCHAR (20),
+	[SPL CONVEYANCE] NVARCHAR (20),
+	[SPL DAFTAR] NVARCHAR (20),
+	[SPL DAFTER] NVARCHAR (20),
+	[SPL DESPATCH] NVARCHAR (20),
+	[SPL DRIVER] NVARCHAR (20),
+	[SPL DUPLICATING/XEROX MACHINE] NVARCHAR (20),
+	[SPL ELECTRICIAN] NVARCHAR (20),
+	[SPL INCENTIVE] NVARCHAR (20),
+	[SPL JAMEDAR] NVARCHAR (20),
+	[SPL KEY] NVARCHAR (20),
+	[SPL LIBRARY] NVARCHAR (20),
+	[SPL LIFT OPERATOR] NVARCHAR (20),
+	[SPL NON PROMOTIONAL] NVARCHAR (20),
+	[SPL PERSONAL PAY] NVARCHAR (20),
+	[SPL RECEPTIONIST ALLOWANCE] NVARCHAR (20),
+	[SPL RECORD ROOM ASST ALLOWANCE] NVARCHAR (20),
+	[SPL RECORD ROOM SUB STAFF ALL] NVARCHAR (20),
+	[SPL RECORD ROOM SUB.STAFF ALLOWANCE] NVARCHAR (20),
+	[SPL SPL.ALW.ACSTI] NVARCHAR (20),
+	[SPL SPLIT DUTY - MANAGERS] NVARCHAR (20),
+	[SPL SPLIT DUTY -AWARD STAFF] NVARCHAR (20),
+	[SPL STENOGRAPHER] NVARCHAR (20),
+	[SPL TELEPHONE OPERATOR] NVARCHAR (20),
+	[SPL TYPIST] NVARCHAR (20),
+	[SPL WATCHMAN] NVARCHAR (20),
+	[SPL. ALLOW] NVARCHAR (20),
+	[SPLINCR] NVARCHAR (20),
+	[SPLPAY] NVARCHAR (20),
+	[STAGALLOW] NVARCHAR (20),
+	[STAGNATION INCREMENTS] NVARCHAR (20),
+	[SUBCLUB] NVARCHAR (20),
+	[SUBLT] NVARCHAR (20),
+	[SUBST] NVARCHAR (20),
+	[SUBUNION] NVARCHAR (20),
+	[SYSADMN] NVARCHAR (20),
+	[SYSTEM ADMINISTRATOR ALLOWANCE] NVARCHAR (20),
+	[TDS] NVARCHAR (20),
+	[TEACH] NVARCHAR (20),
+	[TEACHING ALLOWANCE] NVARCHAR (20),
+	[TELANGANA INCREMENT] NVARCHAR (20),
+	[TGASSN] NVARCHAR (20),
+	[TGUNION] NVARCHAR (20),
+	[TOFA] NVARCHAR (20),
+	[TSCABOA] NVARCHAR (20),
+	[UNIONLEVY] NVARCHAR (20),
+	[VEH2W] NVARCHAR (20),
+	[VEH4W] NVARCHAR (20),
+	[VEHINS] NVARCHAR (20),
+	[VEHMACHILI] NVARCHAR (20),
+	[VIJAYA] NVARCHAR (20),
+	[VISAKHA] NVARCHAR (20),
+	[VPF] NVARCHAR (20),
+	[WASHALLW] NVARCHAR (20),
+	[WASHING ALLOWANCE] NVARCHAR (20))
+	
+--Insertion AllowanceFact
+
+
+
+
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2020and month='April'),'2019-04-01','payslip','Regular'from pr_emp_payslip where fm='2019-04-01'and spl_type='Regular'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2020and month='May'),'2019-05-01','payslip','Regular'from pr_emp_payslip where fm='2019-05-01'and spl_type='Regular'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2020and month='June'),'2019-06-01','payslip','Regular'from pr_emp_payslip where fm='2019-06-01'and spl_type='Regular'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2020and month='July'),'2019-07-01','payslip','Regular'from pr_emp_payslip where fm='2019-07-01'and spl_type='Regular'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2020and month='August'),'2019-08-01','payslip','Regular'from pr_emp_payslip where fm='2019-08-01'and spl_type='Regular'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2020and month='September'),'2019-09-01','payslip','Regular'from pr_emp_payslip where fm='2019-09-01'and spl_type='Regular'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2020and month='October'),'2019-10-01','payslip','Regular'from pr_emp_payslip where fm='2019-10-01'and spl_type='Regular'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2020and month='November'),'2019-11-01','payslip','Regular'from pr_emp_payslip where fm='2019-11-01'and spl_type='Regular'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2020and month='December'),'2019-12-01','payslip','Regular'from pr_emp_payslip where fm='2019-12-01'and spl_type='Regular'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2020and month='January'),'2020-01-01','payslip','Regular'from pr_emp_payslip where fm='2020-01-01'and spl_type='Regular'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2020and month='February'),'2020-02-01','payslip','Regular'from pr_emp_payslip where fm='2020-02-01'and spl_type='Regular'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2020and month='March'),'2020-03-01','payslip','Regular'from pr_emp_payslip where fm='2020-03-01'and spl_type='Regular'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2021and month='April'),'2020-04-01','payslip','Regular'from pr_emp_payslip where fm='2020-04-01'and spl_type='Regular'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2021and month='May'),'2020-05-01','payslip','Regular'from pr_emp_payslip where fm='2020-05-01'and spl_type='Regular'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2021and month='June'),'2020-06-01','payslip','Regular'from pr_emp_payslip where fm='2020-06-01'and spl_type='Regular'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2021and month='July'),'2020-07-01','payslip','Regular'from pr_emp_payslip where fm='2020-07-01'and spl_type='Regular'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2021and month='August'),'2020-08-01','payslip','Regular'from pr_emp_payslip where fm='2020-08-01'and spl_type='Regular'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2021and month='September'),'2020-09-01','payslip','Regular'from pr_emp_payslip where fm='2020-09-01'and spl_type='Regular'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2021and month='October'),'2020-10-01','payslip','Regular'from pr_emp_payslip where fm='2020-10-01'and spl_type='Regular'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2021and month='November'),'2020-11-01','payslip','Regular'from pr_emp_payslip where fm='2020-11-01'and spl_type='Regular'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2021and month='December'),'2020-12-01','payslip','Regular'from pr_emp_payslip where fm='2020-12-01'and spl_type='Regular'
+
+
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2020and month='April'),'2019-04-01','payslip','Adhoc'from pr_emp_payslip where fm='2019-04-01'and spl_type='Adhoc'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2020and month='May'),'2019-05-01','payslip','Adhoc'from pr_emp_payslip where fm='2019-05-01'and spl_type='Adhoc'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2020and month='June'),'2019-06-01','payslip','Adhoc'from pr_emp_payslip where fm='2019-06-01'and spl_type='Adhoc'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2020and month='July'),'2019-07-01','payslip','Adhoc'from pr_emp_payslip where fm='2019-07-01'and spl_type='Adhoc'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2020and month='August'),'2019-08-01','payslip','Adhoc'from pr_emp_payslip where fm='2019-08-01'and spl_type='Adhoc'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2020and month='September'),'2019-09-01','payslip','Adhoc'from pr_emp_payslip where fm='2019-09-01'and spl_type='Adhoc'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2020and month='October'),'2019-10-01','payslip','Adhoc'from pr_emp_payslip where fm='2019-10-01'and spl_type='Adhoc'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2020and month='November'),'2019-11-01','payslip','Adhoc'from pr_emp_payslip where fm='2019-11-01'and spl_type='Adhoc'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2020and month='December'),'2019-12-01','payslip','Adhoc'from pr_emp_payslip where fm='2019-12-01'and spl_type='Adhoc'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2020and month='January'),'2020-01-01','payslip','Adhoc'from pr_emp_payslip where fm='2020-01-01'and spl_type='Adhoc'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2020and month='February'),'2020-02-01','payslip','Adhoc'from pr_emp_payslip where fm='2020-02-01'and spl_type='Adhoc'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2020and month='March'),'2020-03-01','payslip','Adhoc'from pr_emp_payslip where fm='2020-03-01'and spl_type='Adhoc'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2021and month='April'),'2020-04-01','payslip','Adhoc'from pr_emp_payslip where fm='2020-04-01'and spl_type='Adhoc'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2021and month='May'),'2020-05-01','payslip','Adhoc'from pr_emp_payslip where fm='2020-05-01'and spl_type='Adhoc'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2021and month='June'),'2020-06-01','payslip','Adhoc'from pr_emp_payslip where fm='2020-06-01'and spl_type='Adhoc'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2021and month='July'),'2020-07-01','payslip','Adhoc'from pr_emp_payslip where fm='2020-07-01'and spl_type='Adhoc'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2021and month='August'),'2020-08-01','payslip','Adhoc'from pr_emp_payslip where fm='2020-08-01'and spl_type='Adhoc'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2021and month='September'),'2020-09-01','payslip','Adhoc'from pr_emp_payslip where fm='2020-09-01'and spl_type='Adhoc'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2021and month='October'),'2020-10-01','payslip','Adhoc'from pr_emp_payslip where fm='2020-10-01'and spl_type='Adhoc'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2021and month='November'),'2020-11-01','payslip','Adhoc'from pr_emp_payslip where fm='2020-11-01'and spl_type='Adhoc'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2021and month='December'),'2020-12-01','payslip','Adhoc'from pr_emp_payslip where fm='2020-12-01'and spl_type='Adhoc'
+
+
+
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2020and month='April'),'2019-04-01','payslip','Encashment'from pr_emp_payslip where fm='2019-04-01'and spl_type='Encashment'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2020and month='May'),'2019-05-01','payslip','Encashment'from pr_emp_payslip where fm='2019-05-01'and spl_type='Encashment'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2020and month='June'),'2019-06-01','payslip','Encashment'from pr_emp_payslip where fm='2019-06-01'and spl_type='Encashment'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2020and month='July'),'2019-07-01','payslip','Encashment'from pr_emp_payslip where fm='2019-07-01'and spl_type='Encashment'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2020and month='August'),'2019-08-01','payslip','Encashment'from pr_emp_payslip where fm='2019-08-01'and spl_type='Encashment'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2020and month='September'),'2019-09-01','payslip','Encashment'from pr_emp_payslip where fm='2019-09-01'and spl_type='Encashment'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2020and month='October'),'2019-10-01','payslip','Encashment'from pr_emp_payslip where fm='2019-10-01'and spl_type='Encashment'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2020and month='November'),'2019-11-01','payslip','Encashment'from pr_emp_payslip where fm='2019-11-01'and spl_type='Encashment'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2020and month='December'),'2019-12-01','payslip','Encashment'from pr_emp_payslip where fm='2019-12-01'and spl_type='Encashment'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2020and month='January'),'2020-01-01','payslip','Encashment'from pr_emp_payslip where fm='2020-01-01'and spl_type='Encashment'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2020and month='February'),'2020-02-01','payslip','Encashment'from pr_emp_payslip where fm='2020-02-01'and spl_type='Encashment'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2020and month='March'),'2020-03-01','payslip','Encashment'from pr_emp_payslip where fm='2020-03-01'and spl_type='Encashment'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2021and month='April'),'2020-04-01','payslip','Encashment'from pr_emp_payslip where fm='2020-04-01'and spl_type='Encashment'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2021and month='May'),'2020-05-01','payslip','Encashment'from pr_emp_payslip where fm='2020-05-01'and spl_type='Encashment'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2021and month='June'),'2020-06-01','payslip','Encashment'from pr_emp_payslip where fm='2020-06-01'and spl_type='Encashment'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2021and month='July'),'2020-07-01','payslip','Encashment'from pr_emp_payslip where fm='2020-07-01'and spl_type='Encashment'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2021and month='August'),'2020-08-01','payslip','Encashment'from pr_emp_payslip where fm='2020-08-01'and spl_type='Encashment'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2021and month='September'),'2020-09-01','payslip','Encashment'from pr_emp_payslip where fm='2020-09-01'and spl_type='Encashment'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2021and month='October'),'2020-10-01','payslip','Encashment'from pr_emp_payslip where fm='2020-10-01'and spl_type='Encashment'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2021and month='November'),'2020-11-01','payslip','Encashment'from pr_emp_payslip where fm='2020-11-01'and spl_type='Encashment'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year=2021and month='December'),'2020-12-01','payslip','Encashment'from pr_emp_payslip where fm='2020-12-01'and spl_type='Encashment'
+
+
+
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT empcode,(select top 1 dim_tid from dim_time where year=2020and month='April'),'2019-04-01','tds',' 'from pr_emp_tds_process where fm='2019-04-01'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT empcode,(select top 1 dim_tid from dim_time where year=2020and month='May'),'2019-05-01','tds',' 'from pr_emp_tds_process where fm='2019-05-01'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT empcode,(select top 1 dim_tid from dim_time where year=2020and month='June'),'2019-06-01','tds',' 'from pr_emp_tds_process where fm='2019-06-01'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT empcode,(select top 1 dim_tid from dim_time where year=2020and month='July'),'2019-07-01','tds',' 'from pr_emp_tds_process where fm='2019-07-01'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT empcode,(select top 1 dim_tid from dim_time where year=2020and month='August'),'2019-08-01','tds',' 'from pr_emp_tds_process where fm='2019-08-01'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT empcode,(select top 1 dim_tid from dim_time where year=2020and month='September'),'2019-09-01','tds',' 'from pr_emp_tds_process where fm='2019-09-01'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT empcode,(select top 1 dim_tid from dim_time where year=2020and month='October'),'2019-10-01','tds',' 'from pr_emp_tds_process where fm='2019-10-01'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT empcode,(select top 1 dim_tid from dim_time where year=2020and month='November'),'2019-11-01','tds',' 'from pr_emp_tds_process where fm='2019-11-01'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT empcode,(select top 1 dim_tid from dim_time where year=2020and month='December'),'2019-12-01','tds',' 'from pr_emp_tds_process where fm='2019-12-01'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT empcode,(select top 1 dim_tid from dim_time where year=2020and month='January'),'2020-01-01','tds',' 'from pr_emp_tds_process where fm='2020-01-01'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT empcode,(select top 1 dim_tid from dim_time where year=2020and month='February'),'2020-02-01','tds',' 'from pr_emp_tds_process where fm='2020-02-01'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT empcode,(select top 1 dim_tid from dim_time where year=2020and month='March'),'2020-03-01','tds',' 'from pr_emp_tds_process where fm='2020-03-01'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT empcode,(select top 1 dim_tid from dim_time where year=2021and month='April'),'2020-04-01','tds',' 'from pr_emp_tds_process where fm='2020-04-01'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT empcode,(select top 1 dim_tid from dim_time where year=2021and month='May'),'2020-05-01','tds',' 'from pr_emp_tds_process where fm='2020-05-01'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT empcode,(select top 1 dim_tid from dim_time where year=2021and month='June'),'2020-06-01','tds',' 'from pr_emp_tds_process where fm='2020-06-01'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT empcode,(select top 1 dim_tid from dim_time where year=2021and month='July'),'2020-07-01','tds',' 'from pr_emp_tds_process where fm='2020-07-01'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT empcode,(select top 1 dim_tid from dim_time where year=2021and month='August'),'2020-08-01','tds',' 'from pr_emp_tds_process where fm='2020-08-01'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT empcode,(select top 1 dim_tid from dim_time where year=2021and month='September'),'2020-09-01','tds',' 'from pr_emp_tds_process where fm='2020-09-01'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT empcode,(select top 1 dim_tid from dim_time where year=2021and month='October'),'2020-10-01','tds',' 'from pr_emp_tds_process where fm='2020-10-01'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT empcode,(select top 1 dim_tid from dim_time where year=2021and month='November'),'2020-11-01','tds',' 'from pr_emp_tds_process where fm='2020-11-01'
+INSERT INTO [dbo].[AllowanceFact]([Emp_code],[dim_tid_ref_allow],[fm],[allowance_type],[ps_type])SELECT DISTINCT empcode,(select top 1 dim_tid from dim_time where year=2021and month='December'),'2020-12-01','tds',' 'from pr_emp_tds_process where fm='2020-12-01'
+
+------
+declare @name nvarchar(500);
+declare @name1 nvarchar(500);
+declare @amount decimal(20,2);
+declare @empcode nvarchar(20);
+declare @fyQry NVARCHAR(500);
+declare @fmnew bigint;
+declare @fm1 nvarchar(20);
+
+set @fmnew=201904;
+while (@fmnew<=202012)
+begin
+set @fm1=concat(substring (cast(@fmnew as nvarchar),1,4),'-',substring (cast(@fmnew as nvarchar),5,2),'-','01')
+select upper(all_name) as name,all_amount as amount,emp_code into #psallowtempreg from pr_emp_payslip_allowance where payslip_mid in(select id from pr_emp_payslip where fm=@fm1 and spl_type='Regular') and all_amount!=0;
+
+while exists (select * from #psallowtempreg)
+begin
+
+set @name= (select top 1 name from #psallowtempreg)
+set @amount= (select top 1 amount from #psallowtempreg)
+set @empcode= (select top 1 emp_code from #psallowtempreg)
+set @name1=concat('[',@name,']');
+print @name1;
+
+--set @fyQry = 'select @fy = dbo.getFY('+@pmonth+');';
+set @fyQry = 'update AllowanceFact set '+@name1+'='+CAST(@amount as nvarchar(20))+' where Emp_code='+@empcode+' and fm='''+@fm1+''' and allowance_type=''payslip'' and ps_type=''Regular'';';
+print @fyQry;
+execute sp_executesql 
+    @fyQry, 
+    N'@name1 NVARCHAR(500) OUTPUT', 
+    @name1 = @name1 output;
+--update AllowanceFact set @name1=@amount where Emp_code=@empcode and fm='2020-09-01' and allowance_type='payslip' and ps_type='Regular';
+print @name;
+print @amount;
+print @empcode;
+delete from #psallowtempreg where name=@name and amount=@amount and emp_code=@empcode;
+end
+drop table #psallowtempreg;
+set @fmnew=@fmnew+1;
+if(substring (cast(@fmnew as nvarchar),5,2)=13)
+begin
+set @fmnew=CAST(CONCAT((SUBSTRING(CAST(@fmnew as nvarchar),1,4)+1),'01') as bigint)
+end
+print @fmnew;
+print @fm1;
+end
+
+
+declare @namead nvarchar(500);
+declare @name1ad nvarchar(500);
+declare @amountad decimal(20,2);
+declare @empcodead nvarchar(20);
+declare @fyQryad NVARCHAR(500);
+declare @fmnew bigint;
+declare @fm1 nvarchar(20);
+
+set @fmnew=201904;
+while (@fmnew<=202012)
+begin
+set @fm1=concat(substring (cast(@fmnew as nvarchar),1,4),'-',substring (cast(@fmnew as nvarchar),5,2),'-','01')
+select upper(all_name) as name,all_amount as amount,emp_code into #psallowtempad from pr_emp_payslip_allowance where payslip_mid in(select id from pr_emp_payslip where fm=@fm1 and spl_type='Adhoc') and all_amount!=0;
+while exists (select * from #psallowtempad)
+begin
+
+set @namead= (select top 1 name from #psallowtempad)
+set @amountad= (select top 1 amount from #psallowtempad)
+set @empcodead= (select top 1 emp_code from #psallowtempad)
+set @name1ad=concat('[',@namead,']');
+print @name1ad;
+
+--set @fyQry = 'select @fy = dbo.getFY('+@pmonth+');';
+set @fyQryad = 'update AllowanceFact set '+@name1ad+'='+CAST(@amountad as nvarchar(20))+' where Emp_code='+@empcodead+' and fm='''+@fm1+''' and allowance_type=''payslip'' and ps_type=''Adhoc'';';
+print @fyQryad;
+execute sp_executesql 
+    @fyQryad, 
+    N'@name1ad NVARCHAR(500) OUTPUT', 
+    @name1ad = @name1ad output;
+--update AllowanceFact set @name1=@amount where Emp_code=@empcode and fm='2020-09-01' and allowance_type='payslip' and ps_type='Adhoc';
+print @namead;
+print @amountad;
+print @empcodead;
+delete from #psallowtempad where name=@namead and amount=@amountad and emp_code=@empcodead;
+end
+drop table #psallowtempad;
+set @fmnew=@fmnew+1;
+if(substring (cast(@fmnew as nvarchar),5,2)=13)
+begin
+set @fmnew=CAST(CONCAT((SUBSTRING(CAST(@fmnew as nvarchar),1,4)+1),'01') as bigint)
+end
+print @fmnew;
+print @fm1;
+end
+
+
+declare @nameencash nvarchar(500);
+declare @name1encash nvarchar(500);
+declare @amountencash decimal(20,2);
+declare @empcodeencash nvarchar(20);
+declare @fyQryencash NVARCHAR(500);
+declare @fmnew bigint;
+declare @fm1 nvarchar(20);
+
+set @fmnew=201904;
+while (@fmnew<=202012)
+begin
+set @fm1=concat(substring (cast(@fmnew as nvarchar),1,4),'-',substring (cast(@fmnew as nvarchar),5,2),'-','01')
+select upper(all_name) as name,all_amount as amount,emp_code into #psallowtempencash from pr_emp_payslip_allowance where payslip_mid in(select id from pr_emp_payslip where fm=@fm1 and spl_type='Encashment') and all_amount!=0;
+while exists (select * from #psallowtempencash)
+begin
+
+set @nameencash= (select top 1 name from #psallowtempencash)
+set @amountencash= (select top 1 amount from #psallowtempencash)
+set @empcodeencash= (select top 1 emp_code from #psallowtempencash)
+set @name1encash=concat('[',@nameencash,']');
+print @name1encash;
+
+--set @fyQry = 'select @fy = dbo.getFY('+@pmonth+');';
+set @fyQryencash = 'update AllowanceFact set '+@name1encash+'='+CAST(@amountencash as nvarchar(20))+' where Emp_code='+@empcodeencash+' and fm='''+@fm1+''' and allowance_type=''payslip'' and ps_type=''Encashment'';';
+print @fyQryencash;
+execute sp_executesql 
+    @fyQryencash, 
+    N'@name1encash NVARCHAR(500) OUTPUT', 
+    @name1encash = @name1encash output;
+--update AllowanceFact set @name1=@amount where Emp_code=@empcode and fm='2020-09-01' and allowance_type='payslip' and ps_type='Encashment';
+print @nameencash;
+print @amountencash;
+print @empcodeencash;
+delete from #psallowtempencash where name=@nameencash and amount=@amountencash and emp_code=@empcodeencash;
+end
+drop table #psallowtempencash;
+set @fmnew=@fmnew+1;
+if(substring (cast(@fmnew as nvarchar),5,2)=13)
+begin
+set @fmnew=CAST(CONCAT((SUBSTRING(CAST(@fmnew as nvarchar),1,4)+1),'01') as bigint)
+end
+print @fmnew;
+print @fm1;
+end
+
+
+declare @nametds nvarchar(500);
+declare @name1tds nvarchar(500);
+declare @amounttds decimal(20,2);
+declare @empcodetds nvarchar(20);
+declare @fyQrytds NVARCHAR(500);
+declare @fmnew bigint;
+declare @fm1 nvarchar(20);
+
+set @fmnew=201904;
+while (@fmnew<=202012)
+begin
+set @fm1=concat(substring (cast(@fmnew as nvarchar),1,4),'-',substring (cast(@fmnew as nvarchar),5,2),'-','01')
+select upper(all_name) as name,all_amount as amount,emp_code into #psallowtemptds from pr_emp_tds_process_allowances  where fm=@fm1;
+while exists (select * from #psallowtemptds)
+begin
+
+set @nametds= (select top 1 name from #psallowtemptds)
+set @amounttds= (select top 1 amount from #psallowtemptds)
+set @empcodetds= (select top 1 emp_code from #psallowtemptds)
+set @name1tds=concat('[',@nametds,']');
+print @name1tds;
+
+--set @fyQry = 'select @fy = dbo.getFY('+@pmonth+');';
+set @fyQrytds = 'update AllowanceFact set '+@name1tds+'='+CAST(@amounttds as nvarchar(20))+' where Emp_code='+@empcodetds+' and fm='''+@fm1+''' and allowance_type=''tds'';';
+print @fyQrytds;
+execute sp_executesql 
+    @fyQrytds, 
+    N'@name1tds NVARCHAR(500) OUTPUT', 
+    @name1tds = @name1tds output;
+--update AllowanceFact set @name1tds=@amounttds where Emp_code=@empcodetds and fm='2020-09-01' and allowance_type='payslip' and ps_type='Adhoc';
+print @nametds;
+print @amounttds;
+print @empcodetds;
+delete from #psallowtemptds where name=@nametds and amount=@amounttds and emp_code=@empcodetds;
+end
+drop table #psallowtemptds;
+set @fmnew=@fmnew+1;
+if(substring (cast(@fmnew as nvarchar),5,2)=13)
+begin
+set @fmnew=CAST(CONCAT((SUBSTRING(CAST(@fmnew as nvarchar),1,4)+1),'01') as bigint)
+end
+print @fmnew;
+print @fm1;
+end
+
+---Deduction Fact
+
+CREATE Table DeductionFact	(Emp_code	int	,
+	dim_tid_ref_ded	int Foreign key References dim_time (dim_tid)	,
+	fm NVARCHAR(20),
+	deduction_type NVARCHAR(20),
+	ps_type	NVARCHAR(20)	,
+	[TUTION FEE]	Decimal (20)	,
+	[UCO HOUSING LOAN INTEREST]	Decimal (20)	,
+	[UCO HOUSING LOAN PRINCIPLE]	Decimal (20)	,
+	[1 ADDL JR CVL JUDGE, TANUKU]	Decimal (20)	,
+	[AB-HLF(HYD)]	Decimal (20)	,
+	[ADITYA BIRLA ELSS]	Decimal (20)	,
+	[ADITYA BIRLA SIP]	Decimal (20)	,
+	[ANADHA VIDYARTHI GRIHA DONATION]	Decimal (20)	,
+	[ANDHRA BANK HOUSING LOAN INTEREST]	Decimal (20)	,
+	[ANDHRA BANK, RAMANTHPUR]	Decimal (20)	,
+	[ANNUAL HEALTH CHECKUP]	Decimal (20)	,
+	[APCCADB - EMP CC]	Decimal (20)	,
+	[APCCADB - EMP CCS]	Decimal (20)	,
+	[APCCADB-EMP CC]	Decimal (20)	,
+	[APCOB EMP ASSN LEVY]	Decimal (20)	,
+	[APCOB HL INTEREST]	Decimal (20)	,
+	[APCOB HL PRINCIPAL]	Decimal (20)	,
+	[APCOB HOUSING LOAN INTEREST]	Decimal (20)	,
+	[APCOB HOUSING LOAN PRINCIPLE]	Decimal (20)	,
+	[APCOB STAFF UNION LEVY]	Decimal (20)	,
+	[APCOB-ED.LOAN-HNR.BR]	Decimal (20)	,
+	[APCOB-ED.LOAN-HNR-BR]	Decimal (20)	,
+	[APCOB-ED.LOAN-HO]	Decimal (20)	,
+	[APCOB-ED-LOAN-HO]	Decimal (20)	,
+	[APCOB-HFC-HO]	Decimal (20)	,
+	[APCOBHFCLT]	Decimal (20)	,
+	[APCOB-HFC-LT]	Decimal (20)	,
+	[APOLLO MUNCIH HEALTH POLICY]	Decimal (20)	,
+	[APSCB-LT-EMP ASSN]	Decimal (20)	,
+	[ARUNODAYA FOUNDATION]	Decimal (20)	,
+	[AXIS BANK HL INTEREST]	Decimal (20)	,
+	[AXIS MF]	Decimal (20)	,
+	[AXIS MUTUAL FUND]	Decimal (20)	,
+	[BANKS EMP ASSN TELANGANA]	Decimal (20)	,
+	[BHAGYANAGAR GAU SEVA SADAN]	Decimal (20)	,
+	[BHAGYANAGAR GAU-SEVA SADAN]	Decimal (20)	,
+	[BIRLA SUNLIFE MF]	Decimal (20)	,
+	[BIRLA SUNLIFE TAX PLAN]	Decimal (20)	,
+	[BOM HOUSING LOAN INTEREST]	Decimal (20)	,
+	[BOM HOUSING LOAN PRINCIPLE]	Decimal (20)	,
+	[CADRE OFFICERS ASSN FUND]	Decimal (20)	,
+	[CAN FIN HOMES LTD HOUSING LOAN INT]	Decimal (20)	,
+	[CAN FIN HOMES LTD HOUSING LOAN PRINCIPAL]	Decimal (20)	,
+	[CAN FIN HOMES]	Decimal (20)	,
+	[CCA - AP]	Decimal (20)	,
+	[CCS - HYD]	Decimal (20)	,
+	[CCS-AP]	Decimal (20)	,
+	[CCS-HYD]	Decimal (20)	,
+	[CEO ALLOW ON ENCASHMENT]	Decimal (20)	,
+	[CLA PERQUISITES]	Decimal (20)	,
+	[CLUB SUBSCRIPTION]	Decimal (20)	,
+	[COD_INS_PRM]	Decimal (20)	,
+	[COD-INS-PRM1]	Decimal (20)	,
+	[CODPERKS]	Decimal (20)	,
+	[CORP-EDU LOAN]	Decimal (20)	,
+	[CORP-EDU LOAN-INT]	Decimal (20)	,
+	[CORPORATION BANK EDU LOAN INT]	Decimal (20)	,
+	[CORPORATION BANK EDU LOAN PRINCIPAL]	Decimal (20)	,
+	[CORPORATION BANK EDUCATION LOAN]	Decimal (20)	,
+	[CORPORATION EDUCATION LOAN INTEREST]	Decimal (20)	,
+	[COURT DEDUCTION]	Decimal (20)	,
+	[COURT DEDUCTIONS]	Decimal (20)	,
+	[DCCB DEDUCTION]	Decimal (20)	,
+	[DHFL HOUSING LOAN INT]	Decimal (20)	,
+	[DHFL HOUSING LOAN INTEREST]	Decimal (20)	,
+	[DHFL HOUSING LOAN PRINCIPAL]	Decimal (20)	,
+	[DHFL HOUSING LOAN PRINCIPLE]	Decimal (20)	,
+	[DHFL HOUSING LOAN]	Decimal (20)	,
+	[DIABILITY]	Decimal (20)	,
+	[DISABILITY OF LEFT HAND]	Decimal (20)	,
+	[DISABILITY,VH]	Decimal (20)	,
+	[DONATION TO GAU SEVA SADAN]	Decimal (20)	,
+	[DONATION TO ISHA EDUCATION]	Decimal (20)	,
+	[DONATION TO JAMIA NIZAMLA]	Decimal (20)	,
+	[DONATION TO SAVE THE CHILDREN]	Decimal (20)	,
+	[DONATION TO SIGHT RESTORATION SURGERIES]	Decimal (20)	,
+	[DONATION(2)]	Decimal (20)	,
+	[DONATION]	Decimal (20)	,
+	[DONATIONS - ISHA]	Decimal (20)	,
+	[DONATIONS]	Decimal (20)	,
+	[DR-CCS-VIZAG]	Decimal (20)	,
+	[DSP BLACK ROCK MUTUAL FUND]	Decimal (20)	,
+	[DSP BLACKROCK MF]	Decimal (20)	,
+	[DSP MUTUAL FUND]	Decimal (20)	,
+	[ED LOAN- CORP BANK INTEREST]	Decimal (20)	,
+	[EDELWEISS TOKIO LIP]	Decimal (20)	,
+	[EDU LOAN INT ANDHRA BANK]	Decimal (20)	,
+	[EDU LOAN INT TSCAB]	Decimal (20)	,
+	[EDU LOAN PRIN- BOB]	Decimal (20)	,
+	[EDU LOAN PRIN-SBI]	Decimal (20)	,
+	[EDUCATION LOAN INT TSCAB]	Decimal (20)	,
+	[EDUCATION LOAN INT/ANDHRA BANK]	Decimal (20)	,
+	[EDUCATION LOAN INTEREST(SBI)]	Decimal (20)	,
+	[EDUCATION LOAN INTEREST]	Decimal (20)	,
+	[EDUCATION LOAN PRINCIPAL(SBI)]	Decimal (20)	,
+	[ELSS]	Decimal (20)	,
+	[EMP_ASSN_SUB]	Decimal (20)	,
+	[ENCASHMENT]	Decimal (20)	,
+	[ESI DEDUCTION]	Decimal (20)	,
+	[ESTT-EXCESS HRA REC]	Decimal (20)	,
+	[EXGRATIA]	Decimal (20)	,
+	[FEST ADV MEDAK]	Decimal (20)	,
+	[FESTIVAL ADVANCE ELURU]	Decimal (20)	,
+	[FESTIVAL ADVANCE MEDAK]	Decimal (20)	,
+	[FESTIVAL ADVANCE ONGOLE]	Decimal (20)	,
+	[FESTIVAL ADVANCE]	Decimal (20)	,
+	[FGPRM]	Decimal (20)	,
+	[FP INCENTIVE RECOVERY]	Decimal (20)	,
+	[FRANK TEMP TAX SHIELD MF]	Decimal (20)	,
+	[GIC HOUSING LOAN INT]	Decimal (20)	,
+	[GIC HOUSING LOAN PRIN]	Decimal (20)	,
+	[GIC HOUSING LOAN]	Decimal (20)	,
+	[GIC HOUSING LOAN-INT]	Decimal (20)	,
+	[GRATUITY ON RETIREMENT]	Decimal (20)	,
+	[GRATUITY ON SUPERANNUATION]	Decimal (20)	,
+	[GRATUITY]	Decimal (20)	,
+	[GSLI]	Decimal (20)	,
+	[HDFC CREDILA EDU LOAN INTEREST]	Decimal (20)	,
+	[HDFC CREDILA EDUCATION LOAN INTEREST  ]	Decimal (20)	,
+	[HDFC ELSS SCHEME]	Decimal (20)	,
+	[HDFC HL INTEREST]	Decimal (20)	,
+	[HDFC HL INTREST]	Decimal (20)	,
+	[HDFC HL PRINCIPLE]	Decimal (20)	,
+	[HDFC HOUSING LOAN INT]	Decimal (20)	,
+	[HDFC HOUSING LOAN INTEREST\]	Decimal (20)	,
+	[HDFC HOUSING LOAN INTEREST]	Decimal (20)	,
+	[HDFC HOUSING LOAN PRINCIPLE]	Decimal (20)	,
+	[HDFC HOUSING LOAN]	Decimal (20)	,
+	[HDFC LIFE]	Decimal (20)	,
+	[HDFC LIP]	Decimal (20)	,
+	[HDFC]	Decimal (20)	,
+	[HDFL HOUSING LOAN INT]	Decimal (20)	,
+	[HEALTH INS-MAX BUPA]	Decimal (20)	,
+	[HEALTH INSURANCE POLICY]	Decimal (20)	,
+	[HEALTH INSURANCE]	Decimal (20)	,
+	[HEARING DISABILITY(100%)]	Decimal (20)	,
+	[HEARING DISABILITY]	Decimal (20)	,
+	[HELPAGE INDIA DONATION]	Decimal (20)	,
+	[HELPAGE INDIA]	Decimal (20)	,
+	[HFC INT]	Decimal (20)	,
+	[HFC INTEREST]	Decimal (20)	,
+	[HFC PRINCIPAL]	Decimal (20)	,
+	[HFC PRINCIPLE]	Decimal (20)	,
+	[HFC]	Decimal (20)	,
+	[HFC-INT]	Decimal (20)	,
+	[HL INT- UCO BANK]	Decimal (20)	,
+	[HL INTEREST OF ICICI]	Decimal (20)	,
+	[HLINT-LIC HOUSING FIN LTD]	Decimal (20)	,
+	[HL-LIC HOUSING FIN LTD]	Decimal (20)	,
+	[HLOAN INT INHOUSE]	Decimal (20)	,
+	[HL-UCO BANK]	Decimal (20)	,
+	[HONORARIUM]	Decimal (20)	,
+	[HOU-INSU-PRE]	Decimal (20)	,
+	[HOUSE PROPERTY INSURANCE]	Decimal (20)	,
+	[HOUSIG LOAN-DHFC]	Decimal (20)	,
+	[HOUSIN LOAN INT LIC HFL]	Decimal (20)	,
+	[HOUSIN LOAN LIC HFL]	Decimal (20)	,
+	[HOUSIN LOAN-LIC HFL]	Decimal (20)	,
+	[HOUSING LOAN - APCOB]	Decimal (20)	,
+	[HOUSING LOAN - CITY BANK]	Decimal (20)	,
+	[HOUSING LOAN - DHFL]	Decimal (20)	,
+	[HOUSING LOAN - HDFC]	Decimal (20)	,
+	[HOUSING LOAN - HUDCO]	Decimal (20)	,
+	[HOUSING LOAN - IDBI]	Decimal (20)	,
+	[HOUSING LOAN - LIC HF]	Decimal (20)	,
+	[HOUSING LOAN - LIC HFC]	Decimal (20)	,
+	[HOUSING LOAN - LIC HFL]	Decimal (20)	,
+	[HOUSING LOAN - LIC]	Decimal (20)	,
+	[HOUSING LOAN - LIC-HFL]	Decimal (20)	,
+	[HOUSING LOAN - PNB]	Decimal (20)	,
+	[HOUSING LOAN - SBI]	Decimal (20)	,
+	[HOUSING LOAN DEWAN HFC]	Decimal (20)	,
+	[HOUSING LOAN HDFC INT]	Decimal (20)	,
+	[HOUSING LOAN HDFC]	Decimal (20)	,
+	[HOUSING LOAN ICICI PRIN]	Decimal (20)	,
+	[HOUSING LOAN INDIAN BANK INT]	Decimal (20)	,
+	[HOUSING LOAN INDIAN BANK PRINICIPAL]	Decimal (20)	,
+	[HOUSING LOAN INT - INDIAN BANK]	Decimal (20)	,
+	[HOUSING LOAN INT HDFC]	Decimal (20)	,
+	[HOUSING LOAN INT ICICI]	Decimal (20)	,
+	[HOUSING LOAN INTEREST (FINANCIAL INTEREST AMOUNT)]	Decimal (20)	,
+	[HOUSING LOAN INT-LIC HFL]	Decimal (20)	,
+	[HOUSING LOAN LIC HFL INT]	Decimal (20)	,
+	[HOUSING LOAN LIC HFL PRINCIPAL]	Decimal (20)	,
+	[HOUSING LOAN LIC HFL]	Decimal (20)	,
+	[HOUSING LOAN -LIC HFL]	Decimal (20)	,
+	[HOUSING LOAN LIC]	Decimal (20)	,
+	[HOUSING LOAN PNB INT]	Decimal (20)	,
+	[HOUSING LOAN PNB]	Decimal (20)	,
+	[HOUSING LOAN PRIN ICICI]	Decimal (20)	,
+	[HOUSING LOAN PRINCIPLE (FINANCIAL YEAR RECOVERED AMOUNT)]	Decimal (20)	,
+	[HOUSING LOAN PRI-SBI]	Decimal (20)	,
+	[HOUSING LOAN SBI INT]	Decimal (20)	,
+	[HOUSING LOAN SBI PRINCIPAL]	Decimal (20)	,
+	[HOUSING LOAN- SBI]	Decimal (20)	,
+	[HOUSING LOAN]	Decimal (20)	,
+	[HOUSING LOAN-ANDHRA BANK]	Decimal (20)	,
+	[HOUSING LOAN-APCOB]	Decimal (20)	,
+	[HOUSING LOAN-CANARA BANK]	Decimal (20)	,
+	[HOUSING LOAN-CITI BANK]	Decimal (20)	,
+	[HOUSING LOAN-DEWAN HFC]	Decimal (20)	,
+	[HOUSING LOAN-DHFC]	Decimal (20)	,
+	[HOUSING LOAN-HDFC]	Decimal (20)	,
+	[HOUSING LOAN-HUDCO NIWAS]	Decimal (20)	,
+	[HOUSING LOAN-IDBI & LIC HFL]	Decimal (20)	,
+	[HOUSING LOAN-IDBI BANK]	Decimal (20)	,
+	[HOUSING LOAN-IDBI]	Decimal (20)	,
+	[HOUSING LOAN-INDIAN BANK]	Decimal (20)	,
+	[HOUSING LOAN-LIC HFC]	Decimal (20)	,
+	[HOUSING LOAN-LIC HFL]	Decimal (20)	,
+	[HOUSING LOAN-LIC HOUSING FINANCE]	Decimal (20)	,
+	[HOUSING LOAN-NATIONAL TRUST HOUSING FIN]	Decimal (20)	,
+	[HOUSING LOAN-NTHF]	Decimal (20)	,
+	[HOUSING LOAN-NTHFL]	Decimal (20)	,
+	[HOUSING LOAN-PNB]	Decimal (20)	,
+	[HOUSING LOAN-SBI]	Decimal (20)	,
+	[HOUSING LOAN-SUNDARAM BNP PARIBAS]	Decimal (20)	,
+	[HOUSING LOAN-SUNDARAM BNP]	Decimal (20)	,
+	[HOUSING LOAN-UNITED BANK OF INDIA]	Decimal (20)	,
+	[ICIC LOMBARD - MED INSURANCE]	Decimal (20)	,
+	[ICICI BANK HL INT]	Decimal (20)	,
+	[ICICI BANK HL PRINCIPAL]	Decimal (20)	,
+	[ICICI HL INTEREST]	Decimal (20)	,
+	[ICICI HL PRINCIPAL]	Decimal (20)	,
+	[ICICI HOUSING LOAN INTEREST]	Decimal (20)	,
+	[ICICI HOUSING LOAN PRINCIPAL]	Decimal (20)	,
+	[ICICI HOUSING LOAN PRINCIPLE]	Decimal (20)	,
+	[ICICI HOUSING LOAN]	Decimal (20)	,
+	[ICICI HOUSING LOAN-INT]	Decimal (20)	,
+	[ICICI LIP]	Decimal (20)	,
+	[ICICI LOMBARD MEDICAL INSURANCE PREMIUM]	Decimal (20)	,
+	[ICICI PRU LIFE]	Decimal (20)	,
+	[ICICI PRU MF]	Decimal (20)	,
+	[ICICI PRUDENTIAL LIFE]	Decimal (20)	,
+	[ICICI PRUDENTIAL LIP]	Decimal (20)	,
+	[ICICI PRUDENTIAL MF]	Decimal (20)	,
+	[IDBI HOUSING LOAN INTEREST]	Decimal (20)	,
+	[IDBI HOUSING LOAN PRINCIPLE]	Decimal (20)	,
+	[IDBI HOUSING LOAN]	Decimal (20)	,
+	[IDBI INTEREST]	Decimal (20)	,
+	[IDBI PRINCIPLE]	Decimal (20)	,
+	[IFFCO MEDICAL INSURANCE]	Decimal (20)	,
+	[IFFCO TOKIO MEDICAL INSURANCE]	Decimal (20)	,
+	[IFFCO TOKYO]	Decimal (20)	,
+	[IIFL HL INTEREST]	Decimal (20)	,
+	[IIFL HL PRINCIPLE]	Decimal (20)	,
+	[IIFL HOUSLING LOAN INTEREST]	Decimal (20)	,
+	[IIFL HOUSLING LOAN PRINCIPLE]	Decimal (20)	,
+	[IIFL INTEREST]	Decimal (20)	,
+	[IIFL PRINCIPLE]	Decimal (20)	,
+	[INCENTIVE]	Decimal (20)	,
+	[INCOME FROM HOUSE PROPERTY]	Decimal (20)	,
+	[INCOME ON HOUSE PROPERTY]	Decimal (20)	,
+	[INCOME TAX]	Decimal (20)	,
+	[INFRASTRUCTURE BONDS]	Decimal (20)	,
+	[INS PREMIUM-HDFC]	Decimal (20)	,
+	[INT OF HOUSE LOAN-SBI]	Decimal (20)	,
+	[INT OF VIZAG COOP BANK HOUSING LOAN]	Decimal (20)	,
+	[INT ON EDU LOAN SBI]	Decimal (20)	,
+	[INT ON EDU LOAN-ANDHRA BANK]	Decimal (20)	,
+	[INT ON EDU LOAN-BOB]	Decimal (20)	,
+	[INT ON EDU LOAN-IOB]	Decimal (20)	,
+	[INT ON EDU LOAN-PNB]	Decimal (20)	,
+	[INT ON EDUCATION LOAN]	Decimal (20)	,
+	[INT ON EDUCN LOAN]	Decimal (20)	,
+	[INT ON HOUSING LOAN LIC]	Decimal (20)	,
+	[INT ON HOUSING LOAN(UCO BANK)]	Decimal (20)	,
+	[INTEREST ON EDUCATION LOAN]	Decimal (20)	,
+	[INTEREST ON EDUCATION LOAN-TSCAB]	Decimal (20)	,
+	[INTEREST ON EDUCATIONAL LOAN]	Decimal (20)	,
+	[INTEREST ON EDUCATIONAL LOAN-INDIAN BANK]	Decimal (20)	,
+	[INTEREST ON HOUSING LOAN]	Decimal (20)	,
+	[INTEREST ON HOUSING LOAN-ICICI]	Decimal (20)	,
+	[INTEREST ON NSC (DEDUCTION)]	Decimal (20)	,
+	[INTEREST ON NSC (EARNING)]	Decimal (20)	,
+	[INTERIM RELIEF]	Decimal (20)	,
+	[JAMAI NIZAMIA]	Decimal (20)	,
+	[JAMIA NIZAMIA DONATION]	Decimal (20)	,
+	[JEEVAN SURAKSHA]	Decimal (20)	,
+	[JR CVL JUDGE, SULLURPET]	Decimal (20)	,
+	[KADAPA DCCB]	Decimal (20)	,
+	[KML COOP BANK, VIZAG]	Decimal (20)	,
+	[LEASE RENT PERKS]	Decimal (20)	,
+	[LEAVE ENCAHSMENT]	Decimal (20)	,
+	[LEAVE ENCASHMENT ON RETIREMENT]	Decimal (20)	,
+	[LEAVE ENCASHMENT ON SUPERANNUATION]	Decimal (20)	,
+	[LEVE ENCASHMENT ON RETIREMENT]	Decimal (20)	,
+	[LIC - PENSION]	Decimal (20)	,
+	[LIC ADVANCE RECOVERY]	Decimal (20)	,
+	[LIC HFC HOUSING LOAN INTEREST]	Decimal (20)	,
+	[LIC HFC HOUSING LOAN PRINCIPLE]	Decimal (20)	,
+	[LIC HFL HOUSING LOAN INTEREST]	Decimal (20)	,
+	[LIC HFL HOUSING LOAN PRINCIPLE]	Decimal (20)	,
+	[LIC HFL HOUSING LOAN]	Decimal (20)	,
+	[LIC HFL HOUSING LOAN-INT]	Decimal (20)	,
+	[LIC HFL INEREST]	Decimal (20)	,
+	[LIC HFL INT]	Decimal (20)	,
+	[LIC HFL INTEREST]	Decimal (20)	,
+	[LIC HFL PRINCIPAL]	Decimal (20)	,
+	[LIC HFL PRINCIPLE]	Decimal (20)	,
+	[LIC HFL PRINICIPLE]	Decimal (20)	,
+	[LIC HFL]	Decimal (20)	,
+	[LIC HOUSING FIN LTD- PRINCIPAL]	Decimal (20)	,
+	[LIC HOUSING FIN LTD-INTEREST]	Decimal (20)	,
+	[LIC HOUSING FINANCE INTEREST]	Decimal (20)	,
+	[LIC HOUSING FINANCE PRINCIPLE]	Decimal (20)	,
+	[LIC HOUSING LOAN INT]	Decimal (20)	,
+	[LIC HOUSING LOAN INTEREST]	Decimal (20)	,
+	[LIC HOUSING LOAN PRIN]	Decimal (20)	,
+	[LIC HOUSING LOAN PRINC]	Decimal (20)	,
+	[LIC HOUSING LOAN PRINCIPLE]	Decimal (20)	,
+	[LIC MACHILIPATNAM]	Decimal (20)	,
+	[LIC MUTUAL FUND]	Decimal (20)	,
+	[LIC]	Decimal (20)	,
+	[LIFE INSURANCE]	Decimal (20)	,
+	[LIP - BIRLA SUN LIFE]	Decimal (20)	,
+	[LIP - ICICI PRODENTIAL]	Decimal (20)	,
+	[LIP - ICICI PRU]	Decimal (20)	,
+	[LIP - MAX NEW YORK]	Decimal (20)	,
+	[LIP -BIRLA SUN]	Decimal (20)	,
+	[LIP KOTAK]	Decimal (20)	,
+	[LIP -MAX NEWYORK]	Decimal (20)	,
+	[LIP MEDICAL]	Decimal (20)	,
+	[LIP PLI]	Decimal (20)	,
+	[LIP RELIANCE]	Decimal (20)	,
+	[LIP SBI LIFE]	Decimal (20)	,
+	[LIP(MAY&NOV)]	Decimal (20)	,
+	[LIP]	Decimal (20)	,
+	[LIP-BAJAJ  ALLIANZ]	Decimal (20)	,
+	[LIP-BIRLA SUN LIFE]	Decimal (20)	,
+	[LIP-ICICI PRUDENTIAL]	Decimal (20)	,
+	[LIP-ICICI]	Decimal (20)	,
+	[LIP-ING VYSYA]	Decimal (20)	,
+	[LIP-KOTAK]	Decimal (20)	,
+	[LIP-MAX LIFE]	Decimal (20)	,
+	[LIP-MAX NEW YORK LIFE]	Decimal (20)	,
+	[LIP-MAX NEWYORK]	Decimal (20)	,
+	[LIP-PRUDETIAL LIFE]	Decimal (20)	,
+	[LIP-SBI LIFE]	Decimal (20)	,
+	[LIP-SHRIRAM LIC]	Decimal (20)	,
+	[LIP-SRIRAM LIFE]	Decimal (20)	,
+	[LOANPERKS]	Decimal (20)	,
+	[LT STAFF BENEFIT FUND]	Decimal (20)	,
+	[LTC ADVANCE RECOVERY]	Decimal (20)	,
+	[LTC ENCASHMENT]	Decimal (20)	,
+	[LTC]	Decimal (20)	,
+	[MALLIKAMBA INST OF MEN HANDICAPPED]	Decimal (20)	,
+	[MAX BUPA HEALTH INSURANCE]	Decimal (20)	,
+	[MAX CURE ANNUAL HEALTH CHECKUP]	Decimal (20)	,
+	[MAX HEALTH INSURANCE]	Decimal (20)	,
+	[MAX LIP]	Decimal (20)	,
+	[MEDICAL ADVANCE RECOVERY]	Decimal (20)	,
+	[MEDICAL AID]	Decimal (20)	,
+	[MEDICAL INS PERMIUM]	Decimal (20)	,
+	[MEDICAL INSURANCE]	Decimal (20)	,
+	[MEDICAL INSURANCE-NICL]	Decimal (20)	,
+	[MEDICAL POLICY]	Decimal (20)	,
+	[MEDICAL]	Decimal (20)	,
+	[MEDICLAIM POLICY]	Decimal (20)	,
+	[MEDICLAIM POLICY-NIACL]	Decimal (20)	,
+	[MEDICLIM POLICY]	Decimal (20)	,
+	[MENTALLY RETARDED DEPENDENT]	Decimal (20)	,
+	[MISC. DEDUCTION]	Decimal (20)	,
+	[MISC]	Decimal (20)	,
+	[MISCELLANEOUS DEDUCTION ]	Decimal (20)	,
+	[MUTUAL FUND (ELSS) ]	Decimal (20)	,
+	[MUTUAL FUNDS-AXIS]	Decimal (20)	,
+	[NATIONAL INSURANCE COMPANY LIMITED]	Decimal (20)	,
+	[NATIONAL INSURANCE MEDICLAIM]	Decimal (20)	,
+	[NATIONAL PENSION SYSTEM]	Decimal (20)	,
+	[NEW INDIA ASSURANCE MEDICAL INSURANCE]	Decimal (20)	,
+	[NEW INDIA HEALTH ISURANCE]	Decimal (20)	,
+	[NEW INDIA INSURANCE MEDICLAIM]	Decimal (20)	,
+	[NEW INDIA MEDICAL INSUARNCE]	Decimal (20)	,
+	[NIA MED INSU]	Decimal (20)	,
+	[NIA MEDICAL INS]	Decimal (20)	,
+	[NIA MEDICAL INSUARANCE]	Decimal (20)	,
+	[NIA MEDICAL INSURANCE]	Decimal (20)	,
+	[NIACL MEDICAL INSURANCE]	Decimal (20)	,
+	[NIACL-MEDICAL INS]	Decimal (20)	,
+	[NICL HOSPITALIZATION INS]	Decimal (20)	,
+	[NICL MED INSURANCE]	Decimal (20)	,
+	[NICL MEDIACL INSURANCE]	Decimal (20)	,
+	[NON PRIORITY PERSONAL LOAN]	Decimal (20)	,
+	[NPS SCHEME]	Decimal (20)	,
+	[NPS]	Decimal (20)	,
+	[NSC]	Decimal (20)	,
+	[OFFICERS ASSN FUND]	Decimal (20)	,
+	[ONE DAY SAL RECOVERY]	Decimal (20)	,
+	[ONE DAY SALARY RECOVERY]	Decimal (20)	,
+	[OT WAGES]	Decimal (20)	,
+	[OVER TIME WAGES]	Decimal (20)	,
+	[PENSION -  MAX NEW YORK LIFE]	Decimal (20)	,
+	[PENSION - HDFC]	Decimal (20)	,
+	[PERSONAL LOAN]	Decimal (20)	,
+	[PERSONAL LOAN1]	Decimal (20)	,
+	[PF 0.5%]	Decimal (20)	,
+	[PFPERKS]	Decimal (20)	,
+	[PGIMER DONATION]	Decimal (20)	,
+	[PHONE BILL]	Decimal (20)	,
+	[PHYSICAL DISABILITY(75%)]	Decimal (20)	,
+	[PHYSICAL DISABILITY]	Decimal (20)	,
+	[PHYSICALL HANDICAPPED(40%)]	Decimal (20)	,
+	[PHYSICALLY HADICAPPED DEPENDENT]	Decimal (20)	,
+	[PHYSICALLY HANDICAPPED DEPENDENT]	Decimal (20)	,
+	[PHYSICALLY HANDICAPPED(HH)]	Decimal (20)	,
+	[PHYSICALLY HANDICAPPED]	Decimal (20)	,
+	[PL ENCASH ON SUPERANNUATION]	Decimal (20)	,
+	[PL ENCASH. ON SUPERANNUATION]	Decimal (20)	,
+	[PL ENCASHMENT ON SUPERANNUATION]	Decimal (20)	,
+	[PL ENCASHMENT]	Decimal (20)	,
+	[PL ENCASHMNET]	Decimal (20)	,
+	[PL RNCASH. ON SUPERANNUATION]	Decimal (20)	,
+	[PLI]	Decimal (20)	,
+	[PNB EDUCATION LOAN INT]	Decimal (20)	,
+	[PNB EDUCATION LOAN INTEREST]	Decimal (20)	,
+	[PNB HL INTEREST]	Decimal (20)	,
+	[PNB HL PRINCIPLE]	Decimal (20)	,
+	[PNB HOUSING LOAN INT]	Decimal (20)	,
+	[PNB HOUSING LOAN INTEREST]	Decimal (20)	,
+	[PNB HOUSING LOAN PRINCIPAL]	Decimal (20)	,
+	[PNB HOUSING LOAN PRINCIPLE]	Decimal (20)	,
+	[PNB HOUSING LOAN]	Decimal (20)	,
+	[PNB HOUSING LOAN-INT]	Decimal (20)	,
+	[POWER FINANCE CORPORATION]	Decimal (20)	,
+	[PPF POST OFFICE]	Decimal (20)	,
+	[PPF]	Decimal (20)	,
+	[PRIVILEGE LEAVE ENCASHMENT ON RETIREMENT]	Decimal (20)	,
+	[PRN-JR CVL JUDGE, VIZAG]	Decimal (20)	,
+	[PROF. TAX]	Decimal (20)	,
+	[PROVIDENT FUND]	Decimal (20)	,
+	[REGISTRAION CHARGES & STAMP DUTY]	Decimal (20)	,
+	[RELIANCE MUTUAL FUND]	Decimal (20)	,
+	[RENTAL INCOME PER ANNUM]	Decimal (20)	,
+	[RENTAL INCOME]	Decimal (20)	,
+	[SAHRUDHAYA OLD AGE HOME]	Decimal (20)	,
+	[SBI EDU LOAN INT]	Decimal (20)	,
+	[SBI HL INT]	Decimal (20)	,
+	[SBI HL INTEREST]	Decimal (20)	,
+	[SBI HL PRINCIPLE]	Decimal (20)	,
+	[SBI HOUSING LOAN INTEREST]	Decimal (20)	,
+	[SBI HOUSING LOAN PRINCIPAL]	Decimal (20)	,
+	[SBI HOUSING LOAN PRINCIPLE]	Decimal (20)	,
+	[SBI HOUSING LOAN]	Decimal (20)	,
+	[SBI HOUSING LOAN-INT]	Decimal (20)	,
+	[SBI LIFE INSU]	Decimal (20)	,
+	[SBI LIFE INSURANCE]	Decimal (20)	,
+	[SBI LIFE SMART WEALTH BUILDER]	Decimal (20)	,
+	[SBI LIP]	Decimal (20)	,
+	[SBI PPF]	Decimal (20)	,
+	[SBO HOUSING LOAN INT]	Decimal (20)	,
+	[SC/ST ASSN LT SUBSCRIPTION]	Decimal (20)	,
+	[SC/ST ASSN ST SUBSCRIPTION]	Decimal (20)	,
+	[SIGHTSAVERS DONATION]	Decimal (20)	,
+	[SOS CHILDRENS VILLAGES INDIA DONATION]	Decimal (20)	,
+	[SR.CIVIL JUDGE, KADAPA]	Decimal (20)	,
+	[STAMP DUTY & REGISTRAIION CHARGES]	Decimal (20)	,
+	[STANDARD DEDUCTION]	Decimal (20)	,
+	[STAR HEALTH MEDICAL INSURANCE]	Decimal (20)	,
+	[STAR HELATH INSURANCE ]	Decimal (20)	,
+	[SUKANYA SAMRIDHI A/C]	Decimal (20)	,
+	[SUKANYA SAMRUDHI YOJANA]	Decimal (20)	,
+	[SYNDICATE BANK HL INTREST]	Decimal (20)	,
+	[SYNDICATE BANK HL PRINCIPLE]	Decimal (20)	,
+	[SYNDICATE BANK HOUSING LOAN INTEREST]	Decimal (20)	,
+	[SYNDICATE BANK HOUSING LOAN PRINCIPLE]	Decimal (20)	,
+	[TATA AIA LIP]	Decimal (20)	,
+	[TAX SAVER FD]	Decimal (20)	,
+	[TAX SAVER FDR]	Decimal (20)	,
+	[TAX SAVER GLD]	Decimal (20)	,
+	[TELANGANA EMP UNION]	Decimal (20)	,
+	[TELANGANA OFFICERS ASSN]	Decimal (20)	,
+	[THENKAILAYA BAKTHI PERAVAI DONATION]	Decimal (20)	,
+	[TSCAB EDUCATION LOAN]	Decimal (20)	,
+	[TSCAB OFFICERS ASSN]	Decimal (20)	,
+	[TUITION FEES]	Decimal (20)	,
+	[TUTION FEE - TKR EDU. COLLEGE]	Decimal (20)	,
+	[TUTION FEES]	Decimal (20)	,
+	[TUTITION FEES]	Decimal (20)	,
+	[TUTUION FEES]	Decimal (20)	,
+	[UCO BANK HL INTEREST]	Decimal (20)	,
+	[UCO BANK HOUSING LOAN INTEREST]	Decimal (20)	,
+	[UCO BANK HOUSING LOAN PRINCIPLE]	Decimal (20)	,
+	[UCO BANK PRINCIPLE]	Decimal (20)	,
+	[UCO-HOUSING LOAN]	Decimal (20)	,
+	[UCO-HOUSING LOAN-INT]	Decimal (20)	,
+	[UNION CLUB SUBSCRIPTION]	Decimal (20)	,
+	[UNION SUBSCRIPTION]	Decimal (20)	,
+	[VEHICLE LOAN MACHILIPATNAM]	Decimal (20)	,
+	[VEH-INS]	Decimal (20)	,
+	[VIJAYA COOP SOCIETY DEDUCTION]	Decimal (20)	,
+	[VISAKHA COOP SOCIETY DEDUCTION]	Decimal (20)	,
+	[VISUAL DIABILITY(75%)]	Decimal (20)	,
+	[VISUAL DIABILITY]	Decimal (20)	,
+	[VISUAL DIABILTY 100%]	Decimal (20)	,
+	[VISUALLY HANDICAPED]	Decimal (20)	,
+	[VISUALLY HANDICAPPED]	Decimal (20)	,
+	[VISUALLY HANDICAPPED-75%]	Decimal (20)	,
+	[VISUALLY IMPAIRED (PH - 100%)]	Decimal (20)	,
+	[VIZAG COOP BANK HOUSING LOAN]	Decimal (20)	,
+	[VPF DEDUCTION]	Decimal (20)	,
+	[VPF PERCENTAGE]	Decimal (20)	,
+	[VPF]	Decimal (20)	,
+	[WAGE REVISION ARREARS]	Decimal (20)	,
+	[XI JR.CVL JUDGE, C C COURT, SEC]	Decimal (20)	,
+	[XIX JR CVL COURT, C C COURT HYDERABAD]	Decimal (20)	,
+	[XIX JR.CVL COURT, C C COURT, HYDERABAD]	Decimal (20)	,
+	[XIX JR.CVL JUDGE, C C COURT, HYDERABAD]	Decimal (20)	,
+[PF ADVANCE LT2] Decimal (20)	,
+[PF ADVANCE LT3] Decimal (20)	,
+[CD LOAN 2] Decimal (20)	,
+[EDUCATION LOAN] Decimal (20)	,
+[HOUSING ADDL.LOAN - 2D] Decimal (20)	,
+[HOUSING LOAN - 2] Decimal (20)	,
+[HOUSING LOAN 2] Decimal (20)	,
+[HOUSING LOAN 2A] Decimal (20)	,
+[HOUSING LOAN 2B-2C] Decimal (20)	,
+[HOUSING LOAN 3] Decimal (20)	,
+[HOUSING LOAN COMMERICAL] Decimal (20)	,
+[HOUSING LOAN INT] Decimal (20)	,
+[HOUSING LOAN MAIN] Decimal (20)	,
+[HOUSING LOAN-PLOT] Decimal (20)	,
+[MARRIAGE LOAN] Decimal (20)	,
+[PF ADVANCE LT1] Decimal (20)	,
+[PF ADVANCE LT4] Decimal (20)	,
+[PF LOAN 1] Decimal (20)	,
+[PF LOAN 2] Decimal (20)	,
+[PF LOAN ST 1] Decimal (20)	,
+[PF LOAN ST2] Decimal (20)	,
+[SOCIETY LOAN] Decimal (20)	,
+[STAFF BENEFIT FUND LOAN] Decimal (20)	,
+[VEHICLE LOAN (2W)] Decimal (20)	,
+[VEHICLE LOAN (4W)] Decimal (20)	)
+
+	
+--DeductionFact Insertion
+
+
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2020 and month='April'),'2019-04-01','payslip','Regular' from pr_emp_payslip where fm='2019-04-01' and spl_type='Regular'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2020 and month='May'),'2019-05-01','payslip','Regular' from pr_emp_payslip where fm='2019-05-01' and spl_type='Regular'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2020 and month='June'),'2019-06-01','payslip','Regular' from pr_emp_payslip where fm='2019-06-01' and spl_type='Regular'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2020 and month='July'),'2019-07-01','payslip','Regular' from pr_emp_payslip where fm='2019-07-01' and spl_type='Regular'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2020 and month='August'),'2019-08-01','payslip','Regular' from pr_emp_payslip where fm='2019-08-01' and spl_type='Regular'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2020 and month='September'),'2019-09-01','payslip','Regular' from pr_emp_payslip where fm='2019-09-01' and spl_type='Regular'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2020 and month='October'),'2019-10-01','payslip','Regular' from pr_emp_payslip where fm='2019-10-01' and spl_type='Regular'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2020 and month='November'),'2019-11-01','payslip','Regular' from pr_emp_payslip where fm='2019-11-01' and spl_type='Regular'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2020 and month='December'),'2019-12-01','payslip','Regular' from pr_emp_payslip where fm='2019-12-01' and spl_type='Regular'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2020 and month='January'),'2020-01-01','payslip','Regular' from pr_emp_payslip where fm='2020-01-01' and spl_type='Regular'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2020 and month='February'),'2020-02-01','payslip','Regular' from pr_emp_payslip where fm='2020-02-01' and spl_type='Regular'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2020 and month='March'),'2020-03-01','payslip','Regular' from pr_emp_payslip where fm='2020-03-01' and spl_type='Regular'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2021 and month='April'),'2020-04-01','payslip','Regular' from pr_emp_payslip where fm='2020-04-01' and spl_type='Regular'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2021 and month='May'),'2020-05-01','payslip','Regular' from pr_emp_payslip where fm='2020-05-01' and spl_type='Regular'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2021 and month='June'),'2020-06-01','payslip','Regular' from pr_emp_payslip where fm='2020-06-01' and spl_type='Regular'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2021 and month='July'),'2020-07-01','payslip','Regular' from pr_emp_payslip where fm='2020-07-01' and spl_type='Regular'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2021 and month='August'),'2020-08-01','payslip','Regular' from pr_emp_payslip where fm='2020-08-01' and spl_type='Regular'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2021 and month='September'),'2020-09-01','payslip','Regular' from pr_emp_payslip where fm='2020-09-01' and spl_type='Regular'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2021 and month='October'),'2020-10-01','payslip','Regular' from pr_emp_payslip where fm='2020-10-01' and spl_type='Regular'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2021 and month='November'),'2020-11-01','payslip','Regular' from pr_emp_payslip where fm='2020-11-01' and spl_type='Regular'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2021 and month='December'),'2020-12-01','payslip','Regular' from pr_emp_payslip where fm='2020-12-01' and spl_type='Regular'
+
+
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2020 and month='April'),'2019-04-01','payslip','Adhoc' from pr_emp_payslip where fm='2019-04-01' and spl_type='Adhoc'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2020 and month='May'),'2019-05-01','payslip','Adhoc' from pr_emp_payslip where fm='2019-05-01' and spl_type='Adhoc'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2020 and month='June'),'2019-06-01','payslip','Adhoc' from pr_emp_payslip where fm='2019-06-01' and spl_type='Adhoc'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2020 and month='July'),'2019-07-01','payslip','Adhoc' from pr_emp_payslip where fm='2019-07-01' and spl_type='Adhoc'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2020 and month='August'),'2019-08-01','payslip','Adhoc' from pr_emp_payslip where fm='2019-08-01' and spl_type='Adhoc'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2020 and month='September'),'2019-09-01','payslip','Adhoc' from pr_emp_payslip where fm='2019-09-01' and spl_type='Adhoc'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2020 and month='October'),'2019-10-01','payslip','Adhoc' from pr_emp_payslip where fm='2019-10-01' and spl_type='Adhoc'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2020 and month='November'),'2019-11-01','payslip','Adhoc' from pr_emp_payslip where fm='2019-11-01' and spl_type='Adhoc'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2020 and month='December'),'2019-12-01','payslip','Adhoc' from pr_emp_payslip where fm='2019-12-01' and spl_type='Adhoc'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2020 and month='January'),'2020-01-01','payslip','Adhoc' from pr_emp_payslip where fm='2020-01-01' and spl_type='Adhoc'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2020 and month='February'),'2020-02-01','payslip','Adhoc' from pr_emp_payslip where fm='2020-02-01' and spl_type='Adhoc'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2020 and month='March'),'2020-03-01','payslip','Adhoc' from pr_emp_payslip where fm='2020-03-01' and spl_type='Adhoc'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2021 and month='April'),'2020-04-01','payslip','Adhoc' from pr_emp_payslip where fm='2020-04-01' and spl_type='Adhoc'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2021 and month='May'),'2020-05-01','payslip','Adhoc' from pr_emp_payslip where fm='2020-05-01' and spl_type='Adhoc'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2021 and month='June'),'2020-06-01','payslip','Adhoc' from pr_emp_payslip where fm='2020-06-01' and spl_type='Adhoc'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2021 and month='July'),'2020-07-01','payslip','Adhoc' from pr_emp_payslip where fm='2020-07-01' and spl_type='Adhoc'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2021 and month='August'),'2020-08-01','payslip','Adhoc' from pr_emp_payslip where fm='2020-08-01' and spl_type='Adhoc'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2021 and month='September'),'2020-09-01','payslip','Adhoc' from pr_emp_payslip where fm='2020-09-01' and spl_type='Adhoc'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2021 and month='October'),'2020-10-01','payslip','Adhoc' from pr_emp_payslip where fm='2020-10-01' and spl_type='Adhoc'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2021 and month='November'),'2020-11-01','payslip','Adhoc' from pr_emp_payslip where fm='2020-11-01' and spl_type='Adhoc'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2021 and month='December'),'2020-12-01','payslip','Adhoc' from pr_emp_payslip where fm='2020-12-01' and spl_type='Adhoc'
+
+
+
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2020 and month='April'),'2019-04-01','payslip','Encashment' from pr_emp_payslip where fm='2019-04-01' and spl_type='Encashment'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2020 and month='May'),'2019-05-01','payslip','Encashment' from pr_emp_payslip where fm='2019-05-01' and spl_type='Encashment'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2020 and month='June'),'2019-06-01','payslip','Encashment' from pr_emp_payslip where fm='2019-06-01' and spl_type='Encashment'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2020 and month='July'),'2019-07-01','payslip','Encashment' from pr_emp_payslip where fm='2019-07-01' and spl_type='Encashment'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2020 and month='August'),'2019-08-01','payslip','Encashment' from pr_emp_payslip where fm='2019-08-01' and spl_type='Encashment'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2020 and month='September'),'2019-09-01','payslip','Encashment' from pr_emp_payslip where fm='2019-09-01' and spl_type='Encashment'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2020 and month='October'),'2019-10-01','payslip','Encashment' from pr_emp_payslip where fm='2019-10-01' and spl_type='Encashment'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2020 and month='November'),'2019-11-01','payslip','Encashment' from pr_emp_payslip where fm='2019-11-01' and spl_type='Encashment'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2020 and month='December'),'2019-12-01','payslip','Encashment' from pr_emp_payslip where fm='2019-12-01' and spl_type='Encashment'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2020 and month='January'),'2020-01-01','payslip','Encashment' from pr_emp_payslip where fm='2020-01-01' and spl_type='Encashment'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2020 and month='February'),'2020-02-01','payslip','Encashment' from pr_emp_payslip where fm='2020-02-01' and spl_type='Encashment'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2020 and month='March'),'2020-03-01','payslip','Encashment' from pr_emp_payslip where fm='2020-03-01' and spl_type='Encashment'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2021 and month='April'),'2020-04-01','payslip','Encashment' from pr_emp_payslip where fm='2020-04-01' and spl_type='Encashment'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2021 and month='May'),'2020-05-01','payslip','Encashment' from pr_emp_payslip where fm='2020-05-01' and spl_type='Encashment'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2021 and month='June'),'2020-06-01','payslip','Encashment' from pr_emp_payslip where fm='2020-06-01' and spl_type='Encashment'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2021 and month='July'),'2020-07-01','payslip','Encashment' from pr_emp_payslip where fm='2020-07-01' and spl_type='Encashment'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2021 and month='August'),'2020-08-01','payslip','Encashment' from pr_emp_payslip where fm='2020-08-01' and spl_type='Encashment'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2021 and month='September'),'2020-09-01','payslip','Encashment' from pr_emp_payslip where fm='2020-09-01' and spl_type='Encashment'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2021 and month='October'),'2020-10-01','payslip','Encashment' from pr_emp_payslip where fm='2020-10-01' and spl_type='Encashment'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2021 and month='November'),'2020-11-01','payslip','Encashment' from pr_emp_payslip where fm='2020-11-01' and spl_type='Encashment'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT emp_code,(select top 1 dim_tid from dim_time where year= 2021 and month='December'),'2020-12-01','payslip','Encashment' from pr_emp_payslip where fm='2020-12-01' and spl_type='Encashment'
+
+
+
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT empcode,(select top 1 dim_tid from dim_time where year= 2020 and month='April'),'2019-04-01','tds',' ' from pr_emp_tds_process where fm='2019-04-01'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT empcode,(select top 1 dim_tid from dim_time where year= 2020 and month='May'),'2019-05-01','tds',' ' from pr_emp_tds_process where fm='2019-05-01'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT empcode,(select top 1 dim_tid from dim_time where year= 2020 and month='June'),'2019-06-01','tds',' ' from pr_emp_tds_process where fm='2019-06-01'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT empcode,(select top 1 dim_tid from dim_time where year= 2020 and month='July'),'2019-07-01','tds',' ' from pr_emp_tds_process where fm='2019-07-01'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT empcode,(select top 1 dim_tid from dim_time where year= 2020 and month='August'),'2019-08-01','tds',' ' from pr_emp_tds_process where fm='2019-08-01'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT empcode,(select top 1 dim_tid from dim_time where year= 2020 and month='September'),'2019-09-01','tds',' ' from pr_emp_tds_process where fm='2019-09-01'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT empcode,(select top 1 dim_tid from dim_time where year= 2020 and month='October'),'2019-10-01','tds',' ' from pr_emp_tds_process where fm='2019-10-01'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT empcode,(select top 1 dim_tid from dim_time where year= 2020 and month='November'),'2019-11-01','tds',' ' from pr_emp_tds_process where fm='2019-11-01'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT empcode,(select top 1 dim_tid from dim_time where year= 2020 and month='December'),'2019-12-01','tds',' ' from pr_emp_tds_process where fm='2019-12-01'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT empcode,(select top 1 dim_tid from dim_time where year= 2020 and month='January'),'2020-01-01','tds',' ' from pr_emp_tds_process where fm='2020-01-01'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT empcode,(select top 1 dim_tid from dim_time where year= 2020 and month='February'),'2020-02-01','tds',' ' from pr_emp_tds_process where fm='2020-02-01'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT empcode,(select top 1 dim_tid from dim_time where year= 2020 and month='March'),'2020-03-01','tds',' ' from pr_emp_tds_process where fm='2020-03-01'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT empcode,(select top 1 dim_tid from dim_time where year= 2021 and month='April'),'2020-04-01','tds',' ' from pr_emp_tds_process where fm='2020-04-01'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT empcode,(select top 1 dim_tid from dim_time where year= 2021 and month='May'),'2020-05-01','tds',' ' from pr_emp_tds_process where fm='2020-05-01'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT empcode,(select top 1 dim_tid from dim_time where year= 2021 and month='June'),'2020-06-01','tds',' ' from pr_emp_tds_process where fm='2020-06-01'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT empcode,(select top 1 dim_tid from dim_time where year= 2021 and month='July'),'2020-07-01','tds',' ' from pr_emp_tds_process where fm='2020-07-01'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT empcode,(select top 1 dim_tid from dim_time where year= 2021 and month='August'),'2020-08-01','tds',' ' from pr_emp_tds_process where fm='2020-08-01'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT empcode,(select top 1 dim_tid from dim_time where year= 2021 and month='September'),'2020-09-01','tds',' ' from pr_emp_tds_process where fm='2020-09-01'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT empcode,(select top 1 dim_tid from dim_time where year= 2021 and month='October'),'2020-10-01','tds',' ' from pr_emp_tds_process where fm='2020-10-01'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT empcode,(select top 1 dim_tid from dim_time where year= 2021 and month='November'),'2020-11-01','tds',' ' from pr_emp_tds_process where fm='2020-11-01'
+INSERT INTO [dbo].[DeductionFact]([Emp_code],[dim_tid_ref_ded],[fm],[deduction_type],[ps_type])SELECT DISTINCT empcode,(select top 1 dim_tid from dim_time where year= 2021 and month='December'),'2020-12-01','tds',' ' from pr_emp_tds_process where fm='2020-12-01'
+
+
+declare @name nvarchar(500);
+declare @name1 nvarchar(500);
+declare @amount decimal(20,2);
+declare @empcode nvarchar(20);
+declare @fyQry NVARCHAR(500);
+declare @fmnew bigint;
+declare @fm1 nvarchar(20);
+
+set @fmnew=201904;
+while (@fmnew<=202012)
+begin
+set @fm1=concat(substring (cast(@fmnew as nvarchar),1,4),'-',substring (cast(@fmnew as nvarchar),5,2),'-','01')
+
+select upper(dd_name) as name,dd_amount as amount,emp_code into #psdeducttempreg from pr_emp_payslip_deductions where payslip_mid in(select id from pr_emp_payslip where fm=@fm1 and spl_type='Regular') and dd_amount!=0;
+
+while exists (select * from #psdeducttempreg)
+begin
+
+set @name= (select top 1 name from #psdeducttempreg)
+set @amount= (select top 1 amount from #psdeducttempreg)
+set @empcode= (select top 1 emp_code from #psdeducttempreg)
+set @name1=concat('[',@name,']');
+print @name1;
+
+--set @fyQry = 'select @fy = dbo.getFY('+@pmonth+');';
+set @fyQry = 'update DeductionFact set '+@name1+'='+CAST(@amount as nvarchar(20))+' where Emp_code='+@empcode+' and fm='''+@fm1+''' and deduction_type=''payslip'' and ps_type=''Regular'';';
+print @fyQry;
+execute sp_executesql 
+    @fyQry, 
+    N'@name1 NVARCHAR(500) OUTPUT', 
+    @name1 = @name1 output;
+--update DeductionFact set @name1=@amount where Emp_code=@empcode and fm='2020-09-01' and deduction_type='payslip' and ps_type='Regular';
+print @name;
+print @amount;
+print @empcode;
+delete from #psdeducttempreg where name=@name and amount=@amount and emp_code=@empcode;
+end
+drop table #psdeducttempreg;
+set @fmnew=@fmnew+1;
+if(substring (cast(@fmnew as nvarchar),5,2)=13)
+begin
+set @fmnew=CAST(CONCAT((SUBSTRING(CAST(@fmnew as nvarchar),1,4)+1),'01') as bigint)
+end
+print @fmnew;
+print @fm1;
+end
+
+
+
+declare @namead nvarchar(500);
+declare @name1ad nvarchar(500);
+declare @amountad decimal(20,2);
+declare @empcodead nvarchar(20);
+declare @fyQryad NVARCHAR(500);
+declare @fmnew bigint;
+declare @fm1 nvarchar(20);
+
+set @fmnew=201904;
+while (@fmnew<=202012)
+begin
+set @fm1=concat(substring (cast(@fmnew as nvarchar),1,4),'-',substring (cast(@fmnew as nvarchar),5,2),'-','01')
+select upper(dd_name) as name,dd_amount as amount,emp_code into #psdeducttempad from pr_emp_payslip_deductions where payslip_mid in(select id from pr_emp_payslip where fm=@fm1 and spl_type='Adhoc') and dd_amount!=0;
+while exists (select * from #psdeducttempad)
+begin
+
+set @namead= (select top 1 name from #psdeducttempad)
+set @amountad= (select top 1 amount from #psdeducttempad)
+set @empcodead= (select top 1 emp_code from #psdeducttempad)
+set @name1ad=concat('[',@namead,']');
+print @name1ad;
+
+--set @fyQry = 'select @fy = dbo.getFY('+@pmonth+');';
+set @fyQryad = 'update DeductionFact set '+@name1ad+'='+CAST(@amountad as nvarchar(20))+' where Emp_code='+@empcodead+' and fm='''+@fm1+''' and deduction_type=''payslip'' and ps_type=''Adhoc'';';
+print @fyQryad;
+execute sp_executesql 
+    @fyQryad, 
+    N'@name1ad NVARCHAR(500) OUTPUT', 
+    @name1ad = @name1ad output;
+--update DeductionFact set @name1=@amount where Emp_code=@empcode and fm='2020-09-01' and deduction_type='payslip' and ps_type='Adhoc';
+print @namead;
+print @amountad;
+print @empcodead;
+delete from #psdeducttempad where name=@namead and amount=@amountad and emp_code=@empcodead;
+end
+drop table #psdeducttempad;
+set @fmnew=@fmnew+1;
+if(substring (cast(@fmnew as nvarchar),5,2)=13)
+begin
+set @fmnew=CAST(CONCAT((SUBSTRING(CAST(@fmnew as nvarchar),1,4)+1),'01') as bigint)
+end
+print @fmnew;
+print @fm1;
+end
+
+
+
+declare @nameencash nvarchar(500);
+declare @name1encash nvarchar(500);
+declare @amountencash decimal(20,2);
+declare @empcodeencash nvarchar(20);
+declare @fyQryencash NVARCHAR(500);
+declare @fmnew bigint;
+declare @fm1 nvarchar(20);
+
+set @fmnew=201904;
+while (@fmnew<=202012)
+begin
+set @fm1=concat(substring (cast(@fmnew as nvarchar),1,4),'-',substring (cast(@fmnew as nvarchar),5,2),'-','01')
+select upper(dd_name) as name,dd_amount as amount,emp_code into #psdeducttempencash from pr_emp_payslip_deductions where payslip_mid in(select id from pr_emp_payslip where fm='2020-09-01' and spl_type='Encashment') and dd_amount!=0;
+while exists (select * from #psdeducttempencash)
+begin
+
+set @nameencash= (select top 1 name from #psdeducttempencash)
+set @amountencash= (select top 1 amount from #psdeducttempencash)
+set @empcodeencash= (select top 1 emp_code from #psdeducttempencash)
+set @name1encash=concat('[',@nameencash,']');
+print @name1encash;
+
+--set @fyQry = 'select @fy = dbo.getFY('+@pmonth+');';
+set @fyQryencash = 'update DeductionFact set '+@name1encash+'='+CAST(@amountencash as nvarchar(20))+' where Emp_code='+@empcodeencash+' and fm='''+@fm1+''' and deduction_type=''payslip'' and ps_type=''Encashment'';';
+print @fyQryencash;
+execute sp_executesql 
+    @fyQryencash, 
+    N'@name1encash NVARCHAR(500) OUTPUT', 
+    @name1encash = @name1encash output;
+--update DeductionFact set @name1=@amount where Emp_code=@empcode and fm='2020-09-01' and deduction_type='payslip' and ps_type='Encashment';
+print @nameencash;
+print @amountencash;
+print @empcodeencash;
+delete from #psdeducttempencash where name=@nameencash and amount=@amountencash and emp_code=@empcodeencash;
+end
+drop table #psdeducttempencash;
+set @fmnew=@fmnew+1;
+if(substring (cast(@fmnew as nvarchar),5,2)=13)
+begin
+set @fmnew=CAST(CONCAT((SUBSTRING(CAST(@fmnew as nvarchar),1,4)+1),'01') as bigint)
+end
+print @fmnew;
+print @fm1;
+end
+
+
+declare @nametds nvarchar(500);
+declare @name1tds nvarchar(500);
+declare @amounttds decimal(20,2);
+declare @amounttds1 decimal(20,2);
+declare @empcodetds nvarchar(20);
+declare @fyQrytds NVARCHAR(500);
+declare @fmnew bigint;
+declare @fm1 nvarchar(20);
+
+set @fmnew=201904;
+while (@fmnew<=202012)
+begin
+set @fm1=concat(substring (cast(@fmnew as nvarchar),1,4),'-',substring (cast(@fmnew as nvarchar),5,2),'-','01')
+select dfm.id,upper(dfm.name) as name,sd.empcode as emp_code,sd.gross as amount,sd.qual as amount1 into #psdeducttemptds from pr_deduction_field_master dfm join pr_emp_tds_section_deductions sd on dfm.id=sd.m_id where sd.fm=@fm1
+while exists (select * from #psdeducttemptds)
+begin
+
+set @nametds= (select top 1 name from #psdeducttemptds)
+set @amounttds= (select top 1 amount from #psdeducttemptds)
+set @amounttds1= (select top 1 amount1 from #psdeducttemptds)
+set @empcodetds= (select top 1 emp_code from #psdeducttemptds)
+set @name1tds=concat('[',@nametds,']');
+if(@amounttds1>@amounttds)
+begin
+set @amounttds=@amounttds1;
+end
+print @name1tds;
+
+--set @fyQry = 'select @fy = dbo.getFY('+@pmonth+');';
+set @fyQrytds = 'update DeductionFact set '+@name1tds+'='+CAST(@amounttds as nvarchar(20))+' where Emp_code='+@empcodetds+' and fm='''+@fm1+''' and deduction_type=''tds'';';
+print @fyQrytds;
+execute sp_executesql 
+    @fyQrytds, 
+    N'@name1tds NVARCHAR(500) OUTPUT', 
+    @name1tds = @name1tds output;
+--update DeductionFact set @name1=@amount where Emp_code=@empcode and fm='2020-09-01' and deduction_type='tds';
+print @nametds;
+print @amounttds;
+print @empcodetds;
+delete from #psdeducttemptds where name=@nametds and amount=@amounttds and emp_code=@empcodetds;
+end
+drop table #psdeducttemptds;
+set @fmnew=@fmnew+1;
+if(substring (cast(@fmnew as nvarchar),5,2)=13)
+begin
+set @fmnew=CAST(CONCAT((SUBSTRING(CAST(@fmnew as nvarchar),1,4)+1),'01') as bigint)
+end
+print @fmnew;
+print @fm1;
+end

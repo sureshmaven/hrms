@@ -1,0 +1,68 @@
+﻿
+@{
+    ViewBag.Title = "IncomeTaxDetails";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+<h2>IncomeTaxDetails</h2>
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <h1>Income Tax Bank Payment Details<span class="year-end">TGCAB 01-04-2019 - 31-04-2020</span></h1>
+                        <div class="col-md-12 mt_10">
+                                <div class="table-responsive">
+                                    <table id="income_tax" class="display" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Month</th>
+                                                <th>Payment Date</th>
+                                                <th>Bank Name</th>
+                                                <th>Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Apr-2018</td>
+                                                <td>15-04-2014</td>
+                                                <td>HDFC</td>
+                                                <td>8000.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Apr-2018</td>
+                                                <td>15-04-2014</td>
+                                                <td>HDFC</td>
+                                                <td>8000.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Apr-2018</td>
+                                                <td>15-04-2014</td>
+                                                <td>HDFC</td>
+                                                <td>8000.00</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                          </div>
+                    <div class="col-md-12 mt_10">
+                        <div class="pull-right">
+                            <button type="reset" class="btn btn-default cancel">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Clear Row</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#income_tax').DataTable();
+    });
+</script>
+

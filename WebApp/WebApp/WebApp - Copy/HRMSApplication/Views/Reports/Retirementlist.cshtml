@@ -1,0 +1,1154 @@
+﻿
+@model Entities.view_employee
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var rolepages = TempData["RolePages"].ToString();
+    ViewBag.RolePages = TempData["RolePages"];
+    var reportTitle = ViewBag.ReportTitle;
+    var ReportPdfSize = ViewBag.PdfSize;
+    var ReportpageSize = ViewBag.pageSize;
+    var PdfExportColumns = ViewBag.ExportColumns;
+    var dataUrl = ViewBag.DataUrl;
+    var reportFilters = ViewBag.ReportFilters;
+    var reportFiltersTwo = ViewBag.ReportFiltersTwo;
+    var reportFiltersThree = ViewBag.ReportFiltersThree;
+    var searchBtn = ViewBag.SearchBtn;
+}
+@{
+    var message = TempData["AlertMessage"] ?? string.Empty;
+}
+<style>
+    .activeClass {
+        background: #ffdb99;
+    }
+
+    .secondClass {
+        /*background: #FF9999;*/
+        color: red;
+    }
+</style>
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade in active">
+                    <div class="page_st">
+                        <div class="page">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="main_heading">
+                                    <h1>Report List </h1>
+                                    <div class="report-list">
+                                        @{
+                                            <ul>
+                                                @if (rolepages.Contains("RPBRA"))
+                                                {
+                                                    <li class='@(reportTitle == "Branches List" ? "active" : "")'><a href=@Url.Action("Index", "AllReports")>Branches</a></li>}
+                                                @if (rolepages.Contains("RPBRC"))
+                                                {
+                                                    <li class='@(reportTitle == "Branches Contacts List" ? "active" : "")'><a href=@Url.Action("BranchContacts", "AllReports")>Branch Contacts</a></li>}
+                                                @if (rolepages.Contains("RPCDR"))
+                                                {
+                                                    @*<li><a href=@Url.Action("CadreReport", "Reports")>Cadre</a></li>*@
+                                                    <li class='@(reportTitle == "Cadre List" ? "active" : "")'><a href=@Url.Action("CadreList", "AllReports")>Cadre</a></li>
+                                                }
+                                                @if (rolepages.Contains("RPCAT"))
+                                                {
+                                                    <li><a href=@Url.Action("staffCategoryList", "AllReports")>Category</a></li>}
+                                                @if (rolepages.Contains("RPDOB"))
+                                                {
+                                                    <li class='@(reportTitle == "DOB List" ? "active" : "")'><a href=@Url.Action("EmpDob", "AllReports")>DOB</a></li>}
+                                                @if (rolepages.Contains("RPEMP"))
+                                                {
+                                                    <li class='@(reportTitle == "Employee List" ? "active" : "")'><a href=@Url.Action("EmployeesRept", "AllReports")>Employees</a></li>}
+                                                @if (rolepages.Contains("RPEAL"))
+                                                {
+                                                    <li class='@(reportTitle == "Future Applied Leaves" ? "active" : "")'><a href=@Url.Action("FutureAppliedLeaves", "AllReports")>Future Applied Leaves</a></li>}
+                                                @if (rolepages.Contains("RPHOF"))
+                                                {
+                                                    <li class='@(reportTitle == "Head Office List" ? "active" : "")'><a href=@Url.Action("HeadOfficeList", "AllReports")>Head Office</a></li>}
+                                                @if (rolepages.Contains("RPHOA"))
+                                                {
+                                                    <li class='@(reportTitle == "Head Office Attender List" ? "active" : "")'><a href=@Url.Action("HeadOfcAttenders", "AllReports")>Head Office Attenders</a></li>}
+                                                @if (rolepages.Contains("RPKOF"))
+                                                {
+                                                    <li class='@(reportTitle == "Work Profile Of Key Officials" ? "active" : "")'><a href=@Url.Action("KeyOfficials", "AllReports")>Key Officials</a></li>}
+                                                @if (rolepages.Contains("RPLTC"))
+                                                {
+                                                    <li class='@(reportTitle == "LTC List" ? "active" : "")'><a href=@Url.Action("LTCList", "AllReports")>LTC</a></li>}
+                                                @if (rolepages.Contains("RPLEV"))
+                                                {
+                                                    <li class='@(reportTitle == "Emp Leave History" ? "active" : "")'><a href=@Url.Action("LeavesHistory", "AllReports")>Leaves</a></li>}
+                                                @if (rolepages.Contains("RPLLE"))
+                                                {
+                                                    <li class='@(reportTitle == "Long Leaves" ? "active" : "")'><a href=@Url.Action("LongLeaves", "AllReports")>Long Leaves</a></li>}
+                                                @if (rolepages.Contains("RPLFA"))
+                                                {
+                                                    <li class='@(reportTitle == "Leave Approval List" ? "active" : "")'><a href=@Url.Action("LeavesCarryForward", "AllReports")>Leaves Forwarded/Approved</a></li>}
+                                                @if (rolepages.Contains("RPLAL"))
+                                                {
+                                                    <li class='@(reportTitle == "Late Applied Leaves List" ? "active" : "")'><a href=@Url.Action("LateAppliedLeaves", "AllReports")>Late Applied Leaves</a></li>}
+                                                @if (rolepages.Contains("RPLCD"))
+                                                {
+                                                    <li class='@(reportTitle == "Cancelled Leaves" ? "active" : "")'><a href=@Url.Action("LeaveCancelled", "AllReports")>Leaves Cancelled</a></li>}
+                                                @if (rolepages.Contains("RPCMP"))
+                                                {
+                                                    <li class='@(reportTitle == "Month Wise CL/ML/PL" ? "active" : "")'><a href=@Url.Action("MonthwiseCLMLPL", "AllReports")>Month Wise CL/ML/PL</a></li>}
+                                                @if (rolepages.Contains("RPMWL"))
+                                                {
+                                                    <li class='@(reportTitle == "Month Wise Leaves" ? "active" : "")'><a href=@Url.Action("MonthWiseLeaves", "AllReports")>Month Wise Leaves</a></li>}
+                                                @if (rolepages.Contains("RPMWO"))
+                                                {
+                                                    <li class='@(reportTitle == "Month Wise OD" ? "active" : "")'><a href=@Url.Action("MonthWiseOD", "AllReports")>Month Wise OD</a></li>}
+                                                @if (rolepages.Contains("RPMTT"))
+                                                {
+                                                    <li class='@(reportTitle == "Month Wise Temporary Transfer" ? "active" : "")'><a href=@Url.Action("MonthWiseTemporaryTransfer", "AllReports")>Month Wise Temporary Transfer</a></li>}
+                                                                                                @if (rolepages.Contains("RPODD"))
+                                                                                                {
+                                                                                                    <li class='@(reportTitle == "OD List" ? "active" : "")'><a href=@Url.Action("OdDuty", "AllReports")>OD</a></li>}
+                                                @if (rolepages.Contains("RPPTS"))
+                                                {
+                                                    <li class='@(reportTitle == "Permanent Transfer List" ? "active" : "")'><a href=@Url.Action("PermanentTransfer", "AllReports")>Permanent Transfers</a></li>}
+                                                @if (rolepages.Contains("RPPRO"))
+                                                {
+                                                    <li class='@(reportTitle == "Transfer List" ? "active" : "")'><a href=@Url.Action("EmpPromotions", "AllReports")>Promotion</a></li>}
+                                                @if (rolepages.Contains("RPSPL"))
+                                                {
+                                                    <li class='@(reportTitle == "PL List" ? "active" : "")'><a href=@Url.Action("PrivilegeLeave", "AllReports")>PL</a></li>}
+                                                @if (rolepages.Contains("RPRET"))
+                                                {
+                                                    @*<li class='@(reportTitle == "Retirement List" ? "active" : "")'><a href=@Url.Action("Retirement", "AllReports")>Retirements</a></li>}*@
+                                                    <li class="active"><a href=@Url.Action("RetirementReport", "Reports")>Retirements</a></li>}
+                                                @if (rolepages.Contains("RPSEN"))
+                                                {
+                                                    <li class='@(reportTitle == "Seniorty List" ? "active" : "")'><a href=@Url.Action("Seniorty", "AllReports")>Seniority</a></li>}
+                                                @if (rolepages.Contains("RPSMA"))
+                                                {
+                                                    <li class='@(reportTitle == "StaffMaster List" ? "active" : "")'><a href=@Url.Action("StaffMaster", "AllReports")>Staff Master</a></li>}
+                                                @if (rolepages.Contains("RPTXH"))
+                                                {
+                                                    <li class='@(reportTitle == "Transaction History" ? "active" : "")'><a href=@Url.Action("TxHistory", "AllReports")>TX History</a></li>}
+                                                @if (rolepages.Contains("RPTTS"))
+                                                {
+                                                    <li class='@(reportTitle == "Temporary Transfer List" ? "active" : "")'><a href=@Url.Action("TempTrnsfr", "AllReports")>Temporary Transfers</a></li>}
+                                                @if (rolepages.Contains("RPTMT"))
+                                                {
+                                                    <li class='@(reportTitle == "Top Management List" ? "active" : "")'><a href=@Url.Action("Topmanagement", "AllReports")>TopManagement</a></li>}
+                                                @if (rolepages.Contains("RPWDY"))
+                                                {
+                                                    <li class='@(reportTitle == "Work Diary" ? "active" : "")'><a href=@Url.Action("WorkDiary", "AllReports")>WorkDiary </a></li>}
+                                                @if (rolepages.Contains("RPYLB"))
+                                                {
+                                                    @*<li><a href=@Url.Action("YearWiseLeaveBalanceReport", "Reports")>YearWiseLeaveBalance</a></li>*@
+                                                    <li class='@(reportTitle == "Year Wise Leave Balance" ? "active" : "")'><a href=@Url.Action("LeavesCreditDebit", "AllReports")>YearWiseLeaveBalance</a></li>}
+
+                                            </ul>
+                                        }
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+
+                                <div class="main_heading">
+                                    <h1>Retirement List </h1>
+                                    <div id="allleaves">
+                                        <div class="form-horizontal">
+                                            <div class="col-md-12">
+                                                <div class="col-md-3 col-sm-4 col-xs-12">
+
+                                                    <div class="col-md-4 col-xs-12">
+                                                        <div class="form-group">
+
+                                                            <button type="button" id="ALLbtn" class="active btn btn-primary btn-sm pull-left" onclick="return clearleavedata();">ALL Employees </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-8 col-xs-12">
+                                                        <div class="form-group">
+                                                            <button type="button" id="Todaybtn" class="btn btn-primary btn-sm pull-right" onclick="return clearleavedata();">Retired Employees </button>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="branch_search">
+                                                <div class="col-sm-12">
+                                                    <div class="form-horizontal">
+                                                        <div class="col-md-4 col-sm-3 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">From Date:<span class="mandatory">*</span></label>
+                                                                <div class="input-group date col-sm-8">
+                                                                    <input type="text" id="SDate" class="form-control" , onchange="return Dateevent4();"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4 col-sm-3 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">To Date:<span class="mandatory">*</span></label>
+                                                                <div class="input-group date col-sm-8">
+                                                                    <input type="text" id="EDate" class="form-control" , onchange="return Dateevent2();"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                                    @Html.HiddenFor(model => model.Id)
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-1 col-sm-1 col-xs-12">
+                                                            <button type="button" id="btnApply" class="btn btn-primary btn-sm pull-right" onclick="return temp();">Search</button>
+                                                            <button type="button" id="btnApply1" class="btn btn-primary btn-sm pull-right" onclick="return temp();">Search</button>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div id="grid">
+
+                                                    </div>
+                                                </div>
+                                                <br /><br /><br /><br />
+                                                <div style='margin-top: 20px; '>
+                                                    <div id="div1" style='float: left; margin: 10px 0 0 16px;'>
+                                                        <input type="button" value="Export to Excel" id='excelExport' />
+
+                                                    </div>
+
+                                                </div>
+                                                <div id="div1" style='float: left; margin: 10px 0 0 16px;'>
+                                                    <input type="button" class="jqx-rc-all jqx-button jqx-widget jqx-fill-state-normal" value="Download PDF" id='pdfall1' onclick='window.location = "@Url.Action("CreatePdfRetirement", "Reports")";' />
+                                                </div>
+                                                <div id="div1" style='float: left; margin: 10px 0 0 16px;'>
+                                                    <input type="button" class="jqx-rc-all jqx-button jqx-widget jqx-fill-state-normal" value="Download PDF" id='pdfretired2' onclick='window.location = "@Url.Action("CreatePdfRetiredEmployees", "Reports")";' />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    var message = '@message';
+    if (message) alert(message);
+</script>
+<script type="text/javascript">
+                $(document).ready(function () {
+                    $("#pdfall1").show();
+                    $("#pdfretired2").hide();
+                    $("#pdfret").hide();
+                    $("#btnApply").show();
+                    $("#btnApply1").hide();
+                    var property = document.getElementById("ALLbtn");
+                    property.style.backgroundColor = "#e6a74e"
+                    // prepare the data
+                    var source =
+                        {
+                            datatype: "json",
+
+                            datafields: [
+                                { name: 'Id', type: 'int' },
+                                { name: 'EmpId', type: 'string' },
+                                { name: 'EmpName', type: 'string' },
+                                { name: 'Code', type: 'string' },
+                                { name: 'BranchName', type: 'string' },
+                                { name: 'DOB_MonthWise', type: 'date' },
+                                { name: 'DOJ', type: 'date' },
+                                { name: 'RetirementDate_MonthWise', type: 'date' },
+                                { name: 'Age', type: 'string' },
+                            ],
+                            async: false,
+                            url: '/Reports/RetirementView',
+                            data: {
+                                featureClass: "P",
+                                style: "full",
+                                maxRows: 2,
+                                username: "jqwidgets"
+                            }
+                        };
+
+                    var dataAdapter = new $.jqx.dataAdapter(source,
+                        {
+                            formatData: function (data) {
+
+                                data.EmpId = $("#searchField").val();
+
+                                return data;
+                            }
+                        }
+                    );
+                    var editrowindex = -1;
+                    var delrowindex = -1;
+                    // initialize jqxGrid
+
+
+                    $("#grid").jqxGrid(
+                        {
+                            width: '100%',
+                            source: dataAdapter,
+                            theme: otherTheme,
+                            autoheight: true,
+                            sortable: true,
+                            pageable: true,
+                            columnsResize: true,
+                            altRows: true,
+                            filterable: true,
+                            autoshowfiltericon: true,
+                            ready: function () {
+                                $("#grid").jqxGrid('localizestrings', localizationObject);
+                            },
+                            updatefilterconditions: function (type, defaultconditions) {
+                                switch (type) {
+                                    case 'stringfilter':
+                                        return stringcomparisonoperators;
+                                    case 'numericfilter':
+                                        return numericcomparisonoperators;
+                                    case 'datefilter':
+                                        return datecomparisonoperators;
+                                    case 'booleanfilter':
+                                        return booleancomparisonoperators;
+                                }
+                            },
+                            updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                                filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                                var index1 = 0;
+                                var index2 = 0;
+                                if (columnfilter != null) {
+                                    var filter1 = columnfilter.getfilterat(0);
+                                    var filter2 = columnfilter.getfilterat(1);
+                                    if (filter1) {
+                                        index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                                        var value1 = filter1.filtervalue;
+                                        filterinputfield1.val(value1);
+                                    }
+                                    if (filter2) {
+                                        index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                                        var value2 = filter2.filtervalue;
+                                        filterinputfield2.val(value2);
+                                    }
+                                }
+                                filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                                filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                            },
+                            columns: [
+                                {
+                                    text: 'SNO', sortable: false, filterable: false, editable: false, align: 'center',
+                                    groupable: false, draggable: false, exportable : false, resizable: false,
+                                    datafield: '', columntype: 'number', width: 50,
+                                    cellsrenderer: function (row, column, value) {
+                                        return "<div style='margin:4px;text-align: center;'>" + (value + 1) + "</div>";
+                                    }
+                                },
+                                { text: "Emp Code", datafield: "EmpId", width: 100, editable: false },
+                                { text: "Name", datafield: "EmpName", width: 157, editable: false },
+                                { text: "Designation", datafield: "Code", width: 100, editable: false },
+                                { text: "Branch/Department", datafield: "BranchName", width: 150, editable: false },
+                                { text: "DOB", datafield: "DOB_MonthWise", width: 100, cellsformat: 'dd/MM/yyyy', editable: false },
+                                { text: "DOJ", datafield: "DOJ", width: 100, cellsformat: 'dd/MM/yyyy', editable: false },
+                                { text: 'Retirement Date', datafield: 'RetirementDate_MonthWise', width: 160, cellsformat: 'dd/MM/yyyy', editable: false },
+                                { text: "Age", datafield: "Age", width: 160, editable: false },
+                            ], columngroups:
+                            [
+                                { text: 'Action', align: 'center', name: 'Actions', width: 160 },
+                            ],
+
+                            showtoolbar: true,
+                            rendertoolbar: function (toolbar) {
+                                var me = this;
+                                var container = $("<div style='margin: 5px;'></div>");
+                                var span = $("<span style='float: left; margin-top: 5px; margin-right: 4px;'>Search: </span>");
+                                var input = $("<input class='jqx-input jqx-widget-content jqx-rc-all' id='searchField' type='text' style='height: 23px; float: left; width: 223px;' />");
+                                //toolbar.append(container);
+                                //container.append(span);
+                                //container.append(input);
+                                if (otherTheme != "") {
+                                    input.addClass('jqx-widget-content-' + otherTheme);
+                                    input.addClass('jqx-rc-all-' + otherTheme);
+                                }
+                                var oldVal = "";
+                                input.on('keydown', function () {
+                                    if (input.val().length >= 2) {
+                                        if (me.timer) {
+                                            clearTimeout(me.timer);
+                                        }
+                                        if (oldVal != input.val()) {
+                                            me.timer = setTimeout(function () {
+                                                $("#grid").jqxGrid('updatebounddata');
+                                            }, 1000);
+                                            oldVal = input.val();
+                                        }
+                                    }
+                                    else {
+                                        $("#grid").jqxGrid('updatebounddata');
+                                    }
+                                });
+                            }
+
+                        });
+
+                    $("#excelExport").jqxButton();
+
+
+                    $("#excelExport").click(function () {
+                        $("#grid").jqxGrid('exportdata', 'xls', 'Retirement List');
+                    });
+
+                });
+
+</script>
+<script type="text/javascript">
+                /*---------------view button click event ------------*/
+                $(function () {
+                    $("#btnApply").click(function () {
+
+
+                        var startdate = $("#SDate").val();
+                        var enddate = $("#EDate").val()
+                        $("#pdfall").hide();
+                        $("#pdfretired").hide();
+                        $("#pdfret").show();     
+                        // prepare the data
+                        var source =
+                            {
+                                type: "Post",
+                                datatype: "json",
+                                datafields: [
+                                    { name: 'EmpId', type: 'string' },
+                                    { name: 'EmpName', type: 'string' },
+                                    { name: 'Code', type: 'string' },
+                                    { name: 'BranchName', type: 'string' },
+                                    { name: 'DOB_MonthWise', type: 'date' },
+                                    { name: 'DOJ', type: 'date' },
+                                    { name: 'RetirementDate_MonthWise', type: 'date' },
+                                    { name: 'Age', type: 'string' },
+                                ],
+                                async: false,
+                                url: "/Reports/RetirementViews?StartDate=" + startdate + "&EndDate=" + enddate,
+                                data: {
+                                    featureClass: "P",
+                                    style: "full",
+                                    username: "jqwidgets",
+
+
+                                }
+                            };
+
+
+                        var dataAdapter = new $.jqx.dataAdapter(source,
+                            {
+                                formatData: function (data) {
+                                    data.ProductName = $("#searchField").val();
+                                    return data;
+                                }
+                            }
+                        );
+
+
+
+                        // initialize jqxGrid
+                        var editrowindex = -1;
+                        var delrowindex = -1;
+                        $("#grid").jqxGrid(
+                            {
+                                width: '99%',
+                                source: dataAdapter,
+                                theme: otherTheme,// for theme refernce go to Layout.cshtml
+                                autoheight: true,
+                                sortable: true,
+                                pageable: true,
+                                columnsResize: true,
+                                altRows: true,
+                                filterable: true,
+                                autoshowfiltericon: true,
+
+                                ready: function () {
+                                    $("#grid").jqxGrid('localizestrings', localizationObject);
+                                },
+                                updatefilterconditions: function (type, defaultconditions) {
+                                    switch (type) {
+                                        case 'stringfilter':
+                                            return stringcomparisonoperators;
+                                        case 'numericfilter':
+                                            return numericcomparisonoperators;
+                                        case 'datefilter':
+                                            return datecomparisonoperators;
+                                        case 'booleanfilter':
+                                            return booleancomparisonoperators;
+                                    }
+                                },
+                                updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                                    filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                                    var index1 = 0;
+                                    var index2 = 0;
+                                    if (columnfilter != null) {
+                                        var filter1 = columnfilter.getfilterat(0);
+                                        var filter2 = columnfilter.getfilterat(1);
+                                        if (filter1) {
+                                            index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                                            var value1 = filter1.filtervalue;
+                                            filterinputfield1.val(value1);
+                                        }
+                                        if (filter2) {
+                                            index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                                            var value2 = filter2.filtervalue;
+                                            filterinputfield2.val(value2);
+                                        }
+                                    }
+                                    filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                                    filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                                },
+                                columns: [
+                                    {
+                                        text: 'SNO', sortable: false, filterable: false, editable: false,
+                                        groupable: false, draggable: false, exportable: false, resizable: false,
+                                        datafield: '', columntype: 'number', width: 50,
+                                        cellsrenderer: function (row, column, value) {
+                                            return "<div style='margin:4px;'>" + (value + 1) + "</div>";
+                                        }
+                                    },
+                                    { text: "Emp Code", datafield: "EmpId", width: 100, editable: false },
+                                    { text: "Name", datafield: "EmpName", width: 155, editable: false },
+                                    { text: "Designation", datafield: "Code", width: 100, editable: false },
+                                    { text: "Branch/Department", datafield: "BranchName", width: 150, editable: false },
+                                    { text: "DOB", datafield: "DOB_MonthWise", width: 100, cellsformat: 'dd/MM/yyyy', editable: false },
+                                    { text: "DOJ", datafield: "DOJ", width: 100, cellsformat: 'dd/MM/yyyy', editable: false },
+                                    { text: 'Retirement Date', datafield: 'RetirementDate_MonthWise', width: 160, cellsformat: 'dd/MM/yyyy', editable: false },
+                                    { text: "Age", datafield: "Age", width: 150, editable: false },
+                                ],
+
+                            });
+                    });
+                    $("#excelExport").jqxButton();
+
+
+                    $("#excelExport").click(function () {
+                        $("#grid").jqxGrid('exportdata', 'xls', 'Retirement List');
+                    });
+
+                });
+                $("#ALLbtn").click(function () {
+                    $("#pdfall1").show();
+                    $("#pdfretired2").hide();
+                    $("#pdfret").hide();
+              
+                    $("#btnApply").show();
+                    $("#btnApply1").hide();
+                    var property = document.getElementById("ALLbtn");
+                    property.style.backgroundColor = "#e6a74e"
+                    var property = document.getElementById("Todaybtn");
+                    property.style.backgroundColor = "#067213";
+                    // prepare the data
+                    var source =
+                        {
+                            type: "Get",
+                            datatype: "json",
+                            datafields: [
+                                { name: 'EmpId', type: 'string' },
+                                { name: 'EmpName', type: 'string' },
+                                { name: 'Code', type: 'string' },
+                                { name: 'BranchName', type: 'string' },
+                                { name: 'DOB_MonthWise', type: 'date' },
+                                { name: 'DOJ', type: 'date' },
+                                { name: 'RetirementDate_MonthWise', type: 'date' },
+                                { name: 'Age', type: 'string' },
+                            ],
+                            async: false,
+                            url: '/Reports/RetirementView',
+                            data: {
+                                featureClass: "P",
+                                style: "full",
+                                username: "jqwidgets",
+
+
+
+                            }
+                        };
+                    var dataAdapter = new $.jqx.dataAdapter(source,
+                        {
+                            formatData: function (data) {
+                                data.ProductName = $("#searchField").val();
+                                return data;
+                            }
+                        }
+                    );
+                    // initialize jqxGrid
+                    var editrowindex = -1;
+                    var delrowindex = -1;
+                    $("#grid").jqxGrid(
+                        {
+                            width: '99%',
+                            source: dataAdapter,
+                            theme: otherTheme,// for theme refernce go to Layout.cshtml
+                            autoheight: true,
+                            sortable: true,
+                            pageable: true,
+                            pagesize: 20,
+                            columnsResize: true,
+                            altRows: true,
+                            filterable: true,
+                            autoshowfiltericon: true,
+
+                            ready: function () {
+                                $("#grid").jqxGrid('localizestrings', localizationObject);
+                            },
+                            updatefilterconditions: function (type, defaultconditions) {
+                                switch (type) {
+                                    case 'stringfilter':
+                                        return stringcomparisonoperators;
+                                    case 'numericfilter':
+                                        return numericcomparisonoperators;
+                                    case 'datefilter':
+                                        return datecomparisonoperators;
+                                    case 'booleanfilter':
+                                        return booleancomparisonoperators;
+                                }
+                            },
+                            updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                                filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                                var index1 = 0;
+                                var index2 = 0;
+                                if (columnfilter != null) {
+                                    var filter1 = columnfilter.getfilterat(0);
+                                    var filter2 = columnfilter.getfilterat(1);
+                                    if (filter1) {
+                                        index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                                        var value1 = filter1.filtervalue;
+                                        filterinputfield1.val(value1);
+                                    }
+                                    if (filter2) {
+                                        index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                                        var value2 = filter2.filtervalue;
+                                        filterinputfield2.val(value2);
+                                    }
+                                }
+                                filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                                filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                            },
+                            columns: [
+                                {
+                                    text: 'SNO', sortable: false, filterable: false, editable: false,
+                                    groupable: false, draggable: false, resizable: false, exportable: false,
+                                    datafield: '', columntype: 'number', width: 50,
+                                    cellsrenderer: function (row, column, value) {
+                                        return "<div style='margin:4px;'>" + (value + 1) + "</div>";
+                                    }
+                                },
+                                { text: "Emp Code", datafield: "EmpId", width: 100, editable: false },
+                                { text: "Name", datafield: "EmpName", width: 155, editable: false },
+                                { text: "Designation", datafield: "Code", width: 100, editable: false },
+                                { text: "Branch/Department", datafield: "BranchName", width: 150, editable: false },
+                                { text: "DOB", datafield: "DOB_MonthWise", width: 100, cellsformat: 'dd/MM/yyyy', editable: false },
+                                { text: "DOJ", datafield: "DOJ", width: 100, cellsformat: 'dd/MM/yyyy', editable: false },
+                                { text: 'Retirement Date', datafield: 'RetirementDate_MonthWise', width: 160, cellsformat: 'dd/MM/yyyy', editable: false },
+                                { text: "Age", datafield: "Age", width: 150, editable: false },
+                            ],
+                            columngroups:
+                            [
+                                { text: 'Action', align: 'center', name: 'Actions', width: 160 },
+                            ],
+
+
+                        });
+                    $("#excelExport").jqxButton();
+
+
+                    $("#excelExport").click(function () {
+                        $("#grid").jqxGrid('exportdata', 'xls', 'Retirement List');
+                    });
+                });
+                $("#Todaybtn").click(function () {
+
+                    $("#pdfall1").hide();
+                    $("#pdfretired2").show();
+                    $("#pdfret").hide();
+                    $("#btnApply").hide();
+                    $("#btnApply1").show();
+                    var property = document.getElementById("Todaybtn");
+                    property.style.backgroundColor = "#e6a74e"
+                    var property = document.getElementById("ALLbtn");
+                    property.style.backgroundColor = "#067213";
+                    // prepare the data
+                    var source =
+                        {
+                            type: "Get",
+                            datatype: "json",
+                            datafields: [
+                                { name: 'Id', type: 'int' },
+                                { name: 'EmpId', type: 'string' },
+                                { name: 'EmpName', type: 'string' },
+                                { name: 'Code', type: 'string' },
+                                { name: 'BranchName', type: 'string' },
+                                { name: 'DOB_MonthWise', type: 'date' },
+                                { name: 'DOJ', type: 'date' },
+                                { name: 'RetirementDate_MonthWise', type: 'date' },
+                                { name: 'Age', type: 'string' },
+                            ],
+                            async: false,
+                            url: '/Reports/RetirementViewss',
+                            data: {
+                                featureClass: "P",
+                                style: "full",
+                                username: "jqwidgets",
+
+
+
+                            }
+                        };
+                    var dataAdapter = new $.jqx.dataAdapter(source,
+                        {
+                            formatData: function (data) {
+                                data.ProductName = $("#searchField").val();
+                                return data;
+                            }
+                        }
+                    );
+                    // initialize jqxGrid
+                    var editrowindex = -1;
+                    var delrowindex = -1;
+                    $("#grid").jqxGrid(
+                        {
+                            width: '99%',
+                            source: dataAdapter,
+                            theme: otherTheme,// for theme refernce go to Layout.cshtml
+                            autoheight: true,
+                            sortable: true,
+                            pageable: true,
+                            pagesize: 20,
+                            columnsResize: true,
+                            altRows: true,
+                            filterable: true,
+                            autoshowfiltericon: true,
+
+                            ready: function () {
+                                $("#grid").jqxGrid('localizestrings', localizationObject);
+                            },
+                            updatefilterconditions: function (type, defaultconditions) {
+                                switch (type) {
+                                    case 'stringfilter':
+                                        return stringcomparisonoperators;
+                                    case 'numericfilter':
+                                        return numericcomparisonoperators;
+                                    case 'datefilter':
+                                        return datecomparisonoperators;
+                                    case 'booleanfilter':
+                                        return booleancomparisonoperators;
+                                }
+                            },
+                            updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                                filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                                var index1 = 0;
+                                var index2 = 0;
+                                if (columnfilter != null) {
+                                    var filter1 = columnfilter.getfilterat(0);
+                                    var filter2 = columnfilter.getfilterat(1);
+                                    if (filter1) {
+                                        index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                                        var value1 = filter1.filtervalue;
+                                        filterinputfield1.val(value1);
+                                    }
+                                    if (filter2) {
+                                        index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                                        var value2 = filter2.filtervalue;
+                                        filterinputfield2.val(value2);
+                                    }
+                                }
+                                filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                                filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                            },
+                            columns: [
+                                {
+                                    text: 'SNO', sortable: false, filterable: false, editable: false,
+                                    groupable: false, draggable: false, resizable: false, exportable: false,
+                                    datafield: '', columntype: 'number', width: 50,
+                                    cellsrenderer: function (row, column, value) {
+                                        return "<div style='margin:4px;'>" + (value + 1) + "</div>";
+                                    }
+                                },
+                                { text: "Emp Code", datafield: "EmpId", width: 100 },
+                                { text: "Name", datafield: "EmpName", width: 175 },
+                                { text: "Designation", datafield: "Code", width: 100 },
+                                { text: "Branch/Department", datafield: "BranchName", width: 150 },
+                                { text: "DOB", datafield: "DOB_MonthWise", width: 100, cellsformat: 'dd/MM/yyyy' },
+                                { text: "DOJ", datafield: "DOJ", width: 100, cellsformat: 'dd/MM/yyyy' },
+                                { text: 'Retirement Date', datafield: 'RetirementDate_MonthWise', width: 120, cellsformat: 'dd/MM/yyyy' },
+                                { text: "Age", datafield: "Age", width: 100 },
+                                {
+                                    text: 'Edit', datafield: 'Edit', align: 'Center', sortable: false, filterable: false, columngroup: 'Actions', columntype: 'button', width: 70, cellsrenderer: function (row) {
+                                        editrowindex = row;
+                                        var paginginformation = $('#grid').jqxGrid('getpaginginformation');
+                                        var id = $("#grid").jqxGrid('getcellvalue', row, "Id");
+                                        return "<a href= '/Register/Edit/?id=" + id + "&page=" + paginginformation.pagenum + "'><i class='fa fa-pencil' aria-hidden='true'></i></a>";
+
+                                    }, buttonclick: function (row) {
+                                        editrowindex = row;
+                                        var paginginformation = $('#grid').jqxGrid('getpaginginformation');
+                                        var id = $("#grid").jqxGrid('getcellvalue', row, "Id");
+                                        window.location = '/Register/Edit/?id=' + id + '&page=' + paginginformation.pagenum;
+                                    }
+                                },
+                            ],
+                            columngroups:
+                            [
+                                { text: 'Action', align: 'center', name: 'Actions', width: 160 },
+                            ],
+
+
+                        });
+                    $("#excelExport").jqxButton();
+
+
+                    $("#excelExport").click(function () {
+                        $("#grid").jqxGrid('exportdata', 'xls', 'Retired_Employees_List');
+                    });
+                });
+
+                //------------------------retired employee search-------------------------//
+
+                $(function () {
+                    $("#btnApply1").click(function () {
+                        var startdate = $("#SDate").val();
+                        var enddate = $("#EDate").val()
+                        $("#pdfall").hide();
+                        $("#pdfretired").hide();
+                        $("#pdfret").show();             
+                        // prepare the data
+                        var source =
+                            {
+                                type: "Post",
+                                datatype: "json",
+                                datafields: [
+                                      { name: 'Id', type: 'int' },
+                                    { name: 'EmpId', type: 'string' },
+                                    { name: 'EmpName', type: 'string' },
+                                    { name: 'Code', type: 'string' },
+                                    { name: 'BranchName', type: 'string' },
+                                    { name: 'DOB_MonthWise', type: 'date' },
+                                    { name: 'DOJ', type: 'date' },
+                                    { name: 'RetirementDate_MonthWise', type: 'date' },
+                                    { name: 'Age', type: 'string' },
+                                ],
+                                async: false,
+                                url: "/Reports/RetiredempViews?StartDate=" + startdate + "&EndDate=" + enddate,
+                                data: {
+                                    featureClass: "P",
+                                    style: "full",
+                                    username: "jqwidgets",
+
+
+                                }
+                            };
+
+
+                        var dataAdapter = new $.jqx.dataAdapter(source,
+                            {
+                                formatData: function (data) {
+                                    data.ProductName = $("#searchField").val();
+                                    return data;
+                                }
+                            }
+                        );
+
+
+
+                        // initialize jqxGrid
+                        var editrowindex = -1;
+                        var delrowindex = -1;
+                        $("#grid").jqxGrid(
+                            {
+                                width: '99%',
+                                source: dataAdapter,
+                                theme: otherTheme,// for theme refernce go to Layout.cshtml
+                                autoheight: true,
+                                sortable: true,
+                                pageable: true,
+                                columnsResize: true,
+                                altRows: true,
+                                filterable: true,
+                                autoshowfiltericon: true,
+
+                                ready: function () {
+                                    $("#grid").jqxGrid('localizestrings', localizationObject);
+                                },
+                                updatefilterconditions: function (type, defaultconditions) {
+                                    switch (type) {
+                                        case 'stringfilter':
+                                            return stringcomparisonoperators;
+                                        case 'numericfilter':
+                                            return numericcomparisonoperators;
+                                        case 'datefilter':
+                                            return datecomparisonoperators;
+                                        case 'booleanfilter':
+                                            return booleancomparisonoperators;
+                                    }
+                                },
+                                updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                                    filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                                    var index1 = 0;
+                                    var index2 = 0;
+                                    if (columnfilter != null) {
+                                        var filter1 = columnfilter.getfilterat(0);
+                                        var filter2 = columnfilter.getfilterat(1);
+                                        if (filter1) {
+                                            index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                                            var value1 = filter1.filtervalue;
+                                            filterinputfield1.val(value1);
+                                        }
+                                        if (filter2) {
+                                            index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                                            var value2 = filter2.filtervalue;
+                                            filterinputfield2.val(value2);
+                                        }
+                                    }
+                                    filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                                    filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                                },
+                                columns: [
+                                    {
+                                        text: 'SNO', sortable: false, filterable: false, editable: false,
+                                        groupable: false, draggable: false, resizable: false, exportable: false,
+                                        datafield: '', columntype: 'number', width: 50,
+                                        cellsrenderer: function (row, column, value) {
+                                            return "<div style='margin:4px;'>" + (value + 1) + "</div>";
+                                        }
+                                    },
+                                    { text: "Emp Code", datafield: "EmpId", width: 100 },
+                                   { text: "Name", datafield: "EmpName", width: 175 },
+                                    { text: "Designation", datafield: "Code", width: 100 },
+                                    { text: "Branch/Department", datafield: "BranchName", width: 150 },
+                                    { text: "DOB", datafield: "DOB_MonthWise", width: 100, cellsformat: 'dd/MM/yyyy' },
+                                    { text: "DOJ", datafield: "DOJ", width: 100, cellsformat: 'dd/MM/yyyy' },
+                                    { text: 'Retirement Date', datafield: 'RetirementDate_MonthWise', width: 120, cellsformat: 'dd/MM/yyyy' },
+                                    { text: "Age", datafield: "Age", width: 100 },
+                                           {
+                                               text: 'Edit', datafield: 'Edit', align: 'Center', sortable: false, filterable: false, columngroup: 'Actions', columntype: 'button', width: 70, cellsrenderer: function (row) {
+                                                   editrowindex = row;
+                                                   var paginginformation = $('#grid').jqxGrid('getpaginginformation');
+                                                   var id = $("#grid").jqxGrid('getcellvalue', row, "Id");
+                                                   return "<a href= '/Register/Edit/?id=" + id + "&page=" + paginginformation.pagenum + "'><i class='fa fa-pencil' aria-hidden='true'></i></a>";
+
+                                               }, buttonclick: function (row) {
+                                                   editrowindex = row;
+                                                   var paginginformation = $('#grid').jqxGrid('getpaginginformation');
+                                                   var id = $("#grid").jqxGrid('getcellvalue', row, "Id");
+                                                   window.location = '/Register/Edit/?id=' + id + '&page=' + paginginformation.pagenum;
+                                               }
+                                           },
+                                ],
+
+                            });
+                    });
+                    $("#excelExport").jqxButton();
+                    $("#pdfret").jqxButton();
+
+                    $("#excelExport").click(function () {
+                        $("#grid").jqxGrid('exportdata', 'xls', 'Retirement List');
+                    });
+                    $("#pdfret").click(function () {
+                        $("#grid").jqxGrid('exportdata', 'pdf', 'Retirement List');
+                    });
+                });
+</script>
+<script>
+            document.getElementById("a6").className = "active";
+
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnApply").show();
+        $("#btnApply1").hide();
+        $("#pdfall1").show();
+        $("#pdfretired2").hide();
+        var property = document.getElementById("ALLbtn");
+        property.style.backgroundColor = "#e6a74e"
+        $("#ALLbtn").click(function () {
+            var property = document.getElementById("Todaybtn");
+            property.style.backgroundColor = "#067213";
+            var property = document.getElementById("ALLbtn");
+            property.style.backgroundColor = "#e6a74e";
+            $("#btnApply1").hide();
+            $("#btnApply").show();
+            $("#pdfall1").show();
+            $("#pdfretired2").hide();
+        });
+        $("#Todaybtn").click(function () {
+            var property = document.getElementById("Todaybtn");
+            property.style.backgroundColor = "#e6a74e"
+            var property = document.getElementById("ALLbtn");
+            property.style.backgroundColor = "#067213";  
+            $("#btnApply").hide();
+            $("#btnApply1").show();
+            $("#pdfall1").hide();
+            $("#pdfretired2").show();
+        });
+    });
+</script>
+<script>
+            //To Date and From Date Validation
+            function Dateevent2() {
+
+
+                var fromdate = document.getElementById("SDate").value;
+                var todate = document.getElementById("EDate").value;
+                var date = moment(fromdate, "DD.MM.YYYY");
+
+                var currentDate1 = moment(todate, "DD.MM.YYYY");
+                var duration = moment.duration(date.diff(currentDate1));
+
+
+                if (duration > 0) {
+
+
+                    alert("Please ensure that To Date is greater than or equal to From Date.");
+                    document.getElementById("EDate").focus();
+                    document.getElementById("EDate").value = '';
+                    return false;
+
+                }
+            }
+            function Dateevent4() {
+                var StartDate = document.getElementById('SDate').value;
+                var EndDate = document.getElementById('EDate').value;
+                var eDate = moment(EndDate, "DD.MM.YYYY");
+                var sDate = moment(StartDate, "DD.MM.YYYY");
+                if (StartDate != '' && EndDate != '' && sDate > eDate) {
+                    alert("Please ensure that To Date is greater than or equal to From Date.");
+                    document.getElementById('SDate').value = '';
+                    document.getElementById("SDate").focus();
+                    return false;
+                }
+                function xyz() {
+                    $("#SDate").hide();
+                    $("#EDate").hide();
+                }
+
+            }
+</script>
+<script>
+            function clearleavedata() {
+                $('#SDate').val('');
+                $('#EDate').val('');
+            }
+
+</script>
+<script>
+            function temp() {
+                var fromdate = $("#SDate").val();
+                var todate = $("#EDate").val();
+                if (fromdate == "") {
+                    window.alert("Please Select Start Date");
+                    $("#SDate").focus();
+                    return false;
+                }
+                else if (todate == "") {
+                    window.alert("Please Select End Date");
+                    $("#EDate").focus();
+                    return false;
+                }
+
+            }
+</script>
+<script type='text/javascript'>
+            $(function getholidays() {
+                var active_dates = [];
+                $.ajax({
+                    type: "GET",
+                    async: false,
+                    url: "/LeaveApply/GetDates",
+                    dataType: "Json",
+                    success: function (data) {
+                        datesArray = data;
+                        for (i = 0; i < datesArray.length; i++) {
+                            var result = datesArray[i].replace("-", "/");
+                            var result1 = result.replace("-", "/");
+                            var strArray = result1.split("/");
+                            var cdate = strArray[0] + "/" + parseInt(strArray[1]) + "/" + strArray[2]
+                            active_dates.push(cdate);
+
+                            if (i == datesArray.length - 1) {
+                                //loadcal(active_dates);
+                            }
+                        }
+
+                    }
+                });
+                $('.input-group.date').datepicker({
+                    format: "dd/mm/yyyy",
+                    autoclose: true,
+                    todayHighlight: true,
+                    beforeShowDay: function nonWorkingDays(date) {
+                        var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
+                        var week = 0 | date.getDate() / 7 //get the week
+                        var dd = date.getDate();
+                        var month = date.getMonth();
+                        if (dd < 10) {
+                            dd = '0' + dd
+                        }
+
+                        if (month < 10) {
+                            month = '0' + month
+                        }
+                        var sunweek = date.getDay();
+                        var year = date.getFullYear();
+
+                        if (dd == 14 && day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                        if (dd == 28 && day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                            //check if it's second week or fourth week
+                        else if (week == 1 || week == 3) {
+                            if (dd == 7 && day == 6 || dd == 21 && day == 6) {
+                                //check for satruday
+
+                            }
+                            else {
+                                if (day == 6) {
+                                    return {
+                                        classes: 'secondClass'
+                                    };
+                                }
+                            }
+
+                        }
+                        //check for sunday
+                        if (day == 0) {
+                            return {
+                                classes: 'secondClass'
+                            };
+
+                        }
+                        //check for holidays
+                        var d = date;
+                        var curr_date = d.getDate();
+                        var curr_month = d.getMonth() + 1; //Months are zero based
+                        if (curr_date < 10) {
+                            curr_date = '0' + curr_date
+                        }
+                        var curr_year = d.getFullYear();
+                        var formattedDate = curr_date + "/" + curr_month + "/" + curr_year
+
+                        if ($.inArray(formattedDate, active_dates) != -1) {
+                            return {
+                                classes: 'activeClass'
+                            };
+                        }
+                        return [true];
+                    }
+                });
+            });
+</script>
+<script>
+            $("div span:first-child")
+               // .css("text-decoration", "underline")
+                .hover(function () {
+              //      $(this).addClass("sogreen");
+                }, function () {
+              //      $(this).removeClass("sogreen");
+                });
+</script>

@@ -1,0 +1,115 @@
+﻿@{
+    ViewBag.Title = "LoanLedger";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <h1>Loan Ledger</h1>
+                    <div class="col-md-4">
+                        <div class="inner_heading">
+                            <h1>Report Options</h1>
+                            <div>
+                                <input id="radio1" type="radio" name="radio" value="1" checked="checked"><label for="radio1"><span><span></span></span>All Employees</label>
+                            </div>
+                            <div>
+                                <input id="radio2" type="radio" name="radio" value="2"><label for="radio2"><span><span></span></span>Selected Employees</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="inner_heading">
+                            <h1>Loan Options</h1>
+                            <div>
+                                <input id="radio3" type="radio" name="radio" value="3" checked="checked"><label for="radio3"><span><span></span></span>All Loans</label>
+                            </div>
+                            <div>
+                                <input id="radio3" type="radio" name="radio" value="4"><label for="radio4"><span><span></span></span>Selected Loans</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="inner_heading">
+                            <h1>Financial Period</h1>
+                            <div class="table-responsive month_name_tbl">
+                                <table id="month_name" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Select Financial Period</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>01-04-18 - 31-03-2019</td>
+                                        </tr>
+                                        <tr>
+                                            <td>01-04-17 - 31-03-2016</td>
+                                        </tr>
+                                        <tr>
+                                            <td>01-04-16 - 31-03-2015</td>
+                                        </tr>
+                                        <tr>
+                                            <td>01-04-15 - 31-03-2014</td>
+                                        </tr>
+                                        <tr>
+                                            <td>01-04-14 - 31-03-2013</td>
+                                        </tr>
+                                        <tr>
+                                            <td>01-04-13 - 31-03-2012</td>
+                                        </tr>
+                                        <tr>
+                                            <td>01-04-12 - 31-03-2011</td>
+                                        </tr>
+                                        <tr>
+                                            <td>01-04-11 - 31-03-2010</td>
+                                        </tr>
+                                        <tr>
+                                            <td>01-04-10 - 31-03-2009</td>
+                                        </tr>
+                                        <tr>
+                                            <td>01-04-09 - 31-03-2008</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mt_10">
+                        <div class="pull-right">
+                            <button type="reset" class="btn btn-default cancel">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#month_name').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('#region_name').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+        });
+    });
+</script>
+

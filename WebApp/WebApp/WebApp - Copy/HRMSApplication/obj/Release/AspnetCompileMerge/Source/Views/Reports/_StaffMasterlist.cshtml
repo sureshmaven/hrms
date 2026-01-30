@@ -1,0 +1,527 @@
+﻿@model Entities.view_employee_transfer
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var rolepages = TempData["RolePages"].ToString();
+    ViewBag.RolePages = TempData["RolePages"];
+    var reportTitle = ViewBag.ReportTitle;
+    var ReportPdfSize = ViewBag.PdfSize;
+    var ReportpageSize = ViewBag.pageSize;
+    var PdfExportColumns = ViewBag.ExportColumns;
+    var dataUrl = ViewBag.DataUrl;
+    var reportFilters = ViewBag.ReportFilters;
+    var reportFiltersTwo = ViewBag.ReportFiltersTwo;
+    var reportFiltersThree = ViewBag.ReportFiltersThree;
+    var searchBtn = ViewBag.SearchBtn;
+}
+@{
+    var message = TempData["AlertMessage"] ?? string.Empty;
+}
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade in active">
+                    <div class="page_st">
+                        <div class="page">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="main_heading">
+                                    <h1>Report List </h1>
+                                    <div class="report-list">
+                                        @{
+                                            <ul>
+                                                @if (rolepages.Contains("RPBRA"))
+                                                {
+                                                    <li class='@(reportTitle == "Branches List" ? "active" : "")'><a href=@Url.Action("Index", "AllReports")>Branches</a></li>}
+                                                @if (rolepages.Contains("RPBRC"))
+                                                {
+                                                    <li class='@(reportTitle == "Branches Contacts List" ? "active" : "")'><a href=@Url.Action("BranchContacts", "AllReports")>Branch Contacts</a></li>}
+                                                @if (rolepages.Contains("RPCDR"))
+                                                {
+                                                    @*<li><a href=@Url.Action("CadreReport", "Reports")>Cadre</a></li>*@
+                                                    <li class='@(reportTitle == "Cadre List" ? "active" : "")'><a href=@Url.Action("CadreList", "AllReports")>Cadre</a></li>
+                                                }
+                                                @if (rolepages.Contains("RPCAT"))
+                                                {
+                                                    <li><a href=@Url.Action("staffCategoryList", "AllReports")>Category</a></li>}
+                                                @if (rolepages.Contains("RPDOB"))
+                                                {
+                                                    <li class='@(reportTitle == "DOB List" ? "active" : "")'><a href=@Url.Action("EmpDob", "AllReports")>DOB</a></li>}
+                                                @if (rolepages.Contains("RPEMP"))
+                                                {
+                                                    <li class='@(reportTitle == "Employee List" ? "active" : "")'><a href=@Url.Action("EmployeesRept", "AllReports")>Employees</a></li>}
+                                                @if (rolepages.Contains("RPEAL"))
+                                                {
+                                                    <li class='@(reportTitle == "Future Applied Leaves" ? "active" : "")'><a href=@Url.Action("FutureAppliedLeaves", "AllReports")>Future Applied Leaves</a></li>}
+                                                @if (rolepages.Contains("RPHOF"))
+                                                {
+                                                    <li class='@(reportTitle == "Head Office List" ? "active" : "")'><a href=@Url.Action("HeadOfficeList", "AllReports")>Head Office</a></li>}
+                                                @if (rolepages.Contains("RPHOA"))
+                                                {
+                                                    <li class='@(reportTitle == "Head Office Attender List" ? "active" : "")'><a href=@Url.Action("HeadOfcAttenders", "AllReports")>Head Office Attenders</a></li>}
+                                                @if (rolepages.Contains("RPKOF"))
+                                                {
+                                                    <li class='@(reportTitle == "Work Profile Of Key Officials" ? "active" : "")'><a href=@Url.Action("KeyOfficials", "AllReports")>Key Officials</a></li>}
+                                                @if (rolepages.Contains("RPLTC"))
+                                                {
+                                                    <li><a href=@Url.Action("LTCview", "Reports")>LTC</a></li>}
+                                                @if (rolepages.Contains("RPLEV"))
+                                                {
+                                                    <li><a href=@Url.Action("LeaveSearch", "MyLeaves")>Leaves</a></li>}
+                                                @if (rolepages.Contains("RPLLE"))
+                                                {
+                                                    <li class='@(reportTitle == "Long Leaves" ? "active" : "")'><a href=@Url.Action("LongLeaves", "AllReports")>Long Leaves</a></li>}
+                                                @if (rolepages.Contains("RPLFA"))
+                                                {
+                                                    <li><a href=@Url.Action("Report1", "Reports" )>Leaves Forwarded/Approved</a></li>}
+                                                @if (rolepages.Contains("RPLAL"))
+                                                {
+                                                    <li class='@(reportTitle == "Late Applied Leaves List" ? "active" : "")'><a href=@Url.Action("LateAppliedLeaves", "AllReports")>Late Applied Leaves</a></li>}
+                                                @if (rolepages.Contains("RPLCD"))
+                                                {
+                                                    <li class='@(reportTitle == "Cancelled Leaves" ? "active" : "")'><a href=@Url.Action("LeaveCancelled", "AllReports")>Leaves Cancelled</a></li>}
+                                                @if (rolepages.Contains("RPCMP"))
+                                                {
+                                                    <li class='@(reportTitle == "Month Wise CL/ML/PL" ? "active" : "")'><a href=@Url.Action("MonthwiseCLMLPL", "AllReports")>Month Wise CL/ML/PL</a></li>}
+                                                @if (rolepages.Contains("RPMWL"))
+                                                {
+                                                    <li class='@(reportTitle == "Month Wise Leaves" ? "active" : "")'><a href=@Url.Action("MonthWiseLeaves", "AllReports")>Month Wise Leaves</a></li>}
+                                                @if (rolepages.Contains("RPMWO"))
+                                                {
+                                                    <li class='@(reportTitle == "Month Wise OD" ? "active" : "")'><a href=@Url.Action("MonthWiseOD", "AllReports")>Month Wise OD</a></li>}
+                                                @if (rolepages.Contains("RPMTT"))
+                                                {
+                                                    <li class='@(reportTitle == "Month Wise Temporary Transfer" ? "active" : "")'><a href=@Url.Action("MonthWiseTemporaryTransfer", "AllReports")>Month Wise Temporary Transfer</a></li>}
+                                                @if (rolepages.Contains("RPODD"))
+                                                {
+                                                    <li><a href=@Url.Action("History", "Duty")>OD</a></li>}
+                                                @if (rolepages.Contains("RPPTS"))
+                                                {
+                                                    <li class='@(reportTitle == "Permanent Transfer List" ? "active" : "")'><a href=@Url.Action("PermanentTransfer", "AllReports")>Permanent Transfers</a></li>}
+                                                @if (rolepages.Contains("RPPRO"))
+                                                {
+                                                    <li><a href=@Url.Action("TransferReport", "Reports" )>Promotion</a></li>}
+                                                @if (rolepages.Contains("RPSPL"))
+                                                {
+                                                    <li class='@(reportTitle == "PL List" ? "active" : "")'><a href=@Url.Action("PrivilegeLeave", "AllReports")>PL</a></li>}
+                                                @if (rolepages.Contains("RPRET"))
+                                                {
+                                                    <li class='@(reportTitle == "Retirement List" ? "active" : "")'><a href=@Url.Action("Retirement", "AllReports")>Retirements</a></li>}
+                                                @if (rolepages.Contains("RPSEN"))
+                                                {
+                                                    <li class='@(reportTitle == "Seniorty List" ? "active" : "")'><a href=@Url.Action("Seniorty", "AllReports")>Seniority</a></li>}
+                                                @if (rolepages.Contains("RPSMA"))
+                                                {
+                                                    <li class="active"><a href=@Url.Action("SMReport", "Reports")>Staff Master</a></li>}
+                                                @if (rolepages.Contains("RPTXH"))
+                                                {
+                                                    <li><a href=@Url.Action("Index", "Tx_History" )>TX History</a></li>}
+                                                @if (rolepages.Contains("RPTTS"))
+                                                {
+                                                    <li class='@(reportTitle == "Temporary Transfer List" ? "active" : "")'><a href=@Url.Action("TempTrnsfr", "AllReports")>Temporary Transfers</a></li>}
+                                                @if (rolepages.Contains("RPTMT"))
+                                                {
+                                                    <li class='@(reportTitle == "Top ManagementList List" ? "active" : "")'><a href=@Url.Action("Topmanagement", "AllReports")>TopManagement</a></li>}
+                                                @if (rolepages.Contains("RPWDY"))
+                                                {
+                                                    <li class='@(reportTitle == "Work Diary" ? "active" : "")'><a href=@Url.Action("WorkDiary", "AllReports")>WorkDiary </a></li>}
+                                                @if (rolepages.Contains("RPYLB"))
+                                                {
+                                                    @*<li><a href=@Url.Action("YearWiseLeaveBalanceReport", "Reports")>YearWiseLeaveBalance</a></li>*@
+                                                    <li class='@(reportTitle == "Year Wise Leave Balance" ? "active" : "")'><a href=@Url.Action("LeavesCreditDebit", "AllReports")>YearWiseLeaveBalance</a></li>}
+
+                                            </ul>
+                                        }
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                                <div class="main_heading">
+                                    <h1>Staff Master List</h1>
+
+                                    <div class="form-horizontal">
+                                        <div class="col-md-4 col-sm-3 col-xs-12">
+                                            <div class="col-sm-7">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-sm-3 col-xs-12">
+                                            <div class="form-group">
+                                                <div class="col-sm-7">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="branch_search">
+                                        <div class="col-sm-12">
+                                            <div class="form-horizontal">
+                                                <div class="col-md-6 col-sm-3 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-7 control-label">Employee Code / Designation / Name:<span class="mandatory">*</span></label>
+                                                        <div class="col-md-5">
+                                                            <input type="text" id="ecode" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-1 col-sm-1 col-xs-12">
+                                                    <button type="button" id="btnApply" class="btn btn-primary btn-sm pull-right">Search</button>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <div class="col-md-12">
+
+                                                <div id="grid"></div>
+                                                <div style='margin-top: 20px;'>
+                                                    <div style='float: left;'>  
+                                                        <input type="button" class="jqx-rc-all jqx-button jqx-widget jqx-fill-state-normal" value="Export To Excel" id='excel' onclick='window.location = "@Url.Action("ExportGridToExcelSM", "Reports")";' />
+                                                    </div>
+                                                </div>
+                                                <div style='margin-top: 20px; '>
+                                                    <div id="div1" style='float: left; margin: 0px 0 0 4px;'>
+                                                        <input type="button" class="jqx-rc-all jqx-button jqx-widget jqx-fill-state-normal" value="Download PDF" id='pdftemp' onclick='window.location = "@Url.Action("CreatePdfSM", "Reports")";' />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var message = '@message';
+    if (message) alert(message);
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        // prepare the data
+        var source =
+            {
+                datatype: "json",
+
+                datafields: [
+                    { name: 'Id', type: 'int' },
+                    { name: 'EmpId', type: 'string' },
+                    { name: 'EmpName', type: 'string' },
+                    { name: 'FatherName', type: 'string' },
+                    { name: 'MotherName', type: 'string' },
+                    { name: 'Code', type: 'string' },
+                    { name: 'DOB', type: 'date' },
+                    { name: 'DOJ', type: 'date' },
+                    { name: 'RetirementDate', type: 'date' },
+                    { name: 'CurrentBrDept', type: 'string' },
+                    { name: 'ProfessionalQualifications', type: 'string' },
+                    { name: 'Graduation', type: 'string' },
+                    { name: 'PostGraduation', type: 'string' },
+                    { name: 'PresentAddress', type: 'string' },
+                    { name: 'MobileNumber', type: 'int' },
+                    { name: 'Category', type: 'string' },
+                    //{ name: 'OldDesignation', type: 'int' },
+                    //{ name: 'NewDesignation', type: 'int' },
+                    { name: 'oldBrDept', type: 'string' },
+                    { name: 'LatestBrDept', type: 'string' },
+                    { name: 'EffectiveFrom', type: 'date' },
+                    { name: 'EffectiveTo', type: 'date' },
+                    { name: 'Type', type: 'string' },
+                ],
+                async: false,
+                url: '/Reports/SMView',
+                data: {
+                    featureClass: "P",
+                    style: "full",
+                    maxRows: 2,
+                    username: "jqwidgets"
+                }
+            };
+
+        var dataAdapter = new $.jqx.dataAdapter(source,
+            {
+                formatData: function (data) {
+
+                    data.EmpId = $("#searchField").val();
+
+                    return data;
+                }
+            }
+        );
+        var editrowindex = -1;
+        var delrowindex = -1;
+        // initialize jqxGrid
+
+
+        $("#grid").jqxGrid(
+            {
+                width: '100%',
+                source: dataAdapter,
+                theme: otherTheme,
+                autoheight: true,
+                sortable: true,
+                pageable: true,
+                columnsResize: true,
+                altRows: true,
+                filterable: true,
+                autoshowfiltericon: true,
+                ready: function () {
+                    $("#grid").jqxGrid('localizestrings', localizationObject);
+                },
+                updatefilterconditions: function (type, defaultconditions) {
+                    switch (type) {
+                        case 'stringfilter':
+                            return stringcomparisonoperators;
+                        case 'numericfilter':
+                            return numericcomparisonoperators;
+                        case 'datefilter':
+                            return datecomparisonoperators;
+                        case 'booleanfilter':
+                            return booleancomparisonoperators;
+                    }
+                },
+                updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                    filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                    var index1 = 0;
+                    var index2 = 0;
+                    if (columnfilter != null) {
+                        var filter1 = columnfilter.getfilterat(0);
+                        var filter2 = columnfilter.getfilterat(1);
+                        if (filter1) {
+                            index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                            var value1 = filter1.filtervalue;
+                            filterinputfield1.val(value1);
+                        }
+                        if (filter2) {
+                            index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                            var value2 = filter2.filtervalue;
+                            filterinputfield2.val(value2);
+                        }
+                    }
+                    filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                    filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                },
+                columns: [
+                    { text: "Emp Code", datafield: "EmpId", width: 80 },
+                    { text: "Emp Name", datafield: "EmpName", width: 110 },
+                    { text: "Designation", datafield: "Code", width: 110 },
+                    { text: "DOB", datafield: "DOB", width: 88, cellsformat: 'dd/MM/yyyy' },
+                    { text: "DOJ", datafield: "DOJ", width: 88, cellsformat: 'dd/MM/yyyy' },
+                    { text: "Retirement Date", datafield: "RetirementDate", width: 115, cellsformat: 'dd/MM/yyyy' },
+                    { text: "Father Name", datafield: "FatherName", width: 110 },
+                    { text: "Mother Name", datafield: "MotherName", width: 110 },
+                    { text: "Emp Address", datafield: "PresentAddress", width: 140 },
+                    { text: "Mobile Number", datafield: "MobileNumber", width: 140 },
+                    { text: "Category", datafield: "Category", width: 80 },
+                    { text: "Graduation", datafield: "Graduation", columngroup: 'Educational Qualifications', width: 100 },
+                    { text: "PostGraduation", datafield: "PostGraduation", columngroup: 'Educational Qualifications', width: 100 },
+                    { text: "Prof Qualifications", datafield: "ProfessionalQualifications", columngroup: 'Educational Qualifications', width: 140 },
+                    { text: "Present Work Place", datafield: "CurrentBrDept", width: 140 },
+                    { text: "From", datafield: "oldBrDept", columngroup: 'Trasfers and postings made', width: 140 },
+                    { text: "To", datafield: "LatestBrDept", columngroup: 'Trasfers and postings made', width: 140 },
+                    { text: "Date", datafield: "EffectiveFrom", columngroup: 'Trasfers and postings made', width: 88, cellsformat: 'dd/MM/yyyy' },
+                    //{ text: "From(Cadre)", datafield: "OldDesignation", columngroup: 'Promotions if any', width: 140 },
+                    //{ text: "To(Cadre)", datafield: "NewDesignation", columngroup: 'Promotions if any', width: 140 },
+
+                ], columngroups:
+                [
+                    { text: 'Action', align: 'center', name: 'Actions', width: 160 },
+                    { text: 'Trasfers and postings made', align: 'center', editable: false, name: 'Trasfers and postings made' },
+                    { text: 'Promotions if any', align: 'center', editable: false, name: 'Promotions if any' },
+                    { text: 'Educational Qualifications', align: 'center', editable: false, name: 'Educational Qualifications' }
+
+                ],
+
+                showtoolbar: false,
+                rendertoolbar: function (toolbar) {
+                    var me = this;
+                    var container = $("<div style='margin: 5px;'></div>");
+                    var span = $("<span style='float: left; margin-top: 5px; margin-right: 4px;'>Emp Code/Emp Name/Designation: </span>");
+                    var input = $("<input class='jqx-input jqx-widget-content jqx-rc-all' id='searchField' type='text' style='height: 23px; float: left; width: 223px;' />");
+                    toolbar.append(container);
+                    container.append(span);
+                    container.append(input);
+                    if (otherTheme != "") {
+                        input.addClass('jqx-widget-content-' + otherTheme);
+                        input.addClass('jqx-rc-all-' + otherTheme);
+                    }
+                    var oldVal = "";
+                    input.on('keydown', function () {
+                        if (input.val().length >= 2) {
+                            if (me.timer) {
+                                clearTimeout(me.timer);
+                            }
+                            if (oldVal != input.val()) {
+                                me.timer = setTimeout(function () {
+                                    $("#grid").jqxGrid('updatebounddata');
+                                }, 1000);
+                                oldVal = input.val();
+                            }
+                        }
+                        else {
+                            $("#grid").jqxGrid('updatebounddata');
+                        }
+                    });
+                }
+
+            });
+    });
+
+</script>
+<script type="text/javascript">
+    $(function () {
+        $("#btnApply").click(function () {
+
+      
+            var startdate = $("#ecode").val();
+            if (startdate == "")
+            {
+                alert("Please Enter Employee Code / Designation / Name:")
+                return false;
+            }
+            //var enddate = $("#EDate").val()
+
+            // prepare the data
+            var source =
+                {
+                    type: "Post",
+                    datatype: "json",
+                    datafields: [
+                        { name: 'Id', type: 'int' },
+                        { name: 'EmpId', type: 'string' },
+                        { name: 'EmpName', type: 'string' },
+                        { name: 'FatherName', type: 'string' },
+                        { name: 'MotherName', type: 'string' },
+                        { name: 'Code', type: 'string' },
+                        { name: 'DOB', type: 'date' },
+                        { name: 'DOJ', type: 'date' },
+                        { name: 'RetirementDate', type: 'date' },
+                        { name: 'CurrentBrDept', type: 'string' },
+                        { name: 'ProfessionalQualifications', type: 'string' },
+                        { name: 'Graduation', type: 'string' },
+                        { name: 'PostGraduation', type: 'string' },
+                        { name: 'PresentAddress', type: 'string' },
+                        { name: 'MobileNumber', type: 'int' },
+                        { name: 'Category', type: 'string' },
+                        //{ name: 'OldDesignation', type: 'int' },
+                        //{ name: 'NewDesignation', type: 'int' },
+                        { name: 'oldBrDept', type: 'string' },
+                        { name: 'LatestBrDept', type: 'string' },
+                        { name: 'EffectiveFrom', type: 'date' },
+                        { name: 'EffectiveTo', type: 'date' },
+                        { name: 'Type', type: 'string' },
+                    ],
+                    async: false,
+                    url: "/Reports/SMViews?EmpID=" + startdate,
+                    data: {
+                        featureClass: "P",
+                        style: "full",
+                        username: "jqwidgets",
+
+
+                    }
+                };
+
+
+            var dataAdapter = new $.jqx.dataAdapter(source,
+                {
+                    formatData: function (data) {
+                        data.ProductName = $("#searchField").val();
+                        return data;
+                    }
+                }
+            );
+
+
+
+            // initialize jqxGrid
+            var editrowindex = -1;
+            var delrowindex = -1;
+            $("#grid").jqxGrid(
+                {
+                    width: '99%',
+                    source: dataAdapter,
+                    theme: otherTheme,// for theme refernce go to Layout.cshtml
+                    autoheight: true,
+                    sortable: true,
+                    pageable: true,
+                    columnsResize: true,
+                    altRows: true,
+                    filterable: true,
+                    autoshowfiltericon: true,
+
+                    ready: function () {
+                        $("#grid").jqxGrid('localizestrings', localizationObject);
+                    },
+                    updatefilterconditions: function (type, defaultconditions) {
+                        switch (type) {
+                            case 'stringfilter':
+                                return stringcomparisonoperators;
+                            case 'numericfilter':
+                                return numericcomparisonoperators;
+                            case 'datefilter':
+                                return datecomparisonoperators;
+                            case 'booleanfilter':
+                                return booleancomparisonoperators;
+                        }
+                    },
+                    updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                        filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                        var index1 = 0;
+                        var index2 = 0;
+                        if (columnfilter != null) {
+                            var filter1 = columnfilter.getfilterat(0);
+                            var filter2 = columnfilter.getfilterat(1);
+                            if (filter1) {
+                                index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                                var value1 = filter1.filtervalue;
+                                filterinputfield1.val(value1);
+                            }
+                            if (filter2) {
+                                index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                                var value2 = filter2.filtervalue;
+                                filterinputfield2.val(value2);
+                            }
+                        }
+                        filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                        filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                    },
+                    columns: [
+                        { text: "Emp Code", datafield: "EmpId", width: 80 },
+                        { text: "Emp Name", datafield: "EmpName", width: 110 },
+                        { text: "Designation", datafield: "Code", width: 110 },
+                        { text: "DOB", datafield: "DOB", width: 88, cellsformat: 'dd/MM/yyyy' },
+                        { text: "DOJ", datafield: "DOJ", width: 88, cellsformat: 'dd/MM/yyyy' },
+                        { text: "RetirementDate", datafield: "RetirementDate", width: 115, cellsformat: 'dd/MM/yyyy' },
+                        { text: "Father Name", datafield: "FatherName", width: 110 },
+                        { text: "Mother Name", datafield: "MotherName", width: 110 },
+                        { text: "Emp Address", datafield: "PresentAddress", width: 140 },
+                        { text: "Mobile Number", datafield: "MobileNumber", width: 140 },
+                        { text: "Category", datafield: "Category", width: 80 },
+                        { text: "Graduation", datafield: "Graduation", columngroup: 'Educational Qualifications', width: 100 },
+                        { text: "PostGraduation", datafield: "PostGraduation", columngroup: 'Educational Qualifications', width: 100 },
+                        { text: "Prof Qualifications", datafield: "ProfessionalQualifications", columngroup: 'Educational Qualifications', width: 140 },
+                        { text: "Present Work Place", datafield: "CurrentBrDept", width: 140 },
+                        { text: "From", datafield: "oldBrDept", columngroup: 'Trasfers and postings made', width: 140 },
+                        { text: "To", datafield: "LatestBrDept", columngroup: 'Trasfers and postings made', width: 140 },
+                        { text: "Date", datafield: "EffectiveFrom", columngroup: 'Trasfers and postings made', width: 88, cellsformat: 'dd/MM/yyyy' },
+                    //{ text: "From(Cadre)", datafield: "OldDesignation", columngroup: 'Promotions if any', width: 140 },
+                    //{ text: "To(Cadre)", datafield: "NewDesignation", columngroup: 'Promotions if any', width: 140 },
+
+                    ], columngroups:
+                    [
+                        { text: 'Action', align: 'center', name: 'Actions', width: 160 },
+                        { text: 'Trasfers and postings made', align: 'center', editable: false, name: 'Trasfers and postings made' },
+                        { text: 'Promotions if any', align: 'center', editable: false, name: 'Promotions if any' },
+                        { text: 'Educational Qualifications', align: 'center', editable: false, name: 'Educational Qualifications' }
+
+                    ],
+
+                });
+        });     
+    });
+</script>
+<script>
+    document.getElementById("a6").className = "active";
+</script>
+

@@ -1,0 +1,70 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+		<div class="leftmenu-container">
+            <div class="sidebar-menu">
+              
+                    @{Html.RenderPartial("_PVPayrollMenu");}
+                
+            </div>
+            <div class="sidebar-content">
+                <div class="main_heading heading_main">
+                    <h1>Payroll Masters </h1>
+                    <div class="col-md-12">
+                        <ul class="index-menus">
+                       
+                            <li><a href="@Url.Action("EmployeeMaster", "Masters")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="Employee Master" aria-hidden="true"></i> <span> Employee Master </span></a> <span>  : Employee personal, biological, allowances, deduction, LIC and HFC data.</span></li>
+                            <li><a href="@Url.Action("LoansAdvances", "Masters")"><i class="fa fa-exchange" data-toggle="tooltip" data-placement="right" title="Loans & Advances" aria-hidden="true"></i> <span> Loans & Advances </span></a> <span>  : New loan creation and existing loan data visualization.</span></li>
+                            <li><a href="@Url.Action("PersonalEarnings", "HRMSMasters")"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="Personal Earnings" aria-hidden="true"></i><span> Personal Earnings </span></a> <span>  : Personal Earnings which will be consider as earnings for TDS and Form16 general.</span></li>
+                            <li><a href="@Url.Action("PersonalDeductions", "HRMSMasters")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="Personal Deductions" aria-hidden="true"></i> <span> Personal Deductions </span></a> <span>  : Personal deductions which will be consider as deductions and section wise exemption for TDS and Form16 general.</span></li>
+                            <li><a href="@Url.Action("RentDetails", "Masters")"><i class="fa fa-lock" data-toggle="tooltip" data-placement="right" title="Rent Details" aria-hidden="true"></i> <span> Rent Details </span></a> <span>  : Rent details for current financial year for TDS exemption.</span></li>
+                            <li><a href="@Url.Action("Allowance", "Masters")"><i class="fa fa-user" data-toggle="tooltip" data-placement="right" title="Allowance Master" aria-hidden="true"></i> <span> Allowance Master </span></a> <span>  : Creation of new allowance and showing existing allowance amount.</span></li>
+                            <li><a href="@Url.Action("IncomeTaxBankPayment", "HRMSMasters")"><i class="fa fa-pencil-square-o" data-toggle="tooltip" data-placement="right" title="Income Tax Bank Payments" aria-hidden="true"></i> <span> Income Tax Bank Payments </span></a> <span>  :  Month wise income tax bank payments for financial year.</span></li>
+                            <li><a href="@Url.Action("Form12BA", "Masters")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="Form 12BA" aria-hidden="true"></i> <span> Form 12BA </span></a> <span>  : Form 12ba for extra incomes which will be calculated in TDS and Form16 general.</span></li>
+                            <li><a href="@Url.Action("Form12B", "Masters")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="Form 12B" aria-hidden="true"></i> <span> Form 12B </span></a> <span>  : Form 12b data will be given only who joined in the current financial year.</span></li>
+                            <li><a href="@Url.Action("OtherTdsDeduction", "Masters")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="Other TDS Deductions" aria-hidden="true"></i> <span> Other TDS Deductions </span></a> <span>  : Any other TDS deductions done by the employee.</span></li>
+                            <li><a href="@Url.Action("Form16", "Masters")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="Form 16" aria-hidden="true"></i> <span>  Form 16 </span></a> <span>  : Year wise income tax payment details.</span></li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="main_heading heading_main mt_10">
+                    <h1>HRMS Masters </h1>
+                    <div class="col-md-12">
+                        <ul class="index-menus">
+                            <li><a target="_blank" href="@Url.Action("Index/PayrollPromotion", null, new { area = string.Empty, controller = "Transfer" }, Request.Url.Scheme)"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="Promotions" aria-hidden="true"></i> <span> Promotion</span></a> <span>  : Promotions will be given to employee and Re-Direct to HRMS portal.</span></li>
+                            <li><a href="@Url.Action("IncrementDateChange", "HRMSMasters")"><i class="fa fa-exchange" data-toggle="tooltip" data-placement="right" title="Increment Date Change" aria-hidden="true"></i> <span> Increment Date Change </span></a> <span>  : Increment Data Change will be useful in order to change the increment date.</span></li>
+                            <li><a href="@Url.Action("IncrementAnnualStagnation", "HRMSMasters")"><i class="fa fa-user" data-toggle="tooltip" data-placement="right" title="Increment Annual Stagnation" aria-hidden="true"></i><span> Increment Annual Stagnation </span></a> <span>  : Increment annual stagnation will be useful in order to initiate the Increment process before authorization and process.</span></li>
+                            <li><a href="@Url.Action("JAIIBCAIIBIncr", "HRMSMasters")"><i class="fa fa-lock" data-toggle="tooltip" data-placement="right" title="JAIIB / CAIIB /General" aria-hidden="true"></i><span> JAIIB / CAIIB / General </span></a> <span>  : Used to give the JAIIB/CAIIB increments after the exam completion.</span></li>
+                            <li>
+                                <a href="#"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="Basic Pay Structure" aria-hidden="true"></i><span> Basic Pay Structure</span></a> <span>  : To know basic pay structure of an employee.</span>
+                                <ul class="index-menus2">
+                                    <li><a href="@Url.Action("AnnualIncrement", "HRMSMasters")"><i class="fa fa-file-text-o"></i> Annual Increment</a> <span>  : Annual increment basic pay structure based on the designation.</span></li>
+                                    <li><a href="@Url.Action("StagnationIncrement", "HRMSMasters")"><i class="fa fa-pencil-square-o"></i> Stagnation Increment </a> <span>  : stagnation increment basic pay structure based on the designation.</span></li>
+                                </ul>
+                            </li>
+                            <li><a href="@Url.Action("PfNominee", "HRMSMasters")"><i class="fa fa-lock" data-toggle="tooltip" data-placement="right" title="PfNominee" aria-hidden="true"></i><span> PF Nominee</span></a> <span>  : To create and change the PF nominee details of an employee.</span></li>
+                            <li>
+                                <a href="#"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="PF Loans" aria-hidden="true"></i><span> PF Loans</span></a> <span>  : Used to apply PF loans based on their present PF balance Amount.</span>
+                                <ul class="index-menus2">
+                                    <li><a href="@Url.Action("NonRepayableLoans", "Masters")"><i class="fa fa-pencil-square-o"></i> PF Non Re-Payable Loans </a> <span>  : Non Re-Payable Loans will be given based on their present PF balance amount for different kinds of loans.</span></li>
+                                    <li><a href="@Url.Action("RepayableLoans", "Masters")"><i class="fa fa-file-text-o"></i> PF Re-Payable Loans</a> <span>  : Will be checked the eligibility of amount for PF Re-Payable loan based on their PF balance amount. And then eligibility amount will be available in loans and advances.</span></li>
+                                </ul>
+                            </li>
+                           
+                        </ul>
+                    </div>
+                </div>
+            </div>
+			</div>
+
+        </div>
+    </div>
+</div>
+

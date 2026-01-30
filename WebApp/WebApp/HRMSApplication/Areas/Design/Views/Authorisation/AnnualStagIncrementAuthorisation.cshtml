@@ -1,0 +1,132 @@
+﻿@{
+    ViewBag.Title = "AnnualStagIncrementAuthorisation";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <h1>Annual Stag Increment Authorisation <span class="year-end">TGCAB 01-04-2019 - 31-04-2020</span></h1>
+                    <div class="col-md-12 mt_10">
+                        <div class="inner_heading">
+                            <h1>Employee Search</h1>
+                            <div class="col-md-12">
+                                <div class="col-md-3">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> Employee Id wise
+                                    </label>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> Employee Name wise
+                                    </label>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" id="inlineCheckbox3" value="option3"> Select All
+                                    </label>
+                                </div>
+                                <div class="col-md-6 mt_10">
+                                    <div class="col-md-9">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Employee Name:</label>
+                                            <div class="col-sm-7">
+                                                <input type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 col-sm-3 col-xs-12"><button type="button" class="btn btn-primary btn-sm pull-right">Search</button></div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table id="incrm_stag_auth" class="display" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Emp Code</th>
+                                                    <th>Empname</th>
+                                                    <th>Inc Amount</th>
+                                                    <th>Basic</th>
+                                                    <th>Increment Type</th>
+                                                    <th>Increment W.E.F</th>
+                                                    <th colspan="3">Designation</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <label class="checkbox-inline">
+                                                            <input type="checkbox" id="inlineCheckbox1" value="option1">347
+                                                        </label>
+                                                    </td>
+                                                    <td>Dr.S.Ramesh</td>
+                                                    <td>142</td>
+                                                    <td>19860</td>
+                                                    <td>ANNUAL</td>
+                                                    <td>
+                                                        <div class="input-group date">
+                                                            <input class="form-control">
+                                                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                        </div>
+                                                    </td>
+                                                    <td>ATTD</td>
+                                                    <td>1</td>
+                                                    <td>704</td>                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <label class="checkbox-inline">
+                                                            <input type="checkbox" id="inlineCheckbox1" value="option1">347
+                                                        </label>
+                                                    </td>
+                                                    <td>Dr.S.Ramesh</td>
+                                                    <td>142</td>
+                                                    <td>19860</td>
+                                                    <td>ANNUAL</td>
+                                                    <td>
+                                                        <div class="input-group date">
+                                                            <input class="form-control">
+                                                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                        </div>
+                                                    </td>
+                                                    <td>ATTD</td>
+                                                    <td>1</td>
+                                                    <td>704</td>                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mt_10">
+                                    <div class="pull-right">
+                                        <button type="reset" class="btn btn-default calcel">Close</button>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#incrm_stag_auth').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false
+        });
+    });
+</script>
+
+

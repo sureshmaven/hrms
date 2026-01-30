@@ -1,0 +1,56 @@
+--Apply Maternity  leave to  M Mounika, staff assistant, emp code 6353 from  01.02.2022 to 30.09.2022 ,we are unable to apply leave.
+
+-- Reason " On maternity leave ".
+
+
+
+declare @Empid int;
+declare @Leavetypeid int;
+declare @StartDate Date;
+declare @EndDate Date;
+declare @UpdatedBy_EmployeeId int;
+declare @Status varchar(10);
+declare @LeaveDays int;
+declare @TotalDays int;
+declare @MaternityType varchar(10);
+declare @pre_leave_balance int;
+
+
+set @Empid=6353;
+set @Leavetypeid=4;
+set @StartDate='2022-02-01';
+set @EndDate='2022-09-30';
+set @UpdatedBy_EmployeeId=123456;
+set @Status='Pending';
+set @LeaveDays=242;
+set @TotalDays=242;
+set @MaternityType='Pregnant';
+set @pre_leave_balance=((select leavebalance from EmpLeaveBalance where empid =(select id from employees where empid=6353 ) 
+and leavetypeid=4 and year=2022));
+
+
+INSERT INTO [dbo].[Leaves]([EmpId],[ControllingAuthority],[SanctioningAuthority],[LeaveType],[StartDate],[EndDate],[Subject],[Reason],
+[UpdatedBy],[UpdatedDate],[Status],[LeaveDays],[TotalDays],[LeaveTimeStamp],[LeavesYear],[Stage],[CancelReason],[MaternityType],
+[BranchId],[DepartmentId],[DesignationId],[leave_balance]) 
+VALUES((select id from employees where empid=@empid),
+(select ControllingAuthority from employees where empid=@empid),
+(select SanctioningAuthority from employees where empid=@empid),
+@Leavetypeid,@StartDate,@EndDate,'Leave Applied','On maternity leave',
+@UpdatedBy_EmployeeId,GETDATE(),@Status,@LeaveDays,@TotalDays,GETDATE(),2022,'','',
+@MaternityType,(select Branch from employees where empid=@empid),
+(select Department from employees where empid=@empid),
+(select CurrentDesignation from employees where empid=@empid),@pre_leave_balance);
+
+
+------- To update Leavebalances
+
+declare @Empid int;
+declare @LeaveTypeId int;
+declare @LeaveBalance int;
+
+set @Empid=6353;
+set @LeaveTypeId=4;
+set @Leavebalance=((select leavebalance from EmpLeaveBalance where empid =(select id from employees where empid=6353) and leavetypeid=4 and year=2022)-242);
+
+update EmpLeaveBalance set LeaveBalance=@Leavebalance where LeaveTypeId=@LeaveTypeId and empid=
+(select id from employees where empid=@Empid) and year=2022;

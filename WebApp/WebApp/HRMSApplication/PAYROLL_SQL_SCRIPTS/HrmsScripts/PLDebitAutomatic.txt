@@ -1,0 +1,30 @@
+Create procedure [dbo].[PLDebitAutomatic](
+ @empid varchar(50),
+ @debitLeave int,
+ @comment varchar(250))
+
+as
+begin
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=@empid),3,	0	,	@debitLeave	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=@empid) 
+and LeaveTypeId=3 and year=2022),@comment,
+(select ShortName from Employees where empid=@empid),
+(select Department from Employees where empid=@empid),
+(select Branch from Employees where empid=@empid),
+(select CurrentDesignation from Employees where empid=@empid),'Debit',
+(select branch_value1 from employees where empid=@empid),((select (leavebalance-@debitLeave) from 
+EmpLeaveBalance where EmpId=(select id from employees where empid=@empid) 
+and LeaveTypeId=3 and year=2022)),2022);
+
+
+update  EmpLeaveBalance set leavebalance=(leavebalance-	@debitLeave	)  
+where empid=(select id from employees where empid=	@empid	) and LeaveTypeId=3 and year=2022;
+
+
+end

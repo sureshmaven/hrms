@@ -1,0 +1,33 @@
+CREATE NONCLUSTERED INDEX [idx_emp_code_prempgeneral] ON [dbo].[pr_emp_general](emp_code ASC);
+CREATE NONCLUSTERED INDEX [idx_empid_Employees] ON [dbo].[Employees](Empid ASC);
+CREATE NONCLUSTERED INDEX [idx_CurrentDesignation_Employees] ON [dbo].[Employees](CurrentDesignation ASC);
+CREATE NONCLUSTERED INDEX [idx_id_Designations] ON [dbo].[Designations](Id ASC);
+CREATE NONCLUSTERED INDEX [idx_empcode_pr_emp_tds_process] ON [dbo].[pr_emp_tds_process](empcode ASC);
+CREATE NONCLUSTERED INDEX [idx_empcode_pr_emp_tds_section_deductions] ON [dbo].[pr_emp_tds_section_deductions](empcode ASC);
+CREATE NONCLUSTERED INDEX [idx_m_id_pr_emp_tds_section_deductions] ON [dbo].[pr_emp_tds_section_deductions](m_id ASC);
+CREATE NONCLUSTERED INDEX [idx_id_pr_deduction_field_master] ON [dbo].[pr_deduction_field_master](Id ASC);
+CREATE NONCLUSTERED INDEX [idx_m_id_pr_emp_perdeductions] ON [dbo].[pr_emp_perdeductions](m_id ASC);
+CREATE NONCLUSTERED INDEX [idx_emp_code_pr_emp_tds_process_allowances] ON [dbo].[pr_emp_tds_process_allowances](emp_code ASC);
+CREATE NONCLUSTERED INDEX [idx_id_pr_emp_payslip] ON [dbo].[pr_emp_payslip](id ASC);
+
+--pr_emp_general
+--Employees
+--Designations
+--pr_emp_tds_process
+--pr_emp_tds_section_deductions
+--pr_emp_perdeductions
+--pr_deduction_field_master
+--pr_emp_tds_process_allowances
+--pr_emp_payslip
+
+--drop index [idx_emp_code_prempgeneral] ON pr_emp_general
+--drop index [idx_empid_Employees] on Employees
+--drop index [idx_CurrentDesignation_Employees] on Employees
+--drop index [idx_id_Designations] on Designations
+--drop index [idx_empcode_pr_emp_tds_process] on pr_emp_tds_process
+--drop index [idx_empcode_pr_emp_tds_section_deductions] on pr_emp_tds_section_deductions
+--drop index [idx_m_id_pr_emp_tds_section_deductions] on pr_emp_tds_section_deductions
+--drop index [idx_m_id_pr_emp_perdeductions] on pr_emp_perdeductions
+--drop index [idx_id_pr_deduction_field_master] on pr_deduction_field_master
+--drop index [idx_emp_code_pr_emp_tds_process_allowances] on pr_emp_tds_process_allowances
+--drop index [idx_id_pr_emp_payslip] on pr_emp_payslip

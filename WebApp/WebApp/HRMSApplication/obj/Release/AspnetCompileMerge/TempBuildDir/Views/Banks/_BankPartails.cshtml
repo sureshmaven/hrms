@@ -1,0 +1,372 @@
+﻿@model Entities.ViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.RolePages = TempData["RolePages"];
+    var rolepages = TempData["RolePages"].ToString();
+}
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+
+        <div class="panel-heading">
+            @{
+                <ul class="nav nav-tabs">
+                    @if (rolepages.Contains("MABAN"))
+                    {
+                        <li class="active"><a href=@Url.Action("Create", "Banks")>Bank</a></li>}
+                    @if (rolepages.Contains("MABRA"))
+                    {
+                        <li><a href=@Url.Action("Create", "Branches")>Branch</a></li>}
+
+                    @if (rolepages.Contains("MADEP"))
+                    {
+                        <li><a href=@Url.Action("Create", "Departments")>Department</a></li>}
+                    @if (rolepages.Contains("MADES"))
+                    {
+                        <li><a href=@Url.Action("Create", "Designations")>Designation</a></li>}
+                    @if (rolepages.Contains("MAROL"))
+                    {
+                        <li><a href=@Url.Action("Create", "Roles")>Role</a></li>}
+                    @if (rolepages.Contains("MALTY"))
+                    {
+                        <li><a href=@Url.Action("Create", "LeaveTypes")>LeaveType</a></li>}
+                    @if (rolepages.Contains("MAHLI"))
+                    {
+                        <li><a href=@Url.Action("Create", "HolidayLists")>HolidayList</a></li>}
+                    @if (rolepages.Contains("MACDL"))
+                    {
+                        <li><a href=@Url.Action("CreditDebitleaves", "MyLeaves")>Credit / Debit leaves</a></li>}
+                    @if (rolepages.Contains("MABCY"))
+                    {
+                        <li><a href=@Url.Action("Createbranchcount", "Branches")>Branch Category</a></li>}
+                    @if (rolepages.Contains("MAODY"))
+                    {
+                        <li><a href=@Url.Action("OtherdutyCreate", "LeaveTypes")>Other Duty</a></li>}
+                    @if (rolepages.Contains("MABPD"))
+                    {
+                        <li><a href=@Url.Action("Create", "BlockPeriod")>BlockPeriod</a></li>}
+                    @if (rolepages.Contains("MANES"))
+                    {
+                        <li><a href=@Url.Action("Create", "News")>News</a></li>}
+                </ul>
+            }
+        </div>
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="bank">
+                    <div class="page_st">
+                        <div class="page">
+                            <div class="col-md-12 col-sm-12">
+                            
+                                    
+                                    <div>
+    @using (Html.BeginForm("Create", "Banks", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="col-md-12 col-sm-12">
+            <div class="main_heading">
+                <h1>Bank Creation</h1>
+                <div class="leave_cont_start form-horizontal">
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">Bank Name: <span class="mandatory">*</span></label>
+                            <div class="col-sm-7">
+                                @Html.EditorFor(model => model.lbanks.Name, new { htmlAttributes = new { @class = "form-control", @id = "baName", onBlur = "banknam()", onkeypress = "return onlyAlphabets(event)" } })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">Address Line 1:<span class="mandatory">*</span></label>
+                            <div class="col-sm-7">
+                                @Html.TextAreaFor(model => model.lbanks.AddressLine1, new { @class = "form-control", @id = "lbanksAddr1" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <div class="form-group">
+
+                            <label class="col-sm-5 control-label">Address Line 2:<span class="mandatory">*</span></label>
+                            <div class="col-sm-7">
+                                @Html.TextAreaFor(model => model.lbanks.AddressLine2, new { @class = "form-control", @id = "lbanksAddr2" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <div class="form-group">
+
+                            <label class="col-sm-5 control-label">City:<span class="mandatory">*</span></label>
+                            <div class="col-sm-7">
+                                @Html.EditorFor(model => model.lbanks.City, new { htmlAttributes = new { @class = "form-control", @id = "lbankscity", onkeypress = "return checkNum1(event)" } })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <div class="form-group">
+
+                            <label class="col-sm-5 control-label">Phone No 1:<span class="mandatory">*</span></label>
+                            <div class="col-sm-7">
+                                @Html.EditorFor(model => model.lbanks.PhoneNo1, new { htmlAttributes = new { @class = "form-control", @id = "lbanksphone1", maxlength = "12", onkeypress = "return isNumber(event)" } })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <div class="form-group">
+                            @Html.Label("Phone No 2:", htmlAttributes: new { @class = "control-label col-sm-5", })
+                            <div class="col-sm-7">
+                                @Html.EditorFor(model => model.lbanks.PhoneNo2, new { htmlAttributes = new { @class = "form-control", @id = "lbanksphone2", maxlength = "12", onkeypress = "return isNumber(event)" } })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <div class="form-group">
+                            @Html.Label("Phone No 3:", htmlAttributes: new { @class = "control-label col-sm-5", })
+                            <div class="col-sm-7">
+                                @Html.EditorFor(model => model.lbanks.PhoneNo3, new { htmlAttributes = new { @class = "form-control", @id = "lbanksphone3", maxlength = "12", onkeypress = "return isNumber(event)" } })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="pull-right">
+                            <input type="reset" value="Cancel" class="btn btn-default" />
+                            <input type="submit" value="Create" onclick="return Banks();" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+                                </div>
+                                                <div class="clearfix"></div>
+                                                <div class="col-md-12">
+                                                    <div class="main_heading">
+                                                        <h1>Bank List</h1>
+                                                        <div class="col-md-12">
+                                                            <div class="table-responsive">
+                                                                <div id="grid"></div>
+                                                            </div>
+                                                            </div>
+                                                        </div>
+                                                </div>
+
+                                           
+
+                                        }
+                                    </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@{
+    var message = TempData["AlertMessage"] ?? string.Empty;
+}
+<script type="text/javascript">
+ var message = '@message';
+
+if(message) alert(message);
+
+</script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // prepare the data for BankView
+            var theme = otherTheme;
+            // prepare the data
+            var url = "../Banks/BankViews";
+            var source =
+                {
+                    type: "Get",
+                    datatype: "json",
+                    datafields: [
+                        { name: 'Id', type: 'int' },
+                        { name: 'Code', type: 'string' },
+                        { name: 'Name', type: 'string' },
+                        { name: 'AddressLine1', type: 'string' },
+                        { name: 'AddressLine2', type: 'string' },
+                        { name: 'City', type: 'string' },
+
+                    ],
+                    async: false,
+                    url: url,
+                    data: {
+                        featureClass: "P",
+                        style: "full",
+                        username: "jqwidgets"
+                    }
+                };
+            var dataAdapter = new $.jqx.dataAdapter(source,
+                {
+                    formatData: function (data) {
+                        data.ProductName = $("#searchField").val();
+                        return data;
+                    }
+                }
+            );
+            // initialize jqxGrid
+            var editrowindex = -1;
+            var delrowindex = -1;
+            $("#grid").jqxGrid(
+                {
+                    width: '99.5%',
+                    source: dataAdapter,
+                    theme: otherTheme,// for theme refernce go to Layout.cshtml
+                    autoheight: true,
+                    sortable: true,
+                    pageable: true,
+                    columnsResize: true,
+                    altRows: true,
+                    filterable: true,
+                    autoshowfiltericon: true,
+
+                    ready: function () {
+                        $("#grid").jqxGrid('localizestrings', localizationObject);
+                    },
+                    updatefilterconditions: function (type, defaultconditions) {
+                        switch (type) {
+                            case 'stringfilter':
+                                return stringcomparisonoperators;
+                            case 'numericfilter':
+                                return numericcomparisonoperators;
+                            case 'datefilter':
+                                return datecomparisonoperators;
+                            case 'booleanfilter':
+                                return booleancomparisonoperators;
+                        }
+                    },
+                    updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                        filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                        var index1 = 0;
+                        var index2 = 0;
+                        if (columnfilter != null) {
+                            var filter1 = columnfilter.getfilterat(0);
+                            var filter2 = columnfilter.getfilterat(1);
+                            if (filter1) {
+                                index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                                var value1 = filter1.filtervalue;
+                                filterinputfield1.val(value1);
+                            }
+                            if (filter2) {
+                                index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                                var value2 = filter2.filtervalue;
+                                filterinputfield2.val(value2);
+                            }
+                        }
+                        filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                        filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                    },
+                    columns: [
+                        { text: "Bank Name", datafield: "Name", editable: false, width: 210 },
+                        { text: "Address Line 1", datafield: "AddressLine1", editable: false, width: 250 },
+                        { text: "Address Line 2", datafield: "AddressLine2", editable: false, width: 250 },
+                        { text: "City", datafield: "City", editable: false, width: 210 },
+                        {
+                            text: 'Edit', datafield: 'Edit', sortable: false, filterable: false, columngroup: 'Actions', columntype: 'button', width: 60, cellsrenderer: function () {
+
+                                return "Edit";
+                            }, buttonclick: function (row) {
+                                editrowindex = row;
+                                var paginginformation = $('#grid').jqxGrid('getpaginginformation');
+                                var id = $("#grid").jqxGrid('getcellvalue', row, "Id");
+                                window.location = '/Banks/Edit/?id=' + id + '&page=' + paginginformation.pagenum;
+                            }
+                        },
+                        {
+                            text: 'Delete', datafield: 'Delete', columngroup: 'Actions', sortable: false, filterable: false, columntype: 'button', name: 'delete', width: 60, cellsrenderer: function () {
+                                return "Delete";
+                            },
+                            buttonclick: function (row) {
+                                var res = confirm("Do You Want to Delete");
+                                if (res) {
+                                    delrowindex = row;
+                                    var id = $("#grid").jqxGrid('getcellvalue', row, "Id");
+
+                                    var paginginformation = $('#grid').jqxGrid('getpaginginformation');
+                                    window.location = '/Banks/Delete/?id=' + id + '&page=' + paginginformation.pagenum;
+                                }
+                                else
+                                    return res;
+                            }
+                        }
+                    ],
+                    columngroups:
+                        [
+                            { text: 'Action', align: 'center', name: 'Actions', width: 120 },
+                        ],
+                });
+        });
+
+    </script>
+
+<script>
+    function banknam() {
+        var x = location.hostname;
+        var url = window.location.href
+        var arr = url.split("/");
+        var textBoxValue = document.getElementById("baName").value;
+
+        //var result = "https://" + arr[2] + "/" + "Banks/bankcheck?Name=" + textBoxValue;
+          var result = "" + arr[0] +  "//" + arr[2] +  "/"+ "Banks/bankcheck?Name=" + textBoxValue;
+
+        $.ajax({
+            type: "GET",
+            url: result,
+
+            dataType: "json",
+            success: function (data) {
+
+                if (data.message == "use") {
+
+                }
+                if (data.message == "used") {
+
+                    document.getElementById("baName").value = "";
+
+                    alert("This Bank Name already Exist!");
+                }
+
+            },
+            error: function () {
+
+            }
+        });
+
+
+    }
+</script>
+<script>
+    $(document).ready(function () {
+
+        $('#baName').keydown(function (e) {
+
+            if (e.which == 188 && e.shiftKey == true) { // 188 + Shift is <
+
+                e.preventDefault();
+
+            }
+
+        });
+
+    });
+
+</script>
+<script>
+    $(document).ready(
+
+        $('#baName').on('keypress', function (e) {
+            if (e.which === 60 || e.which === 62) {
+                e.preventDefault();
+            }
+
+        }));
+
+</script>
+<script>
+    document.getElementById("a2").className = "active";
+
+</script>

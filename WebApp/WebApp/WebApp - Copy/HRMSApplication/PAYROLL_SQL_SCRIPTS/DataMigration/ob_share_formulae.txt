@@ -1,0 +1,23 @@
+="INSERT INTO pr_ob_share_temp
+           ([emp_id]
+           ,[emp_code]
+           ,[fy]
+           ,[fm]
+           ,[active]
+           ,[trans_id]
+           ,[own_share_total]
+           ,[vpf_total]
+           ,[bank_share_total],[pension_open],
+        [pension_total],
+        [pension_intrest_amount])
+     VALUES
+           ((select id from employees where empid="&D3&")
+           ,"&D3&"
+           ,2020
+           ,'2019-07-01'
+           ,1
+           ,1000
+           ,"&A3&"
+           ,"&B3&"
+           ,"&C3&",0,0,0
+           )"

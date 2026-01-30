@@ -1,0 +1,494 @@
+﻿
+@{
+    ViewBag.Title = "PersonalEarnings";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+<style>
+    #gridNeW_paginate {
+        display: none !important;
+    }
+
+    #gridNeW_length {
+        display: none !important;
+    }
+
+    #gridNeW_filter {
+        display: none !important;
+    }
+</style>
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="leftmenu-container">
+            <div class="sidebar-menu">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="sidebar-content">
+                <div class="main_heading heading_main">
+                    <h1>Personal Earnings<span class="year-end">@ViewBag.Env_Fm_Fy</span></h1>
+                    @{ Html.RenderPartial("_pvEmployeeSearch"); }
+                    <input type="hidden" id="hdnEmpCode" />
+                    <div class="col-md-12 mt_10">
+                        <div class="pull-right">
+                            <button id="addRow" class="btn btn-default mr_0" title="Add details"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mt_5 personal_eng_gride">
+                        <div class="table-responsive">
+                            <table id="gridEF" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th style="width:43%;">Personal Earnings</th>
+                                        <th>Amount(<i class="fa fa-rupee"></i>)</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <table id="gridNeW" class="display" style="width:100%" >
+                                <thead style="display:none;">
+                                    <tr>
+                                        <th style="width:20%;" >Personal Earnings </th>
+                                        <th>Amount</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <table id="tablep" class="display" style="width:100%">
+                            <tr>
+                                <td style="width:43%;">Total Amount:</td>
+                                <td><label id="total"></label></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-12 mt_10">
+                        <div class="pull-right">
+                            <button id="btnCancel" class="btn btn-default" title="Clear the data">Cancel</button>
+                            <button id="btnsubmit" class="btn btn-primary" type="button" title="Submit details"> Submit </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			</div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#gridNeW').hide();
+    });
+</script>
+<script>
+    var orgNew = [];
+    var orgErlist;
+    var incIndex = 0;
+    var modifiedData = [];
+    var arrDelete = [];
+    var orgData = [];
+    $(document).ready(function () {
+        $("#tablep").hide();
+        $("#btnsubmit").attr("disabled", true);
+        $("#addRow").attr("disabled", true);
+        //on page load
+        $('#gridEF').DataTable({
+            "paging": false,
+            "sort": false,
+            "searching": false,
+            "language": {
+                "emptyTable": "No data available. Please enter employee code and search"
+            }
+        });
+
+
+    });
+    $('#addRow').click(function () {
+        addRow();
+    });
+
+    function addRow() {
+        $('#gridNeW').show();
+        incIndex++;
+
+        if (incIndex == 1) {
+            var incId = "NeW" + incIndex;
+            var addNewEf = [{
+                "Id": incId,
+                "Name": "",
+                "Value": "",
+                "Action": "Delete"
+            }];
+            orgNew = addNewEf;
+            fillDataTables(addNewEf);
+        } else {
+
+            var table = $('#gridNeW').DataTable();
+            var updateData = decodeURIComponent(table.$('input, select').serializeAndEncode());;
+            var arrUpdate = updateData.split("*");
+            var arrSampleObJ = [];
+            arrUpdate.forEach(function (element) {
+                if (element != "") {
+                    var objEf = {}; //"NeW1=over+time&NeW1=123"
+                    var strRow = element.split("&");
+                    var id = strRow[0].split("=");
+                    objEf.Id = id[0];
+                    objEf.Name = id[1];
+                    var value = strRow[1].split("=");
+                    objEf.Value = value[1];
+                    if (isNaN(id[0])) {
+                        objEf.Action = "Delete";
+                    } else {
+                        objEf.Action = "Add";
+                    }
+                    arrSampleObJ.push(objEf);
+                }
+            });
+
+            modifiedData = arrSampleObJ;
+            var incId = "NeW" + incIndex;
+            var row = {
+                "Id": incId,
+                "Name": "",
+                "Value": "",
+                "Action": "Delete"
+            };
+            modifiedData.push(row);
+            fillDataTables(modifiedData);
+        }
+    }
+
+    function getColumnTextboxonly(Id, Value) {
+        return '<input type="text" class = "form-control" name="' + Id + '" value="' + Value + '"onkeypress="javascript : return checkNum(event)" required "  />';
+    }
+    function fillDataTables(respData) {
+        debugger;
+        $('#gridNeW').DataTable({
+            "destroy": true,
+            "drawCallback": function (settings) {
+                $("#gridNeW thead").remove();
+            },
+            "paging": false,
+            "sort": false,
+            "searching": false,
+            data: respData,
+            "columns": [
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data) {
+                        return getColumnTextboxonly("*" + data.Id, data.Name);
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data) {
+                        return getColumnNumberCountValue(data.Id, data.Value);
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return getColumnButton(data.Id, data.Action);
+                    }
+                },
+            ],
+            "order": [[0, 'asc']]
+        });
+    }
+    function deleteRow(id) {
+        incIndex--;
+        var table = $('#gridNeW').DataTable();
+        var updateData = decodeURIComponent(table.$('input, select').serializeAndEncode());;
+        var arrUpdate = updateData.split("*");
+        var arrSampleObJ = [];
+        arrUpdate.forEach(function (element) {
+            if (element != "") {
+                var objEf = {}; //"NeW1=over+time&NeW1=123"
+                var strRow = element.split("&");
+                var id = strRow[0].split("=");
+                objEf.Id = id[0];
+                objEf.Name = id[1];
+                var value = strRow[1].split("=");
+                objEf.Value = value[1];
+                if (isNaN(id[0])) {
+                    objEf.Action = "Delete";
+                } else {
+                    objEf.Action = "Add";
+                }
+                arrSampleObJ.push(objEf);
+            }
+        });
+
+        modifiedData = arrSampleObJ;
+
+        modifiedData = modifiedData.filter(function (obj) {
+            return obj.Id !== id;
+        });
+
+        fillDataTables(modifiedData);
+        if (modifiedData.length == 0) {
+            $('#gridNeW').hide();
+        }
+    }
+    function deleteEntireRow(id) {
+        incIndex--;
+        var table = $('#gridNeW').DataTable();
+        var updateData = decodeURIComponent(table.$('input, select').serializeAndEncode());;
+        var arrUpdate = updateData.split("*");
+        var arrSampleObJ = [];
+        arrUpdate.forEach(function (element) {
+            if (element != "") {
+                var objEf = {}; //"NeW1=over+time&NeW1=123"
+                var strRow = element.split("&");
+                var id = strRow[0].split("=");
+                objEf.Id = id[0];
+                objEf.Name = id[1];
+                var value = strRow[1].split("=");
+                objEf.Value = value[1];
+                if (isNaN(id[0])) {
+                    objEf.Action = "Delete";
+                } else {
+                    objEf.Action = "Add";
+                }
+                arrSampleObJ.push(objEf);
+            }
+        });
+
+        modifiedData = arrSampleObJ;
+        modifiedData = modifiedData.filter(function (obj) {
+
+            if (obj.Id != "null" && id != "null") {
+                if (obj.Id == id) {
+                    obj.Action = "Deleted";
+                    arrDelete.push(obj);
+                } else {
+                    return obj.Id !== id;
+                }
+            }
+        });
+
+        fillDataTables(modifiedData);
+    }
+    $("#btnCancel").click(function () {
+        
+        incIndex = 0;
+        $('#gridNeW').empty();
+        fillEpfDt(orgData);
+        //var table = $('#gridNeW').DataTable();
+        //var updateData = decodeURIComponent(table.$('input, select').serializeAndEncode());;
+        //var arrUpdate = updateData.split("*");
+        //var arrSampleObJ = [];
+        //var arrResult = [];
+        //arrUpdate.forEach(function (element) {
+        //    if (element != "") {
+        //        var objEf = {}; //"NeW1=over+time&NeW1=123"
+        //        var strRow = element.split("&");
+        //        var id = strRow[0].split("=");
+        //        objEf.Id = id[0];
+        //        objEf.Name = id[1];
+        //        var value = strRow[1].split("=");
+        //        objEf.Value = value[1];
+        //        if (isNaN(id[0])) {
+        //            objEf.Action = "Delete";
+        //        } else {
+        //            objEf.Action = "Add";
+        //        }
+        //        arrSampleObJ.push(objEf);
+        //    }
+        //});
+        //arrSampleObJ.filter(function (obj) {
+        //    if (obj.Value != "" || obj.Name != "") {
+        //        arrResult.push(obj.Value);
+        //    }
+           
+        //})
+        
+        //if (arrResult.length > 0) {
+        //    fillDataTables(orgNew);
+        //} else {
+        //    $('#gridNeW').hide();
+        //}
+        //fillDataTables(orgNew);
+        
+    });
+
+    $('#btnsubmit').click(function () {
+       debugger;
+        var count = 0;
+        var updErList = $('#gridEF').DataTable().$('input, select').serialize();
+
+        var ModifiedErList = getModifiedDataFromJDT(updErList, orgErlist);
+
+        var table = $('#gridNeW').DataTable();
+        var updateData = decodeURIComponent(table.$('input, select').serializeAndEncode());;
+        var arrUpdate = updateData.split("*");
+        var arrSampleObJ = [];
+        arrUpdate.forEach(function (element) {
+           // debugger;
+            if (element != "") {
+                var objEf = {};
+                var strRow = element.split("&");
+                var id = strRow[0].split("=");
+                objEf.Id = id[0];
+                objEf.Name = id[1];
+                var value = strRow[1].split("=");
+                objEf.Value = value[1];
+
+                if (isNaN(id[0])) {
+                    objEf.Action = "New";
+                } else {
+                    objEf.Action = "Update";
+                }
+
+                if (objEf.Name == ""
+                    && objEf.Value == "") {
+                    console.log("row is empty");
+                } else {
+                    if (objEf.Name != ""
+                        || objEf.Value != "") {
+                        objEf = objEf;
+                    } else {
+                        objEf = {};
+                    }
+
+                    if (Object.keys(objEf).length > 0) {
+                        
+                        if (objEf.Name != "") {
+                            arrSampleObJ.push(objEf);
+                        } else {
+                            count++;
+                            showGlobalModal("I#Required Field#Please Enter Earning Field Name.");
+                            return false;
+                        }
+                    }
+
+                }
+
+            }
+        });
+        
+        var dataToSend;
+        arrDelete.map(function (obj) {
+            arrSampleObJ.push(obj);
+        });
+        
+        if (arrSampleObJ.length > 0) {
+            dataToSend = JSON.stringify({
+                'EntityId': $("#hdnEmpCode").val(),
+                'StringData': ModifiedErList,
+                'objPE': arrSampleObJ
+
+            });
+        } else {
+            dataToSend = JSON.stringify({
+                'EntityId': $("#hdnEmpCode").val(),
+                'StringData': ModifiedErList,
+            });
+        }
+        if (count <= 0) {
+            CommonApiPOST('/Payroll/HRMSMasters/saveDataEPF', dataToSend, function (isSuccess) {
+                if (isSuccess) {
+                    //window.location.reload();
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+        }
+        
+
+        return false;
+    });
+
+    function fillEpfDt(respData) {
+        var totalAmount = 0;
+
+        var ef = [];
+        var dataObj = respData;
+
+        ef.push(dataObj.EfDetails);
+        //// 
+
+        var efData = ef[0];
+
+        orgErlist = efData;
+        orgErlist.map(function (obj) {
+            if (obj.Value != "") {
+                totalAmount = totalAmount + obj.Value;
+            }
+            
+        });
+        $("#tablep").show();
+        //if (totalAmount > 0) {
+        //    $("#tablep").show();
+        //} else {
+        //    $("#tablep").hide();
+        //}
+        // alert(totalAmount);
+        document.getElementById('total').innerHTML = totalAmount;
+        //// 
+        debugger;
+        $('#gridEF').DataTable({
+            "destroy": true,
+            "paging": false,
+            "sort": false,
+            "searching": false,
+            data: efData,
+
+            "columns": [
+                { "data": "Name" },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data) {
+                        if (data.Name.startsWith("PFPerks")) {
+                            //return getColumnNumberCountValue(data.Id, data.Value);
+                            return getColumnReadOnly(data.Id, data.Value);
+                        } else {
+                            return getColumnNumberCountValue(data.Id, data.Value);
+                        }
+                        
+                    }
+                }
+            ],
+            "order": [[0, 'asc']]
+        });
+
+
+    }
+
+    function getDataAfterEmpSearch1440(empcode) {
+        debugger;
+        $('#hdnEmpCode').val(empcode);
+        CommonApiGET('/Payroll/HRMSMasters/GetEmpPayFieldsDetails?EmpId=' + empcode, function (respData) {
+            $('#gridNeW').hide();
+            $("#btnsubmit").attr("disabled", false);
+            $("#addRow").attr("disabled", false);
+            incIndex = 0;
+            orgData = respData;
+            fillEpfDt(respData);
+
+        });
+    }
+    function calcTotal() {
+        var sum = 0;
+        $(".value").each(function () {
+            sum += +$(this).val();
+        });
+        document.getElementById('total').innerHTML = sum;
+    }
+
+      // Only Characters
+    function checkNum(event) {
+       // debugger;
+        if ((event.keyCode > 64 && event.keyCode < 91) || (event.keyCode > 96 && event.keyCode < 123) || event.keyCode == 8 || event.keyCode == 32 || event.keyCode == 190)
+            return true;
+        else {
+            showGlobalModal('E#Save Error#Please Enter Characters Only.');
+          //  alert("Please Enter Only Characters.");
+            return false;
+        }
+
+    }
+</script>
+
+
+

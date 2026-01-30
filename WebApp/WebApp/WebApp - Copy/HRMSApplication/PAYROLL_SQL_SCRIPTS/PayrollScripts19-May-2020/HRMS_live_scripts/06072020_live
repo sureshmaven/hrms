@@ -1,0 +1,55 @@
+--it is to inform you that, Ms J Ravali , SA, Emp 6418  availed  casual leave on 02.07.2020, 
+--Casual leave can't be applied combination with LOP, so we are requesting you please apply CL on 02.07.2020.
+--CL : 02.07.2020
+--Reason :  i got struck at home as one of my villagers tested positive for chinese virus
+
+declare @Empid int;
+declare @Leavetypeid int;
+declare @StartDate Date;
+declare @EndDate Date;
+declare @UpdatedBy_EmployeeId int;
+declare @Status varchar(10);
+declare @LeaveDays int;
+declare @TotalDays int;
+declare @MaternityType varchar(10);
+declare @pre_leave_balance int;
+
+
+set @Empid=6418;
+set @Leavetypeid=1;
+set @StartDate='2020-07-02';
+set @EndDate='2020-07-02';
+set @UpdatedBy_EmployeeId=123456;
+set @Status='Pending';
+set @LeaveDays=1;
+set @TotalDays=1;
+set @MaternityType='';
+set @pre_leave_balance=((select leavebalance from EmpLeaveBalance where empid =(select id from employees where empid=6418 ) 
+and leavetypeid=1 and year=2020));
+
+
+INSERT INTO [dbo].[Leaves]([EmpId],[ControllingAuthority],[SanctioningAuthority],[LeaveType],[StartDate],[EndDate],[Subject],[Reason],
+[UpdatedBy],[UpdatedDate],[Status],[LeaveDays],[TotalDays],[LeaveTimeStamp],[LeavesYear],[Stage],[CancelReason],[MaternityType],
+[BranchId],[DepartmentId],[DesignationId],[leave_balance]) 
+VALUES((select id from employees where empid=@empid),
+(select ControllingAuthority from employees where empid=@empid),
+(select SanctioningAuthority from employees where empid=@empid),
+@Leavetypeid,@StartDate,@EndDate,'Leave Applied','i got struck at home as one of my villagers tested positive for chinese virus',
+@UpdatedBy_EmployeeId,GETDATE(),@Status,@LeaveDays,@TotalDays,GETDATE(),2020,'','',
+@MaternityType,(select Branch from employees where empid=@empid),
+(select Department from employees where empid=@empid),
+(select CurrentDesignation from employees where empid=@empid),@pre_leave_balance);
+
+
+------- To update Leavebalances
+
+declare @Empid int;
+declare @LeaveTypeId int;
+declare @LeaveBalance int;
+
+set @Empid=6418;
+set @LeaveTypeId=1;
+set @Leavebalance=((select leavebalance from EmpLeaveBalance where empid =(select id from employees where empid=6418) and leavetypeid=1 and year=2020)-1);
+
+update EmpLeaveBalance set LeaveBalance=@Leavebalance where LeaveTypeId=@LeaveTypeId and empid=
+(select id from employees where empid=@Empid) and year=2020;

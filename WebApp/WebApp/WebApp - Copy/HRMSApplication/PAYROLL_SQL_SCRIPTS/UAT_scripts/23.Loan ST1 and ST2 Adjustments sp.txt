@@ -1,0 +1,21 @@
+create PROCEDURE [dbo].[updatedecamounts] @emp_code integer , @loantype integer,@fm date
+as
+
+declare @installment_amount integer;
+set @installment_amount=(select installment_amount from pr_emp_adv_loans
+where emp_code=@emp_code and loan_type_mid=@loantype and active=1 );
+
+declare @interest_accured integer;
+set @interest_accured=(select la.interest_accured from pr_emp_adv_loans_adjustments la join pr_emp_adv_loans l on l.id=la.emp_adv_loans_mid
+where l.emp_code=@emp_code and l.loan_type_mid=@loantype and la.fm=@fm and l.active=1);
+
+declare @principal_paid_amount integer;
+set @principal_paid_amount=@installment_amount-@interest_accured;
+
+
+UPDATE pr_emp_adv_loans_child set os_principal_amount=os_principal_amount-@interest_accured
+where emp_adv_loans_mid in (select id from pr_emp_adv_loans where loan_type_mid=@loantype and emp_code=@emp_code and active=1)
+
+update pr_emp_adv_loans_adjustments set interest_open_amount=@interest_accured,interest_paid_amount=@interest_accured,
+principal_paid_amount=@principal_paid_amount where emp_adv_loans_mid in (select id from pr_emp_adv_loans where loan_type_mid=@loantype and emp_code=@emp_code and active=1)and fm=@fm
+-- End ----

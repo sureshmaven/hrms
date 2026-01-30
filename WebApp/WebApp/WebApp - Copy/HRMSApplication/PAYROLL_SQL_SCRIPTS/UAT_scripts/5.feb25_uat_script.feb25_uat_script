@@ -1,0 +1,105 @@
+
+update pr_emp_adv_loans_adjustments set 
+principal_open_amount=60000, 
+principal_paid_amount=861, 
+principal_balance_amount=59139,
+interest_accured=529,
+interest_paid_amount=529,
+installments_paid=1,
+installments_amount=1390,
+installments_paid_date='2021-02-25',
+payment_mode='Installment'
+where emp_adv_loans_mid=(select id from pr_emp_adv_loans where emp_code=5889 and loan_type_mid=16) and fm='2020-10-01'
+
+--select * from pr_emp_adv_loans_adjustments where emp_adv_loans_mid=(select id from pr_emp_adv_loans where emp_code=5889 and loan_type_mid=16) and fm='2020-10-01'
+
+update pr_emp_adv_loans_adjustments set 
+principal_open_amount=59139, 
+principal_paid_amount=869, 
+principal_balance_amount=58270,
+interest_accured=521,
+interest_paid_amount=521,
+installments_paid=2,
+installments_amount=1390,
+installments_paid_date='2021-02-25',
+payment_mode='Installment'
+where emp_adv_loans_mid=(select id from pr_emp_adv_loans where emp_code=5889 and loan_type_mid=16) and fm='2020-11-01'
+
+update pr_emp_adv_loans_child set 
+interest_accured=1050,
+principal_amount_recovered=1730,
+interest_amount_recovered=1050,
+total_amount_recovered=2780,
+os_principal_amount=58270,
+os_total_amount=58270
+where emp_adv_loans_mid=(select id from pr_emp_adv_loans where emp_code=5889 and loan_type_mid=16) 
+
+--select * from pr_emp_adv_loans_child where emp_adv_loans_mid=(select id from pr_emp_adv_loans where emp_code=5889 and loan_type_mid=16) 
+
+update pr_emp_adv_loans set 
+interest_rate=10.75,
+interest_installment_amount=1390
+where emp_code=5889 and  loan_type_mid=16
+--select * from pr_emp_adv_loans where emp_code=5889 and  loan_type_mid=16
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+update pr_emp_adv_loans_adjustments set 
+principal_open_amount=50000, 
+principal_paid_amount=734, 
+principal_balance_amount=49266,
+interest_accured=426,
+interest_paid_amount=426,
+installments_paid=1,
+installments_amount=1160,
+installments_paid_date='2021-02-25',
+payment_mode='Installment'
+where emp_adv_loans_mid=(select id from pr_emp_adv_loans where emp_code=6194 and loan_type_mid=16) and fm='2020-09-01'
+
+update pr_emp_adv_loans_adjustments set 
+principal_open_amount=49266, 
+principal_paid_amount=711, 
+principal_balance_amount=48555,
+interest_accured=449,
+interest_paid_amount=449,
+installments_paid=2,
+installments_amount=1160,
+installments_paid_date='2021-02-25',
+payment_mode='Installment'
+where emp_adv_loans_mid=(select id from pr_emp_adv_loans where emp_code=6194 and loan_type_mid=16) and fm='2020-10-01'
+
+--select * from pr_emp_adv_loans_adjustments where emp_adv_loans_mid=(select id from pr_emp_adv_loans where emp_code=5889 and loan_type_mid=16) and fm='2020-10-01'
+
+update pr_emp_adv_loans_adjustments set 
+principal_open_amount=48555, 
+principal_paid_amount=732, 
+principal_balance_amount=47823,
+interest_accured=428,
+interest_paid_amount=428,
+installments_paid=3,
+installments_amount=1160,
+installments_paid_date='2021-02-25',
+payment_mode='Installment'
+where emp_adv_loans_mid=(select id from pr_emp_adv_loans where emp_code=6194 and loan_type_mid=16) and fm='2020-11-01'
+
+update pr_emp_adv_loans_child set 
+interest_accured=1303,
+principal_amount_recovered=2177,
+interest_amount_recovered=1303,
+total_amount_recovered=3480,
+os_principal_amount=47823,
+os_total_amount=47823
+where emp_adv_loans_mid=(select id from pr_emp_adv_loans where emp_code=6194 and loan_type_mid=16) 
+
+
+update pr_emp_adv_loans set 
+interest_rate=10.75,
+interest_installment_amount=1390
+where emp_code=6194 and  loan_type_mid=16
+
+
+update pr_emp_adv_loans_adjustments set interest_paid_amount=0 where fm='2020-11-01' and loan_sl_no=7610;
+update pr_emp_adv_loans_adjustments set interest_paid_amount=0 where fm='2020-11-01' and loan_sl_no=7937;
+
+
+

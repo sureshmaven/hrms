@@ -1,0 +1,117 @@
+﻿
+@{
+    ViewBag.Title = "AdhocPayments";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <h1>Adhoc Payments<span class="year-end">TGCAB 01-04-2019 - 31-04-2020</span></h1>
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-horizontal">
+                                <div class="col-md-6">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Date:</label>
+                                            <div class="col-sm-7 input-group date">
+                                                <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Employee Id:</label>
+                                            <div class="col-sm-7">
+                                                <input type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Emp Name:</label>
+                                            <div class="col-sm-7">
+                                                <label class="control-label"> </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Chq No.:</label>
+                                            <div class="col-sm-7">
+                                                <input type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Remark:</label>
+                                            <div class="col-sm-7">
+                                                <textarea class="form-control" rows="6"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                            <div class="col-md-12">
+                                <table id="adhocpay" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Earning Fields</th>
+                                            <th>Amount</th>
+                                            <th>Deduction Fields</th>
+                                            <th>Amount</th>
+                                            <th>Contributions Fields</th>
+                                            <th>Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Basic</td>
+                                            <td></td>
+                                            <td>ESI Deduction</td>
+                                            <td></td>
+                                            <td>HRA Rate</td>
+                                            <td></td>       
+                                        </tr>
+                                        <tr>
+                                            <td>Special Increment</td>
+                                            <td></td>
+                                            <td>Income Tax</td>
+                                            <td></td>
+                                            <td>MAX CCA</td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                    </div>
+                    <div class="col-md-12 mt_10">
+                        <div class="pull-right">
+                            <button type="reset" class="btn btn-default calcel">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+$(document).ready(function() {
+    $('#adhocpay').DataTable();
+} );
+</script>
+
+

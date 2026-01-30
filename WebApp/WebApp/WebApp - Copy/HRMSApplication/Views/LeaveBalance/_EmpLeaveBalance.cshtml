@@ -1,0 +1,761 @@
+﻿@model Entities.V_LeaveHistory
+@{
+    var rolepages = TempData["RolePages"].ToString();
+    ViewBag.RolePages = TempData["RolePages"];
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+debugger;
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-heading">
+            @{
+                <ul class="nav nav-tabs">
+
+                    <li><a href=@Url.Action("LeaveRequest","LeaveApply")>Leave Apply</a></li>
+
+                    <li class="active"><a href=@Url.Action("LeaveBalance","LeaveBalance")>Emp Leave Balance</a></li>
+
+                    <li><a href=@Url.Action("LeaveApproval", "LeaveApproval")>Leave Approvals</a></li>
+
+                    @*<li class="active"><a href=@Url.Action("Leaveforemployee", "LeaveApply")>LeaveForEmployee</a></li>*@
+
+
+
+                    <li><a href=@Url.Action("myleaveapproval", "Reports")>My Leave Approvals</a></li>
+                </ul>
+            }
+        </div>
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade  in active" id="tab2primary">
+                    <div class="page_st">
+                        <div class="page">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="main_heading">
+                                    <h1>Emp Leave Balance</h1>
+                                    <div class="leave_cont_start">
+                                        @using (Html.BeginForm("LeaveBalanceView", "LeaveBalance", new { FormMethod.Post }))
+                                        {
+
+                                            @*<div class="leaves_radiobtn">
+                                                <div class="form-horizontal">
+                                                    <div class="col-md-4 col-sm-6 col-xs-12">
+                                                        <div class="form-group">
+                                                            @*<label class="col-sm-4 control-label"></label>*@
+                                            @*<div class="col-sm-8">
+                                                                    @Html.RadioButtonFor(model => model.Department, "HeadOffice", new { id = "C", onclick = "return pp()", @checked = "checked" })<label for="C" class="label_class">HeadOffice</label>
+
+                                                                    @Html.RadioButtonFor(model => model.Branch, "Branch", new { id = "D", onclick = "return pfp()" })<label for="D" class="label_class">Branch</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>*@
+                                            <div class="clearfix"></div>
+                                            <div class="col-md-12">
+                                                <div class="form-horizontal">
+                                                    <div class="col-md-2 col-sm-2 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-5 control-label p0 p-l label_left">Emp Code:</label>
+                                                            <div class="col-sm-7">
+                                                                @Html.EditorFor(model => model.EmployeeCode, new { htmlAttributes = new { @class = "form-control", maxlength = "10", onkeypress = "return isNumber(event)" } })
+                                                                @Html.ValidationMessageFor(model => model.EmployeeCode, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-sm-3 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-5 control-label">Short Name:</label>
+                                                            <div class="col-sm-7">
+                                                                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", onkeypress = "return checkNum1(event)" } })
+                                                                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    @*<div class="col-md-3 col-sm-3 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Last Name:</label>
+                                                                <div class="col-sm-7">
+                                                                    @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                                                                    @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                                                                </div>
+                                                            </div>
+                                                        </div>*@
+
+
+
+
+
+                                                    <div class="col-md-5 col-sm-3 col-xs-12" id="DIVbranch">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-5 control-label">Branch/Department:</label>
+                                                            <div class="col-sm-7">
+                                                                @Html.DropDownListFor(model => model.Branch, ViewBag.Branchess as SelectList, "Select", new { @class = "form-control", @Id = "Branch" })
+                                                                @Html.ValidationMessageFor(model => model.Branch, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    @*<div class="col-md-3 col-sm-3 col-xs-12" id="dept">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Department:</label>
+                                                                <div class="col-sm-8">
+                                                                    @Html.DropDownListFor(model => model.Department, ViewBag.Departments as SelectList, "Select", new { @class = "form-control" })
+
+                                                                </div>
+                                                            </div>
+                                                        </div>*@
+                                                    <div class="col-md-2 col-sm-1 col-xs-12">
+                                                        <div class="form-group">
+
+                                                            <button type="button" id="btnLeaveBal" onclick="return SearchLeaveBal();" class="btn btn-primary btn-sm">Search</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                        <div class="clearfix"></div>
+                                        <div class="col-md-12">
+                                            <div class="table-responsive m_20">
+                                                <div id="gridlb"></div>
+                                                <div style='margin-top: 20px;'>
+                                                    <div style='float: left;'>
+                                                        @*<input type="button" class="btn btn-info" value="Export to Excel" id='excelExport' />*@
+                                                        <input type="button" class="btn btn-info" value="Export to Excel" id='excelExportexcell' />
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+      
+
+        // prepare the data for BankView
+        var theme = otherTheme;
+        // prepare the data
+        var url = "../LeaveBalance/LeaveBalanceViews";
+        var source =
+        {
+            type: "Get",
+            datatype: "json",
+            datafields: [
+                { name: 'EmployeeCode', type: 'string' },
+                { name: 'ShortName', type: 'string' },
+                { name: 'Deptbranch', type: 'string' },
+                { name: 'Code', type: 'string' },
+                { name: 'CasualLeave', type: 'int' },
+                { name: 'MedicalSickLeave', type: 'int' },
+                { name: 'PrivilegeLeave', type: 'int' },
+                { name: 'MaternityLeave', type: 'int' },
+                { name: 'PaternityLeave', type: 'int' },
+                { name: 'ExtraOrdinaryLeave', type: 'int' },
+                { name: 'SpecialCasualLeave', type: 'int' },
+                { name: 'LOP', type: 'int' },
+                { name: 'CompensatoryOff', type: 'int' },
+                { name: 'CWOFF', type: 'int' },
+            ],
+            async: false,
+            url: url,
+            data: {
+                featureClass: "P",
+                style: "full",
+                username: "jqwidgets"
+            }
+        };
+        var dataAdapter = new $.jqx.dataAdapter(source,
+            {
+                formatData: function (data) {
+                    data.ProductName = $("#searchField").val();
+                    return data;
+                }
+            }
+        );
+        // initialize jqxGrid
+        var editrowindex = -1;
+        var delrowindex = -1;
+        $("#gridlb").jqxGrid(
+            {
+                width: '99%',
+                source: dataAdapter,
+                theme: otherTheme,// for theme refernce go to Layout.cshtml
+                autoheight: true,
+                sortable: true,
+                pageable: true,
+                columnsResize: true,
+                altRows: true,
+                filterable: true,
+                autoshowfiltericon: true,
+
+                ready: function () {
+                    $("#gridlb").jqxGrid('localizestrings', localizationObject);
+                },
+                updatefilterconditions: function (type, defaultconditions) {
+                    switch (type) {
+                        case 'stringfilter':
+                            return stringcomparisonoperators;
+                        case 'numericfilter':
+                            return numericcomparisonoperators;
+                        case 'datefilter':
+                            return datecomparisonoperators;
+                        case 'booleanfilter':
+                            return booleancomparisonoperators;
+                    }
+                },
+                updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                    filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                    var index1 = 0;
+                    var index2 = 0;
+                    if (columnfilter != null) {
+                        var filter1 = columnfilter.getfilterat(0);
+                        var filter2 = columnfilter.getfilterat(1);
+                        if (filter1) {
+                            index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                            var value1 = filter1.filtervalue;
+                            filterinputfield1.val(value1);
+                        }
+                        if (filter2) {
+                            index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                            var value2 = filter2.filtervalue;
+                            filterinputfield2.val(value2);
+                        }
+                    }
+                    filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                    filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                },
+                columns: [
+                    { text: "Emp Code", datafield: "EmployeeCode", editable: false, width: 75 },
+                    { text: "Employee Name", datafield: "ShortName", editable: false, width: 120 },
+                    { text: "Designation", datafield: "Code", editable: false, width: 86 },
+                    { text: "Department/Branch", datafield: "Deptbranch", editable: false, width: 200 },
+                    { text: 'CL', editable: false, columngroup: 'LeaveBalance', datafield: 'CasualLeave', cellsalign: 'center', align: 'center', width: 65 },
+                    { text: 'ML', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'MedicalSickLeave', width: 65 },
+                    { text: 'PL', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'PrivilegeLeave', width: 65 },
+                    { text: 'MTL', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'MaternityLeave', width: 65 },
+                    { text: 'PTL', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'PaternityLeave', width: 65 },
+                    { text: 'EOL', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'ExtraOrdinaryLeave', width: 65 },
+                    { text: 'SCL', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'SpecialCasualLeave', width: 65 },
+                    { text: 'LOP', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'LOP', width: 65 },
+                    //{ text: 'Week-Off', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'woff', width: 65 },
+                    { text: 'C-OFF', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'CompensatoryOff', width: 65 },
+                    { text: 'CW-OFF', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'CWOFF', width: 65 },
+
+                ],
+                columngroups:
+                    [
+                        { text: 'Action', align: 'center', name: 'Actions', width: 160 },
+                        { text: 'Leave Balance', align: 'center', editable: false, name: 'LeaveBalance' },
+                    ],
+
+            });
+        //$("#excelExport").jqxButton();
+
+
+       // $("#excelExport").click(function () {
+       //     $("#gridlb").jqxGrid('exportdata', 'xls', 'EmpLeaveBalance');
+       //});
+    });
+
+</script>
+<script type="text/javascript">
+    /*---------------Leave balance view button click event ------------*/
+    $(function () {
+        $("#btnLeaveBal").click(function () {
+            debugger;
+            ajaxSpinnerShow();
+
+            var employeecode = $("#EmployeeCode").val();
+            var firstname = $("#FirstName").val();
+            //var lastName = $("#LastName").val();
+            var branch = $("#Branch").val();
+            var startdate = $("#SDate").val();
+            var enddate = $("#EDate").val();
+            //var departments = $("#Department").val();
+
+            // prepare the data
+
+            var source =
+            {
+                type: "Post",
+                datatype: "json",
+                datafields: [
+                    { name: 'EmployeeCode', type: 'string' },
+                    { name: 'ShortName', type: 'string' },
+                    { name: 'Deptbranch', type: 'string' },
+                    { name: 'Code', type: 'string' },
+                    { name: 'CasualLeave', type: 'int' },
+                    { name: 'MedicalSickLeave', type: 'int' },
+                    { name: 'PrivilegeLeave', type: 'int' },
+                    { name: 'MaternityLeave', type: 'int' },
+                    { name: 'PaternityLeave', type: 'int' },
+                    { name: 'ExtraOrdinaryLeave', type: 'int' },
+                    { name: 'SpecialCasualLeave', type: 'int' },
+                    { name: 'LOP', type: 'int' },
+                    { name: 'CompensatoryOff', type: 'int' },
+                    { name: 'CWOFF', type: 'int' },
+                ],
+                async: false,
+                url: "/LeaveBalance/LeaveBalanceView?EmployeeCode=" + employeecode + "&FirstName=" + firstname + "&Branch=" + branch,
+                data: {
+                    featureClass: "P",
+                    style: "full",
+                    username: "jqwidgets",
+                    EmployeeCode: employeecode,
+                    FirstName: firstname,
+                    // LastName: lastName,
+                    Branch: branch
+
+                },
+                loadComplete: function () {
+                    ajaxSpinnerHide();
+                }
+            };
+            var dataAdapter = new $.jqx.dataAdapter(source,
+                {
+                    formatData: function (data) {
+                        data.ProductName = $("#searchField").val();
+                        return data;
+                    }
+                }
+            );
+            // initialize jqxGrid
+            var editrowindex = -1;
+            var delrowindex = -1;
+            $("#gridlb").jqxGrid(
+                {
+                    width: '99%',
+                    source: dataAdapter,
+                    theme: otherTheme,// for theme refernce go to Layout.cshtml
+                    autoheight: true,
+                    sortable: true,
+                    pageable: true,
+                    columnsResize: true,
+                    altRows: true,
+                    filterable: true,
+                    autoshowfiltericon: true,
+
+                    ready: function () {
+                        $("#grid").jqxGrid('localizestrings', localizationObject);
+                    },
+                    updatefilterconditions: function (type, defaultconditions) {
+                        switch (type) {
+                            case 'stringfilter':
+                                return stringcomparisonoperators;
+                            case 'numericfilter':
+                                return numericcomparisonoperators;
+                            case 'datefilter':
+                                return datecomparisonoperators;
+                            case 'booleanfilter':
+                                return booleancomparisonoperators;
+                        }
+                    },
+                    updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                        filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                        var index1 = 0;
+                        var index2 = 0;
+                        if (columnfilter != null) {
+                            var filter1 = columnfilter.getfilterat(0);
+                            var filter2 = columnfilter.getfilterat(1);
+                            if (filter1) {
+                                index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                                var value1 = filter1.filtervalue;
+                                filterinputfield1.val(value1);
+                            }
+                            if (filter2) {
+                                index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                                var value2 = filter2.filtervalue;
+                                filterinputfield2.val(value2);
+                            }
+                        }
+                        filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                        filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                    },
+                    columns: [
+                        { text: "Emp Code", datafield: "EmployeeCode", editable: false, width: 75 },
+                        { text: "Employee Name", datafield: "ShortName", editable: false, width: 120 },
+                        { text: "Designation", datafield: "Code", editable: false, width: 86 },
+                        { text: "Department/Branch", datafield: "Deptbranch", editable: false, width: 200 },
+                        { text: 'CL', editable: false, columngroup: 'LeaveBalance', datafield: 'CasualLeave', cellsalign: 'center', align: 'center', width: 65 },
+                        { text: 'ML', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'MedicalSickLeave', width: 65 },
+                        { text: 'PL', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'PrivilegeLeave', width: 65 },
+                        { text: 'MTL', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'MaternityLeave', width: 65 },
+                        { text: 'PTL', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'PaternityLeave', width: 65 },
+                        { text: 'EOL', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'ExtraOrdinaryLeave', width: 65 },
+                        { text: 'SCL', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'SpecialCasualLeave', width: 65 },
+                        { text: 'LOP', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'LOP', width: 65 },
+                        { text: 'C-OFF', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'CompensatoryOff', width: 65 },
+                        { text: 'CW-OFF', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'CWOFF', width: 65 },
+
+                    ],
+                    columngroups:
+                        [
+                            { text: 'Action', align: 'center', name: 'Actions', width: 160 },
+                            { text: 'Leave Balance', align: 'center', name: 'LeaveBalance' },
+                        ],
+
+
+                });
+        });
+    });
+</script>
+
+<script>
+    document.getElementById("a4").className = "active";
+
+</script>
+<script>
+    function pp() {
+        debugger;
+        document.getElementById('C').checked = true;
+        document.getElementById('D').checked = false;
+        $("#branch").hide();
+        $("#dept").show();
+        $("#Branch").val('');
+        $("#Department").val('');
+        $("#EmployeeCode").val('');
+        $("#FirstName").val('');
+        // prepare the data to refresh the data
+        var theme = otherTheme;
+        // prepare the data
+        var url = "../LeaveBalance/LeaveBalanceViews";
+        var source =
+        {
+            type: "Get",
+            datatype: "json",
+            datafields: [
+                { name: 'EmployeeCode', type: 'string' },
+                { name: 'ShortName', type: 'string' },
+                { name: 'Deptbranch', type: 'string' },
+                { name: 'Code', type: 'string' },
+                { name: 'CasualLeave', type: 'int' },
+                { name: 'MedicalSickLeave', type: 'int' },
+                { name: 'PrivilegeLeave', type: 'int' },
+                { name: 'MaternityLeave', type: 'int' },
+                { name: 'PaternityLeave', type: 'int' },
+                { name: 'ExtraOrdinaryLeave', type: 'int' },
+                { name: 'SpecialCasualLeave', type: 'int' },
+                { name: 'LOP', type: 'int' },
+                { name: 'CompensatoryOff', type: 'int' },
+                { name: 'CWOFF', type: 'int' },
+            ],
+            async: false,
+            url: url,
+            data: {
+                featureClass: "P",
+                style: "full",
+                username: "jqwidgets"
+            }
+        };
+        var dataAdapter = new $.jqx.dataAdapter(source,
+            {
+                formatData: function (data) {
+                    data.ProductName = $("#searchField").val();
+                    return data;
+                }
+            }
+        );
+        // initialize jqxGrid
+        var editrowindex = -1;
+        var delrowindex = -1;
+        $("#gridlb").jqxGrid(
+            {
+                width: '99%',
+                source: dataAdapter,
+                theme: otherTheme,// for theme refernce go to Layout.cshtml
+                autoheight: true,
+                sortable: true,
+                pageable: true,
+                columnsResize: true,
+                altRows: true,
+                filterable: true,
+                autoshowfiltericon: true,
+
+                ready: function () {
+                    $("#gridlb").jqxGrid('localizestrings', localizationObject);
+                },
+                updatefilterconditions: function (type, defaultconditions) {
+                    switch (type) {
+                        case 'stringfilter':
+                            return stringcomparisonoperators;
+                        case 'numericfilter':
+                            return numericcomparisonoperators;
+                        case 'datefilter':
+                            return datecomparisonoperators;
+                        case 'booleanfilter':
+                            return booleancomparisonoperators;
+                    }
+                },
+                updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                    filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                    var index1 = 0;
+                    var index2 = 0;
+                    if (columnfilter != null) {
+                        var filter1 = columnfilter.getfilterat(0);
+                        var filter2 = columnfilter.getfilterat(1);
+                        if (filter1) {
+                            index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                            var value1 = filter1.filtervalue;
+                            filterinputfield1.val(value1);
+                        }
+                        if (filter2) {
+                            index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                            var value2 = filter2.filtervalue;
+                            filterinputfield2.val(value2);
+                        }
+                    }
+                    filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                    filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                },
+                columns: [
+                    { text: "Emp Code", datafield: "EmployeeCode", editable: false, width: 75 },
+                    { text: "Employee Name", datafield: "ShortName", editable: false, width: 120 },
+                    { text: "Designation", datafield: "Code", editable: false, width: 86 },
+                    { text: "Department/Branch", datafield: "Deptbranch", editable: false, width: 200 },
+                    { text: 'CL', editable: false, columngroup: 'LeaveBalance', datafield: 'CasualLeave', cellsalign: 'center', align: 'center', width: 65 },
+                    { text: 'ML', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'MedicalSickLeave', width: 65 },
+                    { text: 'PL', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'PrivilegeLeave', width: 65 },
+                    { text: 'MTL', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'MaternityLeave', width: 65 },
+                    { text: 'PTL', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'PaternityLeave', width: 65 },
+                    { text: 'EOL', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'ExtraOrdinaryLeave', width: 65 },
+                    { text: 'SCL', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'SpecialCasualLeave', width: 65 },
+                    { text: 'LOP', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'LOP', width: 65 },
+                    { text: 'C-OFF', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'CompensatoryOff', width: 65 },
+                    { text: 'CW-OFF', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'CWOFF', width: 65 },
+
+                ],
+                columngroups:
+                    [
+                        { text: 'Action', align: 'center', name: 'Actions', width: 160 },
+                        { text: 'Leave Balance', align: 'center', editable: false, name: 'LeaveBalance' },
+                    ],
+
+            });
+        //$("#excelExport").jqxButton();
+
+
+        //$("#excelExport").click(function () {
+        //    $("#gridlb").jqxGrid('exportdata', 'xls', 'EmpLeaveBalance');
+        //});
+
+    }
+    function pfp() {
+        debugger;
+        document.getElementById('C').checked = false;
+        document.getElementById('D').checked = true;
+        $("#branch").show();
+        $("#dept").hide();
+        $("#Branch").val('');
+        $("#Department").val('');
+        $("#EmployeeCode").val('');
+        $("#FirstName").val('');
+        // prepare the data to refresh the data
+        var theme = otherTheme;
+        // prepare the data
+        var url = "../LeaveBalance/LeaveBalanceViews";
+        var source =
+        {
+            type: "Get",
+            datatype: "json",
+            datafields: [
+                { name: 'EmployeeCode', type: 'string' },
+                { name: 'ShortName', type: 'string' },
+                { name: 'Deptbranch', type: 'string' },
+                { name: 'Code', type: 'string' },
+                { name: 'CasualLeave', type: 'int' },
+                { name: 'MedicalSickLeave', type: 'int' },
+                { name: 'PrivilegeLeave', type: 'int' },
+                { name: 'MaternityLeave', type: 'int' },
+                { name: 'PaternityLeave', type: 'int' },
+                { name: 'ExtraOrdinaryLeave', type: 'int' },
+                { name: 'SpecialCasualLeave', type: 'int' },
+                { name: 'LOP', type: 'int' },
+                { name: 'CompensatoryOff', type: 'int' },
+                { name: 'CWOFF', type: 'int' },
+            ],
+            async: false,
+            url: url,
+            data: {
+                featureClass: "P",
+                style: "full",
+                username: "jqwidgets"
+            }
+        };
+        var dataAdapter = new $.jqx.dataAdapter(source,
+            {
+                formatData: function (data) {
+                    data.ProductName = $("#searchField").val();
+                    return data;
+                }
+            }
+        );
+        // initialize jqxGrid
+        var editrowindex = -1;
+        var delrowindex = -1;
+        $("#gridlb").jqxGrid(
+            {
+                width: '99%',
+                source: dataAdapter,
+                theme: otherTheme,// for theme refernce go to Layout.cshtml
+                autoheight: true,
+                sortable: true,
+                pageable: true,
+                columnsResize: true,
+                altRows: true,
+                filterable: true,
+                autoshowfiltericon: true,
+
+                ready: function () {
+                    $("#gridlb").jqxGrid('localizestrings', localizationObject);
+                },
+                updatefilterconditions: function (type, defaultconditions) {
+                    switch (type) {
+                        case 'stringfilter':
+                            return stringcomparisonoperators;
+                        case 'numericfilter':
+                            return numericcomparisonoperators;
+                        case 'datefilter':
+                            return datecomparisonoperators;
+                        case 'booleanfilter':
+                            return booleancomparisonoperators;
+                    }
+                },
+                updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                    filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                    var index1 = 0;
+                    var index2 = 0;
+                    if (columnfilter != null) {
+                        var filter1 = columnfilter.getfilterat(0);
+                        var filter2 = columnfilter.getfilterat(1);
+                        if (filter1) {
+                            index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                            var value1 = filter1.filtervalue;
+                            filterinputfield1.val(value1);
+                        }
+                        if (filter2) {
+                            index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                            var value2 = filter2.filtervalue;
+                            filterinputfield2.val(value2);
+                        }
+                    }
+                    filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                    filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                },
+                columns: [
+                    { text: "Emp Code", datafield: "EmployeeCode", editable: false, width: 75 },
+                    { text: "Employee Name", datafield: "ShortName", editable: false, width: 120 },
+                    { text: "Designation", datafield: "Code", editable: false, width: 86 },
+                    { text: "Department/Branch", datafield: "Deptbranch", editable: false, width: 200 },
+                    { text: 'CL', editable: false, columngroup: 'LeaveBalance', datafield: 'CasualLeave', cellsalign: 'center', align: 'center', width: 65 },
+                    { text: 'ML', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'MedicalSickLeave', width: 65 },
+                    { text: 'PL', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'PrivilegeLeave', width: 65 },
+                    { text: 'MTL', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'MaternityLeave', width: 65 },
+                    { text: 'PTL', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'PaternityLeave', width: 65 },
+                    { text: 'EOL', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'ExtraOrdinaryLeave', width: 65 },
+                    { text: 'SCL', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'SpecialCasualLeave', width: 65 },
+                    { text: 'LOP', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'LOP', width: 65 },
+                    { text: 'C-OFF', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'CompensatoryOff', width: 65 },
+                    { text: 'CW-OFF', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'CWOFF', width: 65 },
+
+                ],
+                columngroups:
+                    [
+                        { text: 'Action', align: 'center', name: 'Actions', width: 160 },
+                        { text: 'Leave Balance', align: 'center', editable: false, name: 'LeaveBalance' },
+                    ],
+
+            });
+        //$("#excelExport").jqxButton();
+
+
+        //$("#excelExport").click(function () {
+        //    $("#gridlb").jqxGrid('exportdata', 'xls', 'EmpLeaveBalance');
+        //});
+
+    }
+</script>
+
+
+
+
+<!-- Include XLSX library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+<!-- Include FileSaver library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Add click event handler to the download Excel button
+        $("#excelExportexcell").click(function () {
+            // Get filtered data from the grid
+            var filteredData = $("#gridlb").jqxGrid('getrows');
+
+            // Process the data to convert dates to human-readable format
+            const processedData = filteredData.map(item => ({
+                ...item,
+                IssueDate: item.IssueDate ? formatDate(parseDate(item.IssueDate)) : '',
+                Duedate: item.Duedate ? formatDate(parseDate(item.Duedate)) : '',
+                Leaveapplieddate: item.Leaveapplieddate ? formatDate(parseDate(item.Leaveapplieddate)) : '',
+                Responsedate: item.Responsedate ? formatDate(parseDate(item.Responsedate)) : ''
+            }));
+
+            // Create a workbook and worksheet
+            var wb = XLSX.utils.book_new();
+            var ws = XLSX.utils.json_to_sheet(processedData);
+
+            // Add worksheet to workbook
+            XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+            // Convert workbook to binary data
+            var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+
+            // Create a Blob object from the binary data
+            var blob = new Blob([s2ab(wbout)], { type: 'application/octet-stream' });
+
+            // Trigger download
+            saveAs(blob, 'EmpLeaveBalance.xlsx');
+            
+            return false;
+        });
+    });
+
+    // Function to parse date string from /Date(timestamp)/ format to Date object
+    function parseDate(dateString) {
+        // Check for /Date(xxxxxxx)/ format
+        const match = /\/Date\((\d+)\)\//.exec(dateString);
+        if (match) {
+            return new Date(parseInt(match[1], 10));
+        }
+        // Check for ISO string format
+        return new Date(dateString);
+    }
+
+    // Function to format Date object to DD/MM/YYYY format
+    function formatDate(date) {
+        if (!date || isNaN(date.getTime())) return '';
+        var day = String(date.getDate()).padStart(2, '0');
+        var month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+        var year = date.getFullYear();
+        return `${day}/${month}/${year}`; // Format: DD/MM/YYYY
+    }
+
+    // Function to convert string to ArrayBuffer
+    function s2ab(s) {
+        var buf = new ArrayBuffer(s.length);
+        var view = new Uint8Array(buf);
+        for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+        return buf;
+    }
+</script>
+

@@ -1,0 +1,240 @@
+﻿@model PayrollModels.CommonGetModel
+@{
+    ViewBag.Title = "IncomeTaxBankPayment";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+<style>
+    #Inc_Tax_Bank_Pay.dataTable tbody td:nth-last-child(n+2) + td input.form-control {
+        text-align: right !important;
+    }
+    </style>
+
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="leftmenu-container">
+            <div class="sidebar-menu">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="sidebar-content">
+                <div class="main_heading">
+                    <h1>Income Tax Bank Payment Details <span class="year-end">@ViewBag.Env_Fm_Fy</span></h1>
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table id="Inc_Tax_Bank_Pay" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                    <tr>
+                                        <th>Year</th>
+                                        <th>Month</th>
+                                        <th>Payment Date</th>
+                                        <th>Bank Name</th>
+                                        <th>Amount(<i class="fa fa-rupee"></i>)</th>
+                                        <th>Challan No</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mt_10">
+                        <div class="pull-right">
+                            <button type="button" id="btnCancel"  class="btn btn-default" title="Clear the data">Cancel</button>
+                            <button type="submit" id="btnsubmit" value="Submit" class="btn btn-primary" title="Submit details"> Submit</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+			</div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    var orgDdlist;
+    $(document).ready(function () {
+        CommonApiGET('/Payroll/HRMSMasters/getIncomeTaxBankPayment', function (respData) {
+            //
+            orgDdlist = respData;
+            fillDataTables(respData);
+        });
+    });
+        $('#btnCancel').click(function () {
+
+            //fillDataTables(orgDdlist);
+            fillDataTables(orgDdlist);
+        });
+        function fillDataTables(respData) {
+            orgDdlist = respData;
+            $('#Inc_Tax_Bank_Pay').DataTable({
+                destroy: true,
+                "paging": false,
+                "ordering": false,
+                "info": false,
+                "bFilter": false,
+                data: respData,
+                "columns": [
+                    { "data": "fy" },
+                    { "data": "fm" },
+
+                    {
+                        "mData": null,
+                        "bSortable": false,
+                        "mRender": function (data) {
+                            var ele1 = getColumnDate("*" + data.id, data.payment_date);
+                            return ele1;
+                        }
+                    },
+
+                    {
+                        "mData": null,
+                        "bSortable": false,
+                        "mRender": function (data) {
+                            var ele2 = getColumnTextbox("bank name", data.bank_name);
+                            return ele2;
+                        }
+                    },
+
+                    {
+                        "mData": null,
+                        "bSortable": false,
+                        "mRender": function (data) {
+                            var ele3 = getColumnNumber("amount", data.amount);
+                            return ele3;
+                        }
+                    },
+
+                    {
+                        "mData": null,
+                        "bSortable": false,
+                        "mRender": function (data) {
+                            var ele4 = getColumnTextbox("challana_no", data.challan_no);
+                            return ele4;
+                        }
+                    },
+
+                ],
+                "order": [[1, 'asc']]
+            });
+
+        }
+
+
+
+
+
+    $('#btnsubmit').click(function () {
+
+        var table = $('#Inc_Tax_Bank_Pay').DataTable();
+        var updateData = decodeURIComponent(table.$('input, select').serializeAndEncode());
+        var arrer = updateData.split('*');
+        var newobj = "";
+        var IncomeTaxBank = [];
+        arrer.forEach(function (element) {
+            if (element != "") {
+                //
+                var objEf = {};
+                var strRow = element.split("&");
+                var id1 = strRow[0].split("*");
+                var id = id1[0].split("=");
+                objEf.id = id[0];
+
+                var payment_date = strRow[0].split("=");
+                objEf.payment_date = payment_date[1];
+                var bank_name = strRow[1].split("=");
+                objEf.bank_name = bank_name[1];
+                var amount = strRow[2].split("=");
+                objEf.amount = amount[1];
+                var challan_no = strRow[3].split("=");
+                objEf.challan_no = challan_no[1];
+
+                if (isNaN(id[0])) {
+                    objEf.Action = null;
+                } else {
+                    objEf.Action = "Update";
+                }
+
+                orgDdlist.map(function (org) {
+                    var payment_date;
+                    var bank_name;
+                    var amount;
+                    var challan_no;
+                    if (org.id == objEf.id) {
+                        if (objEf.payment_date == "") {
+                            payment_date = "";
+                        } else {
+                            payment_date = objEf.payment_date;
+                        }
+                        if (objEf.bank_name == "") {
+                            bank_name = "";
+                        } else {
+                            bank_name = objEf.bank_name;
+                        }
+                        if (objEf.amount == "") {
+                            amount = "";
+                        } else {
+                            amount = objEf.amount;
+                        }
+                        if (objEf.challan_no == "") {
+                            challan_no = "";
+                        } else {
+                            challan_no = objEf.challan_no;
+                        }
+                        if (challan_no == "undefined") {
+                            challan_no = "";
+                        }
+                        if ((org.payment_date != payment_date || org.bank_name != bank_name || org.amount != amount || org.challan_no != challan_no)) {
+                            //
+                            if (objEf.payment_date == "" && (objEf.bank_name != "" || objEf.amount != "" || objEf.challan_no != ""))
+                            {
+                                showGlobalModal('E#Save Error#Please select Payment Date');
+                                org.preventDefault();
+                            }
+                            else if (objEf.bank_name == "" && (objEf.payment_date != "" || objEf.amount != "" || objEf.challan_no != ""))
+                            {
+                                showGlobalModal('E#Save Error#Please enter Bank Name');
+                                org.preventDefault();
+                            }
+                            else if (objEf.amount == "" && (objEf.bank_name != "" || objEf.payment_date != "" || objEf.challan_no != ""))
+                            {
+                                showGlobalModal('E#Save Error#Please enter Amount');
+                                org.preventDefault();
+                            }
+                            else if (objEf.challan_no == "" && (objEf.bank_name != "" || objEf.payment_date != "" || objEf.amount != ""))
+                            {
+                                showGlobalModal('E#Save Error#Please enter Challan No');
+                                org.preventDefault();
+                            }
+                            else {
+                                IncomeTaxBank.push(objEf);
+                                newobj = IncomeTaxBank;
+                            }
+                        }
+                    }
+                });
+
+            }
+        });
+        // 
+        if (IncomeTaxBank.length > 0) {
+            var dataToSend = JSON.stringify({
+
+                'IncomeTaxBank': newobj
+            });
+
+            CommonApiPOST("/Payroll/HRMSMasters/updateIncomeTaxBankPayment", dataToSend, function (isSuccess) {
+                if (isSuccess) {
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+        }
+        else {
+           //  
+            showGlobalModal('E#Save Error#Please Enter/Modify Data ');
+            return false;
+        }
+
+    });
+
+</script>

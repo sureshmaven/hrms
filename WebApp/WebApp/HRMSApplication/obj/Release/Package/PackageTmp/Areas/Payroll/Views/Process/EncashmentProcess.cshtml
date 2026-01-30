@@ -1,0 +1,290 @@
+﻿
+@{
+    ViewBag.Title = "Encashment";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="leftmenu-container">
+                <div class="sidebar-menu">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="sidebar-content">
+                <div class="main_heading heading_main">
+                    <h1>Encashment<span class="year-end">@ViewBag.Env_Fm_Fy</span></h1>
+                    @*<div class="col-md-5 col-sm-5 col-xs-12">
+                        <div class="form-group">
+                            <label class="col-sm-6 control-label label_left">Select Month and Year:<span class="mandatory"></span></label>
+
+                            <div class="col-sm-5 date input-group p0" id="monthyear">
+                                <input type="text" class="form-control form-control-1 input-sm from fromFudis" placeholder="Select-Month" id="monthpicker">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>*@
+                    @*<div class="col-md-1 col-sm-1 col-xs-12">
+                        <button type="button" id="btnSearch" class="btn btn-sm btn-primary">Search</button>
+                        <button type="button" class="btn btn-primary btn-sm pull-right" id="datesearch">Search</button>
+                    </div>*@
+                    <div class="col-md-12 mt_10">
+
+                        <div class="table-responsive">
+                            <table id="encash" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th class="process_checkbox">
+                                            <input name="select" value="1" id="checkAll" type="checkbox" onclick="checkboxRowAll()">
+                                            <label for="checkbox1"><span></span></label>
+
+                                        </th>
+                                        <th>Emp Code</th>
+                                        <th>Emp Name</th>
+                                        <th>Designation</th>
+                                        <th>Br/Dept</th>
+                                        <th>Total PL</th>
+                                        <th>PL Encash</th>
+                                        <th>Encash Year</th>
+                                        <th>Financial Month</th>
+                                        <th>Financial Year</th>
+                                        <th>Applied Date</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mt_10">
+                        <div class="pull-right">
+                           
+                            <button type="submit" id="btnsubmit" class="btn btn-primary">Process</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			</div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#encash').DataTable();
+    });
+</script>
+<style>
+    .process_checkbox {
+        width: 44px !important;
+    }
+   
+</style>
+
+<script>
+    var orgDdlist;
+    var cancelOrg;
+    var minDate;
+    var arrerresult = [];
+    $(document).ready(function () {
+
+        var orgData;
+        CommonApiGET('/Payroll/Process/getEncashmentDetails', function (respData) {
+            orgData = respData;
+            cancelOrg = respData;
+            fillDataTables(respData);
+        });
+
+        function fillDataTables(respData) {
+          
+            orgDdlist = respData;
+            $('#encash').DataTable({
+                destroy: true,
+                "paging": false,
+                "ordering": true,
+                "info": false,
+                "bFilter": false,
+                "searching": true,
+                 "language": {
+                    "search": "Filter records:"
+                },
+                data: respData,
+                "columns": [
+                 {
+                     "mData": null,
+                     "bSortable": false,
+                     'mRender': function (data, type, full) {
+                         return getColumnCheckBox(data.Id, data.Name);
+                     }
+                 },
+                    { "data": "Id" },
+                    { "data": "Name" },
+                    { "data": "Designation" },
+                    { "data": "Branch" },
+                      { "data": "totalpl" },
+                     { "data": "plencash" },
+                    { "data": "encashyear" },
+                    { "data": "encashfm" },
+                    { "data": "encashfy" },
+                      
+                         { "data": "UpdatedDate" },
+  
+                ],
+                "order": [[1, 'asc']]
+            });
+        }
+        function formatDate(date) {
+            // 
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+
+        return [year, month, day].join('-');
+    }
+     
+        var date = new Date();
+        var year = date.getFullYear();
+        var month = date.getMonth();
+
+        $('#monthyear').datepicker({
+            minViewMode: 1,
+            autoclose: true,
+            format: 'M-yyyy',
+            autoclose: true,
+            startDate: new Date(year, month, '01'),
+            endDate: new Date(year + 1, month, '31')
+            //endDate: '+0m'
+        }).datepicker("setDate", "+0d");
+    });
+    var respData;
+    //row wise checked
+    function checkboxRow(id) {
+        // 
+        orgDdlist.map(function (o) {
+            if (o.Id == id) {
+                arrerresult.push(o.Id);
+            }
+
+        });
+        console.log(JSON.stringify(arrerresult));
+    };
+    // all checked 
+    function checkboxRowAll() {
+        // 
+        $('input[type="checkbox"]').click(function () {
+            if ($(this).prop("checked") == true) {
+                orgDdlist.map(function (o) {
+                    arrerresult.push(o.Id);
+
+                });
+            }
+            else if ($(this).prop("checked") == false) {
+                orgDdlist.map(function (o) {
+                    arrerresult = [];
+                });
+            }
+        });
+    };
+
+    $('#btnsubmit').click(function () {
+      
+        if (arrerresult.length > 0) {
+            CommonApiPOST("/Payroll/Process/ProcessEncashment", JSON.stringify(arrerresult), function (isSuccess) {
+                if (isSuccess) {
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+        }
+
+    });
+
+</script>
+
+<script>
+    var resetForm = function () { $('input,select,textarea').not('[readonly],[disabled],:button').val(''); }
+</script>
+<script>
+    $("#checkAll").click(function () {
+       $('input:checkbox').not(this).prop('checked', this.checked);
+
+    });
+
+
+</script>
+@*<script>
+
+    $("#btnSearch").click(function () {
+        //
+        var search = $("#monthpicker").val();
+        $('#encash').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+            data: respData,
+            ajax: {
+                "url": "/Payroll/HRMSMasters/searchIncrementDateChange?SearchData=" + search,
+
+                "type": "GET",
+                "error": function (e) {
+                    alert(e.statusText);
+                },
+                "dataSrc": function (d) {
+                    //
+                    orgDdlist = d;
+                    return d
+                }
+            },
+            "columns": [
+                { "data": "Id" },
+                { "data": "Name" },
+                { "data": "Designation" },
+                { "data": "Branch" },
+                //{
+                //    "mData": null,
+                //    "bSortable": false,
+                //    "mRender": function (data, type, full) {
+                //        dataDate = data.IncDate;
+                //        minDate = formatDate(dataDate);
+                //        return data.IncDate;
+                //    }
+                //},
+                //{
+                //    "mData": null,
+                //    "bSortable": false,
+                //    "mRender": function (data, type, full) {
+                //        var ele = getColumngridcompDate('*' +data.Id, data.Value, minDate);
+                //        return ele;
+                //    }
+                //},
+                { "data": "IncDate" },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        var ele = getColumnDate('*' + data.Id, data.Value);
+                        //
+                        return ele;
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        data.Remarks = '';
+                        var ele = getColumnTextbox(data.Id, data.remarks);
+                        //
+                        return ele;
+                    }
+                },
+
+            ],
+            "order": [[1, 'asc']]
+        });
+
+    })
+</script>*@
+

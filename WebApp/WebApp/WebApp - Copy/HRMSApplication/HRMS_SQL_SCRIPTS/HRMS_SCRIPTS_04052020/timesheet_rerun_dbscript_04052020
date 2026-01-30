@@ -1,0 +1,53 @@
+alter procedure timesheet_rerun @mn int, @lastday int as
+
+declare @d varchar(10);
+DECLARE @dvid varchar(20);
+declare @day integer;
+--declare @mn integer;
+--declare @lastday integer;
+DECLARE @date1 varchar(20);
+DECLARE @date2 varchar(20);
+
+--set @mn = 2;
+--set @lastday = 29; --@mn month last day
+
+DECLARE CUR_TEST CURSOR FAST_FORWARD FOR
+SELECT Device_id
+FROM Branch_Device
+ORDER BY Branchid;
+OPEN CUR_TEST
+FETCH NEXT FROM CUR_TEST INTO @dvid
+WHILE @@FETCH_STATUS = 0
+BEGIN
+--start from day1 to last day of the month
+set @day=1;
+while(@day<=@lastday)
+begin
+set @date1 = '2020-' + convert(varchar, @mn) + '-' + convert(varchar, @day) + ' 00:00:00.000';
+set @date2 = '2020-' + convert(varchar, @mn) + '-' + convert(varchar, @day) + ' 23:59:59.000';
+--print @date;
+if (Not Exists(select 1 from timesheet_logs where device_id=@dvid and (io_time>=@date1 and io_time<@date2)) AND
+Not Exists(Select 1 from holidaylist where [Date]=@date1))
+begin
+--print @dvid + ',' + @date1;
+print 'UPDATE timesheet_run_status SET D'+CONVERT(varchar, @day)+'=0 WHERE yr=2020 AND mn='+convert(varchar, @mn)+' AND device_id=' 
++''+  @dvid + ';';
+end
+-- increase day
+set @day = @day + 1;
+end
+FETCH NEXT FROM CUR_TEST INTO @dvid
+END
+CLOSE CUR_TEST
+DEALLOCATE CUR_TEST
+GO
+
+
+
+--exec timesheet_rerun 01,31
+--exec timesheet_rerun 02,29
+--exec timesheet_rerun 03,31
+--exec timesheet_rerun 04,30
+
+
+--select * from timesheet_run_status where mn=4 and yr=2020

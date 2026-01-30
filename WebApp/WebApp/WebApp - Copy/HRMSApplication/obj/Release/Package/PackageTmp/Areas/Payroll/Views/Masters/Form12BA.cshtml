@@ -1,0 +1,390 @@
+﻿
+@{
+    ViewBag.Title = "Form12BA";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+<style>
+    #gridForm12BA.dataTable tbody td:nth-last-child(n+2) + td input.form-control {
+        text-align: right !important;
+    }
+</style>
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="leftmenu-container">
+                <div class="sidebar-menu">
+                    @{Html.RenderPartial("_PVPayrollMenu");}
+                </div>
+                <div class="sidebar-content">
+                    <div class="main_heading">
+                        <h1>Form 12 BA<span class="year-end">@ViewBag.Env_Fm_Fy</span></h1>
+                        @{ Html.RenderPartial("_pvEmployeeSearch"); }
+                        <input type="hidden" id="hdnEmpCode" />
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table id="gridForm12BA" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Nature of perquisite see(rule 3)</th>
+                                            <th>Perq Amount(<i class="fa fa-rupee"></i>)</th>
+                                            <th>Rec Amount(<i class="fa fa-rupee"></i>)</th>
+                                            <th>Tax Amount(<i class="fa fa-rupee"></i>)</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                            <div>
+                                    <div>Tax paid by the employer on behalf of the employee u/s 192(1A): <span id="total_amount"></span></div>
+                               
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt_10">
+                            <div class="pull-right">
+                                <button type="button" id="btnCancel" class="btn btn-default" title="Clear the data">Cancel</button>
+                                <button type="submit" id="btnsubmit" value="Submit" class="btn btn-primary" title="Submit details"> Submit</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    var totalfinal = 0;
+       var orgDdlist;
+    $(document).ready(function () {
+       
+        $('#gridForm12BA').DataTable({
+            "paging": false,
+            "sort": false,
+            "searching": false,
+            "language": {
+                "emptyTable": "No data available. Please enter employee code and search"
+            }
+        });
+
+     
+    });
+
+    function getDataAfterEmpSearch1440(empcode) {
+        //$("#btnsubmit").attr("disabled", false);
+        $('#hdnEmpCode').val(empcode);
+        CommonApiGET('/Payroll/Masters/getForm12BADetails?EmpId=' + empcode, function (respData) {
+            orgDdlist = respData;
+            fillDataTables(respData);
+
+        });
+    }
+  
+   
+    $('#btnCancel').click(function () {
+         
+        //fillDataTables(orgDdlist);
+        fillDataTables(orgDdlist);
+    });
+    function fillDataTables(respData) {
+        var totalAmount = 0;
+        orgDdlist.map(function (obj) {
+            if (obj.Id > 16) {
+                if (obj.preq != null) {
+                 
+                    totalAmount = totalAmount + obj.preq;
+                }
+
+                if (obj.rec != null) {
+                   
+                    totalAmount = totalAmount + obj.rec;
+                }
+                if (obj.tax != null) {
+                
+                    totalAmount = totalAmount + obj.tax;
+                }
+            }
+        });
+       
+        document.getElementById('total_amount').innerHTML = totalAmount;
+     
+        $('#gridForm12BA').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+            data: respData,
+            "columns": [
+                { "data": "Id" },
+                { "data": "name" },
+
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data) {
+
+                        if (data.name == 'Total Value of Perquisites') {
+                            return getprqclutextbox('*' + data.Id, data.preq);
+                        }
+                        else if (data.name != 'Total Value of Profits in lieu of Salary as per 17(3)' && data.name != 'Total Value of Perquisites') {
+
+                            return getpeq1clutextbox('*' + data.Id, data.preq);
+                        }
+                        else {
+
+                            return getColumnNumberCountValue('*' + data.Id, data.preq);
+                        }
+                    }
+                },
+
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data) {
+                        if (data.name == 'Total Value of Perquisites') {
+                            // return '<input type="number" id="totrec" class = "form-control" name="' + data.Id + '" value="' + data.rec + '" onkeydown = "javascript: return event.keyCode == 69 || event.keyCode == 189? false : true"  readonly="readonly" onkeypress="javascript:return isNumber(event)"/>';
+
+                            return getrecclutextbox(data.Id, data.rec);
+                        }
+                        else if (data.name != 'Total Value of Profits in lieu of Salary as per 17(3)' && data.name != 'Total Value of Perquisites') {
+                            // return '<input type="number"  class ="form-control rectot" name="' + data.Id + '" value="' + data.rec + '" onkeyup="calcTotal1()" onblur="calcTotal4()"  onkeydown = "javascript: return event.keyCode == 69 || event.keyCode == 189? false : true" onkeypress="javascript:return isNumber(event)" required/>';
+                            return getrec2clutextbox(data.Id, data.rec);
+                        }
+                        else {
+                            return getColumnNumberCountValue(data.Id, data.rec);
+                        }
+                    }
+                },
+
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data) {
+                        if (data.name == 'Total Value of Perquisites') {
+                            // return '<input type="number" id="tottax" class = "form-control" name="' + data.Id + '" value="' + data.tax + '" onkeydown = "javascript: return event.keyCode == 69 || event.keyCode == 189? false : true"  readonly="readonly" onkeypress="javascript:return isNumber(event)"/>';
+                            return gettaxclutextbox(data.Id, data.tax);
+                        }
+                        else if (data.name != 'Total Value of Profits in lieu of Salary as per 17(3)' && data.name != 'Total Value of Perquisites') {
+                            //return '<input type="number"  class ="form-control taxtot" name="' + data.Id + '" value="' + data.tax + '" onkeyup="calcTotal2()" onblur="calcTotal4()" onkeydown = "javascript: return event.keyCode == 69 || event.keyCode == 189? false : true" onkeypress="javascript:return isNumber(event)" required/>';
+                            return gettax2clutextbox(data.Id, data.tax);
+                        }
+                        else {
+                            return getColumnNumberCountValue(data.Id, data.tax);
+                        }
+                    }
+                }
+
+            ],
+            "order": [[1, 'asc']]
+        });
+
+    }
+    ////// preq
+    function getprqclutextbox(Id, Value) {
+        return '<input type="number" id="totpreq" class = "form-control" name="' + Id + '" value= "' + Value + '"  onkeydown = "javascript: return event.keyCode == 69 || event.keyCode == 189? false : true"  readonly="readonly"  onkeypress="javascript:return isNumber(event)"/>';
+    }
+    function getpeq1clutextbox(Id, Value) {
+        return '<input type="number"  class ="form-control preqtot" name="' + Id + '" value="' + Value + '" onkeyup="calcTotalpreq()" onblur="calcTotal4()" onkeydown = "javascript: return event.keyCode == 69 || event.keyCode == 189? false : true" onkeypress="javascript:return isNumber(event)" required/>';
+    }
+    ///// rec
+    function getrecclutextbox(Id, Value) {
+        return '<input type="number" id="totrec" class = "form-control" name="' + Id + '" value="' + Value + '" onkeydown = "javascript: return event.keyCode == 69 || event.keyCode == 189? false : true"  readonly="readonly" onkeypress="javascript:return isNumber(event)"/>';
+    }
+    function getrec2clutextbox(Id, Value) {
+        return '<input type="number"  class ="form-control rectot" name="' + Id + '" value="' + Value + '" onkeyup="calcTotal1()" onblur="calcTotal4()"  onkeydown = "javascript: return event.keyCode == 69 || event.keyCode == 189? false : true" onkeypress="javascript:return isNumber(event)" required/>';
+    }
+    ////// tax
+    function gettaxclutextbox(Id, Value) {
+        return '<input type="number" id="tottax" class = "form-control" name="' + Id + '" value="' + Value + '" onkeydown = "javascript: return event.keyCode == 69 || event.keyCode == 189? false : true"  readonly="readonly" onkeypress="javascript:return isNumber(event)"/>';
+    }
+    function gettax2clutextbox(Id, Value) {
+        return '<input type="number"  class ="form-control taxtot" name="' + Id + '" value="' + Value + '" onkeyup="calcTotal2()" onblur="calcTotal4()" onkeydown = "javascript: return event.keyCode == 69 || event.keyCode == 189? false : true" onkeypress="javascript:return isNumber(event)" required/>';
+    } 
+
+    $('#btnsubmit').click(function () {
+         
+        var table = $('#gridForm12BA').DataTable();
+        var updateData = decodeURIComponent(table.$('input, select').serializeAndEncode());
+        var arrer = updateData.split('*');  
+        var newobj = "";
+        var Form12BAArr = [];
+        arrer.forEach(function (element) {
+            if (element != "") {
+                 
+                var objEf = {};
+                var strRow = element.split("&");
+                
+                //id and preq
+                var id = strRow[0].split("=");
+                objEf.id = id[0];
+                objEf.preq = id[1];
+
+                //rec
+                var strRec = strRow[1].split("=");
+                objEf.rec = strRec[1];
+
+                //tax
+                var strTax = strRow[2].split("=");
+                objEf.tax = strTax[1];
+
+                
+
+                if (isNaN(id[0])) {
+                    objEf.action = "New";
+                } else {
+                    objEf.action = "Update";
+                }
+
+                orgDdlist.map(function (org) {
+                    var preq;
+                    var rec;
+                    var tax;
+                    if (org.Id == objEf.id) {
+                        if (objEf.preq == "") {
+                            preq = null;
+                        } else {
+                            preq = objEf.preq;
+                        }
+                        if (objEf.rec == "") {
+                            rec = null;
+                        } else {
+                            rec = objEf.rec;
+                        }
+                        if (objEf.tax == "") {
+                            tax = null;
+                        } else {
+                            tax = objEf.tax;
+                        }
+                        if ((org.preq != preq || org.rec != rec || org.tax != tax)) {
+                             
+                                Form12BAArr.push(objEf);
+                        }
+                    }
+                });
+
+            }
+        });
+         
+        Form12BAArr.map(function (modified) {
+           
+            orgDdlist.map(function (org) {
+                
+                if (org.Id == modified.id) {
+                     
+                    if (org.preq == null && (modified.preq != null && modified.preq != "") ||
+                        org.rec == null && (modified.rec != null && modified.rec != "") ||
+                        org.tax == null && (modified.tax != null && modified.tax != "")) {
+                        modified.action = "new";
+                    } else if (org.preq != null && (org.preq != modified.preq) ||
+                        org.rec != null && (org.rec != modified.rec) ||
+                        org.tax != null && (org.tax != modified.tax)) {
+                        modified.action = "update";
+                    }
+                }
+            });
+        });
+        if (Form12BAArr.length > 0) {
+            var dataToSend = JSON.stringify({
+                'EntityId': $("#hdnEmpCode").val(),
+                'form12ba': Form12BAArr
+            });
+
+            CommonApiPOST("/Payroll/Masters/saveForm12BADetails", dataToSend, function (isSuccess) {
+                if (isSuccess) {
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+        }
+        else {
+            showGlobalModal('E#Save Error#Please Enter/Modify Data ');
+            return false;
+        }
+
+    });
+
+    function calcTotalpreq() {
+        // 
+        var sum = 0;
+    
+        $(".preqtot").each(function () {
+           
+            sum += +$(this).val();
+           
+        });
+        
+ 
+        
+        document.getElementById('totpreq').value = sum;
+      
+    }
+    function calcTotal1() {
+     
+        var sum1 = 0;
+
+        $(".rectot").each(function () {
+         
+            sum1 += +$(this).val();
+          
+        });
+       
+      
+      
+        document.getElementById('totrec').value = sum1;
+
+    }
+    function calcTotal2() {
+        var sum2 = 0;
+     
+
+        $(".taxtot").each(function () {
+           
+            sum2 += +$(this).val();
+           
+        });
+
+       
+        totalfinal += sum2;
+       
+        document.getElementById('tottax').value = sum2;
+
+    }
+    function calcTotal() {
+         
+        var sumt = 0;
+        $(".value").each(function () {
+            sumt += +$(this).val();
+        });
+    }
+    function calcTotal4() {
+         
+        var sump = 0;
+        var sumr = 0;
+        var sumt = 0;
+        var sumtotal = 0;
+        $(".preqtot").each(function () {
+
+            sump += +$(this).val();
+
+        });
+        $(".rectot").each(function () {
+
+            sumr += +$(this).val();
+
+        });
+        $(".taxtot").each(function () {
+
+            sumt += +$(this).val();
+
+        });
+        var sumtotal = 0;
+        $(".value").each(function () {
+            sumtotal += +$(this).val();
+        });
+        var tot = sump + sumr + sumt + sumtotal;
+        document.getElementById('total_amount').innerHTML = tot;
+      
+    }
+</script>

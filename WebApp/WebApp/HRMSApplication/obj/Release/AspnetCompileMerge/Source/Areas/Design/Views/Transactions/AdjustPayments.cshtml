@@ -1,0 +1,89 @@
+﻿
+@{
+    ViewBag.Title = "AdjustPayments";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <h1>Adjust Payments</h1>
+                    <div class="col-md-12 mt_10">
+                        <div class="main_heading">
+                            <h1>Employee Search</h1>
+                            <div class="col-md-12">
+                                <div class="form-horizontal">
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Employee Id:</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Employee Name:</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1 col-sm-1 col-xs-12"><button type="button" class="btn btn-primary btn-sm pull-right">Search</button></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="main_heading">
+                            <h1>Adjust Payments</h1>
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table id="adjust_payments" class="display" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Earing Fields</th>
+                                                <th>Amount</th>
+                                                <th>Deduction Fields</th>
+                                                <th>Amount</th>
+                                                <th>Contribution Fields</th>
+                                                <th>Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Basic</td>
+                                                <td>21900</td>
+                                                <td>ESI Deduction</td>
+                                                <td>456</td>
+                                                <td>HRA Rate</td>
+                                                <td>1354</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mt_10">
+                                <div class="pull-right">
+                                    <button type="reset" class="btn btn-default calcel">Cancel</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#adjust_payments').DataTable();
+    });
+</script>
+
+

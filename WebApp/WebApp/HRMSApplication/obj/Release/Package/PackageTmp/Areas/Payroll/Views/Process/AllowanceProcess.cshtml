@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="leftmenu-container">
+                <div class="sidebar-menu">
+
+                    @{Html.RenderPartial("_PVPayrollMenu");}
+
+                </div>
+                <div class="sidebar-content">
+                    <div class="main_heading">
+                        <h1>Allowance Process</h1>
+
+                    </div>
+                    <button type="submit" id="Save" value="Submit" class="btn btn-primary" onclick="return getDataAfterProcess();"> Process Allowances</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<script>
+    function getDataAfterProcess(empcode) {
+
+        CommonApiGET('/Payroll/Process/getAllowanceData', function (respData) {
+           
+                showGlobalModal("I#Required Field#Allowances Processed Successfully.");
+         
+            //orgCancelData = respData;
+            //fillDataTables(respData);
+        });
+    }
+</script>
+

@@ -1,0 +1,404 @@
+﻿
+@{
+    /**/
+
+    ViewBag.Title = "AddRow";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                <div class="main_heading left-menu">
+                    @{Html.RenderPartial("_PVPayrollMenu");}
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <h1>Multi Grid</h1>
+                    @{ Html.RenderPartial("_pvEmployeeSearch"); }
+                    <input type="hidden" id="hdnEmpCode" />
+                    <div class="col-md-12">
+                        <div class="pull-right mb_10">
+                            <button id="addRow" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                        </div>
+                        <table id="pocGrid" class="display mt_10" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Account Number</th>
+                                    <th>Amount</th>
+                                    <th>Pay Type</th>
+                                    <th>PayMonths</th>
+                                    <th>StartMonth</th>
+                                    <th>StopMonth</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <br />
+                        <div class="col-md-12">
+                            <div class="pull-right">
+                                <button id="cancelData" class="btn btn-default">Cancel</button>
+                                <button id="updatGridData" class="btn btn-primary" type="button"> Update </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    var originalData = [];
+    var incIndex = 0;
+    var modifiedData = [];
+    var arrDelete = [];
+    var arrTypes = ['Monthly', 'Yearly', 'Half Yearly', 'Quarterly'];
+
+    $(document).ready(function () {
+        var lempid = 0;
+        CommonApiGET("/Payroll/AsyncPOC/getAddRowData?EmpCode=" + lempid, function (respData) {
+            originalData = respData;
+            fillDataTables(respData);
+        });
+    });
+
+    function getDataAfterEmpSearch1440(empcode) {
+        $('#hdnEmpCode').val(empcode);
+        CommonApiGET('/Payroll/AsyncPOC/getAddRowData?EmpCode=' + empcode, function (respData) {
+            originalData = respData;
+            fillDataTables(respData);
+        });
+
+    }
+
+    function fillDataTables(respData) {
+        $('#pocGrid').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+            data: respData,
+            "columns": [
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return getColumnTextbox('*' + data.Id, data.AccNum);
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return getColumnNumber('Amount', data.Amount);
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return getColumnDropdown('PayType', data.PayType, arrTypes);
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return getColumnNumber('PayMonths', data.PayMonths);
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return getColumnDate('StartMonth', data.StartMonth);
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return getColumnDate('StopMonth', data.StopMonth);
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return getColumnButton(data.Id, data.Action);
+                    }
+                },
+            ],
+            "order": [[1, 'asc']]
+        });
+    }
+
+
+    $('#addRow').click(function () {
+        var table = $('#pocGrid').DataTable();
+        var updateData = table.$('input, select').serialize();
+        var arrUpdate = updateData.split("*");
+        var arrSampleObJ = [];
+        arrUpdate.forEach(function (element) {
+            if (element != "") {
+                var objEf = {};
+                var strRow = element.split("&");
+                var id = strRow[0].split("=");
+                objEf.Id = id[0];
+                objEf.AccNum = id[1];
+
+                var amount = strRow[1].split("=");
+                objEf.Amount = amount[1];
+
+                var payType = strRow[2].split("=");
+                objEf.PayType = payType[1];
+
+                var payMonth = strRow[3].split("=");
+                objEf.PayMonths = payMonth[1];
+
+                var startMonth = strRow[4].split("=");
+                objEf.StartMonth = startMonth[1];
+
+                var stopMonth = strRow[5].split("=");
+                objEf.StopMonth = stopMonth[1];
+
+                if (isNaN(id[0])) {
+                    objEf.Action = "Delete";
+                } else {
+                    objEf.Action = "Add";
+                }
+                arrSampleObJ.push(objEf);
+            }
+        });
+
+        modifiedData = arrSampleObJ;
+
+        incIndex++;
+        var incId = "NeW" + incIndex;
+        var row = {
+            "Id": incId,
+            "AccNum": "",
+            "PayType": "",
+            "PayMonths": "",
+            "StartMonth": "",
+            "StopMonth": "",
+            "Amount": "",
+            "Action": "Delete"
+        };
+        modifiedData.push(row);
+        fillDataTables(modifiedData);
+    });
+
+    function deleteRow(id) {
+        var table = $('#pocGrid').DataTable();
+        var updateData = table.$('input, select').serialize();
+        var arrUpdate = updateData.split("*");
+        var arrSampleObJ = [];
+        arrUpdate.forEach(function (element) {
+            if (element != "") {
+                var objEf = {};
+                var strRow = element.split("&");
+                var id = strRow[0].split("=");
+                objEf.Id = id[0];
+                objEf.AccNum = id[1];
+
+                var amount = strRow[1].split("=");
+                objEf.Amount = amount[1];
+
+                var payType = strRow[2].split("=");
+                objEf.PayType = payType[1];
+
+                var payMonth = strRow[3].split("=");
+                objEf.PayMonths = payMonth[1];
+
+                var startMonth = strRow[4].split("=");
+                objEf.StartMonth = startMonth[1];
+
+                var stopMonth = strRow[5].split("=");
+                objEf.StopMonth = stopMonth[1];
+
+                if (isNaN(id[0])) {
+                    objEf.Action = "Delete";
+                } else {
+                    objEf.Action = "Add";
+                }
+                arrSampleObJ.push(objEf);
+            }
+        });
+
+        modifiedData = arrSampleObJ;
+       
+        modifiedData = modifiedData.filter(function (obj) {
+            return obj.Id !== id;
+        });
+       
+        fillDataTables(modifiedData);
+    }
+    function deleteEntireRow(id) {
+
+        var table = $('#pocGrid').DataTable();
+        var updateData = table.$('input, select').serialize();
+        var arrUpdate = updateData.split("*");
+        var arrSampleObJ = [];
+        arrUpdate.forEach(function (element) {
+            if (element != "") {
+                var objEf = {};
+                var strRow = element.split("&");
+                var id = strRow[0].split("=");
+                objEf.Id = id[0];
+                objEf.AccNum = id[1];
+
+                var amount = strRow[1].split("=");
+                objEf.Amount = amount[1];
+
+                var payType = strRow[2].split("=");
+                objEf.PayType = payType[1];
+
+                var payMonth = strRow[3].split("=");
+                objEf.PayMonths = payMonth[1];
+
+                var startMonth = strRow[4].split("=");
+                objEf.StartMonth = startMonth[1];
+
+                var stopMonth = strRow[5].split("=");
+                objEf.StopMonth = stopMonth[1];
+
+                if (isNaN(id[0])) {
+                    objEf.Action = "Delete";
+                } else {
+                    objEf.Action = "Add";
+                }
+                arrSampleObJ.push(objEf);
+            }
+        });
+
+        modifiedData = arrSampleObJ;
+        modifiedData = modifiedData.filter(function (obj) {
+
+            if (obj.Id != "null" && id != "null") {
+                if (obj.Id == id) {
+                    obj.Action = "Deleted";
+                    arrDelete.push(obj);
+                } else {
+                    return obj.Id !== id;
+                }
+            }
+        });
+
+        fillDataTables(modifiedData);
+    }
+
+    $('#updatGridData').click(function () {
+
+        var table = $('#pocGrid').DataTable();
+        var updateData = table.$('input, select').serialize();
+        var arrUpdate = updateData.split("*");
+        var arrSampleObJ = [];
+        arrUpdate.forEach(function (element) {
+            if (element != "") {
+                var objEf = {};
+                var finalObj = {};
+                var strRow = element.split("&");
+                var id = strRow[0].split("=");
+                objEf.Id = id[0];
+                objEf.AccNum = id[1];
+
+                var amount = strRow[1].split("=");
+                objEf.Amount = amount[1];
+
+                var payType = strRow[2].split("=");
+                objEf.PayType = payType[1];
+
+                var payMonth = strRow[3].split("=");
+                objEf.PayMonths = payMonth[1];
+
+                var startMonth = strRow[4].split("=");
+                objEf.StartMonth = startMonth[1];
+
+                var stopMonth = strRow[5].split("=");
+                objEf.StopMonth = stopMonth[1];
+
+                if (isNaN(id[0])) {
+                    objEf.Action = "New";
+                } else {
+                    objEf.Action = "Update";
+                }
+
+                if (objEf.AccNum == ""
+                    && objEf.Amount == "" && objEf.PayType == ""
+                    && objEf.PayMonths == "" && objEf.StartMonth == "" && objEf.StopMonth == "") {
+                    console.log("row is empty");
+                } else {
+
+                    originalData.map(function (element) {
+                        if (element.Id == objEf.Id && element.AccNum != objEf.AccNum) {
+
+                            objEf.AccNum = objEf.AccNum;
+                        }
+                        else if (element.Id == objEf.Id && element.Amount != objEf.Amount) {
+
+                            objEf.Amount = objEf.Amount;
+                        }
+                        else if (element.Id == objEf.Id && element.PayMonths != objEf.PayMonths) {
+
+                            objEf.PayMonths = objEf.PayMonths;
+                        }
+                        else if (element.Id == objEf.Id && element.PayType != objEf.PayType) {
+
+                            objEf.PayType = objEf.PayType;
+                        }
+                        else if (element.Id == objEf.Id && element.StartMonth != objEf.StartMonth) {
+
+                            objEf.StartMonth = objEf.StartMonth;
+                        } else if (element.Id == objEf.Id && element.StopMonth != objEf.StopMonth) {
+
+                            objEf.StopMonth = objEf.StopMonth;
+                        } else if (element.Id == objEf.Id
+                            && element.AccNum == objEf.AccNum
+                            && element.Amount == objEf.Amount
+                            && element.PayMonths == objEf.PayMonths
+                            && element.StartMonth == objEf.StartMonth
+                            && element.StopMonth == objEf.StopMonth
+                            && element.PayType == objEf.PayType) {
+                            objEf = {};
+                        } else if (objEf.AccNum != ""
+                            || objEf.Amount != ""
+                            || objEf.PayMonths != ""
+                            || objEf.StartMonth != ""
+                            || objEf.StopMonth != "") {
+                            objEf = objEf;
+                        } else {
+                            objEf = {};
+                        }
+                    });
+
+                    if (Object.keys(objEf).length > 0) {
+                        arrSampleObJ.push(objEf);
+                    }
+
+                }
+
+            }
+        });
+
+        arrDelete.map(function (obj) {
+            arrSampleObJ.push(obj);
+        });
+        var emp_code = $("#hdnEmpCode").val();
+        var dataToSend = JSON.stringify({
+            EntityId: emp_code,
+            multiObject: arrSampleObJ
+        });
+        if (emp_code != 0) {
+            CommonApiPOST("/Payroll/AsyncPOC/updateMultipleColumnGridData", dataToSend, function (isSuccess) {
+                if (isSuccess) {
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+        }
+    });
+
+</script>

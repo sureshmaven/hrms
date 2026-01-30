@@ -1,0 +1,980 @@
+﻿@model Entities.LeaveViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.RolePages = TempData["RolePages"];
+    var rolepages = TempData["RolePages"].ToString();
+}
+<script type="text/javascript">
+    @{
+        var message = TempData["AlertMessage"] ?? string.Empty;
+    }
+    var message = '@message';
+    if (message) alert(message);
+</script>
+
+<style>
+    .activeClass {
+        background: #ffdb99;
+    }
+
+    .secondClass {
+        color: red;
+    }
+</style>
+
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-heading">
+            @{
+                <ul class="nav nav-tabs">
+                    @if (rolepages.Contains("LVMLV"))
+                    {
+                        <li><a href=@Url.Action("LeaveRequest", "LeaveApply")>Leave Apply</a></li>
+                    }
+                    @if (rolepages.Contains("LVELB"))
+                    {
+                        <li><a href=@Url.Action("LeaveBalance", "LeaveBalance")>Emp Leave Balance</a></li>}
+                    @if (rolepages.Contains("LVLAP"))
+                    {
+                        <li><a href=@Url.Action("LeaveApproval", "LeaveApproval")>Leave Approvals</a></li>
+                        //<li class="active"><a href=@Url.Action("Leaveforemployee", "LeaveApply")>LeaveForEmployee</a></li>
+                    }
+                    @if (rolepages.Contains("LFPMain"))
+                    {
+                        <li class="active"><a href=@Url.Action("Leaveforemployee", "LeaveApply")>LeaveForEmployee</a></li>
+                    }
+                    @if (rolepages.Contains("LVMLA"))
+                    {
+                        <li><a href=@Url.Action("myleaveapproval", "Reports")>My Leave Approvals</a></li>}
+                </ul>
+            }
+        </div>
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade  in active" id="tab2primary">
+                    <div class="page_st">
+                        <div class="page">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="main_heading">
+                                    <h1>LeaveForOtherEmployee</h1>
+                                    <div class="leave_cont_start">
+                                        @using (Html.BeginForm("Leaveforemployee", "LeaveApply", FormMethod.Post, new { name = "Leaveforemployee" }))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            @*<div class="col-md-12 col-sm-12">
+                                                    <div class="main_heading">
+
+
+                                                    </div>
+                                                </div>*@
+                                            <div class="col-md-12 col-sm-12">
+                                                <div class="main_heading">
+                                                    <h1>Apply Leave</h1>
+                                                    <div class="form-horizontal col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Emp Code:<span class="mandatory">*</span></label>
+                                                                <div class="col-sm-6">
+                                                                    @Html.EditorFor(model => model.EmpId, new { htmlAttributes = new { @class = "form-control", id = "empcode", onkeypress = "return isNumber(event)" } })
+                                                                </div>
+                                                                <div class="col-sm-2">
+                                                                    <button type="button" id="btnApply" class="btn btn-primary btn-sm pull-right">Search</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Employee Name:<span class="mandatory">*</span></label>
+                                                                <div class="col-sm-8">
+                                                                    @Html.EditorFor(model => model.EmpId, new { htmlAttributes = new { @class = "form-control", @id = "Shortname", @readonly = "readonly" } })
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Leave Type:<span class="mandatory">*</span></label>
+                                                                <div class="col-sm-8">
+
+                                                                    @Html.DropDownListFor(model => model.lleaves.Id, ViewBag.LeaveTypes as SelectList, "Select", new { @class = "form-control", @id = "Type" })
+
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Start Date:<span class="mandatory">*</span></label>
+                                                                <div class="input-group date col-sm-8">
+                                                                    @Html.EditorFor(model => model.lleaves.StartDate, new { htmlAttributes = new { @class = "form-control", @id = "sdate", onkeypress = "return nokeyword(event)", onchange = "Dateevent3();" } })
+
+                                                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">End Date:<span class="mandatory">*</span></label>
+                                                                <div class="input-group date col-sm-8">
+                                                                    @Html.EditorFor(model => model.lleaves.EndDate, new { htmlAttributes = new { @class = "form-control", @id = "edate", onkeypress = "return nokeyword(event)", onchange = "return Dateevent1()" } })
+                                                                    @*@Html.EditorFor(model => model.lleaves.EndDate, new { htmlAttributes = new { @class = "form-control", @id = "edate" } })*@
+                                                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Reason:<span class="mandatory">*</span></label>
+                                                                <div class="col-sm-8">
+                                                                    @Html.TextAreaFor(m => m.lleaves.Reason, new { @class = "form-control", style = "width:100% !important", rows = "3", @id = "reason" })
+                                                                    @Html.ValidationMessageFor(model => model.lleaves.Reason, "", new { @class = "text-danger" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="pull-right">
+                                                                <button type="button" onclick="resetForm()" value="reset" class="btn btn-default">Cancel</button>
+                                                                @*<button type="submit" id="btsubmit" onclick="return leaveapply();" class="btn btn-primary subleave">Submit</button>*@
+
+                                                                <button type="button" onclick="return leaveapplyforother();" id="buttonSubmit" value="reset" class="btn btn-primary subleave">Submit</button>
+                                                                @*<button type="submit" id="btsubmit" class="btn btn-primary subleave" data-toggle="modal" data-target="#myModal">
+                                                                        Submit
+                                                                    </button>*@
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            @*<div class="col-md-12 col-sm-12">
+                                                    <div class="main_heading">
+
+
+
+                                                        <div class="clearfix"></div>
+
+                                                    </div>
+                                                </div>*@
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(document).on("keydown", disableF5);
+        function disableF5(e) {
+
+            if ((e.which || e.keyCode) == 116 || (e.which || e.keyCode) == 82) e.preventDefault();
+        };
+
+
+
+
+        var url = $(location).attr('href'),
+            parts = url.split("/"),
+            last_part = parts[parts.length - 1];
+
+
+
+        $("#empcode").keypress(function (event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+            }
+        });
+
+    $("#btnApply").click(function () {
+
+        var lempid = $("#empcode").val();
+        if (lempid == "") {
+            showGlobalModal("I#Required#Please Enter EmpCode.");
+            $("#empcode").focus();
+            return false;
+        }
+        $("#shortname").val('');
+        //$("#desig").val('');
+        //$("#Branchdept").val('');
+        //$("#TotalExperience").val('');
+        //$("#TotalPL").val('');
+
+        //ajaxSpinnerShow();
+        $.ajax({
+
+            url: "/PLE_Type/GetEmployeeData?empcode=" + lempid,
+            dataType: "Json",
+            cache: false,
+            success: function (response) {
+
+                if (response != null) {
+                    ajaxSpinnerHide();
+                    document.getElementById("Shortname").value = response.lshortnmaeAjax;
+                    //document.getElementById("desig").value = response.ldesigAjax;
+                    //document.getElementById("Branchdept").value = response.lbranchAjax;
+                    //document.getElementById("TotalExperience").value = response.lTotalexpAjax;
+                    //document.getElementById("TotalPL").value = response.lbalanceajax;
+                    //document.getElementById("Type").value = response.lbalancetypeajax;
+                    if (response.Status == "Notfound") {
+                        ajaxSpinnerHide();
+                        showGlobalModal("I#Error#Employee doesn't exists.");
+                        $("#empcode").val('');
+
+                    }
+                    else if (response.Status == "AlreadyRetired") {
+                        ajaxSpinnerHide();
+                        showGlobalModal("I#Error#Employee is Retired.");
+                        $("#empcode").val('');
+
+
+                    }
+                }
+                else {
+                    // alert("Something went wrong");
+                }
+            },
+
+        });
+
+
+        });
+    });
+</script>
+<script>
+    document.getElementById("a4").className = "active";
+</script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        
+        $("#check").hide();
+        // prepare the data for BankView
+        var theme = otherTheme;
+        // prepare the data
+
+        $(function () {
+            $.ajax({
+                type: "GET",
+                url: "/LeaveApply/GetAuthorityNamess",
+                dataType: "Json",
+                success: function (response) {
+                    if (response != null) {
+                        document.getElementById("ControllingAuthority").value = response.lControllingAuthorityAjax;
+                        document.getElementById("SanctioningAuthority").value = response.lSanctioningAuthorityAjax;
+                    }
+                    else {
+                        // alert("Something went wrong");
+                    }
+                },
+            });
+        });
+        var url = "../LeaveApply/LeaveHistoryViews";
+        var source =
+        {
+            datatype: "json",
+            datafields: [
+                { name: 'EmpId', type: 'string' },
+                { name: 'EmpName', type: 'string' },
+                { name: 'Designation', type: 'string' },
+                { name: 'AppliedDate', type: 'datetime' },
+                { name: 'BrDept', type: 'string' },
+                { name: 'StartDate', type: 'datetime' },
+                { name: 'EndDate', type: 'datetime' },
+                { name: 'LeaveType', type: 'string' },
+                { name: 'LeaveDays', type: 'double' },
+                //{ name: 'Subject', type: 'string' },
+                { name: 'Reason', type: 'string' },
+                { name: 'status', type: 'string' },
+                { name: 'CancelReason', type: 'string' },
+            ],
+            async: false,
+            url: url,
+            data: {
+                featureClass: "P",
+                style: "full",
+                username: "jqwidgets"
+            }
+        };
+        var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties, rowdata) {
+            
+            if (value == "Pending") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #FFA500;">' + value + '</span>';
+            }
+            else if (value == "Forwarded") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #33b5e5;">' + value + '</span>';
+            }
+            else if (value == "Approved") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #00C851;">' + value + '</span>';
+            }
+            else if (value == "Credited") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #EC33FF;">' + value + '</span>';
+            }
+            else if (value == "Denied") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #8B008B;">' + value + '</span>';
+            }
+            else if (value == "Debited") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #EB984E;">' + value + '</span>';
+            }
+            else {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #ff4444;">' + value + '</span>';
+            }
+        }
+        var dataAdapter = new $.jqx.dataAdapter(source,
+            {
+                formatData: function (data) {
+                    data.ProductName = $("#searchField").val();
+                    return data;
+                }
+            }
+        );
+        // initialize jqxGrid
+        var editrowindex = -1;
+        var delrowindex = -1;
+        $("#gridApplyl").jqxGrid(
+            {
+                width: '100%',
+                source: dataAdapter,
+                theme: otherTheme,// for theme refernce go to Layout.cshtml
+                autoheight: true,
+                sortable: true,
+                pageable: true,
+
+                columnsResize: true,
+                altRows: true,
+                filterable: true,
+                autoshowfiltericon: true,
+
+                ready: function () {
+                    $("#gridApplyl").jqxGrid('localizestrings', localizationObject);
+                },
+                updatefilterconditions: function (type, defaultconditions) {
+                    switch (type) {
+                        case 'stringfilter':
+                            return stringcomparisonoperators;
+                        case 'numericfilter':
+                            return numericcomparisonoperators;
+                        case 'datefilter':
+                            return datecomparisonoperators;
+                        case 'booleanfilter':
+                            return booleancomparisonoperators;
+                    }
+                },
+                updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                    filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                    var index1 = 0;
+                    var index2 = 0;
+                    if (columnfilter != null) {
+                        var filter1 = columnfilter.getfilterat(0);
+                        var filter2 = columnfilter.getfilterat(1);
+                        if (filter1) {
+                            index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                            var value1 = filter1.filtervalue;
+                            filterinputfield1.val(value1);
+                        }
+                        if (filter2) {
+                            index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                            var value2 = filter2.filtervalue;
+                            filterinputfield2.val(value2);
+                        }
+                    }
+                    filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                    filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                },
+                columns: [
+                    {
+                        text: 'SNO', sortable: false, filterable: false, editable: false, exportable: false, align: 'center',
+                        groupable: false, draggable: false, resizable: false,
+                        datafield: '', columntype: 'number', width: 50,
+                        cellsrenderer: function (row, column, value) {
+                            return "<div style='margin:4px;text-align: center;'>" + (value + 1) + "</div>";
+                        }
+                    },
+                    { text: "Emp Code", datafield: "EmpId", editable: false, width: 75 },
+                    { text: "Employee Name", datafield: "EmpName", exportable: false, editable: false, width: 120 },
+                    { text: "Designation", datafield: "Designation", exportable: false, editable: false, width: 85 },
+                    { text: "Applied Date", datafield: "AppliedDate", editable: false, width: 140, cellsformat: 'dd/MM/yyyy' },
+                    { text: "Department/Branch", datafield: "BrDept", editable: false, width: 140 },
+                    { text: "Start Date", datafield: "StartDate", editable: false, width: 140, cellsformat: 'dd/MM/yyyy' },
+                    { text: "End Date", datafield: "EndDate", editable: false, width: 140, cellsformat: 'dd/MM/yyyy' },
+                    { text: "Leave Type", datafield: "LeaveType", editable: false, width: 80 },
+                    { text: "Leaves", datafield: "LeaveDays", editable: false, width: 65 },
+                    // { text: "Subject", datafield: "Subject", exportable: false, editable: false, width: 100 },
+                    { text: "Reason", datafield: "Reason", exportable: false, editable: false, width: 240 },
+                    { text: "Status", datafield: "status", cellsrenderer: cellsrenderer, editable: false, width: 80 },
+                    { text: "Cancel Reason", datafield: "CancelReason", exportable: false, editable: false, width: 80 },
+
+
+                ],
+                columngroups:
+                    [
+                        { text: 'Action', align: 'center', name: 'Actions', width: 90 },
+                    ],
+
+
+            });
+
+        //$("#excelExport").jqxButton();
+
+
+        //$("#excelExport").click(function () {
+        //    $("#gridApplyl").jqxGrid('exportdata', 'pdf', 'MyLeaveHistory');
+        //});
+    });
+
+    $("#buttonSubmit").click(function () {
+        //datescheck();
+    });
+    function datescheck() {
+        
+        var x = location.hostname;
+        var url = window.location.href
+        var arr = url.split("/");
+        var sdate = document.getElementById("sdate").value;
+        var edate = document.getElementById("edate").value;
+        var ltype = document.getElementById("Type").value;
+        if (ltype == "") {
+            ltype = 0;
+        }
+
+        //var result = "http://" + arr[2] + "/" + "LeaveApply/checkLeaveEligebleOrNot?StartDate=" + sdate + "&EndDate=" + edate + "&LeaveType=" + ltype;
+        // var result = url+"/checkLeaveEligebleOrNot?StartDate=" + sdate + "&EndDate=" + edate + "&LeaveType=" + ltype;
+        var result = "" + arr[0] + "//" + arr[2] + "/" + "LeaveApply/checkLeaveEligebleOrNot?StartDate=" + sdate + "&EndDate=" + edate + "&LeaveType=" + ltype;
+        $.ajax({
+            type: "GET",
+            url: result,
+
+            dataType: "json",
+            success: function (data) {
+
+                var input = data.message;
+
+                var fields = input.split('/');
+                var status = fields[0];
+                var dates = fields[1];
+
+                if (status == "false") {
+
+                    document.getElementById("sdate").value = "";
+                    document.getElementById("edate").value = "";
+                    alert(dates);
+
+                }
+                else if (status != "false") {
+                    if (ltype == "4") {
+                        Joindatescheck();
+                    }
+                    else
+                        if (ltype == "5") {
+                            Joindatescheck();
+                        }
+                }
+                else {
+                    Combinationdatescheck2();
+                }
+                if (status == "countzero") {
+                    alert(dates);
+                }
+
+
+            },
+            error: function () {
+
+            }
+        });
+
+
+    }
+
+
+</script>
+
+<script type="text/javascript">
+            $(function () {
+                $("#Type").change(function () {
+                    if ($(this).val() == "@ViewBag.PaternityId") {
+                        $("#dvPassport").show();
+                        $('#delivery').val('');
+
+
+                    }
+
+                    else {
+                        $("#dvPassport").hide();
+                        $('#delivery').val('');
+                    }
+                });
+            });
+</script>
+<script type="text/javascript">
+            $(function () {
+                $("#Type").change(function () {
+                    if ($(this).val() == "@ViewBag.MaternityId") {
+                        $("#check").show();
+                    }
+                    else {
+                        $("#check").hide();
+                    }
+                });
+            });
+</script>
+<script>
+    //Start And End Date Validation
+    function Dateevent1() {
+
+
+        var Joindate = document.getElementById("sdate").value;
+        var Retdate = document.getElementById("edate").value;
+        var date = moment(Joindate, "DD.MM.YYYY");
+
+        var currentDate1 = moment(Retdate, "DD.MM.YYYY");
+        var duration = moment.duration(date.diff(currentDate1));
+
+
+        if (duration > 0) {
+
+
+            alert("Please ensure that End Date is greater than or equal to Start Date.");
+            document.getElementById("edate").focus();
+            document.getElementById("edate").value = '';
+            return false;
+
+        }
+
+        else {
+            if (Joindate != '' && Retdate != '') {
+                // datescheck();
+            }
+            return true;
+
+        }
+    }
+
+
+
+    function Dateevent3() {
+        
+        var ltype = document.getElementById("Type").value;
+        var StartDate = document.getElementById('sdate').value;
+        var EndDate = document.getElementById('edate').value;
+        var eDate = moment(EndDate, "DD.MM.YYYY");
+        var sDate = moment(StartDate, "DD.MM.YYYY");
+        if (StartDate != '' && EndDate != '' && sDate > eDate) {
+            alert("Please ensure that End Date is greater than or equal to Start Date.");
+            document.getElementById('sdate').value = '';
+            document.getElementById("sdate").focus();
+            return false;
+
+        }
+
+        else {
+
+            if (ltype == "4" || ltype == "5") {
+                if (StartDate != '' && EndDate != '') {
+
+                }
+            }
+            else
+                if (ltype != "4" || ltype != "5") {
+                    if (StartDate != '' && EndDate != '') {
+                        // datescheck();
+                    }
+                }
+                else if (EndDate != '' && StartDate != '') {
+                    Combinationdatescheck2();
+                }
+            eventvalidates();
+
+            return true;
+        }
+    }
+</script>
+<script>
+    //To Date and From Date Validation
+    function Dateevent2() {
+
+
+        var fromdate = document.getElementById("SDate").value;
+        var todate = document.getElementById("EDate").value;
+        var date = moment(fromdate, "DD.MM.YYYY");
+
+        var currentDate1 = moment(todate, "DD.MM.YYYY");
+        var duration = moment.duration(date.diff(currentDate1));
+
+
+        if (duration > 0) {
+
+            alert("Please ensure that To Date is greater than or equal to From Date.");
+            document.getElementById("EDate").focus();
+            document.getElementById("EDate").value = '';
+            return false;
+
+        }
+    }
+    function Dateevent4() {
+        var StartDate = document.getElementById('SDate').value;
+        var EndDate = document.getElementById('EDate').value;
+        var eDate = moment(EndDate, "DD.MM.YYYY");
+        var sDate = moment(StartDate, "DD.MM.YYYY");
+        if (StartDate != '' && EndDate != '' && sDate > eDate) {
+            alert("Please ensure that To Date is greater than or equal to From Date.");
+            document.getElementById('SDate').value = '';
+            document.getElementById("SDate").focus();
+            return false;
+        }
+    }
+</script>
+<script>
+    var resetForm = function () { $('input,select,textarea').not('[readonly],[disabled],:button').not('input[id="SDate"]').not('input[id="EDate"]').not($("#leaveid")).not($('input[type=text].jqx-input')).val(''); }
+</script>
+
+<script type="text/javascript">
+    $('.subleave').click(function () {
+    })
+</script>
+<script>
+    function eventvalidates() {
+
+
+
+        var mtype = document.getElementById("PregMTL").value;
+        var mtype1 = document.getElementById("MTLmiss").value;
+        var ltype = document.getElementById("Type").value;
+        var Joindate = document.getElementById("sdate").value;
+        var fields = Joindate.split('/');
+        var day = fields[0];
+        var mon = fields[1];
+        var years = fields[2];
+        var myjoindate = mon + "-" + day + "-" + years;
+        var today = new Date();
+        var month = today.getMonth() + 1
+        var day = today.getDate();
+        var year = today.getFullYear();
+        var shortStartDate = month + "-" + day + "-" + year;
+        var m1 = moment(myjoindate, 'M/D/YYYY');
+        var m2 = moment(myjoindate, 'MM/DD/YYYY').add(180, 'days').format('DD-MM-YYYY');
+        var m3 = moment(myjoindate, 'MM/DD/YYYY').add(14, 'days').format('DD-MM-YYYY');
+        var m4 = moment(myjoindate, 'MM/DD/YYYY').add(42, 'days').format('DD-MM-YYYY');
+
+        //commented by chaitanya on 16/04/2020
+        //if (ltype == "4") {
+
+        //    if ($('#PregMTL').is(":checked")) {
+        //        document.getElementById("edate").value = m2;
+
+        //        datescheck();
+        //    }
+        //    else {
+        //        document.getElementById("edate").value = m3;
+
+        //        datescheck();
+        //    }
+
+
+        //}
+        //end
+
+        if (ltype == "5") {
+            document.getElementById("edate").value = m3;
+            // datescheck();
+        }
+
+    }
+</script>
+<script>
+    function Joindatescheck() {
+        
+        var x = location.hostname;
+        var url = window.location.href
+        var arr = url.split("/");
+        var sdate = document.getElementById("sdate").value;
+        var edate = document.getElementById("edate").value;
+        var leavetype = $("#Type").val();
+
+        //var result = "https://" + arr[2] + "/" + "LeaveApply/displayjoiningdate?StartDate=" + sdate + "&EndDate=" + edate + "&leaveTypeId=" + leavetype;
+        var result = "" + arr[0] + "//" + arr[2] + "/" + "LeaveApply/displayjoiningdate?StartDate=" + sdate + "&EndDate=" + edate + "&leaveTypeId=" + leavetype;
+        $.ajax({
+            type: "GET",
+            url: result,
+
+            dataType: "json",
+            success: function (data) {
+
+                var input = data.message;
+
+                var fields = input.split('/');
+                var status = fields[0];
+                var dates = fields[1];
+
+                if (status == "false") {
+
+                    alert(dates);
+                }
+                else {
+                    document.getElementById("sdate").value = '';
+                    document.getElementById("edate").value = '';
+                }
+                if (status == "countzero") {
+
+
+                }
+
+            },
+            error: function () {
+
+            }
+        });
+
+
+    }
+    function Combinationdatescheck2() {
+
+        var x = location.hostname;
+        var url = window.location.href
+        var arr = url.split("/");
+        var sdate = document.getElementById("sdate").value;
+        var edate = document.getElementById("edate").value;
+        var ltype = document.getElementById("Type").value;
+        // var result = "https://" + arr[2] + "/" + "LeaveApply/CheckCombinationLeaves?StartDate=" + sdate + "&EndDate=" + edate + "&LeaveType=" + ltype;
+        var result = "" + arr[0] + "//" + arr[2] + "/" + "LeaveApply/CheckCombinationLeaves?StartDate=" + sdate + "&EndDate=" + edate + "&LeaveType=" + ltype;
+        $.ajax({
+            type: "GET",
+            url: result,
+
+            dataType: "json",
+            success: function (data) {
+
+                var input = data.message;
+                var clalert = data.clmessage;
+                if (input == "CL") {
+                    alert(clalert);
+                }
+                var startdate = data.stdate;
+                var enddate = data.eddate;
+                var date = new Date(parseInt(startdate.substr(6)));
+                var date1 = new Date(parseInt(enddate.substr(6)));
+                var lmonth = date.getMonth() + 1;
+                var lday = date.getDay;
+                var lmonth1 = date.getMonth() + 1;
+                var lday1 = date.getDay;
+                var checkzeromonth = "";
+                var checkzeroday = "";
+                if (lmonth <= 9) {
+                    checkzeromonth = '0' + (date.getMonth() + 1);
+                }
+                else {
+                    checkzeromonth = (date.getMonth() + 1);
+                }
+
+                if (lday <= 9) {
+                    checkzeroday = '0' + date.getDate();
+                }
+                else {
+                    checkzeroday = date.getDate();
+                }
+
+                var checkzeromonth1 = "";
+                var checkzeroday1 = "";
+                if (lmonth1 <= 9) {
+                    checkzeromonth1 = '0' + (date1.getMonth() + 1);
+                }
+                else {
+                    checkzeromonth1 = (date1.getMonth() + 1);
+                }
+
+                if (lday1 <= 9) {
+                    checkzeroday1 = '0' + date1.getDate();
+                }
+                else {
+                    checkzeroday1 = date1.getDate();
+                }
+
+                var lappliedsdate = checkzeroday + '/' + checkzeromonth + '/' + date.getFullYear();
+                var lappliededate = checkzeroday1 + '/' + checkzeromonth1 + '/' + date1.getFullYear();
+
+
+                var a = confirm(input);
+                if (a == true) {
+                    document.getElementById("sdate").value = lappliedsdate;
+                    document.getElementById("edate").value = lappliededate;
+                }
+                else {
+                    document.getElementById("sdate").value = '';
+                    document.getElementById("edate").value = '';
+                }
+
+            },
+            error: function () {
+
+            }
+        });
+
+
+    }
+
+</script>
+<script>
+    $('#Type').change(function () {
+        // alert('list changed : clear text');
+        //Set what value you want for text field');
+        $('#reason').val('');
+        $('#edate').val('');
+        $('#sdate').val('');
+        $('#subject').val('');
+    });
+</script>
+<script type='text/javascript'>
+    $(function getholidays() {
+
+        var active_dates = [];
+        $.ajax({
+            type: "GET",
+            async: false,
+            url: "/LeaveApply/GetDates",
+            dataType: "Json",
+            success: function (data) {
+                datesArray = data;
+                for (i = 0; i < datesArray.length; i++) {
+                    var result = datesArray[i].replace("-", "/");
+                    var result1 = result.replace("-", "/");
+                    var strArray = result1.split("/");
+                    var cdate = strArray[0] + "/" + parseInt(strArray[1]) + "/" + strArray[2]
+                    active_dates.push(cdate);
+
+                    if (i == datesArray.length - 1) {
+                        //loadcal(active_dates);
+                    }
+                }
+
+            }
+        });
+        $('.input-group.date').datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            beforeShowDay: function nonWorkingDays(date) {
+                var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
+                var week = 0 | date.getDate() / 7 //get the week
+                var dd = date.getDate();
+                var month = date.getMonth();
+                if (dd < 10) {
+                    dd = '0' + dd
+                }
+
+                if (month < 10) {
+                    month = '0' + month
+                }
+                var sunweek = date.getDay();
+                var year = date.getFullYear();
+
+                if (dd == 14 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                if (dd == 28 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                //check if it's second week or fourth week
+                else if (week == 1 || week == 3) {
+                    if (dd == 7 && day == 6 || dd == 21 && day == 6) {
+                        //check for satruday
+
+                    }
+                    else {
+                        if (day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                    }
+
+                }
+                //check for sunday
+                if (day == 0) {
+                    return {
+                        classes: 'secondClass'
+                    };
+
+                }
+                //check for holidays
+                var d = date;
+                var curr_date = d.getDate();
+                var curr_month = d.getMonth() + 1; //Months are zero based
+                if (curr_date < 10) {
+                    curr_date = '0' + curr_date
+                }
+                var curr_year = d.getFullYear();
+                var formattedDate = curr_date + "/" + curr_month + "/" + curr_year
+
+                if ($.inArray(formattedDate, active_dates) != -1) {
+                    return {
+                        classes: 'activeClass'
+                    };
+                }
+                return [true];
+            }
+        });
+
+
+    });
+</script>
+@*<script>
+    function onclick() {
+            location.href = '@Html.ActionLink("Create Pdf", "CreatePdf", "LeaveApply")';
+            }
+    </script>*@
+<script>
+    $(document).ready(function () {
+        // the selector will match all input controls of type :checkbox
+        // and attach a click event handler
+        $("input:checkbox").on('click', function () {
+            // in the handler, 'this' refers to the box clicked on
+            var $box = $(this);
+            if ($box.is(":checked")) {
+                // the name of the box is retrieved using the .attr() method
+                // as it is assumed and expected to be immutable
+                var group = "input:checkbox[name='" + $box.attr("name") + "']";
+                // the checked state of the group/box on the other hand will change
+                // and the current value is retrieved using .prop() method
+                $(group).prop("checked", false);
+                $box.prop("checked", true);
+                document.getElementById("sdate").value = '';
+                document.getElementById("edate").value = '';
+            } else {
+                $box.prop("checked", false);
+
+            }
+        })
+    });</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

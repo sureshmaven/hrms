@@ -1,0 +1,1304 @@
+﻿@model Entities.ViewModel
+@{
+    var rolepages = TempData["RolePages"].ToString();
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.RolePages = TempData["RolePages"];
+}
+
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-heading">
+            @{
+                <ul class="nav nav-tabs">
+                    @if (rolepages.Contains("PLPAL"))
+                    {
+                        <li class="active"><a href=@Url.Action("Index", "PLE_Type")>PL Encashment History</a></li>}
+                    @*@if (rolepages.Contains("PLPAV"))
+                    {
+                        <li><a href=@Url.Action("Approvals", "PLE_Type")>PL Approvals</a></li>}*@
+                </ul>
+            }
+        </div>
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade  in active" id="tab2primary">
+                    <div class="page_st">
+                        <div class="page">
+
+                            <div class="col-md-12 col-sm-12">
+                                <div class="leave_cont_start">
+
+
+
+                                    <div class="col-md-12 col-sm-12">
+
+                                        <div class="main_heading">
+                                            <h1>PL Encashment History</h1>
+                                            <div class="form-horizontal">
+                                                <div class="col-md-4 col-sm-3 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label">Applied Date:</label>
+                                                        <div class="input-group date col-sm-8" id="Event_Date2">
+                                                            <input type="text" id="ADate" class="form-control" onchange="return Dateevent4();" onkeypress="return nokeyword(event)"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-3 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label">Year:</label>
+                                                        <div class="input-group date col-sm-8" id="Event_Date3">
+                                                            <input type="text" name="Year" id="Year" class="form-control" maxlength=4 onkeypress="return nokeyword(event)" /><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-1 col-sm-1 col-xs-12">
+                                                    <button type="button" id="searchbtn" onclick="return checkyear();" class="btn btn-primary btn-sm pull-right">Search</button>
+                                                </div>
+                                            </div>
+
+                                            <div class="clearfix"></div>
+
+                                            <div class="col-md-12">
+                                                <div class="table-responsive m_20">
+                                                    <div id="gridApplyl"></div>
+                                                    <div style='margin-top: 20px;'>
+                                                        <div style='float: left;'>
+                                                            @*<input type="button" class="btn btn-info" value="Export to Excel" id='excelExport' />*@
+                                                            <input type="button" class="btn btn-info" value="Export to Excel" id='exceltoExport' />
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $("#btnApply").click(function () {
+
+        var lempid = $("#empcode").val();
+        $.ajax({
+
+            url: "/PLE_Type/GetEmployeeData?empcode=" + lempid,
+            dataType: "Json",
+            success: function (response) {
+
+                if (response != null) {
+
+                    document.getElementById("Shortname").value = response.lshortnmaeAjax;
+                    document.getElementById("desig").value = response.ldesigAjax;
+                    document.getElementById("Branchdept").value = response.lbranchAjax;
+                    document.getElementById("TotalExperience").value = response.lTotalexpAjax;
+                }
+                else {
+                    // alert("Something went wrong");
+                }
+            },
+        });
+
+        $.ajax({
+            type: "GET",
+            url: "/PLE_Type/GetTotalPLBalance?empcode=" + lempid,
+            dataType: "Json",
+            success: function (response) {
+                if (response != null) {
+
+                    document.getElementById("TotalPL").value = response.lbalanceajax;
+                    document.getElementById("Type").value = response.lbalancetypeajax;
+
+
+                }
+                else {
+                    // alert("Something went wrong");
+                }
+            },
+
+        });
+        $.ajax({
+            type: "GET",
+            url: "ChangeAuthority/Authority111?prefix=" + lempid,
+            dataType: "Json",
+            success: function (response) {
+                if (response != null) {
+
+                    if (response.Status == "false") {
+                    }
+                    else if (response.Status == "Notfound") {
+                        alert("EmpCode doesnot exists");
+                        $("#Shortname").val("");
+                        $("#desig").val("");
+                        $("#Branchdept").val("");
+                        $("#TotalExperience").val("");
+                        $("#empcode").val("");
+
+
+                    }
+                    else if (response.Status == "AlreadyRetired") {
+                        alert("This Employee is Retired");
+                        $("#Shortname").val("");
+                        $("#desig").val("");
+                        $("#Branchdept").val("");
+                        $("#TotalExperience").val("");
+                        $("#empcode").val("");
+
+
+
+                    }
+
+                }
+                else {
+                }
+            },
+        });
+    });
+    //$.ajax({
+    //    type: "GET",
+    //    url: "PLE_Type/Index?empcode=" + lempid,
+    //    dataType: "Json",
+    //    success: function (response) {
+    //        if (response != null) {
+
+    //            if (response.Status == "false") {
+    //            }
+    //            else if (response.Status == "Notfound") {
+    //                alert("EmpCode doesnot exists");
+
+
+    //            }
+    //            else if (response.Status == "AlreadyRetired") {
+    //                alert("This Employee is Retired");
+
+
+    //            }
+
+    //        }
+    //        else {
+    //        }
+    //    },
+    //});
+
+    //})
+</script>
+<script>
+
+    var rowCount = 1;
+    function addMoreRows() {
+        //rowCount = 0;
+        // if (rowCount) {
+        rowCount++;
+        var recRow = '<tr id="rowCount' + rowCount + '"><td><select class="form-control" id="Relation__" name="relation[]"><option value="">Select Relation</option><option value="Spouse">Spouse</option><option value="Children">Children</option><option value="Father">Father</option><option value="Mother">Mother</option></select></td><td><input class="form-control" id="subject" name="name[]" style="width:100% !important" type="text" value="" /></td><td><input class="form-control" id="subject" name="RelationAge[]" style="width:100% !important" type="text" value="" /></td><td><input class="form-control" id="subject" name="Occupation[]" style="width:100% !important" type="text" value="" /></td><td><input type="button" value="remove" onclick="removeRow(' + rowCount + ');" /></td></tr>';
+        jQuery('#addedRows').append(recRow);
+        //}
+    }
+    function removeRow(removeNum) {
+        //var registration_amt = parseInt(jQuery("#regTotalAmt").val());
+        //registration_amt -= jQuery("#regAmt" + removeNum).val();
+        //jQuery("#regTotalAmt").val(registration_amt);
+        //jQuery('#rowCount' + removeNum).remove(); jQuery("#error").css('display', 'none');
+        //var decreaseRowCount = jQuery("#rowCountHidden").val() - 1;
+        //jQuery("#rowCountHidden").val(decreaseRowCount);
+        jQuery('#rowCount' + removeNum).remove();
+    }
+
+    //$.ajax({
+    //    type: "POST",
+    //    url: "/LeaveTravel/Insertfamily",
+    //   // data: JSON.stringify(Relation),
+    //    contentType: "application/json; charset=utf-8",
+    //    dataType: "json",
+    //    success: function (r) {
+    //        alert(r + " record(s) inserted.");
+    //    }
+    //});
+
+</script>
+
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+</style>
+@{
+    var message = TempData["AlertMessage"] ?? string.Empty;
+}
+<script type="text/javascript">
+ var message = '@message';
+
+if(message) alert(message);
+
+</script>
+<script type="text/javascript">
+    $("#D").click(function () {
+        $("#Placeofvis").hide();
+        $("#ModeofTransport").hide();
+        $("#TravelAdvance").hide();
+    });
+    $("#C").click(function () {
+        $("#Placeofvis").show();
+        $("#ModeofTransport").show();
+        $("#TravelAdvance").show();
+    });
+</script>
+<script type="text/javascript">
+    $("#Relation__").change(function () {
+        alert($(this).val());
+        if ($(this).val() == "Mother") {
+            $("#Declarationform1").show();
+        }
+        else {
+            $("#Declarationform1").hide();
+        }
+
+    });
+
+</script>
+<script type="text/javascript">
+    var screenTheme = 'darkblue';
+    var popupTheme = 'highcontrast';
+    var otherTheme = 'arctic';
+
+    var localizationObject = {
+        filterstringcomparisonoperators: ['contains', 'does not contain'],  /* filter String Comparison Operators    */
+        filternumericcomparisonoperators: ['less than', 'greater than'],    /* filter Numeric Comparison Operators  */
+        filterdatecomparisonoperators: ['less than', 'greater than'],       /* filter Date comparison operators.  */
+        filterbooleancomparisonoperators: ['equal', 'not equal']            /* filter bool comparison operators.*/
+    };
+    var stringcomparisonoperators = ['CONTAINS', 'DOES_NOT_CONTAIN'];
+    var numericcomparisonoperators = ['LESS_THAN', 'GREATER_THAN'];
+    var datecomparisonoperators = ['LESS_THAN', 'GREATER_THAN'];
+    var booleancomparisonoperators = ['EQUAL', 'NOT_EQUAL'];
+
+    $(document).ready(function () {
+        // prepare the data for BankView
+        var theme = otherTheme;
+        var lempid = $("#empcode").val();
+        // prepare the data
+        $.ajax({
+            type: "GET",
+            url: "/PLE_Type/GetTotalPLBalance1",
+            dataType: "Json",
+            success: function (response) {
+                if (response != null) {
+
+
+                    document.getElementById("Type").value = response.lbalancetypeajax;
+
+
+                }
+                else {
+                    // alert("Something went wrong");
+                }
+            },
+
+        });
+        //$(function () {
+        //    //$.ajax({
+        //    //    type: "GET",
+        //    //    url: "/PLE_Type/GetAuthorityNamess",
+        //    //    dataType: "Json",
+        //    //    success: function (response) {
+        //    //        if (response != null) {
+
+        //    //            document.getElementById("ControllingAuthority").value = response.lControllingAuthorityAjax;
+        //    //            document.getElementById("SanctioningAuthority").value = response.lSanctioningAuthorityAjax;
+        //    //            document.getElementById("TotalExperience").value = response.lTotalexpAjax;
+        //    //        }
+        //    //        else {
+        //    //            // alert("Something went wrong");
+        //    //        }
+        //    //    },
+        //    //});
+        //});
+        //$(function () {
+        //    $.ajax({
+        //        type: "GET",
+        //        url: "/PLE_Type/GetTotalPLBalance",
+        //        dataType: "Json",
+        //        success: function (response) {
+        //            if (response != null) {
+
+        //                document.getElementById("TotalPL").value = response.lbalanceajax;
+        //                document.getElementById("Type").value = response.lbalancetypeajax;
+
+
+        //            }
+        //            else {
+        //                // alert("Something went wrong");
+        //            }
+        //        },
+        //    });
+        //});
+
+
+        var url = "../PLE_Type/PLView";
+        var source =
+        {
+            datatype: "json",
+            datafields: [
+                { name: 'EmpId', type: 'string' },
+                { name: 'ShortName', type: 'string' },
+                { name: 'UpdatedDate', type: 'date' },
+                { name: 'Code', type: 'string' },
+                { name: 'Deptbranch', type: 'string' },
+                { name: 'TotalExperience', type: 'string' },
+                { name: 'TotalPL', type: 'string' },
+                { name: 'PLEncash', type: 'string' },
+                { name: 'Subject', type: 'string' },
+                { name: 'Status', type: 'string' },
+                { name: 'CurrentYear', type: 'string' },
+            ],
+            async: false,
+            url: url,
+            data: {
+                featureClass: "P",
+                style: "full",
+                username: "jqwidgets"
+            }
+        };
+        var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties, rowdata) {
+            if (value == "Pending") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #FFA500;">' + value + '</span>';
+            }
+            else if (value == "Forwarded") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #33b5e5;">' + value + '</span>';
+            }
+            else if (value == "Approved") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #00C851;">' + value + '</span>';
+            }
+            else {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #ff4444;">' + value + '</span>';
+            }
+        }
+        var dataAdapter = new $.jqx.dataAdapter(source,
+            {
+                formatData: function (data) {
+                    data.ProductName = $("#searchField").val();
+                    return data;
+                }
+            }
+        );
+        // initialize jqxGrid
+        var editrowindex = -1;
+        var delrowindex = -1;
+        $("#gridApplyl").jqxGrid(
+            {
+                width: '99%',
+                source: dataAdapter,
+                theme: otherTheme,// for theme refernce go to Layout.cshtml
+                autoheight: true,
+                sortable: true,
+                pageable: true,
+
+                columnsResize: true,
+                altRows: true,
+                filterable: true,
+                autoshowfiltericon: true,
+
+                ready: function () {
+                    $("#gridApplyl").jqxGrid('localizestrings', localizationObject);
+                },
+                updatefilterconditions: function (type, defaultconditions) {
+                    switch (type) {
+                        case 'stringfilter':
+                            return stringcomparisonoperators;
+                        case 'numericfilter':
+                            return numericcomparisonoperators;
+                        case 'datefilter':
+                            return datecomparisonoperators;
+                        case 'booleanfilter':
+                            return booleancomparisonoperators;
+                    }
+                },
+                updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                    filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                    var index1 = 0;
+                    var index2 = 0;
+                    if (columnfilter != null) {
+                        var filter1 = columnfilter.getfilterat(0);
+                        var filter2 = columnfilter.getfilterat(1);
+                        if (filter1) {
+                            index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                            var value1 = filter1.filtervalue;
+                            filterinputfield1.val(value1);
+                        }
+                        if (filter2) {
+                            index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                            var value2 = filter2.filtervalue;
+                            filterinputfield2.val(value2);
+                        }
+                    }
+                    filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                    filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                },
+                columns: [
+
+                    {
+                        text: 'SNO', sortable: false, filterable: false, editable: false, align: 'center',
+                        groupable: false, draggable: false, exportable: false, resizable: false,
+                        datafield: '', columntype: 'number', width: 50,
+                        cellsrenderer: function (row, column, value) {
+                            return "<div style='margin:4px; text-align:center;'>" + (value + 1) + "</div>";
+                        }
+                    },
+                    { text: "Emp Code", datafield: "EmpId", editable: false, width: 75 },
+                    { text: "Employee Name", datafield: "ShortName", editable: false, width: 150 },
+                    { text: "Applied Date", datafield: "UpdatedDate", editable: false, width: 90, cellsformat: "dd/MM/yyyy" },
+                    { text: "Designation", datafield: "Code", editable: false, width: 85 },
+                    { text: "Department/Branch", datafield: "Deptbranch", width: 140, editable: false },
+                    { text: "Total Experience", datafield: "TotalExperience", width: 193, editable: false },
+                    { text: "Total PL", datafield: "TotalPL", editable: false, width: 70 },
+                    { text: "PL Encash", datafield: "PLEncash", editable: false, width: 70 },
+                    { text: "Year", datafield: "CurrentYear", width: 45, editable: false },
+                    { text: "Subject", datafield: "Subject", editable: false, width: 110 },
+                    { text: "Status", datafield: "Status", editable: false, cellsrenderer: cellsrenderer, width: 90 },
+                ],
+
+            });
+        $("#exceltoExport").jqxButton();
+
+
+        $("#excelExport").click(function () {
+            $("#gridApplyl").jqxGrid('exportdata', 'xls', 'PLEnchasement');
+        });
+    });
+</script>
+<script type="text/javascript">
+    /*------------------ Click event button script in Partail view-------------*/
+
+    $("#btnApply").click(function () {
+
+        var startdate = $("#SDate").val();
+        var enddate = $("#EDate").val()
+        var url = "../LeaveTravel/PLViews";
+        // prepare the data
+        var source =
+        {
+            type: "Post",
+            datatype: "json",
+            datafields: [
+                { name: 'EmpId', type: 'string' },
+                { name: 'ShortName', type: 'string' },
+                { name: 'Code', type: 'string' },
+                { name: 'Deptbranch', type: 'string' },
+                { name: 'TotalExperience', type: 'string' },
+                { name: 'TravelAdvance', type: 'string' },
+                { name: 'ModeOfTransport', type: 'string' },
+                { name: 'PlaceOfVisits', type: 'string' },
+                { name: 'PLType', type: 'string' },
+                { name: 'Reason', type: 'string' },
+                //{ name: 'Block_Period', type: 'string' },
+                { name: 'StartDate', type: 'date' },
+                { name: 'EndDate', type: 'date' },
+                { name: 'Status', type: 'string' },
+            ],
+            async: false,
+            url: "/PLE_Type/PLViews?StartDate=" + startdate + "&EndDate=" + enddate,
+            data: {
+                featureClass: "P",
+                style: "full",
+                username: "jqwidgets",
+                StartDate: startdate,
+                EndDate: enddate
+
+            }
+        };
+        var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties, rowdata) {
+            if (value == "Pending") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #FFA500;">' + value + '</span>';
+            }
+            else if (value == "Forwarded") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #33b5e5;">' + value + '</span>';
+            }
+            else if (value == "Approved") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #00C851;">' + value + '</span>';
+            }
+            else {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #ff4444;">' + value + '</span>';
+            }
+        }
+        var dataAdapter = new $.jqx.dataAdapter(source,
+            {
+                formatData: function (data) {
+                    data.ProductName = $("#searchField").val();
+                    return data;
+                }
+            }
+        );
+        // initialize jqxGrid
+        var editrowindex = -1;
+        var delrowindex = -1;
+        $("#gridApplyl").jqxGrid(
+            {
+                width: '99%',
+                source: dataAdapter,
+                theme: otherTheme,// for theme refernce go to Layout.cshtml
+                autoheight: true,
+                sortable: true,
+                pageable: true,
+                columnsResize: true,
+                altRows: true,
+                filterable: true,
+                autoshowfiltericon: true,
+
+                ready: function () {
+                    $("#gridApplyl").jqxGrid('localizestrings', localizationObject);
+                },
+                updatefilterconditions: function (type, defaultconditions) {
+                    switch (type) {
+                        case 'stringfilter':
+                            return stringcomparisonoperators;
+                        case 'numericfilter':
+                            return numericcomparisonoperators;
+                        case 'datefilter':
+                            return datecomparisonoperators;
+                        case 'booleanfilter':
+                            return booleancomparisonoperators;
+                    }
+                },
+                updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                    filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                    var index1 = 0;
+                    var index2 = 0;
+                    if (columnfilter != null) {
+                        var filter1 = columnfilter.getfilterat(0);
+                        var filter2 = columnfilter.getfilterat(1);
+                        if (filter1) {
+                            index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                            var value1 = filter1.filtervalue;
+                            filterinputfield1.val(value1);
+                        }
+                        if (filter2) {
+                            index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                            var value2 = filter2.filtervalue;
+                            filterinputfield2.val(value2);
+                        }
+                    }
+                    filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                    filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                },
+                columns: [
+                    {
+                        text: 'SNO', sortable: false, filterable: false, editable: false,
+                        groupable: false, draggable: false, exportable: false, resizable: false,
+                        datafield: '', columntype: 'number', width: 50,
+                        cellsrenderer: function (row, column, value) {
+                            return "<div style='margin:4px;'>" + (value + 1) + "</div>";
+                        }
+                    },
+                    { text: "Emp Code", datafield: "EmpId", editable: false, width: 75 },
+                    { text: "Employee Name", datafield: "ShortName", editable: false, width: 150 },
+                    { text: "Designation", datafield: "Code", editable: false, width: 85 },
+                    { text: "Department/Branch", datafield: "Deptbranch", width: 140, editable: false },
+                    { text: "PLType", datafield: "PLType", editable: false, width: 90 },
+                    { text: "FromDate", datafield: "StartDate", editable: false, width: 90, cellsformat: "dd/MM/yyyy" },
+                    { text: "ToDate", datafield: "EndDate", editable: false, width: 90, cellsformat: "dd/MM/yyyy" },
+                    { text: "TravelAdvance", datafield: "TravelAdvance", editable: false, width: 105 },
+                    { text: "ModeOfTransport", datafield: "ModeOfTransport", editable: false, width: 130 },
+                    //{ text: "Block_Period", datafield: "Block_Period", editable: false, width: 90 },
+                    { text: "Status", datafield: "Status", editable: false, width: 90 },
+                ],
+
+
+
+            });
+        $("#exceltoExport").jqxButton();
+
+
+        $("#excelExport").click(function () {
+            $("#grid1").jqxGrid('exportdata', 'xls', 'LTCHistory');
+        });
+    });
+
+
+
+</script>
+<script>
+    function empidcheck() {
+        var x = location.hostname;
+        var url = window.location.href
+        var arr = url.split("/");
+        var textBoxValue = document.getElementById("currentyear").value;
+
+        // var result = "https://" + arr[2] + "/" + "PLE_Type/checkCurrentyear?empid=" + textBoxValue;
+
+        var result = "" + arr[0] + "//" + arr[2] + "/" + "PLE_Type/checkCurrentyear?empid=" + textBoxValue;
+        $.ajax({
+            type: "GET",
+            url: result,
+
+            dataType: "json",
+            success: function (data) {
+
+                if (data.message == "use") {
+
+                }
+                if (data.message == "used") {
+
+                    document.getElementById("currentyear").value = "";
+
+                    alert("PL already applied for this year!");
+                }
+
+            },
+            error: function () {
+
+            }
+        });
+
+
+    }</script>
+<script>
+    //Start And End Date Validation
+    function Dateevent1() {
+
+        var darray = document.getElementById('sdate').value.split(" ");
+        var darraye = document.getElementById('edate').value.split(" ");
+        var Joindate = darray[0];
+
+        var Retdate = darraye[0];
+        var date = moment(Joindate, "DD.MM.YYYY");
+
+        var currentDate1 = moment(Retdate, "DD.MM.YYYY");
+        var duration = moment.duration(date.diff(currentDate1));
+
+
+        if (duration > 0) {
+            alert("Please ensure that End Date is greater than or equal to Start Date.");
+            document.getElementById("edate").focus();
+            document.getElementById("edate").value = '';
+            return false;
+
+        }
+        else {
+            datescheck();
+            return true;
+
+        }
+    }
+    //$("#datetimepicker1")
+
+
+    function Dateevent3() {
+
+        // alert("okokokokoko");
+
+        var darray = document.getElementById('sdate').value.split(" ");
+        var darraye = document.getElementById('edate').value.split(" ");
+        var StartDate = darray[0];
+        //  console.log(StartDate);
+        var EndDate = darraye[0];
+
+        var eDate = moment(EndDate, "DD.MM.YYYY");
+        var sDate = moment(StartDate, "DD.MM.YYYY");
+        if (StartDate != '' && EndDate != '' && sDate > eDate) {
+            alert("Please ensure that End Date is greater than or equal to Start Date.");
+            document.getElementById('sdate').value = '';
+            document.getElementById("sdate").focus();
+            return false;
+        }
+        else {
+            datescheck();
+            return true;
+
+        }
+    }
+</script>
+<script>
+    //Start And End Date Validation
+    function Dateevent1() {
+
+
+        var Joindate = document.getElementById("sdate").value;
+        var Retdate = document.getElementById("edate").value;
+        var date = moment(Joindate, "DD.MM.YYYY");
+
+        var currentDate1 = moment(Retdate, "DD.MM.YYYY");
+        var duration = moment.duration(date.diff(currentDate1));
+
+
+        if (duration > 0) {
+
+
+            alert("Please ensure that End Date is greater than or equal to Start Date.");
+            document.getElementById("edate").focus();
+            document.getElementById("edate").value = '';
+            return false;
+
+        }
+        else {
+            datescheck();
+            return true;
+
+        }
+    }
+
+    function Dateevent3() {
+
+
+        var StartDate = document.getElementById('sdate').value;
+        var EndDate = document.getElementById('edate').value;
+        var eDate = moment(EndDate, "DD.MM.YYYY");
+        var sDate = moment(StartDate, "DD.MM.YYYY");
+        if (StartDate != '' && EndDate != '' && sDate > eDate) {
+            alert("Please ensure that End Date is greater than or equal to Start Date.");
+            document.getElementById('sdate').value = '';
+            document.getElementById("sdate").focus();
+            return false;
+        }
+    }
+</script>
+<script>
+    //To Date and From Date Validation
+    function Dateevent2() {
+
+
+        var fromdate = document.getElementById("SDate").value;
+        var todate = document.getElementById("EDate").value;
+        var date = moment(fromdate, "DD.MM.YYYY");
+
+        var currentDate1 = moment(todate, "DD.MM.YYYY");
+        var duration = moment.duration(date.diff(currentDate1));
+
+
+        if (duration > 0) {
+
+
+            alert("Please ensure that To Date is greater than or equal to From Date.");
+            document.getElementById("EDate").focus();
+            document.getElementById("EDate").value = '';
+            return false;
+
+        }
+    }
+    function Dateevent4() {
+        var StartDate = document.getElementById('SDate').value;
+        var EndDate = document.getElementById('EDate').value;
+        var eDate = moment(EndDate, "DD.MM.YYYY");
+        var sDate = moment(StartDate, "DD.MM.YYYY");
+        if (StartDate != '' && EndDate != '' && sDate > eDate) {
+            alert("Please ensure that To Date is greater than or equal to From Date.");
+            document.getElementById('SDate').value = '';
+            document.getElementById("SDate").focus();
+            return false;
+        }
+    }
+</script>
+<script>
+    //To Date and From Date Validation
+    function Dateevent2() {
+
+
+        var fromdate = document.getElementById("SDate").value;
+        var todate = document.getElementById("EDate").value;
+        var date = moment(fromdate, "DD.MM.YYYY");
+
+        var currentDate1 = moment(todate, "DD.MM.YYYY");
+        var duration = moment.duration(date.diff(currentDate1));
+
+
+        if (duration > 0) {
+
+
+            alert("Please ensure that To Date is greater than or equal to From Date.");
+            document.getElementById("EDate").focus();
+            document.getElementById("EDate").value = '';
+            return false;
+
+        }
+    }
+    function Dateevent4() {
+        var StartDate = document.getElementById('SDate').value;
+        var EndDate = document.getElementById('EDate').value;
+        var eDate = moment(EndDate, "DD.MM.YYYY");
+        var sDate = moment(StartDate, "DD.MM.YYYY");
+        if (StartDate != '' && EndDate != '' && sDate > eDate) {
+            alert("Please ensure that To Date is greater than or equal to From Date.");
+            document.getElementById('SDate').value = '';
+            document.getElementById("SDate").focus();
+            return false;
+        }
+    }
+</script>
+
+<style>
+    table, th, td {
+        border-collapse: collapse;
+    }
+
+    .activeClass {
+        background: #ffdb99;
+    }
+
+    .secondClass {
+        /*background: #FF9999;*/
+        color: red;
+    }
+</style>
+
+
+
+<script type='text/javascript'>
+    $(function getholidays() {
+
+        var active_dates = [];
+        $.ajax({
+            type: "GET",
+            async: false,
+            url: "/LeaveApply/GetDates",
+            dataType: "Json",
+            success: function (data) {
+                datesArray = data;
+                for (i = 0; i < datesArray.length; i++) {
+                    var result = datesArray[i].replace("-", "/");
+                    var result1 = result.replace("-", "/");
+                    var strArray = result1.split("/");
+                    var cdate = strArray[0] + "/" + parseInt(strArray[1]) + "/" + strArray[2]
+                    active_dates.push(cdate);
+
+                    if (i == datesArray.length - 1) {
+                        //loadcal(active_dates);
+                    }
+                }
+
+            }
+        });
+        $("#Event_Date2").datepicker({
+
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            beforeShowDay: function nonWorkingDays(date) {
+
+                var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
+                var week = 0 | date.getDate() / 7 //get the week
+                var dd = date.getDate();
+                var month = date.getMonth();
+                if (dd < 10) {
+                    dd = '0' + dd
+                }
+
+                if (month < 10) {
+                    month = '0' + month
+                }
+                var sunweek = date.getDay();
+                var year = date.getFullYear();
+
+                if (dd == 14 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                if (dd == 28 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                //check if it's second week or fourth week
+                else if (week == 1 || week == 3) {
+                    if (dd == 7 && day == 6 || dd == 21 && day == 6) {
+                        //check for satruday
+
+                    }
+                    else {
+                        if (day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                    }
+
+                }
+                //check for sunday
+                if (day == 0) {
+                    return {
+                        classes: 'secondClass'
+                    };
+
+                }
+                //check for holidays
+                var d = date;
+                var curr_date = d.getDate();
+                var curr_month = d.getMonth() + 1; //Months are zero based
+                if (curr_date < 10) {
+                    curr_date = '0' + curr_date
+                }
+                var curr_year = d.getFullYear();
+                var formattedDate = curr_date + "/" + curr_month + "/" + curr_year
+
+                if ($.inArray(formattedDate, active_dates) != -1) {
+                    return {
+                        classes: 'activeClass'
+                    };
+                }
+                return [true];
+            }
+        });
+
+
+    });
+</script>
+
+
+<script>
+    $(function () {
+        $('#Event_Date1').datepicker({
+            format: 'dd-mm-yyyy',
+
+
+            todayHighlight: true,
+            autoclose: true
+        })
+        $('#Event_Date2').datepicker({
+            format: 'dd/mm/yyyy',
+
+
+            todayHighlight: true,
+            autoclose: true
+        })
+        $('#Event_Date2').on('changeDate', function (ev) {
+            $(this).datepicker('hide');
+        });
+
+    });
+</script>
+<script>
+    var resetForm = function () {
+        $("#currentyear").val('');
+        $("#Block_Period").val('');
+        $("#sdate").val('');
+        $("#edate").val('');
+        $("#Placeofvis").val('');
+        $("#ModeOfTransport").val('');
+        $("#subject").val('');
+        $("#reason1").val('');
+        $("#TravelAdvance").val('');
+        $("#plencash").val('');
+    }
+</script>
+<script type="text/javascript">
+    $('.subleave1').click(function () {
+    })
+
+</script>
+<script>
+    document.getElementById("a10").className = "active";
+</script>
+<script>
+    function pl() {
+
+        var year = $("#currentyear").val();
+        var type = $("#Type").val();
+        var totalpl = $("#TotalPL").val();
+        var pl = $("#plencash").val();
+        var Subject = $("#subject").val();
+        if (year == "") {
+            //window.alert("Please Enter Year");
+            showGlobalModal("I#Required#Please Enter Year.");
+            $("#currentyear").focus();
+            return false;
+        }
+        else if (year == "0" || year == "00" || year == "000" || year == "0000") {
+            //window.alert("Please Enter Valid Year");
+            showGlobalModal("I#Required#Please Enter Valid Year.");
+            $("#currentyear").focus();
+            $("#currentyear").val('');
+            return false;
+        }
+        else if (year != "" && year.length != 4) {
+            //window.alert("Please Enter Valid Year");
+            showGlobalModal("I#Required#Please Enter Valid Year.");
+            $("#currentyear").focus();
+            return false;
+        }
+        else if (type == "") {
+            // window.alert("Please Enter Type.");
+            showGlobalModal("I#Required#Please Enter Type.");
+            $("#Type").focus();
+            return false;
+        }
+        else if (totalpl == "") {
+            //window.alert("Please Enter Total PL.");
+            showGlobalModal("I#Required#Please Enter Total PL.");
+            $("#TotalPL").focus();
+            return false;
+        }
+        else if (pl == "") {
+            //window.alert("Please Enter PL Encash.");
+            showGlobalModal("I#Required#Please Enter PL Encash.");
+            $("#plencash").focus();
+            return false;
+        }
+        else if (pl == "0" || pl == "00" || pl == "000") {
+            // window.alert("Please Enter Valid PL Encash.");
+            showGlobalModal("I#Required#Please Enter Valid PL Encash.");
+            $("#plencash").focus();
+            $("#plencash").val('');
+            return false;
+        }
+        else if (Subject == "") {
+            // window.alert("Please Enter Subject.");
+            showGlobalModal("I#Required#Please Enter Subject.");
+            $("#subject").focus();
+            return false;
+        }
+    }
+</script>
+<script type="text/javascript">
+    /*--------------- Button click event ------------*/
+    $(function () {
+        $("#searchbtn").click(function () {
+            ajaxSpinnerShow();
+            var adate = $("#ADate").val();
+            var year = $("#Year").val();
+            // prepare the data
+            url: "/PLE_Type/Plempsearch?applieddate=" + adate + "&year=" + year;
+            var source =
+            {
+
+                type: "Post",
+                datatype: "json",
+                datafields: [
+                    { name: 'EmpId', type: 'string' },
+                    { name: 'ShortName', type: 'string' },
+                    { name: 'UpdatedDate', type: 'date' },
+                    { name: 'Code', type: 'string' },
+                    { name: 'Deptbranch', type: 'string' },
+                    { name: 'TotalExperience', type: 'string' },
+                    { name: 'TotalPL', type: 'string' },
+                    { name: 'PLEncash', type: 'string' },
+                    { name: 'Subject', type: 'string' },
+                    { name: 'Status', type: 'string' },
+                    { name: 'CurrentYear', type: 'string' },
+
+                ],
+                async: false,
+                url: "/PLE_Type/Plempsearch?applieddate=" + adate + "&year=" + year,
+                data: {
+                    featureClass: "P",
+                    style: "full",
+                    username: "jqwidgets",
+                    applieddate: adate,
+                    year: year,
+                },
+                loadComplete: function () {
+                    ajaxSpinnerHide();
+                }
+            };
+            var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties, rowdata) {
+                if (value == "Pending") {
+                    return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #FFA500;">' + value + '</span>';
+                }
+                else if (value == "Forwarded") {
+                    return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #33b5e5;">' + value + '</span>';
+                }
+                else if (value == "Approved") {
+                    return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #00C851;">' + value + '</span>';
+                }
+                else if (value == "Denied") {
+                    return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #8B008B;">' + value + '</span>';
+                }
+                else {
+                    return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #ff4444;">' + value + '</span>';
+                }
+            }
+
+            var dataAdapter = new $.jqx.dataAdapter(source,
+                {
+                    formatData: function (data) {
+                        data.ProductName = $("#searchField").val();
+                        return data;
+                    }
+                }
+            );
+            // initialize jqxGrid
+            var editrowindex = -1;
+            var delrowindex = -1;
+            $("#gridApplyl").jqxGrid(
+                {
+                    width: '99%',
+                    source: dataAdapter,
+                    theme: otherTheme,// for theme refernce go to Layout.cshtml
+                    autoheight: true,
+                    sortable: true,
+                    pageable: true,
+
+                    columnsResize: true,
+                    altRows: true,
+                    filterable: true,
+                    autoshowfiltericon: true,
+
+                    ready: function () {
+                        $("#gridApplyl").jqxGrid('localizestrings', localizationObject);
+                    },
+                    updatefilterconditions: function (type, defaultconditions) {
+                        switch (type) {
+                            case 'stringfilter':
+                                return stringcomparisonoperators;
+                            case 'numericfilter':
+                                return numericcomparisonoperators;
+                            case 'datefilter':
+                                return datecomparisonoperators;
+                            case 'booleanfilter':
+                                return booleancomparisonoperators;
+                        }
+                    },
+                    updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                        filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                        var index1 = 0;
+                        var index2 = 0;
+                        if (columnfilter != null) {
+                            var filter1 = columnfilter.getfilterat(0);
+                            var filter2 = columnfilter.getfilterat(1);
+                            if (filter1) {
+                                index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                                var value1 = filter1.filtervalue;
+                                filterinputfield1.val(value1);
+                            }
+                            if (filter2) {
+                                index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                                var value2 = filter2.filtervalue;
+                                filterinputfield2.val(value2);
+                            }
+                        }
+                        filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                        filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                    },
+                    columns: [
+
+                        {
+                            text: 'SNO', sortable: false, filterable: false, editable: false, align: 'center',
+                            groupable: false, draggable: false, exportable: false, resizable: false,
+                            datafield: '', columntype: 'number', width: 50,
+                            cellsrenderer: function (row, column, value) {
+                                return "<div style='margin:4px; text-align:center;'>" + (value + 1) + "</div>";
+                            }
+                        },
+                        { text: "Emp Code", datafield: "EmpId", editable: false, width: 75 },
+                        { text: "Employee Name", datafield: "ShortName", editable: false, width: 150 },
+                        { text: "Applied Date", datafield: "UpdatedDate", editable: false, width: 90, cellsformat: "dd/MM/yyyy" },
+                        { text: "Designation", datafield: "Code", editable: false, width: 85 },
+                        { text: "Department/Branch", datafield: "Deptbranch", width: 140, editable: false },
+                        { text: "Total Experience", datafield: "TotalExperience", width: 193, editable: false },
+                        { text: "Total PL", datafield: "TotalPL", editable: false, width: 70 },
+                        { text: "PL Encash", datafield: "PLEncash", editable: false, width: 70 },
+                        { text: "Year", datafield: "CurrentYear", width: 45, editable: false },
+                        { text: "Subject", datafield: "Subject", editable: false, width: 110 },
+                        { text: "Status", datafield: "Status", editable: false, cellsrenderer: cellsrenderer, width: 90 },
+                    ],
+
+                });
+        });
+        $("#exceltoExport").jqxButton();
+        $("#excelExport").click(function () {
+            $("#gridApplyl").jqxGrid('exportdata', 'xls', 'PL List');
+        });
+    });
+</script>
+<script>
+    function checkyear() {
+        var year = $("#Year").val();
+        if (year == "0" || year == "00" || year == "000" || year == "0000") {
+            window.alert("Please Enter Valid Year");
+            $("#Year").focus();
+            $("#Year").val('');
+            return false;
+
+        }
+    }
+</script>
+<script type='text/javascript'>
+    $(function () {
+        $('.input-group.date').datepicker({
+            format: 'yyyy',
+            viewMode: "years",
+            minViewMode: "years",
+            todayHighlight: true,
+            autoclose: true
+        });
+    });
+</script>
+
+
+<!-- Include XLSX library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+<!-- Include FileSaver library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Add click event handler to the download Excel button
+        $("#exceltoExport").click(function () {
+            // Get filtered data from the grid
+            var filteredData = $("#gridApplyl").jqxGrid('getrows');
+
+            // Process the data to convert dates to human-readable format
+            const processedData = filteredData.map(item => ({
+                ...item,
+                IssueDate: item.IssueDate ? formatDate(parseDate(item.IssueDate)) : '',
+                Duedate: item.Duedate ? formatDate(parseDate(item.Duedate)) : '',
+                Leaveapplieddate: item.Leaveapplieddate ? formatDate(parseDate(item.Leaveapplieddate)) : '',
+                Responsedate: item.Responsedate ? formatDate(parseDate(item.Responsedate)) : ''
+            }));
+
+            // Create a workbook and worksheet
+            var wb = XLSX.utils.book_new();
+            var ws = XLSX.utils.json_to_sheet(processedData);
+
+            // Add worksheet to workbook
+            XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+            // Convert workbook to binary data
+            var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+
+            // Create a Blob object from the binary data
+            var blob = new Blob([s2ab(wbout)], { type: 'application/octet-stream' });
+
+            // Trigger download
+            saveAs(blob, 'PLEnchasement.xlsx');
+
+            return false;
+        });
+    });
+
+    // Function to parse date string from /Date(timestamp)/ format to Date object
+    function parseDate(dateString) {
+        // Check for /Date(xxxxxxx)/ format
+        const match = /\/Date\((\d+)\)\//.exec(dateString);
+        if (match) {
+            return new Date(parseInt(match[1], 10));
+        }
+        // Check for ISO string format
+        return new Date(dateString);
+    }
+
+    // Function to format Date object to DD/MM/YYYY format
+    function formatDate(date) {
+        if (!date || isNaN(date.getTime())) return '';
+        var day = String(date.getDate()).padStart(2, '0');
+        var month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+        var year = date.getFullYear();
+        return `${day}/${month}/${year}`; // Format: DD/MM/YYYY
+    }
+
+    // Function to convert string to ArrayBuffer
+    function s2ab(s) {
+        var buf = new ArrayBuffer(s.length);
+        var view = new Uint8Array(buf);
+        for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+        return buf;
+    }
+</script>

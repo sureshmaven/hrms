@@ -1,0 +1,376 @@
+﻿@model Entities.Employees
+@{
+    var showTimer = TempData["ShowTimer"] != null && (bool)TempData["ShowTimer"];
+    DateTime lockEndTime;
+    if (TempData["LockedUntil"] != null && DateTime.TryParse(TempData["LockedUntil"].ToString(), out lockEndTime))
+    {
+        // lockEndTime parsed successfully
+    }
+    else
+    {
+        lockEndTime = DateTime.MinValue; // Default value if parsing fails
+    } }
+<script type="text/javascript">
+    @{
+        var message = TempData["AlertMessage"] ?? string.Empty;
+    }
+    var message = '@message';
+    if (message) alert(message);
+</script>
+<style>
+    #menuheader {
+        display: none !important;
+    }
+
+    body {
+        background: url(../Assets/images/bg11.jpg) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        padding: 0px;
+        margin: 0px;
+    }
+
+    .logo_login img {
+        width: 100%;
+    }
+
+    .loginpage {
+        background: rgba(255,255,255,0.5);
+        margin-top: 10%;
+        border: 1px solid rgba(0,0,0,0.5);
+        border-radius: 10px;
+        margin-bottom: 2%;
+    }
+
+    .login_footer {
+        border-top: 1px solid #696666;
+        padding-top: 10px;
+        text-align: center;
+    }
+
+    .logo_login {
+        text-align: center;
+        margin-bottom: 7px;
+    }
+
+    .login_footer a {
+        color: #000;
+        font-size: 12px;
+    }
+
+    .error_msg_login {
+        color: red;
+        text-align: center;
+        padding: 10px 0;
+    }
+
+    .wthree_footer_copy {
+        padding: 1em 0;
+        text-align: center;
+        background: rgba(0,0,0,0.2);
+    }
+
+    .footer {
+        margin-top: 50px;
+        position: absolute;
+        bottom: 0px;
+        width: 100%;
+    }
+
+    input[type=checkbox]:not(old),
+    input[type=radio]:not(old) {
+        width: 2em;
+        margin: 0;
+        padding: 0;
+        font-size: 1em;
+        opacity: 0;
+    }
+
+        input[type=checkbox]:not(old) + label,
+        input[type=radio]:not(old) + label {
+            display: inline-block;
+            margin-left: -2.5em;
+            line-height: 26px;
+            margin-right: 1em;
+        }
+
+            input[type=checkbox]:not(old) + label > span,
+            input[type=radio]:not(old) + label > span {
+                display: inline-block;
+                width: 18px;
+                height: 18px;
+                margin: 0.25em 0.5em 0.25em 0.25em;
+                border: 0.0625em solid rgb(17, 107, 6);
+                border-radius: 0.25em;
+                background: rgb(242, 255, 242);
+                vertical-align: bottom;
+            }
+
+            input[type=radio]:not(old) + label > span {
+                border-radius: 50%;
+            }
+
+        input[type=checkbox]:not(old):checked + label > span,
+        input[type=radio]:not(old):checked + label > span {
+            background: #fff;
+        }
+
+            input[type=checkbox]:not(old):checked + label > span:before {
+                content: '✓';
+                display: block;
+                width: 17px;
+                color: rgb(17, 107, 6);
+                font-size: 17px;
+                line-height: 18px;
+                text-align: center;
+                text-shadow: 0 0 0.0714em rgb(17, 107, 6);
+                font-weight: bold;
+            }
+
+            input[type=radio]:not(old):checked + label > span > span {
+                display: block;
+                width: 8px;
+                height: 8px;
+                margin: 4px;
+                border: 0.0625em solid rgb(17, 107, 6);
+                background: rgb(17, 107, 6);
+                border-radius: 50%;
+            }
+</style>
+@using (Html.BeginForm("Loginuser", "Home", "POST"))
+{
+    @Html.ValidationSummary(true)
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-7 col-sm-5 col-sm-offset-5 loginpage">
+                <div class="panel-body">
+                    <div class="logo_login"><img src="~/Assets/images/LoginLogo.png" /></div>
+                    <div class="error_msg_login">@ViewBag.Status</div>
+                    <div class="form-horizontal" role="form">
+
+                        @if (TempData["ShowTimer"] != null && (bool)TempData["ShowTimer"])
+                        {
+                            <div class="error_msg_login" style="font-size: 12px; margin-top: 0px;" id="lockout-timer">
+                                Your account is locked. Please wait for <span id="timer"></span> to retry.
+                            </div>}
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-5 control-label">
+                                Employee Code:
+                            </label>
+                            <div class="col-sm-7">
+                                @Html.EditorFor(model => model.EmpId, new { htmlAttributes = new { @class = "form-control", maxlength = "10", onkeypress = "return isNumber(event)", autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.EmpId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-5 control-label">
+                                Password:
+                            </label>
+                            <div class="col-sm-7">
+                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", type = "password", maxlength = "15", autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        @Html.HiddenFor(model => model.branchhide, new { htmlAttributes = new { @class = "form-control", id = "EncryptChallenge" } })
+                        <input id="HiddenPwd" name="HiddenPwd" type="hidden" value="" />
+                        <input type="hidden" id="EncryptSalt" />
+                        <!--<form method="post" action="/Account/Login">-->
+                        <!-- Add other login fields -->
+                        @*<div class="col-md-4 g-recaptcha" data-sitekey="6Le8V00qAAAAAFq0TcHUF5K1p9ZRLyvU71JQq6rO"></div>
+                            </form>
+                                                     Include reCAPTCHA script
+                                                    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+                                                    <div></div>*@
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">Captcha:</label>
+                            <div class="col-sm-7">
+                                <span id="captchaDiv">
+                                    <img src="@Url.Action("CreateCaptcha", "Captcha")" id="captchaImage" alt="Captcha" />
+                                    <i class="fa fa-refresh fa-captcha-refresh" title="Reload Captcha" onclick="reloadCaptcha()" style="padding: 0 0 0 3px;"></i>
+                                </span>
+                                <input id="captcha" name="captcha" type="text" placeholder="Enter Captcha" class="form-control" maxlength="5" autocomplete="off" required />
+                            </div>
+                        </div>
+                        <div class="form-group last">
+                            <div class="col-sm-offset-5 col-sm-7">
+                                <button id="button1id" name="button1id" class="btn btn-success btn-md" type="submit" onclick="return myFunction();">
+                                    <i class="fa fa-key" style="font-size:15px;margin-right: 4px;"></i> Login
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="login_footer">
+                        <a href="~/Home/ForgotPassword"><i class="glyphicon glyphicon-time" style="font-size:10px"></i> Forgot Password</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+<script src="@Url.Content("~/Assets/hrms/SHA512.min.js")"></script>
+<script>
+         function reloadCaptcha() {
+        document.getElementById('captchaImage').src = '@Url.Action("CreateCaptcha", "Captcha")?' + new Date().getTime();
+    }
+        function myFunction() {
+            var Email = $("#EmpId").val();
+            var Password = $("#Password").val();
+
+            if (Email == "") {
+                window.alert("Please Enter EmpId ");
+                $("#EmpId").focus();
+                return false;
+            }
+
+            else if (Password == "") {
+                window.alert("Please Enter Password");
+                $("#Password").focus();
+                return false;
+
+            }
+
+            else {
+                var saltText = document.getElementById("branchhide").value;
+                var newSHA512String = SHA512(Password + saltText);
+                var t = "";
+                for (var i = 0; i < Password.length; i++) { t += "*"; }
+                $("#Password").val(t);
+                document.getElementById("HiddenPwd").value = newSHA512String;
+                document.getElementById("EncryptSalt").value = saltText;
+                return true;
+            }
+        }
+</script>
+
+<script>
+    function Onempid() {
+        var url = window.location.href;
+        var arr = url.split("/");
+        var empId = $("#EmpId").val();
+
+        var result = arr[0] + "//" + arr[2] + "/Home/CheckEmpid?EmpID=" + empId;
+        $.ajax({
+            type: "GET",
+            url: result,
+            dataType: "json",
+            success: function (data) {
+                if (data.message == "used") {
+                    // Handle "used" case
+                }
+                if (data.message == "use") {
+                    alert("This Employee Code does not Exist!");
+                }
+            },
+            error: function () {
+                // Handle error
+            }
+        });
+    }
+</script>
+
+<script>
+    $("#btnSave").click(function () {
+        var empId = $("#EmpId").val();
+        var pwd = $("#pw1").val();
+        var cpwd = $("#pw2").val();
+
+        $.ajax({
+            type: "POST",
+            url: '/Home/ForgotPassword',
+            dataType: "json",
+            success: function (response) {
+                if (response != null) {
+                    // Handle success
+                } else {
+                    // Handle failure
+                }
+            },
+            error: function () {
+                // Handle error
+            }
+        });
+    });
+</script>
+@if (showTimer)
+{
+    <div>
+        <span>Account locked. Time remaining: <span id="timer">--:--</span></span>
+    </div>
+
+    <script>
+        var lockEndTime = new Date('@lockEndTime.ToString("o")');
+
+        // Check if lockEndTime is already stored in localStorage
+        if (!localStorage.getItem('LockedUntil')) {
+            localStorage.setItem('LockedUntil', lockEndTime.toISOString());
+        } else {
+            lockEndTime = new Date(localStorage.getItem('LockedUntil'));
+        }
+
+        var timerDisplay = document.getElementById("timer");
+
+        function startCountdown() {
+            var interval = setInterval(function () {
+                var now = new Date();
+                var remainingTime = Math.floor((lockEndTime - now) / 1000);
+
+                if (remainingTime <= 0) {
+                    clearInterval(interval);
+                    timerDisplay.textContent = "00:00";
+                    localStorage.removeItem('LockedUntil');
+                    location.reload(); // Automatically refresh the page
+                    return;
+                }
+
+                var minutes = Math.floor(remainingTime / 60);
+                var seconds = remainingTime % 60;
+                timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+
+        startCountdown();
+
+        // Block refresh via F5 or Ctrl+R
+        window.addEventListener('keydown', function (e) {
+            if ((e.key === 'F5') || (e.ctrlKey && e.key.toLowerCase() === 'r')) {
+                var now = new Date();
+                if (now < lockEndTime) {
+                    e.preventDefault();
+                    alert("Please wait until the lock timer ends. You can't refresh now.");
+                }
+            }
+        });
+
+        // Prevent closing/reloading the tab
+        //window.addEventListener('beforeunload', function (e) {
+        //    var now = new Date();
+        //    if (now < lockEndTime) {
+        //        e.preventDefault();
+        //       // e.returnValue = ''; // Required for Chrome
+        //        alert("Please wait until the lock timer ends. You can't refresh now.");
+        //    }
+        //});
+        window.addEventListener('beforeunload', function (e) {
+            var now = new Date();
+            if (now < lockEndTime) {
+                e.preventDefault();
+                e.returnValue = ''; // Triggers browser's default confirmation dialog
+                // Don't use alert here — it's blocked in beforeunload!
+                return ''; // Some browsers require this return value
+                alert("Please wait until the lock timer ends. You can't refresh now.");
+            }
+        });
+
+    </script>
+}
+
+
+<script type="text/javascript">
+        // Function to validate reCAPTCHA selection
+
+</script>

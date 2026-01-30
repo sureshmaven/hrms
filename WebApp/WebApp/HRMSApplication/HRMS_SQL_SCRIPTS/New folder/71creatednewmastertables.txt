@@ -1,0 +1,121 @@
+alter table branches add StartTime nvarchar(250) null,EndTime nvarchar(250) null;
+
+update branches set starttime='9.00 AM',endtime='3.00 PM' where name='ALWAL';
+update branches set starttime='9.30 AM',endtime='3.30 PM' where name='AMBERPET';
+update branches set starttime='9.30 AM',endtime='3.30 PM' where name='AMEERPET';
+update branches set starttime='9.30 AM',endtime='3.30 PM' where name='ATTAPUR';
+update branches set starttime='9.30 AM',endtime='3.30 PM' where name='BAGHLINGAMPALLY';
+update branches set starttime='9.30 AM',endtime='3.30 PM' where name='BANDLAGUDA';
+update branches set starttime='9.30 AM',endtime='3.30 PM' where name='BHARATNAGAR';
+update branches set starttime='9.00 AM',endtime='3.00 PM' where name='BOUDHANAGAR';
+update branches set starttime='9.00 AM',endtime='3.00 PM' where name='CHAMPAPET';
+update branches set starttime='9.30 AM',endtime='3.30 PM' where name='CHANDANAGAR';
+update branches set starttime='10.30 AM',endtime='4.30 PM' where name='CHARMINAR';
+update branches set starttime='9.30 AM',endtime='3.30 PM' where name='DILSUKHNAGAR';
+update branches set starttime='9.30 AM',endtime='3.30 PM' where name='GACHIBOWLI ';
+update branches set starttime='10.00 AM',endtime='4.00 PM' where name='HIMAYATNAGAR';
+update branches set starttime='9.30 AM',endtime='3.30 PM' where name='JUBILEE HILLS';
+update branches set starttime='8.30 AM',endtime='2.30 PM' where name='KAMALANAGAR';
+update branches set starttime='9.30 AM',endtime='3.30 PM' where name='KUKATPALLY';
+update branches set starttime='9.30 AM',endtime='3.30 PM' where name='LALAPET';
+update branches set starttime='9.00 AM',endtime='3.00 PM' where name='LOTHKUNTA';
+update branches set starttime='9.30 AM',endtime='3.30 PM' where name='MALAKPET';
+update branches set starttime='9.30 AM',endtime='3.30 PM' where name='MALKAJGIRI';
+update branches set starttime='9.00 AM',endtime='3.00 PM' where name='MARUTINAGAR';
+update branches set starttime='10.00 AM',endtime='4.00 PM' where name='MASABTANK';
+update branches set starttime='10.00 AM',endtime='4.00 PM' where name='MOULALI';
+update branches set starttime='9.30 AM',endtime='3.30 PM' where name='NARAYANAGUDA';
+update branches set starttime='9.30 AM',endtime='3.30 PM' where name='UPPAL';
+update branches set starttime='8.30 AM',endtime='2.30 PM' where name='SAIDABAD COLONY';
+update branches set starttime='10.30 AM',endtime='4.30 PM' where name='SECUNDERABAD';
+update branches set starttime='9.30 AM',endtime='3.30 PM' where name='SERILINGAMPALLY';
+update branches set starttime='9.00 AM',endtime='3.00 PM' where name='TARNAKA';
+update branches set starttime='9.30 AM',endtime='3.30 PM' where name='TOLICHOWKI';
+update branches set starttime='9.30 AM',endtime='3.30 PM' where name='VENGALRAONAGAR';
+update branches set starttime='9.00 AM',endtime='3.00 PM' where name='VIDYANAGAR';
+update branches set starttime='10.30 AM',endtime='4.30 PM' where name='VIDYUTHSOUDHA';
+update branches set starttime='9.00 AM',endtime='3.00 PM' where name='NEREDMET';
+update branches set starttime='9.00 AM',endtime='3.00 PM' where name='YOUSUFGUDA';
+update branches set starttime='9.00 AM',endtime='3.00 PM' where name='SUCHITRA';
+update branches set starttime='9.00 AM',endtime='3.00 PM' where name='SAROORNAGAR';
+update branches set starttime='9.00 AM',endtime='3.00 PM' where name='BADANGPET';
+update branches set starttime='9.00 AM',endtime='3.00 PM' where name='MEERPET';
+update branches set starttime='9.00 AM',endtime='3.00 PM' where name='MANSOORABAD';
+
+
+
+CREATE TABLE BranchStaffCount(id int  IDENTITY(1,1) PRIMARY KEY NOT NULL);
+ALTER TABLE BranchStaffCount ADD Branchid int null;
+ALTER TABLE BranchStaffCount ADD Category varchar(50) null;
+ALTER TABLE BranchStaffCount ADD StaffCount [nvarchar](100) NULL;
+ALTER TABLE BranchStaffCount ADD AmountRange decimal(18,4) null;
+
+alter table [dbo].[BranchStaffCount] add [UpdatedBy] [varchar](50) NULL,[UpdatedDate] [datetime] NULL;
+
+ALTER TABLE [dbo].BranchStaffCount  WITH CHECK ADD  CONSTRAINT [FK_BranchStaffCount_BranchId] FOREIGN KEY(BranchId)
+REFERENCES [dbo].branches ([Id]);
+
+
+
+CREATE TABLE [dbo].[Employee_Transfer](
+	[Id] [int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
+	[Type] [varchar](50) NULL,
+	[EmpId] [int] NULL,
+	[OldDesignation] [int] NULL,
+	[NewDesignation] [int] NULL,
+	[OldBranch] [int] NULL,
+	[NewBranch] [int] NULL,
+	[OldDepartment] [int] NULL,
+	[NewDepartment] [int] NULL,
+	[EffectiveFrom] [datetime] NULL,
+	[EffectiveTo] [datetime] NULL);
+
+ALTER TABLE [dbo].[Employee_Transfer]  WITH CHECK ADD  CONSTRAINT [FK_Employee_Transfer_Branches] FOREIGN KEY([NewBranch])
+REFERENCES [dbo].[Branches] ([Id]);
+
+ALTER TABLE [dbo].[Employee_Transfer]  WITH CHECK ADD  CONSTRAINT [FK_Employee_Transfer_Branches_OldDe] FOREIGN KEY([OldBranch])
+REFERENCES [dbo].[Branches] ([Id]);
+
+ALTER TABLE [dbo].[Employee_Transfer]  WITH CHECK ADD  CONSTRAINT [FK_Employee_Transfer_Departments] FOREIGN KEY([NewDepartment])REFERENCES [dbo].[Departments] ([Id]);
+
+ALTER TABLE [dbo].[Employee_Transfer]  WITH CHECK ADD  CONSTRAINT [FK_Employee_Transfer_Departments_Old] FOREIGN KEY([OldDepartment])REFERENCES [dbo].[Departments] ([Id]);
+
+ALTER TABLE [dbo].[Employee_Transfer]  WITH CHECK ADD  CONSTRAINT [FK_Employee_Transfer_Designations] FOREIGN KEY([NewDesignation])REFERENCES [dbo].[Designations] ([Id]);
+
+ALTER TABLE [dbo].[Employee_Transfer]  WITH CHECK ADD  CONSTRAINT [FK_Employee_Transfer_Designations_Old] FOREIGN KEY([OldDesignation])REFERENCES [dbo].[Designations] ([Id]);
+
+ALTER TABLE [dbo].[Employee_Transfer]  WITH CHECK ADD  CONSTRAINT [FK_Employee_Transfer_Designations_OldD] FOREIGN KEY([OldDesignation])REFERENCES [dbo].[Designations] ([Id]);
+
+ALTER TABLE [dbo].[Employee_Transfer]  WITH CHECK ADD  CONSTRAINT [FK_Employee_Transfer_Employees] FOREIGN KEY([EmpId])
+REFERENCES [dbo].[Employees] ([Id]);
+
+create table OD_Master(Id int identity(1,1) primary key not null,ODType varchar(50) null);
+alter table OD_Master add  UpdatedBy varchar(50) null,UpdatedDate datetime null;
+
+
+CREATE TABLE [dbo].[OD_OtherDuty](
+	[Id] [int] IDENTITY(1,1) primary key NOT NULL,
+	[EmpId] [int] NULL,
+	[ControllingAuthority] [int] NULL,
+	[SanctioningAuthority] [int] NULL,
+	[VistorFrom] [int] NULL,
+	[VistorTo] [varchar](500) NULL,
+	[StartDate] [datetime] NULL,
+	[EndDate] [datetime] NULL,
+	[Purpose] [int]  NULL,
+	[Description] [varchar](500) null,
+	[UpdatedBy] [varchar](150) NULL,
+	[UpdatedDate] [datetime] NULL,
+	[Status] [varchar](50) NULL);
+alter table OD_OtherDuty add constraint FK_OD_OtherDuty_EmpId foreign key (Empid) references employees(id);
+alter table OD_OtherDuty add constraint FK_OD_OtherDuty_controllingauthority foreign key (controllingauthority) references employees(id);
+alter table OD_OtherDuty add constraint FK_OD_OtherDuty_sanctioningauthority foreign key (sanctioningauthority) references employees(id);
+alter table OD_OtherDuty add constraint FK_OD_OtherDuty_VistorFrom foreign key (VistorFrom) references branches(id);
+alter table OD_OtherDuty add constraint FK_OD_OtherDuty_Purpose foreign key (Purpose) references OD_Master(id);
+
+
+alter table Leaves add LeaveTimeStamp datetime null;
+update leaves set LeaveTimeStamp=updateddate;
+
+
+

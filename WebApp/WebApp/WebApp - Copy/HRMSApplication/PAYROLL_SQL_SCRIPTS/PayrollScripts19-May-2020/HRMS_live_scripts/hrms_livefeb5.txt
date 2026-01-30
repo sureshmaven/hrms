@@ -1,0 +1,53 @@
+985
+30 days delete 
+
+899
+debit 30pl encahment for year 2019-20
+(apply)
+
+
+998
+ nartionn 2019-20
+ 
+ 
+ 709
+  nartionn 2019-20
+  
+ --------------------------------------------------------------------------------------------------------------------
+
+ 
+  select * from Leaves_CreditDebit where empid in (select id from employees where empid in (899)) and year=2020 and type='Debit';
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=899),3,	0	,	30	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=899) 
+and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2019-20',
+(select ShortName from Employees where empid=899),
+(select Department from Employees where empid=899),
+(select Branch from Employees where empid=899),
+(select CurrentDesignation from Employees where empid=899),'Debit',
+(select branch_value1 from employees where empid=899),((select (leavebalance-30) from 
+EmpLeaveBalance where EmpId=(select id from employees where empid=899) 
+and LeaveTypeId=3 and year=2020)),2020);
+
+update  EmpLeaveBalance set leavebalance=(leavebalance-	30)  
+where empid=(select id from employees where empid=	899	) and LeaveTypeId=3 and year=2020;
+
+-----------------------------------------------------------------------------------------------------------------------
+
+select * from Leaves_CreditDebit where empid in (select id from employees where empid in (985)) and year=2020 and type='Debit' and Comments='PL Encashment for the year 2019-20';
+--delete from Leaves_CreditDebit where empid in (select id from employees where empid in (985)) and year=2020 and type='Debit' and Comments='PL Encashment for the year 2019-20';
+
+-----------------------------------------------------------------------------------------------------------------------
+
+select * from Leaves_CreditDebit where empid in (select id from employees where empid in (998)) and year=2020 and type='Debit';
+--update Leaves_CreditDebit set Comments='PL Encashment for the year 2019-20' where empid in (select id from employees where empid in (998)) and year=2020 and type='Debit';
+
+-----------------------------------------------------------------------------------------------------------------------
+
+select * from Leaves_CreditDebit where empid in (select id from employees where empid in (709)) and year=2020 and type='Debit';
+--update Leaves_CreditDebit set Comments='PL Encashment for the year 2020' where empid in (select id from employees where empid in (709)) and year=2020 and type='Debit';

@@ -1,0 +1,55 @@
+--Sri J Kalyan, Staff Assistant, Code 948 applied
+--Paternity leave from 03.05.2020 to 17.05.2020. 
+
+declare @Empid int;
+declare @Leavetypeid int;
+declare @StartDate Date;
+declare @EndDate Date;
+declare @UpdatedBy_EmployeeId int;
+declare @Status varchar(10);
+declare @LeaveDays int;
+declare @TotalDays int;
+declare @MaternityType varchar(10);
+declare @pre_leave_balance int;
+
+
+set @Empid=948;
+set @Leavetypeid=5;
+set @StartDate='2020-05-03';
+set @EndDate='2020-05-17';
+set @UpdatedBy_EmployeeId=123456;
+set @Status='Pending';
+set @LeaveDays=15;
+set @TotalDays=15;
+set @MaternityType='';
+set @pre_leave_balance=((select leavebalance from EmpLeaveBalance where empid =
+(select id from employees where empid=948) and leavetypeid=5 and year=2020));
+
+
+INSERT INTO [dbo].[Leaves]([EmpId],[ControllingAuthority],[SanctioningAuthority],[LeaveType],[StartDate],[EndDate],[Subject],[Reason],
+[UpdatedBy],[UpdatedDate],[Status],[LeaveDays],[TotalDays],[LeaveTimeStamp],[LeavesYear],[Stage],[CancelReason],[MaternityType],
+[BranchId],[DepartmentId],[DesignationId],[leave_balance]) 
+VALUES((select id from employees where empid=@empid),
+(select ControllingAuthority from employees where empid=@empid),
+(select SanctioningAuthority from employees where empid=@empid),
+@Leavetypeid,@StartDate,@EndDate,'Leave Applied','Leave Applied Manually',
+@UpdatedBy_EmployeeId,GETDATE(),@Status,@LeaveDays,@TotalDays,GETDATE(),2020,'','',
+@MaternityType,(select Branch from employees where empid=@empid),
+(select Department from employees where empid=@empid),
+(select CurrentDesignation from employees where empid=@empid),@pre_leave_balance);
+
+
+------- To update Leavebalances
+
+declare @Empid int;
+declare @LeaveTypeId int;
+declare @LeaveBalance int;
+
+set @Empid=948;
+set @LeaveTypeId=5;
+set @Leavebalance=((select leavebalance from EmpLeaveBalance where empid =
+(select id from employees where empid=948) and leavetypeid=5 and year=2020)-15);
+
+update EmpLeaveBalance set LeaveBalance=@Leavebalance where LeaveTypeId=@LeaveTypeId and empid=
+(select id from employees where empid=@Empid) and year=2020;
+

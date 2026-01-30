@@ -1,0 +1,29 @@
+insert into employee_transfer values('TemporaryTransfer',45,8,7,(select id from branches where name='VIDYANAGAR'),(select id from branches where name='BOUDHANAGAR'),46,46,'2018-06-07','2018-06-08','TemporaryTransfer',223,'2018-06-06');
+insert into employee_transfer values('TemporaryTransfer',464,8,8,(select id from branches where name='CHANDANAGAR'),(select id from branches where name='KUKATPALLY'),46,46,'2018-06-08','2018-06-08','TemporaryTransfer',223,'2018-06-08');
+insert into employee_transfer values('TemporaryTransfer',177,7,7,(select id from branches where name='AMBERPET'),(select id from branches where name='UPPAL'),46,46,'2018-06-13','2018-06-13','TemporaryTransfer',223,'2018-06-12');
+insert into employee_transfer values('TemporaryTransfer',278,9,6,(select id from branches where name='HeadOffice'),(select id from branches where name='UPPAL'),46,46,'2018-06-15','2018-06-15','TemporaryTransfer',223,'2018-06-15');
+insert into employee_transfer values('TemporaryTransfer',284,11,7,(select id from branches where name='HeadOffice'),(select id from branches where name='SAROORNAGAR'),46,46,'2018-06-18','2018-06-30','TemporaryTransfer',223,'2018-06-15');
+insert into employee_transfer values('TemporaryTransfer',174,7,7,(select id from branches where name='BAGHLINGAMPALLY'),(select id from branches where name='DILSUKHNAGAR'),46,46,'2018-06-18','2018-06-19','TemporaryTransfer',223,'2018-06-15');
+insert into employee_transfer values('TemporaryTransfer',29,8,7,(select id from branches where name='OtherBranch'),(select id from branches where name='NARAYANAGUDA'),(select id from departments where name='BKG/CASH/HO'),(select id from departments where name='OtherDepartment'),'2018-06-18','2018-06-19','TemporaryTransfer',223,'2018-06-18');
+
+update employees set branch=(select id from branches where name='VIDYANAGAR'),
+Branch_Value1=43,branch_value_2=2 where empid=702;
+update employees set branch=(select id from branches where name='CHANDANAGAR'),
+Branch_Value1=43,branch_value_2=2 where empid=6376;
+update employees set branch=(select id from branches where name='AMBERPET'),
+Branch_Value1=43,branch_value_2=2 where empid=988;
+update employees set branch=(select id from branches where name='HeadOffice'),
+Branch_Value1=43,branch_value_2=2 where empid=5660;
+update Employee_Transfer set EffectiveTo='2018-06-07' where id=174;
+
+update employees set branch=(select id from branches where name='HeadOffice'),
+Branch_Value1=43,branch_value_2=2 where empid=5770;
+
+update employees set branch=(select id from branches where name='BAGHLINGAMPALLY'),
+Branch_Value1=43,branch_value_2=2 where empid=986;
+
+update employees set branch=(select id from branches where name='OtherBranch'),department=(select id from departments where name='BKG/CASH/HO'),
+Branch_Value1=42,branch_value_2=1 where empid=827;
+
+insert into DB_Script(DT_Time,Type,FileName) values(Getdate(),'DDL-DML','19062018.SQL');
+

@@ -1,0 +1,1 @@
+sp_rename 'pr_emp_loans_ledger', 'pr_emp_loans_projection';

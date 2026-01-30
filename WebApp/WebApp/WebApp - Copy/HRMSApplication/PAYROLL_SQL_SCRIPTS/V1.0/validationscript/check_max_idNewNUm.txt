@@ -1,0 +1,161 @@
+-- New Num table updates
+select last_num pr_allowance_field_master from new_num where table_name = 'pr_allowance_field_master'; select max(id) pr_allowance_field_master from pr_allowance_field_master
+select last_num pr_basic_anual_incr_master from new_num where table_name = 'pr_basic_anual_incr_master';  select max(id) pr_basic_anual_incr_master from pr_basic_anual_incr_master
+select last_num pr_basic_stag_incr_master from new_num where table_name = 'pr_basic_stag_incr_master'; select max(id) pr_basic_stag_incr_master from pr_basic_stag_incr_master
+select last_num pr_branch_allowance_master from new_num where table_name = 'pr_branch_allowance_master'; select max(id) from pr_branch_allowance_master pr_branch_allowance_master
+select last_num pr_contribution_field_master from new_num where table_name = 'pr_contribution_field_master'; select max(id) pr_contribution_field_master from pr_contribution_field_master
+select last_num pr_deduction_field_master from new_num where table_name = 'pr_deduction_field_master'; select max(id) pr_deduction_field_master from pr_deduction_field_master
+select last_num pr_earn_field_master from new_num where table_name = 'pr_earn_field_master'; select max(id) pr_earn_field_master from pr_earn_field_master
+select last_num pr_emp_adhoc_contribution_field from new_num where table_name = 'pr_emp_adhoc_contribution_field'; select max(id) pr_emp_adhoc_contribution_field from pr_emp_adhoc_contribution_field
+select last_num pr_emp_adhoc_deduction_field from new_num where table_name = 'pr_emp_adhoc_deduction_field'; select max(id) pr_emp_adhoc_deduction_field from pr_emp_adhoc_deduction_field
+select last_num pr_emp_adhoc_det_field from new_num where table_name = 'pr_emp_adhoc_det_field'; select max(id) pr_emp_adhoc_det_field from pr_emp_adhoc_det_field
+select last_num pr_emp_adhoc_earn_field from new_num where table_name = 'pr_emp_adhoc_earn_field'; select max(id) pr_emp_adhoc_earn_field from pr_emp_adhoc_earn_field
+select last_num pr_emp_adj_contribution_field from new_num where table_name = 'pr_emp_adj_contribution_field'; select max(id) pr_emp_adj_contribution_field from pr_emp_adj_contribution_field
+select last_num pr_emp_adj_deduction_field from new_num where table_name = 'pr_emp_adj_deduction_field'; select max(id) pr_emp_adj_deduction_field from pr_emp_adj_deduction_field
+select last_num pr_emp_adj_earn_field from new_num where table_name = 'pr_emp_adj_earn_field'; select max(id) pr_emp_adj_earn_field from pr_emp_adj_earn_field
+select last_num pr_emp_adv_loan_type from new_num where table_name = 'pr_emp_adv_loan_type'; select max(id) pr_emp_adv_loan_type from pr_emp_adv_loan_type
+select last_num pr_emp_adv_loans from new_num where table_name = 'pr_emp_adv_loans'; select max(id) pr_emp_adv_loans from pr_emp_adv_loans
+select last_num pr_emp_adv_loans_adjustments from new_num where table_name = 'pr_emp_adv_loans_adjustments'; select max(id) pr_emp_adv_loans_adjustments from pr_emp_adv_loans_adjustments
+select last_num pr_emp_adv_loans_adjustments_bef_monthend from new_num where table_name = 'pr_emp_adv_loans_adjustments_bef_monthend'; select max(id) pr_emp_adv_loans_adjustments_bef_monthend from pr_emp_adv_loans_adjustments_bef_monthend
+select last_num pr_emp_adv_loans_bef_monthend from new_num where table_name = 'pr_emp_adv_loans_bef_monthend'; select max(id) pr_emp_adv_loans_bef_monthend from pr_emp_adv_loans_bef_monthend
+select last_num pr_emp_adv_loans_child from new_num where table_name = 'pr_emp_adv_loans_child'; select max(id) pr_emp_adv_loans_child from pr_emp_adv_loans_child
+select last_num pr_emp_adv_loans_child_bef_monthend from new_num where table_name = 'pr_emp_adv_loans_child_bef_monthend';select max(id) pr_emp_adv_loans_child_bef_monthend from pr_emp_adv_loans_child_bef_monthend
+select last_num pr_emp_allowance_process from new_num where table_name = 'pr_emp_allowance_process'; select max(id) pr_emp_allowance_process from pr_emp_allowance_process
+select last_num pr_emp_allowances from new_num where table_name = 'pr_emp_allowances'; select max(id) pr_emp_allowances from pr_emp_allowances
+select last_num pr_emp_allowances_gen from new_num where table_name = 'pr_emp_allowances_gen'; select max(id) pr_emp_allowances_gen from pr_emp_allowances_gen
+select last_num pr_emp_allowances_spl from new_num where table_name = 'pr_emp_allowances_spl';select max(id) pr_emp_allowances_spl from pr_emp_allowances_spl
+select last_num pr_emp_branch_allowances from new_num where table_name = 'pr_emp_branch_allowances'; select max(id) pr_emp_branch_allowances from pr_emp_branch_allowances
+select last_num pr_emp_categories from new_num where table_name = 'pr_emp_categories'; select max(id) pr_emp_categories from pr_emp_categories
+select last_num pr_emp_deductions from new_num where table_name = 'pr_emp_deductions'; select max(id) pr_emp_deductions from pr_emp_deductions
+select last_num pr_emp_deput_contribution_field from new_num where table_name = 'pr_emp_deput_contribution_field';select max(id) pr_emp_deput_contribution_field from pr_emp_deput_contribution_field
+select last_num pr_emp_deput_deduction_field from new_num where table_name = 'pr_emp_deput_deduction_field'; select max(id) pr_emp_deput_deduction_field from pr_emp_deput_deduction_field
+select last_num pr_emp_deput_det_field from new_num where table_name = 'pr_emp_deput_det_field'; select max(id) pr_emp_deput_det_field from pr_emp_deput_det_field
+select last_num pr_emp_designation from new_num where table_name = 'pr_emp_designation'; select max(id) pr_emp_designation from pr_emp_designation
+select last_num pr_emp_epf_deduction_field from new_num where table_name = 'pr_emp_epf_deduction_field'; select max(id) pr_emp_epf_deduction_field from pr_emp_epf_deduction_field
+select last_num pr_emp_epf_earn_field from new_num where table_name = 'pr_emp_epf_earn_field';select max(id) pr_emp_epf_earn_field from pr_emp_epf_earn_field
+select last_num pr_emp_hfc_details from new_num where table_name = 'pr_emp_hfc_details';select max(id) pr_emp_hfc_details from pr_emp_hfc_details
+select last_num pr_emp_inc_anual_stag from new_num where table_name = 'pr_emp_inc_anual_stag'; select max(id) pr_emp_inc_anual_stag from pr_emp_inc_anual_stag
+select last_num pr_emp_inc_date_change from new_num where table_name = 'pr_emp_inc_date_change'; select max(id) pr_emp_inc_date_change from pr_emp_inc_date_change
+select last_num pr_emp_incometax_12b from new_num where table_name = 'pr_emp_incometax_12b'; select max(id) pr_emp_incometax_12b from pr_emp_incometax_12b
+select last_num pr_emp_incometax_12ba from new_num where table_name = 'pr_emp_incometax_12ba'; select max(id) pr_emp_incometax_12ba from pr_emp_incometax_12ba
+select last_num pr_emp_incometax_12ba_master from new_num where table_name = 'pr_emp_incometax_12ba_master'; select max(id) pr_emp_incometax_12ba_master from pr_emp_incometax_12ba_master
+select last_num pr_emp_jaib_caib_general from new_num where table_name = 'pr_emp_jaib_caib_general';select max(id) pr_emp_jaib_caib_general from pr_emp_jaib_caib_general
+select last_num pr_emp_lic_details from new_num where table_name = 'pr_emp_lic_details'; select max(id) pr_emp_lic_details from pr_emp_lic_details
+select last_num pr_emp_loans_projection from new_num where table_name = 'pr_emp_loans_projection';select max(id) pr_emp_loans_projection from pr_emp_loans_projection
+select last_num pr_emp_other_tds_deductions from new_num where table_name = 'pr_emp_other_tds_deductions';select max(id) pr_emp_other_tds_deductions from pr_emp_other_tds_deductions
+select last_num pr_emp_pay_field from new_num where table_name = 'pr_emp_pay_field'; select max(id) pr_emp_pay_field from pr_emp_pay_field
+select last_num pr_emp_payslip from new_num where table_name = 'pr_emp_payslip';select max(id) pr_emp_payslip from pr_emp_payslip
+select last_num pr_emp_payslip_allowance from new_num where table_name = 'pr_emp_payslip_allowance';select max(id) pr_emp_payslip_allowance from pr_emp_payslip_allowance
+select last_num pr_emp_payslip_deductions from new_num where table_name = 'pr_emp_payslip_deductions';select max(id) pr_emp_payslip_deductions from pr_emp_payslip_deductions
+select last_num pr_emp_payslip_netSalary from new_num where table_name = 'pr_emp_payslip_netSalary';select max(id) pr_emp_payslip_netSalary from pr_emp_payslip_netSalary
+select last_num pr_emp_perdeductions from new_num where table_name = 'pr_emp_perdeductions';select  max(id) pr_emp_perdeductions from pr_emp_perdeductions
+select last_num pr_emp_perearning from new_num where table_name = 'pr_emp_perearning';select max(id) pr_emp_perearning from pr_emp_perearning
+select last_num pr_emp_pf_non_cert_elg from new_num where table_name = 'pr_emp_pf_non_cert_elg';select max(id) pr_emp_pf_non_cert_elg from pr_emp_pf_non_cert_elg
+select last_num pr_emp_pf_nonrepayable_loan from new_num where table_name = 'pr_emp_pf_nonrepayable_loan';select max(id) pr_emp_pf_nonrepayable_loan from pr_emp_pf_nonrepayable_loan
+select last_num pr_emp_pf_repayable_loan from new_num where table_name = 'pr_emp_pf_repayable_loan';select max(id) pr_emp_pf_repayable_loan from pr_emp_pf_repayable_loan
+select last_num pr_emp_promotion from new_num where table_name = 'pr_emp_promotion';select max(id) pr_emp_promotion from pr_emp_promotion
+select last_num pr_emp_rent_details from new_num where table_name = 'pr_emp_rent_details';select max(id) pr_emp_rent_details from pr_emp_rent_details
+select last_num pr_emp_tds_process from new_num where table_name = 'pr_emp_tds_process';select max(id) pr_emp_tds_process from pr_emp_tds_process
+select last_num pr_emp_tds_process_allowances from new_num where table_name = 'pr_emp_tds_process_allowances';select max(id) pr_emp_tds_process_allowances from pr_emp_tds_process_allowances
+select last_num pr_emp_tds_section_deductions from new_num where table_name = 'pr_emp_tds_section_deductions';select max(id) pr_emp_tds_section_deductions from pr_emp_tds_section_deductions
+select last_num pr_encashment_deductions_customization from new_num where table_name = 'pr_encashment_deductions_customization'; select max(id) pr_encashment_deductions_customization from pr_encashment_deductions_customization
+select last_num pr_encashment_earnings_customization from new_num where table_name = 'pr_encashment_earnings_customization'; select max(id) pr_encashment_earnings_customization from pr_encashment_earnings_customization
+select last_num pr_form16_codes from new_num where table_name = 'pr_form16_codes';select max(id) pr_form16_codes from pr_form16_codes
+select last_num pr_incometax_bank_payment from new_num where table_name = 'pr_incometax_bank_payment';select max(id) pr_incometax_bank_payment from pr_incometax_bank_payment
+select last_num pr_list_of_documents_master from new_num where table_name = 'pr_list_of_documents_master';select max(id) pr_list_of_documents_master from pr_list_of_documents_master
+select last_num pr_loan_master from new_num where table_name = 'pr_loan_master';select max(id) pr_loan_master from pr_loan_master
+select last_num pr_month_attendance from new_num where table_name = 'pr_month_attendance';select max(id) pr_month_attendance from pr_month_attendance
+select last_num pr_month_details from new_num where table_name = 'pr_month_details';select max(id) pr_month_details from pr_month_details
+select last_num pr_ob_share from new_num where table_name = 'pr_ob_share';select max(id) pr_ob_share from pr_ob_share
+select last_num pr_ob_share_adhoc from new_num where table_name = 'pr_ob_share_adhoc';select max(id) pr_ob_share_adhoc from pr_ob_share_adhoc
+select last_num pr_ob_share_encashment from new_num where table_name = 'pr_ob_share_encashment';select max(id) pr_ob_share_encashment from pr_ob_share_encashment
+select last_num pr_payroll_service_run from new_num where table_name = 'pr_payroll_service_run';select max(id) pr_payroll_service_run from pr_payroll_service_run 
+select last_num pr_payslip_customization from new_num where table_name = 'pr_payslip_customization';select max(id) pr_payslip_customization from pr_payslip_customization
+select last_num pr_pf_nominee from new_num where table_name = 'pr_pf_nominee';select max(id) pr_pf_nominee from pr_pf_nominee
+select last_num pr_purpose_of_advance_master from new_num where table_name = 'pr_purpose_of_advance_master';select max(id) pr_purpose_of_advance_master from pr_purpose_of_advance_master
+select last_num pr_rentdetails_master from new_num where table_name = 'pr_rentdetails_master';select max(id) pr_rentdetails_master from pr_rentdetails_master
+select last_num transaction_tbl from new_num where table_name = 'transaction_tbl';select max(trans_id) transaction_tbl from transaction_tbl
+
+
+
+
+
+
+-- New Num table updates
+update new_num set last_num=(select max(id) from pr_allowance_field_master )where table_name = 'pr_allowance_field_master';
+update new_num set last_num=(select max(id) from pr_basic_anual_incr_master )where table_name = 'pr_basic_anual_incr_master';
+update new_num set last_num=(select max(id) from pr_basic_stag_incr_master )where table_name = 'pr_basic_stag_incr_master';
+update new_num set last_num=(select max(id) from pr_branch_allowance_master )where table_name = 'pr_branch_allowance_master';
+update new_num set last_num=(select max(id) from pr_contribution_field_master )where table_name = 'pr_contribution_field_master';
+update new_num set last_num=(select max(id) from pr_deduction_field_master )where table_name = 'pr_deduction_field_master';
+update new_num set last_num=(select max(id) from pr_earn_field_master )where table_name = 'pr_earn_field_master';
+update new_num set last_num=(select max(id) from pr_emp_adhoc_contribution_field )where table_name = 'pr_emp_adhoc_contribution_field';
+update new_num set last_num=(select max(id) from pr_emp_adhoc_deduction_field )where table_name = 'pr_emp_adhoc_deduction_field';
+update new_num set last_num=(select max(id) from pr_emp_adhoc_det_field )where table_name = 'pr_emp_adhoc_det_field';
+update new_num set last_num=(select max(id) from pr_emp_adhoc_earn_field )where table_name = 'pr_emp_adhoc_earn_field';
+update new_num set last_num=(select max(id) from pr_emp_adj_contribution_field )where table_name = 'pr_emp_adj_contribution_field';
+update new_num set last_num=(select max(id) from pr_emp_adj_deduction_field )where table_name = 'pr_emp_adj_deduction_field';
+update new_num set last_num=(select max(id) from pr_emp_adj_earn_field )where table_name = 'pr_emp_adj_earn_field';
+update new_num set last_num=(select max(id) from pr_emp_adv_loan_type )where table_name = 'pr_emp_adv_loan_type';
+update new_num set last_num=(select max(id) from pr_emp_adv_loans )where table_name = 'pr_emp_adv_loans';
+update new_num set last_num=(select max(id) from pr_emp_adv_loans_adjustments )where table_name = 'pr_emp_adv_loans_adjustments';
+update new_num set last_num=(select max(id) from pr_emp_adv_loans_adjustments_bef_monthend )where table_name = 'pr_emp_adv_loans_adjustments_bef_monthend';
+update new_num set last_num=(select max(id) from pr_emp_adv_loans_bef_monthend )where table_name = 'pr_emp_adv_loans_bef_monthend';
+update new_num set last_num=(select max(id) from pr_emp_adv_loans_child )where table_name = 'pr_emp_adv_loans_child';
+update new_num set last_num=(select max(id) from pr_emp_adv_loans_child_bef_monthend )where table_name = 'pr_emp_adv_loans_child_bef_monthend';
+update new_num set last_num=(select max(id) from pr_emp_allowance_process )where table_name = 'pr_emp_allowance_process';
+update new_num set last_num=(select max(id) from pr_emp_allowances )where table_name = 'pr_emp_allowances';
+update new_num set last_num=(select max(id) from pr_emp_allowances_gen )where table_name = 'pr_emp_allowances_gen';
+update new_num set last_num=(select max(id) from pr_emp_allowances_spl )where table_name = 'pr_emp_allowances_spl';
+update new_num set last_num=(select max(id) from pr_emp_branch_allowances )where table_name = 'pr_emp_branch_allowances';
+update new_num set last_num=(select max(id) from pr_emp_categories )where table_name = 'pr_emp_categories';
+update new_num set last_num=(select max(id) from pr_emp_deductions )where table_name = 'pr_emp_deductions';
+update new_num set last_num=(select max(id) from pr_emp_deput_contribution_field )where table_name = 'pr_emp_deput_contribution_field';
+update new_num set last_num=(select max(id) from pr_emp_deput_deduction_field )where table_name = 'pr_emp_deput_deduction_field';
+update new_num set last_num=(select max(id) from pr_emp_deput_det_field )where table_name = 'pr_emp_deput_det_field';
+update new_num set last_num=(select max(id) from pr_emp_designation )where table_name = 'pr_emp_designation';
+update new_num set last_num=(select max(id) from pr_emp_epf_deduction_field )where table_name = 'pr_emp_epf_deduction_field';
+update new_num set last_num=(select max(id) from pr_emp_epf_earn_field )where table_name = 'pr_emp_epf_earn_field';
+update new_num set last_num=(select max(id) from pr_emp_hfc_details )where table_name = 'pr_emp_hfc_details';
+update new_num set last_num=(select max(id) from pr_emp_inc_anual_stag )where table_name = 'pr_emp_inc_anual_stag';
+update new_num set last_num=(select max(id) from pr_emp_inc_date_change )where table_name = 'pr_emp_inc_date_change';
+update new_num set last_num=(select max(id) from pr_emp_incometax_12b )where table_name = 'pr_emp_incometax_12b';
+update new_num set last_num=(select max(id) from pr_emp_incometax_12ba )where table_name = 'pr_emp_incometax_12ba';
+update new_num set last_num=(select max(id) from pr_emp_incometax_12ba_master )where table_name = 'pr_emp_incometax_12ba_master';
+update new_num set last_num=(select max(id) from pr_emp_jaib_caib_general )where table_name = 'pr_emp_jaib_caib_general';
+update new_num set last_num=(select max(id) from pr_emp_lic_details )where table_name = 'pr_emp_lic_details';
+update new_num set last_num=(select max(id) from pr_emp_loans_projection )where table_name = 'pr_emp_loans_projection';
+update new_num set last_num=(select max(id) from pr_emp_other_tds_deductions )where table_name = 'pr_emp_other_tds_deductions';
+update new_num set last_num=(select max(id) from pr_emp_pay_field )where table_name = 'pr_emp_pay_field';
+update new_num set last_num=(select max(id) from pr_emp_payslip )where table_name = 'pr_emp_payslip';
+update new_num set last_num=(select max(id) from pr_emp_payslip_allowance )where table_name = 'pr_emp_payslip_allowance';
+update new_num set last_num=(select max(id) from pr_emp_payslip_deductions )where table_name = 'pr_emp_payslip_deductions';
+update new_num set last_num=(select max(id) from pr_emp_payslip_netSalary )where table_name = 'pr_emp_payslip_netSalary';
+update new_num set last_num=(select max(id) from pr_emp_perdeductions )where table_name = 'pr_emp_perdeductions';
+update new_num set last_num=(select max(id) from pr_emp_perearning )where table_name = 'pr_emp_perearning';
+update new_num set last_num=(select max(id) from pr_emp_pf_non_cert_elg )where table_name = 'pr_emp_pf_non_cert_elg';
+update new_num set last_num=(select max(id) from pr_emp_pf_nonrepayable_loan )where table_name = 'pr_emp_pf_nonrepayable_loan';
+update new_num set last_num=(select max(id) from pr_emp_pf_repayable_loan )where table_name = 'pr_emp_pf_repayable_loan';
+update new_num set last_num=(select max(id) from pr_emp_promotion )where table_name = 'pr_emp_promotion';
+update new_num set last_num=(select max(id) from pr_emp_rent_details )where table_name = 'pr_emp_rent_details';
+update new_num set last_num=(select max(id) from pr_emp_tds_process )where table_name = 'pr_emp_tds_process';
+update new_num set last_num=(select max(id) from pr_emp_tds_process_allowances )where table_name = 'pr_emp_tds_process_allowances';
+update new_num set last_num=(select max(id) from pr_emp_tds_section_deductions )where table_name = 'pr_emp_tds_section_deductions';
+update new_num set last_num=(select max(id) from pr_encashment_deductions_customization )where table_name = 'pr_encashment_deductions_customization';
+update new_num set last_num=(select max(id) from pr_encashment_earnings_customization )where table_name = 'pr_encashment_earnings_customization';
+update new_num set last_num=(select max(id) from pr_form16_codes )where table_name = 'pr_form16_codes';
+update new_num set last_num=(select max(id) from pr_incometax_bank_payment )where table_name = 'pr_incometax_bank_payment';
+update new_num set last_num=(select max(id) from pr_list_of_documents_master )where table_name = 'pr_list_of_documents_master';
+update new_num set last_num=(select max(id) from pr_loan_master )where table_name = 'pr_loan_master';
+update new_num set last_num=(select max(id) from pr_month_attendance )where table_name = 'pr_month_attendance';
+update new_num set last_num=(select max(id) from pr_month_details )where table_name = 'pr_month_details';
+update new_num set last_num=(select max(id) from pr_ob_share )where table_name = 'pr_ob_share';
+update new_num set last_num=(select max(id) from pr_ob_share_adhoc )where table_name = 'pr_ob_share_adhoc';
+update new_num set last_num=(select max(id) from pr_ob_share_encashment )where table_name = 'pr_ob_share_encashment';
+update new_num set last_num=(select max(id) from pr_payroll_service_run )where table_name = 'pr_payroll_service_run';
+update new_num set last_num=(select max(id) from pr_payslip_customization )where table_name = 'pr_payslip_customization';
+update new_num set last_num=(select max(id) from pr_pf_nominee )where table_name = 'pr_pf_nominee';
+update new_num set last_num=(select max(id) from pr_purpose_of_advance_master )where table_name = 'pr_purpose_of_advance_master';
+update new_num set last_num=(select max(id) from pr_rentdetails_master )where table_name = 'pr_rentdetails_master';
+update new_num set last_num=(select max(trans_id) from transaction_tbl )where table_name = 'transaction_tbl';
+

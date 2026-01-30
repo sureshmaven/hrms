@@ -1,0 +1,13 @@
+insert into pr_month_attendance  values((select max(id) from pr_month_attendance)+1,2021,'2021-01-01',(select id from employees where empid =6479),6479,'Regular',NULL,'',0,0,31,1,70622,NULL);
+insert into pr_month_attendance  values((select max(id) from pr_month_attendance)+1,2021,'2021-01-01',(select id from employees where empid=6480),6480,'Regular',NULL,'',0,1,30,1,70622,NULL); 
+insert into pr_month_attendance  values((select max(id) from pr_month_attendance)+1,2021,'2021-01-01',(select id from employees where empid=6481),6481,'Regular',NULL,'',0,0,31,1,70622,NULL); 
+insert into pr_month_attendance  values((select max(id) from pr_month_attendance)+1,2021,'2021-01-01',(select id from employees where empid=6482),6482,'Regular',NULL,'',0,0,31,1,70622,NULL); 
+
+insert into pr_month_attendance  values((select max(id) from pr_month_attendance)+1,2021,'2021-01-01',(select id from employees where empid=6482),6483,'Regular',NULL,'',0,0,31,1,70622,NULL);
+
+
+====================================================================
+
+update pr_month_attendance set status='Regular' where emp_code in (730,980) and fm ='2021-01-01';
+update pr_month_attendance set status='StopSalary' where emp_code in (6376) and fm ='2021-01-01';
+update Employees set RetirementDate = '2020-12-21 00:00:00.000' where EmpId=6431

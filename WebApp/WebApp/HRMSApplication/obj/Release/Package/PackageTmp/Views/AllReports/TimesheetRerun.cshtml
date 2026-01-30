@@ -1,0 +1,793 @@
+﻿@model Entities.view_employee
+
+@{
+    Layout = "~/Views/Shared/_ReportsLayout.cshtml";
+    var rolepages = TempData["RolePages"].ToString();
+    ViewBag.RolePages = TempData["RolePages"];
+    var reportTitle = ViewBag.ReportTitle;
+    var ReportPdfSize = ViewBag.PdfSize;
+    var ReportpageSize = ViewBag.pageSize;
+    var PdfExportColumns = ViewBag.ExportColumns;
+    var dataUrl = ViewBag.DataUrl;
+    var reportFilters = ViewBag.ReportFilters;
+    var searchBtn = ViewBag.SearchBtn;
+    var label = ViewBag.DdlOneLabel;
+    var roles = ViewBag.Role;
+
+}
+   
+
+<link href="~/Assets/css/report-style.css" rel="stylesheet" />
+<style>
+    div#grid_filter {
+    display: none;
+}
+    .leave_acc_table {
+    border: 1px solid #3c8dbc;
+    padding: 10px;
+    margin: 10px 0;
+}
+    #pdfprint h1 {
+    text-align: center;
+
+}
+
+</style>
+@{
+    var message = TempData["AlertMessage"] ?? string.Empty;
+}
+
+<script type="text/javascript">
+
+    var message = '@message';
+    if (message) alert(message);
+</script>
+<div  class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade in active">
+                    <div class="page_st">
+                        <div class="page">
+                            <div class="col-md-12 col-sm-12 ">
+                                <div id="heading" class="main_heading">
+                                    <h1>Report List </h1>
+                                    <div>
+                                        @{Html.RenderPartial("_PartialViewForMenu");}
+                                    </div>
+                                </div>
+                                <div class="main_heading">
+                                    <h1>@reportTitle</h1>
+                                    <br />
+
+                                    @if (reportFilters.Contains("timesheetreports"))
+                                    {
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label label_left">Branch</label>
+                                                <div class="col-sm-8">
+                                                    @Html.DropDownList("BranchName", ViewBag.Branchess as SelectList, "All", new { @class = "form-control", id = "BranchName" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-5 col-sm-4 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="col-sm-5 control-label p0">Select Month and Year:</label>
+                                                <div class="col-sm-5 date input-group p0" id="monthyear">
+                                                    <input type="text" class="form-control form-control-1 input-sm from fromFudis" placeholder="Select-Month" id="monthyearvalue">
+                                                    <span class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-1">
+                                            <button class="btn btn-primary btn-sm pull-right" id="earlydeptSrch">Search</button>
+                                        </div>
+                                    }
+
+                                    <div class="col-md-12">
+                                        <div class="">
+                                           
+                                            <div class="clearfix"></div>
+                                            <div class="table-responsive">
+                                                <table id="grid" class="display reports-grids" cellspacing="0" width="100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Month Year</th>
+                                                            <th>BranchName</th>
+                                                           
+                                                            
+                                                          
+                                                            <th>D1</th>
+                                                            <th>D2</th>
+                                                            <th>D3</th>
+                                                            <th>D4</th>
+                                                            <th>D5</th>
+                                                            <th>D6</th>
+                                                            <th>D7</th>
+                                                            <th>D8</th>
+                                                            <th>D9</th>
+                                                            <th>D10</th>
+                                                            <th>D11</th>
+                                                            <th>D12</th>
+                                                            <th>D13</th>
+                                                            <th>D14</th>
+                                                            <th>D15</th>
+                                                            <th>D16</th>
+                                                            <th>D17</th>
+                                                            <th>D18</th>
+                                                            <th>D19</th>
+                                                            <th>D20</th>
+                                                            <th>D21</th>
+                                                            <th>D22</th>
+                                                            <th>D23</th>
+                                                            <th>D24</th>
+                                                            <th>D25</th>
+                                                            <th>D26</th>
+                                                            <th>D27</th>
+                                                            <th>D28</th>
+                                                            <th>D29</th>
+                                                            <th>D30</th>
+                                                            <th>D31</th>
+                                                           
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <br />
+                                           
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    var reportMsgTop = '';
+
+    var fnMessageTop = function () {
+        return (reportMsgTop == '' ? '' : 'Filters : ' + reportMsgTop);
+    };
+
+    $(document).ready(function () {
+       
+        $.noConflict();
+        var serviceurl = '@dataUrl';
+        serviceurl = serviceurl.replace('&amp;', '&');
+        var Branchname = $("#BranchName").val();
+        var monthyear = $("#monthyearvalue").val();
+      
+
+        var d = new Date();
+
+        var currMonth = d.getMonth();
+        var currYear = d.getFullYear();
+        var startDate = new Date(currYear, currMonth, 1);
+        $(".from").datepicker().datepicker("setDate", startDate);
+        $(".fromFudis").datepicker().datepicker("setDate", startDate);
+
+
+        var table = $('#grid').DataTable({
+            lengthChange: false,
+            scrollX: true,
+            scrollCollapse: true,
+            bSort: false,
+            // "destroy" : true,
+            "ajax": {
+                "url": serviceurl,
+                "type": "GET",
+                "datatype": "json",
+                "dataSrc": ""
+            },
+            //dom: 'Bfrtip',
+
+                      "columns": [
+    { data: "monthyear" },
+     { data: "BranchName" },
+        
+
+          {
+              data: "D1", "render": function (data,type,row)
+              {
+                  
+                  if (data == 0)
+                  {
+                      row.D1 = "1";
+                    
+                      return "<a class='btn btn-info'  style='color:blue;' href='@ViewBag.websiteUrl/AllReports/Insertdata?branch=" + row.BranchName + "&day=" + row.D1 + "&monthyear=" + row.monthyear + "'>Run</a>";
+                      
+                  }
+                  else if (data == 1) {
+                      return '<img src="../Assets/images/Check.png" />';
+                  }
+                  else if (data == 2) {
+                      return "<span style='color:#f3c046;'>Pending</span>";
+                  }
+                  else {
+                      return null;
+                  }
+              }
+          },
+          {
+              data: "D2", "render": function (data, type, row) {
+                  if (data == 0) {
+                      row.D2 = "2";
+                      return "<a class='btn btn-info'  style='color:blue;' href='@ViewBag.websiteUrl/AllReports/Insertdata?branch=" + row.BranchName + "&day=" + row.D2 + "&monthyear=" + row.monthyear + "'>Run</a>";
+                  }
+                  else if (data == 1) {
+                      return '<img src="../Assets/images/Check.png" />';
+                  }
+                  else if (data == 2) {
+                      return "<span style='color:#f3c046;'>Pending</span>";
+                  }
+                  else {
+                      return null;
+                  }
+              }
+          },
+          {
+              data: "D3", "render": function (data, type, row) {
+                  if (data == 0) {
+                      row.D3 = "3";
+                      return "<a class='btn btn-info'  style='color:blue;' href='@ViewBag.websiteUrl/AllReports/Insertdata?branch=" + row.BranchName + "&day=" + row.D3 + "&monthyear=" + row.monthyear + "'>Run</a>";
+                  }
+                  else if (data == 1) {
+                      return '<img src="../Assets/images/Check.png" />';
+                  }
+                  else if (data == 2) {
+                      return "<span style='color:#f3c046;'>Pending</span>";
+                  }
+                  else {
+                      return null;
+                  }
+              }
+          },
+          {
+              data: "D4", "render": function (data, type, row) {
+                  if (data == 0) {
+                      row.D4 = "4";
+                      return "<a class='btn btn-info'  style='color:blue;' href='@ViewBag.websiteUrl/AllReports/Insertdata?branch=" + row.BranchName + "&day=" + row.D4 + "&monthyear=" + row.monthyear + "'>Run</a>";
+                  }
+                  else if (data == 1) {
+                      return '<img src="../Assets/images/Check.png" />';
+                  }
+                  else if (data == 2) {
+                      return "<span style='color:#f3c046;'>Pending</span>";
+                  }
+                  else {
+                      return null;
+                  }
+              }
+          },
+          {
+              data: "D5", "render": function (data, type, row) {
+                  if (data == 0) {
+                      row.D5 = "5";
+                      return "<a class='btn btn-info'  style='color:blue;' href='@ViewBag.websiteUrl/AllReports/Insertdata?branch=" + row.BranchName + "&day=" + row.D5 + "&monthyear=" + row.monthyear + "'>Run</a>";
+                  }
+                  else if (data == 1) {
+                      return '<img src="../Assets/images/Check.png" />';
+                  }
+                  else if (data == 2) {
+                      return "<span style='color:#f3c046;'>Pending</span>";
+                  }
+                  else {
+                      return null;
+                  }
+              }
+          },
+          {
+              data: "D6", "render": function (data, type, row) {
+                  if (data == 0) {
+                      row.D6 = "6";
+                      return "<a class='btn btn-info'  style='color:blue;' href='@ViewBag.websiteUrl/AllReports/Insertdata?branch=" + row.BranchName + "&day=" + row.D6 + "&monthyear=" + row.monthyear + "'>Run</a>";
+                  }
+                  else if (data == 1) {
+                      return '<img src="../Assets/images/Check.png" />';
+                  }
+                  else if (data == 2) {
+                      return "<span style='color:#f3c046;'>Pending</span>";
+                  }
+                  else {
+                      return null;
+                  }
+              }
+          },
+          {
+              data: "D7", "render": function (data, type, row) {
+                  if (data == 0) {
+                      row.D7 = "7";
+                      return "<a class='btn btn-info'  style='color:blue;' href='@ViewBag.websiteUrl/AllReports/Insertdata?branch=" + row.BranchName + "&day=" + row.D7 + "&monthyear=" + row.monthyear + "'>Run</a>";
+                  }
+                  else if (data == 1) {
+                      return '<img src="../Assets/images/Check.png" />';
+                  }
+                  else if (data == 2) {
+                      return "<span style='color:#f3c046;'>Pending</span>";
+                  }
+                  else {
+                      return null;
+                  }
+              }
+          },
+          {
+              data: "D8", "render": function (data, type, row) {
+                  if (data == 0) {
+                      row.D8 = "8";
+                      return "<a class='btn btn-info'  style='color:blue;' href='@ViewBag.websiteUrl/AllReports/Insertdata?branch=" + row.BranchName + "&day=" + row.D8 + "&monthyear=" + row.monthyear + "'>Run</a>";
+                  }
+                  else if (data == 1) {
+                      return '<img src="../Assets/images/Check.png" />';
+                  }
+                  else if (data == 2) {
+                      return "<span style='color:#f3c046;'>Pending</span>";
+                  }
+                  else {
+                      return null;
+                  }
+              }
+          },
+          {
+              data: "D9", "render": function (data, type, row) {
+                  if (data == 0) {
+                      row.D9 = "9";
+                      return "<a class='btn btn-info'  style='color:blue;' href='@ViewBag.websiteUrl/AllReports/Insertdata?branch=" + row.BranchName + "&day=" + row.D9 + "&monthyear=" + row.monthyear + "'>Run</a>";
+                  }
+                  else if (data == 1) {
+                      return '<img src="../Assets/images/Check.png" />';
+                  }
+                  else if (data == 2) {
+                      return "<span style='color:#f3c046;'>Pending</span>";
+                  }
+                  else {
+                      return null;
+                  }
+              }
+          },
+          {
+              data: "D10", "render": function (data, type, row) {
+                  if (data == 0) {
+                      row.D10 = "10";
+                      return "<a class='btn btn-info'  style='color:blue;' href='@ViewBag.websiteUrl/AllReports/Insertdata?branch=" + row.BranchName + "&day=" + row.D10 + "&monthyear=" + row.monthyear + "'>Run</a>";
+                  }
+                  else if (data == 1) {
+                      return '<img src="../Assets/images/Check.png" />';
+                  }
+                  else if (data == 2) {
+                      return "<span style='color:#f3c046;'>Pending</span>";
+                  }
+                  else {
+                      return null;
+                  }
+              }
+          },
+          {
+              data: "D11", "render": function (data, type, row) {
+                  if (data == 0) {
+                      row.D11 = "11";
+                      return "<a class='btn btn-info'  style='color:blue;' href='@ViewBag.websiteUrl/AllReports/Insertdata?branch=" + row.BranchName + "&day=" + row.D11 + "&monthyear=" + row.monthyear + "'>Run</a>";
+                  }
+                  else if (data == 1) {
+                      return '<img src="../Assets/images/Check.png" />';
+                  }
+                  else if (data == 2) {
+                      return "<span style='color:#f3c046;'>Pending</span>";
+                  }
+                  else {
+                      return null;
+                  }
+              }
+          },
+          {
+              data: "D12", "render": function (data, type, row) {
+                  if (data == 0) {
+                      row.D12 = "12";
+                      return "<a class='btn btn-info'  style='color:blue;' href='@ViewBag.websiteUrl/AllReports/Insertdata?branch=" + row.BranchName + "&day=" + row.D12 + "&monthyear=" + row.monthyear + "'>Run</a>";
+                  }
+                  else if (data == 1) {
+                      return '<img src="../Assets/images/Check.png" />';
+                  }
+                  else if (data == 2) {
+                      return "<span style='color:#f3c046;'>Pending</span>";
+                  }
+                  else {
+                      return null;
+                  }
+              }
+          },
+          {
+              data: "D13", "render": function (data, type, row) {
+                  if (data == 0) {
+                      row.D13 = "13";
+                      return "<a class='btn btn-info'  style='color:blue;' href='@ViewBag.websiteUrl/AllReports/Insertdata?branch=" + row.BranchName + "&day=" + row.D13 + "&monthyear=" + row.monthyear + "'>Run</a>";
+                  }
+                  else if (data == 1) {
+                      return '<img src="../Assets/images/Check.png" />';
+                  }
+                  else if (data == 2) {
+                      return "<span style='color:#f3c046;'>Pending</span>";
+                  }
+                  else {
+                      return null;
+                  }
+              }
+          },
+          {
+              data: "D14", "render": function (data, type, row) {
+                  if (data == 0) {
+                      row.D14 = "14";
+                      return "<a class='btn btn-info'  style='color:blue;' href='@ViewBag.websiteUrl/AllReports/Insertdata?branch=" + row.BranchName + "&day=" + row.D14 + "&monthyear=" + row.monthyear + "'>Run</a>";
+                  }
+                  else if (data == 1) {
+                      return '<img src="../Assets/images/Check.png" />';
+                  }
+                  else if (data == 2) {
+                      return "<span style='color:#f3c046;'>Pending</span>";
+                  }
+                  else {
+                      return null;
+                  }
+              }
+          },
+          {
+              data: "D15", "render": function (data, type, row) {
+                  if (data == 0) {
+                      row.D15 = "15";
+                      return "<a class='btn btn-info'  style='color:blue;' href='@ViewBag.websiteUrl/AllReports/Insertdata?branch=" + row.BranchName + "&day=" + row.D15 + "&monthyear=" + row.monthyear + "'>Run</a>";
+                  }
+                  else if (data == 1) {
+                      return '<img src="../Assets/images/Check.png" />';
+                  }
+                  else if (data == 2) {
+                      return "<span style='color:#f3c046;'>Pending</span>";
+                  }
+                  else {
+                      return null;
+                  }
+              }
+          },
+          {
+              data: "D16", "render": function (data, type, row) {
+                  if (data == 0) {
+                      row.D16 = "16";
+                      return "<a class='btn btn-info'  style='color:blue;' href='@ViewBag.websiteUrl/AllReports/Insertdata?branch=" + row.BranchName + "&day=" + row.D16 + "&monthyear=" + row.monthyear + "'>Run</a>";
+                  }
+                  else if (data == 1) {
+                      return '<img src="../Assets/images/Check.png" />';
+                  }
+                  else if (data == 2) {
+                      return "<span style='color:#f3c046;'>Pending</span>";
+                  }
+                  else {
+                      return null;
+                  }
+              }
+          },
+          {
+              data: "D17", "render": function (data, type, row) {
+                  if (data == 0) {
+                      row.D17 = "17";
+                      return "<a class='btn btn-info'  style='color:blue;' href='@ViewBag.websiteUrl/AllReports/Insertdata?branch=" + row.BranchName + "&day=" + row.D17 + "&monthyear=" + row.monthyear + "'>Run</a>";
+                  }
+                  else if (data == 1) {
+                      return '<img src="../Assets/images/Check.png" />';
+                  }
+                  else if (data == 2) {
+                      return "<span style='color:#f3c046;'>Pending</span>";
+                  }
+                  else {
+                      return null;
+                  }
+              }
+          },
+          {
+              data: "D18", "render": function (data, type, row) {
+                  if (data == 0) {
+                      row.D18 = "18";
+                      return "<a class='btn btn-info'  style='color:blue;' href='@ViewBag.websiteUrl/AllReports/Insertdata?branch=" + row.BranchName + "&day=" + row.D18 + "&monthyear=" + row.monthyear + "'>Run</a>";
+                  }
+                  else if (data == 1) {
+                      return '<img src="../Assets/images/Check.png" />';
+                  }
+                  else if (data == 2) {
+                      return "<span style='color:#f3c046;'>Pending</span>";
+                  }
+                  else {
+                      return null;
+                  }
+              }
+          },
+          {
+              data: "D19", "render": function (data, type, row) {
+                  if (data == 0) {
+                      row.D19 = "19";
+                      return "<a class='btn btn-info'  style='color:blue;' href='@ViewBag.websiteUrl/AllReports/Insertdata?branch=" + row.BranchName + "&day=" + row.D19 + "&monthyear=" + row.monthyear + "'>Run</a>";
+                  }
+                  else if (data == 1) {
+                      return '<img src="../Assets/images/Check.png" />';
+                  }
+                  else if (data == 2) {
+                      return "<span style='color:#f3c046;'>Pending</span>";
+                  }
+                  else {
+                      return null;
+                  }
+              }
+          },
+          {
+              data: "D20", "render": function (data, type, row) {
+                  if (data == 0) {
+                      row.D20 = "20";
+                      return "<a class='btn btn-info'  style='color:blue;' href='@ViewBag.websiteUrl/AllReports/Insertdata?branch=" + row.BranchName + "&day=" + row.D20 + "&monthyear=" + row.monthyear + "'>Run</a>";
+                  }
+                  else if (data == 1) {
+                      return '<img src="../Assets/images/Check.png" />';
+                  }
+                  else if (data == 2) {
+                      return "<span style='color:#f3c046;'>Pending</span>";
+                  }
+                  else {
+                      return null;
+                  }
+              }
+          },
+          {
+              data: "D21", "render": function (data, type, row) {
+                  if (data == 0) {
+                      row.D21 = "21";
+                      return "<a class='btn btn-info'  style='color:blue;' href='@ViewBag.websiteUrl/AllReports/Insertdata?branch=" + row.BranchName + "&day=" + row.D21 + "&monthyear=" + row.monthyear + "'>Run</a>";
+                  }
+                  else if (data == 1) {
+                      return '<img src="../Assets/images/Check.png" />';
+                  }
+                  else if (data == 2) {
+                      return "<span style='color:#f3c046;'>Pending</span>";
+                  }
+                  else {
+                      return null;
+                  }
+              }
+          },
+          {
+              data: "D22", "render": function (data, type, row) {
+                  if (data == 0) {
+                      row.D22 = "22";
+                      return "<a class='btn btn-info'  style='color:blue;' href='@ViewBag.websiteUrl/AllReports/Insertdata?branch=" + row.BranchName + "&day=" + row.D22 + "&monthyear=" + row.monthyear + "'>Run</a>";
+                  }
+                  else if (data == 1) {
+                      return '<img src="../Assets/images/Check.png" />';
+                  }
+                  else if (data == 2) {
+                      return "<span style='color:#f3c046;'>Pending</span>";
+                  }
+                  else {
+                      return null;
+                  }
+              }
+          },
+          {
+              data: "D23", "render": function (data, type, row) {
+                  if (data == 0) {
+                      row.D23 = "23";
+                      return "<a class='btn btn-info'  style='color:blue;' href='@ViewBag.websiteUrl/AllReports/Insertdata?branch=" + row.BranchName + "&day=" + row.D23 + "&monthyear=" + row.monthyear + "'>Run</a>";
+                  }
+                  else if (data == 1) {
+                      return '<img src="../Assets/images/Check.png" />';
+                  }
+                  else if (data == 2) {
+                      return "<span style='color:#f3c046;'>Pending</span>";
+                  }
+                  else {
+                      return null;
+                  }
+              }
+          },
+          {
+              data: "D24", "render": function (data, type, row) {
+                  if (data == 0) {
+                      row.D24 = "24";
+                      return "<a class='btn btn-info'  style='color:blue;' href='@ViewBag.websiteUrl/AllReports/Insertdata?branch=" + row.BranchName + "&day=" + row.D24 + "&monthyear=" + row.monthyear + "'>Run</a>";
+                  }
+                  else if (data == 1) {
+                      return '<img src="../Assets/images/Check.png" />';
+                  }
+                  else if (data == 2) {
+                      return "<span style='color:#f3c046;'>Pending</span>";
+                  }
+                  else {
+                      return null;
+                  }
+              }
+          },
+          {
+              data: "D25", "render": function (data, type, row) {
+                  if (data == 0) {
+                      row.D25 = "25";
+                      return "<a class='btn btn-info'  style='color:blue;' href='@ViewBag.websiteUrl/AllReports/Insertdata?branch=" + row.BranchName + "&day=" + row.D25 + "&monthyear=" + row.monthyear + "'>Run</a>";
+                  }
+                  else if (data == 1) {
+                      return '<img src="../Assets/images/Check.png" />';
+                  }
+                  else if (data == 2) {
+                      return "<span style='color:#f3c046;'>Pending</span>";
+                  }
+                  else {
+                      return null;
+                  }
+              }
+          },
+          {
+              data: "D26", "render": function (data, type, row) {
+                  if (data == 0) {
+                      row.D26 = "26";
+                      return "<a class='btn btn-info'  style='color:blue;' href='@ViewBag.websiteUrl/AllReports/Insertdata?branch=" + row.BranchName + "&day=" + row.D26 + "&monthyear=" + row.monthyear + "'>Run</a>";
+                  }
+                  else if (data == 1) {
+                      return '<img src="../Assets/images/Check.png" />';
+                  }
+                  else if (data == 2) {
+                      return "<span style='color:#f3c046;'>Pending</span>";
+                  }
+                  else {
+                      return null;
+                  }
+              }
+          },
+          {
+              data: "D27", "render": function (data, type, row) {
+                  if (data == 0) {
+                      row.D27 = "27";
+                      return "<a class='btn btn-info'  style='color:blue;' href='@ViewBag.websiteUrl/AllReports/Insertdata?branch=" + row.BranchName + "&day=" + row.D27 + "&monthyear=" + row.monthyear + "'>Run</a>";
+                  }
+                  else if (data == 1) {
+                      return '<img src="../Assets/images/Check.png" />';
+                  }
+                  else if (data == 2) {
+                      return "<span style='color:#f3c046;'>Pending</span>";
+                  }
+                  else {
+                      return null;
+                  }
+              }
+          },
+          {
+              data: "D28", "render": function (data, type, row) {
+                  if (data == 0) {
+                      row.D28 = "28";
+                      return "<a class='btn btn-info'  style='color:blue;' href='@ViewBag.websiteUrl/AllReports/Insertdata?branch=" + row.BranchName + "&day=" + row.D28 + "&monthyear=" + row.monthyear + "'>Run</a>";
+                  }
+                  else if (data == 1) {
+                      return '<img src="../Assets/images/Check.png" />';
+                  }
+                  else if (data == 2) {
+                      return "<span style='color:#f3c046;'>Pending</span>";
+                  }
+                  else {
+                      return null;
+                  }
+              }
+          },
+          {
+              data: "D29", "render": function (data, type, row) {
+                  if (data == 0) {
+                      row.D29 = "29";
+                      return "<a class='btn btn-info'  style='color:blue;' href='@ViewBag.websiteUrl/AllReports/Insertdata?branch=" + row.BranchName + "&day=" + row.D29 + "&monthyear=" + row.monthyear + "'>Run</a>";
+                  }
+                  else if (data == 1) {
+                      return '<img src="../Assets/images/Check.png" />';
+                  }
+                  else if (data == 2) {
+                      return "<span style='color:#f3c046;'>Pending</span>";
+                  }
+                  else {
+                      return null;
+                  }
+              }
+          },
+          {
+              data: "D30", "render": function (data, type, row) {
+                  if (data == 0) {
+                      row.D30 = "30";
+                      return "<a class='btn btn-info'  style='color:blue;' href='@ViewBag.websiteUrl/AllReports/Insertdata?branch=" + row.BranchName + "&day=" + row.D30 + "&monthyear=" + row.monthyear + "'>Run</a>";
+                  }
+                  else if (data == 1) {
+                      return '<img src="../Assets/images/Check.png" />';
+                  }
+                  else if (data == 2) {
+                      return "<span style='color:#f3c046;'>Pending</span>";
+                  }
+                  else {
+                      return null;
+                  }
+              }
+          },
+          {
+              data: "D31", "render": function (data, type, row) {
+                  if (data == 0) {
+                      row.D31 = "31";
+                      return "<a class='btn btn-info'  style='color:blue;' href='@ViewBag.websiteUrl/AllReports/Insertdata?branch=" + row.BranchName + "&day=" + row.D31 + "&monthyear=" + row.monthyear + "'>Run</a>";
+                  }
+                  else if (data == 1) {
+                      return '<img src="../Assets/images/Check.png" />';
+                  }
+                  else if (data == 2) {
+                      return "<span style='color:#f3c046;'>Pending</span>";
+                  }
+                  else {
+                      return null;
+                  }
+              }
+          },
+
+            ]
+
+        });
+       
+            var Branchname = $("#BranchName").val();
+            var monthyear = $("#monthyearvalue").val();
+                  
+                ajaxSpinnerShow();
+                var ajaxurl = '/AllReports/EmpMonthlyreportS?branch=' + Branchname + '&monthyear=' + monthyear;
+
+                $('#grid').DataTable().ajax.url(ajaxurl).load(function () {
+                    ajaxSpinnerHide();
+                });
+            
+              
+            
+    });
+
+
+    $('#monthyear').datepicker({
+        minViewMode: 1,
+        autoclose: true,
+        format: 'M-yyyy',
+        endDate: '+0d'
+    });
+
+    $('.from').datepicker({
+        minViewMode: 1,
+        autoclose: true,
+        format: 'M-yyyy'
+    });
+    document.getElementById("a6").className = "active";
+
+</script>
+
+<script>
+    $("#earlydeptSrch").click(function () {
+
+        debugger;
+
+        var Branchname = $("#BranchName").val();
+        var monthyear = $("#monthyearvalue").val();
+      
+        // ajaxSpinnerShow();
+       
+            var ajaxurl = '/AllReports/EmpMonthlyreportS?branch=' + Branchname + '&monthyear=' + monthyear;
+
+            $('#grid').DataTable().ajax.url(ajaxurl).load(function () {
+                //  ajaxSpinnerHide();
+            });
+        
+    });
+</script>
+
+
+
+

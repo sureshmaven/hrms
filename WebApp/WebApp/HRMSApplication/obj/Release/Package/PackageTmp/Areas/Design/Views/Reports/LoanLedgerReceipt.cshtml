@@ -1,0 +1,103 @@
+﻿@{
+    ViewBag.Title = "LoanLedgerReceipt";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <h1>Loan Ledger Report</h1>
+                    <div class="ledger_checkbox">
+                        <div class="col-sm-12">
+                            <input id="idwise" type="radio" name="wise" value="idwise"><label for="idwise"><span><span></span></span>Employee Id Wise</label>
+                            <input id="namewise" type="radio" name="wise" value="namewise"><label for="namewise"><span><span></span></span>Employee Name Wise</label>
+                            <input id="selectall" type="checkbox" name="selectall" value="1"><label for="selectall"><span></span>Select All</label>
+                        </div>
+                        </div>
+                        <div class="col-md-12 mt_10">
+                            <div class="inner_heading">
+                                <h1>Loan Ledger Report</h1>
+                                <div class="table-responsive month_name_tbl">
+                                    <table id="ledger_report" class="display" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:7%"><input id="selectallrow" type="checkbox" name="selectall" value="1"><label for="selectall"><span></span></label></th>
+                                                <th>Employee Id</th>
+                                                <th>Employee Name</th>
+                                                <th>Ledger</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><input id="select1" type="checkbox" name="select1" value="1"><label for="select1"><span></span></label></td>
+                                                <td>381</td>
+                                                <td>Indraja</td>
+                                                <td>28</td>
+                                            </tr>
+                                            <tr>
+                                                <td><input id="select2" type="checkbox" name="select2" value="2"><label for="select2"><span></span></label></td>
+                                                <td>281</td>
+                                                <td>Rama Krishna</td>
+                                                <td>2834</td>
+                                            </tr>
+                                            <tr>
+                                                <td><input id="select3" type="checkbox" name="select3" value="3"><label for="select3"><span></span></label></td>
+                                                <td>181</td>
+                                                <td>Jagadish</td>
+                                                <td>2348</td>
+                                            </tr>
+                                            <tr>
+                                                <td><input id="select4" type="checkbox" name="select4" value="4"><label for="select4"><span></span></label></td>
+                                                <td>287</td>
+                                                <td>Vara Prasad</td>
+                                                <td>22368</td>
+                                            </tr>
+                                            <tr>
+                                                <td><input id="select5" type="checkbox" name="select5" value="5"><label for="select5"><span></span></label></td>
+                                                <td>5412</td>
+                                                <td>Reddy</td>
+                                                <td>28365</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt_10">
+                            <div class="pull-right">
+                                <button type="reset" class="btn btn-default cancel">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#ledger_report').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('#region_name').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+        });
+    });
+</script>
+

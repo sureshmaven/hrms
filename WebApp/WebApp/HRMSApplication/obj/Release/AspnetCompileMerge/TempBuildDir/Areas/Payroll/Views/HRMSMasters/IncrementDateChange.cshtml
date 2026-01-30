@@ -1,0 +1,418 @@
+﻿@{
+    ViewBag.Title = "IncrementDateChange";
+    var fm = ViewBag.fm;
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+<style>
+    .datepicker-switch {
+        visibility: hidden;
+    }
+
+    .datepicker-months thead {
+        display: none !important;
+    }
+
+    .datepicker table tr td, .datepicker table tr th {
+        text-align: center;
+        width: 205px;
+        height: 30px;
+        border-radius: 4px;
+        border: none;
+    }
+</style>
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="leftmenu-container">
+            <div class="sidebar-menu">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="sidebar-content">
+                <div class="main_heading heading_main">
+                    <h1>Increment Date Change <span class="year-end">@ViewBag.Env_Fm_Fy</span></h1>
+                    <div class="col-md-4 col-sm-5 col-xs-12">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label label_left">Select Month:<span class="mandatory"></span></label>
+                            <div class="input-group">
+                            <div class="date" id="monthpicker">
+                                <input type="text" class="form-control2" placeholder="Select-Month" id="monthpicker2"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                
+                            </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-1 col-sm-1 col-xs-12">
+                        <button type="button" id="btnSearch" class="btn btn-sm btn-primary">Search</button>
+                        @*<button type="button" class="btn btn-primary btn-sm pull-right" id="datesearch">Search</button>*@
+                    </div>
+                    <div class="col-md-12 mt_10">
+
+                        <div class="table-responsive">
+                            <table id="incr_date_change" class="display" style="width:100%" >
+                                <thead>
+                                    <tr>
+                                        <th>Emp Code</th>
+                                        <th>Emp Name</th>
+                                        <th>Designation</th>
+                                        <th>Branch/Department</th>
+                                        <th>Increment Date WEF</th>
+                                        <th>Increment Date</th>
+                                        <th>Change Increment Date</th>
+                                        <th>Remarks</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mt_10">
+                        <div class="pull-right">
+                            <button type="reset" onclick="resetForm()" id="btnCancel" value="reset" class="btn btn-default calcel"  title="Clear the data">Cancel</button>
+                            <button type="submit" id="btnsubmit" class="btn btn-primary" title="Submit details">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			</div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#incr_date_change').DataTable();
+    });
+  
+    var ld2 = [];
+    var Data;
+    var orgDdlist;
+    var cancelOrg;
+    var minDate;
+    var respData;
+    var MonthNameyear;
+    $(document).ready(function () {
+        //  
+        //debugger;
+        var orgData;
+        CommonApiGET('/Payroll/HRMSMasters/getIncrementDateChange', function (respData) {
+           //  
+            orgData = respData;
+            cancelOrg = respData;
+            fillDataTables(respData);
+        });
+
+        function fillDataTables(respData) {
+            //debugger;
+            orgDdlist = respData;
+            var ld = [];
+
+            var dataObj = JSON.parse(respData);
+            ld.push(dataObj.empDetails); // inc change data
+            ld2.push(dataObj.monthdays); //month days
+
+            var ldData = ld[0];
+             Data = ld2[0];
+            orgErlist = ldData;
+            orgErlist1 = Data;
+
+            $('#incr_date_change').DataTable({
+                destroy: true,
+                "paging": false,
+                "ordering": true,
+                "bSortable": false,
+                "info": false,
+                "bFilter": false,
+                "searching": true,
+                "language": {
+                    "search": "Filter records:"
+                },
+                data: ldData,
+                "columns": [
+                    { "data": "Id", bSortable: false },
+                    { "data": "Name", bSortable: false},
+                    { "data": "Designation", bSortable: false},
+                    { "data": "Branch", bSortable: false },
+                    {
+                        "mData": null,
+                        "bSortable": false,
+                        "mRender": function (data, type, full) {
+                            //debugger;
+                            dataDatenew = data.Increment_Date_WEF;
+                            //  
+
+                            minDatenew = formatDate2(dataDatenew);
+                            var delnew = getColumnDate('*' + data.Id, minDatenew);
+                            //return data.change_inc_date;
+                            //var ele = getColumngridcompDate('*' + data.Id, minDate2, minDate);
+                            //alert(data.change_inc_date);
+
+                            return delnew;
+                        }
+                    },
+                    {
+                        "mData": null,
+                        "bSortable": false,
+                        "mRender": function (data, type, full) {
+                            dataDate = data.IncDate;
+                           //  
+                           
+                            minDate = formatDate(dataDate);
+                            return data.IncDate;
+                        }
+                    },
+                    {
+                        "mData": null,
+                        "bSortable": false,
+                        "mRender": function (data, type, full) {
+                            //debugger;
+                            dataDate2 = data.change_inc_date;
+                            //  
+
+                            minDate2 = formatDate2(dataDate2);
+                            var del = getColumnDate(data.Id, minDate2);
+                            //return data.change_inc_date;
+                            //var ele = getColumngridcompDate('*' + data.Id, minDate2, minDate);
+                            //alert(data.change_inc_date);
+                            
+                            return del;
+                        }
+                    },
+                    {
+                        "mData": null,
+                        "bSortable": false,
+                        "mRender": function (data, type, full) {
+                            data.Remarks = '';
+                            var ele = getColumnTextbox(data.Id, data.remarks);
+                            return ele;
+                        }
+                    },
+
+                ],
+               // "order": [[1, 'asc']]
+            });
+           
+            // 
+            var day = Data[0].month_days; //{fm : "01-02-12"};
+            //var day = Data[0].fm;
+
+            dteSplit = day.split('-');
+            days = dteSplit[0];
+            month = dteSplit[1];
+            year = dteSplit[2];
+
+             function GetMonthName(monthNumber) {
+                // 
+                 var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+                 return months[month - 1];
+            }
+            MonthNameyear = GetMonthName() + "-" + year;
+            finmonth = '@fm';
+             var fmonth = finmonth.split('-');
+
+             var finmonthyear = "'" + fmonth[1] + "-" + fmonth[0] + "'";
+            $('#monthpicker').datepicker({
+                minViewMode: 1,
+                autoclose: true,
+                format: 'M-yyyy',
+                autoclose: true,
+                //defaultDate: '-2m',
+                endDate: new Date(year + 1, month, '31')
+                //endDate: '+0m'
+            }).datepicker("setDate", finmonthyear);
+
+            $('#monthpicker2').val(MonthNameyear);
+        }
+        
+        function formatDate2(date) {
+            // 
+            dteSplit = date.split("-");
+            month = dteSplit[1];
+            day = dteSplit[0];
+            year = dteSplit[2];
+           
+            if (month.length < 2) month = '0' + month;
+            if (day.length < 2) day = '0' + day;
+            return [year, month, day].join('-');
+        }
+        function formatDate(date) {
+            // 
+            dteSplit = date.split("-");
+            month = dteSplit[1];
+            day = dteSplit[0];
+            year = dteSplit[2];
+           
+            if (month.length < 2) month = '0' + month;
+            if (day.length < 2) day = '0' + day;
+            return [year, month, day].join('-');
+    }
+        $("#btnCancel").click(function () {
+            // 
+            fillDataTables(cancelOrg);
+            $('#monthpicker2').val(GetMonthName() + "-" + year);
+           
+        });
+
+        $("#btnSearch").click(function () {
+            // 
+            var search = $('#monthpicker2').val();
+            //var mth = GetMonthName() + "-" + year;
+            //if (MonthNameyear != search) {
+            //    $("#btnsubmit").attr("disabled", true);
+            //}
+            //else {
+            //    $("#btnsubmit").attr("disabled", false);
+            //}
+            if ($("#monthpicker2").val() == "") {
+                showGlobalModal('E#Save Error#Please Select Month ');
+                // $("#monthpicker2").focus();
+            } else {
+                 search = $('#monthpicker2').val();
+            }
+            //var search = $("#monthpicker2").val();
+            if (search != undefined) {
+                $('#incr_date_change').DataTable({
+                    destroy: true,
+                    "paging": false,
+                    "ordering": false,
+                    "bSortable": false,
+                    "info": false,
+                    "bFilter": false,
+                    "searching": true,
+                    "language": {
+                        "search": "Filter records:"
+                    },
+                    data: respData,
+                    ajax: {
+                        "url": "/Payroll/HRMSMasters/searchIncrementDateChange?SearchData=" + search,
+
+                        "type": "GET",
+                        "error": function (e) {
+                            alert(e.statusText);
+                        },
+                        "dataSrc": function (d) {
+                            orgErlist = d;
+                            orgDdlist = d;
+                            return d
+                        }
+                    },
+                    "columns": [
+                        { "data": "Id" },
+                        { "data": "Name" },
+                        { "data": "Designation" },
+                        { "data": "Branch" },
+                        {
+                            "mData": null,
+                            "bSortable": false,
+                            "mRender": function (data, type, full) {
+                                dataDatenew = data.Increment_Date_WEF;
+                                minDatenew = formatDate2(dataDatenew);
+                                var delnew = getColumnDate('*' +data.Id, minDatenew);
+                                //return data.change_inc_date;
+                                //var ele = getColumngridcompDate('*' + data.Id, minDate2, minDate);
+                                //alert(delnew);
+
+                                return delnew;
+                            }
+                        },
+                        {
+                            "mData": null,
+                            "bSortable": false,
+                            "mRender": function (data, type, full) {
+                                dataDate = data.IncDate;
+                                minDate = formatDate(dataDate);
+                                return data.IncDate;
+                                //var ele = getColumnDateReadOnly('*' + data.Id, data.IncDate);
+                                //return ele;
+                            }
+                        },
+                        {
+                            "mData": null,
+                            "bSortable": false,
+                            "mRender": function (data, type, full) {
+                                dataDate2 = data.change_inc_date;
+                                minDate2 = formatDate2(dataDate2);
+                                var del = getColumnDate(data.Id, minDate2);
+                            //return data.change_inc_date;
+                            //var ele = getColumngridcompDate('*' + data.Id, minDate2, minDate);
+                            //alert(data.change_inc_date);
+                            
+                            return del;
+                            }
+                        },
+                        {
+                            "mData": null,
+                            "bSortable": false,
+                            "mRender": function (data, type, full) {
+                                data.Remarks = '';
+                                var ele = getColumnTextbox(data.Id, data.remarks);
+                                // 
+                                return ele;
+                            }
+                        },
+
+                    ],
+                    "order": [[1, 'asc']]
+                });
+            }
+        })
+       
+    }); 
+  
+   
+    $('#btnsubmit').click(function () {
+        // 
+        //debugger;
+        var table = $('#incr_date_change').DataTable();
+        var updateData = table.$('input, select').serialize();
+        var res = updateData.replace("+", " ");
+        var arrer = res.split('*');
+        console.log(orgDdlist, updateData);
+        var arrerresult = [];
+        arrer.forEach(function (element) {
+            if (element != "") {
+
+                var objEf = {};
+                var strRow = element.split("&");
+                var id = strRow[0].split("=");
+                objEf.id = id[0];
+                var Increment_Date_WEF = strRow[0].split("=");
+                objEf.Increment_Date_WEF = Increment_Date_WEF[1];
+                var changeincdate = strRow[1].split("=");
+                objEf.change_incr_date = changeincdate[1];
+                var remarks = strRow[2].split("=");
+                objEf.remarks = remarks[1];
+                //var IncDate;
+                var Increment_Date_WEF;
+                var change_incr_date;
+                if (objEf.Increment_Date_WEF == "") {
+                    Increment_Date_WEF = null;
+                } else {
+                    Increment_Date_WEF = objEf.Increment_Date_WEF;
+                }
+                if (objEf.change_inc_date == "") {
+                    change_incr_date = null;
+                } else {
+                    change_incr_date = objEf.change_incr_date;
+                }
+                orgErlist.map(function (org) {
+                    if ((org.change_inc_date != Increment_Date_WEF && Increment_Date_WEF != null && org.Id == objEf.id)) {
+                        arrerresult.push(objEf);
+                    }
+                });
+            }
+        });
+        // 
+        if (arrerresult.length > 0) {
+            //debugger;
+            CommonApiPOST("/Payroll/HRMSMasters/UpdateIncrementDateChange", JSON.stringify(arrerresult), function (isSuccess) {
+                if (isSuccess) {
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+        }
+    });
+</script>
+
+<script>
+    var resetForm = function () { $('input,select,textarea').not('[readonly],[disabled],:button').val(''); }
+</script>
+

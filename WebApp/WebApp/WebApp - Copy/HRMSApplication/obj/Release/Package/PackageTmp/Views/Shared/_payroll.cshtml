@@ -1,0 +1,322 @@
+﻿
+@using HRMSApplication.Helpers;
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TSCAB-HRM</title>
+    <!-- for-mobile-apps -->
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <script type="text/javascript" src="~/Assets/libs/jquery/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript">
+        var screenTheme = 'darkblue';
+        var popupTheme = 'highcontrast';
+        var otherTheme = 'arctic';
+
+        var localizationObject = {
+            filterstringcomparisonoperators: ['contains', 'does not contain'],  /* filter String Comparison Operators    */
+            filternumericcomparisonoperators: ['less than', 'greater than'],    /* filter Numeric Comparison Operators  */
+            filterdatecomparisonoperators: ['less than', 'greater than'],       /* filter Date comparison operators.  */
+            filterbooleancomparisonoperators: ['equal', 'not equal']            /* filter bool comparison operators.*/
+        };
+        var stringcomparisonoperators = ['CONTAINS', 'DOES_NOT_CONTAIN'];
+        var numericcomparisonoperators = ['LESS_THAN', 'GREATER_THAN'];
+        var datecomparisonoperators = ['LESS_THAN', 'GREATER_THAN'];
+        var booleancomparisonoperators = ['EQUAL', 'NOT_EQUAL'];
+    </script>
+    <script type="application/x-javascript">
+        addEventListener("load", function () {
+            setTimeout(hideURLbar, 0);
+        }, false);
+
+        function hideURLbar() {
+            window.scrollTo(0, 1);
+        }
+
+    </script>
+    <!-- //for-mobile-apps -->
+    <link href="~/Assets/css/bootstrap.css" rel="stylesheet" />
+    <style>
+        #dvLoading {
+            background: url(../Assets/images/loading-green.gif) no-repeat center center;
+            height: 120px;
+            width: 130px;
+            position: fixed;
+            z-index: 1000;
+            left: 45%;
+            top: 45%;
+            margin: -25px 0 0 -25px;
+            z-index: 999999999999999;
+        }
+
+        .ui-widget-overlay {
+            background: rgba(226, 225, 225, 0.58);
+            left: 0;
+            opacity: 0.9;
+            position: absolute;
+            top: 0;
+            z-index: 999999999;
+        }
+    </style>
+    <link href="~/Assets/css/easy-responsive-tabs.css" rel="stylesheet" />
+    <link href="~/Assets/css/font-awesome.css" rel="stylesheet" />
+    <link href="~/Assets/css/popuo-box.css" rel="stylesheet" />
+    <link href="~/Assets/css/style.css" rel="stylesheet" />
+
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic'
+          rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic'
+          rel='stylesheet' type='text/css'>
+
+    <link href="~/Assets/libs/jqwidgets/styles/jqx.base.css" rel="stylesheet" />
+    <link href="~/Assets/css/bootstrap-datetimepicker.css" rel="stylesheet" />
+    <link href="~/Assets/css/bootstrap-datepicker3.min.css" rel="stylesheet" />
+    <link href="~/Assets/libs/jqwidgets/styles/jqx.base.css" rel="stylesheet" />
+
+    <link href="~/Content/timepicki.css" rel="stylesheet" />
+    <link href="~/Assets/css/bootstrap-timepicker.min.css" rel="stylesheet" />
+    <script src="~/Assets/libs/jquery/bootstrap-timepicker.min.js"></script>
+    <script src="~/Assets/libs/jquery/timepicki.js"></script>
+
+</head>
+<body>
+    <div style="display: none;" id="dvLoading"></div>
+    <div style="display: none;" class="ui-widget-overlay overlayforaddNote"></div>
+    @{
+        string rolepages = ViewBag.RolePages;
+    }
+    <div id="menuheader" class="header">
+        <div class="container">
+            <div class="logo-nav">
+                <div class="logo-nav-left col-md-2 col-sm-2 col-xs-12">
+                    @{
+
+                        if (rolepages != null)
+                        {
+                            if (rolepages.Contains("DBMain"))
+                            {
+                                <a href="@Url.Action("Index", "DashBoard")"><img src="~/Assets/images/logo.png" /></a>
+                            }
+                            if (rolepages.Contains("EDMain"))
+                            {
+                                <a href="@Url.Action("EmployeeDashBoard", "DashBoard")"><img src="~/Assets/images/logo.png" /></a>
+                            }
+                        }
+                    }
+                </div>
+                <div class="logo-nav-left1 col-md-10 col-sm-10">
+                    <div class="row">
+                        <div class="header-grid">
+                            <div class="header-grid-left">
+                                <ul>
+                                    <li><i class="glyphicon glyphicon-file" aria-hidden="true"></i><a href="@Url.Action("Policies", "Home")">Policies</a></li>
+                                    @*<li><i class="glyphicon glyphicon-file" aria-hidden="true"></i><a href="@Url.Action("Terms", "Home")">Terms of Use</a></li>*@
+                                    <li><i class="glyphicon glyphicon-earphone" aria-hidden="true"></i><a href="@Url.Action("Help", "Home")">Help</a></li>
+                                    @{
+                                        var lActiveEmployee = Session.GetDataFromSession<string>("EmpFullName");
+                                        var lActiveImage = Session.GetDataFromSession<string>("ActiveImage");
+                                        <li><img style="width:30px; height:30px;" src="~/uploads/@lActiveImage" />Welcome! <strong> @lActiveEmployee </strong></li>
+                                    }
+                                    <li><i class="glyphicon glyphicon-log-in" aria-hidden="true"></i><a href="@Url.Action("Logout", "Home" )" class="login">Logout</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <nav class="navbar navbar-default">
+
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse" data-target="#bs-megadropdown-tabs">Menu <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+                            </div>
+                            <div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
+                                <ul class="nav navbar-nav">
+                                    @{
+
+                                        if (rolepages != null)
+                                        {
+                                            if (rolepages.Contains("DBMain"))
+                                            {
+                                                <li id="a9"><a href="@Url.Action("Index", "DashBoard")">DashBoard</a></li>}
+                                            if (rolepages.Contains("EDMain"))
+                                            {
+                                                <li id="a9"><a href="@Url.Action("EmployeeDashBoard", "DashBoard")">DashBoard</a></li>}
+                                            if (rolepages.Contains("MPMain"))
+                                            {
+                                                <li id="a3"><a href="@Url.Action("ViewProfile", "Register")">My Profile</a></li>}
+                                            if (rolepages.Contains("LEMain"))
+                                            {
+                                                <li id="a4"><a href="@Url.Action("LeaveRequest","LeaveApply")">Leaves</a></li>}
+                                            if (rolepages.Contains("ODMain"))
+                                            {
+                                                <li id="a7"><a href="@Url.Action("Index","Duty")">OD</a></li>}
+                                            if (rolepages.Contains("LTMain"))
+                                            {
+                                                <li id="a8"><a href="@Url.Action("Index", "LeaveTravel")">LTC</a></li>}
+                                            if (rolepages.Contains("PLMain"))
+                                            {
+                                                <li id="a10"><a href="@Url.Action("Index", "PLE_Type")">PL</a></li>}
+                                            if (rolepages.Contains("WDMain"))
+                                            {
+                                                <li id="a11"><a href="@Url.Action("Index", "WorkDiary")">WorkDiary</a></li>}
+                                            if (rolepages.Contains("WDAPLMain"))
+                                            {
+                                                <li id="a11"><a href=@Url.Action("WorkApproval", "WorkDiary")>WorkDiary</a></li>}
+                                            if (rolepages.Contains("WDSHYMain"))
+                                            {
+                                                <li id="a11">  <a href=@Url.Action("SanctionWorkApproval", "WorkDiary")>WorkDiary</a></li>}
+                                            if (rolepages.Contains("TsheetMain"))
+                                            {
+                                                <li id="at"><a href="@Url.Action("Timesheetrequestform", "TimeSheet")">TimeSheet Manual Form</a></li>}
+                                            if (rolepages.Contains("PRMain"))
+                                            {
+                                                <li id="ap"><a href="@Url.Action("Index", "Payroll")">Payroll</a></li>}
+                                            if (rolepages.Contains("PRMain1"))
+                                            {
+                                                <li id="ap"><a href="@Url.Action("Index", "Payrollnew")">Payroll New</a></li>}
+                                            @*if (rolepages.Contains("POMain"))
+                                                {
+                                                    <li id="a5"><a href="@Url.Action("Policies", "Home")">Policies</a></li>}*@
+                                            if (rolepages.Contains("ADMain"))
+                                            {
+                                                <li id="a1"><a href="@Url.Action("InsertEmployees", "Register")">Admin</a></li>}
+                                            if (rolepages.Contains("MAMain"))
+                                            {
+                                                <li id="a2"><a href="@Url.Action("Create","Banks")">Master</a></li>}
+                                            if (rolepages.Contains("MABlock"))
+                                            {
+                                                <li id="a2"><a href="@Url.Action("Create", "BlockPeriod")">Master</a></li>}
+                                            if (rolepages.Contains("MANews"))
+                                            {
+                                                <li id="a2"><a href="@Url.Action("Create", "News")">Master</a></li>}
+
+                                            if (rolepages.Contains("RPMain"))
+                                            {
+                                                <li id="a6"><a href="@Url.Action("Index", "AllReports")">Reports</a></li>}
+                                            @*if (rolepages.Contains("PRMain"))
+                                                {
+                                                    <li id="at"><a href="@Url.Action("Index", "Payroll")">payroll</a></li>}*@
+
+                                            @*if (rolepages.Contains("TsheetApp"))
+                                                {
+                                                    <li id="at1"><a href=@Url.Action("TSApprovalView", "TimeSheet")>TS Approvals</a></li>}*@
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="body-content container">
+        @RenderBody()
+    </div>
+
+    <div class="footer">
+        <div class="wthree_footer_copy">
+            <p>© 2017 Telangana State Cooperative Apex Bank Ltd. All rights reserved </p>
+        </div>
+    </div>
+
+    @*@Scripts.Render("~/bundles/jqueryval")*@
+    @RenderSection("scripts", false)
+
+    <script type="text/javascript" src="~/Assets/libs/jquery/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="~/Assets/hrms/Register.js"></script>
+    <script type="text/javascript" src="~/Assets/libs/jqwidgets/jqx-all.js"></script>
+    <script type="text/javascript" src="~/Assets/libs/jquery/moment.js"></script>
+    <script type="text/javascript" src="~/Assets/libs/jquery/bootstrap.js"></script>
+    <script type="text/javascript" src="~/Assets/libs/jquery/bootstrap-datetimepicker.js"></script>
+    <script type="text/javascript" src="~/Assets/libs/jquery/bootstrap-datepicker.min.js"></script>
+    <script type="text/javascript" src="~/Assets/libs/jquery/moment-precise-range.js"></script>
+    <script type="text/javascript" src="~/Assets/libs/jquery/payrollmenu.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#respMenu").aceResponsiveMenu({
+                resizeWidth: '768', // Set the same in Media query
+                animationSpeed: 'fast', //slow, medium, fast
+                accoridonExpAll: false //Expands all the accordion menu on click
+            });
+        });
+    </script>
+    <script type='text/javascript'>
+        $(function () {
+            $('.input-group.date').datepicker({
+                format: 'dd-mm-yyyy',
+                todayHighlight: true,
+                autoclose: true
+            });
+        });
+
+    </script>
+    <script>
+
+        jQuery.fn.liScroll = function (settings) {
+            settings = jQuery.extend({
+                travelocity: 0.03
+            }, settings);
+            return this.each(function () {
+                var $strip = jQuery(this);
+                $strip.addClass("newsticker")
+                var stripHeight = 1;
+                $strip.find("li").each(function (i) {
+                    stripHeight += jQuery(this, i).outerHeight(true); // thanks to Michael Haszprunar and Fabien Volpi
+                });
+                var $mask = $strip.wrap("<div class='mask'></div>");
+                var $tickercontainer = $strip.parent().wrap("<div class='tickercontainer'></div>");
+                var containerHeight = $strip.parent().parent().height();	//a.k.a. 'mask' width
+                //alert(containerHeight);
+                $strip.height(stripHeight);
+                var totalTravel = stripHeight;
+                var defTiming = totalTravel / settings.travelocity;	// thanks to Scott Waye
+                function scrollnews(spazio, tempo) {
+                    $strip.animate({ top: '-=' + spazio }, tempo, "linear", function () { $strip.css("top", containerHeight); scrollnews(totalTravel, defTiming); });
+                }
+                scrollnews(totalTravel, defTiming);
+                $strip.hover(function () {
+                    jQuery(this).stop();
+                },
+                    function () {
+                        var offset = jQuery(this).offset();
+                        var residualSpace = offset.top + stripHeight;
+                        var residualTime = residualSpace / settings.travelocity;
+                        scrollnews(residualSpace, residualTime);
+                    });
+            });
+        };
+
+        $(function () {
+            $("ul#ticker01").liScroll();
+        });
+    </script>
+
+    <div id="gHrmModal" class="modal fade" role="dialog" data-keyboard="true" tabindex="-1">
+        <div class="modal-dialog modal-dialog2">
+
+            <!-- Modal content-->
+            <div class="modal-content modal-content2">
+                <div class="modal-header modal-header2">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">Hello</h5>
+                </div>
+                <div class="modal-body">
+                    <h4> Please Select Leave Type</h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn alert-btn" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+
+</html>

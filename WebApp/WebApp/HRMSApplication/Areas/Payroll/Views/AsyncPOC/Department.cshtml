@@ -1,0 +1,107 @@
+﻿@{
+    ViewBag.Title = "Department";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <h1>Department</h1>
+                    @{ Html.RenderPartial("_pvEmployeeSearch"); }
+                    <div class="col-md-12">
+                        <table id="jdtDeptEmp" class="display" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Department</th>
+                                    <th>No. of days</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div>
+                        <button id="btnSave" type="button">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var orgData;
+
+    function fillDepartmentTable(grddata) {
+        $('#jdtDeptEmp').DataTable({
+            "destroy": true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+            data: grddata,
+            "columns": [
+                { "data": "Id" },
+                { "data": "Department" },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return getColumnNumber(data.Id, data.Value);
+                    }
+                },
+            ],
+            "order": [[1, 'asc']]
+        });
+    }
+
+    $('#btnSave').click(function () {
+
+        var updtData = $('#jdtDeptEmp').DataTable().$('input, select').serialize();
+        //// 
+        var onlyModified = getModifiedDataFromJDT(updtData, orgData);
+
+        var dataToSend = {
+            'dataEf': {
+                'EntityId': $('#txtEmpId').val(),
+                'StringData': onlyModified
+            },
+            'dataDd': {
+                'EntityId': $('#txtEmpId').val(),
+                'StringData': onlyModified
+            }
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "/Payroll/AsyncPOC/saveDepartmentData",
+            contentType: "application/json;",
+            data: JSON.stringify(dataToSend),
+            success: function (response) {
+                //// 
+                //jQuery.noConflict();
+                //showGlobalModal(response);
+                alert('done');
+                setTimeout(function () { window.location.reload(); }, 0);
+            },
+            failure: function (response) {
+                // 
+                //window.location.reload();
+                alert(response);
+            }
+        });
+    });
+
+    function getDataAfterEmpSearch1440(empcode) {
+        CommonApiGET('/Payroll/AsyncPOC/getDepartmentData?empid=' + empcode, function (respData) {
+            fillDepartmentTable(respData);
+        });
+    }
+
+</script>
+

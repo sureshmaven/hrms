@@ -1,0 +1,300 @@
+﻿
+@{
+    ViewBag.Title = "Form16ReportView";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="leftmenu-container">
+                <div class="sidebar-menu">
+                    <div class="main_heading left-menu">
+                        @{Html.RenderPartial("_PVPayrollMenu");}
+                    </div>
+                </div>
+                <div class="sidebar-content">
+                    <div class="main_heading heading_main">
+                        <h1>Form 16 Report</h1>
+                        <div class="col-md-12">
+                            <div class="fancy-collapse-panel">
+                                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading" role="tab" id="headingOne">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#reportsearch" aria-expanded="true" aria-controls="reportsearch" class="">
+                                                    Report Filter
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="reportsearch" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                            <div class="panel-body">
+                                                <div class="reports_search mt_6">
+                                                    <div class="col-md-7 mt_10 mb_10">
+                                                        <div class="row">
+                                                            @{ Html.RenderPartial("_PvEmployeeSearchwithCheckboxes"); }
+                                                        </div>
+                                                    </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group mt_25">
+                                                                <label class="col-sm-5 control-label dept_label" value="year" id="Year">@ViewBag.T3DdlOneLabel</label>
+                                                                <div class="col-sm-7 mul_drop" id="fYear">
+                                                                    @Html.DropDownList("fY", ViewBag.DdlOneData as SelectList, new { @class = "form-control" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                 <input type="hidden" id="EmployeeId" />
+                                                <div class="col-md-1 mt_25">
+                                                    <div class="pull-right">
+                                                        <button class="btn btn-primary" id="Search">Search</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt_10">
+                            <div class="table-responsive">
+                                <table id="gridPaySlip" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <input name="select" value="1" id="SelectAllcheckBoxes" type="checkbox" onclick="checkboxRowAll()">
+                                                <label for="checkbox1"><span></span></label>
+                                            </th>
+                                            <th>Emp Code</th>
+                                            <th>Emp Name</th>
+                                            <th>Designation</th>
+                                            <th>Financial Year</th>
+                                            
+
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                            <div class="mt_10">
+                                <input type="hidden" id="EmployeeId" />
+                                <div class="mt_10">
+                                    <div class="pull-right">
+                                        <input type="button" value="Download PDF" class="btn btn-primary" id="GetPdf" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#gridPaySlip').DataTable();
+    });
+    var arrerresult = [];
+    var emp_code = "";
+    var mnpkrVal1 = "";
+    var pdftypes = [];
+    var val = [];
+    var string = "";
+
+    function getDataAfterEmpSearch1440(empcode) {
+        //
+        arrerresult = [];
+        hdnfld = empcode;
+        $('#EmployeeId').val(hdnfld);
+        CommonApiGET('/Payroll/PayslipPdf/SearchEmployee?EmpCode=' + empcode, function (respData) {
+            originalData = respData;
+            //fillDataTables(respData);
+        });
+
+    }
+
+
+
+    //searchpaysliprecords_monthwise(emp_code,payslip_type,month-year)
+    $("#Search").click(function () {
+       // debugger;
+        emp_code = $("#txtEmployeeSearchBox1450").val();
+        mnpkrVal1 = $("#fY option:selected").text();
+        if (emp_code == "") {
+            emp_code = $("input[id='rdbEmpAll']:checked").val();
+        }
+
+
+        if (emp_code == undefined) {
+            showGlobalModal('E#Warning #Please Enter Employee Code');
+            return false;
+        }
+
+        if (mnpkrVal1 == undefined || mnpkrVal1=="Select") {
+            showGlobalModal('E#Warning #Please Select Financial Period');
+            return false;
+        }
+
+
+        var allemp = $("input[id='rdbEmpAll']:checked").val();
+
+        if (allemp == "All") {
+            emp_code = $("input[id='rdbEmpAll']:checked").val();
+        }
+
+        arrerresult = [];
+
+        CommonApiGET('/Payroll/PrAllReports/Form16ReportData?empcode=' + emp_code + '&mnpkrVal1=' + mnpkrVal1 + '', function (respData) {
+            orgData = respData;
+            orgDdlist = respData;
+            cancelOrg = respData;
+            fillDataTables(respData);
+            fillDataTables(respData);
+        });
+
+
+
+
+
+    });
+
+   
+
+</script>
+<script>
+    $("#SelectAllcheckBoxes").click(function () {
+        
+        $('.selectAllRow').not(this).prop('checked', this.checked);
+
+    });
+
+</script>
+<script>
+
+
+    var orgDdlist;
+    var cancelOrg;
+    $(document).ready(function () {
+        var orgData;
+        CommonApiGET('/Payroll/PrAllReports/Form16ReportData?empcode=' + emp_code + '&mnpkrVal1=' + mnpkrVal1 + '', function (respData) {
+            //debugger;
+            orgData = respData;
+            orgDdlist = respData;
+            cancelOrg = respData;
+            fillDataTables(respData);
+            //fillDataTables(respData);
+        });
+
+    });
+
+
+
+    //fill datatable on search
+    function fillDataTables(respData) {
+        $('#gridPaySlip').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": true,
+            "info": false,
+            "bFilter": false,
+            "searching": true,
+            data: respData,
+            "language": {
+                "search": "Filter records:"
+            },
+            "columns": [
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    'mRender': function (data, type, full) {
+                        //debugger;
+                        return '<input type="checkbox" class="selectAllRow" id="' + data.emp_code + '" onclick="checkboxRow(this.id)" /><label for="' + data.emp_code + '"><span></span></label>';
+                    }
+                },
+
+                { "data": "emp_code" },
+                { "data": "shortname" },
+                { "data": "Description" },
+                { "data": "fy" },
+               
+
+            ],
+            "order": [[1, 'asc']]
+        });
+    }
+
+
+    //row wise checked
+    function checkboxRow(id) {
+
+        document.getElementById("SelectAllcheckBoxes").checked = false;
+        //$('#SelectAllcheckBoxes').checked = false;
+        if ($('#' + id).prop("checked") == true) {
+           // debugger;
+
+            orgDdlist.map(function (o) {
+                if (o.emp_code == id) {
+                    arrerresult.push(id);
+                }
+            });
+        } else if ($('#' + id).prop("checked") == false) {
+
+            var index = arrerresult.indexOf(id);
+            arrerresult.splice(index, 1);
+
+        }
+
+        console.log(JSON.stringify(arrerresult));
+    };
+
+    // all checked
+    function checkboxRowAll() {
+
+        arrerresult = [];
+
+        if ($('#SelectAllcheckBoxes').prop("checked") == true) {
+
+            orgDdlist.map(function (o) {
+                arrerresult.push(o.emp_code);
+
+                console.log(arrerresult);
+            });
+        }
+        else if ($('#SelectAllcheckBoxes').prop("checked") == false) {
+
+            orgDdlist.map(function (o) {
+                arrerresult = [];
+            });
+        }
+
+    };
+
+
+</script>
+<script>
+
+    $('#GetPdf').click(function () {
+       // debugger;
+        if (arrerresult.length > 0)
+        {
+           // debugger;
+            var psid = arrerresult
+            mnpkrVal1 = $("#fY option:selected").text();
+            window.location = '@Url.Action("CreatePdf", "Form16")?EmpCode=' + psid +'&fy=' +mnpkrVal1;
+
+           // window.location ='/Payroll/Form16Model/CreatePdf?EmpCode=' + psid;
+            //setTimeout(function () { window.location.reload(); }, 5000);
+        }
+        else
+        {
+            showGlobalModal("E#Required Field#Please Select Employee Code");
+        }
+
+    });
+
+    
+</script>
+
+
+

@@ -1,0 +1,146 @@
+﻿@{
+    ViewBag.Title = "Mainmethod";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+<style>
+    .activeClass {
+        background: #ffdb99;
+    }
+
+    .secondClass {
+        color: red;
+    }
+</style>
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade  in active" id="tab2primary">
+                    <div class="page_st">
+                        <div class="page">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="main_heading">
+
+                                    <div class="leave_cont_start">
+                                        @using (Html.BeginForm("PayslipPdf", "Mainmethod", FormMethod.Post, new { name = "PayslipPdf" }))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <div class="col-md-12 col-sm-12">
+                                                <div class="main_heading">
+                                                    @{ Html.RenderPartial("_pvEmployeeSearchWithCheckboxes"); }
+                                                    <input type="hidden" id="EmployeeId" />
+                                                    <div style='margin-top: 20px;'>
+                                                        <div style='float: left;'>
+                                                            <input type="button" value="Download PDF" class="btn btn-info" id="GetPdf" />
+                                                            @*<input type="button" value="Download PDF" class="btn btn-info" id='excelExport' onclick='window.location ="@Url.Action("CreatePdf", "PayslipPdf"? {id = hdnfld  })";' />*@
+                                                        </div>
+
+                                                    </div>
+                                                    <div style='margin-top: 20px;'>
+                                                        <div style='float: right;'>
+                                                            <input type="button" value="Send Mail" class="btn btn-info" id="SendPdf" />
+                                                            @*<input type="button" value="Download PDF" class="btn btn-info" id='excelExport' onclick='window.location ="@Url.Action("CreatePdf", "PayslipPdf"? {id = hdnfld  })";' />*@
+                                                        </div>
+
+                                                    </div>
+
+
+
+
+                                                </div>
+                                            </div>
+
+
+                                            
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    var hdnfld = 0;
+    //search with employee_code
+    function getDataAfterEmpSearch1440(empcode) {
+        // 
+        hdnfld = empcode;
+        $('#EmployeeId').val(hdnfld);
+        CommonApiGET('/Payroll/PayslipPdf/SearchEmployee?EmpCode=' + empcode, function (respData) {
+            originalData = respData;
+            //fillDataTables(respData);
+        });
+
+    }
+
+    $('#GetPdf').click(function () {
+         
+        //CommonApiGET('/Payroll/PayslipPdf/CreatePdf?EmpCode=' + hdnfld, function (respData) {
+        
+        //});
+        var epmIds = $("#txtEmployeeSearchBox1450").val();
+
+        var epmpAllids = $("#rdbEmpAll").val();
+
+
+        //if (epmIds == "") {
+        //    showGlobalModal('E#Validation#Please Enter Employee Code');
+        //    return;
+
+        //}
+
+        
+            
+       
+        //var epmIdss = $("#txtEmployeeSearchBox1450").val;
+        
+        window.location = '@Url.Action("CreatePdf", "PayslipPdf")?EmpCode=' + epmIds , 'EmpAllCode'+  epmpAllids;
+        
+    });
+    $('#SendPdf').click(function () {
+         
+        
+        
+        
+        var epmIds = $("#txtEmployeeSearchBox1450").val();
+
+        var dataToSebd = JSON.stringify({
+            StringData: epmIds
+
+        });
+        var epmpAllids = $("#rdbEmpAll").val();
+        //if (epmIds == "") {
+        //    showGlobalModal('E#Validation#Please Enter Employee Code');
+        //    return;
+        //}
+        if (epmpAllids = "All") {
+            var dataToSebd = JSON.stringify({
+                StringData: epmpAllids
+            });
+            CommonApiPOST("/Payroll/PayslipPdf/SendePdf", dataToSebd, function (isSuccess) {
+                if (isSuccess) {
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+        } else {
+            CommonApiPOST("/Payroll/PayslipPdf/SendePdf", dataToSebd, function (isSuccess) {
+                if (isSuccess) {
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+        }
+        
+            
+    });
+</script>
+
+
+

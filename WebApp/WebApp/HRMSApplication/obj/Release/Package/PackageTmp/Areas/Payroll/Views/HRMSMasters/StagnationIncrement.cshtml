@@ -1,0 +1,211 @@
+﻿@{
+    ViewBag.Title = "StagnationIncrement";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+<style>
+    .active {
+        font-weight: 600 !important;
+         background: #d5ead5 !important;
+    }
+</style>
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+             <div class="leftmenu-container">
+            <div class="sidebar-menu">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="sidebar-content">
+                <div class="main_heading heading_main">
+                    <h1>Basic Pay Structure for Stagnation Increment <span class="year-end">@ViewBag.Env_Fm_Fy</span></h1>
+                    <div class="col-md-4">
+                        <div class="inner_heading">
+                            <h1>Designation Categories</h1>
+                            <div class="col-md-12 mt_10">
+                                <table id="Dec_Categories" class="display"></table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="inner_heading">
+                            <h1>Increment Details</h1>
+                            <div class="form-inline">
+                                <div class="col-md-9">
+                                    <div class="form-group">
+                                        <label class="control-label">Pay Structure Period:</label>
+                                        <select id="example-select" class="form-control" onchange="anualSelection(this.value);">
+                                            <option value="Select date">Select</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="mt_10">
+                                <div class="table-responsive">
+                                    <table id="stagnation_increment" style="width:100%;">
+                                        <thead>
+                                            <tr>
+                                                <th>Basic</th>
+                                                <th>Increment</th>
+                                                <th>Stages</th>
+                                                <th>Increment Type</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			</div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#stagnation_increment').hide();
+    });
+</script>
+<script>
+    var orgDdlist;
+    var empDesId = 0;
+    var empAnual;
+    var myOption;
+    $(document).ready(function () {
+        //var anuals = ["Select Date", '2004-05-10', '2009-05-10', '2014-05-10'];
+        //anuals.push("Select Anual Date");
+        //var lastFive = new Date();
+        //lastFive.setFullYear(lastFive.getFullYear() - 5);
+        //anuals.push(formatDate(lastFive));
+        //var lastTen = new Date();
+        //lastTen.setFullYear(lastTen.getFullYear() - 10);
+        //anuals.push(formatDate(lastTen));
+        //var lastFifteen = new Date();
+        //lastFifteen.setFullYear(lastFifteen.getFullYear() - 15);
+        //anuals.push(formatDate(lastFifteen));
+        //var select = document.getElementById("example-select");
+        //anuals.forEach(function (x) {
+        //    select.options[select.options.length] = new Option(x);
+        //});
+
+        
+
+        CommonApiGET('/Payroll/HRMSMasters/getDecCategories', function (respData) {
+            orgData = respData;
+            fillDataTables(respData);
+        });
+
+      
+        CommonApiGET('/Payroll/HRMSMasters/getPayDatesForStagInc', function (respData) {
+             
+            orgType = respData;
+            bindPayStructurePeriod(orgType);
+
+        });
+
+        function bindPayStructurePeriod(respData) {
+            respData.forEach(function (x) {
+                 
+                var select = document.getElementById("example-select");
+                myOption = document.createElement("option");
+                myOption.text = x.date;
+                myOption.value = x.date;
+                select.add(myOption);
+            });
+        }
+
+        function fillDataTables(respData) {
+            orgDdlist = respData;
+            console.log(orgDdlist);
+            $('#Dec_Categories').DataTable({
+                "destroy": true,
+                "paging": false,
+                "sort": false,
+                "searching": false,
+                data: respData,
+                "columns": [
+                    {
+                        "mData": null,
+                        "bSortable": false,
+                        "mRender": function (data, type, full) {
+                            return getColumnButton1(data.Id, data.category);
+                        }
+                    }
+                ],
+                "order": [[0, 'asc']]
+            });
+
+        }
+    });
+ 
+    function getAnualSalary(id) {
+        if (empDesId == id) {
+            return false;
+        }
+        $("#" + id).addClass('active');
+        $("#" + empDesId).removeClass('active');
+        empDesId = id;
+
+        if (empDesId == 0) {
+            $('#stagnation_increment').hide();
+            showGlobalModal("I#Required Field#Please select Designation.");
+        } else if (empAnual == "Select Date" || empAnual == undefined) {
+            $('#stagnation_increment').hide();
+            showGlobalModal("I#Required Field#Please select Anual dates.");
+        } else if (empDesId != 0 && empAnual != "Select Date") {
+
+            CommonApiGET('/Payroll/HRMSMasters/GetStagnationData?DesId=' + empDesId + '&empAnual=' + empAnual, function (respData) {
+                $('#stagnation_increment').show();
+                fillAnualIncTable(respData);
+            });
+        }
+    }
+
+    //function formatDate(date) {
+    //    var d = new Date(date),
+    //        month = '' + (d.getMonth() + 1),
+    //        day = '' + d.getDate(),
+    //        year = d.getFullYear();
+
+    //    if (month.length < 2) month = '0' + month;
+    //    if (day.length < 2) day = '0' + day;
+
+    //    return [year, month, day].join('-');
+    //}
+
+    function anualSelection(value) {
+        $(this).addClass("active");
+        empAnual = value;
+        if (empDesId == 0) {
+            $('#stagnation_increment').hide();
+            showGlobalModal("I#Required Field#Please select Designation.");
+        } else if (empAnual == "Select Date" || empAnual == undefined) {
+            $('#stagnation_increment').hide();
+            showGlobalModal("I#Required Field#Please select Anual dates.");
+        } else if (empDesId != 0 && empAnual != "Select Date") {
+
+            CommonApiGET('/Payroll/HRMSMasters/GetStagnationData?DesId=' + empDesId + '&empAnual=' + empAnual, function (respData) {
+                $('#stagnation_increment').show();
+                fillAnualIncTable(respData);
+            });
+        }
+    }
+    function fillAnualIncTable(respData) {
+        $('#stagnation_increment').DataTable({
+            "destroy": true,
+            "paging": false,
+            "sort": false,
+            "searching": false,
+            data: respData,
+            "columns": [
+                { "data": "Basic" },
+                { "data": "Increment" },
+                { "data": "Stages" },
+                { "data": "Type" }
+            ],
+            "order": [[0, 'asc']]
+        });
+
+    }
+</script>

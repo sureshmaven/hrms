@@ -1,0 +1,361 @@
+update designations set Code='AGM' where name='Assistant General Manager';
+update designations set Code='DGM' where name='Deputy General Manager';
+update designations set Code='GM' where name='General Manager';
+update designations set Code='CGM' where name='Chief General Manager';
+update designations set Code='MD' where name='Managing Director';
+update designations set Code='SM' where name='Senior Manager';
+update designations set Code='SA' where name='Staff Assistant';
+
+update designations set Code='Attender-Watchman' where name='Attender Cum Watchman';
+update designations set Code='JR-SA' where name='JR Staff Assistant';
+update designations set Code='SA-Assistant Cashier' where name='Staff Assistant Cum Assistant Cashier';
+update designations set Code='TeleOperator-Receptionist' where name='Telephone Operator Cum Receptionist';
+update designations set Code='Substaff' where name='Subordinate Staff(Substaff)';
+update designations set code='MgrScl-1' where name='Manager Scale-1';
+
+
+update employees set firstname='RACHA',lastname='MANIKANTH' where firstname='MANIKANTH' and lastname='RACHA';
+update employees set firstname='PUPPALA',lastname='VAMSHIKRISHNA' where firstname='VAMSHIKRISHNA' and lastname='PUPPALA';
+update employees set firstname='VIRRI',lastname='SUPRAJA' where firstname='SUPRAJA' and lastname='VIRRI';
+update employees set firstname='BONKURI',lastname='HARISH KUMAR' where firstname='HARISH KUMAR' and lastname='BONKURI';
+update employees set firstname='MADDELA',lastname='ABHISHEK JAWHAR' where firstname='ABHISHEK JAWHAR' and lastname='MADDELA';
+
+update branches set starttime='10.00 AM',endtime='4.00 PM' where name='Masabtank Branch';
+update branches set starttime='9.30 AM',endtime='3.30 PM' where name='HO Branch';
+
+alter table leaves add LeavesYear int  null;
+update leaves set LeavesYear='2018';
+
+CREATE view [dbo].[v_BranchContactList]
+as
+select top 1000 CAST(ROW_NUMBER() over(order by branch) AS INT) Id,be.Name as BranchName,d.name,d.code,e.empid,bs.PhoneNo1,bs.PhoneNo2,bs.StartTime,bs.EndTime,
+case when e.empid=686 then 'Dr. N MURALIDHAR'
+else
+concat(substring(e.FirstName,1,1),' ',e.Lastname)
+end as EmpName
+  from employees e join 
+
+ (select distinct (name),
+ case 
+ when 0<>(select count(*) from employees e1 where e1.branch=b.id and e1.CurrentDesignation=(select id from designations where name='Assistant General Manager')) then 
+ (select top 1 e1.empid from employees e1 where  e1.branch=b.id and e1.currentdesignation=(select id from designations where name='Assistant General Manager'))
+ when 0<>(select count(*) from employees e1 where e1.branch=b.id and e1.CurrentDesignation=(select id from designations where name='Senior Manager')) then 
+( select top 1 e1.empid from employees e1 where  e1.branch=b.id and e1.currentdesignation=(select id from designations where name='Senior Manager'))
+  when 0<>(select count(*) from employees e1 where e1.branch=b.id and e1.CurrentDesignation=(select id from designations where name='Manager Scale-1')) then 
+ (select top 1 e1.empid from employees e1 where e1.branch=b.id and e1.currentdesignation=(select id from designations where name='Manager Scale-1'))
+  when 0<>(select count(*) from employees e1 where e1.branch=b.id and e1.CurrentDesignation=(select id from designations where name='Manager')) then 
+ (select top 1 e1.empid from employees e1 where  e1.branch=b.id and e1.currentdesignation=(select id from designations where name='Manager')) 
+end as empid
+from  branches b  ) be on e.empid=be.empid join designations d on e.currentdesignation=d.id join Branches bs on e.branch=bs.id
+GO
+
+
+
+ALTER view [dbo].[view_employee_transfer]
+as
+select  CAST(ROW_NUMBER() over(order by branch) AS INT) Id,e.EmpId,case when e.empid=686 then 'Dr. N MURALIDHAR'
+else
+concat(substring(e.FirstName,1,1),' ',e.Lastname)
+end as EmpName,
+e.FatherName,e.MotherName,e.DOB,e.DOJ,e.RetirementDate,
+d.name as Designation,b.name as BranchName,dp.name as DeptName,e.PresentAddress,e.ProfessionalQualifications,e.MobileNumber,
+e.Category,e.Graduation,e.PostGraduation,t.EffectiveFrom,t.EffectiveTo,t.Type
+,t.OldDesignation,t.NewDesignation,t.OldBranch,t.NewBranch,t.OldDepartment,t.NewDepartment,
+case 
+ when currentdesignation=(select id from designations where name='Managing Director') then 2
+ when currentdesignation=(select id from designations where name='Chief General Manager') then 3
+ when currentdesignation=(select id from designations where name='General Manager') then 4
+ when currentdesignation=(select id from designations where name='Deputy General Manager') then 5
+when currentdesignation=(select id from designations where name='Assistant General Manager') then 6
+when currentdesignation=(select id from designations where name='Senior Manager') then 7
+when currentdesignation=(select id from designations where name='Manager Scale-1') then 8
+when currentdesignation=(select id from designations where name='Staff Assistant' )then 10
+when currentdesignation=(select id from designations where name='Attender') then 16
+when currentdesignation=(select id from designations where name='Attender Cum Watchman') then 16
+when currentdesignation=(select id from designations where name='Attender/J.C') then 16
+when currentdesignation=(select id from designations where name='Civil Engg Supervisor') then 13
+when currentdesignation=(select id from designations where name='Driver') then 18
+when currentdesignation=(select id from designations where name='IDO/Manager') then 9
+when currentdesignation=(select id from designations where name='JR Staff Assistant') then 11
+when currentdesignation=(select id from designations where name='Junior Clerk') then 15
+when currentdesignation=(select id from designations where name='Staff Assistant Cum Assistant Cashier') then 11
+when currentdesignation=(select id from designations where name='Stenographer') then 14
+when currentdesignation=(select id from designations where name='Telephone Operator Cum Receptionist') then 17
+when currentdesignation=(select id from designations where name='Typist') then 14
+when currentdesignation=(select id from designations where name='Watchman') then 19
+when currentdesignation=(select id from designations where name='Subordinate Staff(Substaff)') then 12
+when currentdesignation=(select id from designations where name='President') then 1
+when currentdesignation=(select id from designations where name='TBD') then 20
+when currentdesignation=(select id from designations where name='Manager') then 9
+when currentdesignation=(select id from designations where name='Manager Tech') then 9
+end as designations
+from employees  e   full outer join Employee_Transfer t on e.id=t.empid join designations d on e.CurrentDesignation=d.id join branches b on e.branch=b.id
+join departments dp on e.department=dp.id 
+
+GO
+
+update employees set CurrentDesignation=(select id from Designations where name='Watchman') where empid in (308,422,512,5862);
+
+
+update branches set starttime='10.00 AM',endtime='4.00 PM' where name='Masabtank Branch';
+update branches set starttime='9.30 AM',endtime='3.30 PM' where name='HO Branch';
+
+
+ALTER view [dbo].[View_Employee]
+as
+select top 1000 CAST(ROW_NUMBER() over(order by branch) AS INT) Id,b.Name as BranchName,b.Id as BranchId,e.EmpId,dept.Name,
+case when empid=686 then 'Dr. N MURALIDHAR'
+else
+concat(substring(e.FirstName,1,1),' ',e.Lastname)
+end as EmpName,d.Code
+,case 
+ when currentdesignation=(select id from designations where name='Managing Director') then 2
+ when currentdesignation=(select id from designations where name='Chief General Manager') then 3
+ when currentdesignation=(select id from designations where name='General Manager') then 4
+ when currentdesignation=(select id from designations where name='Deputy General Manager') then 5
+when currentdesignation=(select id from designations where name='Assistant General Manager') then 6
+when currentdesignation=(select id from designations where name='Senior Manager') then 7
+when currentdesignation=(select id from designations where name='Manager Scale-1') then 8
+when currentdesignation=(select id from designations where name='Staff Assistant' )then 10
+when currentdesignation=(select id from designations where name='Attender') then 16
+when currentdesignation=(select id from designations where name='Attender Cum Watchman') then 16
+when currentdesignation=(select id from designations where name='Attender/J.C') then 16
+when currentdesignation=(select id from designations where name='Civil Engg Supervisor') then 13
+when currentdesignation=(select id from designations where name='Driver') then 18
+when currentdesignation=(select id from designations where name='IDO/Manager') then 9
+when currentdesignation=(select id from designations where name='JR Staff Assistant') then 11
+when currentdesignation=(select id from designations where name='Junior Clerk') then 15
+when currentdesignation=(select id from designations where name='Staff Assistant Cum Assistant Cashier') then 11
+when currentdesignation=(select id from designations where name='Stenographer') then 14
+when currentdesignation=(select id from designations where name='Telephone Operator Cum Receptionist') then 17
+when currentdesignation=(select id from designations where name='Typist') then 14
+when currentdesignation=(select id from designations where name='Watchman') then 19
+when currentdesignation=(select id from designations where name='Subordinate Staff(Substaff)') then 12
+when currentdesignation=(select id from designations where name='President') then 1
+when currentdesignation=(select id from designations where name='TBD') then 20
+when currentdesignation=(select id from designations where name='Manager') then 9
+when currentdesignation=(select id from designations where name='Manager Tech') then 9
+end as designations
+from employees e join Branches b on e.Branch=b.id join Designations d on e.CurrentDesignation=d.Id 
+join Departments dept on e.Department=dept.Id 
+order by b.name,designations
+
+
+ALTER view [dbo].[view_employee_category]
+as
+select top 1000 CAST(ROW_NUMBER() over(order by branch) AS INT) Id,e.EmpId,
+case when empid=686 then 'Dr. N MURALIDHAR'
+else
+concat(substring(e.FirstName,1,1),' ',e.Lastname)
+end as EmpName,d.Code,e.category,e.gender,b.Name as BranchName
+,case 
+ when currentdesignation=(select id from designations where name='Managing Director') then 2
+ when currentdesignation=(select id from designations where name='Chief General Manager') then 3
+ when currentdesignation=(select id from designations where name='General Manager') then 4
+ when currentdesignation=(select id from designations where name='Deputy General Manager') then 5
+when currentdesignation=(select id from designations where name='Assistant General Manager') then 6
+when currentdesignation=(select id from designations where name='Senior Manager') then 7
+when currentdesignation=(select id from designations where name='Manager Scale-1') then 8
+when currentdesignation=(select id from designations where name='Staff Assistant' )then 10
+when currentdesignation=(select id from designations where name='Attender') then 16
+when currentdesignation=(select id from designations where name='Attender Cum Watchman') then 16
+when currentdesignation=(select id from designations where name='Attender/J.C') then 16
+when currentdesignation=(select id from designations where name='Civil Engg Supervisor') then 13
+when currentdesignation=(select id from designations where name='Driver') then 18
+when currentdesignation=(select id from designations where name='IDO/Manager') then 9
+when currentdesignation=(select id from designations where name='JR Staff Assistant') then 11
+when currentdesignation=(select id from designations where name='Junior Clerk') then 15
+when currentdesignation=(select id from designations where name='Staff Assistant Cum Assistant Cashier') then 11
+when currentdesignation=(select id from designations where name='Stenographer') then 14
+when currentdesignation=(select id from designations where name='Telephone Operator Cum Receptionist') then 17
+when currentdesignation=(select id from designations where name='Typist') then 14
+when currentdesignation=(select id from designations where name='Watchman') then 19
+when currentdesignation=(select id from designations where name='Subordinate Staff(Substaff)') then 12
+when currentdesignation=(select id from designations where name='President') then 1
+when currentdesignation=(select id from designations where name='TBD') then 20
+when currentdesignation=(select id from designations where name='Manager') then 9
+when currentdesignation=(select id from designations where name='Manager Tech') then 9
+end as designations
+from employees  e join Branches b on e.Branch=b.id join Designations d on e.CurrentDesignation=d.Id 
+join Departments dept on e.Department=dept.Id 
+
+order by e.Category,e.gender,designations 
+
+ALTER view [dbo].[view_employee_dept]
+as
+select top 1000 CAST(ROW_NUMBER() over(order by department) AS INT) Id,e.EmpId,dept.Name as DeptName,dept.Id as DepartmentId,
+case when empid=686 then 'Dr. N MURALIDHAR'
+else
+concat(substring(e.FirstName,1,1),' ',e.Lastname)
+end as EmpName,d.Code
+,case 
+ when currentdesignation=(select id from designations where name='Managing Director') then 2
+ when currentdesignation=(select id from designations where name='Chief General Manager') then 3
+ when currentdesignation=(select id from designations where name='General Manager') then 4
+ when currentdesignation=(select id from designations where name='Deputy General Manager') then 5
+when currentdesignation=(select id from designations where name='Assistant General Manager') then 6
+when currentdesignation=(select id from designations where name='Senior Manager') then 7
+when currentdesignation=(select id from designations where name='Manager Scale-1') then 8
+when currentdesignation=(select id from designations where name='Staff Assistant' )then 10
+when currentdesignation=(select id from designations where name='Attender') then 16
+when currentdesignation=(select id from designations where name='Attender Cum Watchman') then 16
+when currentdesignation=(select id from designations where name='Attender/J.C') then 16
+when currentdesignation=(select id from designations where name='Civil Engg Supervisor') then 13
+when currentdesignation=(select id from designations where name='Driver') then 18
+when currentdesignation=(select id from designations where name='IDO/Manager') then 9
+when currentdesignation=(select id from designations where name='JR Staff Assistant') then 11
+when currentdesignation=(select id from designations where name='Junior Clerk') then 15
+when currentdesignation=(select id from designations where name='Staff Assistant Cum Assistant Cashier') then 11
+when currentdesignation=(select id from designations where name='Stenographer') then 14
+when currentdesignation=(select id from designations where name='Telephone Operator Cum Receptionist') then 17
+when currentdesignation=(select id from designations where name='Typist') then 14
+when currentdesignation=(select id from designations where name='Watchman') then 19
+when currentdesignation=(select id from designations where name='Subordinate Staff(Substaff)') then 12
+when currentdesignation=(select id from designations where name='President') then 1
+when currentdesignation=(select id from designations where name='TBD') then 20
+when currentdesignation=(select id from designations where name='Manager') then 9
+when currentdesignation=(select id from designations where name='Manager Tech') then 9
+end as designations
+from employees  e join  Designations d on e.CurrentDesignation=d.Id 
+join Departments dept on e.Department=dept.Id 
+
+order by dept.name,designations
+
+
+
+ALTER view [dbo].[view_employee_DOB_RetirementDateMonthWise]
+as
+select top 1000 CAST(ROW_NUMBER() over(order by department) AS INT) Id,case when empid=686 then 'Dr. N MURALIDHAR'
+else
+concat(substring(e.FirstName,1,1),' ',e.Lastname)
+end as EmpName,e.EmpId,
+dp.name as DeptName,e.DOB AS DOB_MonthWise,e.DOJ,e.RetirementDate as RetirementDate_MonthWise,d.Code,b.Name as BranchName
+,case 
+ when currentdesignation=(select id from designations where name='Managing Director') then 2
+ when currentdesignation=(select id from designations where name='Chief General Manager') then 3
+ when currentdesignation=(select id from designations where name='General Manager') then 4
+ when currentdesignation=(select id from designations where name='Deputy General Manager') then 5
+when currentdesignation=(select id from designations where name='Assistant General Manager') then 6
+when currentdesignation=(select id from designations where name='Senior Manager') then 7
+when currentdesignation=(select id from designations where name='Manager Scale-1') then 8
+when currentdesignation=(select id from designations where name='Staff Assistant' )then 10
+when currentdesignation=(select id from designations where name='Attender') then 16
+when currentdesignation=(select id from designations where name='Attender Cum Watchman') then 16
+when currentdesignation=(select id from designations where name='Attender/J.C') then 16
+when currentdesignation=(select id from designations where name='Civil Engg Supervisor') then 13
+when currentdesignation=(select id from designations where name='Driver') then 18
+when currentdesignation=(select id from designations where name='IDO/Manager') then 9
+when currentdesignation=(select id from designations where name='JR Staff Assistant') then 11
+when currentdesignation=(select id from designations where name='Junior Clerk') then 15
+when currentdesignation=(select id from designations where name='Staff Assistant Cum Assistant Cashier') then 11
+when currentdesignation=(select id from designations where name='Stenographer') then 14
+when currentdesignation=(select id from designations where name='Telephone Operator Cum Receptionist') then 17
+when currentdesignation=(select id from designations where name='Typist') then 14
+when currentdesignation=(select id from designations where name='Watchman') then 19
+when currentdesignation=(select id from designations where name='Subordinate Staff(Substaff)') then 12
+when currentdesignation=(select id from designations where name='President') then 1
+when currentdesignation=(select id from designations where name='TBD') then 20
+when currentdesignation=(select id from designations where name='Manager') then 9
+when currentdesignation=(select id from designations where name='Manager Tech') then 9
+end as designations
+from employees  e join  Designations d on e.CurrentDesignation=d.Id join Branches b on e.Branch=b.Id join Departments dp on e.Department=dp.id
+
+
+order by month(e.dob),month(RetirementDate),designations desc
+
+
+ALTER view [dbo].[view_employee_senioritylist]
+as
+select top 1000 CAST(ROW_NUMBER() over(order by department) AS INT) Id,
+case when empid=686 then 'Dr. N MURALIDHAR'
+else
+concat(substring(e.FirstName,1,1),' ',e.Lastname)
+end as EmpName,e.EmpId,e.DOJ,e.RetirementDate,e.DOB,d.name,d.Code,b.Name as BranchName,
+dp.Name as DeptName,e.MobileNumber,b.PhoneNo1,b.PhoneNo2
+,case 
+ when currentdesignation=(select id from designations where name='Managing Director') then 2
+ when currentdesignation=(select id from designations where name='Chief General Manager') then 3
+ when currentdesignation=(select id from designations where name='General Manager') then 4
+ when currentdesignation=(select id from designations where name='Deputy General Manager') then 5
+when currentdesignation=(select id from designations where name='Assistant General Manager') then 6
+when currentdesignation=(select id from designations where name='Senior Manager') then 7
+when currentdesignation=(select id from designations where name='Manager Scale-1') then 8
+when currentdesignation=(select id from designations where name='Staff Assistant' )then 10
+when currentdesignation=(select id from designations where name='Attender') then 16
+when currentdesignation=(select id from designations where name='Attender Cum Watchman') then 16
+when currentdesignation=(select id from designations where name='Attender/J.C') then 16
+when currentdesignation=(select id from designations where name='Civil Engg Supervisor') then 13
+when currentdesignation=(select id from designations where name='Driver') then 18
+when currentdesignation=(select id from designations where name='IDO/Manager') then 9
+when currentdesignation=(select id from designations where name='JR Staff Assistant') then 11
+when currentdesignation=(select id from designations where name='Junior Clerk') then 15
+when currentdesignation=(select id from designations where name='Staff Assistant Cum Assistant Cashier') then 11
+when currentdesignation=(select id from designations where name='Stenographer') then 14
+when currentdesignation=(select id from designations where name='Telephone Operator Cum Receptionist') then 17
+when currentdesignation=(select id from designations where name='Typist') then 14
+when currentdesignation=(select id from designations where name='Watchman') then 19
+when currentdesignation=(select id from designations where name='Subordinate Staff(Substaff)') then 12
+when currentdesignation=(select id from designations where name='President') then 1
+when currentdesignation=(select id from designations where name='TBD') then 20
+when currentdesignation=(select id from designations where name='Manager') then 9
+when currentdesignation=(select id from designations where name='Manager Tech') then 9
+end as designations
+from employees  e join  Designations d on e.CurrentDesignation=d.Id join Branches b on e.Branch=b.id join Departments dp on e.department=dp.id
+
+
+order by designations
+
+
+ALTER view [dbo].[view_employee_transfer]
+as
+
+
+select top 1000 CAST(ROW_NUMBER() over(order by branch) AS INT) Id,e.EmpId,case when e.empid=686 then 'Dr. N MURALIDHAR'
+else
+concat(substring(e.FirstName,1,1),' ',e.Lastname)
+end as EmpName,
+e.FatherName,e.MotherName,e.DOB,e.DOJ,e.RetirementDate,
+d.name as Designation,b.name as BranchName,dp.name as DeptName,e.PresentAddress,e.ProfessionalQualifications,e.MobileNumber,
+e.Category,e.Graduation,e.PostGraduation,t.EffectiveFrom,t.EffectiveTo,t.Type
+,t.OldDesignation,t.NewDesignation,t.OldBranch,t.NewBranch,t.OldDepartment,t.NewDepartment,
+case 
+ when currentdesignation=(select id from designations where name='Managing Director') then 2
+ when currentdesignation=(select id from designations where name='Chief General Manager') then 3
+ when currentdesignation=(select id from designations where name='General Manager') then 4
+ when currentdesignation=(select id from designations where name='Deputy General Manager') then 5
+when currentdesignation=(select id from designations where name='Assistant General Manager') then 6
+when currentdesignation=(select id from designations where name='Senior Manager') then 7
+when currentdesignation=(select id from designations where name='Manager Scale-1') then 8
+when currentdesignation=(select id from designations where name='Staff Assistant' )then 10
+when currentdesignation=(select id from designations where name='Attender') then 16
+when currentdesignation=(select id from designations where name='Attender Cum Watchman') then 16
+when currentdesignation=(select id from designations where name='Attender/J.C') then 16
+when currentdesignation=(select id from designations where name='Civil Engg Supervisor') then 13
+when currentdesignation=(select id from designations where name='Driver') then 18
+when currentdesignation=(select id from designations where name='IDO/Manager') then 9
+when currentdesignation=(select id from designations where name='JR Staff Assistant') then 11
+when currentdesignation=(select id from designations where name='Junior Clerk') then 15
+when currentdesignation=(select id from designations where name='Staff Assistant Cum Assistant Cashier') then 11
+when currentdesignation=(select id from designations where name='Stenographer') then 14
+when currentdesignation=(select id from designations where name='Telephone Operator Cum Receptionist') then 17
+when currentdesignation=(select id from designations where name='Typist') then 14
+when currentdesignation=(select id from designations where name='Watchman') then 19
+when currentdesignation=(select id from designations where name='Subordinate Staff(Substaff)') then 12
+when currentdesignation=(select id from designations where name='President') then 1
+when currentdesignation=(select id from designations where name='TBD') then 20
+when currentdesignation=(select id from designations where name='Manager') then 9
+when currentdesignation=(select id from designations where name='Manager Tech') then 9
+end as designations
+from employees  e   full outer join Employee_Transfer t on e.id=t.empid join designations d on e.CurrentDesignation=d.id join branches b on e.branch=b.id
+join departments dp on e.department=dp.id 
+
+
+
+
+
+
+select * into employees13mar from employees;
+
+update employees set employees.FirstName=employees13mar.LastName,employees.LastName=employees13mar.FirstName
+from employees13mar where employees.id=employees13mar.id and employees.EmpId in (708,563,822,744,777,564,560,554,557,566,817,547,548,721,779,562,586,590,782,827,749,723,714,731,775,733,801,730,581,559,570,702,783,599,725,830,786,796,550,572,760,709,556,814,763,815,835,845,876,864,838,841,836,846,837,847,877,935,899,848,865,878,911,866,849,901,889,902,867,903,887,910,868,896,884,893,862,871,872,860,886,881,909,853,912,885,891,854,905,892,890,855,861,856,857,858,895,859,913,906,898,874,914,915,916,918,921,922,924,925,926,928,929,941,942,944,946,948,949,938,939,937,934,933,930,932,945,432,495,2005,943,6342,954,956,957,960,963,959,965,966,971,974,983,982,981,989,990,986,985,987,988,6304,999,6300,6301,984,991,6302,6305,6317,6318,6319,6325,6333,947,121,176,204,240,265,266,279,286,292,293,301,302,308,319,331,338,340,356,358,361,363,364,365,376,377,381,421,428,429,438,440,445,452,457,468,474,476,478,480,484,491,492,507,510,511,513,514,518,519,521,523,526,527,528,530,532,538,545,373,539,337,304,5741,5781,5909,509,6190,1998,5148,6195,6193,5809,5750,5888,5751,5660,6198,5757,6182,5161,6180,5770,5150,6194,5884,5768,5866,5794,1862,6196,5908,1930,5796,6177,444,520,486,485,427,5889,6199,6191,5738,832,536,834,434,517,508,5782,5785,175,6173,493,374,383,686,462,368,354,405,271,463,359,320,287,357,322,6184,262,5920,318,516,6192,5910,299,233,184,420,433,505,177,5746,6132,425,5824,178,422,239,250,288,303,490,5740,435,535,544,831,525,5743,249,512,5862,443,5869,5890,436,439,950,833,951,953,958,962,961,967,968,970,969,972,973,976,975,977,979,980,978,995,997,992,996,993,994,6309,964,6306,6308,6315,6316,6307,6311,6313,6310,6312,6314,6321,6322,6324,6327,6329,6328,6330,6331,6335,6336,6337,6338,6339,6340,6341,6343,6344,6345,6354,6351,6352,6353,6346,6350,6347,6348,6349,6357,6355,6356,6358,6359,6360,6361,6366,6362,6367,6368,6369,6363,6364,6365,6370,6372,534,6209,339,5892,6376,6375,6374,6373);
+

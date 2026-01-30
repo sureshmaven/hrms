@@ -1,0 +1,172 @@
+----------Employee_Transfer
+
+
+USE [hrms25]
+GO
+
+/****** Object:  Table [dbo].[Employee_Transfer]    Script Date: 1/31/2018 5:34:16 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[Employee_Transfer](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Type] [varchar](50) NULL,
+	[EmpId] [int] NULL,
+	[OldDesignation] [int] NULL,
+	[NewDesignation] [int] NULL,
+	[OldBranch] [int] NULL,
+	[NewBranch] [int] NULL,
+	[OldDepartment] [int] NULL,
+	[NewDepartment] [int] NULL,
+	[EffectiveFrom] [datetime] NULL,
+	[EffectiveTo] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+ALTER TABLE [dbo].[Employee_Transfer]  WITH CHECK ADD  CONSTRAINT [FK_Employee_Transfer_Branches] FOREIGN KEY([NewBranch])
+REFERENCES [dbo].[Branches] ([Id])
+GO
+
+ALTER TABLE [dbo].[Employee_Transfer] CHECK CONSTRAINT [FK_Employee_Transfer_Branches]
+GO
+
+ALTER TABLE [dbo].[Employee_Transfer]  WITH CHECK ADD  CONSTRAINT [FK_Employee_Transfer_Branches_OldDe] FOREIGN KEY([OldBranch])
+REFERENCES [dbo].[Branches] ([Id])
+GO
+
+ALTER TABLE [dbo].[Employee_Transfer] CHECK CONSTRAINT [FK_Employee_Transfer_Branches_OldDe]
+GO
+
+ALTER TABLE [dbo].[Employee_Transfer]  WITH CHECK ADD  CONSTRAINT [FK_Employee_Transfer_Departments] FOREIGN KEY([NewDepartment])
+REFERENCES [dbo].[Departments] ([Id])
+GO
+
+ALTER TABLE [dbo].[Employee_Transfer] CHECK CONSTRAINT [FK_Employee_Transfer_Departments]
+GO
+
+ALTER TABLE [dbo].[Employee_Transfer]  WITH CHECK ADD  CONSTRAINT [FK_Employee_Transfer_Departments_Old] FOREIGN KEY([OldDepartment])
+REFERENCES [dbo].[Departments] ([Id])
+GO
+
+ALTER TABLE [dbo].[Employee_Transfer] CHECK CONSTRAINT [FK_Employee_Transfer_Departments_Old]
+GO
+
+ALTER TABLE [dbo].[Employee_Transfer]  WITH CHECK ADD  CONSTRAINT [FK_Employee_Transfer_Designations] FOREIGN KEY([NewDesignation])
+REFERENCES [dbo].[Designations] ([Id])
+GO
+
+ALTER TABLE [dbo].[Employee_Transfer] CHECK CONSTRAINT [FK_Employee_Transfer_Designations]
+GO
+
+ALTER TABLE [dbo].[Employee_Transfer]  WITH CHECK ADD  CONSTRAINT [FK_Employee_Transfer_Designations_Old] FOREIGN KEY([OldDesignation])
+REFERENCES [dbo].[Designations] ([Id])
+GO
+
+ALTER TABLE [dbo].[Employee_Transfer] CHECK CONSTRAINT [FK_Employee_Transfer_Designations_Old]
+GO
+
+ALTER TABLE [dbo].[Employee_Transfer]  WITH CHECK ADD  CONSTRAINT [FK_Employee_Transfer_Designations_OldD] FOREIGN KEY([OldDesignation])
+REFERENCES [dbo].[Designations] ([Id])
+GO
+
+ALTER TABLE [dbo].[Employee_Transfer] CHECK CONSTRAINT [FK_Employee_Transfer_Designations_OldD]
+GO
+
+ALTER TABLE [dbo].[Employee_Transfer]  WITH CHECK ADD  CONSTRAINT [FK_Employee_Transfer_Employees] FOREIGN KEY([EmpId])
+REFERENCES [dbo].[Employees] ([Id])
+GO
+
+ALTER TABLE [dbo].[Employee_Transfer] CHECK CONSTRAINT [FK_Employee_Transfer_Employees]
+GO
+
+
+--------Employee_MeetingSchedule
+
+CREATE TABLE Employee_MeetingSchedule(
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[EmpId] [int] NULL,
+	[FirstName] [varchar](150) NULL,
+	[LastName] [varchar](150) NULL,
+	StartTime [datetime] NULL,
+	EndTime [datetime] NULL,
+	[UpdatedDate] [datetime] NULL,
+	[Branch] [int] NULL,
+	[Department] [int] NULL,
+	[designation] [int] null,
+	[Reason] [varchar](150) NULL,
+	[Recurring] [int] null
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+--------Employee_Meeting
+
+CREATE TABLE Employee_Meeting(
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[EmpId] [int] NULL,
+	[OfficalEmailId] [varchar](250) NULL,
+	[Subject] [varchar](250) NULL,
+	[Description] [varchar](250) NULL,
+	StartTime [datetime] NULL,
+	EndTime [datetime] NULL,
+	[UpdatedDate] [datetime] NULL
+	
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+----Employee_Circulars
+CREATE TABLE Employee_Circulars(
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[EmpId] [int] NULL,
+	[OfficalEmailId] [varchar](250) NULL,
+	[Branch] [int] NULL,
+	[Department] [int] NULL,
+	[designation] [int] null,
+	[Subject] [varchar](250) NULL,
+	[Description] [varchar](250) NULL,
+	[AttachedFile] [varchar](250) NULL,
+	[UpdatedDate] [datetime] NULL
+	
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+
+create index idx_Employees_EmpId on employees(EmpId);
+create index idx_Employees_firstname on employees(firstname);
+create index idx_Employees_lastname on employees(lastname);
+create index idx_Employees_branch on employees(branch);
+create index idx_Employees_currentdesignation on employees(currentdesignation);
+create index idx_Employees_department on employees(department);
+
+create index idx_Employee_transfer_EmpId on Employee_transfer(EmpId);
+create index idx_Employee_transfer_olddesignation on Employee_transfer(olddesignation);
+create index idx_Employee_transfer_newdesignation on Employee_transfer(newdesignation);
+create index idx_Employee_transfer_Oldbranch on Employee_transfer(Oldbranch);
+create index idx_Employee_transfer_Newbranch on Employee_transfer(newbranch);
+create index idx_Employee_transfer_olddepartment on Employee_transfer(olddepartment);
+create index idx_Employee_transfer_newdepartment on Employee_transfer(newdepartment);
+
+create index idx_Empleavebalance_EmpId on Empleavebalance(EmpId);
+create index idx_Empleavebalance_leavetypeid on Empleavebalance(leavetypeid);

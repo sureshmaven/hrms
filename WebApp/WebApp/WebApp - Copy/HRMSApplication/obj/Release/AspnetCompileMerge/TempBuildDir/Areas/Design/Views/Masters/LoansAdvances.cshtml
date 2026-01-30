@@ -1,0 +1,315 @@
+﻿@{
+    ViewBag.Title = "LoansAdvances";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <h1>Advances - Loans</h1>
+                    <div class="emp-serch">
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label">Employee Id:</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-sm-1 col-xs-12"><button type="button" class="btn btn-primary btn-sm pull-right">Search</button></div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label">Employee Name :</label>
+                                    <div class="col-sm-6">
+                                        <label class="control-label"> raju sadhula</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label">Department :</label>
+                                    <div class="col-sm-6">
+                                        <label class="control-label">  IT</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label">Designation :</label>
+                                    <div class="col-sm-6">
+                                        <label class="control-label"> UI Developer</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label">Date of Joining :</label>
+                                    <div class="col-sm-6">
+                                        <label class="control-label"> 27/04/2017</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="col-md-12">
+                        <table id="loans_advances" class="display" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th style="width:25%">Description</th>
+                                    <th>Enter Particulars</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Loan Type</td>
+                                    <td><input type="text" class="form-control" data-toggle="modal" data-target="#adv_loans_modal"></td>
+                                </tr>
+                                <tr>
+                                    <td>Total Amount</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>No. of Installments</td>
+                                    <td>192</td>
+                                </tr>
+                                <tr>
+                                    <td>Interest Installments</td>
+                                    <td>40</td>
+                                </tr>
+                                <tr>
+                                    <td>Sanction Date</td>
+                                    <td>20-10-2019</td>
+                                </tr>
+                                <tr>
+                                    <td>Method</td>
+                                    <td>Interest</td>
+                                </tr>
+                                <tr>
+                                    <td>Interest Rate</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>Installment Amount</td>
+                                    <td>10231</td>
+                                </tr>
+                                <tr>
+                                    <td>Recovered Amount</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>Completed Installments</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>Loan StartFrom(YYYYMM)</td>
+                                    <td>201906</td>
+                                </tr>
+                                <tr>
+                                    <td>Loan Vendor Name</td>
+                                    <td>
+                                    <select class="form-control">
+                                        <option>AB-HYD</option>
+                                        <option>CCS - AP</option>
+                                        <option>CCS - HYD</option>
+                                        <option>APCCADB - EMP CCS</option>
+                                        <option>APCOB ED.LOAN KKP Branch</option>
+                                        <option>APCOB ED.LOAN HD</option>
+                                        <option>M D F C</option>
+                                    </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Add Sub Loans</td>
+                                    <td><button  type="submit" class="btn btn-primary" data-toggle="modal" data-target="#adv_loans_modal_sub">Add Loans</button>
+                                </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="table-responsive mt_10">
+                            <table class="table table-bordered" id="loans_ven_details">
+                                <thead>
+                                    <tr>
+                                        <th>S.NO</th>
+                                        <th>Date Disbus</th>
+                                        <th>Amount</th>
+                                        <th>Int Rate</th>
+                                        <th>Int Acc</th>
+                                        <th>Loan Repaid</th>
+                                        <th>Int Repaid</th>
+                                        <th>Prior</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>20-03-2019</td>
+                                        <td>1500000</td>
+                                        <td>9.5</td>
+                                        <td>16007</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>1</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>20-03-2019</td>
+                                        <td>1500000</td>
+                                        <td>9.5</td>
+                                        <td>16007</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>2</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        </div>
+                    <div class="col-md-12 mt_10">
+                        <div class="pull-right">
+                            <button type="reset" class="btn btn-default cancel">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                       </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+   <div class="modal fade" id="adv_loans_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Loan Details</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive mb_10">
+                        <table id="loan_adv" class="display" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Loan Id</th>
+                                    <th>Loan Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>CD2</td>
+                                    <td>CD LOAN 2 </td>
+                                </tr>
+                                <tr>
+                                    <td>EDUC</td>
+                                    <td>Education Loan</td>
+                                </tr>
+                                <tr>
+                                    <td>FEST</td>
+                                    <td>Festival Advance</td>
+                                </tr>
+                                <tr>
+                                    <td>HL2</td>
+                                    <td>Housing Loan - 2 -6%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="adv_loans_modal_sub" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Loan Details</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered" id="loans_ven_details">
+                        <thead>
+                            <tr>
+                                <th>S.NO</th>
+                                <th>Date Disbus</th>
+                                <th>Amount</th>
+                                <th>Int Rate</th>
+                                <th>Int Acc</th>
+                                <th>Loan Repaid</th>
+                                <th>Int Repaid</th>
+                                <th>Prior</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>20-03-2019</td>
+                                <td>1500000</td>
+                                <td>9.5</td>
+                                <td>16007</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>20-03-2019</td>
+                                <td>1500000</td>
+                                <td>9.5</td>
+                                <td>16007</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>2</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary">Add New</button>
+                    <button type="button" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    $(document).ready(function () {
+        $('#loans_advances').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+        });
+    });
+    $(document).ready(function () {
+        $('#loans_ven_details').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+        });
+    });
+    </script>
+    <script>
+    $(document).ready(function () {
+        $('#loan_adv').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+        });
+    });
+    </script>

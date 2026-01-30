@@ -1,0 +1,1000 @@
+﻿@model Entities.ViewModel
+@{
+    var rolepages = TempData["RolePages"].ToString();
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.RolePages = TempData["RolePages"];
+}
+
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-heading">
+            @{
+            <ul class="nav nav-tabs">
+                @if (rolepages.Contains("ADERG"))
+                {
+                    <li><a href=@Url.Action("InsertEmployees", "Register")>Employee Registration</a></li>
+                }
+                @if (rolepages.Contains("ADTPO"))
+                {
+                    <li><a href="@Url.Action("Index","Transfer")">Transfer/Promotions</a></li>
+                }
+                @if (rolepages.Contains("ADCAU"))
+                {
+                    <li><a href="@Url.Action("Index","ChangeAuthority")">Change Authority</a></li>
+                }
+                @if (rolepages.Contains("ADCPR"))
+                {
+                    <li><a href="@Url.Action("Index","ChangeProfile")">Change Profile</a></li>
+                }
+                @if (rolepages.Contains("ADLTCA"))
+                {
+                    <li><a href=@Url.Action("AdminLTCApply", "LeaveTravel")>Apply LTC </a></li>
+                }
+                @if (rolepages.Contains("ADPLA"))
+                {
+                    <li class="active"><a href=@Url.Action("AdminPLApply", "PLE_Type")>Apply PL Encashment</a></li>
+                }
+                @if (rolepages.Contains("ADWDA"))
+                {
+                    <li><a href=@Url.Action("WorkApprovalAdmin", "WorkDiary")> Delete Work Dairy</a></li>
+                }
+                @if (rolepages.Contains("ADUSRO"))
+                {
+                    <li><a href=@Url.Action("UserRolesView", "AllReports")>User Roles</a></li>
+                }
+                @if (rolepages.Contains("ADCBRMG"))
+                {
+                    <li><a href=@Url.Action("ChangeBranchManager", "ChangeBranchManager")>Change Branch Manager</a></li>
+                }
+                @if (rolepages.Contains("TsheetMain"))
+                {
+                    <li><a href=@Url.Action("Timesheetrequestform", "TimeSheet")>TimeSheet Manual Form</a></li>
+                }
+                @if (rolepages.Contains("TsheetApp"))
+                {
+                    <li><a href=@Url.Action("TSApprovalView", "TimeSheet")>TimeSheet Manual Approvals</a></li>
+                }
+            </ul>
+            }
+        </div>
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade  in active" id="tab2primary">
+                    <div class="page_st">
+                        <div class="page">
+
+                            <div class="col-md-12 col-sm-12">
+                               
+                                    <div class="leave_cont_start">
+                                        @using (Html.BeginForm("PLPost", "PLE_Type", FormMethod.Post))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <div class="col-md-12 col-sm-12">
+                                                <div class="main_heading">
+                                                    <h1>Apply PL Encashment</h1>
+                                                    <br /><br />
+                                                    <div class="form-horizontal col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Emp Code:<span class="mandatory">*</span></label>
+                                                                <div class="col-sm-6">
+                                                                    @Html.EditorFor(model => model.EmpId, new { htmlAttributes = new { @class = "form-control", id = "empcode", onkeypress = "return isNumber(event)" } })
+                                                                </div>
+                                                                <div class="col-sm-2">
+                                                                    <button type="button" id="btnApply" class="btn btn-primary btn-sm pull-right">Search</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+
+
+                                                    </div>
+                            
+                                                    <div class="form-horizontal col-md-12 col-sm-12 col-xs-12">
+                                                        @*<div class="col-sm-6">
+                                                            <label class="col-sm-4 control-label p0">Financial Month Year:<span class="mandatory">*</span></label>
+                                                            <div class="col-sm-8 input-group date" id="fmy">
+                                                                @Html.EditorFor(model => model.lpl.fm, new { htmlAttributes = new { @class = "form-control", @id = "fm", onchange = "empidcheck()", onkeypress = "return nokeyword(event)" } })<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                            </div>
+                                                        </div>*@
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Employee Name:<span class="mandatory">*</span></label>
+                                                                <div class="col-sm-8">
+                                                                    @Html.EditorFor(model => model.EmpId, new { htmlAttributes = new { @class = "form-control", @id = "Shortname",@readonly="readonly" } })
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Designation:<span class="mandatory">*</span></label>
+                                                                <div class="col-sm-8">
+
+                                                                    @Html.EditorFor(model => model.EmpId, new { htmlAttributes = new { @class = "form-control", @id = "desig", @readonly = "readonly" } })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Br/Dept:<span class="mandatory">*</span></label>
+                                                                <div class="col-sm-8">
+
+                                                                    @Html.EditorFor(model => model.EmpId, new { htmlAttributes = new { @class = "form-control", @id = "Branchdept", @ViewBag.branchname , @readonly = "readonly" } })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Total Experience:<span class="mandatory">*</span></label>
+                                                                <div class="col-sm-8">
+                                                                    @Html.EditorFor(model => model.TotalExperience, new { htmlAttributes = new { @class = "form-control", @id = "TotalExperience", @readonly = "readonly" } })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Leave Type:<span class="mandatory">*</span></label>
+                                                                <div class="col-sm-8">
+
+                                                                    @Html.EditorFor(model => model.lpl.LeaveType, new { htmlAttributes = new { @class = "form-control", @id = "Type", @readonly = "readonly"} })
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12" id="Placeofvis">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Total PL's:<span class="mandatory">*</span></label>
+                                                                <div class="col-sm-8">
+                                                                    @Html.EditorFor(model => model.lpl.TotalPL, new { htmlAttributes = new { @class = "form-control", @id = "TotalPL" , @readonly = "readonly" } })
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+
+
+                                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-4 control-label">Year:<span class="mandatory">*</span></label>
+                                                                    <div class="col-sm-8" >
+                                                                        @Html.DropDownList("lpl.CurrentYear", ((List<string>)ViewBag.plyear).Select(m => new SelectListItem { Text = m, Value = m }), new { @class = "form-control",onchange = "empidcheck();Getencash();", id = "currentyear" })
+                                                                        @*@Html.EditorFor(model => model.lpl.CurrentYear, new { htmlAttributes = new { @class = "form-control", @id = "currentyear", onchange = "empidcheck()", onkeypress = "return nokeyword(event)" } })<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>*@
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                       
+                                                 
+                                                        <div class="col-md-6 col-sm-6 col-xs-12" id="ModeofTransport">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">PL Encash:<span class="mandatory">*</span></label>
+                                                                <div class="col-sm-8">
+                                                               
+                                                                    @Html.DropDownList("lpl.PLEncash", ((List<string>)ViewBag.pllist).Select(m => new SelectListItem { Text = m, Value = m }), new { @class = "form-control",  id = "encash30" })
+
+                                                                    @*@Html.EditorFor(model => model.lpl.PLEncash, new { htmlAttributes = new { @class = "form-control", @id = "plencash", maxlength = 3, onkeypress = "return isNumber(event)" } })*@
+                                                                    @*@Html.DropDownList("lpl.PLEncash", new[] {
+        new SelectListItem() {Text = "Select",Value = "Select"},
+         //new SelectListItem() {Text = "15",Value = "15"},
+         //new SelectListItem() {Text = "29",Value = "29"},
+         //new SelectListItem() {Text = "30",Value = "30"},
+
+         }, "Select", new { @class = "form-control", id = "encash30" })*@
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Subject:<span class="mandatory">*</span></label>
+                                                                <div class="col-sm-8">
+                                                                    @Html.TextAreaFor(model => model.lpl.Subject, new { @class = "form-control", style = "width:100% !important", rows = "3", @id = "subject" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+
+
+
+                                                        <div class="col-md-12">
+                                                            <div class="pull-right">
+                                                                <br />
+                                                                <button type="button" onclick="resetForm()" value="reset" class="btn btn-default">Cancel</button>
+                                                                <button type="submit" onclick="return pl();" id="btsubmit" class="btn btn-primary subleave1">Submit</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                           
+                                        }
+                                    </div>
+                              
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type='text/javascript'>
+
+   
+    $(function () {
+     
+        var curryear = new Date().getFullYear();
+        var first = curryear + 1;
+        var two = curryear - 1;
+        var stdate = 03 + "-" + first;
+        var edate = 04 + "-" + two;
+        $('#fmy').datepicker({
+            format: "MM-yyyy",
+            autoclose: true,
+            minViewMode: 1,
+            startDate: edate,
+            endDate: stdate,
+        });
+    });
+
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(document).on("keydown", disableF5);
+        function disableF5(e)
+        {
+
+            if ((e.which || e.keyCode) == 116 || (e.which || e.keyCode) == 82) e.preventDefault();
+        };
+
+       
+
+       
+        var url = $(location).attr('href'),
+      parts = url.split("/"),
+      last_part = parts[parts.length - 1];
+
+        if (last_part == 'PayrollEncash') {
+
+            var url =  $(location).attr('href');
+            var segments = url.split('/');
+          //  var action = segments[3];
+         
+                $(".logo-nav-left").css('pointer-events', 'none');
+                $(".panel-primary > .panel-heading ").css("display", "none");
+                $(".navbar-default").css("display", "none");
+                $(".prhide").css("display", "none");
+                
+                var title = "Page1";
+                var url = "/";
+                if (typeof (history.pushState) != "undefined") {
+                    var obj = { Title: title, Url: url };
+                    history.pushState(obj, obj.Title, obj.Url);
+                } else {
+                    
+                }
+
+
+           
+
+        }
+
+        $("#empcode").keypress(function (event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+            }
+        });
+    });
+
+    $("#btnApply").click(function () {
+
+        var lempid = $("#empcode").val();
+                if (lempid == "")
+        {
+                    showGlobalModal("I#Required#Please Enter EmpCode.");
+                    $("#empcode").focus();
+                    return false;
+        }
+          $("#shortname").val('');
+                    $("#desig").val('');
+                    $("#Branchdept").val('');
+        $("#TotalExperience").val('');
+         $("#TotalPL").val('');
+        
+        ajaxSpinnerShow();
+        $.ajax({
+
+            url: "/PLE_Type/GetEmployeeData?empcode=" + lempid,
+            dataType: "Json",
+            cache: false,
+            success: function (response) {
+              
+                if (response != null) {
+                   ajaxSpinnerHide();
+                    document.getElementById("Shortname").value = response.lshortnmaeAjax;
+                    document.getElementById("desig").value = response.ldesigAjax;
+                    document.getElementById("Branchdept").value = response.lbranchAjax;
+                    document.getElementById("TotalExperience").value = response.lTotalexpAjax;
+                    document.getElementById("TotalPL").value = response.lbalanceajax;
+                    document.getElementById("Type").value = response.lbalancetypeajax;
+                      if (response.Status == "Notfound") {
+                             ajaxSpinnerHide();
+                            showGlobalModal("I#Error#Employee doesn't exists.");
+                             $("#empcode").val('');
+                         
+                        }
+                        else if (response.Status == "AlreadyRetired") {
+                              ajaxSpinnerHide();
+                     showGlobalModal("I#Error#Employee is Retired.");
+                      $("#empcode").val('');
+                       
+
+                        }
+                }
+                else {
+                    // alert("Something went wrong");
+                }
+            },
+          
+        });
+     
+            
+    });
+    //$.ajax({
+    //    type: "GET",
+    //    url: "PLE_Type/Index?empcode=" + lempid,
+    //    dataType: "Json",
+    //    success: function (response) {
+    //        if (response != null) {
+
+    //            if (response.Status == "false") {
+    //            }
+    //            else if (response.Status == "Notfound") {
+    //                alert("EmpCode doesnot exists");
+
+
+    //            }
+    //            else if (response.Status == "AlreadyRetired") {
+    //                alert("This Employee is Retired");
+
+
+    //            }
+
+    //        }
+    //        else {
+    //        }
+    //    },
+    //});
+
+    //})
+</script>
+
+
+
+@{
+    var message = TempData["AlertMessage"] ?? string.Empty;
+}
+<script type="text/javascript">
+ var message = '@message';
+
+if(message) alert(message);
+
+</script>
+
+
+
+
+<script>
+    function empidcheck() {
+   
+        var x = location.hostname;
+        var url = window.location.href
+        var arr = url.split("/");
+        var textBoxValue = document.getElementById("currentyear").value;
+     
+        var lempid = $("#empcode").val();
+      //  var result = "https://" + arr[2] + "/" + "PLE_Type/checkCurrentyear?EmpCode=" + lempid + "&CurrYear=" + textBoxValue;
+
+        var result = "" + arr[0] +  "//" + arr[2] +  "/"+ "PLE_Type/checkCurrentyear?EmpCode=" + lempid + "&CurrYear=" + textBoxValue;
+        $.ajax({
+            type: "GET",
+            url: result,
+
+            dataType: "json",
+            success: function (data) {
+
+                if (data.message == "use") {
+
+                }
+                if (data.message == "used") {
+
+                    document.getElementById("currentyear").value = "Select";
+                       showGlobalModal("I#Error#PL already applied for this year!.");
+                  //  alert("PL already applied for this year!");
+                }
+                //if (data.message == "pused") {
+
+                //    document.getElementById("currentyear").value = "";
+
+                //    alert("Cannot Avail PL for Previous years!");
+                //}
+            },
+            error: function () {
+
+            }
+        });
+       // Getencash();
+
+    }
+    //function encashcheck() {
+      
+    //    var x = location.hostname;
+    //    var url = window.location.href
+    //    var arr = url.split("/");
+    //    var textBoxValue = document.getElementById("currentyear").value;
+    //    var encash = document.getElementById("encash30").value;
+    //    var lempid = $("#empcode").val();
+    //    var result = "https://" + arr[2] + "/" + "PLE_Type/checkCurrentencash?EmpCode=" + lempid + "&CurrYear=" + textBoxValue + "&encashpl=" + encash;
+
+
+    //    $.ajax({
+    //        type: "GET",
+    //        url: result,
+
+    //        dataType: "json",
+    //        success: function (data) {
+    //            var input = data.message;
+    //            var fields = input.split('/');
+    //            var status = fields[0];
+    //            var dates = fields[1];
+
+    //            if (data.message ==status) {
+
+    //                document.getElementById("encash30").value = "";
+    //                alert(input);
+    //            }
+    //            else {
+
+    //            }
+
+    //        },
+    //        error: function () {
+
+    //        }
+    //    });
+
+
+    //}
+</script>
+<script language="javascript" type="text/javascript">
+    function Getencash() {
+       
+        var year =  $("#currentyear").val();
+        var lempid = $("#empcode").val();
+        var procemessage = "<option value='0'> Please wait...</option>";
+        $("#encash30").html(procemessage).show();
+     
+
+        $.ajax({
+            url:'/PLE_Type/Getencashdata',
+            data: { yearcurr: year},
+            cache: false,
+            type: "POST",
+            success: function (pldata) {
+               
+                $("#encash30").html(""); // clear before appending new list
+                $("#encash30").append(
+                    $('<option></option>').val('0').html('Select'));
+                $.each(pldata, function (i, encash30) {
+                   
+                    $("#encash30").append(
+                        $('<option></option>').val(encash30.Value).html(encash30.Text));
+                });
+                
+
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
+
+    }
+</script>
+<script>
+    //Start And End Date Validation
+    function Dateevent1() {
+
+        var darray = document.getElementById('sdate').value.split(" ");
+        var darraye = document.getElementById('edate').value.split(" ");
+        var Joindate = darray[0];
+
+        var Retdate = darraye[0];
+        var date = moment(Joindate, "DD.MM.YYYY");
+
+        var currentDate1 = moment(Retdate, "DD.MM.YYYY");
+        var duration = moment.duration(date.diff(currentDate1));
+
+
+        if (duration > 0) {
+            alert("Please ensure that End Date is greater than or equal to Start Date.");
+            document.getElementById("edate").focus();
+            document.getElementById("edate").value = '';
+            return false;
+
+        }
+        else {
+            datescheck();
+            return true;
+
+        }
+    }
+    //$("#datetimepicker1")
+
+
+    function Dateevent3() {
+
+        // alert("okokokokoko");
+
+        var darray = document.getElementById('sdate').value.split(" ");
+        var darraye = document.getElementById('edate').value.split(" ");
+        var StartDate = darray[0];
+        //  console.log(StartDate);
+        var EndDate = darraye[0];
+
+        var eDate = moment(EndDate, "DD.MM.YYYY");
+        var sDate = moment(StartDate, "DD.MM.YYYY");
+        if (StartDate != '' && EndDate != '' && sDate > eDate) {
+            alert("Please ensure that End Date is greater than or equal to Start Date.");
+            document.getElementById('sdate').value = '';
+            document.getElementById("sdate").focus();
+            return false;
+        }
+        else {
+            datescheck();
+            return true;
+
+        }
+    }
+</script>
+<script>
+    //Start And End Date Validation
+    function Dateevent1() {
+
+
+        var Joindate = document.getElementById("sdate").value;
+        var Retdate = document.getElementById("edate").value;
+        var date = moment(Joindate, "DD.MM.YYYY");
+
+        var currentDate1 = moment(Retdate, "DD.MM.YYYY");
+        var duration = moment.duration(date.diff(currentDate1));
+
+
+        if (duration > 0) {
+
+
+            alert("Please ensure that End Date is greater than or equal to Start Date.");
+            document.getElementById("edate").focus();
+            document.getElementById("edate").value = '';
+            return false;
+
+        }
+        else {
+            datescheck();
+            return true;
+
+        }
+    }
+
+    function Dateevent3() {
+
+
+        var StartDate = document.getElementById('sdate').value;
+        var EndDate = document.getElementById('edate').value;
+        var eDate = moment(EndDate, "DD.MM.YYYY");
+        var sDate = moment(StartDate, "DD.MM.YYYY");
+        if (StartDate != '' && EndDate != '' && sDate > eDate) {
+            alert("Please ensure that End Date is greater than or equal to Start Date.");
+            document.getElementById('sdate').value = '';
+            document.getElementById("sdate").focus();
+            return false;
+        }
+    }
+</script>
+<script>
+    //To Date and From Date Validation
+    function Dateevent2() {
+
+
+        var fromdate = document.getElementById("SDate").value;
+        var todate = document.getElementById("EDate").value;
+        var date = moment(fromdate, "DD.MM.YYYY");
+
+        var currentDate1 = moment(todate, "DD.MM.YYYY");
+        var duration = moment.duration(date.diff(currentDate1));
+
+
+        if (duration > 0) {
+
+
+            alert("Please ensure that To Date is greater than or equal to From Date.");
+            document.getElementById("EDate").focus();
+            document.getElementById("EDate").value = '';
+            return false;
+
+        }
+    }
+    function Dateevent4() {
+        var StartDate = document.getElementById('SDate').value;
+        var EndDate = document.getElementById('EDate').value;
+        var eDate = moment(EndDate, "DD.MM.YYYY");
+        var sDate = moment(StartDate, "DD.MM.YYYY");
+        if (StartDate != '' && EndDate != '' && sDate > eDate) {
+            alert("Please ensure that To Date is greater than or equal to From Date.");
+            document.getElementById('SDate').value = '';
+            document.getElementById("SDate").focus();
+            return false;
+        }
+    }
+</script>
+<script>
+    //To Date and From Date Validation
+    function Dateevent2() {
+
+
+        var fromdate = document.getElementById("SDate").value;
+        var todate = document.getElementById("EDate").value;
+        var date = moment(fromdate, "DD.MM.YYYY");
+
+        var currentDate1 = moment(todate, "DD.MM.YYYY");
+        var duration = moment.duration(date.diff(currentDate1));
+
+
+        if (duration > 0) {
+
+
+            alert("Please ensure that To Date is greater than or equal to From Date.");
+            document.getElementById("EDate").focus();
+            document.getElementById("EDate").value = '';
+            return false;
+
+        }
+    }
+    function Dateevent4() {
+        var StartDate = document.getElementById('SDate').value;
+        var EndDate = document.getElementById('EDate').value;
+        var eDate = moment(EndDate, "DD.MM.YYYY");
+        var sDate = moment(StartDate, "DD.MM.YYYY");
+        if (StartDate != '' && EndDate != '' && sDate > eDate) {
+            alert("Please ensure that To Date is greater than or equal to From Date.");
+            document.getElementById('SDate').value = '';
+            document.getElementById("SDate").focus();
+            return false;
+        }
+    }
+</script>
+
+<style>
+    table, th, td {
+        border-collapse: collapse;
+    }
+
+    .activeClass {
+        background: #ffdb99;
+    }
+
+    .secondClass {
+        /*background: #FF9999;*/
+        color: red;
+    }
+</style>
+
+
+
+<script type='text/javascript'>
+    $(function getholidays() {
+
+        var active_dates = [];
+        $.ajax({
+            type: "GET",
+            async: false,
+            url: "/LeaveApply/GetDates",
+            dataType: "Json",
+            success: function (data) {
+                datesArray = data;
+                for (i = 0; i < datesArray.length; i++) {
+                    var result = datesArray[i].replace("-", "/");
+                    var result1 = result.replace("-", "/");
+                    var strArray = result1.split("/");
+                    var cdate = strArray[0] + "/" + parseInt(strArray[1]) + "/" + strArray[2]
+                    active_dates.push(cdate);
+
+                    if (i == datesArray.length - 1) {
+                        //loadcal(active_dates);
+                    }
+                }
+
+            }
+        });
+        $("#Event_Date2").datepicker({
+
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            beforeShowDay: function nonWorkingDays(date) {
+
+                var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
+                var week = 0 | date.getDate() / 7 //get the week
+                var dd = date.getDate();
+                var month = date.getMonth();
+                if (dd < 10) {
+                    dd = '0' + dd
+                }
+
+                if (month < 10) {
+                    month = '0' + month
+                }
+                var sunweek = date.getDay();
+                var year = date.getFullYear();
+
+                if (dd == 14 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                if (dd == 28 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                //check if it's second week or fourth week
+                else if (week == 1 || week == 3) {
+                    if (dd == 7 && day == 6 || dd == 21 && day == 6) {
+                        //check for satruday
+
+                    }
+                    else {
+                        if (day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                    }
+
+                }
+                //check for sunday
+                if (day == 0) {
+                    return {
+                        classes: 'secondClass'
+                    };
+
+                }
+                //check for holidays
+                var d = date;
+                var curr_date = d.getDate();
+                var curr_month = d.getMonth() + 1; //Months are zero based
+                if (curr_date < 10) {
+                    curr_date = '0' + curr_date
+                }
+                var curr_year = d.getFullYear();
+                var formattedDate = curr_date + "/" + curr_month + "/" + curr_year
+
+                if ($.inArray(formattedDate, active_dates) != -1) {
+                    return {
+                        classes: 'activeClass'
+                    };
+                }
+                return [true];
+            }
+        });
+
+
+    });
+</script>
+
+
+<script>
+    $(function () {
+        $('#Event_Date1').datepicker({
+            format: 'dd-mm-yyyy',
+
+
+            todayHighlight: true,
+            autoclose: true
+        })
+        $('#Event_Date2').datepicker({
+            format: 'dd/mm/yyyy',
+
+
+            todayHighlight: true,
+            autoclose: true
+        })
+        $('#Event_Date2').on('changeDate', function (ev) {
+            $(this).datepicker('hide');
+        });
+
+    });
+</script>
+<script>
+    var resetForm = function () {
+        $("#currentyear").val('');
+        $("#Block_Period").val('');
+        $("#sdate").val('');
+        $("#edate").val('');
+        $("#Placeofvis").val('');
+        $("#ModeOfTransport").val('');
+        $("#subject").val('');
+        $("#reason1").val('');
+        $("#TravelAdvance").val('');
+        $("#encash30").val('');
+    }
+</script>
+<script type="text/javascript">
+    $('.subleave1').click(function () {
+    })
+
+</script>
+<script>
+   // document.getElementById("a1").className = "active";
+</script>
+<script>
+    function pl() {
+
+        var fin = $("#fm").val();
+        var empname = $("#Shortname").val();
+        var de = $("#desig").val();
+        var empid = $("#empcode").val();
+        var year = $("#currentyear").val();
+        var type = $("#Type").val();
+        var totalpl = $("#TotalPL").val();
+        var pl = $("#encash30").val();
+        var Subject = $("#subject").val();
+        if (empid == "") {
+            //window.alert("Please Enter Year");
+            showGlobalModal("I#Required#Please Enter EmpCode.");
+            $("#empcode").focus();
+            return false;
+        }
+        //if (fin == "") {
+        //    //window.alert("Please Enter Year");
+        //    showGlobalModal("I#Required#Please Select Financial Month Year.");
+        //    $("#fm").focus();
+        //    return false;
+        //}
+       else if (empname == "") {
+            //window.alert("Please Enter Year");
+            showGlobalModal("I#Required#Employee Name Cannot be empty Please Enter EmpCode and Search for Employee Details.");
+            $("#empcode").focus();
+            return false;
+        }
+       else if (de == "") {
+            //window.alert("Please Enter Year");
+            showGlobalModal("I#Required#Designation Cannot be empty Please Enter EmpCode and Search for Employee Details.");
+            $("#empcode").focus();
+            return false;
+        }
+
+        else if (year == "" || year =="Select") {
+            debugger;
+            //window.alert("Please Enter Year");
+            showGlobalModal("I#Required#Please Select Year.");
+            $("#currentyear").focus();
+            return false;
+        }
+        //else if (year == "0" || year == "00" || year == "000" || year == "0000") {
+        //    //window.alert("Please Enter Valid Year");
+        //    showGlobalModal("I#Required#Please Enter Valid Year.");
+        //    $("#currentyear").focus();
+        //    $("#currentyear").val('');
+        //    return false;
+        //}
+        //else if (year != "" && year.length != 4) {
+        //    //window.alert("Please Enter Valid Year");
+        //    showGlobalModal("I#Required#Please Enter Valid Year.");
+        //    $("#currentyear").focus();
+        //    return false;
+        //}
+        else if (type == "") {
+           // window.alert("Please Enter Type.");
+            showGlobalModal("I#Required#Please Enter Type.");
+            $("#Type").focus();
+            return false;
+        }
+        else if (totalpl == "") {
+            //window.alert("Please Enter Total PL.");
+            showGlobalModal("I#Required#Please Enter Total PL.");
+            $("#TotalPL").focus();
+            return false;
+        }
+        else if (pl == "" || pl =="Select") {
+            //window.alert("Please Enter PL Encash.");
+            showGlobalModal("I#Required#Please Enter PL Encash.");
+            $("#encash30").focus();
+            return false;
+        }
+        else if (pl == "0" || pl == "00" || pl == "000") {
+           // window.alert("Please Enter Valid PL Encash.");
+            showGlobalModal("I#Required#Please Enter Valid PL Encash.");
+            $("#encash30").focus();
+            $("#encash30").val('');
+            return false;
+        }
+        else if (Subject == "") {
+           // window.alert("Please Enter Subject.");
+            showGlobalModal("I#Required#Please Enter Subject.");
+            $("#subject").focus();
+            return false;
+        }
+    }
+</script>
+
+<script>
+    function checkyear() {
+        var year = $("#Year").val();
+        if (year == "0" || year == "00" || year == "000" || year == "0000") {
+            window.alert("Please Enter Valid Year");
+            $("#Year").focus();
+            $("#Year").val('');
+            return false;
+
+        }
+    }
+</script>
+<script type='text/javascript'>
+    $(function () {
+
+        var year = (new Date).getFullYear();
+        $('#Event_Date3').datepicker({
+            autoclose: true,
+            format: " yyyy",
+            viewMode: "years",
+            minViewMode: "years",
+            startDate: '-1y',
+            endDate: new Date(),
+        });
+    });
+</script>
+<script type='text/javascript'>
+    $(function () {
+   
+        var year = (new Date).getFullYear();
+        $('.input-group.date').datepicker({
+            format: 'yyyy',
+            viewMode: "years",
+            minDate: new Date(year-01-01),
+            minViewMode: "years",
+            todayHighlight: true,
+            autoclose: true
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+       
+    $.ajax({
+        type: "GET",
+        async: false,
+        url: "/PLE_Type/GetTotalPLBalance1",
+        dataType: "Json",
+        success: function (response) {
+           
+
+              
+                document.getElementById("Type").value = response.lbalancetypeajax;
+
+
+       
+        },
+
+    });
+
+});</script>
+
+<script>
+    document.getElementById("a1").className = "active";
+
+</script>

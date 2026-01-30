@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewBag.Title = "DateOfLeaving";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <h1>Date Of Leaving</h1>
+                    <div class="col-md-12">
+                        <table id="date_leave" class="display" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Empid</th>
+                                    <th>EmpName</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1607</td>
+                                    <td>A.MEERAMMA</td>
+                                </tr>
+                                <tr>
+                                    <td>507</td>
+                                    <td>TAGARAM SRINIVAS</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-12 mt_10">
+                        <div class="inner_heading">
+                            <h1>Select an Option</h1>
+                            <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> Employee Name wise
+                                    </label>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">  Employee Id wise 
+                                    </label>
+                                </div>
+                                <div class="col-md-12 mt_10">
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Enter Employee Id:</label>
+                                            <div class="col-sm-7">
+                                                <input type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 col-sm-3 col-xs-12"><button type="button" class="btn btn-primary btn-sm pull-right">Search</button></div>
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Date Of Leaving:</label>
+                                                <div class="col-sm-7 input-group date">
+                                                    <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <div class="col-md-12 mt_10">
+                                    <div class="pull-right">
+                                        <button type="reset" class="btn btn-default calcel">Cancel</button>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+$(document).ready(function() {
+    $('#date_leave').DataTable();
+} );
+</script>
+

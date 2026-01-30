@@ -1,0 +1,3288 @@
+﻿@{
+    ViewBag.Title = "NonRepayableLoans";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+
+}
+<style>
+    #tblobshare.ob-table tbody td:nth-last-child(n+2) + td{
+        text-align: right !important;
+    }
+    #tblobshare.ob-table tbody th:nth-last-child(n+2) + th {
+        text-align: right !important;
+    }
+</style>
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="leftmenu-container">
+                <div class="sidebar-menu">
+                    @{Html.RenderPartial("_PVPayrollMenu");}
+                </div>
+                <div class="sidebar-content">
+                    <div class="main_heading">
+                        <h1>Non Re-Payable Loans<span class="year-end">@ViewBag.Env_Fm_Fy</span></h1>
+                        @{ Html.RenderPartial("_pvEmployeeSearchWithOutRetirement"); }
+                        <input type="hidden" id="hdnEmpCode" />
+                        <div class="col-md-12">
+                            <div class="inner_heading">
+                                <h1>PF Details</h1>
+                                <div class="form-horizontal">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">P.F Account No:</label>
+
+                                            <div class="col-sm-3">
+                                                <div class="fom-border text_left ml_12 " id="pf_no"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Purpose of Advance:</label>
+                                            <div class="col-sm-7">
+                                                <select id="example-select" class="form-control col-sm-5" onchange="getDetailsByLoanType(this.value);">
+                                                    <option value="Select Loan Type">Select Loan Type</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Rate of Basic & D A:</label>
+                                            <div class="col-sm-3">
+                                                <div class="fom-border text_left ml_12 " id="basic_da"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="inner_heading">
+                                <h1>List of Documents Enclosed</h1>
+                                <div class="form-horizontal">
+                                    <div id="documents"></div>
+                                </div>
+                                <div class="form-horizontal form_label_left" id="licPolicy">
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">i. Proposed Amount</label>
+                                            <div class="col-sm-2">
+                                                <input type="number" class="form-control text_left ml_12" id="proposed_amount">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">ii. Premium Amount</label>
+                                            <div class="col-sm-2">
+                                                <input type="number" class="form-control text_left ml_12" id="premium_amount">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">iii. Name of Policy</label>
+                                            <div class="col-sm-2">
+                                                <input type="text" class="form-control text_left ml_12" id="premium_name">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="inner_heading">
+                                <h1>Eligibility</h1>
+                                <div class="form-horizontal form_label_left" id="Covid">
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">i. (Basic+DA)*<span id="multply"></span>:</label>
+                                            <div class="col-sm-2">
+                                                <div class="fom-border ml_12 text_left" id="basic_Da_elg"></div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">ii.75% Own Share + Bank Share:</label>
+                                            <div class="col-sm-2">
+                                                <div class="fom-border ml_12 text_left" id="75_own_share"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">iii. Amount applied for:</label>
+                                            <div class="col-sm-2">
+                                                <input type="number" class="form-control text_left ml_12" id="apply_amount10" onkeyup="eligibility()">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">iv. Least of i,ii,iii</label>
+                                            <div class="col-sm-2">
+                                                <div class="fom-border ml_12 text_left" id="least10"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-horizontal form_label_left" id="Eligibility">
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">i. (Basic+DA)*<span id="multply"></span>:</label>
+                                            <div class="col-sm-2">
+                                                <div class="fom-border ml_12 text_left" id="basic_elg"></div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">ii. Own Share:</label>
+                                            <div class="col-sm-2">
+                                                <div class="fom-border ml_12 text_left" id="own_share_elg"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">iii. Amount applied for:</label>
+                                            <div class="col-sm-2">
+                                                <input type="number" class="form-control text_left ml_12" id="apply_amount" onkeyup="eligibility()">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Least of i,ii,iii</label>
+                                            <div class="col-sm-2">
+                                                <div class="fom-border ml_12 text_left" id="least"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-horizontal form_label_left" id="purchase">
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">i. (Basic+DA)*<span id="purchase_mul"></span>:</label>
+                                            <div class="col-sm-2 control-label text_left">
+                                                <div class="fom-border ml_12 text_left" id="purchase_elg"></div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">ii. Own Share + Bank Share:</label>
+                                            <div class="col-sm-2 control-label text_left">
+                                                <div class="fom-border ml_12 text_left" id="purcahse_own_elg"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">iii. Cost Of Site or Flat:</label>
+                                            <div class="col-sm-2">
+                                                <input type="number" class="form-control text_left ml_12" id="purchase_amount" onkeyup="eligibility()">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Least of i,ii,iii</label>
+                                            <div class="col-sm-2 control-label text_left">
+                                                <div class="fom-border ml_12 text_left" id="puchase_least"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-horizontal form_label_left" id="EligibilityCriteria">
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">i. 50% of own share<span id="multply"></span></label>
+                                            <div class="col-sm-2 control-label text_left">
+                                                <div class="fom-border ml_12" id="50_own_share"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">ii. Amount applied for:</label>
+                                            <div class="col-sm-2">
+                                                <input type="number" class="form-control text_left ml_12" id="apply_amount2" onkeyup="eligibility()">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Least of i,ii</label>
+                                            <div class="col-sm-2 control-label text_left">
+                                                <div class="fom-border ml_12" id="least2"></div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-horizontal form_label_left" id="90_percent">
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">i. 90% of own share+bank share</label>
+                                            <div class="col-sm-2 control-label text_left">
+                                                <div class="fom-border ml_12" id="90_own_share"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">ii. Amount applied for:</label>
+                                            <div class="col-sm-2">
+                                                <input type="number" class="form-control text_left ml_12" id="apply_amount4" onkeyup="eligibility()">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Least of i,ii</label>
+                                            <div class="col-sm-2 control-label text_left">
+                                                <div class="fom-border ml_12" id="least3"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-horizontal form_label_left" id="premium_eligibility">
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">i. Premium Amount<span id="multply"></span></label>
+                                            @*<div class="col-sm-4 control-label" id="50_own_share"></div>*@
+                                            @*<input type="number" class="form-control" id="premium_amount_lic">*@
+                                            <div class="col-sm-2">
+                                                <input type="number" class="form-control text_left ml_12" id="premium_amount_lic" onkeyup="eligibility()">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">ii. Own Share:</label>
+                                            <div class="col-sm-2 control-label text_left">
+                                                <div class="fom-border ml_12" id="own_share_lic"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Least of i,ii</label>
+                                            <div class="col-sm-2 control-label text_left">
+                                                <div class="fom-border ml_12" id="least4"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-horizontal form_label_left" id="fianl">
+
+                                    <div class="clearfix"></div>
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">i. Amount Applied For</label>
+                                            <div class="col-sm-2">
+                                                <input type="number" class="form-control text_left ml_12" id="apply_amount3" onkeyup="eligibility()">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-horizontal form_label_left" id="ccf_loans">
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">i. Own share + Bank share</label>
+                                            <div class="col-sm-2 control-label text_left">
+                                                <div class="fom-border ml_12" id="own+bank"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">ii. Outstanding With CCS</label>
+                                            @*<div class="col-sm-4 control-label" id="outstanding"></div>*@
+                                            <div class="col-sm-2">
+                                                <input type="number" class="form-control text_left ml_12" id="outstanding" onkeyup="eligibility()">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Least of i,ii</label>
+                                            <div class="col-sm-2 control-label text_left">
+                                                <div class="fom-border ml_12" id="least5"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="inner_heading">
+                                <div class="col-md-5">
+                                    <h1>
+                                        <span class="col-md-7 p0">Sanctioned</span>  <span class="col-md-3 fom-border text_left" id="sanction" style="width: 29%;"></span>
+                                        <span class="clearfix"></span>
+                                    </h1>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="inner_heading">
+                                @*<div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="col-sm-3">Sanctioned</label>
+                                            <label class="col-sm-2 control-label text_left" id="least5">30000</label>
+                                        </div>
+                                    </div>*@
+
+                                <div class="form-horizontal form_label_left">
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label"></label>
+                                            <div class="col-sm-2">
+                                                Applied For
+                                            </div>
+                                            <div class="col-sm-2">
+                                                Available
+                                            </div>
+                                            @*<label class="col-sm-1 control-label">Available</label>*@
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">From Own Share</label>
+                                            <div class="col-sm-2">                                              
+                                                <input type="number" class="form-control text_left" id="own_share_num" value="" onkeyup="data()">
+                                            </div>
+                                            <div class="col-sm-2 control-label text_left">
+                                                <div class="fom-border" id="own_share"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">From V.P.F</label>
+                                            <div class="col-sm-2">
+                                                <input type="number" class="form-control text_left" id="vpf_num" onkeyup="data()">
+                                            </div>
+                                            <div class="col-sm-2 control-label text_left">
+                                                <div class="fom-border" id="vpf"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">From Bank Share</label>
+                                            <div class="col-sm-2">
+                                                <input type="number" class="form-control text_left" id="bank_share_num"> @*//onkeyup="data()"*@
+                                            </div>
+                                            <div class="col-sm-2 control-label text_left">
+                                                <div class="fom-border" id="bank_share"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Total</label>
+                                            <div class="col-sm-2">
+                                                <div class="control-label fom-border text_left mr_12" id="total_recommend"><strong></strong></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt_10">
+                            <div class="pull-right">
+                                <button type="reset" class="btn btn-default" id="cancelBtn" title="Clear the data">Cancel</button>
+                                <button type="button" id="btnobshare" class="btn btn-primary" data-toggle="modal" data-target="#adv_Schedule_modal">OB Share</button>
+                                <button type="submit" class="btn btn-primary" id="btnSubmit" title="Save details">Submit</button>
+                                <button type="submit" class="btn btn-primary" id="btnUpdate" title="Save details">Update</button>
+                                <button type="submit" class="btn btn-primary" id="btnDelete" title="Delete details">Delete</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="adv_Schedule_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow:auto">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">OB SHARE</h4>
+            </div>
+            <div class="modal-body pf_loans_table">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table id="tblobshare" class="table ob-table">
+                            <tr>
+                                <th><label class="control-label">Particulars</label></th>
+                                <th><label class="control-label">Own share</label></th>
+                                <th><label class="control-label">VPF</label></th>
+                                <th><label class="control-label">Bank Share</label></th>
+                            </tr>
+                            <tr>
+                                <td><label class="control-label">1.Fund</label></td>
+                                <td><label class="control-label" id="ownshare"></label></td>
+                                <td><label class="control-label" id="fund_vpf"></label></td>
+                                <td><label class="control-label" id="bankshare"></label></td>
+                            </tr>
+                            <tr>
+                                <td><label class="control-label">2.Interest</label></td>
+                                <td><label class="control-label" id="inst_own"></label></td>
+                                <td><label class="control-label" id="inst_vpf"></label></td>
+                                <td><label class="control-label" id="inst_bank"></label></td>
+                            </tr>
+                            <tr>
+                                <td><label class="control-label">A.TOTAL(1+2)</label></td>
+                                <td><label class="control-label" id="own_inst"></label></td>
+                                <td><label class="control-label" id="vpf_inst"></label></td>
+                                <td><label class="control-label" id="bank_inst"></label></td>
+                            </tr>
+                            <tr>
+                                <td><label class="control-label">3.Non Repayable loan availed upto previous year</label></td>
+                                <td><label class="control-label" id="prev_own"></label></td>
+                                <td><label class="control-label" id="prev_vpf"></label></td>
+                                <td><label class="control-label" id="prev_bank"></label></td>
+                            </tr>
+                            <tr>
+                                <td><label class="control-label">4.Non Repayable loan availed Present year</label></td>
+                                <td><label class="control-label" id="pres_own"></label></td>
+                                <td><label class="control-label" id="pres_vpf"></label></td>
+                                <td><label class="control-label" id="pres_bank"></label></td>
+                            </tr>
+                            <tr>
+                                <td><label class="control-label">B.TOTAL(3+4)</label></td>
+                                <td><label class="control-label" id="btown_inst"></label></td>
+                                <td><label class="control-label" id="btvpf_inst"></label></td>
+                                <td><label class="control-label" id="btbank_inst"></label></td>
+                            </tr>
+                            <tr>
+                                <td><label class="control-label">5.Repayable PF Loan 1 Amount</label></td>
+                                <td><label class="control-label" id="Outpf1">0.00</label></td>
+                                <td><label class="control-label" id="vpf_pf1">0.00</label></td>
+
+                                <td><label class="control-label" id="svpf_pf1">0.00</label></td>
+                            </tr>
+                            <tr>
+                                <td><label class="control-label">6.Repayable PF Loan 2 Amount</label></td>
+                                <td><label class="control-label" id="Outpf2">0.00</label></td>
+                                <td><label class="control-label" id="vpf_pf2">0.00</label></td>
+
+                                <td><label class="control-label" id="svpf_pf2">0.00</label></td>
+                            </tr>
+                            <tr>
+                                <td><label class="control-label">C.TOTAL(5+6)</label></td>
+                                <td><label class="control-label" id="totalpf"></label></td>
+                                <td><label class="control-label" id="tvpf_inst">0.00</label></td>
+                                <td><label class="control-label" id="tbank_inst">0.00</label></td>
+                            </tr>
+                            <tr>
+                                <td><label class="control-label">D.TOTAL(A-(B+C))</label></td>
+                                <td><label class="control-label" id="dtotal">0</label></td>
+                                <td><label class="control-label" id="dtotal1">0</label></td>
+                                <td><label class="control-label" id="dtotal2">0</label></td>
+                            </tr>
+                            <tr>
+                                <td><label class="control-label">TOTAL(OwnShare+BankShare)</label></td>
+                                <td><label class="control-label" id="totalfinal"></label></td>
+                                <td><label class="control-label"></label></td>
+                                <td><label class="control-label"></label></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                @*<button type="button" class="btn btn-primary" id="btnScheduleTypeModalOK">OK</button>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $("#btnDelete").click(function () {
+
+        var loantype = $("#example-select").val();
+        var empId = $("#hdnEmpCode").val();
+
+        var dataToSend = JSON.stringify({
+            "StringData": loantype,
+            "StringData2": empId
+        });
+        if (dataToSend.length > 0) {
+            //
+            CommonApiPOST("/Payroll/Masters/DeleteLoan", dataToSend, function (isSuccess) { //, JSON.stringify(id)
+                if (isSuccess) {
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+        }
+    });
+
+    $(document).on('keydown', 'select', function (e) {
+        //debugger;
+        var optsel = $("#example-select").find('option:selected').val();
+        if ((e.which == 38 || e.which === 40)) {
+            //setTimeout(function () { $('select option[value="' + optsel + '"]').prop("selected", true) }, 0);
+            e.preventDefault();
+        }
+    });
+
+</script>
+<script>
+
+
+    var loaddata;
+    var empId = $("#hdnEmpCode").val();
+    var fileNames = [];
+    var toMultiply = 1;
+    var orgData = [];
+    var orgType = [];
+    var basic_and_da = 0;
+    var orgGeneral = [];
+    var orgCert = [];
+    var apply_amount = 0;
+    var apply_amount10 = 0;
+    var basic_elg = 0;
+    var purchase_elg = 0;
+    var owns = 0;
+    var banks = 0;
+    var vpfs = 0;
+    var own_share1 = 0;
+    var bank_share1 = 0;
+    var vpf1 = 0;
+    var percentage_share_50 = 0;
+    var percentage_share_75 = 0;
+    var percentage_share_90 = 0;
+    var own_bank = 0;
+    var basic = 0;
+    var da = 0;
+    var sanction = 0;
+    $(document).ready(function () {
+        
+        var PurposeType = $("#example-select").val();
+
+        if (PurposeType == "Select Loan Type" || PurposeType == "" || PurposeType == null || PurposeType == "undefined") {
+            $("#btnSubmit").show();
+            $("#btnUpdate").hide();
+            $("#btnDelete").hide();
+        }
+        else {
+            $("#btnSubmit").hide();
+            $("#btnUpdate").show();
+            $("#btnDelete").show();
+        }
+        $("#Eligibility").show();
+        $("#EligibilityCriteria").hide();
+        $("#premium_eligibility").hide();
+        $("#fianl").hide();
+        $("#90_percent").hide();
+        $("#ccf_loans").hide();
+        $("#licPolicy").hide();
+        $("#purchase").hide();
+        $("#Covid").hide();
+        $("#bank_share_num").val("");
+        $("#bank_share_num").prop('readonly', true);
+        $("#vpf_num").val("");
+        $("#vpf_num").prop('readonly', false);
+        $("#own_share_num").val("");
+        $("#own_share_num").prop('readonly', false);
+        $("#apply_amount3").val("");
+        $("#apply_amount3").prop('readonly', false);
+        ////debugger;
+        $("#total_recommend").val("");
+        $("#total_recommend").prop('readonly', false);
+        document.getElementById("least").innerHTML = "";
+        document.getElementById("least2").innerHTML = "";
+        document.getElementById("least3").innerHTML = "";
+        document.getElementById("least4").innerHTML = "";
+        document.getElementById("least5").innerHTML = "";
+        document.getElementById("least10").innerHTML = "";
+        document.getElementById("total_recommend").innerHTML = "";
+        document.getElementById("sanction").innerHTML = "";
+        $("#bank_share_num").val("");
+        $("#bank_share_num").prop('readonly', true);
+        $("#vpf_num").val("");
+        $("#vpf_num").prop('readonly', false);
+        $("#own_share_num").val("");
+        $("#own_share_num").prop('readonly', false);
+        $("#apply_amount").val("");
+        $("#apply_amount").prop('readonly', false);
+
+        $("#apply_amount10").val("");
+        $("#apply_amount10").prop('readonly', false);
+
+        $("#apply_amount3").val("");
+        $("#apply_amount3").prop('readonly', false);
+        $("#apply_amount2").val("");
+        $("#apply_amount2").prop('readonly', false);
+
+        $("#apply_amount4").val("");
+        $("#apply_amount4").prop('readonly', false);
+        $("#apply_amount5").val("");
+        $("#apply_amount5").prop('readonly', false);
+       // //debugger;
+        CommonApiGET('/Payroll/Masters/getLoanPurpose', function (respData) {
+           // //debugger;
+            orgType = respData;
+            document.getElementById("multply").innerHTML = "";
+            bindPruposeNames(orgType);
+        });
+    });
+
+    $("#btnobshare").click(function () {
+
+        var empId = $("#hdnEmpCode").val();
+
+        if (empId == "") {
+            showGlobalModal("I#Required Field#Please select Emp Code.");
+            return false;
+        } else {
+            CommonApiGET('/Payroll/Masters/getOBShareData?emp_code=' + empId, function (respData) {
+
+                orgData = respData;
+                fillDataobshare(respData);
+
+
+            });
+        }
+
+
+
+    });
+
+
+    function bindPruposeNames(respData) {
+        ////debugger;
+        respData.forEach(function (x) {
+            var select = document.getElementById("example-select");
+            var myOption = document.createElement("option");
+            myOption.text = x.name;
+            myOption.value = x.id;
+            select.add(myOption);
+        });
+    }
+    function bindPruposeNamesforretire(respData) {
+        //debugger;
+        var select = document.getElementById("example-select");
+        //select.innerText = null;
+        RemoveOldOptions();
+        respData.forEach(function (x) {
+            var select = document.getElementById("example-select");
+            
+            var myOption = document.createElement("option");
+            myOption.text = x.name;
+            myOption.value = x.id;
+            //select.innerText = null;
+            //var length = select.options.length;
+            //for (i = length - 1; i >= 0; i--) {
+            //    select.options[i] = null;
+            //}
+            select.add(myOption);
+        });
+    }
+    function RemoveOldOptions() {
+        //debugger;
+        var selopt = document.getElementById("example-select");
+        var length = selopt.options.length;
+        for (i = length - 1; i >= 1; i--) {
+            selopt.options[i] = null;
+        }
+    }
+    
+       
+    function getDetailsByLoanType(id) {
+       // //debugger;
+        
+        $('#documents').empty();
+        var type = id;
+
+        orgType.map(function (orgtype) {
+            if (orgtype.id == type) {
+               // //debugger;
+                toMultiply = orgtype.value;
+                var total_basic = (basic_and_da * toMultiply).toFixed(2);
+                document.getElementById("multply").innerHTML = toMultiply;
+                document.getElementById("purchase_mul").innerHTML = toMultiply;
+                document.getElementById("basic_elg").innerHTML = total_basic;
+                document.getElementById("purchase_elg").innerHTML = total_basic;
+
+                document.getElementById("basic_Da_elg").innerHTML = total_basic;
+            }
+        });
+
+        if (type != "Select Loan Type") {
+
+            $("#bank_share_num").val("");
+            $("#bank_share_num").prop('readonly', true);
+            $("#vpf_num").val("");
+            $("#vpf_num").prop('readonly', false);
+            $("#own_share_num").val("");
+            $("#own_share_num").prop('readonly', false);
+            $("#apply_amount3").val("");
+            $("#apply_amount3").prop('readonly', false);
+            $("#total_recommend").val("");
+            $("#total_recommend").prop('readonly', false);
+            document.getElementById("least10").innerHTML = "";
+            document.getElementById("least").innerHTML = "";
+            document.getElementById("least2").innerHTML = "";
+            document.getElementById("least3").innerHTML = "";
+            document.getElementById("least4").innerHTML = "";
+            document.getElementById("least5").innerHTML = "";
+            document.getElementById("total_recommend").innerHTML = "";
+            document.getElementById("sanction").innerHTML = "";
+            $("#bank_share_num").val("");
+            $("#bank_share_num").prop('readonly', true);
+            $("#vpf_num").val("");
+            $("#vpf_num").prop('readonly', false);
+            $("#own_share_num").val("");
+            $("#own_share_num").prop('readonly', false);
+            $("#apply_amount").val("");
+            $("#apply_amount").prop('readonly', false);
+
+            $("#apply_amount10").val("");
+            $("#apply_amount10").prop('readonly', false);
+            $("#apply_amount3").val("");
+            $("#apply_amount3").prop('readonly', false);
+            $("#apply_amount2").val("");
+            $("#apply_amount2").prop('readonly', false);
+
+            $("#apply_amount4").val("");
+            $("#apply_amount4").prop('readonly', false);
+            $("#apply_amount5").val("");
+            $("#apply_amount5").prop('readonly', false);
+            $('#documents').empty();
+            
+            if (type == "2" || type == "4") { //medical, education, marriage, ccf loans
+                if (empId == "") {
+                    showGlobalModal("I#Required Field#Please Select Emp Code.");
+                } else {
+                    CommonApiGET("/Payroll/Masters/getOptionByPFType?type=" + type + "&EmpId=" + empId, function (respData) {
+
+                        
+
+                        var cert = [];
+
+                       
+                        var dataObj = respData;
+
+                        cert.push(dataObj.loan);
+                        var purpose = dataObj.purpose;
+
+                        //if (purpose.startsWith("E")) {
+                        //    showGlobalModal(purpose);
+                        //    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                        //}
+                        var certData = cert[0];
+                        
+                        //var generalData = general[0];
+                        $("#Eligibility").hide();
+                        $("#EligibilityCriteria").show();
+                        $("#ccf_loans").hide();
+                        $('#documents').add();
+                        $("#premium_eligibility").hide();
+                        $("#fianl").hide();
+                        $("#90_percent").hide();
+                        $("#licPolicy").hide();
+                        $("#purchase").hide();
+                        $("#Covid").hide();
+                        $("#bank_share_num").val("");
+                        $("#bank_share_num").prop('readonly', true);
+                        for (i = 0; i < certData.length; i++) {
+                            var value = i;
+                            var id = ++value;
+                            $('<div class="col-md-3"><label>' + id + '. ' + certData[i].name + '</label> </div><div class="col-md-9"><input type = "radio" class = "postageyes" id ="new ' + id + '" name = ' + certData[i].name + ' value = "' + certData[i].id + ',' + certData[i].name + ' ,Yes"/> <label for="new ' + id + '"><span><span></span></span>Yes</label></label><label><input type = "radio" class = "postageyes" id =' + id + '  name = ' + certData[i].name + ' value = "' + certData[i].id + ',' + certData[i].name + ' ,No"/><label for=' + id + '><span><span></span></span>No</label></div><br />').appendTo('#documents');
+                            // $('<label>' + id + '. ' + respData[i].name + '<input type = "radio" id = "postageyes" name = ' + respData[i].name + ' value = "' + respData[i].id + ',' + respData[i].name + ' ,Yes"/> <label><span><span></span></span>Yes</label></label><label><input type = "radio" id = "postageyes" name = ' + respData[i].name + ' value = "' + respData[i].id + ',' + respData[i].name + ' ,No"/><label><span><span></span></span>No</label></label><br />').appendTo('#documents');
+                        }
+                    });
+                }
+
+            }
+            else if (type == "3") {//lic policy
+                
+                $("#Eligibility").hide();
+                $("#EligibilityCriteria").hide();
+                $("#ccf_loans").hide();
+                $("#premium_eligibility").show();
+                $("#fianl").hide();
+                $("#90_percent").hide();
+                $("#licPolicy").show();
+                $("#purchase").hide();
+                $("#Covid").hide();
+            }
+            else if (type == "10") {//ccf policy
+
+                if (empId == "") {
+                    showGlobalModal("I#Required Field#Please Select Emp Code.");
+                } else {
+                    CommonApiGET("/Payroll/Masters/getOptionByPFType?type=" + type + "&EmpId=" + empId, function (respData) {
+                                               
+
+                        var cert = [];
+                        
+                        var dataObj = respData;
+
+                        cert.push(dataObj.loan);
+                        var purpose = dataObj.purpose;
+
+                        //if (purpose.startsWith("E")) {
+                        //    showGlobalModal(purpose);
+                        //    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                        //}
+                        var certData = cert[0];
+                        $("#Eligibility").hide();
+                        $("#EligibilityCriteria").hide();
+                        $("#ccf_loans").show();
+                        $("#premium_eligibility").hide();
+                        $("#fianl").hide();
+                        $("#90_percent").hide();
+                        $("#licPolicy").hide();
+                        $("#purchase").hide();
+                        $("#Covid").hide();
+                        for (i = 0; i < certData.length; i++) {
+                            var value = i;
+                            var id = ++value;
+                            $('<div class="col-md-3"><label>' + id + '. ' + certData[i].name + '</label></div><div class="col-md-9"><input type = "radio" id="new ' + id + '" class = "postageyes" name = ' + certData[i].name + ' value = "' + certData[i].id + ',' + certData[i].name + ' ,Yes"/> <label for="new ' + id + '"><span><span></span></span>Yes</label></label><label><input type = "radio" class = "postageyes" id=' + id + ' name = ' + certData[i].name + ' value = "' + certData[i].id + ',' + respData[i].name + ' ,No"/><label for=' + id + '><span><span></span></span>No</label></div><br />').appendTo('#documents');
+                            //$('<label>' + id + '. ' + respData[i].name + '<input type = "radio" id = "postageyes" name = ' + respData[i].name + ' value = "' + respData[i].id + ',' + respData[i].name + ' ,Yes"/> <label><span><span></span></span>Yes</label></label><label><input type = "radio" id = "postageyes" name = ' + respData[i].name + ' value = "' + respData[i].id + ',' + respData[i].name + ' ,No"/><label><span><span></span></span>No</label></label><br />').appendTo('#documents');
+                        }
+                    });
+                }
+            }
+            else if (type == "9") {// final settlemet
+                ////debugger;
+                CommonApiGET("/Payroll/Masters/getOptionByPFType?type=" + type + "&EmpId=" + empId, function (respData) {
+                                      
+
+                    var cert = [];
+                    
+                    var dataObj = respData;
+
+                    cert.push(dataObj.loan);
+                    var purpose = dataObj.purpose;
+                    //if (purpose.startsWith("E")) {
+                    //    showGlobalModal(purpose);
+                    //    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                    //}
+                })
+                $("#Eligibility").hide();
+                $("#EligibilityCriteria").hide();
+                $("#ccf_loans").hide();
+                $("#premium_eligibility").hide();
+                $("#90_percent").hide();
+                $("#fianl").show();
+                $("#licPolicy").hide();
+                $("#purchase").hide();
+                $("#Covid").hide();
+               // //debugger;
+                var total_settlement = own_share1 + bank_share1 + vpf1;
+                document.getElementById("total_recommend").innerHTML = total_settlement;
+                
+                $("#bank_share_num").val(bank_share1);
+                $("#bank_share_num").prop('readonly', true);
+                $("#vpf_num").val(vpf1);
+                $("#vpf_num").prop('readonly', false);
+                $("#own_share_num").val(own_share1);
+                $("#own_share_num").prop('readonly', false);
+                $("#apply_amount3").val(total_settlement);
+                $("#apply_amount3").prop('readonly', false);
+                                
+
+            }
+            else if (type == "8") { //90 percent
+
+                //$('#apply_amount4').on('mouseup keyup', function () {
+                //    $(this).val(Math.min(apply_amount * 90 / 100, $(this).val()));
+                //});
+                if (empId == "") {
+                    showGlobalModal("I#Required Field#Please Select Emp Code.");
+                } else {
+                    CommonApiGET("/Payroll/Masters/getOptionByPFType?type=" + type + "&EmpId=" + empId, function (respData) {
+
+                        
+
+                        var cert = [];
+
+
+                        var dataObj = respData;
+
+                        cert.push(dataObj.loan);
+                        var purpose = dataObj.purpose;
+                        //if (purpose.startsWith("E")) {
+                        //    showGlobalModal(purpose);
+                        //    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                        //}
+                        var certData = cert[0];
+
+                        $("#Eligibility").hide();
+                        $("#EligibilityCriteria").hide();
+                        $("#ccf_loans").hide();
+                        $('#documents').add();
+                        $("#premium_eligibility").hide();
+                        $("#fianl").hide();
+                        $("#90_percent").show();
+                        $("#licPolicy").hide();
+                        $("#purchase").hide();
+                        $("#Covid").hide();
+                        for (i = 0; i < certData.length; i++) {
+                            var value = i;
+                            var id = ++value;
+                            $('<div class="col-md-3"><label>' + id + '. ' + certData[i].name + '</label></div><div class="col-md-9"><input type = "radio" id="new ' + id + '" class = "postageyes" name = ' + certData[i].name + ' value = "' + certData[i].id + ',' + certData[i].name + ' ,Yes"/> <label for="new ' + id + '"><span><span></span></span>Yes</label></label><label><input type = "radio" id=' + id + ' class = "postageyes" name = ' + certData[i].name + ' value = "' + certData[i].id + ',' + certData[i].name + ' ,No"/><label for=' + id + '><span><span></span></span>No</label></div><br />').appendTo('#documents');
+                            // $('<label>' + id + '. ' + respData[i].name + '<input type = "radio" id = "postageyes" name = ' + respData[i].name + ' value = "' + respData[i].id + ',' + respData[i].name + ' ,Yes"/> <label><span><span></span></span>Yes</label></label><label><input type = "radio" id = "postageyes" name = ' + respData[i].name + ' value = "' + respData[i].id + ',' + respData[i].name + ' ,No"/><label><span><span></span></span>No</label></label><br />').appendTo('#documents');
+                        }
+                    });
+                }
+            } else if (type == "6" || type == "7") {
+                if (empId == "") {
+                    showGlobalModal("I#Required Field#Please Select Emp Code.");
+                } else {
+                    CommonApiGET("/Payroll/Masters/getOptionByPFType?type=" + type + "&EmpId=" + empId, function (respData) {
+                        
+                        var cert = [];
+                        
+                        var dataObj = respData;
+
+                        cert.push(dataObj.loan);
+                        var purpose = dataObj.purpose;
+                        //if (purpose.startsWith("E")) {
+                        //    showGlobalModal(purpose);
+                        //    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                        //}
+                        var certData = cert[0];
+
+                        $('#documents').add();
+                        $("#Eligibility").hide();
+                        $("#EligibilityCriteria").hide();
+                        $("#ccf_loans").hide();
+                        $("#premium_eligibility").hide();
+                        $("#fianl").hide();
+                        $("#licPolicy").hide();
+                        $("#purchase").show();
+                        $("#Covid").hide();
+                        for (i = 0; i < certData.length; i++) {
+                            var value = i;
+                            var id = ++value;
+                            $('<div class="col-md-5"><label>' + id + '. ' + certData[i].name + '</label></div><div class="col-md-7"><input type = "radio" id="new ' + id + '" class = "postageyes" name = ' + certData[i].name + ' value = "' + certData[i].id + ',' + certData[i].name + ' ,Yes"/> <label for="new ' + id + '"><span><span></span></span>Yes</label></label><label><input type = "radio" id=' + id + ' class = "postageyes" name = ' + certData[i].name + ' value = "' + certData[i].id + ',' + certData[i].name + ' ,No"/><label for=' + id + '><span><span></span></span>No</label></div><br />').appendTo('#documents');
+                            // $('<label>' + id + '. ' + respData[i].name + '<input type = "radio" id = "postageyes" name = ' + respData[i].name + ' value = "' + respData[i].id + ',' + respData[i].name + ' ,Yes"/> <label><span><span></span></span>Yes</label></label><label><input type = "radio" id = "postageyes" name = ' + respData[i].name + ' value = "' + respData[i].id + ',' + respData[i].name + ' ,No"/><label><span><span></span></span>No</label></label><br />').appendTo('#documents');
+                        }
+                    });
+                }
+            }
+            else if (type == "19") {
+              //  //debugger;
+                if (empId == "") {
+                    showGlobalModal("I#Required Field#Please Select Emp Code.");
+                } else {
+                    CommonApiGET("/Payroll/Masters/getOptionByPFType?type=" + type + "&EmpId=" + empId, function (respData) {
+                        
+                        var cert = [];
+
+                        var dataObj = respData;
+                        cert.push(dataObj.loan);
+                        var purpose = dataObj.purpose;
+
+                        var certData = cert[0];
+
+                        $('#documents').add();
+                        $("#Eligibility").hide();
+                        $("#EligibilityCriteria").hide();
+                        $("#ccf_loans").hide();
+                        $("#premium_eligibility").hide();
+                        $("#fianl").hide();
+                        $("#licPolicy").hide();
+                        $("#purchase").hide();
+                        $("#Covid").show();
+                        for (i = 0; i < certData.length; i++) {
+                            var value = i;
+                            var id = ++value;
+                            $('<div class="col-md-5"><label>' + id + '. ' + certData[i].name + '</label></div><div class="col-md-7"><input type = "radio" id="new ' + id + '" class = "postageyes" name = ' + certData[i].name + ' value = "' + certData[i].id + ',' + certData[i].name + ' ,Yes"/> <label for="new ' + id + '"><span><span></span></span>Yes</label></label><label><input type = "radio" id=' + id + ' class = "postageyes" name = ' + certData[i].name + ' value = "' + certData[i].id + ',' + certData[i].name + ' ,No"/><label for=' + id + '><span><span></span></span>No</label></div><br />').appendTo('#documents');
+                            // $('<label>' + id + '. ' + respData[i].name + '<input type = "radio" id = "postageyes" name = ' + respData[i].name + ' value = "' + respData[i].id + ',' + respData[i].name + ' ,Yes"/> <label><span><span></span></span>Yes</label></label><label><input type = "radio" id = "postageyes" name = ' + respData[i].name + ' value = "' + respData[i].id + ',' + respData[i].name + ' ,No"/><label><span><span></span></span>No</label></label><br />').appendTo('#documents');
+                        }
+                    });
+                }
+            }
+            else {
+
+                if (empId == "") {
+                    showGlobalModal("I#Required Field#Please Select Emp Code.");
+                } else {
+                    CommonApiGET("/Payroll/Masters/getOptionByPFType?type=" + type + "&EmpId=" + empId, function (respData) {
+                        
+                        var cert = [];
+
+                        var dataObj = respData;
+
+                        cert.push(dataObj.loan);
+                        var purpose = dataObj.purpose;
+                        //if (purpose.startsWith("E")) {
+                        //    showGlobalModal(purpose);
+                        //    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                        //}
+                        var certData = cert[0];
+
+                        $('#documents').add();
+                        $("#Eligibility").show();
+                        $("#EligibilityCriteria").hide();
+                        $("#ccf_loans").hide();
+                        $("#premium_eligibility").hide();
+                        $("#fianl").hide();
+                        $("#licPolicy").hide();
+                        $("#purchase").hide();
+                        $("#Covid").hide();
+                        for (i = 0; i < certData.length; i++) {
+                            var value = i;
+                            var id = ++value;
+                            $('<div class="col-md-5"><label>' + id + '. ' + certData[i].name + '</label></div><div class="col-md-7"><input type = "radio" id="new ' + id + '"  class = "postageyes" name = ' + certData[i].name + ' value = "' + certData[i].id + ',' + certData[i].name + ' ,Yes"/> <label for="new ' + id + '"><span><span></span></span>Yes</label></label><label><input type = "radio" id=' + id + ' class = "postageyes" name = ' + certData[i].name + ' value = "' + certData[i].id + ',' + certData[i].name + ' ,No"/><label for=' + id + '><span><span></span></span>No</label></div><br />').appendTo('#documents');
+                            // $('<label>' + id + '. ' + respData[i].name + '<input type = "radio" id = "postageyes" name = ' + respData[i].name + ' value = "' + respData[i].id + ',' + respData[i].name + ' ,Yes"/> <label><span><span></span></span>Yes</label></label><label><input type = "radio" id = "postageyes" name = ' + respData[i].name + ' value = "' + respData[i].id + ',' + respData[i].name + ' ,No"/><label><span><span></span></span>No</label></label><br />').appendTo('#documents');
+                        }
+                    });
+                }
+            }
+        }
+
+    }
+
+    function getDataAfterEmpSearch1440(empcode) {
+       // //debugger;
+        orgData = [];
+        $("#bank_share_num").val("");
+        $("#bank_share_num").prop('readonly', true);
+        $("#vpf_num").val("");
+        $("#vpf_num").prop('readonly', false);
+        $("#own_share_num").val("");
+        $("#own_share_num").prop('readonly', false);
+        $("#apply_amount3").val("");
+        $("#apply_amount3").prop('readonly', false);
+        $("#apply_amount2").val("");
+        $("#apply_amount2").prop('readonly', false);
+        $("#apply_amount").val("");
+        $("#apply_amount").prop('readonly', false);
+
+        $("#apply_amount10").val("");
+        $("#apply_amount10").prop('readonly', false);
+        $("#purchase_amount").val("");
+        $("#purchase_amount").prop('readonly', false);
+        $("#least").val("");
+        $("#least10").val("");
+        $('#hdnEmpCode').val(empcode);
+        $('#documents').empty();
+       // //debugger;
+        //$('#documents').empty();
+        document.getElementById("least").innerHTML = "";
+        document.getElementById("least10").innerHTML = "";
+        document.getElementById("total_recommend").innerHTML = "";
+        document.getElementById("purchase_elg").innerHTML = "";
+        document.getElementById("purcahse_own_elg").innerHTML = "";
+        document.getElementById("sanction").innerHTML = "";
+
+        empId = $("#hdnEmpCode").val();
+
+        CommonApiGET('/Payroll/Masters/getPfNonPayableData?emp_code=' + empcode, function (respData) {
+
+            //var purpose_type = {
+            //    id: "Select Loan Type",
+            //    name: "Select Loan Type"
+            //};
+            //orgType.push(purpose_type);
+
+            $('#example-select').empty();
+            var select = document.getElementById("example-select");
+            var myOption = document.createElement("option");
+            myOption.text = "Select Loan Type";
+            myOption.value = "Select Loan Type";
+            select.add(myOption);
+            bindPruposeNames(orgType);
+            orgData = respData;
+            fillData(respData);
+            loaddata = respData;
+        });
+    }
+    $("#cancelBtn").click(function () {
+        setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+    });
+    function fillDataobshare(respData) {
+        //debugger;
+        if (respData.startsWith("E#")) {
+            showGlobalModal("I#Required Field#Data Not Found.");
+            //setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+        } else {
+            //debugger;
+            var resShare = [];
+            var resInst = [];
+            var resPrev = [];
+            var resPres = [];
+            var respf1 = [];
+            var respf2 = [];
+            var dataObj = JSON.parse(respData);
+            resShare.push(dataObj.share);
+            resInst.push(dataObj.inst);
+            resPrev.push(dataObj.prev);
+            resPres.push(dataObj.pres);
+            respf1.push(dataObj.pf1);
+            respf2.push(dataObj.pf2);
+            var shareData = resShare[0];
+            var instData = resInst[0];
+            var prevData = resPrev[0]
+            var presData = resPres[0];
+            var pf1 = respf1[0];
+            var pf2 = respf2[0];
+            var share = shareData[0];
+            var inst = instData[0];
+            var prev = prevData[0];
+            var pres = presData[0];
+            var Opf1 = pf1.toFixed(2);
+            var Opf2 = pf2.toFixed(2);
+            document.getElementById("ownshare").innerHTML = share.fund_own;
+            document.getElementById("bankshare").innerHTML = share.fund_bank;
+            document.getElementById("fund_vpf").innerHTML = share.fund_vpf;
+            //fund_vpf
+
+            //2. Interest
+            document.getElementById("inst_own").innerHTML = inst.ist_own;
+            document.getElementById("inst_bank").innerHTML = inst.ist_bank;
+            document.getElementById("inst_vpf").innerHTML = inst.ist_vpf;
+
+
+            //3. Fund + Interest
+            document.getElementById("own_inst").innerHTML = (parseFloat(share.fund_own) + parseFloat(inst.ist_own)).toFixed(2);
+            document.getElementById("bank_inst").innerHTML = (parseFloat(share.fund_bank) + parseFloat(inst.ist_bank)).toFixed(2);
+            document.getElementById("vpf_inst").innerHTML = (parseFloat(share.fund_vpf) + parseFloat(inst.ist_vpf)).toFixed(2);
+            //debugger;
+            //4. Prev year available
+            document.getElementById("prev_own").innerHTML = prev.prev_own;
+            document.getElementById("prev_vpf").innerHTML = prev.prev_vpf;
+            document.getElementById("prev_bank").innerHTML = prev.prev_bank;
+            //5. Pres year available
+            //debugger;
+            if (pres != undefined) {
+                document.getElementById("Outpf1").innerHTML = pres.pf1;
+                document.getElementById("Outpf2").innerHTML = pres.pf2;
+                document.getElementById("pres_own").innerHTML = pres.pres_own;
+                document.getElementById("pres_vpf").innerHTML = pres.pres_vpf;
+                document.getElementById("pres_bank").innerHTML = pres.pres_bank;
+            } else {
+                //debugger;
+                document.getElementById("Outpf1").innerHTML = "0.00";
+                document.getElementById("Outpf2").innerHTML = "0.00";
+                document.getElementById("pres_own").innerHTML = "0.00";
+                document.getElementById("pres_vpf").innerHTML = "0.00";
+                document.getElementById("pres_bank").innerHTML = "0.00";
+
+            }
+
+
+            document.getElementById("Outpf1").innerHTML = Opf1;
+            document.getElementById("Outpf2").innerHTML = Opf2;
+            var p1 = "";
+            var p2 = "";
+            var p = "0";
+
+            if (Opf1 != "") {
+                p1 = Opf1;
+            }
+            else {
+                p1 = p;
+            }
+            if (Opf2 != "") {
+                p2 = Opf2;
+            }
+            else {
+                p2 = p;
+            }
+            if (prev.prev_own != "") {
+                prev.prev_own = prev.prev_own;
+            }
+            else {
+                prev.prev_own = "0"
+            }
+            if (prev.prev_vpf != "") {
+                prev.prev_vpf = prev.prev_vpf;
+            }
+            else {
+                prev.prev_vpf = "0"
+            }
+            if (prev.prev_bank != "") {
+                prev.prev_bank = prev.prev_bank;
+            }
+            else {
+                prev.prev_bank = "0"
+            }
+            if (pres != undefined) {
+                if (pres.pres_own != "") {
+                    pres.pres_own = pres.pres_own;
+                }
+                else {
+                    pres.pres_own = "0"
+                }
+                if (pres.pres_vpf != "") {
+                    pres.pres_vpf = pres.pres_vpf;
+                }
+                else {
+                    pres.pres_vpf = "0"
+                }
+                if (pres.pres_bank != "") {
+                    pres.pres_bank = pres.pres_bank;
+                }
+                else {
+                    pres.pres_bank = "0"
+                }
+            }
+
+            //debugger;
+            document.getElementById("prev_own").innerHTML = prev.prev_own;
+            document.getElementById("prev_vpf").innerHTML = prev.prev_vpf;
+            document.getElementById("prev_bank").innerHTML = prev.prev_bank;
+            document.getElementById("totalpf").innerHTML = (parseFloat(p1) + parseFloat(p2)).toFixed(2);
+
+            if (pres != undefined) {
+                document.getElementById("btown_inst").innerHTML = (parseFloat(prev.prev_own) + parseFloat(pres.pres_own)).toFixed(2);
+                document.getElementById("btvpf_inst").innerHTML = (parseFloat(prev.prev_vpf) + parseFloat(pres.pres_vpf)).toFixed(2);
+                document.getElementById("btbank_inst").innerHTML = (parseFloat(prev.prev_bank) + parseFloat(pres.pres_bank)).toFixed(2);
+                document.getElementById("dtotal").innerHTML = ((parseFloat(share.fund_own) + parseFloat(inst.ist_own)) - ((parseFloat(prev.prev_own) + parseFloat(pres.pres_own) + (parseFloat(p1) + parseFloat(p2))))).toFixed(2);
+                document.getElementById("dtotal1").innerHTML = ((parseFloat(share.fund_vpf) + parseFloat(inst.ist_vpf)) - ((parseFloat(prev.prev_vpf) + parseFloat(pres.pres_vpf) + (0.00 + 0.00)))).toFixed(2);
+                document.getElementById("dtotal2").innerHTML = (parseFloat(share.fund_bank) + parseFloat(inst.ist_bank) - ((parseFloat(prev.prev_bank) + parseFloat(pres.pres_bank) + (0.00 + 0.00)))).toFixed(2);
+                document.getElementById("totalfinal").innerHTML = (((parseFloat(share.fund_own) + parseFloat(inst.ist_own)) - ((parseFloat(prev.prev_own) + parseFloat(pres.pres_own) + (parseFloat(p1) + parseFloat(p2))))) + (parseFloat(share.fund_bank) + parseFloat(inst.ist_bank) - ((parseFloat(prev.prev_bank) + parseFloat(pres.pres_bank) + (0.00 + 0.00)))) + (parseFloat(share.fund_vpf) + parseFloat(inst.ist_vpf)) - ((parseFloat(prev.prev_vpf) + parseFloat(pres.pres_vpf) + (0.00 + 0.00)))).toFixed(2);
+            }
+            else {
+                document.getElementById("btown_inst").innerHTML = (parseFloat(prev.prev_own)).toFixed(2);
+                document.getElementById("btvpf_inst").innerHTML = (parseFloat(prev.prev_vpf)).toFixed(2);
+                document.getElementById("btbank_inst").innerHTML = (parseFloat(prev.prev_bank)).toFixed(2);
+                document.getElementById("dtotal").innerHTML = ((parseFloat(share.fund_own) + parseFloat(inst.ist_own)) - ((parseFloat(prev.prev_own) + (parseFloat(p1) + parseFloat(p2))))).toFixed(2);
+                document.getElementById("dtotal1").innerHTML = ((parseFloat(share.fund_vpf) + parseFloat(inst.ist_vpf)) - ((parseFloat(prev.prev_vpf) + (0.00 + 0.00)))).toFixed(2);
+                document.getElementById("dtotal2").innerHTML = (parseFloat(share.fund_bank) + parseFloat(inst.ist_bank) - ((parseFloat(prev.prev_bank) + (0.00 + 0.00)))).toFixed(2);
+                document.getElementById("totalfinal").innerHTML = (((parseFloat(share.fund_own) + parseFloat(inst.ist_own)) - ((parseFloat(prev.prev_own) + (parseFloat(p1) + parseFloat(p2))))) + (parseFloat(share.fund_bank) + parseFloat(inst.ist_bank) - ((parseFloat(prev.prev_bank) + (0.00 + 0.00)))) + (parseFloat(share.fund_vpf) + parseFloat(inst.ist_vpf)) - ((parseFloat(prev.prev_vpf) + (0.00 + 0.00)))).toFixed(2);
+            }
+        }
+    }
+    function fillData(respData) {
+        //debugger;
+        var PurposeType = $("#example-select").val();
+
+        if (PurposeType == "Select Loan Type" || PurposeType == "" || PurposeType == null || PurposeType == "undefined") {
+            $("#btnSubmit").show();
+            $("#btnUpdate").hide();
+            $("#btnDelete").hide();
+        }
+        else {
+            $("#btnSubmit").hide();
+            $("#btnUpdate").show();
+            $("#btnDelete").show();
+        }
+        if (respData.startsWith("E#")) {
+            showGlobalModal(respData);
+            setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+        } else {
+            var cndObj = JSON.parse(respData).cert;
+            if ("cert" in JSON.parse(respData)) {
+                $("#cancelBtn").attr("disabled", false);
+                $("#ob_share").attr("disabled", true);
+                // $("#btnSubmit").attr("disabled", true);
+                $("#btnSubmit").hide();
+                $("#btnUpdate").show();
+                $("#btnDelete").show();
+
+                var general = [];
+                var cert = [];
+                var loans = [];
+                var dataObj = JSON.parse(respData);
+                general.push(dataObj.loan);
+                cert.push(dataObj.cert);
+                loans.push(dataObj.loans);
+                var generalData = general[0];
+                var certData = cert[0];
+                var loanData = loans[0];
+                var loansData = loanData[0]
+                orgGeneral = generalData[0];
+                orgCert = certData;
+
+                var basic = orgGeneral.basic;
+                var da = orgGeneral.da_percent;
+                var pf_no = orgGeneral.pf_no;
+                var own_share = orgGeneral.own_share;
+                var bank_share = orgGeneral.bank_share;
+                var vpf = orgGeneral.vpf;
+                var total = own_share + bank_share + vpf;
+
+                $("#apply_amount").val(orgGeneral.amount_applied);
+                $("#apply_amount").prop('readonly', false);
+
+                $("#apply_amount10").val(orgGeneral.amount_applied);
+                $("#apply_amount10").prop('readonly', false);
+
+                $("#apply_amount2").val(orgGeneral.amount_applied);
+                $("#apply_amount2").prop('readonly', false);
+
+                $("#apply_amount3").val(orgGeneral.amount_applied);
+                $("#apply_amount3").prop('readonly', false);
+
+                $("#apply_amount4").val(orgGeneral.amount_applied);
+                $("#apply_amount4").prop('readonly', false);
+
+                $("#apply_amount5").val(orgGeneral.amount_applied);
+                $("#apply_amount5").prop('readonly', false);
+
+                $("#purchase_amount").val(orgGeneral.amount_applied);
+                $("#purchase_amount").prop('readonly', false);
+
+                document.getElementById("sanction").innerHTML = orgGeneral.sanction;
+
+                if (orgGeneral.purpose_of_advance == "2" ||
+                    orgGeneral.purpose_of_advance == "4") {
+                    $("#Eligibility").hide();
+                    $("#EligibilityCriteria").show();
+                    $("#ccf_loans").hide();
+                    $("#premium_eligibility").hide();
+                    $("#fianl").hide();
+                    $("#90_percent").hide();
+                    $("#licPolicy").hide();
+                    $("#purchase").hide();
+                    $("#Covid").hide();
+                    $('#documents').empty();
+
+                    for (i = 0; i < orgCert.length; i++) {
+
+                        var value = i;
+                        var id = ++value;
+                        if (orgCert[i].status == "Yes") {
+                            $('<div class="col-md-3"><label>' + id + '. ' + orgCert[i].cert_name + '</label></div><div class="col-md-9"><input type = "radio" id = "postageyes" name = ' + orgCert[i].cert_name + ' value = "' + orgCert[i].id + ',' + orgCert[i].cert_name + ' ,Yes" checked/> <label><span><span></span></span>Yes</label></label><label><input type = "radio" id = "postageyes" name = ' + orgCert[i].cert_name + ' value = "' + orgCert[i].id + ',' + orgCert[i].cert_name + ' ,No"/><label><span><span></span></span>No</label></div><br />').appendTo('#documents');
+                        } else if (orgCert[i].status == "No") {
+                            $('<div class="col-md-3"><label>' + id + '. ' + orgCert[i].cert_name + '</label></div><div class="col-md-9"><input type = "radio" id = "postageyes" name = ' + orgCert[i].cert_name + ' value = "' + orgCert[i].id + ',' + orgCert[i].cert_name + ' ,Yes"/> <label><span><span></span></span>Yes</label></label><label><input type = "radio" id = "postageyes" name = ' + orgCert[i].cert_name + ' value = "' + orgCert[i].id + ',' + orgCert[i].cert_name + ' ,No" checked/><label><span><span></span></span>No</label></div><br />').appendTo('#documents');
+                        }
+
+                    }
+
+
+                    var own_50 = (loansData.own_share + loansData.vpf) / 2;
+                    if (orgGeneral.amount_applied > own_50) {
+                        document.getElementById("least2").innerHTML = own_50;
+                    } else {
+                        document.getElementById("least2").innerHTML = orgGeneral.amount_applied;
+                    }
+
+
+                }
+                else if (orgGeneral.purpose_of_advance == "9") {
+
+                    //debugger;
+                    $("#Eligibility").hide();
+                    $("#EligibilityCriteria").hide();
+                    $("#licPolicy").hide();
+                    $("#premium_eligibility").hide();
+                    $("#90_percent").hide();
+                    $("#fianl").show();
+                    $("#purchase").hide();
+                    $("#Covid").hide();
+                } else if (orgGeneral.purpose_of_advance == "3") {
+
+
+                    $("#Eligibility").hide();
+                    $("#EligibilityCriteria").hide();
+                    $("#licPolicy").show();
+                    $("#premium_eligibility").hide();
+                    $("#90_percent").hide();
+                    $("#fianl").hide();
+                    $("#purchase").hide();
+                    $("#Covid").hide();
+                    $("#premium_eligibility").show();
+
+                    for (i = 0; i < orgCert.length; i++) {
+
+                        orgCert[i].cert_name
+                        if (i == 0) {
+                            $("#proposed_amount").val(orgCert[i].status);
+                            $("#proposed_amount").prop('readonly', false);
+                        } else if (i == 1) {
+                            $("#premium_amount").val(orgCert[i].status);
+                            $("#premium_amount").prop('readonly', false);
+                        } else if (i == 2) {
+                            $("#premium_name").val(orgCert[i].status);
+                            $("#premium_name").prop('readonly', false);
+                        }
+
+                    }
+
+                    var lic = loansData.own_share + loansData.vpf;
+                    document.getElementById("own_share_lic").innerHTML = lic;
+                    //document.getElementById("own_share_lic").innerHTML = percentage_share_90;
+                    $("#premium_amount_lic").val(orgGeneral.amount_applied);
+                    $("#premium_amount_lic").prop('readonly', false);
+                    if (orgGeneral.amount_applied > lic) {
+                        document.getElementById("least4").innerHTML = lic;
+                    } else {
+                        document.getElementById("least4").innerHTML = orgGeneral.amount_applied;
+                    }
+
+
+                }
+                else if (orgGeneral.purpose_of_advance == "8") {
+
+                    $("#Eligibility").hide();
+                    $("#EligibilityCriteria").hide();
+                    $("#ccf_loans").hide();
+                    $('#documents').add();
+                    $("#premium_eligibility").hide();
+                    $("#fianl").hide();
+                    $("#90_percent").show();
+                    $("#licPolicy").hide();
+                    $("#purchase").hide();
+                    $("#Covid").hide();
+                    $('#documents').empty();
+
+                    for (i = 0; i < orgCert.length; i++) {
+
+                        var value = i;
+                        var id = ++value;
+                        if (orgCert[i].status == "Yes") {
+                            $('<div class="col-md-3"><label>' + id + '. ' + orgCert[i].cert_name + '</label></div><div class="col-md-9"><input type = "radio" id = "postageyes" name = ' + orgCert[i].cert_name + ' value = "' + orgCert[i].id + ',' + orgCert[i].cert_name + ' ,Yes" checked/> <label><span><span></span></span>Yes</label></label><label><input type = "radio" id = "postageyes" name = ' + orgCert[i].cert_name + ' value = "' + orgCert[i].id + ',' + orgCert[i].cert_name + ' ,No"/><label><span><span></span></span>No</label></div><br />').appendTo('#documents');
+                        } else if (orgCert[i].status == "No") {
+                            $('<div class="col-md-3"><label>' + id + '. ' + orgCert[i].cert_name + '</label></div><div class="col-md-9"><input type = "radio" id = "postageyes" name = ' + orgCert[i].cert_name + ' value = "' + orgCert[i].id + ',' + orgCert[i].cert_name + ' ,Yes"/> <label><span><span></span></span>Yes</label></label><label><input type = "radio" id = "postageyes" name = ' + orgCert[i].cert_name + ' value = "' + orgCert[i].id + ',' + orgCert[i].cert_name + ' ,No" checked/><label><span><span></span></span>No</label></div><br />').appendTo('#documents');
+                        }
+
+                    }
+
+                    var own_90 = (loansData.own_share + loansData.bank_share + loansData.vpf) * 90 / 100;
+                    if (orgGeneral.amount_applied > own_90) {
+                        document.getElementById("least3").innerHTML = own_90;
+                    } else {
+                        document.getElementById("least3").innerHTML = orgGeneral.amount_applied;
+                    }
+                }
+                else if (orgGeneral.purpose_of_advance == "10") {
+
+                    $("#Eligibility").hide();
+                    $("#EligibilityCriteria").hide();
+                    $("#ccf_loans").show();
+                    $("#premium_eligibility").hide();
+                    $("#fianl").hide();
+                    $("#90_percent").hide();
+                    $("#licPolicy").hide();
+                    $("#purchase").hide();
+                    $('#documents').empty();
+                    $("#Covid").hide();
+
+                    for (i = 0; i < orgCert.length; i++) {
+
+                        var value = i;
+                        var id = ++value;
+                        if (orgCert[i].status == "Yes") {
+                            $('<div class="col-md-3"><label>' + id + '. ' + orgCert[i].cert_name + '</label></div><div class="col-md-9"><input type = "radio" id = "postageyes" name = ' + orgCert[i].cert_name + ' value = "' + orgCert[i].id + ',' + orgCert[i].cert_name + ' ,Yes" checked/> <label><span><span></span></span>Yes</label></label><label><input type = "radio" id = "postageyes" name = ' + orgCert[i].cert_name + ' value = "' + orgCert[i].id + ',' + orgCert[i].cert_name + ' ,No"/><label><span><span></span></span>No</label></div><br />').appendTo('#documents');
+                        } else if (orgCert[i].status == "No") {
+                            $('<div class="col-md-3"><label>' + id + '. ' + orgCert[i].cert_name + '</label></div><div class="col-md-9"><input type = "radio" id = "postageyes" name = ' + orgCert[i].cert_name + ' value = "' + orgCert[i].id + ',' + orgCert[i].cert_name + ' ,Yes"/> <label><span><span></span></span>Yes</label></label><label><input type = "radio" id = "postageyes" name = ' + orgCert[i].cert_name + ' value = "' + orgCert[i].id + ',' + orgCert[i].cert_name + ' ,No" checked/><label><span><span></span></span>No</label></div><br />').appendTo('#documents');
+                        }
+
+                    }
+
+                    var outstanding = own_share + bank_share + vpf;
+                    document.getElementById("own+bank").innerHTML = outstanding;
+                    $("#outstanding").val(orgGeneral.amount_applied);
+                    $("#outstanding").prop('readonly', true);
+                    var ccf = loansData.own_share + loansData.bank_share;
+                    if (orgGeneral.amount_applied > outstanding) {
+                        document.getElementById("least5").innerHTML = outstanding;
+                    } else {
+                        document.getElementById("least5").innerHTML = orgGeneral.amount_applied;
+                    }
+                }
+                else if (orgGeneral.purpose_of_advance == "6" || orgGeneral.purpose_of_advance == "7") {
+
+                    $("#Eligibility").hide();
+                    $("#EligibilityCriteria").hide();
+                    $("#ccf_loans").hide();
+                    $("#premium_eligibility").hide();
+                    $("#fianl").hide();
+                    $("#90_percent").hide();
+                    $("#licPolicy").hide();
+                    $("#purchase").show();
+                    $("#Covid").hide();
+                    $('#documents').empty();
+
+                    for (i = 0; i < orgCert.length; i++) {
+
+                        var value = i;
+                        var id = ++value;
+                        if (orgCert[i].status == "Yes") {
+                            $('<div class="col-md-5"><label>' + id + '. ' + orgCert[i].cert_name + '</label></div><div class="col-md-7"><input type = "radio" id = "postageyes" name = ' + orgCert[i].cert_name + ' value = "' + orgCert[i].id + ',' + orgCert[i].cert_name + ' ,Yes" checked/> <label><span><span></span></span>Yes</label></label><label><input type = "radio" id = "postageyes" name = ' + orgCert[i].cert_name + ' value = "' + orgCert[i].id + ',' + orgCert[i].cert_name + ' ,No"/><label><span><span></span></span>No</label></div><br />').appendTo('#documents');
+                        } else if (orgCert[i].status == "No") {
+                            $('<div class="col-md-5"><label>' + id + '. ' + orgCert[i].cert_name + '</label></div><div class="col-md-7"><input type = "radio" id = "postageyes" name = ' + orgCert[i].cert_name + ' value = "' + orgCert[i].id + ',' + orgCert[i].cert_name + ' ,Yes"/> <label><span><span></span></span>Yes</label></label><label><input type = "radio" id = "postageyes" name = ' + orgCert[i].cert_name + ' value = "' + orgCert[i].id + ',' + orgCert[i].cert_name + ' ,No" checked/><label><span><span></span></span>No</label></div><br />').appendTo('#documents');
+                        }
+
+                    }
+
+                    var share = loansData.own_share + loansData.bank_share + loansData.vpf;
+                    document.getElementById("purcahse_own_elg").innerHTML = share;
+                    if (orgGeneral.eligibility_amount < share && orgGeneral.eligibility_amount < orgGeneral.amount_applied) {
+
+                        document.getElementById("puchase_least").innerHTML = orgGeneral.eligibility_amount;
+                    }
+                    else if (share < orgGeneral.amount_applied) {
+
+                        document.getElementById("puchase_least").innerHTML = share;
+                    }
+                    else {
+
+                        document.getElementById("puchase_least").innerHTML = orgGeneral.amount_applied;
+                    }
+                }
+
+                else if (orgGeneral.purpose_of_advance == "19") {
+                    //debugger;
+                    $("#Eligibility").hide();
+                    $("#EligibilityCriteria").hide();
+                    $("#ccf_loans").hide();
+                    $("#premium_eligibility").hide();
+                    $("#fianl").hide();
+                    $("#90_percent").hide();
+                    $("#licPolicy").hide();
+                    $("#purchase").hide();
+                    $('#documents').empty();
+                    $("#Covid").show();
+
+                    for (i = 0; i < orgCert.length; i++) {
+
+                        var value = i;
+                        var id = ++value;
+                        if (orgCert[i].status == "Yes") {
+                            $('<div class="col-md-3"><label>' + id + '. ' + orgCert[i].cert_name + '</label></div><div class="col-md-9"><input type = "radio" id = "postageyes" name = ' + orgCert[i].cert_name + ' value = "' + orgCert[i].id + ',' + orgCert[i].cert_name + ' ,Yes" checked/> <label><span><span></span></span>Yes</label></label><label><input type = "radio" id = "postageyes" name = ' + orgCert[i].cert_name + ' value = "' + orgCert[i].id + ',' + orgCert[i].cert_name + ' ,No"/><label><span><span></span></span>No</label></div><br />').appendTo('#documents');
+                        } else if (orgCert[i].status == "No") {
+                            $('<div class="col-md-3"><label>' + id + '. ' + orgCert[i].cert_name + '</label></div><div class="col-md-9"><input type = "radio" id = "postageyes" name = ' + orgCert[i].cert_name + ' value = "' + orgCert[i].id + ',' + orgCert[i].cert_name + ' ,Yes"/> <label><span><span></span></span>Yes</label></label><label><input type = "radio" id = "postageyes" name = ' + orgCert[i].cert_name + ' value = "' + orgCert[i].id + ',' + orgCert[i].cert_name + ' ,No" checked/><label><span><span></span></span>No</label></div><br />').appendTo('#documents');
+                        }
+
+                    }
+                    var basic = loansData.own_share + loansData.vpf + loansData.bank_share;
+                    if (orgGeneral.eligibility_amount < basic && orgGeneral.eligibility_amount < orgGeneral.amount_applied) {
+
+                        document.getElementById("least10").innerHTML = orgGeneral.eligibility_amount;
+                    }
+                    else if (basic < orgGeneral.amount_applied) {
+
+                        document.getElementById("least10").innerHTML = basic;
+                    }
+                    else {
+
+                        document.getElementById("least10").innerHTML = orgGeneral.amount_applied;
+                    }
+                    //document.getElementById("own+bank").innerHTML = outstanding;
+                    //$("#outstanding").val(orgGeneral.amount_applied);
+                    //$("#outstanding").prop('readonly', true);
+                    //var ccf = loansData.own_share + loansData.bank_share;
+                    //if (orgGeneral.amount_applied > outstanding) {
+                    //    document.getElementById("least10").innerHTML = outstanding;
+                    //} else {
+                    //    document.getElementById("least10").innerHTML = orgGeneral.amount_applied;
+                    //}
+                }
+
+                else {
+                    //debugger;
+                    $("#Eligibility").show();
+                    $("#EligibilityCriteria").hide();
+                    $("#ccf_loans").hide();
+                    $("#premium_eligibility").hide();
+                    $("#fianl").hide();
+                    $("#90_percent").hide();
+                    $("#licPolicy").hide();
+                    $("#purchase").hide();
+                    $("#Covid").hide();
+                    $('#documents').empty();
+
+                    for (i = 0; i < orgCert.length; i++) {
+
+                        var value = i;
+                        var id = ++value;
+                        if (orgCert[i].status == "Yes") {
+                            $('<div class="col-md-5"><label>' + id + '. ' + orgCert[i].cert_name + '</label></div><div class="col-md-7"><input type = "radio" id = "postageyes" name = ' + orgCert[i].cert_name + ' value = "' + orgCert[i].id + ',' + orgCert[i].cert_name + ' ,Yes" checked/> <label><span><span></span></span>Yes</label></label><label><input type = "radio" id = "postageyes" name = ' + orgCert[i].cert_name + ' value = "' + orgCert[i].id + ',' + orgCert[i].cert_name + ' ,No"/><label><span><span></span></span>No</label></div><br />').appendTo('#documents');
+                        } else if (orgCert[i].status == "No") {
+                            $('<div class="col-md-5"><label>' + id + '. ' + orgCert[i].cert_name + '</label></div><div class="col-md-7"><input type = "radio" id = "postageyes" name = ' + orgCert[i].cert_name + ' value = "' + orgCert[i].id + ',' + orgCert[i].cert_name + ' ,Yes"/> <label><span><span></span></span>Yes</label></label><label><input type = "radio" id = "postageyes" name = ' + orgCert[i].cert_name + ' value = "' + orgCert[i].id + ',' + orgCert[i].cert_name + ' ,No" checked/><label><span><span></span></span>No</label></div><br />').appendTo('#documents');
+                        }
+
+                    }
+
+                    var basic = loansData.own_share + loansData.vpf;
+                    if (orgGeneral.eligibility_amount < basic && orgGeneral.eligibility_amount < orgGeneral.amount_applied) {
+
+                        document.getElementById("least").innerHTML = orgGeneral.eligibility_amount;
+                    }
+                    else if (basic < orgGeneral.amount_applied) {
+
+                        document.getElementById("least").innerHTML = basic;
+                    }
+                    else {
+
+                        document.getElementById("least").innerHTML = orgGeneral.amount_applied;
+                    }
+                }
+                //debugger;
+                document.getElementById("total_recommend").innerHTML = orgGeneral.total;
+                //alert(orgGeneral.total);
+                var basic_da = parseFloat(basic) + parseFloat(da);
+                basic_and_da = basic_da;
+                var basic_elg = basic_da * toMultiply;
+                document.getElementById("basic_elg").innerHTML = orgGeneral.eligibility_amount;
+                document.getElementById("purchase_elg").innerHTML = orgGeneral.eligibility_amount;
+
+
+                document.getElementById("own_share_elg").innerHTML = orgGeneral.own_share + orgGeneral.vpf;
+
+
+                document.getElementById("basic_Da_elg").innerHTML = orgGeneral.eligibility_amount;
+                //to find the least of i,ii,iii
+
+
+
+                document.getElementById("multply").innerHTML = orgGeneral.month;
+
+                $("#bank_share_num").val(orgGeneral.bank_share);
+                $("#bank_share_num").prop('readonly', true);
+                $("#vpf_num").val(orgGeneral.vpf);
+                $("#vpf_num").prop('readonly', false);
+                $("#own_share_num").val(orgGeneral.own_share);
+                $("#own_share_num").prop('readonly', false);
+                $('#example-select').empty();
+                var select = document.getElementById("example-select");
+                var myOption = document.createElement("option");
+                myOption.text = orgGeneral.purpose_name;
+                select.add(myOption);
+                //apply_amount
+                document.getElementById("pf_no").innerHTML = pf_no;
+                //$("#pf_no").val(pf_no);
+                //debugger;
+                document.getElementById("total_recommend").innerHTML = orgGeneral.bank_share + orgGeneral.own_share + orgGeneral.vpf;
+
+                document.getElementById("basic_da").innerHTML = orgGeneral.rate_of_basic_da;
+                //$("#basic_da").val(basic_da);
+                document.getElementById("50_own_share").innerHTML = orgGeneral.amount_applied;
+
+
+                var basic = loansData.basic;
+                var da = loansData.da_percent;
+                var pf_no = loansData.pf_no;
+                var date_of_join = loansData.date_of_join;
+                var own_share = loansData.own_share;
+                var bank_share = loansData.bank_share;
+                var vpf = loansData.vpf;
+                var total = own_share + bank_share + vpf;
+                apply_amount = own_share + bank_share;
+                document.getElementById("own_share").innerHTML = own_share;
+                //var amount = $("#apply_amount").val();
+
+
+                document.getElementById("own_share_elg").innerHTML = own_share + vpf;
+                document.getElementById("75_own_share").innerHTML = own_share + bank_share;
+
+                document.getElementById("bank_share").innerHTML = bank_share;
+
+
+                document.getElementById("vpf").innerHTML = vpf;
+
+
+
+                var basic_da = parseFloat(basic) + parseFloat(da);
+                basic_and_da = basic_da;
+                var basic_elg = basic_da * toMultiply;
+                //document.getElementById("basic_elg").innerHTML = basic_elg;
+
+
+                percentage_share_50 = (own_share + vpf) / 2;
+                percentage_share_90 = (own_share + bank_share + vpf) * 90 / 100;
+
+                percentage_share_75 = (own_share + bank_share) * 75 / 100;
+                document.getElementById("50_own_share").innerHTML = percentage_share_50;
+                document.getElementById("90_own_share").innerHTML = percentage_share_90;
+
+                document.getElementById("75_own_share").innerHTML = percentage_share_75;
+                //document.getElementById("own_share_lic").innerHTML = percentage_share_90;
+                own_bank = own_share + bank_share + vpf;
+                document.getElementById("own+bank").innerHTML = own_bank;
+                $("input[type=radio]").attr('disabled', false);
+
+            } else {
+                //$('#example-select').empty();
+                //bindPruposeNames(orgType);
+                $("#cancelBtn").attr("disabled", false);
+                $("#ob_share").attr("disabled", false);
+                $("#btnSubmit").attr("disabled", false);
+                var general = [];
+                var dataObj = JSON.parse(respData);
+                general.push(dataObj.loan);
+                var generalData = general[0];
+                orgGeneral = generalData[0];
+
+                basic = orgGeneral.basic;
+                da = orgGeneral.da_percent;
+                var pf_no = orgGeneral.pf_no;
+                var date_of_join = orgGeneral.date_of_join;
+                var own_share = orgGeneral.own_share;
+                var bank_share = orgGeneral.bank_share;
+
+                var vpf = orgGeneral.vpf;
+                var dor = orgGeneral.dor;
+                var today = new Date();
+                var dd = today.getDate();
+                var mm = today.getMonth() + 1; //January is 0!
+
+                var yyyy = today.getFullYear();
+                if (dd < 10) {
+                    dd = '0' + dd;
+                }
+                if (mm < 10) {
+                    mm = '0' + mm;
+                }
+                var today = yyyy + ',' + mm + ',' + dd;
+                var months = monthDiff(
+                    new Date(dor),
+                    new Date(today)
+                );
+                own_share1 = own_share;
+                bank_share1 = bank_share;
+                vpf1 = vpf;
+
+                if (months <= 1) {
+                    //both 90 and full
+                    var loan_purpose = [{ name: "PF Final Settlement", id: 9 }];
+                    loan_purpose.forEach(function (x) {
+                        var select = document.getElementById("example-select");
+                        var myOption = document.createElement("option");
+                        myOption.text = x.name;
+                        myOption.value = x.id;
+                        select.add(myOption);
+                    });
+
+                }
+                //else if (months > 1 && months <= "60") {
+                //90
+                //        var loan_purpose = [{ name: "PF Final Settlement", id: 9 }];
+                //        loan_purpose.forEach(function (x) {
+                //            var select = document.getElementById("example-select");
+                //            var myOption = document.createElement("option");
+                //            myOption.text = x.name;
+                //            myOption.value = x.id;
+                //            select.add(myOption);
+                //        });
+                //}
+                else if (months <= 24) {
+                    CommonApiGET('/Payroll/Masters/getLoanPurposeforretire', function (respData) {
+                        //debugger;
+                        orgType = respData;
+                        document.getElementById("multply").innerHTML = "";
+                        bindPruposeNamesforretire(orgType);
+                    });
+                    //var loan_purpose = [{ name: "NR 90% withdrawl", id: 8 }];
+                    //loan_purpose.forEach(function (x) {
+                    //    var select = document.getElementById("example-select");
+                    //    var myOption = document.createElement("option");
+                    //    myOption.text = x.name;
+                    //    myOption.value = x.id;
+                    //    //select.add(myOption);
+                    //});
+                    //loan_purpose.forEach(function (item) {
+                    //    var select = document.getElementById("example-select");
+                    //    var myoption = document.createElement("option");
+                    //    myoption.text = item.name;
+                    //    myoption.value = item.id;
+                    //    select.add(myoption);
+                    //});
+                }
+                apply_amount = own_share + bank_share;
+                document.getElementById("own_share").innerHTML = own_share;
+
+                //var amount = $("#apply_amount").val();
+
+                $('#own_share_num').on('mouseup keyup', function () {
+                    //debugger;
+                    var leastamt = document.getElementById('sanction').innerHTML;
+                    //var leastamt = $("#apply_amount").val();
+
+                    var ownshar = parseInt($("#own_share_num").val());
+                    var vpf_num = parseInt($("#vpf_num").val());
+                    var bankshar = parseInt($("#bank_share_num").val());
+
+                    if (isNaN(ownshar)) {
+                        ownshar = 0;
+                        document.getElementById("own_share_num").innerHTML = ownshar;
+                    }
+                    if (isNaN(vpf_num)) {
+                        vpf_num = 0;
+                        document.getElementById("vpf_num").innerHTML = vpf_num;
+
+                    }
+                    if (isNaN(bankshar)) {
+                        bankshar = 0;
+                        document.getElementById("bank_share_num").innerHTML = bankshar;
+                    }
+
+                    $(this).val(Math.min(own_share, $(this).val()));
+                    owns = $(this).val();
+
+                    var total = parseFloat(ownshar) + parseFloat(vpf_num);
+                    if (total != "0" && total < sanction) {
+                        var bank = leastamt - total;
+                        total = parseFloat(ownshar) + parseFloat(bank) + parseFloat(vpf_num);
+
+                    }
+                    else {
+                        //if (total != "0") {
+                        var bank = leastamt - parseFloat(owns);
+                        if (bank > 0) {
+                            total = parseFloat(ownshar) + parseFloat(bank) + parseFloat(vpf_num);
+                        }
+                        else {
+                            bank = 0;
+                            total = parseFloat(ownshar) + parseFloat(bank) + parseFloat(vpf_num);
+                        }
+                        //}
+                    }
+                    //debugger;
+                    if (total > sanction) {
+                        showGlobalModal("I#Required Field#Please Select Amount Below Than Eligible Amount.");
+                        $("#own_share_num").val("");
+                        $("#bank_share_num").val("");
+                        $("#vpf_num").val("");
+                        var remain = 0;
+                        document.getElementById("total_recommend").innerHTML = remain;
+                        document.getElementById("bank_share_num").innerHTML = remain;
+                    } else {
+                        document.getElementById("total_recommend").innerHTML = total;
+                        var leastamt = $("#bank_share_num").val(bank);
+                        document.getElementById("bank_share_num").innerHTML = bank;
+                    }
+
+                });
+
+                document.getElementById("own_share_elg").innerHTML = own_share + vpf;
+
+                document.getElementById("75_own_share").innerHTML = own_share + bank_share;
+
+
+                document.getElementById("bank_share").innerHTML = bank_share;
+                //$('#bank_share_num').on('mouseup keyup', function () {
+                //    $(this).val(Math.min(bank_share, $(this).val()));
+                //    banks = $(this).val();
+                //     var leastamt = document.getElementById('sanction').innerHTML;
+                //    var total = parseFloat(owns) + parseFloat(banks) + parseFloat(vpfs);
+                //    var bank = leastamt - total;
+                //     var totals = parseFloat(owns) + parseFloat(bank) + parseFloat(vpfs);
+                //    if (total > sanction) {
+                //        showGlobalModal("I#Required Field#Please Select Amount Below Than Eligible Amount.");
+                //        $("#bank_share_num").val("");
+                //        var remain = total - parseFloat(banks);
+                //        document.getElementById("total_recommend").innerHTML = remain;
+                //          document.getElementById("bank_share_num").innerHTML = remain;
+                //    } else {
+                //        document.getElementById("total_recommend").innerHTML = totals;
+                //        document.getElementById("bank_share_num").innerHTML = bank;
+                //    }
+                //});
+
+                document.getElementById("vpf").innerHTML = vpf;
+                $('#vpf_num').on('mouseup keyup', function () {
+                    $(this).val(Math.min(vpf, $(this).val()));
+                    vpfs = $(this).val();
+                    var leastamt = document.getElementById('sanction').innerHTML;
+                    var ownshar = parseInt($("#own_share_num").val());
+                    var vpf_num = parseInt($("#vpf_num").val());
+                    var bankshar = parseInt($("#bank_share_num").val());
+
+                    if (isNaN(ownshar)) {
+                        ownshar = 0;
+                        document.getElementById("own_share_num").innerHTML = ownshar;
+                    }
+                    if (isNaN(vpf_num)) {
+                        vpf_num = 0;
+                        document.getElementById("vpf_num").innerHTML = vpf_num;
+
+                    }
+                    if (isNaN(bankshar)) {
+                        bankshar = 0;
+                        document.getElementById("bank_share_num").innerHTML = bankshar;
+                    }
+
+                    var total = parseFloat(ownshar) + parseFloat(vpf_num);
+                    if (total != "0" && total < sanction) {
+                        var bank = leastamt - total;
+                        total = parseFloat(ownshar) + parseFloat(bank) + parseFloat(vpf_num);
+
+                    }
+                    else {
+                        //if (total != "0") {
+                        var bank = leastamt - parseFloat(owns);
+                        if (bank > 0) {
+                            total = parseFloat(ownshar) + parseFloat(bank) + parseFloat(vpf_num);
+                        }
+                        else {
+                            bank = 0;
+                            total = parseFloat(ownshar) + parseFloat(bank) + parseFloat(vpf_num);
+                        }
+                        //}
+                    }
+                    //debugger;
+                    if (total > sanction) {
+                        showGlobalModal("I#Required Field#Please Select Amount Below Than Eligible Amount.");
+                        $("#own_share_num").val("");
+                        $("#bank_share_num").val("");
+                        $("#vpf_num").val("");
+                        var remain = 0
+                        document.getElementById("total_recommend").innerHTML = remain;
+                        document.getElementById("bank_share_num").innerHTML = remain;
+                    } else {
+                        document.getElementById("total_recommend").innerHTML = total;
+                        var leastamt = $("#bank_share_num").val(bank);
+                        document.getElementById("bank_share_num").innerHTML = bank;
+                    }
+
+                });
+
+                document.getElementById("pf_no").innerHTML = pf_no;
+                //$("#pf_no").val(pf_no);
+
+
+                //$("#basic_da").val(basic_da);
+
+                percentage_share_50 = (own_share + vpf) / 2;
+                percentage_share_90 = (own_share + bank_share + vpf) * 90 / 100;
+                percentage_share_75 = (own_share + bank_share + vpf) * 75 / 100;
+                document.getElementById("50_own_share").innerHTML = percentage_share_50;
+                document.getElementById("90_own_share").innerHTML = percentage_share_90;
+
+                document.getElementById("75_own_share").innerHTML = percentage_share_75;
+                document.getElementById("own_share_lic").innerHTML = own_share + vpf;
+                own_bank = own_share + bank_share + vpf;
+                document.getElementById("own+bank").innerHTML = own_bank;
+
+                document.getElementById("purcahse_own_elg").innerHTML = own_bank;
+
+
+                var basic_da = parseFloat(basic) + parseFloat(da);
+                document.getElementById("basic_da").innerHTML = basic_da.toFixed(2);
+                basic_and_da = basic_da;
+                basic_elg = basic_da * toMultiply;
+                document.getElementById("basic_elg").innerHTML = basic_elg.toFixed(2);
+                var purchase_elg_own = own_share + bank_share + vpf;
+                document.getElementById("purchase_elg").innerHTML = purchase_elg_own;
+                $('#apply_amount').on('mouseup keyup', function () {
+
+                    $(this).val(Math.min(own_share + vpf, $(this).val()) && Math.min(basic_da * toMultiply, $(this).val()));
+                    //to find the least of i,ii,iii
+                    if ($(this).val() < basic_da * toMultiply && $(this).val() < own_share + vpf) {
+
+                        document.getElementById("least").innerHTML = $(this).val();
+                        sanction = $(this).val();
+                        document.getElementById("sanction").innerHTML = sanction;
+
+                    }
+                    else if (basic_da * toMultiply < own_share + vpf) {
+
+                        document.getElementById("least").innerHTML = basic_da * toMultiply;
+                        sanction = basic_da * toMultiply;
+                        document.getElementById("sanction").innerHTML = sanction;
+                    }
+                    else {
+
+                        document.getElementById("least").innerHTML = own_share + vpf;
+                        sanction = own_share + vpf;
+                        document.getElementById("sanction").innerHTML = sanction;
+                    }
+
+                });
+
+                $('#purchase_amount').on('mouseup keyup', function () {
+
+                    var share = own_share + vpf + bank_share;
+                    console.log(basic_da * toMultiply + " share " + share);
+                    $(this).val(Math.min(share, $(this).val()) && Math.min(basic_da * toMultiply, $(this).val()));
+                    //to find the least of i,ii,iii
+                    if ($(this).val() < basic_da * toMultiply && $(this).val() < share) {
+
+                        document.getElementById("puchase_least").innerHTML = $(this).val();
+                        sanction = $(this).val();
+                        document.getElementById("sanction").innerHTML = sanction;
+                    }
+                    else if (basic_da * toMultiply < share) {
+
+                        document.getElementById("puchase_least").innerHTML = basic_da * toMultiply;
+                        sanction = basic_da * toMultiply;
+                        document.getElementById("sanction").innerHTML = sanction;
+                    }
+                    else {
+
+                        document.getElementById("puchase_least").innerHTML = own_share + vpf + bank_share;
+                        sanction = own_share + vpf + bank_share;
+                        document.getElementById("sanction").innerHTML = sanction;
+                    }
+
+                });
+
+                $('#premium_amount').on('mouseup keyup', function () {
+
+                    $("#premium_amount_lic").val($(this).val());
+                    if ($(this).val() > own_share + vpf) {
+
+                        document.getElementById("least4").innerHTML = own_share + vpf;
+                        sanction = own_share + vpf;
+                        document.getElementById("sanction").innerHTML = sanction;
+                    }
+                    else {
+
+                        document.getElementById("least4").innerHTML = $(this).val();
+                        sanction = $(this).val();
+                        document.getElementById("sanction").innerHTML = sanction;
+                    }
+                });
+                $('#premium_amount_lic').on('mouseup keyup', function () {
+
+                    $("#premium_amount").val($(this).val());
+                    $(this).val(Math.min(own_share + vpf, $(this).val()));
+                    //to find the least of i,ii,iii
+                    if ($(this).val() > own_share + vpf) {
+
+                        document.getElementById("least4").innerHTML = own_share + vpf;
+                        sanction = own_share + vpf;
+                        document.getElementById("sanction").innerHTML = sanction;
+                    }
+                    else {
+
+                        document.getElementById("least4").innerHTML = $(this).val();
+                        sanction = $(this).val();
+                        document.getElementById("sanction").innerHTML = sanction;
+                    }
+
+                });
+
+                // least for 50 percent
+                $('#apply_amount2').on('mouseup keyup', function () {
+
+                    $(this).val(Math.min(percentage_share_50, $(this).val()));
+                    //to find the least of i,ii,iii|| percentage_share_90
+                    if ($(this).val() > percentage_share_50) {
+
+                        document.getElementById("least2").innerHTML = percentage_share_50;
+                        sanction = percentage_share_50;
+                        document.getElementById("sanction").innerHTML = sanction;
+                    }
+                    else {
+
+                        document.getElementById("least2").innerHTML = $(this).val();
+                        sanction = $(this).val();
+                        document.getElementById("sanction").innerHTML = sanction;
+                    }
+
+                });
+                // least for 90 percent
+                $('#apply_amount4').on('mouseup keyup', function () {
+
+                    $(this).val(Math.min(percentage_share_90, $(this).val()));
+                    //to find the least of i,ii,iii|| percentage_share_90
+                    var value = $(this).val();
+                    if (value > percentage_share_90) {
+
+                        document.getElementById("least3").innerHTML = percentage_share_90;
+                        sanction = percentage_share_90;
+                        document.getElementById("sanction").innerHTML = sanction;
+                    }
+                    else {
+
+                        document.getElementById("least3").innerHTML = value;
+                        sanction = value;
+                        document.getElementById("sanction").innerHTML = sanction;
+                    }
+
+                });
+
+                $('#outstanding').on('mouseup keyup', function () {
+
+                    $(this).val(Math.min(own_bank, $(this).val()));
+                    //to find the least of i,ii,iii|| percentage_share_90
+                    if ($(this).val() > own_bank) {
+
+                        document.getElementById("least5").innerHTML = own_bank;
+                        sanction = own_bank;
+                        document.getElementById("sanction").innerHTML = sanction;
+                    }
+                    else {
+
+                        document.getElementById("least5").innerHTML = $(this).val();
+                        sanction = $(this).val();
+                        document.getElementById("sanction").innerHTML = sanction;
+                    }
+
+                });
+
+                // least for 75 percent
+                $('#apply_amount10').on('mouseup keyup', function () {
+                    //debugger;
+
+                    $(this).val(Math.min(percentage_share_75, $(this).val()) && Math.min(basic_da * toMultiply, $(this).val()));
+                    //to find the least of i,ii,iii
+                    if ($(this).val() < basic_da * toMultiply && $(this).val() < percentage_share_75) {
+
+                        document.getElementById("least10").innerHTML = $(this).val();
+                        sanction = $(this).val();
+                        document.getElementById("sanction").innerHTML = sanction;
+
+                    }
+                    else if (basic_da * toMultiply < percentage_share_75) {
+
+                        document.getElementById("least10").innerHTML = basic_da * toMultiply;
+                        sanction = basic_da * toMultiply;
+                        document.getElementById("sanction").innerHTML = sanction;
+                    }
+                    else {
+
+                        document.getElementById("least10").innerHTML = percentage_share_75;
+                        sanction = percentage_share_75;
+                        document.getElementById("sanction").innerHTML = sanction;
+                    }
+                });
+            }
+        }
+
+        //$("#50_own_share").val(own_share / 2);
+
+    }
+    //to calculate the months difference between date of retirement and today
+    function monthDiff(d1, d2) {
+
+        var months;
+        months = (d2.getFullYear() - d1.getFullYear()) * 12;
+        months -= d1.getMonth() + 1;
+        months += d2.getMonth();
+        months = Math.abs(months);
+        return months <= 0 ? 0 : months;
+    }
+
+    //monthDiff(
+    //    new Date(2008, 10, 4), // November 4th, 2008
+    //    new Date(2010, 2, 12)  // March 12th, 2010
+    //);
+
+
+    $("#btnUpdate").click(function () {
+
+        //debugger;
+        var pf = $('#pf_no').html();
+        var basic_da = $('#basic_da').html();
+        var purposeType = $("#example-select").val();
+        var sanction = $('#sanction').html();
+        //if (purposeType.length <= 2) {
+        var da = orgCert;
+        var loans = [];
+
+        var dataObj = JSON.parse(loaddata);
+
+        loans.push(dataObj.loan);
+
+        var purposeTypes = loans[0];
+        purposeType = purposeTypes[0].purpose_of_advance;
+        //}
+        //else {
+        //    purposeType = $("#example-select").val();
+        //}
+       // //debugger;
+        var total = $('#total_recommend').html();
+        if (purposeType == "Select Loan Type") {
+            showGlobalModal("I#Required Field#Please Choose Purpose of Advance.");
+            return false;
+        }
+        else if (purposeType == "2" || purposeType == "4") { //heigher education , marriage
+
+            var rates = $("input[id='postageyes']");
+            var amount = $("#apply_amount2").val();
+            var own = $("#own_share_num").val();
+            var bank = $("#bank_share_num").val();
+            var vpn = $("#vpf_num").val();
+            var elg_amount = $('#50_own_share').html();
+            var rate_value;
+            var certf = [];
+            for (var i = 0; i < rates.length; i++) {
+                if (rates[i].checked) {
+
+                    rate_value = rates[i].value;
+                    certf.push(rate_value);
+                }
+            }
+            if (purposeType == "2" && certf.length < 2) {
+                showGlobalModal("I#Required Field#Please Select List of Documents Enclosed.");
+                return false;
+            }
+            if (purposeType == "4" && certf.length < 1) {
+                showGlobalModal("I#Required Field#Please Select List of Documents Enclosed.");
+                return false;
+            }
+            if (amount == "") {
+                showGlobalModal("I#Required Field#Please Select Amount To Apply.");
+                return false;
+            }
+
+
+            var dataToSend = JSON.stringify({
+                'EntityId': $("#hdnEmpCode").val(),
+                pf_no: pf,
+                basic_da: basic_da,
+                purposeType: purposeType,
+                certificates: certf,
+                apply_amount: amount,
+                own_share: own,
+                bank_share: bank,
+                vpn_share: vpn,
+                total: total,
+                elg_amount: elg_amount,
+                sanction: sanction
+            })
+            CommonApiPOST('/Payroll/Masters/UpdatePFNonPayableData', dataToSend, function (isSuccess) {
+                if (isSuccess) {
+
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+        }
+        else if (purposeType == "8") { // 90 percent withdrawl
+
+            var amount = $("#apply_amount4").val();
+            var own = $("#own_share_num").val();
+            var bank = $("#bank_share_num").val();
+            var vpn = $("#vpf_num").val();
+            var elg_amount = $('#90_own_share').html();
+            var rates = $("input[id='postageyes']");
+            var rate_value;
+            var certf = [];
+            for (var i = 0; i < rates.length; i++) {
+                if (rates[i].checked) {
+
+                    rate_value = rates[i].value;
+                    certf.push(rate_value);
+                }
+            }
+            if (certf.length < 1) {
+                showGlobalModal("I#Required Field#Please Select List of Documents Enclosed.");
+                return false;
+            }
+            if (amount == "") {
+                showGlobalModal("I#Required Field#Please Select Amount To Apply.");
+                return false;
+            }
+            var dataToSend = JSON.stringify({
+                'EntityId': $("#hdnEmpCode").val(),
+                pf_no: pf,
+                basic_da: basic_da,
+                purposeType: purposeType,
+                certificates: certf,
+                apply_amount: amount,
+                own_share: own,
+                bank_share: bank,
+                vpn_share: vpn,
+                total: total,
+                elg_amount: elg_amount,
+                sanction: sanction
+            })
+
+            CommonApiPOST('/Payroll/Masters/UpdatePFNonPayableData', dataToSend, function (isSuccess) {
+                if (isSuccess) {
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+
+        }
+        else if (purposeType == "3") { //lic policy
+
+
+            var certf = [];
+            var proposed_amount = $("#proposed_amount").val();
+            var premium_amount = $("#premium_amount").val();
+            var premium_name = $("#premium_name").val();
+            var proposed_amount_str = "6, Proposed Amount," + proposed_amount;
+            certf.push(proposed_amount_str);
+            var premium_name_str = "7, Premium Amount," + premium_amount;
+            certf.push(premium_name_str);
+            var premium_name_str = "8, Name of Policy," + premium_name;
+            certf.push(premium_name_str);
+
+            var amount = $("#premium_amount_lic").val();
+            var own = $("#own_share_num").val();
+            var bank = $("#bank_share_num").val();
+            var vpn = $("#vpf_num").val();
+            var elg_amount = $('#own_share_lic').html();
+            if (certf.length < 1) {
+                showGlobalModal("I#Required Field#Please Fill the List of Documents Enclosed.");
+                return false;
+            }
+            if (amount == "") {
+                showGlobalModal("I#Required Field#Please Select Amount To Apply.");
+                return false;
+            }
+            var dataToSend = JSON.stringify({
+                'EntityId': $("#hdnEmpCode").val(),
+                pf_no: pf,
+                basic_da: basic_da,
+                purposeType: purposeType,
+                certificates: certf,
+                apply_amount: amount,
+                own_share: own,
+                bank_share: bank,
+                vpn_share: vpn,
+                total: total,
+                elg_amount: elg_amount,
+                sanction: sanction
+            })
+
+            CommonApiPOST('/Payroll/Masters/UpdatePFNonPayableData', dataToSend, function (isSuccess) {
+                if (isSuccess) {
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+        }
+        else if (purposeType == "10") { // repayment of ccf loans
+
+            var rates = $("input[id='postageyes']");
+            var amount = $("#outstanding").val();
+            var own = $("#own_share_num").val();
+            var bank = $("#bank_share_num").val();
+            var vpn = $("#vpf_num").val();
+            var elg_amount = $('#basic_elg').html();
+            var rate_value;
+            var certf = [];
+            //for (var i = 0; i < rates.length; i++) {
+            //    if (rates[i].checked) {
+            //        rate_value = rates[i].value;
+            //        certf.push(rate_value);
+            //    }
+            //}
+            //if (certf.length < 1) {
+            //    showGlobalModal("I#Required Field#Please Select List of Documents Enclosed.");
+            //    return false;
+            //}
+            //if (amount == "") {
+            //    showGlobalModal("I#Required Field#Please Select Amount To Apply.");
+            //    return false;
+            //}
+
+
+            var dataToSend = JSON.stringify({
+                'EntityId': $("#hdnEmpCode").val(),
+                pf_no: pf,
+                basic_da: basic_da,
+                purposeType: purposeType,
+                certificates: certf,
+                apply_amount: amount,
+                own_share: own,
+                bank_share: bank,
+                vpn_share: vpn,
+                total: total,
+                elg_amount: elg_amount,
+                sanction: sanction
+            })
+
+            CommonApiPOST('/Payroll/Masters/UpdatePFNonPayableData', dataToSend, function (isSuccess) {
+                if (isSuccess) {
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+        }
+        else if (purposeType == "9") { // pf final settlement
+           // //debugger;
+            var amount = $("#apply_amount3").val();
+            var own = $("#own_share_num").val();
+            var bank = $("#bank_share_num").val();
+            var vpn = $("#vpf_num").val();
+            var elg_amount = $('#basic_elg').html();
+
+            var dataToSend = JSON.stringify({
+                'EntityId': $("#hdnEmpCode").val(),
+                pf_no: pf,
+                basic_da: basic_da,
+                purposeType: purposeType,
+                certificates: certf,
+                apply_amount: amount,
+                own_share: own,
+                bank_share: bank,
+                vpn_share: vpn,
+                total: total,
+                elg_amount: elg_amount,
+                sanction: sanction
+            })
+
+            CommonApiPOST('/Payroll/Masters/UpdatePFNonPayableData', dataToSend, function (isSuccess) {
+                if (isSuccess) {
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+        }
+
+        else if (purposeType == "6" || purposeType == "7") { // addition to existing house
+
+            var rates = $("input[id='postageyes']");
+            var amount = $("#purchase_amount").val();
+            var own = $("#own_share_num").val();
+            var bank = $("#bank_share_num").val();
+            var vpn = $("#vpf_num").val();
+            var elg_amount = $('#purchase_elg').html();
+            var rate_value;
+            var certf = [];
+            for (var i = 0; i < rates.length; i++) {
+                if (rates[i].checked) {
+                    rate_value = rates[i].value;
+                    certf.push(rate_value);
+                }
+            }
+            if (certf.length < 3) {
+                showGlobalModal("I#Required Field#Please Select List of Documents Enclosed.");
+                return false;
+            }
+            if (amount == "") {
+                showGlobalModal("I#Required Field#Please Select Amount To Apply.");
+                return false;
+            }
+
+            var dataToSend = JSON.stringify({
+                'EntityId': $("#hdnEmpCode").val(),
+                pf_no: pf,
+                basic_da: basic_da,
+                purposeType: purposeType,
+                certificates: certf,
+                apply_amount: amount,
+                own_share: own,
+                bank_share: bank,
+                vpn_share: vpn,
+                total: total,
+                elg_amount: elg_amount,
+                sanction: sanction
+            })
+
+            CommonApiPOST('/Payroll/Masters/UpdatePFNonPayableData', dataToSend, function (isSuccess) {
+                if (isSuccess) {
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+        }
+        else if (purposeType == "5") { //medical
+
+            var rates = $("input[id='postageyes']");
+            var amount = $("#apply_amount").val();
+            var own = $("#own_share_num").val();
+            var bank = $("#bank_share_num").val();
+            var vpn = $("#vpf_num").val();
+            var elg_amount = $('#basic_elg').html();
+            var rate_value;
+            var certf = [];
+
+            for (var i = 0; i < rates.length; i++) {
+                if (rates[i].checked) {
+                    rate_value = rates[i].value;
+                    certf.push(rate_value);
+                }
+            }
+            if (certf.length < 1) {
+                showGlobalModal("I#Required Field#Please Select List of Documents Enclosed.");
+                return false;
+            }
+            if (amount == "") {
+                showGlobalModal("I#Required Field#Please Select Amount To Apply.");
+                return false;
+            }
+
+            var dataToSend = JSON.stringify({
+                'EntityId': $("#hdnEmpCode").val(),
+                pf_no: pf,
+                basic_da: basic_da,
+                purposeType: purposeType,
+                certificates: certf,
+                apply_amount: amount,
+                own_share: own,
+                bank_share: bank,
+                vpn_share: vpn,
+                total: total,
+                elg_amount: elg_amount,
+                sanction: sanction
+            })
+
+            CommonApiPOST('/Payroll/Masters/UpdatePFNonPayableData', dataToSend, function (isSuccess) {
+                if (isSuccess) {
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+
+
+        }
+
+        else if (purposeType == "19") { // covid
+            //debugger;
+            var rates = $("input[id='postageyes']");
+            var amount = $("#apply_amount10").val();
+            var own = $("#own_share_num").val();
+            var bank = $("#bank_share_num").val();
+            var vpn = $("#vpf_num").val();
+            var elg_amount = $('#basic_Da_elg').html();
+
+            //var bank = $("#75_own_share").val();
+            //var vpn = $("#basic_Da_elg").val();
+
+            var rate_value;
+            var certf = [];
+            for (var i = 0; i < rates.length; i++) {
+                if (rates[i].checked) {
+                    rate_value = rates[i].value;
+                    certf.push(rate_value);
+                }
+            }
+
+            if (purposeType == "19" && certf.length < 1) {
+                showGlobalModal("I#Required Field#Please Select List of Documents Enclosed.");
+                return false;
+            }
+            if (amount == "") {
+                showGlobalModal("I#Required Field#Please Select Amount To Apply.");
+                return false;
+            }
+
+            var dataToSend = JSON.stringify({
+                'EntityId': $("#hdnEmpCode").val(),
+                pf_no: pf,
+                basic_da: basic_da,
+                purposeType: purposeType,
+                certificates: certf,
+                apply_amount: amount,
+                own_share: own,
+                bank_share: bank,
+                vpn_share: vpn,
+                total: total,
+                elg_amount: elg_amount,
+                sanction: sanction
+            })
+
+            CommonApiPOST('/Payroll/Masters/UpdatePFNonPayableData', dataToSend, function (isSuccess) {
+                if (isSuccess) {
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+        }
+
+        else { // addition to existing house
+
+            var rates = $("input[id='postageyes']");
+            var amount = $("#apply_amount").val();
+            var own = $("#own_share_num").val();
+            var bank = $("#bank_share_num").val();
+            var vpn = $("#vpf_num").val();
+            var elg_amount = $('#basic_elg').html();
+            var rate_value;
+            var certf = [];
+            for (var i = 0; i < rates.length; i++) {
+                if (rates[i].checked) {
+                    rate_value = rates[i].value;
+                    certf.push(rate_value);
+                }
+            }
+            if (certf.length < 3) {
+                showGlobalModal("I#Required Field#Please Select List of Documents Enclosed.");
+                return false;
+            }
+            if (amount == "") {
+                showGlobalModal("I#Required Field#Please Select Amount To Apply.");
+                return false;
+            }
+
+            var dataToSend = JSON.stringify({
+                'EntityId': $("#hdnEmpCode").val(),
+                pf_no: pf,
+                basic_da: basic_da,
+                purposeType: purposeType,
+                certificates: certf,
+                apply_amount: amount,
+                own_share: own,
+                bank_share: bank,
+                vpn_share: vpn,
+                total: total,
+                elg_amount: elg_amount,
+                sanction: sanction
+            })
+
+            CommonApiPOST('/Payroll/Masters/UpdatePFNonPayableData', dataToSend, function (isSuccess) {
+                if (isSuccess) {
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+        }
+    });
+
+
+    $("#btnSubmit").click(function () {
+        //debugger;
+        var radio = $("input[class='postageyes']");
+        //alert(radio.length);
+        var pf = $('#pf_no').html();
+        var basic_da = $('#basic_da').html();
+        var purposeType = $("#example-select").val();
+        var sanction = $('#sanction').html();
+       // //debugger;
+        var total = $('#total_recommend').html();
+        if (purposeType == "Select Loan Type") {
+            showGlobalModal("I#Required Field#Please Choose Purpose of Advance.");
+            return false;
+        } else if (purposeType == "2" || purposeType == "4") { //heigher education , marriage
+            var rates = $("input[class='postageyes']");
+            var amount = $("#apply_amount2").val();
+            var own = $("#own_share_num").val();
+            var bank = $("#bank_share_num").val();
+            var vpn = $("#vpf_num").val();
+            var elg_amount = $('#50_own_share').html();
+            var rate_value;
+            var certf = [];
+            for (var i = 0; i < rates.length; i++) {
+                if (rates[i].checked) {
+
+                    rate_value = rates[i].value;
+                    certf.push(rate_value);
+                }
+            }
+            if (purposeType == "2" && certf.length < 2) {
+                showGlobalModal("I#Required Field#Please Select List of Documents Enclosed.");
+                return false;
+            }
+            if (purposeType == "4" && certf.length < 1) {
+                showGlobalModal("I#Required Field#Please Select List of Documents Enclosed.");
+                return false;
+            }
+            if (amount == "") {
+                showGlobalModal("I#Required Field#Please Select Amount To Apply.");
+                return false;
+            }
+
+
+            var dataToSend = JSON.stringify({
+                'EntityId': $("#hdnEmpCode").val(),
+                pf_no: pf,
+                basic_da: basic_da,
+                purposeType: purposeType,
+                certificates: certf,
+                apply_amount: amount,
+                own_share: own,
+                bank_share: bank,
+                vpn_share: vpn,
+                total: total,
+                elg_amount: elg_amount,
+                sanction: sanction
+            })
+            CommonApiPOST('/Payroll/Masters/SavePFNonPayableData', dataToSend, function (isSuccess) {
+                if (isSuccess) {
+
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+        } else if (purposeType == "8") { // 90 percent withdrawl
+
+            var amount = $("#apply_amount4").val();
+            var own = $("#own_share_num").val();
+            var bank = $("#bank_share_num").val();
+            var vpn = $("#vpf_num").val();
+            var elg_amount = $('#90_own_share').html();
+            var rates = $("input[class='postageyes']");
+            var rate_value;
+            var certf = [];
+            for (var i = 0; i < rates.length; i++) {
+                if (rates[i].checked) {
+
+                    rate_value = rates[i].value;
+                    certf.push(rate_value);
+                }
+            }
+            if (certf.length < 1) {
+                showGlobalModal("I#Required Field#Please Select List of Documents Enclosed.");
+                return false;
+            }
+            if (amount == "") {
+                showGlobalModal("I#Required Field#Please Select Amount To Apply.");
+                return false;
+            }
+            var dataToSend = JSON.stringify({
+                'EntityId': $("#hdnEmpCode").val(),
+                pf_no: pf,
+                basic_da: basic_da,
+                purposeType: purposeType,
+                certificates: certf,
+                apply_amount: amount,
+                own_share: own,
+                bank_share: bank,
+                vpn_share: vpn,
+                total: total,
+                elg_amount: elg_amount,
+                sanction: sanction
+            })
+
+            CommonApiPOST('/Payroll/Masters/SavePFNonPayableData', dataToSend, function (isSuccess) {
+                if (isSuccess) {
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+
+        } else if (purposeType == "3") { //lic policy
+
+
+            var certf = [];
+            var proposed_amount = $("#proposed_amount").val();
+            var premium_amount = $("#premium_amount").val();
+            var premium_name = $("#premium_name").val();
+            var proposed_amount_str = "6, Proposed Amount," + proposed_amount;
+            certf.push(proposed_amount_str);
+            var premium_name_str = "7, Premium Amount," + premium_amount;
+            certf.push(premium_name_str);
+            var premium_name_str = "8, Name of Policy," + premium_name;
+            certf.push(premium_name_str);
+
+            var amount = $("#premium_amount_lic").val();
+            var own = $("#own_share_num").val();
+            var bank = $("#bank_share_num").val();
+            var vpn = $("#vpf_num").val();
+            var elg_amount = $('#own_share_lic').html();
+            if (certf.length < 1) {
+                showGlobalModal("I#Required Field#Please Fill the List of Documents Enclosed.");
+                return false;
+            }
+            if (amount == "") {
+                showGlobalModal("I#Required Field#Please Select Amount To Apply.");
+                return false;
+            }
+            var dataToSend = JSON.stringify({
+                'EntityId': $("#hdnEmpCode").val(),
+                pf_no: pf,
+                basic_da: basic_da,
+                purposeType: purposeType,
+                certificates: certf,
+                apply_amount: amount,
+                own_share: own,
+                bank_share: bank,
+                vpn_share: vpn,
+                total: total,
+                elg_amount: elg_amount,
+                sanction: sanction
+            })
+
+            CommonApiPOST('/Payroll/Masters/SavePFNonPayableData', dataToSend, function (isSuccess) {
+                if (isSuccess) {
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+        }
+        else if (purposeType == "10") { // repayment of ccf loans
+
+            var rates = $("input[class='postageyes']");
+            var amount = $("#outstanding").val();
+            var own = $("#own_share_num").val();
+            var bank = $("#bank_share_num").val();
+            var vpn = $("#vpf_num").val();
+            var elg_amount = $('#basic_elg').html();
+            var rate_value;
+            var certf = [];
+            //for (var i = 0; i < rates.length; i++) {
+            //    if (rates[i].checked) {
+            //        rate_value = rates[i].value;
+            //        certf.push(rate_value);
+            //    }
+            //}
+            //if (certf.length < 1) {
+            //    showGlobalModal("I#Required Field#Please Select List of Documents Enclosed.");
+            //    return false;
+            //}
+            //if (amount == "") {
+            //    showGlobalModal("I#Required Field#Please Select Amount To Apply.");
+            //    return false;
+            //}
+
+
+            var dataToSend = JSON.stringify({
+                'EntityId': $("#hdnEmpCode").val(),
+                pf_no: pf,
+                basic_da: basic_da,
+                purposeType: purposeType,
+                certificates: certf,
+                apply_amount: amount,
+                own_share: own,
+                bank_share: bank,
+                vpn_share: vpn,
+                total: total,
+                elg_amount: elg_amount,
+                sanction: sanction
+            })
+
+            CommonApiPOST('/Payroll/Masters/SavePFNonPayableData', dataToSend, function (isSuccess) {
+                if (isSuccess) {
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+        }
+        else if (purposeType == "9") { // pf final settlement
+            //debugger;
+            var amount = $("#apply_amount3").val();
+            var own = $("#own_share_num").val();
+            var bank = $("#bank_share_num").val();
+            var vpn = $("#vpf_num").val();
+            var elg_amount = $('#basic_elg').html();
+
+            var dataToSend = JSON.stringify({
+                'EntityId': $("#hdnEmpCode").val(),
+                pf_no: pf,
+                basic_da: basic_da,
+                purposeType: purposeType,
+                certificates: certf,
+                apply_amount: amount,
+                own_share: own,
+                bank_share: bank,
+                vpn_share: vpn,
+                total: total,
+                elg_amount: elg_amount,
+                sanction: sanction
+            })
+
+            CommonApiPOST('/Payroll/Masters/SavePFNonPayableData', dataToSend, function (isSuccess) {
+                if (isSuccess) {
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+        }
+        else if (purposeType == "6" || purposeType == "7") { // addition to existing house
+
+            var rates = $("input[class='postageyes']");
+            var amount = $("#purchase_amount").val();
+            var own = $("#own_share_num").val();
+            var bank = $("#bank_share_num").val();
+            var vpn = $("#vpf_num").val();
+            var elg_amount = $('#purchase_elg').html();
+            var rate_value;
+            var certf = [];
+            for (var i = 0; i < rates.length; i++) {
+                if (rates[i].checked) {
+                    rate_value = rates[i].value;
+                    certf.push(rate_value);
+                }
+            }
+            if (certf.length < 3) {
+                showGlobalModal("I#Required Field#Please Select List of Documents Enclosed.");
+                return false;
+            }
+            if (amount == "") {
+                showGlobalModal("I#Required Field#Please Select Amount To Apply.");
+                return false;
+            }
+
+            var dataToSend = JSON.stringify({
+                'EntityId': $("#hdnEmpCode").val(),
+                pf_no: pf,
+                basic_da: basic_da,
+                purposeType: purposeType,
+                certificates: certf,
+                apply_amount: amount,
+                own_share: own,
+                bank_share: bank,
+                vpn_share: vpn,
+                total: total,
+                elg_amount: elg_amount,
+                sanction: sanction
+            })
+
+            CommonApiPOST('/Payroll/Masters/SavePFNonPayableData', dataToSend, function (isSuccess) {
+                if (isSuccess) {
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+        }
+        else if (purposeType == "5") { //medical
+
+            var rates = $("input[class='postageyes']");
+            var amount = $("#apply_amount").val();
+            var own = $("#own_share_num").val();
+            var bank = $("#bank_share_num").val();
+            var vpn = $("#vpf_num").val();
+            var elg_amount = $('#basic_elg').html();
+            var rate_value;
+            var certf = [];
+
+            for (var i = 0; i < rates.length; i++) {
+                if (rates[i].checked) {
+                    rate_value = rates[i].value;
+                    certf.push(rate_value);
+                }
+            }
+            if (certf.length < 1) {
+                showGlobalModal("I#Required Field#Please Select List of Documents Enclosed.");
+                return false;
+            }
+            if (amount == "") {
+                showGlobalModal("I#Required Field#Please Select Amount To Apply.");
+                return false;
+            }
+
+            var dataToSend = JSON.stringify({
+                'EntityId': $("#hdnEmpCode").val(),
+                pf_no: pf,
+                basic_da: basic_da,
+                purposeType: purposeType,
+                certificates: certf,
+                apply_amount: amount,
+                own_share: own,
+                bank_share: bank,
+                vpn_share: vpn,
+                total: total,
+                elg_amount: elg_amount,
+                sanction: sanction
+            })
+
+            CommonApiPOST('/Payroll/Masters/SavePFNonPayableData', dataToSend, function (isSuccess) {
+                if (isSuccess) {
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+
+
+        }
+
+        else if (purposeType == "19") { // addition to existing house
+            //debugger;
+            var rates = $("input[class='postageyes']");
+            var amount = $("#apply_amount10").val();
+            var own = $("#own_share_num").val();
+            var bank = $("#bank_share_num").val();
+            var vpn = $("#vpf_num").val();
+            var elg_amount = $('#basic_Da_elg').html();
+
+            //var bank = $("#75_own_share").val();
+            //var vpn = $("#basic_Da_elg").val();
+
+            var rate_value;
+            var certf = [];
+            for (var i = 0; i < rates.length; i++) {
+                if (rates[i].checked) {
+
+                    rate_value = rates[i].value;
+                    certf.push(rate_value);
+                }
+            }
+
+            if (purposeType == "19" && certf.length < 1) {
+                showGlobalModal("I#Required Field#Please Select List of Documents Enclosed.");
+                return false;
+            }
+            if (amount == "") {
+                showGlobalModal("I#Required Field#Please Select Amount To Apply.");
+                return false;
+            }
+
+
+            var dataToSend = JSON.stringify({
+                'EntityId': $("#hdnEmpCode").val(),
+                pf_no: pf,
+                basic_da: basic_da,
+                purposeType: purposeType,
+                certificates: certf,
+                apply_amount: amount,
+                own_share: own,
+                bank_share: bank,
+                vpn_share: vpn,
+                total: total,
+                elg_amount: elg_amount,
+                sanction: sanction
+            })
+            CommonApiPOST('/Payroll/Masters/SavePFNonPayableData', dataToSend, function (isSuccess) {
+                if (isSuccess) {
+
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+        }
+
+
+        else { // addition to existing house
+
+            var rates = $("input[class='postageyes']");
+            var amount = $("#apply_amount").val();
+            var own = $("#own_share_num").val();
+            var bank = $("#bank_share_num").val();
+            var vpn = $("#vpf_num").val();
+            var elg_amount = $('#basic_elg').html();
+            var rate_value;
+            var certf = [];
+            for (var i = 0; i < rates.length; i++) {
+                if (rates[i].checked) {
+                    rate_value = rates[i].value;
+                    certf.push(rate_value);
+                }
+            }
+            if (certf.length < 3) {
+                showGlobalModal("I#Required Field#Please Select List of Documents Enclosed.");
+                return false;
+            }
+            if (amount == "") {
+                showGlobalModal("I#Required Field#Please Select Amount To Apply.");
+                return false;
+            }
+
+            var dataToSend = JSON.stringify({
+                'EntityId': $("#hdnEmpCode").val(),
+                pf_no: pf,
+                basic_da: basic_da,
+                purposeType: purposeType,
+                certificates: certf,
+                apply_amount: amount,
+                own_share: own,
+                bank_share: bank,
+                vpn_share: vpn,
+                total: total,
+                elg_amount: elg_amount,
+                sanction: sanction
+            })
+
+            CommonApiPOST('/Payroll/Masters/SavePFNonPayableData', dataToSend, function (isSuccess) {
+                if (isSuccess) {
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+        }
+    });
+
+
+    function eligibility() {
+        //debugger;
+        var loantypeid;
+        var dataObj = JSON.parse(loaddata);
+        var loans = [];
+        loans.push(dataObj.loan);
+
+        var purposeTypes = loans[0];
+        loantypeid = purposeTypes[0].purpose_of_advance;
+        // loan 5
+        var apply_amount = parseInt($("#apply_amount").val());
+
+        var apply_amount10 = parseInt($("#apply_amount10").val());
+        var apply_amount2 = parseInt($("#apply_amount2").val());
+        var premium_amount_lic = parseInt($("#premium_amount_lic").val());
+        var purchase_amount = parseInt($("#purchase_amount").val());
+        var apply_amount4 = parseInt($("#apply_amount4").val());
+        var apply_amount3 = parseInt($("#apply_amount3").val());
+        var outstanding = parseInt($("#outstanding").val());
+
+        // medical
+        if (loantypeid == "5" || loantypeid == "1")  //medical, education, marriage, ccf loans
+        {
+            if (isNaN(apply_amount)) {
+                apply_amount = 0;
+                document.getElementById("apply_amount").innerHTML = apply_amount;
+            }
+
+            document.getElementById("least").innerHTML = apply_amount;
+            document.getElementById("sanction").innerHTML = apply_amount;
+        }
+
+        else if (loantypeid == "2" || loantypeid == "4")  // education, marriage, ccf loans
+        {
+            if (isNaN(apply_amount2)) {
+                apply_amount2 = 0;
+                document.getElementById("apply_amount2").innerHTML = apply_amount2;
+            }
+            document.getElementById("least2").innerHTML = apply_amount2;
+            document.getElementById("sanction").innerHTML = apply_amount2;
+        }
+        //lic 3
+        else if (loantypeid == "3")  // education, marriage, ccf loans
+        {
+            if (isNaN(premium_amount_lic)) {
+                premium_amount_lic = 0;
+                document.getElementById("apply_amount2").innerHTML = premium_amount_lic;
+            }
+            document.getElementById("least4").innerHTML = premium_amount_lic;
+            document.getElementById("sanction").innerHTML = premium_amount_lic;
+        }
+
+        else if (loantypeid == "6" || loantypeid == "7")    //6 purchage of house  , site
+        {
+            if (isNaN(purchase_amount)) {
+                purchase_amount = 0;
+                document.getElementById("apply_amount2").innerHTML = purchase_amount;
+            }
+            document.getElementById("puchase_least").innerHTML = purchase_amount;
+            document.getElementById("sanction").innerHTML = purchase_amount;
+        }
+
+        else if (loantypeid == "8")   // 8  90% withdraw
+        {
+            if (isNaN(apply_amount4)) {
+                apply_amount4 = 0;
+                document.getElementById("apply_amount2").innerHTML = apply_amount4;
+            }
+            document.getElementById("least3").innerHTML = apply_amount4;
+            document.getElementById("sanction").innerHTML = apply_amount4;
+        }
+        else if (loantypeid == "9")   // pf
+        {
+//            //debugger;
+            if (isNaN(apply_amount3)) {
+                apply_amount3 = 0;
+                document.getElementById("apply_amount3").innerHTML = apply_amount3;
+            }
+            //document.getElementById("least3").innerHTML = apply_amount4;
+            document.getElementById("sanction").innerHTML = apply_amount3;
+        }
+
+        else if (loantypeid == "10")    // 10 repayment of ccf loan
+        {
+            if (isNaN(outstanding)) {
+                outstanding = 0;
+                document.getElementById("outstanding").innerHTML = outstanding;
+            }
+            document.getElementById("least5").innerHTML = outstanding;
+            document.getElementById("sanction").innerHTML = outstanding;
+        }
+
+        else if (loantypeid == "19")  // covid
+        {
+            //debugger;
+            if (isNaN(apply_amount10)) {
+                apply_amount10 = 0;
+                document.getElementById("apply_amount10").innerHTML = apply_amount10;
+            }
+            document.getElementById("least10").innerHTML = apply_amount10;
+            document.getElementById("sanction").innerHTML = apply_amount10;
+        }
+    }
+
+    function data() {
+        //debugger;
+        //var label = $('#sanction').innerText;
+        //var sanction = document.getElementById('sanction').textContent;
+        var sanction = document.getElementById('sanction').innerHTML;
+        //var sanction1 = parseInt($("#sanction").val());
+        //var sanction = parseInt($("#apply_amount").val());
+        //debugger;
+        var leastamt = sanction;
+        var own_share_num = parseInt($("#own_share_num").val());
+
+        var vpf_num = parseInt($("#vpf_num").val());
+        var bank_share_num = parseInt($("#bank_share_num").val());
+        if (isNaN(own_share_num)) {
+            own_share_num = 0;
+            document.getElementById("own_share_num").innerHTML = own_share_num;
+        }
+        if (isNaN(vpf_num)) {
+            vpf_num = 0;
+            document.getElementById("vpf_num").innerHTML = vpf_num;
+
+        }
+        if (isNaN(bank_share_num)) {
+            bank_share_num = 0;
+            document.getElementById("bank_share_num").innerHTML = bank_share_num;
+        }
+        var total = own_share_num + vpf_num;
+        //var total = parseFloat(ownshar) + parseFloat(vpf_num);
+        if (total != "0" && total < sanction) {
+            var bank = leastamt - total;
+
+            total = parseFloat(own_share_num) + parseFloat(bank) + parseFloat(vpf_num);
+            //if (total != "0") {
+            //    bank = bank - parseFloat(owns);
+            //}
+
+        }
+        else {
+            //if (total != "0") {
+            var bank = leastamt - parseFloat(owns);
+            if (bank > 0) {
+                total = parseFloat(own_share_num) + parseFloat(bank) + parseFloat(vpf_num);
+            }
+            else {
+                bank = 0;
+                total = parseFloat(own_share_num) + parseFloat(bank) + parseFloat(vpf_num);
+            }
+
+            //}
+        }
+        //debugger;
+        if (total > sanction) {
+            showGlobalModal("I#Required Field#Please Select Amount Below Than Eligible Amount.");
+            $("#own_share_num").val("");
+            $("#bank_share_num").val("");
+            $("#vpf_num").val("");
+            var remain = 0;
+            document.getElementById("total_recommend").innerHTML = remain;
+            //document.getElementById("bank_share_num").innerHTML = remain;
+        } else {
+            document.getElementById("total_recommend").innerHTML = total;
+        }
+
+    }
+</script>
+
+@*licpolicy == > proposed_amount
+                  premium_amount
+                  premium_name
+    Eligibility == > basic_elg
+                    own_share_elg
+                    apply_amount
+                    least
+    Elibility criteria == > 50_own_share
+
+                          apply_amount2
+                          least2
+    90_percent == > 90_own_share
+                    apply_amount4
+                    least3
+    premium_eligibility ==> premium_amount_lic
+
+                           own_share_lic
+                           least4
+    fianl == > apply_amount3
+
+
+    ccf_loans == > own+bank
+                   outstanding
+                   least5
+        purcahse == > purchase_elg
+
+                 purcahse_own_elg
+                 purchase_amount
+    1. additional
+    2. higher education
+    3. lic policy
+    4. marriage
+    5. medical expenditre
+    6. purchase of house
+    7. purchase of site
+    8. nr 90%
+    9. pf final stmt
+    10. repayment of ccf loans*@
+
+
+
+
+

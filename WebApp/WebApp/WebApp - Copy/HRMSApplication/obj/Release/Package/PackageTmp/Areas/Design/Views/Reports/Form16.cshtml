@@ -1,0 +1,84 @@
+﻿
+@{
+    ViewBag.Title = "Form16";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <h1>Form 16</h1>
+                    <div class="col-md-4">
+                        <div class="inner_heading">
+                            <h1>Financial Period</h1>
+                            <div class="table-responsive month_name_tbl">
+                                <table id="month_name" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Select Financial Period</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>01-04-2018 - 31-03-2019</td>
+                                        </tr>
+                                        <tr>
+                                            <td>01-04-2017 - 31-03-2018</td>
+                                        </tr>
+                                        <tr>
+                                            <td>01-04-2016 - 31-03-2017</td>
+                                        </tr>
+                                        <tr>
+                                            <td>01-04-2015 - 31-03-2016</td>
+                                        </tr>
+                                        <tr>
+                                            <td>01-04-2014 - 31-03-2015</td>
+                                        </tr>
+                                        <tr>
+                                            <td>01-04-2013 - 31-03-2014</td>
+                                        </tr>
+                                        <tr>
+                                            <td>01-04-2012 - 31-03-2013</td>
+                                        </tr>
+                                        <tr>
+                                            <td>01-04-2011 - 31-03-2012</td>
+                                        </tr>
+                                        <tr>
+                                            <td>01-04-2010 - 31-03-2011</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mt_10">
+                        <div class="pull-right">
+                            <button type="reset" class="btn btn-default cancel">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#month_name').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+        });
+    });
+</script>
+
+
+
+

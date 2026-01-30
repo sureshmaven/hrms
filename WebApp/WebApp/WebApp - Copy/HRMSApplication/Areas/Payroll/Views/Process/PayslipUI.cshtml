@@ -1,0 +1,795 @@
+﻿@{
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+<div class="page">
+    <div class="form-horizontal">
+        <div class="page_start">
+            <div class="leftmenu-container">
+                <div class="sidebar-menu">
+                    @{Html.RenderPartial("_PVPayrollMenu");}
+                </div>
+                <div class="sidebar-content">
+                    <div class="main_heading heading_main">
+                        <h1>Payslip services <span class="year-end">@ViewBag.Env_Fm_Fy</span></h1>
+                        <div class="col-md-12">
+                            <div id="reportsearch" class="process_pay">
+                                <div class="main_data">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            @{ Html.RenderPartial("_PvEmployeeSearchwithCheckboxes"); }
+                                        </div>
+                                        <div class="col-md-6 mt_10">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <div class="input-group" id="monthyear">
+                                                        <label class="control-label mr-23">Run Service:</label>
+                                                        <input id="Now" type="radio" name="time" value="Now">
+                                                        <label for="Now"><span><span></span></span>Now</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 p0">
+                                                <input id="Shtime" type="radio" name="time" value="Shtime" checked>
+                                                <label for="Shtime"><span><span></span></span>Schedule</label>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control datetimepicker" id="Todate">
+                                                        <span class="input-group-addon datetimepicker-addon">
+                                                            <span class="glyphicon glyphicon-calendar"></span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-10">
+
+                                            <div class="col-md-8 p0">
+                                                <div class=" col-sm-3 pl_40">
+                                                    <label class="control-label mt_10">Payslip Type:</label>
+                                                </div>
+                                                <div class="col-md-9 p0">
+                                                    <div id="payslipstypes">
+
+                                                        <div class="type-check">
+                                                            <input id="Regular" type="checkbox" name="check" value="Regular">
+                                                            <label for="Regular"><span><span></span></span>Regular</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        </div>
+                                                        <div class="type-check">
+                                                            <input id="StopSalary" type="checkbox" name="check" value="stopsalary">
+                                                            <label for="StopSalary"><span><span></span></span>Stop Salary</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        </div>
+                                                        <div class="type-check">
+                                                            <input id="Suspended" type="checkbox" name="check" value="Suspended">
+                                                            <label for="Suspended"><span><span></span></span>Suspended</label>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div id="payslipstypes">
+                                                    <div class="col-sm-7 p0">
+                                                        <input id="Encashment" type="checkbox" name="Encashment" value="Encashment">
+                                                        <label for="Encashment"><span><span></span></span>Encashment</label>
+                                                    </div>
+                                                    @*<div class="col-sm-2">
+                                                            <input id="Promotion" type="checkbox" name="Promotion" value="Promotion">
+                                                            <label for="Promotion"><span><span></span></span>Promotion</label>
+                                                        </div>*@
+                                                    <div class="col-sm-5 p0">
+                                                        <input id="Adhoc" type="checkbox" name="Adhoc" value="Adhoc">
+                                                        <label for="Adhoc"><span><span></span></span>Adhoc</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="mt_12">
+                                                <input id="Finalprocess" type="checkbox" name="Finalprocess" value="Finalprocess">
+                                                <label for="Finalprocess"><span><span></span></span>Final Process</label>
+                                                @*<button class="btn btn-danger" id="btnSubmit">Final Process</button>*@
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    @*<div class="payslip_process">
+                                            <div class="col-md-12">
+                                                <div class="col-md-3">
+                                                    <label class="control-label mr-6 ml-4">Process/Mail:</label>
+                                                    <input id="Finalprocess" type="checkbox" name="Finalprocess" value="">
+                                                    <label for="Finalprocess"><span><span></span></span>Final Process</label>
+                                                    <button class="btn btn-danger" id="btnSubmit">Final Process</button>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <input id="sendmail" type="checkbox" name="sendmail" value="">
+                                                    <label for="sendmail"><span><span></span></span>Send Mail</label>
+                                                    <button class="btn btn-danger" id="btnSubmit">Send Mail</button>
+                                                </div>
+                                            </div>
+                                        </div>*@
+                                </div>
+
+                                <div class="clearfix"></div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="pull-right">
+                                            <button class="btn btn-primary" id="btnSubmit">Run Hour End Process</button>
+                                            <button class="btn btn-primary" id="ReverseHourEnd" onclick="ReverseHourEndProcess()">Revert Hour End process</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="inner_heading mt_10">
+                                    <h1>Run History</h1>
+                                    <div class="table-responsive inc_report">
+                                        <table id="Payslip_service" style="width:100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th>Run Id</th>
+                                                    <th>Payslip Type</th>
+                                                    <th>Total Emp Codes</th>
+                                                    <th>Processed Emp Codes</th>
+                                                    <th>Total Count/Process Count</th>
+                                                    @*<th>Process Count</th>*@
+                                                    <th>Status/Action</th>
+                                                    <th>Run Date Time</th>
+                                                    <th>Processed By</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div id="Process" class="modal fade" role="dialog">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">Warning</h4>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <h4 style="text-align: left;margin: 0 0 6px 0;">Are you sure you want final process</h4>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal" id="btnEmpSearchModalClose">Close</button>
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal" id="btnEmpSearchModalOK">OK</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function ReverseHourEndProcess(empcode) {
+
+        CommonApiGET('/Payroll/Process/ReverseHourEndPorcess', function (respData) {
+            showGlobalModal("I#HourEnd#Reverse Hour End Process Completed Successfully. Please Wait For 10min To Login !");
+        });
+    }
+    //
+    var Pay_Type = [];
+    var val = [];
+    var string = "";
+    var Finalprocess = [];
+    var sendmail = [];
+    // final process
+    $(document).ready(function () {
+        //debugger;
+        $checks = $("#rdbEmpAll");
+        $checks.on('change', function () {
+            val = [];
+            if ($(this).prop("checked") == true) {
+                $("#Now").attr('disabled', true);
+                $("#Todate").attr("disabled", false);
+            }
+            else if ($(this).prop("checked") == false) {
+                $("#Now").attr('disabled', false)
+                $("#Todate").attr("disabled", true);
+
+            }
+
+        });
+
+    });
+    var enableordisbale = '@ViewBag.RunorRevertbuttonenabledisable';
+    $(document).ready(function () {
+        debugger;
+        //alert('Testing');
+
+       //var enableordisbale = '@ViewBag.RunorRevertbuttonenabledisable';
+        if (enableordisbale == 'Disable') {
+            $("#ReverseHourEnd").prop("disabled", false);
+            $("#btnSubmit").prop("disabled", true);
+            //document.getElementById("ReverseHourEnd").style.visibility = "none";
+        }
+        else if (enableordisbale == 'Enable') {
+            $("#btnSubmit").prop("disabled", false);
+            $("#ReverseHourEnd").prop("disabled", true);
+            //document.getElementById("btnSubmit").style.visibility = "none";
+        }
+    });
+
+    $(document).ready(function () {
+
+        $checks = $("#rdbEmpAll1empsearch");
+        $checks.on('change', function () {
+            val = [];
+            if ($(this).prop("checked") == true) {
+                $("#Now").attr('disabled', false);
+                $("#Todate").attr("disabled", true);
+            }
+            else if ($(this).prop("checked") == false) {
+                $("#Now").attr('disabled', true)
+                $("#Todate").attr("disabled", false);
+            }
+
+        });
+    });
+    $("#Finalprocess").click(function () {
+        //
+        if ($(this).prop("checked") == true) {
+            $('#Finalprocess').attr('checked', this.checked);
+            $("#Process").modal('toggle');
+            Finalprocess.push($('#Finalprocess').val());
+            Finalprocess = '1';
+
+            //showGlobalModal('S#Process Elert#' + "Finalprocess" );
+        }
+        else {
+            Finalprocess = '0';
+        }
+    });
+
+    $("#btnEmpSearchModalClose").click(function (e) {
+        //
+        $("#Finalprocess").prop("checked", false);
+    });
+    $("#btnEmpSearchModalOK").click(function (e) {
+        //
+        // $("#Now").prop("checked", true);
+    });
+
+    //$("#sendmail").click(function () {
+    //    if ($(this).prop("checked") == true) {
+    //        $('#sendmail').attr('checked', this.checked);
+    //        sendmail.push($('#sendmail').val());
+    //        sendmail = '1';
+    //    }
+    //    else {
+    //        sendmail = '0';
+    //    }
+    //});
+
+
+    //var s = Promotion , Encashment , Adhoc;
+    $("#Regular").click(function () {
+
+        ////debugger;
+        if ($(this).prop("checked") == true) {
+            Pay_Type.forEach(function (obj) {
+
+                if (obj == "stopsalary") {
+                    val = [];
+                    $("#txtEmployeeSearchBox1450").val(val);
+                }
+            });
+            $("#StopSalary").prop("checked", false);
+            $("#Suspended").prop("checked", false);
+            Pay_Type = Pay_Type.filter(e => e !== $('#StopSalary').val());
+            Pay_Type = Pay_Type.filter(e => e !== $('#Suspended').val());
+
+
+            $('#Regular').attr('checked', this.checked);
+            Pay_Type.push($('#Regular').val());
+        }
+        else {
+            // Pay_Type = [];
+            Pay_Type = Pay_Type.filter(e => e !== $('#Regular').val());
+        }
+    });
+    $("#Suspended").click(function () {
+
+        ////debugger;
+        if ($(this).prop("checked") == true) {
+            $("#StopSalary").prop("checked", false);
+            $("#Regular").prop("checked", false);
+            Pay_Type.forEach(function (obj) {
+
+                if (obj == "stopsalary") {
+                    val = [];
+                    $("#txtEmployeeSearchBox1450").val(val);
+                }
+            });
+            Pay_Type = Pay_Type.filter(e => e !== $('#StopSalary').val());
+            Pay_Type = Pay_Type.filter(e => e !== $('#Regular').val());
+
+            // $("#txtEmployeeSearchBox1450").val("");
+
+            $('#Suspended').attr('checked', this.checked);
+            var type = $('#Suspended').val();
+            Pay_Type.push(type);
+        }
+        else {
+            // Pay_Type = [];
+            Pay_Type = Pay_Type.filter(e => e !== $('#Suspended').val());
+        }
+    });
+    $("#Encashment").click(function () {
+
+        //
+        if ($(this).prop("checked") == true) {
+
+            $("#StopSalary").prop("checked", false);
+            //$("#txtEmployeeSearchBox1450").val("");
+            Pay_Type.forEach(function (obj) {
+
+                if (obj == "stopsalary") {
+                    val = [];
+                    $("#txtEmployeeSearchBox1450").val(val);
+                }
+            });
+            $('#Encashment').attr('checked', this.checked);
+            Pay_Type.push($('#Encashment').val());
+
+        }
+        else {
+            //Pay_Type=[];
+            Pay_Type = Pay_Type.filter(e => e !== $('#Encashment').val());
+        }
+    });
+
+    $("#Adhoc").click(function () {
+
+        ////debugger;
+        if ($(this).prop("checked") == true) {
+
+            $("#StopSalary").prop("checked", false);
+            //  $("#txtEmployeeSearchBox1450").val("");
+            Pay_Type.forEach(function (obj) {
+
+                if (obj == "stopsalary") {
+                    val = [];
+                    $("#txtEmployeeSearchBox1450").val(val);
+                }
+            });
+
+
+
+            $('#Adhoc').attr('checked', this.checked);
+            Pay_Type.push($('#Adhoc').val());
+        }
+        else {
+            //Pay_Type=[];
+            Pay_Type = Pay_Type.filter(e => e !== $('#Adhoc').val());
+        }
+    });
+
+    $(document).ready(function () {
+
+        $checks = $("#StopSalary");
+        $checks.on('change', function () {
+            val = [];
+            if ($(this).prop("checked") == true) {
+                $("#pvBtnSearchEmpCodeWithChkModalPopup1450").attr("disabled", false);
+                string = $checks.filter(":checked").map(function (i, v) {
+                    $("#rdbEmpAll1empsearch").prop("checked", true);
+                    $("#txtEmployeeSearchBox1450").attr("disabled", false);
+                    $("#Now").attr('disabled', false);
+                    $("#Now").prop("checked", true);
+                    $("#Todate").attr("disabled", true);
+                    Pay_Type = Pay_Type.filter(e => e !== $('#Regular').val());
+                    Pay_Type = Pay_Type.filter(e => e !== $('#Suspended').val());
+                    $("#Encashment").prop("checked", false);
+                    $("#Adhoc").prop("checked", false);
+                    $("#Regular").prop("checked", false);
+                    $("#Suspended").prop("checked", false);
+
+                    CommonApiGET('/Payroll/Process/empcodeslist', function (respData) {
+                        fillcheckboxStopSalary(respData);
+                    });
+
+                    return val;
+                }).get().join(",");
+
+            }
+            else if ($(this).prop("checked") == false) {
+                $("#rdbEmpAll").prop("checked", true);
+                $("#Now").prop("checked", false);
+                $("#Now").attr('disabled', true);
+                $("#txtEmployeeSearchBox1450").attr("disabled", true);
+                $("#Todate").attr("disabled", false);
+                val = [];
+                $('#txtEmployeeSearchBox1450').val(val);
+                Pay_Type = Pay_Type.filter(e => e !== $('#StopSalary').val());
+
+            }
+
+        });
+    });
+    function fillcheckboxStopSalary(respData) {
+        //
+        respData.forEach(function (element) {
+            val.push(element.EmpId);
+        });
+        $('#txtEmployeeSearchBox1450').val(val);
+        Pay_Type.push("stopsalary");
+    }
+
+    // based on radio button disabled textbox
+    $(document).ready(function () {
+
+        $("#txtEmployeeSearchBox1450").attr("disabled", true);
+        $("#rdbEmpAll1empsearch").click(function () {
+            $('[id=rdbEmpAll1empsearch]').on('change', function () {
+                $("#txtEmployeeSearchBox1450").attr("disabled", false);
+                $("#Now").attr('disabled', false);
+                $("#Now").prop("checked", true);
+                $("#btnSubmit").prop("disabled", false);
+                $("#ReverseHourEnd").prop("disabled", true);
+
+            })
+        });
+        $("#rdbEmpAll").click(function () {
+            $("#txtEmployeeSearchBox1450").attr("disabled", true);
+            $("#StopSalary").prop("checked", false);
+            $("#Encashment").prop("checked", false);
+            $("#Adhoc").prop("checked", false);
+            $("#Regular").prop("checked", false);
+            $("#Suspended").prop("checked", false);
+            $("#Now").prop("checked", false);
+            $("#Shtime").prop("checked", true);
+            Pay_Type = [];
+            val = [];
+            $('#txtEmployeeSearchBox1450').val(val);
+            //var enableordisbale = '@ViewBag.RunorRevertbuttonenabledisable';
+            if (enableordisbale == 'Disable') {
+            $("#ReverseHourEnd").prop("disabled", false);
+            $("#btnSubmit").prop("disabled", true);
+            //document.getElementById("ReverseHourEnd").style.visibility = "none";
+        }
+            //$("#btnSubmit").prop("disabled", true);
+            //$("#ReverseHourEnd").prop("disabled", false);
+        });
+
+        //$("#Todate").attr("disabled", true);
+        $("#Shtime").click(function () {
+            $("#rdbEmpAll").attr("disabled", false);
+            $('[id=Shtime]').on('change', function () {
+                $("#Todate").attr("disabled", false);
+            })
+        });
+        $("#Now").click(function () {
+            $("#rdbEmpAll").attr("disabled", true);
+            $("#txtEmployeeSearchBox1450").prop("checked", true);
+            $("#Todate").attr("disabled", true);
+          //  $("#Todate").val("");
+        });
+
+        var emp_code = $("#txtEmployeeSearchBox1450").val();
+        var allemp = $("input[id='rdbEmpAll']:checked").val();
+
+        if (allemp == "All") {
+            emp_code = $("input[id='rdbEmpAll']:checked").val();
+            $("#Now").attr('disabled', true);
+        }
+    });
+
+    $(function () {
+        $('.datetimepicker').datetimepicker({
+            minDate: new Date(),
+            format: 'DD-MM-YYYY hh:mm A'
+        });
+
+        $('.datetimepicker-addon').on('click', function () {
+
+            $(this).prev('input.datetimepicker').data('DateTimePicker').toggle();
+            format: 'DD-MM-YYYY hh:mm A'
+        });
+
+    });
+
+    var data = [];
+    var arrerresult = [];
+    $(document).ready(function () {
+        CommonApiGET('/Payroll/Process/getPayslipservice', function (respData) {
+            orgData = respData;
+            fillData(respData);
+        });
+        //////debugger;
+        function fillData(respData) {
+            ////debugger;
+            orgDdlist = respData;
+            data = orgDdlist;
+            $('#Payslip_service').DataTable({
+                destroy: true,
+                "paging": true,
+                "ordering": false,
+                "info": false,
+                "bFilter": false,
+                "searching": true,
+                "lengthChange": false,
+                "language": {
+                    "search": "Filter records:"
+                },
+                data: respData,
+                "columns": [
+                    { "data": "id" },
+                    { "data": "payslip_type" },
+                    { "data": "emp_codes" },
+                    { "data": "CompletedEmpCodes" },
+                    { "data": "process_count" },
+
+
+
+                    //{ "data": "status" },
+                    //{
+                    //    data: "status", "render": function (data, type, row) {
+
+                    //        if (data == 1) {
+                    //            ////debugger;
+                    //            return "<img src='/Areas/Payroll/Assets/images/Check.png' />";
+                    //        }
+                    //        else {
+                    //            return data;
+                    //        }
+                    //    }
+                    //},
+                    {
+
+                        data: "status", "render": function (data, type, row) {
+                            //debugger;
+                            if (data == 0) {
+                                return '<button class="btn btn-danger delete_btn" type="button" id="' + row.id + '" onclick="Delete(this.id)"><i class="glyphicon glyphicon-trash"></i></button>';
+                            }
+                            else if (data == -1) {
+                                return '<button type="button" class="btn btn-default search_btn" title="Show Error" id="' + row.emp_codes + '" onclick="ShowError(this.id)"><i class="glyphicon glyphicon-search"></button>';
+                            }
+                            else if (row.err_desc != null) {
+                                // //debugger;
+                                return '<img src="/Areas/Payroll/Assets/images/Check.png"/><button type="button" class="btn btn-default search_btn" title="Show Error" id="' + row.id + '" onclick="ShowError(this.id)"><i class="glyphicon glyphicon-search"></button>';
+                            }
+                            else {
+                                return "<img src='/Areas/Payroll/Assets/images/Check.png' />";
+                                //return null;
+                            }
+                        }
+                    },
+                    { "data": "run_date_time" },
+                    { "data": "username" }
+                ],
+                "order": [[1, 'asc']]
+            });
+        }
+
+    });
+
+    function Delete(id) {
+        //////debugger;
+        var dataToSend = JSON.stringify({
+            "StringData": id
+        });
+        if (id.length > 0) {
+            CommonApiPOST("/Payroll/Process/DeletePayslip", dataToSend, function (isSuccess) { //, JSON.stringify(id)
+                if (isSuccess) {
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+        }
+    }
+    function ShowError(id) {
+        //alert(id);
+        //
+        ////debugger;
+        var error = JSON.stringify({
+            "StringData": id
+        });
+
+        orgData.map(function (obj) {
+            // //debugger;
+            if (obj.id == id) {
+                showGlobalModalPayslip('E#Error#' + obj.err_desc);
+            }
+        });
+    }
+    var p_type = [];
+    var pro;
+    var ptype;
+    $('#btnSubmit').click(function () {
+        //debugger;
+
+
+        var emp_code = $('#txtEmployeeSearchBox1450').val();
+        var allemp = $("input[id='rdbEmpAll']:checked").val();
+        if (Pay_Type.length == 0) {
+            showGlobalModal('E#Warning #Please Select Payslip Type');
+            return false;
+        }
+
+        ptype = Pay_Type.toString();
+
+
+        //////debugger;
+
+        if (allemp != "All") {
+
+            if ($("#txtEmployeeSearchBox1450").val() == "") {
+                toasterOptions();
+                toastr.error('Employee Id cannot be empty', 'Required');
+
+            }
+            else if ($("#txtEmployeeSearchBox1450").val() != "") {
+                CommonApiGET('/Payroll/Process/empcodesvalidation?EmpCode=' + $("#txtEmployeeSearchBox1450").val(), function (respData) {
+                    if (respData.length == 0) {
+                        toasterOptions();
+                        toastr.error('No user with Name / Code: ' + $("#txtEmployeeSearchBox1450").val(), 'No user');
+                        setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                    }
+
+                    else {
+                        //ebugger;
+                        PayslipData(ptype);
+
+                    }
+                });
+            }
+        }
+        else {
+            //////debugger;
+            CommonApiGET('/Payroll/Process/empcodeslistGS?Pay_Type=' + ptype, function (respData) {
+                //////debugger;
+                p_type = respData;
+                PayslipData(p_type);
+            });
+        }
+    });
+
+    // insert emp ids for payslip
+    function PayslipData(p_type) {
+        ////debugger;
+
+        var finalp = [];
+
+
+        var emp_code = $('#txtEmployeeSearchBox1450').val();
+        var allemp = $("input[id='rdbEmpAll']:checked").val();
+        var emp_codes1 = "";
+        if (allemp == "All") {
+            emp_code = $("input[id='rdbEmpAll']:checked").val();
+            p_type.map(function (obj) {
+                emp_codes1 = emp_codes1 + obj.emp_code + ",";
+            });
+
+            var newStr = emp_codes1.slice(0, emp_codes1.length - 1);
+
+            emp_code = newStr;
+        }
+
+        CommonApiGET('/Payroll/Process/getFinalProcess?emp_code=' + emp_code + "&Pay_Type=" + ptype, function (respData) {
+            //debugger;
+            finalp = respData;
+            pro = finalp;
+            if (respData != "True") {
+                //////debugger;
+
+                //Pay_Type = Pay_Type.toString();
+                Finalprocess = Finalprocess.toString();
+                //sendmail = sendmail.toString();
+                var count = 0;
+                var emp_code = $('#txtEmployeeSearchBox1450').val();
+                var allemp = $("input[id='rdbEmpAll']:checked").val();
+                var emp_codes1 = "";
+                if (allemp == "All") {
+                    emp_code = $("input[id='rdbEmpAll']:checked").val();
+                    p_type.map(function (obj) {
+                        emp_codes1 = emp_codes1 + obj.emp_code + ",";
+                    });
+
+                    var newStr = emp_codes1.slice(0, emp_codes1.length - 1);
+
+                    emp_code = newStr;
+                }
+                var type = "";
+                Pay_Type.forEach(function (arr) {
+                    type = type + arr + ",";
+                });
+
+
+                type = type.substring(0, type.length - 1);
+
+
+                if (emp_code == "") {
+                    showGlobalModal('E#Warning #Employees Not Available in ' + type + '. Please, do ' + type + '  Process');
+                    return false;
+                }
+                var date = $('#Todate').val();
+                var alldate = $("input[id='Now']:checked").val();
+                if (alldate == "Now") {
+                    date = $("input[id='Now']:checked").val();
+                }
+                //debugger;
+                if (date == "") {
+                    showGlobalModal('E#Warning #Please Select Scheduler RunTime');
+                    return false;
+                }
+
+                // now
+                if ($("input[id='Now']:checked").val()) {
+                    var getNumbers = $('#txtEmployeeSearchBox1450').val().split('').filter(function (item) {
+                        return item === ','
+                    }).length + 1;
+                    if (getNumbers > 5) {
+                        showGlobalModal('E#Save Error# Payslip service cannot handle more than 5 employees now.Please schedule a time to run background services.');
+                    }
+                    else {
+                        if (emp_code != undefined && date != "") {
+                            var dataToSend = JSON.stringify({
+                                'EmpId': emp_code,
+                                'date': date,
+                                'Pay_Type': type,
+                                'Finalprocess': Finalprocess,
+                                //'sendmail': sendmail,
+
+                            });
+
+                            //
+                            if (dataToSend.length > 0 && count < 1) {
+                                //
+                                CommonApiPOST("/Payroll/Process/InsertPayslip", dataToSend, function (isSuccess) {
+                                    if (isSuccess) {
+                                        setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                                    } else {
+                                        setTimeout(function () { window.location.reload(); }, g_pagereload_seconds = "5000");
+                                    }
+                                });
+                            }
+
+                        }
+                    }
+                }
+
+                else {
+                    if (emp_code != undefined && date != "") {
+                        //
+                        var dataToSend = JSON.stringify({
+                            'EmpId': emp_code,
+                            'date': date,
+                            'Pay_Type': type,
+                            'Finalprocess': Finalprocess,
+                            // 'sendmail': sendmail,
+
+                        });
+                        if (dataToSend.length > 0 && count < 1) {
+                            CommonApiPOST("/Payroll/Process/InsertPayslip", dataToSend, function (isSuccess) {
+                                if (isSuccess) {
+                                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                                } else {
+                                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+
+            else {
+                // ////debugger;
+                showGlobalModal('E# Save Error# Employee Final process is completed.');
+                setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+            }
+        });
+
+    }
+
+
+
+
+</script>

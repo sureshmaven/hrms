@@ -1,0 +1,136 @@
+--TDS Fact
+--DROP TABLE TdsFact;
+CREATE TABLE [dbo].[TdsFact](
+	[empcode] [int] NULL,
+	[dim_tid_ref_tds] [int] FOREIGN KEY REFERENCES dim_time(dim_tid),
+	[fm] [date] NULL,
+	[sal_basic] [float] NULL,
+	[sal_fixed_personal_allowance] [float] NULL,
+	[sal_fpa_hra_allowance] [float] NULL,
+	[sal_fpiip] [float] NULL,
+	[sal_da] [float] NULL,
+	[sal_hra] [float] NULL,
+	[sal_cca] [float] NULL,
+	[sal_interim_relief] [float] NULL,
+	[sal_telangana_increment] [float] NULL,
+	[sal_spl_allow] [float] NULL,
+	[sal_spcl_da] [float] NULL,
+	[sal_pfperks] [float] NULL,
+	[sal_loanperks] [float] NULL,
+	[sal_incentive] [float] NULL,
+	[sal_value_of_perquisites] [float] NULL,
+	[sal_profits_in_lieu_of_salary] [float] NULL,
+	[gross_salary] [float] NULL,
+	[house_rent_allowance] [float] NULL,
+	[total_of_sec10] [float] NULL,
+	[balance_gross_min_sec10] [float] NULL,
+	[standard_deductions] [float] NULL,
+	[tax_of_employement] [float] NULL,
+	[tds_aggregate] [float] NULL,
+	[income_chargeable_bal_minus_agg] [float] NULL,
+	[other_income_by_the_emp] [float] NULL,
+	[interest_on_housing] [float] NULL,
+	[gross_total_income] [float] NULL,
+	[aggregate_of_deductible] [float] NULL,
+	[total_income] [float] NULL,
+	[tax_on_total_income] [float] NULL,
+	[section_87a] [float] NULL,
+	[education_cess] [float] NULL,
+	[tax_payable] [float] NULL,
+	[tax_deducted_at_source] [float] NULL,
+	[tax_paid_by_the_employer] [float] NULL,
+	[balance_tax] [float] NULL,
+	[balance_months] [float] NULL,
+	[tds_per_month] [float] NULL
+) ON [PRIMARY];
+
+--Inserting data into TDS Fact TABLE
+
+
+INSERT INTO [dbo].[TdsFact]
+           ([empcode]
+           ,[dim_tid_ref_tds]
+           ,[fm]
+           ,[sal_basic]
+           ,[sal_fixed_personal_allowance]
+           ,[sal_fpa_hra_allowance]
+           ,[sal_fpiip]
+           ,[sal_da]
+           ,[sal_hra]
+           ,[sal_cca]
+           ,[sal_interim_relief]
+           ,[sal_telangana_increment]
+           ,[sal_spl_allow]
+           ,[sal_spcl_da]
+           ,[sal_pfperks]
+           ,[sal_loanperks]
+           ,[sal_incentive]
+           ,[sal_value_of_perquisites]
+           ,[sal_profits_in_lieu_of_salary]
+           ,[gross_salary]
+           ,[house_rent_allowance]
+           ,[total_of_sec10]
+           ,[balance_gross_min_sec10]
+           ,[standard_deductions]
+           ,[tax_of_employement]
+           ,[tds_aggregate]
+           ,[income_chargeable_bal_minus_agg]
+           ,[other_income_by_the_emp]
+           ,[interest_on_housing]
+           ,[gross_total_income]
+           ,[aggregate_of_deductible]
+           ,[total_income]
+           ,[tax_on_total_income]
+           ,[section_87a]
+           ,[education_cess]
+           ,[tax_payable]
+           ,[tax_deducted_at_source]
+           ,[tax_paid_by_the_employer]
+           ,[balance_tax]
+           ,[balance_months]
+           ,[tds_per_month])
+     SELECT
+           
+		   tds.empcode
+           ,245
+           ,tds.fm
+           ,tds.sal_basic
+           ,tds.sal_fixed_personal_allowance
+           ,tds.sal_fpa_hra_allowance
+           ,tds.sal_fpiip
+           ,tds.sal_da
+           ,tds.sal_hra
+           ,tds.sal_cca
+           ,tds.sal_interim_relief
+           ,tds.sal_telangana_increment
+           ,tds.sal_spl_allow
+           ,tds.sal_spcl_da
+           ,tds.sal_pfperks
+           ,tds.sal_loanperks
+           ,tds.sal_incentive
+           ,tds.sal_value_of_perquisites
+           ,tds.sal_profits_in_lieu_of_salary
+           ,tds.gross_salary
+           ,tds.house_rent_allowance
+           ,tds.total_of_sec10
+           ,tds.balance_gross_min_sec10
+           ,tds.standard_deductions
+           ,tds.tax_of_employement
+           ,tds.tds_aggregate
+           ,tds.income_chargeable_bal_minus_agg
+           ,tds.other_income_by_the_emp
+           ,tds.interest_on_housing
+           ,tds.gross_total_income
+           ,tds.aggregate_of_deductible
+           ,tds.total_income
+           ,tds.tax_on_total_income
+           ,tds.section_87a
+           ,tds.education_cess
+           ,tds.tax_payable
+           ,tds.tax_deducted_at_source
+           ,tds.tax_paid_by_the_employer
+           ,tds.balance_tax
+           ,tds.balance_months
+           ,tds.tds_per_month
+		   
+		   from pr_emp_tds_process tds where tds.fm between '2019-04-01' and '2020-12-01';

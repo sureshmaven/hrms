@@ -1,0 +1,281 @@
+﻿@model Entities.Employees
+
+<script type="text/javascript">
+    @{
+        var message = TempData["AlertMessage"] ?? string.Empty;
+    }
+    var message = '@message';
+    if (message) alert(message);
+</script>
+<style>
+    #menuheader {
+        display: none !important;
+    }
+    body {
+        background: url(../Assets/images/bg11.jpg) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        padding: 0px;
+        margin: 0px;
+    }
+
+    .logo_login img {
+        width: 100%;
+    }
+
+    .loginpage {
+        background: rgba(255,255,255,0.5);
+        margin-top: 10%;
+        border: 1px solid rgba(0,0,0,0.5);
+        border-radius: 10px;
+        margin-bottom: 2%;
+    }
+
+    .login_footer {
+        border-top: 1px solid #696666;
+        padding-top: 10px;
+        text-align: center;
+    }
+
+    .logo_login {
+        text-align: center;
+        margin-bottom: 7px;
+    }
+
+    .login_footer a {
+        color: #000;
+        font-size: 12px;
+    }
+
+    .error_msg_login {
+        color: red;
+        text-align: center;
+        padding: 10px 0;
+    }
+
+    .wthree_footer_copy {
+        padding: 1em 0;
+        text-align: center;
+        background: rgba(0,0,0,0.2);
+    }
+
+    .footer {
+        margin-top: 50px;
+        position: absolute;
+        bottom: 0px;
+        width: 100%;
+    }
+input[type=checkbox]:not(old),
+input[type=radio]:not(old) {
+    width: 2em;
+    margin: 0;
+    padding: 0;
+    font-size: 1em;
+    opacity: 0;
+}
+
+    input[type=checkbox]:not(old) + label,
+    input[type=radio]:not(old) + label {
+        display: inline-block;
+        margin-left: -2.5em;
+        line-height: 26px;
+        margin-right: 1em;
+    }
+
+        input[type=checkbox]:not(old) + label > span,
+        input[type=radio]:not(old) + label > span {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            margin: 0.25em 0.5em 0.25em 0.25em;
+            border: 0.0625em solid rgb(17, 107, 6);
+            border-radius: 0.25em;
+            background: rgb(242, 255, 242);
+            vertical-align: bottom;
+        }
+
+        input[type=radio]:not(old) + label > span {
+            border-radius: 50%;
+        }
+
+    input[type=checkbox]:not(old):checked + label > span,
+    input[type=radio]:not(old):checked + label > span {
+        background: #fff;
+    }
+
+        input[type=checkbox]:not(old):checked + label > span:before {
+            content: '✓';
+            display: block;
+            width: 17px;
+            color: rgb(17, 107, 6);
+            font-size: 17px;
+            line-height: 18px;
+            text-align: center;
+            text-shadow: 0 0 0.0714em rgb(17, 107, 6);
+            font-weight: bold;
+        }
+
+        input[type=radio]:not(old):checked + label > span > span {
+            display: block;
+            width: 8px;
+            height: 8px;
+            margin: 4px;
+            border: 0.0625em solid rgb(17, 107, 6);
+            background: rgb(17, 107, 6);
+            border-radius: 50%;
+        }
+
+</style>
+
+@using (Html.BeginForm("Loginuser", "Home", "POST"))
+{
+    @Html.ValidationSummary(true)
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-7 col-sm-5 col-sm-offset-5 loginpage">
+                <div class="panel-body">
+                    <div class="logo_login"><img src="~/Assets/images/LoginLogo.png" /></div>
+                    <div class="error_msg_login">@ViewBag.Status</div>
+                    <div class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-5 control-label">
+                                Employee Code:
+                            </label>
+                            <div class="col-sm-7">
+                                @Html.EditorFor(model => model.EmpId, new { htmlAttributes = new { @class = "form-control", maxlength = "10", onkeypress = "return isNumber(event)" } })
+                                @Html.ValidationMessageFor(model => model.EmpId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-5 control-label">
+                                Password:
+                            </label>
+                            <div class="col-sm-7">
+                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" ,type="password" , maxlength = "15" } })
+                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        @*<div class="form-group">
+                                <label for="select" class="col-sm-5 control-label">
+                                Select Application:
+                                </label>
+                                <div class="col-sm-7">
+                                    <input type="radio" id="hrms" value="HRMS" name="HRMS" checked="checked">
+                                    <label for="hrms"><span><span></span></span>HRMS</label>
+                                    <input type="radio" id="payroll" value="payroll" name="HRMS">
+                                    <label for="payroll"><span><span></span></span>Payroll</label>
+                                    @*<input type="radio" id="hrms" value="HRMS" name="HRMS" checked="checked" /> <label for="hrms">  HRMS </label> &nbsp;&nbsp;&nbsp;
+        <input type="radio" id="payroll" value="payroll" name="HRMS" /> <label for="payroll"> Payroll </label>
+                                </div>
+                        </div>*@
+                        <div class="form-group last">
+                            <div class="col-sm-offset-5 col-sm-7">
+                                <button id="button1id" name="button1id" class="btn btn-success btn-md" type="submit" onclick="return myFunction();"><i class="fa fa-key" style="font-size:15px;margin-right: 4px;"></i>  Login</button>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="login_footer">
+                        <a href="~/Home/ForgotPassword"><i class="glyphicon glyphicon-time" style="font-size:10px"></i> Forgot Password</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script>
+    function myFunction() {
+        var Email = $("#EmpId").val();
+        var Password = $("#Password").val();
+
+        if (Email == "") {
+            window.alert("Please Enter EmpId ");
+            $("#EmpId").focus();
+            return false;
+        }
+
+        else if (Password == "") {
+            window.alert("Please Enter Password");
+            $("#Password").focus();
+            return false;
+
+        }
+
+        else {
+
+            return true;
+        }
+
+    };</script>
+<script>
+    function Onempid() {
+
+
+        var x = location.hostname;
+        var url = window.location.href
+        var arr = url.split("/");
+        var textBoxValue = document.getElementById("EmpId").value;
+
+     //   var result = "https://" + arr[2] + "/" + "Home/CheckEmpid?EmpID=" + textBoxValue;
+
+        var result = "" + arr[0] +  "//" + arr[2] +  "/"+ "Home/CheckEmpid?EmpID=" + textBoxValue;
+        $.ajax({
+            type: "GET",
+            url: result,
+
+            dataType: "json",
+            success: function (data) {
+
+
+                if (data.message == "used") {
+
+
+                }
+                if (data.message == "use") {
+                    document.getElementById("EmpId").value != "";
+
+                    alert("This Employee Code does not Exist!");
+                }
+            },
+            error: function () {
+
+            }
+        });
+
+
+    }
+
+
+</script>
+<script>
+    $("#btnSave").click(function () {
+        alert("g");
+        var empid = $("#EmpId").val();
+        var pwd = $("#pw1").val();
+        var cpwd = $("#pw2").val();
+        alert(pwd);
+        alert(cpwd);
+
+        $.ajax({
+            type: "POST",
+            url: '/Home/ForgotPassword',
+
+            dataType: "json",
+            success: function (response) {
+                if (response != null) {
+
+
+                }
+                else {
+                    // alert("Something went wrong");
+                }
+            },
+            error: function () {
+
+            }
+        });
+
+    })
+</script>

@@ -1,0 +1,90 @@
+﻿<div id="reportsearch" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+    <div class="panel-body">
+        <div class="reports_search">
+
+            <div class="report_search_emp no-border">
+                <button type="button"  class="btn btn-default" style="color: #000000" name="wise" id="BranchId">Select Branch Name </button>
+                <div class="form-group">
+
+                    <div class="col-sm-6">
+                        <div class="navbar-form" role="search">
+                            <div class="input-group">
+                                <input type="text" id="txtAllEmpSearchforBranchs" name="txtBranch" class="form-control" placeholder="Search">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="branch_models" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow:auto">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">All Branchs</h4>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive" style="overflow: auto; max-height:300px;">
+                    <table id="gridBranch" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th><input id="checkboxAllBranch" type="checkbox" name="checkbox1" value="0"><label for="checkboxAll"><span></span></label></th>
+                                <th></th>
+                                <th>Branch Name</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="btnBranchModalOK">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+
+    var Branchid = [];
+    
+    $("#BranchId").click(function ()  {
+        Branchid = [];
+
+       $('#txtAllEmpSearchforBranchs').hide();
+
+        fillBranchDetails();
+        // return false();
+    });
+
+
+
+    $("#btnBranchModalOK").click(function () {
+        Branchid = [];
+        $("input:checkbox[name=checkbox1]:checked").each(function () {
+            Branchid.push($(this).val());
+        });
+        $('#txtAllEmpSearchforBranchs').val(Branchid);
+        $('#branch_models').modal('toggle'); //or  $('#IDModal').modal('hide');
+        return false;
+    });
+
+
+
+</script>
+<script type="text/javascript">
+    $("#checkboxAllBranch").click(function () {
+        $('input:checkbox').not(this).prop('checked', this.checked);
+    });
+</script>
+
+
+

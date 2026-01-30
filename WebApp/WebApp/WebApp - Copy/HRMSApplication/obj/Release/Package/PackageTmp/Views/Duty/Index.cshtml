@@ -1,0 +1,930 @@
+﻿@model Entities.OD_OtherDuty
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var rolepages = TempData["RolePages"].ToString();
+    ViewBag.RolePages = TempData["RolePages"];
+}
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-heading">
+            @{
+                <ul class="nav nav-tabs">
+                    @if (rolepages.Contains("ODOAL"))
+                    {
+                        <li class="active"><a href=@Url.Action("Index", "Duty")>OD Apply</a></li>}
+                    @if (rolepages.Contains("ODOAV"))
+                    {
+                        <li><a href=@Url.Action("Approvals", "Duty")>OD Approvals</a></li>
+                        <li><a href=@Url.Action("UnlockOD", "Duty")>UnLock OD</a></li>}
+                </ul>
+            }
+        </div>
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade  in active" id="tab2primary">
+                    <div class="page_st">
+                        <div class="page">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="main_heading">
+                                    <h1>OD Apply</h1>
+                                    <div class="leave_cont_start">
+                                        @using (Html.BeginForm("Index", "Duty", FormMethod.Post, new { name = "Index" }))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <div class="col-md-12 col-sm-12">
+                                                <div class="main_heading">
+                                                    <h1>Apply OD</h1>
+                                                    <div class="form-horizontal col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Controlling Authority:</label>
+                                                                <div class="col-sm-8">
+                                                                    <input type="text" class="form-control" id="ControllingAuthority" readonly="readonly" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Sanctioning Authority:</label>
+                                                                <div class="col-sm-8">
+                                                                    <input type="text" class="form-control" id="SanctioningAuthority" readonly="readonly" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Visiting From:<span class="mandatory">*</span></label>
+                                                                <div class="col-sm-8">
+                                                                    @Html.DropDownListFor(model => model.VistorFrom, ViewBag.Branch as SelectList ,  new { @class = "form-control" })
+                                                                    @Html.HiddenFor(model => model.VistorFrom)
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Visiting To:<span class="mandatory">*</span></label>
+                                                                <div class="col-sm-8">
+                                                                    @Html.TextAreaFor(model => model.VistorTo, new { @class = "form-control" })
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Start Date:<span class="mandatory">*</span></label>
+                                                                <div class="input-group col-sm-8 " id="datetimepicker1">
+                                                                    @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control", @id = "sdate", onkeypress = "return nokeyword(event)", onchange = "return Dateevent3()" } })
+                                                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">End Date:<span class="mandatory">*</span></label>
+                                                                <div class="input-group col-sm-8" id="datetimepicker2">
+                                                                    @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control", @id = "edate", onkeypress = "return nokeyword(event)",onchange= "return Dateevent1()" } })
+                                                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Purpose:<span class="mandatory">*</span></label>
+                                                                <div class="col-sm-8">
+                                                                    @Html.DropDownListFor(model => model.Purpose, ViewBag.Purpose as SelectList, "Select", new { @class = "form-control" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Description:<span class="mandatory">*</span></label>
+                                                                <div class="col-sm-8">
+                                                                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control", style = "width:100% !important", rows = "3", @id = "reason1" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="pull-right">
+                                                                <button type="button" onclick="resetForm()" value="reset" class="btn btn-default">Cancel</button>
+                                                                <button type="submit" id="btsubmit" onclick="return deputationapply();" class="btn btn-primary subleave1">Submit</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12 col-sm-12">
+                                                <div class="main_heading">
+                                                    <h1>OD History</h1>
+                                                    <div class="form-horizontal">
+                                                        <div class="col-md-4 col-sm-3 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label label_left">From Date:<span class="mandatory">*</span></label>
+                                                                <div class="input-group date col-sm-8">
+                                                                    <input type="text" id="SDate" class="form-control" onkeypress="return nokeyword(event)" , onchange="return Dateevent4();"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4 col-sm-3 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">To Date:<span class="mandatory">*</span></label>
+                                                                <div class="input-group date col-sm-8">
+                                                                    <input type="text" id="EDate" class="form-control" onkeypress="return nokeyword(event)" , onchange="return Dateevent2();"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-1 col-sm-1 col-xs-12">
+                                                            <button type="button" onclick="return Deputationhistoryadmin();" id="btnApply" class="btn btn-primary btn-sm pull-right">Search</button>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="clearfix"></div>
+                                                    <div class="col-md-12">
+                                                        <div class="table-responsive m_20">
+                                                            <div id="gridApplyl"></div>
+                                                            <div style='margin-top: 20px;'>
+                                                                <div style='float: left;'>
+                                                                    @*<input type="button" value="Download PDF" id='excelExport' />*@
+                                                                    <input type="button" class="btn btn-info" value="Download PDF" id='excelExport' onclick='window.location = "@Url.Action("CreatePdf", "Duty")";' />
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(function () {
+        $('#datetimepicker1').datetimepicker({
+            useCurrent: true,
+            format: 'DD-MM-YYYY LT',
+            minDate: moment().add(-10, 'Year').add(0, 'h')
+        }).on('dp.change', function (e) {
+             hidedt();
+            Dateevent3();
+        });
+        $('#datetimepicker2').datetimepicker({
+            useCurrent: true,
+            format: 'DD-MM-YYYY LT',
+            minDate: moment().add(-10, 'Year').add(0, 'h')
+        }).on('dp.change', function (e) {
+            hidedt();
+           Dateevent1();
+        })
+    });</script>
+@{
+    var message = TempData["AlertMessage"] ?? string.Empty;
+}
+<script type="text/javascript">
+ var message = '@message';
+
+if(message) alert(message);
+
+</script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+        // prepare the data for BankView
+        var theme = otherTheme;
+        // prepare the data
+
+        $(function () {
+            $.ajax({
+                type: "GET",
+                url: "/Duty/GetAuthorityNamess",
+                dataType: "Json",
+                success: function (response) {
+                    if (response != null) {
+
+                        document.getElementById("ControllingAuthority").value = response.lControllingAuthorityAjax;
+                        document.getElementById("SanctioningAuthority").value = response.lSanctioningAuthorityAjax;
+                    }
+                    else {
+                        // alert("Something went wrong");
+                    }
+                },
+            });
+        });
+
+        var url = "../Duty/Selfdeputation";
+        var source =
+            {
+                datatype: "json",
+                datafields: [
+                    { name: 'Id', type: 'int' },
+                    { name: 'EmpId', type: 'int' },
+                    { name: 'ShortName', type: 'string' },
+                    { name: 'designation', type: 'string' },
+                    { name: 'Deptbranch', type: 'string' },
+                    { name: 'UpdatedDate', type: 'date' },
+                    { name: 'VistorFrom', type: 'string' },
+                    { name: 'VistorTo', type: 'string' },
+                    { name: 'StartDate', type: 'date' },
+                    { name: 'EndDate', type: 'date' },
+                    { name: 'Duration', type: 'string' },
+                    { name: 'Purpose', type: 'string' },
+                    { name: 'Status', type: 'string' },
+                    { name: 'Description', type: 'string' },
+                    { name: 'CancelReason', type: 'string' },
+                ],
+                async: false,
+                url: url,
+                data: {
+                    featureClass: "P",
+                    style: "full",
+                    username: "jqwidgets"
+                }
+            };
+        var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties, rowdata) {
+            if (value == "Pending") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #FFA500;">' + value + '</span>';
+            }
+            else if (value == "Forwarded") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #33b5e5;">' + value + '</span>';
+            }
+            else if (value == "Approved") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #00C851;">' + value + '</span>';
+            }
+            else {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #ff4444;">' + value + '</span>';
+            }
+        }
+        var dataAdapter = new $.jqx.dataAdapter(source,
+            {
+                formatData: function (data) {
+                    data.ProductName = $("#searchField").val();
+                    return data;
+                }
+            }
+        );
+        // initialize jqxGrid
+        var editrowindex = -1;
+        var delrowindex = -1;
+        $("#gridApplyl").jqxGrid(
+            {
+                width: '99%',
+                source: dataAdapter,
+                theme: otherTheme,// for theme refernce go to Layout.cshtml
+                autoheight: true,
+                sortable: true,
+                pageable: true,
+
+                columnsResize: true,
+                altRows: true,
+                filterable: true,
+                autoshowfiltericon: true,
+
+                ready: function () {
+                    $("#gridApplyl").jqxGrid('localizestrings', localizationObject);
+                },
+                updatefilterconditions: function (type, defaultconditions) {
+                    switch (type) {
+                        case 'stringfilter':
+                            return stringcomparisonoperators;
+                        case 'numericfilter':
+                            return numericcomparisonoperators;
+                        case 'datefilter':
+                            return datecomparisonoperators;
+                        case 'booleanfilter':
+                            return booleancomparisonoperators;
+                    }
+                },
+                updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                    filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                    var index1 = 0;
+                    var index2 = 0;
+                    if (columnfilter != null) {
+                        var filter1 = columnfilter.getfilterat(0);
+                        var filter2 = columnfilter.getfilterat(1);
+                        if (filter1) {
+                            index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                            var value1 = filter1.filtervalue;
+                            filterinputfield1.val(value1);
+                        }
+                        if (filter2) {
+                            index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                            var value2 = filter2.filtervalue;
+                            filterinputfield2.val(value2);
+                        }
+                    }
+                    filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                    filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                },
+                columns: [
+
+                    {
+                        text: 'SNO', sortable: false, filterable: false, editable: false, exportable: false, align: 'center',
+                        groupable: false, draggable: false, resizable: false,
+                        datafield: '', columntype: 'number', width: 50,
+                        cellsrenderer: function (row, column, value) {
+                            return "<div style='margin:4px;text-align: center;'>" + (value + 1) + "</div>";
+                        }
+                    },
+                    { text: "Emp Code", datafield: "EmpId", editable: false, width: 120, sortable: false },
+                    { text: "Employee Name", datafield: "ShortName", editable: false, exportable: false, width: 120, sortable: false },
+                    { text: "Designation", datafield: "designation", editable: false, exportable: false, width: 85, sortable: false },
+                    { text: "Applied Date", datafield: "UpdatedDate", editable: false, width: 140, cellsformat: "dd/MM/yyyy", sortable: false },
+                    { text: "Department/Branch", datafield: "Deptbranch", exportable: false, width: 140, sortable: false, editable: false },
+                    { text: "Visit From", datafield: "VistorFrom", editable: false, align: 'center', columngroup: 'Branch/Institution/Training to be visited', width: 140, sortable: false },
+                    { text: "Visit To", datafield: "VistorTo", editable: false, align: 'center', columngroup: 'Branch/Institution/Training to be visited', width: 140, sortable: false },
+                    { text: "From", datafield: "StartDate", editable: false, align: 'center', columngroup: 'Days with Time', width: 180, cellsformat: "dd/MM/yyyy h:mm tt", sortable: false },
+                    { text: "To", datafield: "EndDate", editable: false, align: 'center', columngroup: 'Days with Time', width: 180, cellsformat: "dd/MM/yyyy h:mm tt", sortable: false },
+                    { text: "Duration", datafield: "Duration", editable: false, width: 100, sortable: false },
+                    { text: "Purpose", datafield: "Purpose", exportable: false, editable: false, width: 120, sortable: false },
+                    { text: "Status", datafield: "Status", cellsrenderer: cellsrenderer, width: 100, sortable: false, editable: false },
+                    { text: "Description", datafield: "Description", exportable: false, editable: false, width: 90, sortable: false },
+                    { text: "Cancel Reason", datafield: "CancelReason", exportable: false, editable: false, width: 90, sortable: false }
+                ],
+                columngroups:
+                    [
+                        { text: 'Action', align: 'center', name: 'Actions', width: 160 },
+                        { text: 'Days with Time', align: 'center', editable: false, name: 'Days with Time' },
+                        { text: 'Branch/Institution/Training to be visited', align: 'center', editable: false, name: 'Branch/Institution/Training to be visited' },
+                    ],
+
+
+            });
+        //$("#excelExport").jqxButton();
+
+
+        //$("#excelExport").click(function () {
+        //    $("#gridApplyl").jqxGrid('exportdata', 'pdf', 'MYDeputationHistory');
+        //});
+
+      
+        $('#edate').keyup().focusout(function (e) {
+            console.log('called only once');
+              Dateevent1();
+          
+              return true;
+        });
+
+        $('#sdate').keyup().focusout(function (e) {
+            console.log('called only once');
+            Dateevent3();
+            return false;
+        });
+
+    });
+
+
+    function datescheck() {
+
+        var x = location.hostname;
+        var url = window.location.href
+        var arr = url.split("/");
+        // var darray = document.getElementById('sdate').value;
+        // var darraye = document.getElementById('edate').value;
+        var sdate = document.getElementById("sdate").value;
+        var edate = document.getElementById("edate").value;
+
+        //var result = "https://" + arr[2] + "/" + "Duty/checkLeaveEligebleOrNot?StartDate=" + sdate + "&EndDate=" + edate;
+        var result = "" + arr[0] +  "//" + arr[2] +  "/"+ "Duty/checkLeaveEligebleOrNot?StartDate=" + sdate + "&EndDate=" + edate;
+        $.ajax({
+            type: "GET",
+            url: result,
+
+            dataType: "json",
+            success: function (data) {
+
+                var input = data.message;
+
+                var fields = input.split('/');
+                var status = fields[0];
+                var dates = fields[1];
+
+                if (status == "false") {
+                    document.getElementById("sdate").value = "";
+                    document.getElementById("edate").value = "";
+                    alert(dates);
+                    //$('#datetimepicker2').datetimepicker({
+                    //    useCurrent: true,
+                    //    format: 'DD-MM-YYYY LT',
+                    //    minDate: moment().add(-10, 'Year').add(0, 'h')
+                    //});
+
+                    $('.bootstrap-datetimepicker-widget').hide();
+                    return false;
+
+                }
+                else {
+                    $('.bootstrap-datetimepicker-widget').hide();
+                }
+                if (status == "countzero") {
+
+                    /// alert("Leaves are not available");
+                }
+
+            },
+            error: function () {
+
+            }
+
+        });
+
+
+    }
+
+
+
+</script>
+<script type="text/javascript">
+    /*------------------ Click event button script in Partail view-------------*/
+
+    $("#btnApply").click(function () {
+        ajaxSpinnerShow();
+        var startdate = $("#SDate").val();
+        var enddate = $("#EDate").val()
+
+
+        // prepare the data
+        var source =
+            {
+                type: "Post",
+                datatype: "json",
+                datafields: [
+                    { name: 'Id', type: 'int' },
+                    { name: 'EmpId', type: 'int' },
+                    { name: 'ShortName', type: 'string' },
+                    { name: 'designation', type: 'string' },
+                    { name: 'Deptbranch', type: 'string' },
+                    { name: 'UpdatedDate', type: 'date' },
+                    { name: 'VistorFrom', type: 'string' },
+                    { name: 'VistorTo', type: 'string' },
+                    { name: 'StartDate', type: 'date' },
+                    { name: 'EndDate', type: 'date' },
+                    { name: 'Duration', type: 'string' },
+                    { name: 'Purpose', type: 'string' },
+                    { name: 'Status', type: 'string' },
+                    { name: 'Description', type: 'string' },
+                    { name: 'CancelReason', type: 'string' },
+                ],
+                async: false,
+                url: "/Duty/DeputationHistorySearchViews?StartDate=" + startdate + "&EndDate=" + enddate,
+                data: {
+                    featureClass: "P",
+                    style: "full",
+                    username: "jqwidgets"
+                },
+                loadComplete: function () {
+                    ajaxSpinnerHide();
+                }
+            };
+        var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties, rowdata) {
+            if (value == "Pending") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #FFA500;">' + value + '</span>';
+            }
+            else if (value == "Forwarded") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #33b5e5;">' + value + '</span>';
+            }
+            else if (value == "Approved") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #00C851;">' + value + '</span>';
+            }
+            else {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #ff4444;">' + value + '</span>';
+            }
+        }
+        var dataAdapter = new $.jqx.dataAdapter(source,
+            {
+                formatData: function (data) {
+                    data.ProductName = $("#searchField").val();
+                    return data;
+                }
+            }
+        );
+        // initialize jqxGrid
+        var editrowindex = -1;
+        var delrowindex = -1;
+        $("#gridApplyl").jqxGrid(
+            {
+                width: '99%',
+                source: dataAdapter,
+                theme: otherTheme,// for theme refernce go to Layout.cshtml
+                autoheight: true,
+                sortable: true,
+                pageable: true,
+                columnsResize: true,
+                altRows: true,
+                filterable: true,
+                autoshowfiltericon: true,
+
+                ready: function () {
+                    $("#gridApplyl").jqxGrid('localizestrings', localizationObject);
+                },
+                updatefilterconditions: function (type, defaultconditions) {
+                    switch (type) {
+                        case 'stringfilter':
+                            return stringcomparisonoperators;
+                        case 'numericfilter':
+                            return numericcomparisonoperators;
+                        case 'datefilter':
+                            return datecomparisonoperators;
+                        case 'booleanfilter':
+                            return booleancomparisonoperators;
+                    }
+                },
+                updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                    filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                    var index1 = 0;
+                    var index2 = 0;
+                    if (columnfilter != null) {
+                        var filter1 = columnfilter.getfilterat(0);
+                        var filter2 = columnfilter.getfilterat(1);
+                        if (filter1) {
+                            index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                            var value1 = filter1.filtervalue;
+                            filterinputfield1.val(value1);
+                        }
+                        if (filter2) {
+                            index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                            var value2 = filter2.filtervalue;
+                            filterinputfield2.val(value2);
+                        }
+                    }
+                    filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                    filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                },
+                columns: [
+                    {
+                        text: 'SNO', sortable: false, filterable: false, editable: false,
+                        groupable: false, draggable: false, resizable: false, exportable: false,
+                        datafield: '', columntype: 'number', width: 50,
+                        cellsrenderer: function (row, column, value) {
+                            return "<div style='margin:4px;'>" + (value + 1) + "</div>";
+                        }
+                    },
+
+                    //   { text: "SNO", datafield: "Id", editable: false, exportable: false, width: 35,sortable: false },
+                    { text: "Emp Code", datafield: "EmpId", editable: false, width: 120, sortable: false },
+                    { text: "Employee Name", datafield: "ShortName", editable: false, exportable: false, width: 120, sortable: false },
+                    { text: "Designation", datafield: "designation", editable: false, exportable: false, width: 85, sortable: false },
+                    { text: "Applied Date", datafield: "UpdatedDate", editable: false, width: 140, cellsformat: "dd/MM/yyyy", sortable: false },
+                    { text: "Department/Branch", datafield: "Deptbranch", exportable: false, width: 140, sortable: false, editable: false },
+                    { text: "Visit From", datafield: "VistorFrom", editable: false, align: 'center', columngroup: 'Branch/Institution/Training to be visited', width: 140, sortable: false },
+                    { text: "Visit To", datafield: "VistorTo", editable: false, align: 'center', columngroup: 'Branch/Institution/Training to be visited', width: 140, sortable: false },
+                    { text: "From", datafield: "StartDate", editable: false, align: 'center', columngroup: 'Days with Time', width: 180, cellsformat: "dd/MM/yyyy h:mm tt", sortable: false },
+                    { text: "To", datafield: "EndDate", editable: false, align: 'center', columngroup: 'Days with Time', width: 180, cellsformat: "dd/MM/yyyy h:mm tt", sortable: false },
+                    { text: "Duration", datafield: "Duration", editable: false, width: 100, sortable: false },
+                    { text: "Purpose", datafield: "Purpose", exportable: false, editable: false, width: 120, sortable: false },
+                    { text: "Status", datafield: "Status", cellsrenderer: cellsrenderer, width: 100, sortable: false, editable: false },
+                    { text: "Description", datafield: "Description", exportable: false, editable: false, width: 90, sortable: false },
+                    { text: "Cancel Reason", datafield: "CancelReason", exportable: false, editable: false, width: 90, sortable: false }
+
+                ],
+                columngroups:
+                    [
+                        { text: 'Action', align: 'center', name: 'Actions', width: 160 },
+                        { text: 'Days with Time', align: 'center', editable: false, name: 'Days with Time' },
+                        { text: 'Branch/Institution/Training to be visited', align: 'center', editable: false, name: 'Branch/Institution/Training to be visited' },
+                    ],
+
+
+            });
+        $("#excelExport").jqxButton();
+
+
+        $("#excelExport").click(function () {
+            $("#grid1").jqxGrid('exportdata', 'pdf', 'MYDeputationHistory');
+        });
+    });
+
+
+
+</script>
+
+
+<script>
+    //Start And End Date Validation
+    function Dateevent1() {
+        var darray = document.getElementById('sdate').value.split(" ");
+        var time = darray[1] + " " + darray[2];
+        var hours = Number(time.match(/^(\d+)/)[1]);
+        var minutes = Number(time.match(/:(\d+)/)[1]);
+        var AMPM = time.match(/\s(.*)$/)[1];
+        if (AMPM == "PM" && hours < 12) hours = hours + 12;
+        if (AMPM == "AM" && hours == 12) hours = hours - 12;
+        var sHours = hours.toString();
+        var sMinutes = minutes.toString();
+        if (hours < 10) sHours = "0" + sHours;
+        if (minutes < 10) sMinutes = "0" + sMinutes;
+        //   alert(sHours + ":" + sMinutes);
+        var darraye = document.getElementById('edate').value.split(" ");
+        var time1 = darraye[1] + " " + darraye[2];
+        var hours1 = Number(time1.match(/^(\d+)/)[1]);
+        var minutes1 = Number(time1.match(/:(\d+)/)[1]);
+
+        var AMPM1 = time1.match(/\s(.*)$/)[1];
+
+        if (AMPM1 == "PM" && hours1 < 12) hours1 = hours1 + 12;
+        if (AMPM1 == "AM" && hours1 == 12) hours1 = hours1 - 12;
+        var sHours1 = hours1.toString();
+        var sMinutes1 = minutes1.toString();
+        if (hours1 < 10) sHours1 = "0" + sHours1;
+        if (minutes1 < 10) sMinutes1 = "0" + sMinutes1;
+        //   alert(sHours1 + ":" + sMinutes1);
+        var StartDate = darray[0];
+        var EndDate = darraye[0];
+        if (StartDate == EndDate) {
+            if (parseInt(sHours1) < parseInt(sHours)) {
+                alert("Please ensure that Start Time is greater than or equal to End Time.");
+                document.getElementById('edate').value = '';
+                document.getElementById("edate").focus();
+                return false;
+            }
+            if (parseInt(sHours1) == parseInt(sHours)) {
+                if (parseInt(sMinutes1) < parseInt(sMinutes)) {
+                    alert("Please ensure that Start Time is greater than or equal to End Time.");
+                    document.getElementById('edate').value = '';
+                    document.getElementById("edate").focus();
+                    return false;
+                }
+            }
+        }
+
+        var Joindate = darray[0];
+
+        var Retdate = darraye[0];
+        var date = moment(Joindate, "DD.MM.YYYY");
+
+        var currentDate1 = moment(Retdate, "DD.MM.YYYY");
+        var duration = moment.duration(date.diff(currentDate1));
+
+
+        if (duration > 0) {
+            alert("Please ensure that End Date is greater than or equal to Start Date.");
+            document.getElementById("edate").focus();
+            document.getElementById("edate").value = '';
+            return false;
+
+        }
+        else {
+            datescheck();
+            return true;
+
+        }
+    }
+    //$("#datetimepicker1")
+
+
+    function Dateevent3() {
+
+        var darray = document.getElementById('sdate').value.split(" ");
+        var time = darray[1] + " " + darray[2];
+        var hours = Number(time.match(/^(\d+)/)[1]);
+        var minutes = Number(time.match(/:(\d+)/)[1]);
+        var AMPM = time.match(/\s(.*)$/)[1];
+        if (AMPM == "PM" && hours < 12) hours = hours + 12;
+        if (AMPM == "AM" && hours == 12) hours = hours - 12;
+        var sHours = hours.toString();
+        var sMinutes = minutes.toString();
+        if (hours < 10) sHours = "0" + sHours;
+        if (minutes < 10) sMinutes = "0" + sMinutes;
+        //   alert(sHours + ":" + sMinutes);
+        var darraye = document.getElementById('edate').value.split(" ");
+        var time1 = darraye[1] + " " + darraye[2];
+        var hours1 = Number(time1.match(/^(\d+)/)[1]);
+        var minutes1 = Number(time1.match(/:(\d+)/)[1]);
+        var AMPM1 = time1.match(/\s(.*)$/)[1];
+        if (AMPM1 == "PM" && hours1 < 12) hours1 = hours1 + 12;
+        if (AMPM1 == "AM" && hours1 == 12) hours1 = hours1 - 12;
+        var sHours1 = hours1.toString();
+        var sMinutes1 = minutes1.toString();
+        if (hours1 < 10) sHours1 = "0" + sHours1;
+        if (minutes1 < 10) sMinutes1 = "0" + sMinutes1;
+        //   alert(sHours1 + ":" + sMinutes1);
+        var StartDate = darray[0];
+        var EndDate = darraye[0];
+        if (StartDate == EndDate) {
+            if (parseInt(sHours1) < parseInt(sHours)) {
+                alert("Please ensure that End Time is greater than or equal to Start Time.");
+                document.getElementById('sdate').value = '';
+                document.getElementById("sdate").focus();
+                return false;
+            }
+            if (parseInt(sHours1) == parseInt(sHours)) {
+                if (parseInt(sMinutes1) < parseInt(sMinutes)) {
+                    alert("Please ensure that End Time is greater than or equal to Start Time.");
+                    document.getElementById('sdate').value = '';
+                    document.getElementById("sdate").focus();
+                    return false;
+                }
+            }
+        }
+        var eDate = moment(EndDate, "DD.MM.YYYY");
+        var sDate = moment(StartDate, "DD.MM.YYYY");
+        if (StartDate != '' && EndDate != '' && sDate > eDate) {
+            alert("Please ensure that End Date is greater than or equal to Start Date.");
+            document.getElementById('sdate').value = '';
+            document.getElementById("sdate").focus();
+            return false;
+        }
+        else {
+            datescheck();
+            return true;
+        }
+    }
+</script>
+
+<script>
+    //To Date and From Date Validation
+    function Dateevent2() {
+        var fromdate = document.getElementById("SDate").value;
+
+        var todate = document.getElementById("EDate").value;
+
+        var date = moment(fromdate, "DD.MM.YYYY");
+
+        var currentDate1 = moment(todate, "DD.MM.YYYY");
+        var duration = moment.duration(date.diff(currentDate1));
+
+
+        if (duration > 0) {
+
+
+            alert("Please ensure that To Date is greater than or equal to From Date.");
+            document.getElementById("EDate").focus();
+            document.getElementById("EDate").value = '';
+            return false;
+
+        }
+    }
+    function Dateevent4() {
+        var StartDate = document.getElementById('SDate').value;
+
+        var EndDate = document.getElementById('EDate').value;
+
+        var eDate = moment(EndDate, "DD.MM.YYYY");
+        var sDate = moment(StartDate, "DD.MM.YYYY");
+        if (StartDate != '' && EndDate != '' && sDate > eDate) {
+            alert("Please ensure that To Date is greater than or equal to From Date.");
+            document.getElementById('SDate').value = '';
+            document.getElementById("SDate").focus();
+            return false;
+        }
+    }
+</script>
+
+<script>
+    var resetForm = function () {
+        $("#VistorTo").val('');
+        $("#Purpose").val('');
+        $("#reason1").val('');
+        $("#sdate").val('');
+        $("#edate").val('');
+        $('#VistorFrom option').each(function () {
+            if (this.defaultSelected) {
+                this.selected = true;
+                return false;
+            }
+        });
+    }
+</script>
+
+
+
+
+<script type="text/javascript">
+    $('.subleave1').click(function () {
+    })
+</script>
+
+<script>
+    document.getElementById("a7").className = "active";
+
+</script>
+
+<style>
+    table, th, td {
+        border-collapse: collapse;
+    }
+
+    .activeClass {
+        background: #ffdb99;
+    }
+
+    .secondClass {
+        /*background: #FF9999;*/
+        color: red;
+    }
+</style>
+
+<script type='text/javascript'>
+    $(function getholidays() {
+        var active_dates = [];
+        $.ajax({
+            type: "GET",
+            async: false,
+            url: "/LeaveApply/GetDates",
+            dataType: "Json",
+            success: function (data) {
+                datesArray = data;
+                for (i = 0; i < datesArray.length; i++) {
+                    var result = datesArray[i].replace("-", "/");
+                    var result1 = result.replace("-", "/");
+                    var strArray = result1.split("/");
+                    var cdate = strArray[0] + "/" + parseInt(strArray[1]) + "/" + strArray[2]
+                    active_dates.push(cdate);
+
+                    if (i == datesArray.length - 1) {
+                        //loadcal(active_dates);
+                    }
+                }
+
+            }
+        });
+        $('.input-group.date').datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            beforeShowDay: function nonWorkingDays(date) {
+                var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
+                var week = 0 | date.getDate() / 7 //get the week
+                var dd = date.getDate();
+                var month = date.getMonth();
+                if (dd < 10) {
+                    dd = '0' + dd
+                }
+
+                if (month < 10) {
+                    month = '0' + month
+                }
+                var sunweek = date.getDay();
+                var year = date.getFullYear();
+
+                if (dd == 14 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                if (dd == 28 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                //check if it's second week or fourth week
+                else if (week == 1 || week == 3) {
+                    if (dd == 7 && day == 6 || dd == 21 && day == 6) {
+                        //check for satruday
+
+                    }
+                    else {
+                        if (day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                    }
+
+                }
+                //check for sunday
+                if (day == 0) {
+                    return {
+                        classes: 'secondClass'
+                    };
+
+                }
+                //check for holidays
+                var d = date;
+                var curr_date = d.getDate();
+                var curr_month = d.getMonth() + 1; //Months are zero based
+                if (curr_date < 10) {
+                    curr_date = '0' + curr_date
+                }
+                var curr_year = d.getFullYear();
+                var formattedDate = curr_date + "/" + curr_month + "/" + curr_year
+
+                if ($.inArray(formattedDate, active_dates) != -1) {
+                    return {
+                        classes: 'activeClass'
+                    };
+                }
+                return [true];
+            }
+        });
+
+
+    });
+</script>
+
+

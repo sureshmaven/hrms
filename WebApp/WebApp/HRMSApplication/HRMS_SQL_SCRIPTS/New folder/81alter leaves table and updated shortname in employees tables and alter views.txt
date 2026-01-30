@@ -1,0 +1,771 @@
+alter table employees add ShortName varchar(200) null;
+
+alter table leaves add  Stage varchar(200) null;
+alter table leaves add  CancelReason varchar(500) null;
+
+update employees set ShortName='Dr.N MURALIDHAR' where empid=686;
+update employees set ShortName='T JYOTHI' where empid=462;
+update employees set ShortName='MANZOOR GHOUSIA' where empid=354;
+update employees set ShortName='K ANANTH RAO' where empid=405;
+update employees set ShortName='N VANI BALA' where empid=271;
+update employees set ShortName='LATHA JADHAV' where empid=460;
+update employees set ShortName='K L SUREKHA' where empid=463;
+update employees set ShortName='A NAGESWARI' where empid=147;
+update employees set ShortName='RAMESH BADAY' where empid=204;
+update employees set ShortName='A PADMA' where empid=266;
+update employees set ShortName='M KRISHNAIAH' where empid=368;
+update employees set ShortName='M R SRINIVASA RAO' where empid=371;
+update employees set ShortName='B ANJAIAH' where empid=374;
+update employees set ShortName='D NAGA KRISHNA' where empid=381;
+update employees set ShortName='CH CHINNA RAO' where empid=383;
+update employees set ShortName='D SRIDHAR REDDY' where empid=279;
+update employees set ShortName='B SHAMALA' where empid=359;
+update employees set ShortName='K.ANNAPURNA' where empid=485;
+update employees set ShortName='B PRAKASH KUMAR' where empid=363;
+update employees set ShortName='V VENKATESWARLU' where empid=338;
+update employees set ShortName='B RAMCHANDER' where empid=376;
+update employees set ShortName='S YOGESHWAR RAO' where empid=265;
+update employees set ShortName='D PARDHASARADHI RAO' where empid=337;
+update employees set ShortName='N.KALYANI DEVI' where empid=5809;
+update employees set ShortName='M.RAYAPPA' where empid=5794;
+update employees set ShortName='P SUJATHA' where empid=361;
+update employees set ShortName='N VIJAYA BABU' where empid=320;
+update employees set ShortName='B BALU' where empid=452;
+update employees set ShortName='V RAMA DEVI' where empid=287;
+update employees set ShortName='P CHANDRA SHEKAR' where empid=356;
+update employees set ShortName='Y NIRMALA KUMARI' where empid=340;
+update employees set ShortName='J N NIRMALA DEVI' where empid=358;
+update employees set ShortName='A ANANDA BABU' where empid=357;
+update employees set ShortName='T.B.V.R SRINIVASA RAO' where empid=5882;
+update employees set ShortName='R YADAGIRI' where empid=339;
+update employees set ShortName='D PRABHAVATHI' where empid=373;
+update employees set ShortName='E GOPAL' where empid=364;
+update employees set ShortName='B.L.PADMINI' where empid=478;
+update employees set ShortName='V VENKATESWARLU' where empid=176;
+update employees set ShortName='B GANESH LAL' where empid=322;
+update employees set ShortName='SETTI SRINIVASA RAO' where empid=365;
+update employees set ShortName='M RATNA KUMARI' where empid=377;
+update employees set ShortName='KHAJA MOIN SHARIEF' where empid=6177;
+update employees set ShortName='G PADMAVATHY' where empid=331;
+update employees set ShortName='ANANTHJEET KAUR' where empid=5780;
+update employees set ShortName='R RAVINDER' where empid=286;
+update employees set ShortName='B.SUJATHA DEVI' where empid=5920;
+update employees set ShortName='K.RAVIKANTH REDDY' where empid=6209;
+update employees set ShortName='DEVAKI JYOTHI' where empid=262;
+update employees set ShortName='K RAJESHWAR RAO' where empid=457;
+update employees set ShortName='M.PRAKASA RAO' where empid=480;
+update employees set ShortName='P DURGESH GOUD' where empid=121;
+update employees set ShortName='G.SAILAJA' where empid=6184;
+update employees set ShortName='M.V.S.REDDY' where empid=1998;
+update employees set ShortName='T.SRINIVAS' where empid=6182;
+update employees set ShortName='M.CHARITHA' where empid=6191;
+update employees set ShortName='R S KAGALKAR' where empid=318;
+update employees set ShortName='K.SHANKAR' where empid=5660;
+update employees set ShortName='A.SURESH BABU' where empid=5738;
+update employees set ShortName='D.NARAYANA' where empid=5768;
+update employees set ShortName='D.YELLAIAH' where empid=5150;
+update employees set ShortName='P VIVEK' where empid=555;
+update employees set ShortName='R MANIKANTH' where empid=565;
+update employees set ShortName='M SURESH' where empid=708;
+update employees set ShortName='T BRAJESH' where empid=777;
+update employees set ShortName='P VAMSHIKRISHNA' where empid=785;
+update employees set ShortName='M RAVITEJA' where empid=563;
+update employees set ShortName='RAGHAV K V K' where empid=822;
+update employees set ShortName='V SAMPATH KUMAR' where empid=574;
+update employees set ShortName='N VENKATA ADITHYA' where empid=744;
+update employees set ShortName='R RAJENDER REDDY' where empid=564;
+update employees set ShortName='CH KEERTHI' where empid=800;
+update employees set ShortName='J PRAGATHI' where empid=560;
+update employees set ShortName='SARRAH HASSAN' where empid=554;
+update employees set ShortName='K SRIVIDYA' where empid=580;
+update employees set ShortName='M AVINASH REDDY' where empid=557;
+update employees set ShortName='B LAVANYA' where empid=575;
+update employees set ShortName='ANUSHREE' where empid=788;
+update employees set ShortName='P SHRAVAN KUMAR' where empid=566;
+update employees set ShortName='A KALYAN NAIK' where empid=817;
+update employees set ShortName='N SUJIL BANDE' where empid=547;
+update employees set ShortName='K RAVIKANTH REDDY' where empid=548;
+update employees set ShortName='MARY JEEVITHA GOPU' where empid=721;
+update employees set ShortName='V SUPRAJA' where empid=789;
+update employees set ShortName='S SRAVANTHI' where empid=779;
+update employees set ShortName='CH RAVI' where empid=562;
+update employees set ShortName='BHAT SRIKAR' where empid=586;
+update employees set ShortName='SHAIK ANUSHA' where empid=590;
+update employees set ShortName='L SRINIVAS' where empid=782;
+update employees set ShortName='A.VIGNESHWAR REDDY' where empid=5750;
+update employees set ShortName='S KARIMA' where empid=299;
+update employees set ShortName='B ALEKHYA' where empid=835;
+update employees set ShortName='B HARIN SRIVATSAVA' where empid=840;
+update employees set ShortName='V ANANTHA REDDY' where empid=845;
+update employees set ShortName='V UDAYA SREE' where empid=876;
+update employees set ShortName='B HARISH KUMAR' where empid=863;
+update employees set ShortName='RENA MANUPATI' where empid=864;
+update employees set ShortName='V RAMYA' where empid=838;
+update employees set ShortName='SRIRAMULA VISHALI' where empid=841;
+update employees set ShortName='N LAXMI PRASANNA' where empid=836;
+update employees set ShortName='R SWATHI' where empid=846;
+update employees set ShortName='T MURALIKRISHNA' where empid=837;
+update employees set ShortName='JOEL FRANK VEESA' where empid=847;
+update employees set ShortName='D RAMESH' where empid=877;
+update employees set ShortName='M THIRUPATHI' where empid=931;
+update employees set ShortName='A CHANDRAKANTH REDDY' where empid=935;
+update employees set ShortName='CH VIJAY KUMAR' where empid=476;
+update employees set ShortName='K SRINIVAS' where empid=420;
+update employees set ShortName='T SRINIVAS (DOA08.12.10)' where empid=507;
+update employees set ShortName='N.V.RAMESH KUMAR' where empid=5910;
+update employees set ShortName='K.P.NARASIMHULU' where empid=5770;
+update employees set ShortName='K NAVEENA' where empid=943;
+update employees set ShortName='MD SONY' where empid=945;
+update employees set ShortName='Y RAJYALAXMI' where empid=947;
+update employees set ShortName='N VARALAXMI' where empid=983;
+update employees set ShortName='ASMA TABASSUM' where empid=952;
+update employees set ShortName='N MOUNIKA' where empid=6302;
+update employees set ShortName='A SWATHI' where empid=956;
+update employees set ShortName='K ALEKHYA' where empid=991;
+update employees set ShortName='R NARSIMHA' where empid=960;
+update employees set ShortName='PI RAJINI' where empid=963;
+update employees set ShortName='J ANIL SAGAR' where empid=954;
+update employees set ShortName='P SHASHANK' where empid=6305;
+update employees set ShortName='S LAKSHMI ANUSHA' where empid=966;
+update employees set ShortName='S SHIVA RAJ' where empid=959;
+update employees set ShortName='V VINOD KUMAR' where empid=985;
+update employees set ShortName='Y SHIVAPRASAD' where empid=6317;
+update employees set ShortName='C MOUNIKA' where empid=984;
+update employees set ShortName='K RAMAKRISHNA' where empid=6325;
+update employees set ShortName='G RAJESH KUMAR' where empid=987;
+update employees set ShortName='B. KIRAN KUMAR' where empid=957;
+update employees set ShortName='B ABHILASHA' where empid=6301;
+update employees set ShortName='S ANUSHA' where empid=990;
+update employees set ShortName='SIRAJ MOHAMMAD' where empid=6303;
+update employees set ShortName='G SOWMYA' where empid=6300;
+update employees set ShortName='P SATHISH' where empid=965;
+update employees set ShortName='G ANUSHA' where empid=6319;
+update employees set ShortName='B UDAY SAI KUMAR' where empid=955;
+update employees set ShortName='M SANGEETHA' where empid=999;
+update employees set ShortName='K MOUNIKA' where empid=6318;
+update employees set ShortName='D VIKAS KUMAR' where empid=981;
+update employees set ShortName='N SRIHARI' where empid=6304;
+update employees set ShortName='M BHOOPATHI' where empid=6332;
+update employees set ShortName='T GOVARDHAN' where empid=974;
+update employees set ShortName='M SHIRISHA' where empid=988;
+update employees set ShortName='S NAVANEETHA' where empid=6333;
+update employees set ShortName='S BHAGAVAN' where empid=986;
+update employees set ShortName='D VINAY KUMAR' where empid=982;
+update employees set ShortName='P VAMSHI KRISHNA' where empid=971;
+update employees set ShortName='R SUDHEER KUMAR' where empid=989;
+update employees set ShortName='M HEMANTH' where empid=6334;
+update employees set ShortName='G MAMATHA' where empid=6342;
+update employees set ShortName='P SAHITHI' where empid=827;
+update employees set ShortName='G TEJASWI' where empid=790;
+update employees set ShortName='P PRATHYUSHA' where empid=749;
+update employees set ShortName='P MAMATHA' where empid=723;
+update employees set ShortName='P NAGA JYOTHI' where empid=714;
+update employees set ShortName='G JAGADISH' where empid=793;
+update employees set ShortName='S SRAVANI' where empid=731;
+update employees set ShortName='R.KAVITHA REDDY' where empid=775;
+update employees set ShortName='P KEERTHI' where empid=733;
+update employees set ShortName='G PRADEEP KUMAR' where empid=801;
+update employees set ShortName='Y VANAJA' where empid=549;
+update employees set ShortName='J ASHOK' where empid=804;
+update employees set ShortName='B SHIRISHA' where empid=730;
+update employees set ShortName='CH PUJITHA' where empid=559;
+update employees set ShortName='P KRISHNAIAH' where empid=570;
+update employees set ShortName='G YELLAIAH GOUD' where empid=702;
+update employees set ShortName='R SINDHU' where empid=783;
+update employees set ShortName='J VANI' where empid=599;
+update employees set ShortName='B MADHAVI' where empid=725;
+update employees set ShortName='G NAGARANI' where empid=830;
+update employees set ShortName='SHRAVANKUMAR G' where empid=786;
+update employees set ShortName='JALENDAR B' where empid=581;
+update employees set ShortName='A RAMANUJAREDDY' where empid=815;
+update employees set ShortName='C NILEESHA' where empid=763;
+update employees set ShortName='B VENKATAIAH' where empid=598;
+update employees set ShortName='VIJAY KUMAR' where empid=814;
+update employees set ShortName='RAMESH BHUKYA' where empid=805;
+update employees set ShortName='V MOUNIKA' where empid=556;
+update employees set ShortName='M.G.DASTAGIR' where empid=5757;
+update employees set ShortName='P BHANUBABU' where empid=709;
+update employees set ShortName='R SANTOSH' where empid=760;
+update employees set ShortName='B. RADHIKA' where empid=572;
+update employees set ShortName='D PAVANESH' where empid=550;
+update employees set ShortName='D LAKSHMI DEVI' where empid=796;
+update employees set ShortName='M.JYOTHI' where empid=6132;
+update employees set ShortName='K SRINIVAS' where empid=184;
+update employees set ShortName='M MASOOD ALI' where empid=175;
+update employees set ShortName='R V RAMA DEVI' where empid=293;
+update employees set ShortName='R POORNA CHANDER RAO' where empid=319;
+update employees set ShortName='M GOURI SHANKAR' where empid=233;
+update employees set ShortName='MOHD. ASIF' where empid=177;
+update employees set ShortName='SK SRINIVASACHARYULU' where empid=438;
+update employees set ShortName='A V SAIPRASAD RAO' where empid=433;
+update employees set ShortName='P LALITHA' where empid=493;
+update employees set ShortName='M.SHYAMALA RAO' where empid=5908;
+update employees set ShortName='B SHIVA KUMAR' where empid=427;
+update employees set ShortName='B TRIMURTULU' where empid=434;
+update employees set ShortName='MD.RAYEESUDDIN SARWARI' where empid=5802;
+update employees set ShortName='G.KRISHNA MURTHY' where empid=5866;
+update employees set ShortName='T SUBRAHMANYAM' where empid=6199;
+update employees set ShortName='VENKATESWARA CHARY' where empid=292;
+update employees set ShortName='K ADI MOULI' where empid=468;
+update employees set ShortName='B SAIDULU' where empid=421;
+update employees set ShortName='K.JAGADISHWAR' where empid=5888;
+update employees set ShortName='D PADMAJA' where empid=505;
+update employees set ShortName='S.IFTEQAR AHMED' where empid=5741;
+update employees set ShortName='K SAMPATH RAO' where empid=428;
+update employees set ShortName='B MURALI KRISHNA' where empid=432;
+update employees set ShortName='K.V.RAMANA' where empid=6195;
+update employees set ShortName='V.SRINIVAS REDDY' where empid=6173;
+update employees set ShortName='K RAMESH RAJ' where empid=425;
+update employees set ShortName='K.S.PRABHAKAR' where empid=5746;
+update employees set ShortName='G.JINNAIAH' where empid=6192;
+update employees set ShortName='K.BHEEM RAO' where empid=5824;
+update employees set ShortName='MD.RAWOOF' where empid=495;
+update employees set ShortName='A.BALASUDERSHAN REDDY' where empid=2005;
+update employees set ShortName='A.DAYANANDA REDDY' where empid=6194;
+update employees set ShortName='M.VENKAT REDDY' where empid=5781;
+update employees set ShortName='G SWATHI MADHURI' where empid=899;
+update employees set ShortName='Y MONIKA' where empid=848;
+update employees set ShortName='B SPANDANA' where empid=865;
+update employees set ShortName='RAMANI BOYA' where empid=842;
+update employees set ShortName='G V RAMA RAO' where empid=878;
+update employees set ShortName='S A V P UDAY CHARAN' where empid=911;
+update employees set ShortName='J SANDEEP REDDY' where empid=866;
+update employees set ShortName='G ABHILASH' where empid=849;
+update employees set ShortName='B PRAVEEN' where empid=901;
+update employees set ShortName='SRIDEVI JALA' where empid=889;
+update employees set ShortName='SANDHYA VANGA' where empid=902;
+update employees set ShortName='P AISHWARYA' where empid=867;
+update employees set ShortName='S BHAGYALAXMI' where empid=903;
+update employees set ShortName='VINAY KUMAR VANGARA' where empid=887;
+update employees set ShortName='SURENDER B' where empid=910;
+update employees set ShortName='T ANUSHA' where empid=868;
+update employees set ShortName='S DILEEP KUMAR' where empid=896;
+update employees set ShortName='K SRAVANI' where empid=884;
+update employees set ShortName='RAMYA D' where empid=893;
+update employees set ShortName='K MADHAVI' where empid=862;
+update employees set ShortName='M VISHNU VARDHAN REDDY' where empid=871;
+update employees set ShortName='ASMA JABEEN' where empid=872;
+update employees set ShortName='S SAHITHYA' where empid=860;
+update employees set ShortName='K V L N RAMAKANTH' where empid=886;
+update employees set ShortName='SOWJANYA BOJJA' where empid=881;
+update employees set ShortName='M SAHITHI' where empid=909;
+update employees set ShortName='B NARENDER' where empid=853;
+update employees set ShortName='P VINAY BABU' where empid=912;
+update employees set ShortName='KAVYA SRI CH' where empid=885;
+update employees set ShortName='P JYOTHI' where empid=891;
+update employees set ShortName='SUJITHA N' where empid=854;
+update employees set ShortName='M SRUJANI' where empid=905;
+update employees set ShortName='SWATHI GADIPELLI' where empid=892;
+update employees set ShortName='V BHUVANESHWARI' where empid=890;
+update employees set ShortName='T BHAVANI' where empid=855;
+update employees set ShortName='K SREE VIDHYA' where empid=861;
+update employees set ShortName='P PRANEETH KUMAR' where empid=856;
+update employees set ShortName='K SWATHI' where empid=857;
+update employees set ShortName='POLE SRILATHA' where empid=858;
+update employees set ShortName='D TRINADH REDDY' where empid=895;
+update employees set ShortName='B KARTHIK YADAV' where empid=859;
+update employees set ShortName='NAWAZUR RAHAMAN' where empid=913;
+update employees set ShortName='CH DILEEP' where empid=906;
+update employees set ShortName='K SRAVANYA' where empid=898;
+update employees set ShortName='M ABHISHEK JAWHAR' where empid=844;
+update employees set ShortName='C SRAVYA' where empid=874;
+update employees set ShortName='P SRAVANI' where empid=914;
+update employees set ShortName='ASHWINI K' where empid=920;
+update employees set ShortName='CVS SASIDHAR KRISHNA' where empid=915;
+update employees set ShortName='ARSHIYA TABASSUM' where empid=917;
+update employees set ShortName='K SUDHADEEPAK' where empid=916;
+update employees set ShortName='D SAI' where empid=918;
+update employees set ShortName='BHARATH GANDHI' where empid=921;
+update employees set ShortName='P K S K SAI SHANKER' where empid=922;
+update employees set ShortName='RAMACHARY DAROJU' where empid=924;
+update employees set ShortName='Y RAJASEKHAR REDDY' where empid=925;
+update employees set ShortName='M VAMSHI KRISHNA' where empid=926;
+update employees set ShortName='P POORNIMA' where empid=928;
+update employees set ShortName='P JAYAKAR' where empid=929;
+update employees set ShortName='B VENKATESH' where empid=930;
+update employees set ShortName='V VIJENDER' where empid=932;
+update employees set ShortName='N MOUNIKA' where empid=933;
+update employees set ShortName='M SWETHA' where empid=934;
+update employees set ShortName='S S BHARGAVI' where empid=936;
+update employees set ShortName='M ABHINAY' where empid=937;
+update employees set ShortName='BHEEMA LAXMI' where empid=938;
+update employees set ShortName='MOUNIKA CHANDA' where empid=939;
+update employees set ShortName='B.SRINIVASA RAO' where empid=527;
+update employees set ShortName='B.RAVI' where empid=520;
+update employees set ShortName='K.CHANDRA MOULI' where empid=514;
+update employees set ShortName='K.SATYANARAYANA' where empid=519;
+update employees set ShortName='G.MALATHI' where empid=513;
+update employees set ShortName='P.V.RAMANA (PILLI)' where empid=534;
+update employees set ShortName='K.GIRI BABU' where empid=517;
+update employees set ShortName='RVN PRASAD' where empid=516;
+update employees set ShortName='G.V.RAMANA MURTHY' where empid=526;
+update employees set ShortName='J.VENKATAIAH' where empid=538;
+update employees set ShortName='K.C.VENKATAIAH' where empid=518;
+update employees set ShortName='K.VENKATA RAJU' where empid=521;
+update employees set ShortName='B.NAGABHUSHANAM' where empid=528;
+update employees set ShortName='D ANNAPURNA' where empid=508;
+update employees set ShortName='N SUVEDAMMA' where empid=445;
+update employees set ShortName='B V BHASKAR' where empid=484;
+update employees set ShortName='B PRANEETH REDDY' where empid=941;
+update employees set ShortName='K ANWESH' where empid=942;
+update employees set ShortName='S DEEPTHI' where empid=944;
+update employees set ShortName='T SHIVARAM' where empid=946;
+update employees set ShortName='J KALYAN' where empid=948;
+update employees set ShortName='M SWATHI' where empid=949;
+update employees set ShortName='AKRAM SHARIEFF' where empid=6330;
+update employees set ShortName='P MOUNIKA' where empid=970;
+update employees set ShortName='E NIRANJAN' where empid=6327;
+update employees set ShortName='SHAIK ZAREENA' where empid=961;
+update employees set ShortName='K SOWMYA' where empid=958;
+update employees set ShortName='M PRIYANKA' where empid=962;
+update employees set ShortName='S ESHWARI' where empid=975;
+update employees set ShortName='S VENKATESHWAR REDDY' where empid=6315;
+update employees set ShortName='MASEERA BANU' where empid=993;
+update employees set ShortName='S VENKATESH' where empid=6314;
+update employees set ShortName='G NAVYA' where empid=6316;
+update employees set ShortName='G PADMA' where empid=6312;
+update employees set ShortName='M RAJANI' where empid=977;
+update employees set ShortName='A YAMINI' where empid=978;
+update employees set ShortName='P SHUKRITHA' where empid=973;
+update employees set ShortName='DEEPTHI SYMPHONIA' where empid=996;
+update employees set ShortName='B VIKAS' where empid=953;
+update employees set ShortName='M NAVEEN KUMAR' where empid=6313;
+update employees set ShortName='S CHAITANYA' where empid=6328;
+update employees set ShortName='B SOUNDARYA' where empid=964;
+update employees set ShortName='RUHI TABASSUM' where empid=980;
+update employees set ShortName='A GOPAL' where empid=6306;
+update employees set ShortName='U SAI SATISH' where empid=6326;
+update employees set ShortName='M SANTHOSHI' where empid=6321;
+update employees set ShortName='V AMALA' where empid=979;
+update employees set ShortName='PI NAREN' where empid=994;
+update employees set ShortName='D KALYANI' where empid=6309;
+update employees set ShortName='G MADHAVA REDDY' where empid=992;
+update employees set ShortName='M UMA RANI' where empid=976;
+update employees set ShortName='S BHARGAVI' where empid=6307;
+update employees set ShortName='E NALINI' where empid=6324;
+update employees set ShortName='P SAI PRATHYUSHA' where empid=995;
+update employees set ShortName='G SRINIVAS' where empid=968;
+update employees set ShortName='AJMEER RAVI' where empid=6320;
+update employees set ShortName='A SREE DEEPTHI' where empid=972;
+update employees set ShortName='J SANTOSH' where empid=998;
+update employees set ShortName='P NAGARAJU' where empid=6308;
+update employees set ShortName='K LAVANYA' where empid=6329;
+update employees set ShortName='M ANJALI' where empid=6323;
+update employees set ShortName='M DEEPAK REDDY' where empid=967;
+update employees set ShortName='D SANDHYA' where empid=6310;
+update employees set ShortName='P KIRAN KUMAR' where empid=6322;
+update employees set ShortName='S BHAVANI YADAV' where empid=997;
+update employees set ShortName='SHAIK MEERASAHEB' where empid=6331;
+update employees set ShortName='P CHITRA' where empid=969;
+update employees set ShortName='A B HARIKA MUDIRAJ' where empid=951;
+update employees set ShortName='D HEMALATHA' where empid=6311;
+update employees set ShortName='N SUJITH REDDY' where empid=6341;
+update employees set ShortName='K SHIVA PRASAD' where empid=6336;
+update employees set ShortName='N SRAVANI' where empid=6340;
+update employees set ShortName='L PAVITHRA' where empid=6335;
+update employees set ShortName='K PRADEEP REDDY' where empid=6339;
+update employees set ShortName='M SHRAVYA' where empid=6337;
+update employees set ShortName='B NAVEEN' where empid=6343;
+update employees set ShortName='J SRINIVAS' where empid=6338;
+update employees set ShortName='G L T KRISHNA MOHAN' where empid=6180;
+update employees set ShortName='S SINDHURA' where empid=6369;
+update employees set ShortName='D MANIKANTA' where empid=6354;
+update employees set ShortName='T SAI NEEHARIKA' where empid=6359;
+update employees set ShortName='T RAVITEJA' where empid=6373;
+update employees set ShortName='B PRAMEELA' where empid=6361;
+update employees set ShortName='P GNGNA PRASOONA' where empid=6368;
+update employees set ShortName='J RAHUL KUMAR' where empid=6349;
+update employees set ShortName='S BHARGAV' where empid=6351;
+update employees set ShortName='D MANVITHA' where empid=6367;
+update employees set ShortName='P SAVITHA' where empid=6358;
+update employees set ShortName='K SUDHAKAR' where empid=6366;
+update employees set ShortName='SHAIK AZAZ PASHA' where empid=6344;
+update employees set ShortName='B JYOSHNA' where empid=6346;
+update employees set ShortName='G BHAGYASRI' where empid=6357;
+update employees set ShortName='K VAMSHIKRISHNA' where empid=6365;
+update employees set ShortName='T RAJ KIRAN' where empid=6355;
+update employees set ShortName='S PRASHANTH KUMAR' where empid=6371;
+update employees set ShortName='B NARESH KUMAR' where empid=6348;
+update employees set ShortName='G PUSHPALATHA' where empid=6360;
+update employees set ShortName='G SRUJANA' where empid=6363;
+update employees set ShortName='B ASWANI' where empid=6364;
+update employees set ShortName='VAMSHIDHAR RAO' where empid=6356;
+update employees set ShortName='D VINODHA' where empid=6350;
+update employees set ShortName='K VIJETHA' where empid=6362;
+update employees set ShortName='G NARESH' where empid=6352;
+update employees set ShortName='M SRINIVASULU' where empid=6345;
+update employees set ShortName='M MOUNIKA' where empid=6353;
+update employees set ShortName='M NAGARAJU' where empid=6347;
+update employees set ShortName='B SMITHA VARUN' where empid=6372;
+update employees set ShortName='D AJAY' where empid=6378;
+update employees set ShortName='P KAVITHA' where empid=6376;
+update employees set ShortName='D PRIYANKA' where empid=6377;
+update employees set ShortName='K BHAVANA' where empid=6375;
+update employees set ShortName='SK MYRUNISSA BEGUM' where empid=6374;
+update employees set ShortName='B.RAMAIAH' where empid=1930;
+update employees set ShortName='MD SUJAVUDDIN' where empid=178;
+update employees set ShortName='S.SURESH KUMAR' where empid=5148;
+update employees set ShortName='P SATHAIAH' where empid=240;
+update employees set ShortName='SYED JALALUDDIN' where empid=239;
+update employees set ShortName='B SULOCHANA' where empid=250;
+update employees set ShortName='J GANESH' where empid=249;
+update employees set ShortName='G BABU' where empid=254;
+update employees set ShortName='J.BALACHANDER' where empid=5751;
+update employees set ShortName='P.K.RAVINDER' where empid=5785;
+update employees set ShortName='A.SUDARSHAN' where empid=5782;
+update employees set ShortName='P.VEERAIAH' where empid=5740;
+update employees set ShortName='D RAMESH (JR)' where empid=288;
+update employees set ShortName='M KUMARA SWAMY' where empid=301;
+update employees set ShortName='T VENKATESHWAR' where empid=304;
+update employees set ShortName='E SIVA KUMAR' where empid=303;
+update employees set ShortName='M SRINIVAS' where empid=308;
+update employees set ShortName='MD.BASHEERUDDIN' where empid=5862;
+update employees set ShortName='T.NARSING' where empid=5796;
+update employees set ShortName='P.SURENDER' where empid=5869;
+update employees set ShortName='B.BHASKARA RAO' where empid=5884;
+update employees set ShortName='J.SRIDHAR' where empid=5889;
+update employees set ShortName='B.VEERASWAMY' where empid=5892;
+update employees set ShortName='SD.JAHANGIR' where empid=5909;
+update employees set ShortName='S SHANKAR' where empid=422;
+update employees set ShortName='B SRINIVAS' where empid=429;
+update employees set ShortName='G GANGA RAM' where empid=440;
+update employees set ShortName='K LAKSHMAIAH' where empid=444;
+update employees set ShortName='M.SATYANARAYANA' where empid=6193;
+update employees set ShortName='ZAITUN BEGUM' where empid=6196;
+update employees set ShortName='M.NIRMALA' where empid=6198;
+update employees set ShortName='M MACHINDER' where empid=474;
+update employees set ShortName='INDIRABAI' where empid=486;
+update employees set ShortName='P SUGUNA' where empid=490;
+update employees set ShortName='T PRASAD' where empid=491;
+update employees set ShortName='D PRAMEELA' where empid=492;
+update employees set ShortName='SADATH KHAN' where empid=499;
+update employees set ShortName='G JANARDHAN' where empid=5890;
+update employees set ShortName='P.MANGAMMA' where empid=509;
+update employees set ShortName='E.SHARADA' where empid=510;
+update employees set ShortName='A.LALITHA' where empid=511;
+update employees set ShortName='MD. BASHEER' where empid=512;
+update employees set ShortName='G.SUREKHA' where empid=523;
+update employees set ShortName='M.M.KUMAR' where empid=530;
+update employees set ShortName='B.VENKATESWARLU' where empid=532;
+update employees set ShortName='K.KUMAR' where empid=535;
+update employees set ShortName='D.ANANDA RAO' where empid=536;
+update employees set ShortName='MD.JAHANGIR PASHA' where empid=539;
+update employees set ShortName='CH RAJKUMAR' where empid=435;
+update employees set ShortName='S GEETHA DEVI' where empid=543;
+update employees set ShortName='A JEEVAN KUMAR' where empid=544;
+update employees set ShortName='M KARTHIK' where empid=545;
+update employees set ShortName='B SRISAILAM' where empid=831;
+update employees set ShortName='K ALIVELU' where empid=832;
+update employees set ShortName='D SAI TEJA' where empid=833;
+update employees set ShortName='MOHD. K JAMALUDDIN CHISTHI' where empid=834;
+update employees set ShortName='G MOHIUDDIN QUADRI' where empid=940;
+update employees set ShortName='G CHANDRAKESH' where empid=950;
+update employees set ShortName='N.RAMMOHAN' where empid=5161;
+update employees set ShortName='MD.KHAJA NAZEEMUDDIN' where empid=436;
+update employees set ShortName='S G HUSSAIN' where empid=439;
+update employees set ShortName='G KOTAIAH' where empid=443;
+update employees set ShortName='A.VITTAL' where empid=525;
+
+update employees set ShortName=concat(firstname,' ',lastname) where ShortName is null;
+
+
+ALTER view [dbo].[view_employee_transfer]
+as
+select  CAST(ROW_NUMBER() over(order by branch) AS INT) Id,e.EmpId,e.shortname as empname,
+e.FatherName,e.MotherName,e.DOB,e.DOJ,e.RetirementDate,
+d.name as Designation,b.name as BranchName,dp.name as DeptName,e.PresentAddress,e.ProfessionalQualifications,e.MobileNumber,
+e.Category,e.Graduation,e.PostGraduation,t.EffectiveFrom,t.EffectiveTo,t.Type
+,t.OldDesignation,t.NewDesignation,t.OldBranch,t.NewBranch,t.OldDepartment,t.NewDepartment,
+case 
+ when currentdesignation=(select id from designations where name='Managing Director') then 2
+ when currentdesignation=(select id from designations where name='Chief General Manager') then 3
+ when currentdesignation=(select id from designations where name='General Manager') then 4
+ when currentdesignation=(select id from designations where name='Deputy General Manager') then 5
+when currentdesignation=(select id from designations where name='Assistant General Manager') then 6
+when currentdesignation=(select id from designations where name='Senior Manager') then 7
+when currentdesignation=(select id from designations where name='Manager Scale-1') then 8
+when currentdesignation=(select id from designations where name='Staff Assistant' )then 10
+when currentdesignation=(select id from designations where name='Attender') then 16
+when currentdesignation=(select id from designations where name='Attender Cum Watchman') then 16
+when currentdesignation=(select id from designations where name='Attender/J.C') then 16
+when currentdesignation=(select id from designations where name='Civil Engg Supervisor') then 13
+when currentdesignation=(select id from designations where name='Driver') then 18
+when currentdesignation=(select id from designations where name='IDO/Manager') then 9
+when currentdesignation=(select id from designations where name='JR Staff Assistant') then 11
+when currentdesignation=(select id from designations where name='Junior Clerk') then 15
+when currentdesignation=(select id from designations where name='Staff Assistant Cum Assistant Cashier') then 11
+when currentdesignation=(select id from designations where name='Stenographer') then 14
+when currentdesignation=(select id from designations where name='Telephone Operator Cum Receptionist') then 17
+when currentdesignation=(select id from designations where name='Typist') then 14
+when currentdesignation=(select id from designations where name='Watchman') then 19
+when currentdesignation=(select id from designations where name='Subordinate Staff(Substaff)') then 12
+when currentdesignation=(select id from designations where name='President') then 1
+when currentdesignation=(select id from designations where name='TBD') then 20
+when currentdesignation=(select id from designations where name='Manager') then 9
+when currentdesignation=(select id from designations where name='Manager Tech') then 9
+end as designations
+from employees  e   full outer join Employee_Transfer t on e.id=t.empid join designations d on e.CurrentDesignation=d.id join branches b on e.branch=b.id
+join departments dp on e.department=dp.id
+GO
+
+
+ALTER view [dbo].[view_employee_senioritylist]
+as
+select top 10000 CAST(ROW_NUMBER() over(order by department) AS INT) Id,
+e.shortname as empname,e.EmpId,e.DOJ,e.RetirementDate,e.DOB,d.name,d.Code,b.Name as BranchName,
+dp.Name as DeptName,e.MobileNumber,b.PhoneNo1,b.PhoneNo2
+,case 
+ when currentdesignation=(select id from designations where name='Managing Director') then 2
+ when currentdesignation=(select id from designations where name='Chief General Manager') then 3
+ when currentdesignation=(select id from designations where name='General Manager') then 4
+ when currentdesignation=(select id from designations where name='Deputy General Manager') then 5
+when currentdesignation=(select id from designations where name='Assistant General Manager') then 6
+when currentdesignation=(select id from designations where name='Senior Manager') then 7
+when currentdesignation=(select id from designations where name='Manager Scale-1') then 8
+when currentdesignation=(select id from designations where name='Staff Assistant' )then 10
+when currentdesignation=(select id from designations where name='Attender') then 16
+when currentdesignation=(select id from designations where name='Attender Cum Watchman') then 16
+when currentdesignation=(select id from designations where name='Attender/J.C') then 16
+when currentdesignation=(select id from designations where name='Civil Engg Supervisor') then 13
+when currentdesignation=(select id from designations where name='Driver') then 18
+when currentdesignation=(select id from designations where name='IDO/Manager') then 9
+when currentdesignation=(select id from designations where name='JR Staff Assistant') then 11
+when currentdesignation=(select id from designations where name='Junior Clerk') then 15
+when currentdesignation=(select id from designations where name='Staff Assistant Cum Assistant Cashier') then 11
+when currentdesignation=(select id from designations where name='Stenographer') then 14
+when currentdesignation=(select id from designations where name='Telephone Operator Cum Receptionist') then 17
+when currentdesignation=(select id from designations where name='Typist') then 14
+when currentdesignation=(select id from designations where name='Watchman') then 19
+when currentdesignation=(select id from designations where name='Subordinate Staff(Substaff)') then 12
+when currentdesignation=(select id from designations where name='President') then 1
+when currentdesignation=(select id from designations where name='TBD') then 20
+when currentdesignation=(select id from designations where name='Manager') then 9
+when currentdesignation=(select id from designations where name='Manager Tech') then 9
+end as designations
+from employees  e join  Designations d on e.CurrentDesignation=d.Id join Branches b on e.Branch=b.id join Departments dp on e.department=dp.id
+order by designations
+GO
+
+
+ALTER view [dbo].[view_employee_DOB_RetirementDateMonthWise]
+as
+select top 10000 CAST(ROW_NUMBER() over(order by department) AS INT) Id,e.shortname as empname,e.EmpId,
+dp.name as DeptName,e.DOB AS DOB_MonthWise,e.DOJ,e.RetirementDate as RetirementDate_MonthWise,d.Code,b.Name as BranchName
+,case 
+ when currentdesignation=(select id from designations where name='Managing Director') then 2
+ when currentdesignation=(select id from designations where name='Chief General Manager') then 3
+ when currentdesignation=(select id from designations where name='General Manager') then 4
+ when currentdesignation=(select id from designations where name='Deputy General Manager') then 5
+when currentdesignation=(select id from designations where name='Assistant General Manager') then 6
+when currentdesignation=(select id from designations where name='Senior Manager') then 7
+when currentdesignation=(select id from designations where name='Manager Scale-1') then 8
+when currentdesignation=(select id from designations where name='Staff Assistant' )then 10
+when currentdesignation=(select id from designations where name='Attender') then 16
+when currentdesignation=(select id from designations where name='Attender Cum Watchman') then 16
+when currentdesignation=(select id from designations where name='Attender/J.C') then 16
+when currentdesignation=(select id from designations where name='Civil Engg Supervisor') then 13
+when currentdesignation=(select id from designations where name='Driver') then 18
+when currentdesignation=(select id from designations where name='IDO/Manager') then 9
+when currentdesignation=(select id from designations where name='JR Staff Assistant') then 11
+when currentdesignation=(select id from designations where name='Junior Clerk') then 15
+when currentdesignation=(select id from designations where name='Staff Assistant Cum Assistant Cashier') then 11
+when currentdesignation=(select id from designations where name='Stenographer') then 14
+when currentdesignation=(select id from designations where name='Telephone Operator Cum Receptionist') then 17
+when currentdesignation=(select id from designations where name='Typist') then 14
+when currentdesignation=(select id from designations where name='Watchman') then 19
+when currentdesignation=(select id from designations where name='Subordinate Staff(Substaff)') then 12
+when currentdesignation=(select id from designations where name='President') then 1
+when currentdesignation=(select id from designations where name='TBD') then 20
+when currentdesignation=(select id from designations where name='Manager') then 9
+when currentdesignation=(select id from designations where name='Manager Tech') then 9
+end as designations
+from employees  e join  Designations d on e.CurrentDesignation=d.Id join Branches b on e.Branch=b.Id join Departments dp on e.Department=dp.id
+order by  month(e.dob),day(e.dob),year(e.dob),month(RetirementDate),designations desc
+GO
+
+
+ALTER view [dbo].[view_employee_category]
+as
+select top 10000 CAST(ROW_NUMBER() over(order by branch) AS INT) Id,e.EmpId,
+e.shortname as empname,d.Code,e.category,e.gender,b.name as BranchName,case 
+ when currentdesignation=(select id from designations where name='Managing Director') then 2
+ when currentdesignation=(select id from designations where name='Chief General Manager') then 3
+ when currentdesignation=(select id from designations where name='General Manager') then 4
+ when currentdesignation=(select id from designations where name='Deputy General Manager') then 5
+when currentdesignation=(select id from designations where name='Assistant General Manager') then 6
+when currentdesignation=(select id from designations where name='Senior Manager') then 7
+when currentdesignation=(select id from designations where name='Manager Scale-1') then 8
+when currentdesignation=(select id from designations where name='Staff Assistant' )then 10
+when currentdesignation=(select id from designations where name='Attender') then 16
+when currentdesignation=(select id from designations where name='Attender Cum Watchman') then 16
+when currentdesignation=(select id from designations where name='Attender/J.C') then 16
+when currentdesignation=(select id from designations where name='Civil Engg Supervisor') then 13
+when currentdesignation=(select id from designations where name='Driver') then 18
+when currentdesignation=(select id from designations where name='IDO/Manager') then 9
+when currentdesignation=(select id from designations where name='JR Staff Assistant') then 11
+when currentdesignation=(select id from designations where name='Junior Clerk') then 15
+when currentdesignation=(select id from designations where name='Staff Assistant Cum Assistant Cashier') then 11
+when currentdesignation=(select id from designations where name='Stenographer') then 14
+when currentdesignation=(select id from designations where name='Telephone Operator Cum Receptionist') then 17
+when currentdesignation=(select id from designations where name='Typist') then 14
+when currentdesignation=(select id from designations where name='Watchman') then 19
+when currentdesignation=(select id from designations where name='Subordinate Staff(Substaff)') then 12
+when currentdesignation=(select id from designations where name='President') then 1
+when currentdesignation=(select id from designations where name='TBD') then 20
+when currentdesignation=(select id from designations where name='Manager') then 9
+when currentdesignation=(select id from designations where name='Manager Tech') then 9
+end as designations
+from employees  e join Branches b on e.Branch=b.id join Designations d on e.CurrentDesignation=d.Id 
+join Departments dept on e.Department=dept.Id 
+order by e.Category,e.gender,designations
+GO
+
+ALTER view [dbo].[view_employee]
+as
+select top 10000 CAST(ROW_NUMBER() over(order by branch) AS INT) Id,b.Name as BranchName,e.EmpId,dept.code,
+e.ShortName as EmpName
+,case 
+ when currentdesignation=(select id from designations where name='Managing Director') then 2
+ when currentdesignation=(select id from designations where name='Chief General Manager') then 3
+ when currentdesignation=(select id from designations where name='General Manager') then 4
+ when currentdesignation=(select id from designations where name='Deputy General Manager') then 5
+when currentdesignation=(select id from designations where name='Assistant General Manager') then 6
+when currentdesignation=(select id from designations where name='Senior Manager') then 7
+when currentdesignation=(select id from designations where name='Manager Scale-1') then 8
+when currentdesignation=(select id from designations where name='Staff Assistant' )then 10
+when currentdesignation=(select id from designations where name='Attender') then 16
+when currentdesignation=(select id from designations where name='Attender Cum Watchman') then 16
+when currentdesignation=(select id from designations where name='Attender/J.C') then 16
+when currentdesignation=(select id from designations where name='Civil Engg Supervisor') then 13
+when currentdesignation=(select id from designations where name='Driver') then 18
+when currentdesignation=(select id from designations where name='IDO/Manager') then 9
+when currentdesignation=(select id from designations where name='JR Staff Assistant') then 11
+when currentdesignation=(select id from designations where name='Junior Clerk') then 15
+when currentdesignation=(select id from designations where name='Staff Assistant Cum Assistant Cashier') then 11
+when currentdesignation=(select id from designations where name='Stenographer') then 14
+when currentdesignation=(select id from designations where name='Telephone Operator Cum Receptionist') then 17
+when currentdesignation=(select id from designations where name='Typist') then 14
+when currentdesignation=(select id from designations where name='Watchman') then 19
+when currentdesignation=(select id from designations where name='Subordinate Staff(Substaff)') then 12
+when currentdesignation=(select id from designations where name='President') then 1
+when currentdesignation=(select id from designations where name='TBD') then 20
+when currentdesignation=(select id from designations where name='Manager') then 9
+when currentdesignation=(select id from designations where name='Manager Tech') then 9
+end as designations
+from employees e join Branches b on e.Branch=b.id join Designations d on e.CurrentDesignation=d.Id 
+join Departments dept on e.Department=dept.Id 
+order by b.name,designations
+GO
+
+update employees set branch=(select id from  branches where name='Saidabad') where empid=507;
+update employees set branch=(select id from  branches where name='OtherBranch'),department=(select id from departments where name='L&A-PMU') where empid=555;
+update employees set branch=(select id from  branches where name='Vengalraonagar') where empid=559;
+update employees set branch=(select id from  branches where name='Masabtank') where empid=570;
+update employees set branch=(select id from  branches where name='Kukatpally') where empid=581;
+update employees set branch=(select id from  branches where name='Dilsukhnagar') where empid=599;
+update employees set branch=(select id from  branches where name='Vidyanagar') where empid=702;
+update employees set branch=(select id from  branches where name='Masabtank') where empid=725;
+update employees set branch=(select id from  branches where name='Kamalanagar') where empid=730;
+update employees set branch=(select id from  branches where name='Tarnaka') where empid=733;
+update employees set branch=(select id from  branches where name='Ameerpet') where empid=760;
+update employees set branch=(select id from  branches where name='Champapet') where empid=786;
+update employees set branch=(select id from  branches where name='OtherBranch'),department=(select id from  departments where name='BKG/CASH/HO') where empid=827;
+update employees set branch=(select id from  branches where name='Bandlaguda') where empid=835;
+update employees set branch=(select id from  branches where name='Meerpet') where empid=842;
+update employees set branch=(select id from  branches where name='Moulali') where empid=921;
+update employees set branch=(select id from  branches where name='OtherBranch'),department=(select id from  departments where name='Public Relations Dept') where empid=926;
+update employees set branch=(select id from  branches where name='Kamalanagar') where empid=954;
+update employees set branch=(select id from  branches where name='Jubilee hills') where empid=939;
+update employees set branch=(select id from  branches where name='Moulali') where empid=945;
+update employees set branch=(select id from  branches where name='Jubilee hills') where empid=957;
+update employees set branch=(select id from  branches where name='Alwal') where empid=959;
+update employees set branch=(select id from  branches where name='Secunderabad') where empid=974;
+update employees set branch=(select id from  branches where name='Ameerpet') where empid=971;
+update employees set branch=(select id from  branches where name='Baghlingampally') where empid=986;
+update employees set branch=(select id from  branches where name='Lalapet') where empid=987;
+update employees set branch=(select id from  branches where name='Malkajgiri') where empid=999;
+update employees set branch=(select id from  branches where name='OtherBranch'),department=(select id from departments where name='Reconciliation Cell') where empid=5757;
+update employees set branch=(select id from  branches where name='OtherBranch'),department=(select id from departments where name='Stationery') where empid=5660;
+update employees set branch=(select id from  branches where name='OtherBranch'),department=(select id from departments where name='Inward-Outward') where empid=5770;
+update employees set branch=(select id from  branches where name='Charminar') where empid=6303;
+update employees set branch=(select id from  branches where name='OtherBranch'),department=(select id from departments where name='HRD') where empid=6373;
+update employees set branch=(select id from  branches where name='Vengalraonagar') where empid=6376;
+update employees set branch=(select id from  branches where name='Secunderabad') where empid=6375;
+update employees set branch=(select id from  branches where name='Champapet') where empid=6359;
+update employees set branch=(select id from  branches where name='OtherBranch'),department=(select id from departments where name='HRD–Payments') where empid=6305;
+
+insert into employee_transfer values('TemporaryTransfer',180,7,7,(select id from branches where name='Malkajgiri'),(select id from branches where name='Badangpet'),(select id from departments where name='OtherDepartment'),(select id from departments where name='OtherDepartment'),'2018-05-04','2018-04-30','TemporaryTransfer','','');
+
+insert into employee_transfer values('TemporaryTransfer',284,7,7,(select id from branches where name='OtherBranch'),(select id from branches where name='Meerpet'),(select id from departments where name='Inward-Outward'),(select id from departments where name='OtherDepartment'),'2018-05-04','2018-04-30','TemporaryTransfer','','');
+
+insert into employee_transfer values('TemporaryTransfer',280,7,7,(select id from branches where name='OtherBranch'),(select id from branches where name='Charminar'),(select id from departments where name='Reconciliation Cell'),(select id from departments where name='OtherDepartment'),'2018-05-04','2018-04-30','TemporaryTransfer','','');
+
+insert into employee_transfer values('TemporaryTransfer',158,7,7,(select id from branches where name='Kamalanagar'),(select id from branches where name='Saroornagar'),(select id from departments where name='OtherDepartment'),(select id from departments where name='OtherDepartment'),'2018-05-05','2018-04-30','TemporaryTransfer','','');
+
+insert into employee_transfer values('TemporaryTransfer',133,8,8,(select id from branches where name='OtherBranch'),(select id from branches where name='Attapur'),(select id from departments where name='Public Relations Dept'),(select id from departments where name='OtherDepartment'),'2018-05-05','2018-04-27','TemporaryTransfer','','');
+
+insert into employee_transfer values('TemporaryTransfer',1,6,6,(select id from branches where name='OtherBranch'),(select id from branches where name='Chandanagar'),(select id from departments where name='L&A-PMU'),(select id from departments where name='OtherDepartment'),'2018-05-05','2018-04-30','TemporaryTransfer','','');
+
+insert into employee_transfer values('TemporaryTransfer',467,8,8,(select id from branches where name='OtherBranch'),(select id from branches where name='Attapur'),(select id from departments where name='HRD'),(select id from departments where name='OtherDepartment'),'2018-05-07','2018-04-30','TemporaryTransfer','','');
+
+insert into employee_transfer values('TemporaryTransfer',284,7,7,(select id from branches where name='OtherBranch'),(select id from branches where name='Mansoorabad'),(select id from departments where name='Inward-Outward'),(select id from departments where name='OtherDepartment'),'2018-05-07','2018-05-04','TemporaryTransfer','','');
+
+insert into employee_transfer values('TemporaryTransfer',129,8,8,(select id from branches where name='Moulali'),(select id from branches where name='Uppal'),(select id from departments where name='OtherDepartment'),(select id from departments where name='OtherDepartment'),'2018-05-07','2018-05-05','TemporaryTransfer','','');
+insert into employee_transfer values('TemporaryTransfer',80,8,8,(select id from branches where name='Meerpet'),(select id from branches where name='Badangpet'),(select id from departments where name='OtherDepartment'),(select id from departments where name='OtherDepartment'),'2018-05-07','2018-05-04','TemporaryTransfer','','');
+insert into employee_transfer values('TemporaryTransfer',464,8,8,(select id from branches where name='Vengalraonagar'),(select id from branches where name='Chandanagar'),(select id from departments where name='OtherDepartment'),(select id from departments where name='OtherDepartment'),'2018-05-07','2018-05-05','TemporaryTransfer','','');
+insert into employee_transfer values('TemporaryTransfer',143,8,8,(select id from branches where name='Jubilee hills'),(select id from branches where name='Gachibowli'),(select id from departments where name='OtherDepartment'),(select id from departments where name='OtherDepartment'),'2018-05-07','2018-05-05','TemporaryTransfer','','');
+
+insert into employee_transfer values('TemporaryTransfer',29,7,7,(select id from branches where name='OtherBranch'),(select id from branches where name='Narayanguda'),(select id from departments where name='BKG/CASH/HO'),(select id from departments where name='OtherDepartment'),'2018-05-07','2018-05-07','TemporaryTransfer','','');
+
+insert into employee_transfer values('TemporaryTransfer',278,6,6,(select id from branches where name='OtherBranch'),(select id from branches where name='Uppal'),(select id from departments where name='Stationery'),(select id from departments where name='OtherDepartment'),'2018-05-07','2018-05-07','TemporaryTransfer','','');
+
+insert into employee_transfer values('TemporaryTransfer',50,7,7,(select id from branches where name='Champapet'),(select id from branches where name='Badangpet'),(select id from departments where name='OtherDepartment'),(select id from departments where name='OtherDepartment'),'2018-05-07','2018-05-07','TemporaryTransfer','','');
+insert into employee_transfer values('TemporaryTransfer',41,7,7,(select id from branches where name='Kamalanagar'),(select id from branches where name='Saroornagar'),(select id from departments where name='OtherDepartment'),(select id from departments where name='OtherDepartment'),'2018-05-07','2018-05-07','TemporaryTransfer','','');
+insert into employee_transfer values('TemporaryTransfer',284,7,7,(select id from branches where name='OtherBranch'),(select id from branches where name='Meerpet'),(select id from departments where name='Inward-Outward'),(select id from departments where name='OtherDepartment'),'2018-05-07','2018-05-07','TemporaryTransfer','','');
+
+insert into employee_transfer values('TemporaryTransfer',41,7,7,(select id from branches where name='Vengalraonagar'),(select id from branches where name='Yousufguda'),(select id from departments where name='OtherDepartment'),(select id from departments where name='OtherDepartment'),'2018-05-08','2018-05-07','TemporaryTransfer','','');
+insert into employee_transfer values('TemporaryTransfer',161,7,7,(select id from branches where name='Jubilee hills'),(select id from branches where name='Neredmet'),(select id from departments where name='OtherDepartment'),(select id from departments where name='OtherDepartment'),'2018-05-08','2018-05-07','TemporaryTransfer','','');
+insert into employee_transfer values('TemporaryTransfer',168,7,7,(select id from branches where name='Secunderabad'),(select id from branches where name='Chandanagar'),(select id from departments where name='OtherDepartment'),(select id from departments where name='OtherDepartment'),'2018-05-09','2018-05-07','TemporaryTransfer','','');
+insert into employee_transfer values('TemporaryTransfer',44,7,7,(select id from branches where name='Masabtank'),(select id from branches where name='Attapur'),(select id from departments where name='OtherDepartment'),(select id from departments where name='OtherDepartment'),'2018-05-09','2018-05-07','TemporaryTransfer','','');
+insert into employee_transfer values('TemporaryTransfer',54,7,7,(select id from branches where name='Ameerpet'),(select id from branches where name='Suchitra'),(select id from departments where name='OtherDepartment'),(select id from departments where name='OtherDepartment'),'2018-05-09','2018-05-07','TemporaryTransfer','','');
+insert into employee_transfer values('TemporaryTransfer',242,7,7,(select id from branches where name='Saidabad'),(select id from branches where name='Bandlaguda'),(select id from departments where name='OtherDepartment'),(select id from departments where name='OtherDepartment'),'2018-05-10','2018-05-07','TemporaryTransfer','','');
+
+insert into employee_transfer values('TemporaryTransfer',133,8,8,(select id from branches where name='OtherBranch'),(select id from branches where name='Serilingampally'),(select id from departments where name='Public Relations Dept'),(select id from departments where name='OtherDepartment'),'2018-05-10','2018-05-07','TemporaryTransfer','','');
+
+insert into employee_transfer values('TemporaryTransfer',150,7,7,(select id from branches where name='Moulali'),(select id from branches where name='Uppal'),(select id from departments where name='OtherDepartment'),(select id from departments where name='OtherDepartment'),'2018-05-10','2018-05-08','TemporaryTransfer','','');
+insert into employee_transfer values('TemporaryTransfer',133,8,8,(select id from branches where name='Serilingampally'),(select id from branches where name='Attapur'),(select id from departments where name='OtherDepartment'),(select id from departments where name='OtherDepartment'),'2018-05-10','2018-05-08','TemporaryTransfer','','');
+insert into employee_transfer values('TemporaryTransfer',174,7,7,(select id from branches where name='Baghlingampally'),(select id from branches where name='Chandanagar'),(select id from departments where name='OtherDepartment'),(select id from departments where name='OtherDepartment'),'2018-05-11','2018-05-09','TemporaryTransfer','','');
+insert into employee_transfer values('TemporaryTransfer',133,8,8,(select id from branches where name='Attapur'),(select id from branches where name='Attapur'),(select id from departments where name='OtherDepartment'),(select id from departments where name='OtherDepartment'),'2018-05-14','2018-05-09','TemporaryTransfer','','');
+insert into employee_transfer values('TemporaryTransfer',465,8,8,(select id from branches where name='Secunderabad'),(select id from branches where name='Bharathnagar'),(select id from departments where name='OtherDepartment'),(select id from departments where name='OtherDepartment'),'2018-05-14','2018-05-09','TemporaryTransfer','','');
+insert into employee_transfer values('TemporaryTransfer',45,7,7,(select id from branches where name='Vidyanagar'),(select id from branches where name='Narayanguda'),(select id from departments where name='OtherDepartment'),(select id from departments where name='OtherDepartment'),'2018-05-14','2018-05-11','TemporaryTransfer','','');
+insert into employee_transfer values('TemporaryTransfer',48,7,7,(select id from branches where name='Masabtank'),(select id from branches where name='Attapur'),(select id from departments where name='OtherDepartment'),(select id from departments where name='OtherDepartment'),'2018-05-14','2018-05-11','TemporaryTransfer','','');
+insert into employee_transfer values('TemporaryTransfer',161,7,7,(select id from branches where name='Jubilee hills'),(select id from branches where name='Chandanagar'),(select id from departments where name='OtherDepartment'),(select id from departments where name='OtherDepartment'),'2018-05-14','2018-05-11','TemporaryTransfer','',''); 
+
+insert into employee_transfer values('TemporaryTransfer',284,7,7,(select id from branches where name='OtherBranch'),(select id from branches where name='Badangpet'),(select id from departments where name='Inward-Outward'),(select id from departments where name='OtherDepartment'),'2018-05-14','2018-05-11','TemporaryTransfer','','');
+
+insert into employee_transfer values('TemporaryTransfer',445,8,8,(select id from branches where name='Champapet'),(select id from branches where name='Saidabad'),(select id from departments where name='OtherDepartment'),(select id from departments where name='OtherDepartment'),'2018-05-14','2018-05-11','TemporaryTransfer','','');
+insert into employee_transfer values('TemporaryTransfer',62,7,7,(select id from branches where name='Bandlaguda'),(select id from branches where name='Maruthinagar'),(select id from departments where name='OtherDepartment'),(select id from departments where name='OtherDepartment'),'2018-05-14','2018-05-14','TemporaryTransfer','','');
+insert into employee_transfer values('TemporaryTransfer',48,7,7,(select id from branches where name='Attapur'),(select id from branches where name='Attapur'),(select id from departments where name='OtherDepartment'),(select id from departments where name='OtherDepartment'),'2018-05-15','2018-05-14','TemporaryTransfer','','');
+insert into employee_transfer values('TemporaryTransfer',178,7,7,(select id from branches where name='Charminar'),(select id from branches where name='Chandanagar'),(select id from departments where name='OtherDepartment'),(select id from departments where name='OtherDepartment'),'2018-05-15','2018-05-14','TemporaryTransfer','','');
+insert into employee_transfer values('TemporaryTransfer',42,7,7,(select id from branches where name='Kukatpally'),(select id from branches where name='Neredmet'),(select id from departments where name='OtherDepartment'),(select id from departments where name='OtherDepartment'),'2018-05-15','2018-05-14','TemporaryTransfer','','');
+insert into employee_transfer values('TemporaryTransfer',41,7,7,(select id from branches where name='Kamalanagar'),(select id from branches where name='Saroornagar'),(select id from departments where name='OtherDepartment'),(select id from departments where name='OtherDepartment'),'2018-05-15','2018-05-14','TemporaryTransfer','','');
+insert into employee_transfer values('TemporaryTransfer',164,7,7,(select id from branches where name='Alwal'),(select id from branches where name='Suchitra'),(select id from departments where name='OtherDepartment'),(select id from departments where name='OtherDepartment'),'2018-05-15','2018-05-14','TemporaryTransfer','','');
+
+insert into employee_transfer values('TemporaryTransfer',284,7,7,(select id from branches where name='Badangpet'),(select id from branches where name='Badangpet'),(select id from departments where name='OtherDepartment'),(select id from departments where name='OtherDepartment'),'2018-05-16','2018-05-14','TemporaryTransfer','','');
+
+insert into employee_transfer values('TemporaryTransfer',186,7,7,(select id from branches where name='OtherBranch'),(select id from branches where name='Yousufguda'),(select id from departments where name='HRD–Payments'),(select id from departments where name='OtherDepartment'),'2018-05-17','2018-05-14','TemporaryTransfer','','');
+
+insert into employee_transfer values('TemporaryTransfer',37,7,7,(select id from branches where name='Tarnaka'),(select id from branches where name='Uppal'),(select id from departments where name='OtherDepartment'),(select id from departments where name='OtherDepartment'),'2018-05-17','2018-05-15','TemporaryTransfer','','');
+insert into employee_transfer values('TemporaryTransfer',167,7,7,(select id from branches where name='Ameerpet'),(select id from branches where name='Suchitra'),(select id from departments where name='OtherDepartment'),(select id from departments where name='OtherDepartment'),'2018-05-19','2018-05-15','TemporaryTransfer','','');
+insert into employee_transfer values('TemporaryTransfer',284,7,7,(select id from branches where name='Badangpet'),(select id from branches where name='Meerpet'),(select id from departments where name='OtherDepartment'),(select id from departments where name='OtherDepartment'),'2018-05-19','2018-05-15','TemporaryTransfer','','');
+insert into employee_transfer values('TemporaryTransfer',180,7,7,(select id from branches where name='Malkajgiri'),(select id from branches where name='Mansoorabad'),(select id from departments where name='OtherDepartment'),(select id from departments where name='OtherDepartment'),'2018-05-15','2018-05-15','TemporaryTransfer','','');
+insert into employee_transfer values('TemporaryTransfer',45,7,7,(select id from branches where name='Vidyanagar'),(select id from branches where name='Yousufguda'),(select id from departments where name='OtherDepartment'),(select id from departments where name='OtherDepartment'),'2018-05-15','2018-05-15','TemporaryTransfer','','');
+insert into employee_transfer values('TemporaryTransfer',176,7,7,(select id from branches where name='Lalapet'),(select id from branches where name='Chandanagar'),(select id from departments where name='OtherDepartment'),(select id from departments where name='OtherDepartment'),'2018-05-16','2018-05-16','TemporaryTransfer','','');
+insert into employee_transfer values('TemporaryTransfer',47,7,7,(select id from branches where name='Dilsukhnagar'),(select id from branches where name='Maruthinagar'),(select id from departments where name='OtherDepartment'),(select id from departments where name='OtherDepartment'),'2018-05-17','2018-05-17','TemporaryTransfer','','');
+insert into employee_transfer values('TemporaryTransfer',164,7,7,(select id from branches where name='alwal'),(select id from branches where name='suchitra'),(select id from departments where name='OtherDepartment'),(select id from departments where name='OtherDepartment'),'2018-05-17','2018-05-17','TemporaryTransfer','','');
+insert into employee_transfer values('TemporaryTransfer',178,7,7,(select id from branches where name='Charminar'),(select id from branches where name='Attapur'),(select id from departments where name='OtherDepartment'),(select id from departments where name='OtherDepartment'),'2018-05-19','2018-05-19','TemporaryTransfer','','');
+
+insert into employee_transfer values('TemporaryTransfer',284,7,7,(select id from branches where name='OtherBranch'),(select id from branches where name='Meerpet'),(select id from departments where name='Inward-Outward'),(select id from departments where name='OtherDepartment'),'2018-05-19','2018-05-21','TemporaryTransfer','','');
+
+
+

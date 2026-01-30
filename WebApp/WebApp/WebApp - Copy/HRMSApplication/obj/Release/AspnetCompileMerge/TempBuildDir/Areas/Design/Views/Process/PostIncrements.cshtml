@@ -1,0 +1,105 @@
+﻿@{
+    ViewBag.Title = "PostIncrements";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <h1>Increment/Incentive Process</h1>
+                    <div class="row mt_10">
+                        <div class="col-md-12">
+                            <div class="col-md-3">
+                                <label>
+                                    <input id="radio1" type="radio" name="radio" value="1"><label for="radio1"><span><span></span></span>Employee Id wise</label>
+                                </label>
+                            </div>
+                            <div class="col-md-3">
+                                <label>
+                                    <input id="radio1" type="radio" name="radio" value="1"><label for="radio1"><span><span></span></span>Employee Name wise</label>
+                                </label>
+                            </div>
+                            <div class="col-md-3">
+                                <label>
+                                    <input id="checkbox1" type="checkbox" name="checkbox" value="1"><label for="checkbox1"><span></span> Select All</label>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-md-12 mt_10">
+                        <div class="table-responsive">
+                            <table id="post_increment" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Emp Code</th>
+                                        <th>Empname</th>
+                                        <th>Inc Amount</th>
+                                        <th>Basic</th>
+                                        <th>Increment Type</th>
+                                        <th>Increment W.E.F</th>
+                                        <th>Designation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" id="inlineCheckbox1" value="option1">176
+                                            </label>
+                                        </td>
+                                        <td>V.Venkateshwarlu</td>
+                                        <td>1460</td>
+                                        <td>54410</td>
+                                        <td>ANNUAL</td>
+                                        <td>
+                                            <div class="input-group date">
+                                                <input class="form-control">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            </div>
+                                        </td>
+                                        <td>AGM        8        98</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" id="inlineCheckbox1" value="option2">302
+                                            </label>
+                                        </td>
+                                        <td>G.Vrushabanath</td>
+                                        <td>450</td>
+                                        <td>21900</td>
+                                        <td>STAGNATION</td>
+                                        <td>
+                                            <div class="input-group date">
+                                                <input class="form-control">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            </div>
+                                        </td>
+                                        <td>ATTD     3       208</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mt_10">
+                        <div class="pull-right">
+                            <button type="reset" class="btn btn-default calcel">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#post_increment').DataTable();
+    });
+</script>
+

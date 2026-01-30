@@ -1,0 +1,116 @@
+--Apply LOP to B Anvesh, Emp code: 6465 for 9 days from on 22.04.2021 to 30.04.2021  
+--and Reason "Due to Father Expired".
+
+
+------------To Apply Leave
+
+declare @Empid int;
+declare @Leavetypeid int;
+declare @StartDate Date;
+declare @EndDate Date;
+declare @UpdatedBy_EmployeeId int;
+declare @Status varchar(10);
+declare @LeaveDays int;
+declare @TotalDays int;
+declare @MaternityType varchar(10);
+declare @pre_leave_balance int;
+
+
+set @Empid=6465;
+set @Leavetypeid=12;
+set @StartDate='2021-04-22';
+set @EndDate='2021-04-30';
+set @UpdatedBy_EmployeeId=123456;
+set @Status='Pending';
+set @LeaveDays=9;
+set @TotalDays=9;
+set @MaternityType='';
+set @pre_leave_balance=(select LeaveBalance from EmpLeaveBalance where LeaveTypeId=@Leavetypeid and empid=
+(select id from employees where empid=@Empid) and year=2021);
+
+
+INSERT INTO [dbo].[Leaves]([EmpId],[ControllingAuthority],[SanctioningAuthority],[LeaveType],[StartDate],[EndDate],[Subject],[Reason],
+[UpdatedBy],[UpdatedDate],[Status],[LeaveDays],[TotalDays],[LeaveTimeStamp],[LeavesYear],[Stage],[CancelReason],[MaternityType],
+[BranchId],[DepartmentId],[DesignationId],[leave_balance]) 
+VALUES((select id from employees where empid=@empid),
+(select ControllingAuthority from employees where empid=@empid),
+(select SanctioningAuthority from employees where empid=@empid),
+@Leavetypeid,@StartDate,@EndDate,'Leave Applied','Father Expired',
+@UpdatedBy_EmployeeId,GETDATE(),@Status,@LeaveDays,@TotalDays,GETDATE(),2021,'','',
+@MaternityType,(select Branch from employees where empid=@empid),
+(select Department from employees where empid=@empid),
+(select CurrentDesignation from employees where empid=@empid),@pre_leave_balance);
+
+
+------- To update Leavebalances
+
+declare @Empid int;
+declare @LeaveTypeId int;
+declare @LeaveBalance int;
+
+set @Empid=6465;
+set @LeaveTypeId=12;
+set @Leavebalance=(select LeaveBalance from EmpLeaveBalance where LeaveTypeId=@Leavetypeid and empid=
+(select id from employees where empid=@Empid) and year=2021)+9;
+
+update EmpLeaveBalance set LeaveBalance=@Leavebalance where LeaveTypeId=@LeaveTypeId and empid=
+(select id from employees where empid=@Empid) and year=2021;
+
+
+--Apply LOP to G Vinesh, Emp code: 6463 for 16 days from on 15.04.2021 to 30.04.2021  
+--and Reason "Due to Tested Covid Positive".
+
+------------To Apply Leave
+
+declare @Empid int;
+declare @Leavetypeid int;
+declare @StartDate Date;
+declare @EndDate Date;
+declare @UpdatedBy_EmployeeId int;
+declare @Status varchar(10);
+declare @LeaveDays int;
+declare @TotalDays int;
+declare @MaternityType varchar(10);
+declare @pre_leave_balance int;
+
+
+set @Empid=6463;
+set @Leavetypeid=12;
+set @StartDate='2021-04-15';
+set @EndDate='2021-04-30';
+set @UpdatedBy_EmployeeId=123456;
+set @Status='Pending';
+set @LeaveDays=16;
+set @TotalDays=16;
+set @MaternityType='';
+set @pre_leave_balance=(select LeaveBalance from EmpLeaveBalance where LeaveTypeId=@Leavetypeid and empid=
+(select id from employees where empid=@Empid) and year=2021);
+
+
+INSERT INTO [dbo].[Leaves]([EmpId],[ControllingAuthority],[SanctioningAuthority],[LeaveType],[StartDate],[EndDate],[Subject],[Reason],
+[UpdatedBy],[UpdatedDate],[Status],[LeaveDays],[TotalDays],[LeaveTimeStamp],[LeavesYear],[Stage],[CancelReason],[MaternityType],
+[BranchId],[DepartmentId],[DesignationId],[leave_balance]) 
+VALUES((select id from employees where empid=@empid),
+(select ControllingAuthority from employees where empid=@empid),
+(select SanctioningAuthority from employees where empid=@empid),
+@Leavetypeid,@StartDate,@EndDate,'Leave Applied','Tested Covid Positive',
+@UpdatedBy_EmployeeId,GETDATE(),@Status,@LeaveDays,@TotalDays,GETDATE(),2021,'','',
+@MaternityType,(select Branch from employees where empid=@empid),
+(select Department from employees where empid=@empid),
+(select CurrentDesignation from employees where empid=@empid),@pre_leave_balance);
+
+
+------- To update Leavebalances
+
+declare @Empid int;
+declare @LeaveTypeId int;
+declare @LeaveBalance int;
+
+set @Empid=6463;
+set @LeaveTypeId=12;
+set @Leavebalance=(select LeaveBalance from EmpLeaveBalance where LeaveTypeId=@Leavetypeid and empid=
+(select id from employees where empid=@Empid) and year=2021)+16;
+
+update EmpLeaveBalance set LeaveBalance=@Leavebalance where LeaveTypeId=@LeaveTypeId and empid=
+(select id from employees where empid=@Empid) and year=2021;
+

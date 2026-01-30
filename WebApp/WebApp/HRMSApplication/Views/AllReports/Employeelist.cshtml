@@ -1,0 +1,264 @@
+﻿
+@{
+    ViewBag.Title = "Employeelist";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+@model Entities.view_employee
+
+@{
+    Layout = "~/Views/Shared/_ReportsLayout.cshtml";
+    var rolepages = TempData["RolePages"].ToString();
+    ViewBag.RolePages = TempData["RolePages"];
+    var reportTitle = ViewBag.ReportTitle;
+    var ReportPdfSize = ViewBag.PdfSize;
+    var ReportpageSize = ViewBag.pageSize;
+    var PdfExportColumns = ViewBag.ExportColumns;
+    var dataUrl = ViewBag.DataUrl;
+    var reportFilters = ViewBag.ReportFilters;
+    var searchBtn = ViewBag.SearchBtn;
+    var label = ViewBag.DdlOneLabel;
+    var roles = ViewBag.Role;
+}
+
+<link href="~/Assets/css/report-style.css" rel="stylesheet" />
+<script src="~/Assets/hrms/Register.js"></script>
+
+@{
+    var message = TempData["AlertMessage"] ?? string.Empty;
+}
+
+<script type="text/javascript">
+
+    var message = '@message';
+    if (message) alert(message);
+</script>
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade in active">
+                    <div class="page_st">
+                        <div class="page">
+                            <div class="col-md-12 col-sm-12 ">
+                                <div class="main_heading">
+                                    <h1>Report List </h1>
+                                    <div>
+                                        @{Html.RenderPartial("_PartialViewForMenu");}
+                                    </div>
+                                </div>
+                                <div class="main_heading">
+                                    <h1>@reportTitle</h1>
+                                    <br />
+
+                                    <div class="branch_search form-horizontal">
+
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="col-sm-5 control-label">EmpId:</label>
+                                                <div class="col-sm-7">
+                                                    <input type="text" id="txtEmpId" class="form-control" 
+                                                           onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+                                                           onkeydown="if(event.key==='.'){event.preventDefault();}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <button class="btn btn-primary btn-sm pull-right" id="oneddlempid">Search</button>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="table-responsive">
+                                                <table id="grid" class="display reports-grids" cellspacing="0" width="100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>SNO</th>
+                                                            <th>Emp Code</th>
+                                                            <th>Emp ShortName</th>
+                                                            <th>Designation</th>
+                                                            <th>Home Branch/Department</th>
+                                                            <th>Working Branch/Department</th>
+
+                                                            <th>Emp FullName</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+
+            var reportMsgTop = '';
+
+    var fnMessageTop = function () {
+         
+                return (reportMsgTop == '' ? '' : 'Filters : ' + reportMsgTop);
+            };
+
+            $(document).ready(function () {
+                $.noConflict();
+                var serviceurl = '@dataUrl';
+                serviceurl = serviceurl.replace('&amp;', '&');
+
+
+
+                var table = $('#grid').DataTable( {
+                    scrollX:  true,
+                    scrollCollapse: true,
+                   // bSort: false,
+                    // "destroy" : true,
+                    "ajax": {
+                        "url": serviceurl,
+                        "type": "GET",
+                        "datatype": "json",
+                        "dataSrc": ""
+                    },
+                    dom: 'Bfrtip',
+                    buttons: [
+                        {
+                            extend: 'excelHtml5',
+                            text: '<i class="fa fa-file-excel-o dt-export-icon-excel"></i>',
+                            titleAttr: 'Excel',
+                            title: 'TGCAB - @reportTitle',
+                            messageTop: fnMessageTop,
+                            exportOptions: {@PdfExportColumns},
+                            className: 'dt-export-btn',
+                            color:'red'
+                        },
+                        {
+                            extend: 'pdfHtml5',
+                            text: '<i class="fa fa-file-pdf-o dt-export-icon-pdf"></i>',
+                            className: 'dt-export-btn',
+                            titleAttr: 'Pdf',
+                            orientation: '@ReportPdfSize',
+                            pageSize: '@ReportpageSize',
+                            exportOptions: {@PdfExportColumns},
+                            title: 'TGCAB - @reportTitle',
+                            messageTop: fnMessageTop,
+                            customize: function (doc) {
+                                doc.styles.tableHeader.alignment = 'left';
+                                doc.content.splice(1, 0, {
+                                    margin: [0, -50, 0, 10],
+                                    alignment: 'left',
+                                    image: 'data:image/jpeg;base64,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'
+                                });
+
+                                doc.content[0].text = doc.content[0].text.trim();
+                                doc.styles.title = {
+                                    fontSize: '20',
+                                    alignment: 'center'
+                                };
+                                doc.styles.message = {
+                                    fontSize: '9',
+                                    alignment: 'center'
+                                };
+                                doc['footer'] = (function (page, pages) {
+                                    return {
+                                        columns: [
+                                            'By: @ViewBag.LoginUserName , @ViewBag.LoginBranchName .',
+                                            {
+                                                alignment: 'right',
+                                                text: [
+                                                    new Date().toLocaleDateString("en-IN", { day: "2-digit", month: "2-digit", year: "numeric", hour: '2-digit', minute: '2-digit' }),
+                                                    '    Page ', { text: page.toString() }, ' of ', { text: pages.toString() }
+                                                ]
+                                            }
+                                        ],
+                                        fontSize: '9',
+                                        margin: [40, 10]
+                                    }
+                                });
+                            }
+                        }
+                    ],
+                     "columns": [
+                { data: "EmpidCode", className: "Empid", visible: false,searchable:false },
+                { data: "EmpId" },
+                { data: "Name" },
+                { data: "Designations" },
+                 { data: "BranchDepartmet" },
+                { data: "WorkingBranchDepartmet" },
+                { data: "EmpFullName" },
+                {
+                    data: "EmpidCode",
+                    "render": function (data, type, row) {
+                        var domain = window.location.origin;
+                        var url = window.location.origin + "/Register/Edit?id=" + parseInt(data);
+                        @*return "<a style= 'color:blue;' href='@ViewBag.websiteUrl/register/edit?id=" + data + "'><button>Edit</button></a>";*@
+                        return "<a style= 'color:blue;' href='" + url + "'><button>Edit</button></a>";
+                        return data;
+                    }
+                }]
+
+
+                });
+            });
+
+
+
+    // branch
+
+    $("#oneddlempid").click(function () {
+                if ($("#txtEmpId").val() == '') {
+                    var message = '@ViewBag.DdlOneLabel';
+                    var msg = "I#Required#Please select " + message
+                    var arr = msg.split("#");
+                    // if (msg.length > 0) {
+                    showGlobalModal(msg);
+                    //alert("Please Select " + message);
+                    return false;
+        }
+
+                ajaxSpinnerShow();
+        if ($("#txtEmpId").val() !== '' ) {
+            var mainUrl = '@dataUrl';
+            var branchid = $("#BranchName").val();
+            //var EmpId = $("#EmpId").val();
+             var empid = $("#txtEmpId").val();
+           // var emp = $("#txtEmpId").val();
+           // var branchname = $("#BranchName option:selected").text();
+            //console.log(branchname);
+            var ajaxurl = mainUrl.replace('-1', empid)
+           // ajaxurl = ajaxurl.replace('-2', emp);
+            ajaxurl = ajaxurl.split('&amp;').join('&');
+            //   ajaxurl += branchid;
+
+            if (empid == "") {
+                // reportMsgTop = '@ViewBag.DdlOneLabel : ' + branchid;
+                reportMsgTop = 'Emp code:' + empid;
+            }
+            else {
+                // reportMsgTop = '@ViewBag.DdlOneLabel : ' + branchname;
+                reportMsgTop = 'Emp code:' + empid;
+            }
+            $('#grid').DataTable().ajax.url(ajaxurl).load(function () {
+                ajaxSpinnerHide();
+            });
+        }
+
+            });
+
+
+
+            document.getElementById("a6").className = "active";
+    </script>
+
+
+
+
+
+

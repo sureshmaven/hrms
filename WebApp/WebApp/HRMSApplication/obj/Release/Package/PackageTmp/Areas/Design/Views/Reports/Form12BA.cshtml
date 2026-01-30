@@ -1,0 +1,97 @@
+﻿
+@{
+    ViewBag.Title = "Form12BA";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <h1>Form 12BA Report</h1>
+                    <div class="col-md-4 mt_10">
+                        <div class="inner_heading">
+                            <h1>Options</h1>
+                            <input id="file" type="radio" name="file" value="1"><label for="selectedemployees"><span><span></span></span>Selected Employees</label>
+                            <div class="clearfix"></div>
+                            <input id="file" type="radio" name="file" value="2"><label for="allemployees"><span><span></span></span>All Employees</label>
+                            <div class="clearfix"></div>
+                            <input id="file" type="radio" name="file" value="3"><label for="betweenids"><span><span></span></span>Between ID's</label>
+                            <div class="clearfix"></div>
+                            <input id="file" type="radio" name="file" value="4"><label for="window"><span><span></span></span>Window</label>
+                        </div>
+                    </div>
+                    <div class="col-md-8 mt_10">
+                        <div class="inner_heading">
+                            <h1>Employee Names</h1>
+                            <div class="table-responsive">
+                                <table id="lic_report" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <input id="selectallrow" type="checkbox" name="selectall" value="1"><label for="selectall"><span></span></label>
+                                            </th>
+                                            <th>Employee Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><input id="select1" type="checkbox" name="select1" value="1"><label for="select1"><span></span></label></td>
+                                            <td>121  P.DURGESH GOUD</td>
+                                        </tr>
+                                        <tr>
+                                            <td><input id="select1" type="checkbox" name="select1" value="1"><label for="select1"><span></span></label></td>
+                                            <td>147  A.NAGESHWARI</td>
+                                        </tr>
+                                        <tr>
+                                            <td><input id="select1" type="checkbox" name="select1" value="1"><label for="select1"><span></span></label></td>
+                                            <td>175  V MASOOD ALI</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                        <div class="row mt_10">
+                            <div class="col-md-3">
+                                <label>
+                                    <input id="checkbox1" type="checkbox" name="checkbox" value="1"><label for="checkbox1"><span></span>Select All</label>
+                                </label>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="pull-right">
+                                    <label>
+                                        <input id="checkbox1" type="checkbox" name="checkbox" value="2"><label for="checkbox1"><span></span>Send to Email</label>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt_10">
+                            <div class="pull-right">
+                                <button type="reset" class="btn btn-default cancel">Close</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+<script>
+    $(document).ready(function () {
+        $('#lic_report').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+        });
+    });
+</script>
+
+

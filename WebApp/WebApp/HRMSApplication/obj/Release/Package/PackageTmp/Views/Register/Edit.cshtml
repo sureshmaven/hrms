@@ -1,0 +1,2164 @@
+﻿@model Entities.Employees
+@{
+    Layout = "~/Views/Shared/_ReportsLayout.cshtml";
+    var rolepages = TempData["RolePages"].ToString();
+    ViewBag.RolePages = TempData["RolePages"];
+    var reportTitle = ViewBag.ReportTitle;
+    var ReportPdfSize = ViewBag.PdfSize;
+    var ReportpageSize = ViewBag.pageSize;
+    var PdfExportColumns = ViewBag.ExportColumns;
+    var dataUrl = ViewBag.DataUrl;
+    var reportFilters = ViewBag.ReportFilters;
+    var searchBtn = ViewBag.SearchBtn;
+}
+<script src="~/Assets/hrms/Register.js"></script>
+
+<link href="~/Assets/css/report-style.css" rel="stylesheet" />
+@{
+    var message = TempData["AlertMessage"] ?? string.Empty;
+}
+
+<script type="text/javascript">
+    var message = '@message';
+    if (message) alert(message);
+</script>
+<style>
+    .datepicker > div {
+        display: block;
+    }
+
+    .form-horizontal .control-label {
+        text-align: left;
+    }
+</style>
+
+@using (Html.BeginForm("UpdateProfile", "Register", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="container">
+        <div class="page_st">
+            <div class="page">
+                <div class="form-horizontal form-horizontal2">
+                    <div class="page_start">
+                        <div class="col-md-12">
+                            <div class="main_heading">
+                                <h1>Report List </h1>
+                                <div class="report-list">
+
+                                    @{
+                                        <ul>
+                                            @if (rolepages.Contains("RPBRA"))
+                                            {
+                                                <li class='@(reportTitle == "Branches List" ? "active" : "")'><a href=@Url.Action("Index", "AllReports")>Branches</a></li>
+}
+                                            @if (rolepages.Contains("RPBRC"))
+                                            {
+                                                <li class='@(reportTitle == "Branches Contacts List" ? "active" : "")'><a href=@Url.Action("BranchContacts", "AllReports")>Branch Contacts</a></li>
+}
+                                            @if (rolepages.Contains("RPCDR"))
+                                            {
+                                                @*<li><a href=@Url.Action("CadreReport", "Reports")>Cadre</a></li>*@
+                                                <li class='@(reportTitle == "Cadre List" ? "active" : "")'><a href=@Url.Action("CadreList", "AllReports")>Cadre</a></li>
+                                            }
+                                            @if (rolepages.Contains("RPCAT"))
+                                            {
+                                                <li class='@(reportTitle == "Categeory List" ? "active" : "")'><a href=@Url.Action("staffCategoryList", "AllReports")>Category</a></li>
+}
+                                            @if (rolepages.Contains("RPCASAE"))
+                                            {
+                                                <li class='@(reportTitle == "CA and SA of Employees" ? "active" : "")'><a href=@Url.Action("CaAndSaOfEmployees", "AllReports")>CA & SA of Employees</a></li>
+}
+                                            @if (rolepages.Contains("RPDOB"))
+                                            {
+                                                <li class='@(reportTitle == "DOB List" ? "active" : "")'><a href=@Url.Action("EmpDob", "AllReports")>DOB</a></li>
+}
+                                            @if (rolepages.Contains("RPEMP"))
+                                            {
+                                                <li id="e6" class='@(reportTitle == "Employee List" ? "active" : "")'><a href=@Url.Action("EmployeesRept", "AllReports")>Employees</a></li>
+}
+                                            @if (rolepages.Contains("RPEAL"))
+                                            {
+                                                <li class='@(reportTitle == "Future Applied Leaves" ? "active" : "")'><a href=@Url.Action("FutureAppliedLeaves", "AllReports")>Future Applied Leaves</a></li>
+}
+                                            @if (rolepages.Contains("RPHOF"))
+                                            {
+                                                <li class='@(reportTitle == "Head Office List" ? "active" : "")'><a href=@Url.Action("HeadOfficeList", "AllReports")>Head Office</a></li>
+}
+                                            @if (rolepages.Contains("RPHOA"))
+                                            {
+                                                <li class='@(reportTitle == "Head Office Attender List" ? "active" : "")'><a href=@Url.Action("HeadOfcAttenders", "AllReports")>Head Office Attenders</a></li>
+}
+                                            @if (rolepages.Contains("RPKOF"))
+                                            {
+                                                <li class='@(reportTitle == "Work Profile Of Key Officials" ? "active" : "")'><a href=@Url.Action("KeyOfficials", "AllReports")>Key Officials</a></li>
+}
+                                            @if (rolepages.Contains("RPLTC"))
+                                            {
+                                                <li class='@(reportTitle == "LTC List" ? "active" : "")'><a href=@Url.Action("LTCList", "AllReports")>LTC</a></li>
+}
+                                            @if (rolepages.Contains("RPLEV"))
+                                            {
+                                                <li><a href=@Url.Action("LeavesHistory", "AllReports")>Leaves</a></li>
+}
+                                            @if (rolepages.Contains("RPLLE"))
+                                            {
+                                                <li class='@(reportTitle == "Long Leaves" ? "active" : "")'><a href=@Url.Action("LongLeaves", "AllReports")>Long Leaves</a></li>
+}
+                                            @if (rolepages.Contains("RPLFA"))
+                                            {
+                                                <li class='@(reportTitle == "Leave Approval List" ? "active" : "")'><a href=@Url.Action("LeavesCarryForward", "AllReports")>Leaves Forwarded/Approved</a></li>
+}
+                                            @if (rolepages.Contains("RPLAL"))
+                                            {
+                                                <li class='@(reportTitle == "Late Applied Leaves List" ? "active" : "")'><a href=@Url.Action("LateAppliedLeaves", "AllReports")>Late Applied Leaves</a></li>
+}
+                                            @if (rolepages.Contains("RPLCD"))
+                                            {
+                                                <li class='@(reportTitle == "Cancelled Leaves" ? "active" : "")'><a href=@Url.Action("LeaveCancelled", "AllReports")>Leaves Cancelled</a></li>
+}
+                                            @if (rolepages.Contains("RPCMP"))
+                                            {
+                                                <li class='@(reportTitle == "Month Wise CL/ML/PL" ? "active" : "")'><a href=@Url.Action("MonthwiseCLMLPL", "AllReports")>Month Wise CL/ML/PL</a></li>
+}
+                                            @if (rolepages.Contains("RPMWL"))
+                                            {
+                                                <li class='@(reportTitle == "Month Wise Leaves" ? "active" : "")'><a href=@Url.Action("MonthWiseLeaves", "AllReports")>Month Wise Leaves</a></li>
+}
+                                            @if (rolepages.Contains("RPMWO"))
+                                            {
+                                                <li class='@(reportTitle == "Month Wise OD" ? "active" : "")'><a href=@Url.Action("MonthWiseOD", "AllReports")>Month Wise OD</a></li>
+}
+                                            @if (rolepages.Contains("RPMTT"))
+                                            {
+                                                <li class='@(reportTitle == "Month Wise Temporary Transfer" ? "active" : "")'><a href=@Url.Action("MonthWiseTemporaryTransfer", "AllReports")>Month Wise Temporary Transfer</a></li>
+}
+                                            @if (rolepages.Contains("RPODD"))
+                                            {
+                                                <li class='@(reportTitle == "OD List" ? "active" : "")'><a href=@Url.Action("OdDuty", "AllReports")>OD</a></li>
+}
+
+                                            @if (rolepages.Contains("RPPTS"))
+                                            {
+                                                <li class='@(reportTitle == "Permanent Transfer List" ? "active" : "")'><a href=@Url.Action("PermanentTransfer", "AllReports")>Permanent Transfers</a></li>
+}
+                                            @if (rolepages.Contains("RPPRO"))
+                                            {
+                                                <li class='@(reportTitle == "Transfer List" ? "active" : "")'><a href=@Url.Action("EmpPromotions", "AllReports")>Promotion</a></li>
+}
+                                            @if (rolepages.Contains("RPSPL"))
+                                            {
+                                                <li class='@(reportTitle == "PL List" ? "active" : "")'><a href=@Url.Action("PrivilegeLeave", "AllReports")>Proforma-A (PL Encashment)</a></li>
+}
+                                            @if (rolepages.Contains("RPRET"))
+                                            {
+                                                <li class='@(reportTitle == "Retirement List" ? "active" : "")'><a href=@Url.Action("Retirement", "AllReports")>Retirements/Resignations</a></li>
+}
+                                            @if (rolepages.Contains("RPSEN"))
+                                            {
+                                                <li class='@(reportTitle == "Seniorty List" ? "active" : "")'><a href=@Url.Action("Seniorty", "AllReports")>Seniority</a></li>
+}
+                                            @if (rolepages.Contains("RPSMA"))
+                                            {
+                                                <li class='@(reportTitle == "StaffMaster List" ? "active" : "")'><a href=@Url.Action("StaffMaster", "AllReports")>Staff Master</a></li>
+}
+                                            @if (rolepages.Contains("RPTXH"))
+                                            {
+                                                <li class='@(reportTitle == "Transaction History" ? "active" : "")'><a href=@Url.Action("TxHistory", "AllReports")>TX History</a></li>
+}
+                                            @if (rolepages.Contains("RPTTS"))
+                                            {
+                                                <li class='@(reportTitle == "Temporary Transfer List" ? "active" : "")'><a href=@Url.Action("TempTrnsfr", "AllReports")>Temporary Transfers</a></li>
+}
+                                            @if (rolepages.Contains("RPTMT"))
+                                            {
+                                                <li class='@(reportTitle == "Top Management List" ? "active" : "")'><a href=@Url.Action("Topmanagement", "AllReports")>TopManagement</a></li>
+}
+                                            @if (rolepages.Contains("RPWDY"))
+                                            {
+                                                <li class='@(reportTitle == "Work Diary" ? "active" : "")'><a href=@Url.Action("WorkDiary", "AllReports")>WorkDiary </a></li>
+}
+                                            @if (rolepages.Contains("RPYLB"))
+                                            {
+                                                @*<li><a href=@Url.Action("YearWiseLeaveBalanceReport", "Reports")>YearWiseLeaveBalance</a></li>*@
+                                                <li class='@(reportTitle == "Year Wise Leave Balance" ? "active" : "")'><a href=@Url.Action("LeavesCreditDebit", "AllReports")>Year wise Leave Balance</a></li>
+}
+                                            @if (rolepages.Contains("RPYLB"))
+                                            {
+                                                <li class='@(reportTitle == "Branch Device Report" ? "active" : "")'><a href=@Url.Action("DailyReport", "AllReports")>Branch Device Report</a></li>
+
+                                                <li class='@(reportTitle == "Allotment of Shifts" ? "active" : "")'><a href=@Url.Action("AllotmentofShiftReport", "AllReports")>Allotment of Shifts</a></li>
+
+                                                @*<li class='@(reportTitle == "Late Arrivals" ? "active" : "")'><a href=@Url.Action("Lateby", "AllReports")>Late Arrivals</a></li>
+
+                                                    <li class='@(reportTitle == "Early Departure" ? "active" : "")'><a href=@Url.Action("Earlyby", "AllReports")>Early Departs</a></li>
+
+                                                    <li class='@(reportTitle == "Employee Timesheet" ? "active" : "")'><a href=@Url.Action("TimeSheetMonth", "AllReports")>Employee Timesheet</a></li>*@
+                                                <li class='@(reportTitle == "Late Arrivals" ? "active" : "")'><a href=@Url.Action("LateArrivalsReport", "AllReports")>Late Arrivals</a></li>
+
+                                                <li class='@(reportTitle == "Early Departs" ? "active" : "")'><a href=@Url.Action("EarlyDepartsReport", "AllReports")>Early Departs</a></li>
+
+                                                <li class='@(reportTitle == "Employee Timesheet" ? "active" : "")'><a href=@Url.Action("EmployeeTimesheet", "AllReports")>Employee Timesheet</a></li>
+
+                                                <li class='@(reportTitle == "Late Arrivals/Early Departures Monthly" ? "active" : "")'><a href=@Url.Action("MonthlyLateTimesheet", "AllReports")>Late Arrivals/Early Departures Monthly</a></li>
+
+                                                <li class='@(reportTitle == "Late Memo Monthly" ? "active" : "")'><a href=@Url.Action("MonthlyLateMemoTimesheet", "AllReports")>Late Memo Monthly</a></li>
+
+                                                <li class='@(reportTitle == "Leaves applied/approved but attended duties" ? "active" : "")'><a href=@Url.Action("Leavesapprovedbutattended", "AllReports")>Leaves applied/approved but attended duties</a></li>
+
+                                                <li class='@(reportTitle == "Timesheet Approval Report" ? "active" : "")'><a href=@Url.Action("TSApprovalViewReport", "AllReports")>Time Adjustment Request</a></li>
+                                                <li class='@(reportTitle == "TimeSheet Rerun" ? "active" : "")'><a href=@Url.Action("EmpMonthlyReport", "AllReports")>TimeSheet Rerun</a></li>
+                                                <li class='@(reportTitle == "DCCB Employee Timesheet" ? "active" : "")'><a href=@Url.Action("DCCBEmployeeTimesheet", "AllReports")>DCCB Employee Timesheet</a></li>
+                                                <li class='@(reportTitle == "COVID19 Survey" ? "active" : "")'><a href=@Url.Action("Covid19", "AllReports")>COVID-19 Survey</a></li>
+                                                <li class='@(reportTitle == "COVID-19 Submitted Employee Count" ? "active" : "")'><a href=@Url.Action("Covid19Submited", "AllReports")>COVID-19 Submitted Employee Count</a></li>
+                                                <li class='@(reportTitle == "Government Staff Employee Timesheet" ? "active" : "")'><a href=@Url.Action("GovernmentStaffEmployeeTimesheet", "AllReports")>Government Staff Employee</a></li>
+
+                                                @*<li class='@(reportTitle == "PROFORMA-B" ? "active" : "")'><a href=@Url.Action("proformapage", "AllReports")>PROFORMA-B</a></li>*@
+                                                @*<li class='@(reportTitle == "EmpMonthlyReport" ? "active" : "")'><a href=@Url.Action("EmpMonthlyReport", "AllReports")>Employee Monthly Report</a></li>*@
+                                            }
+                                            @if (rolepages.Contains("EMPREP"))
+                                            {
+                                                <li class='@(reportTitle == "Late Arrivals" ? "active" : "")'><a href=@Url.Action("Lateby", "AllReports")>Late Arrivals</a></li>
+
+                                                <li class='@(reportTitle == "Early Departure" ? "active" : "")'><a href=@Url.Action("Earlyby", "AllReports")>Early Departs</a></li>
+
+                                                <li class='@(reportTitle == "Employee Timesheet" ? "active" : "")'><a href=@Url.Action("TimeSheetMonth", "AllReports")>Employee Timesheet</a></li>
+
+                                                <li class='@(reportTitle == "Late Arrivals/Early Departures Monthly" ? "active" : "")'><a href=@Url.Action("MonthlyLateTimesheet", "AllReports")>Late Arrivals/Early Departures Monthly</a></li>
+
+                                                <li class='@(reportTitle == "Late Memo Monthly" ? "active" : "")'><a href=@Url.Action("MonthlyLateMemoTimesheet", "AllReports")>Late Memo Monthly</a></li>
+                                                <li class='@(reportTitle == "Leaves applied/approved but attended duties" ? "active" : "")'><a href=@Url.Action("Leavesapprovedbutattended", "AllReports")>Leaves applied/approved but attended duties</a></li>
+
+                                                @*<li class='@(reportTitle == "EmpMonthlyReport" ? "active" : "")'><a href=@Url.Action("EmpMonthlyReport", "AllReports")>Employee Monthly Report</a></li>*@
+
+                                            }
+                                        </ul>
+                                    }
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-2">
+                            <div class="side_heading">
+                                <h1>Profile Picture</h1>
+                                <div class="profile_pic">
+
+                                    <img src="~/uploads/@Model.UploadPhoto" id="ImagePreview" />
+                                    <div class="col-md-12">
+                                        <label>Size(3.5 x 4.5 cm)</label>
+                                        <label for="file" class="btn btn-primary profile_pic_btn">Choose Photo</label>
+                                        <input type="file" id="file" style="visibility:hidden;" name="file" onchange="PreviewImageBeforeUpload(this);" />
+                                        <input type="hidden" name="EmployeeImage" value="@Html.DisplayFor(modelItem   => Model.UploadPhoto)" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="side_heading">
+                                <label class="col-sm-12 control-label">Photo Uploaded:</label>
+                                <div class="col-sm-12">
+
+                                    <label class="radio-inline">
+                                        @Html.RadioButtonFor(model => model.photo, "Yes", new { @id = "y" })
+
+                                        Yes
+                                    </label>
+                                    <label class="radio-inline">
+                                        @Html.RadioButtonFor(model => model.photo, "No", new { @id = "n" })
+
+                                        No
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-10 col-sm-10">
+                            <div class="main_heading" style="margin-top:0;">
+                                <h1>Personal Details</h1>
+                                <br />
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">First Name: <span class="mandatory">*</span></label>
+                                        <div class="col-sm-7">
+                                            @Html.HiddenFor(model => model.Id)
+                                            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @id = "FirstName", onkeypress = "return checkNum1(event)" } })
+                                            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Last Name: <span class="mandatory">*</span></label>
+                                        <div class="col-sm-7">
+                                            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @id = "LastName", onkeypress = "return checkNum1(event)" } })
+                                            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Password: <span class="mandatory">*</span></label>
+                                        <div class="col-sm-7">
+                                            @Html.TextBox("Password",
+                                                new string('*', Model.Password?.Length ?? 0),
+                                                new { @class = "form-control", type = "password", @id = "pw1" })
+
+                                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Confirm Password: <span class="mandatory">*</span></label>
+                                        @*<div class="col-sm-7">
+        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", type = "password", @id = "pw2", maxlength = "15" } })
+
+                                    <input class="form-control" type="password" value="********" />
+                                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                </div>*@
+                                        <div class="col-sm-7">
+                                            @Html.TextBox("Password",
+                                                new string('*', Model.Password?.Length ?? 0),
+                                                new { @class = "form-control", type = "password", @id = "pw2" })
+
+                                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="col-sm-5 control-label">Gender:<span class="mandatory">*</span></label>
+                <div class="col-sm-7">
+                    <label class="radio-inline">
+                        @Html.RadioButtonFor(model => model.Gender, "Male", new { @id = "m" })
+                        @*@Html.HiddenFor(model => model.Gender)*@
+                                Male
+                                </label>
+                                <label class="radio-inline">
+                                    @Html.RadioButtonFor(model => model.Gender, "Female", new { @id = "f" })
+                                    @*@Html.HiddenFor(model => model.Gender)*@
+                                    Female
+                                </label>
+                                </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Date of Birth:<span class="mandatory">*</span></label>
+                                        <div class="col-sm-7">
+                                            <div class="input-group date" id="Event_Date1">
+                                                @Html.TextBoxFor(m => m.DOB, "{0:dd/MM/yyyy}", new { @class = "form-control", @disabled = "disabled" })<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                @Html.HiddenFor(model => model.DOB)
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Marital Status:<span class="mandatory">*</span></label>
+                                        <div class="col-sm-7">
+                                            <label class="radio-inline">
+                                                @Html.RadioButtonFor(model => model.MartialStatus, "Single", new { id = "r1" })
+
+                                                Single
+                                            </label>
+                                            <label class="radio-inline">
+
+                                                @Html.RadioButtonFor(model => model.MartialStatus, "Married", new { id = "r2" })
+                                                Married
+
+                                            </label>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Spouse:</label>
+                                        <div class="col-sm-7">
+                                            @Html.EditorFor(model => model.SpouseName, new { htmlAttributes = new { @class = "form-control" } })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Father's Name:<span class="mandatory">*</span></label>
+                                        <div class="col-sm-7">
+                                            @Html.EditorFor(model => model.FatherName, new { htmlAttributes = new { @class = "form-control", @id = "FatherName", onkeypress = "return checkNum1(event)" } })
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Mother's Name:<span class="mandatory">*</span></label>
+                                        <div class="col-sm-7">
+                                            @Html.EditorFor(model => model.MotherName, new { htmlAttributes = new { @class = "form-control", @id = "MotherName", onkeypress = "return checkNum1(event)" } })
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Mobile Number:<span class="mandatory">*</span></label>
+
+                                        <div class="col-sm-7">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">+91</span>
+                                                @Html.EditorFor(model => model.MobileNumber, new { htmlAttributes = new { @class = "form-control", @id = "MobileNumber", maxlength = "10", onkeypress = "return isNumber(event)" } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Landline Number:</label>
+                                        <div class="col-sm-7">
+                                            @Html.EditorFor(model => model.HomeNumber, new { htmlAttributes = new { @class = "form-control", maxlength = "11", onkeypress = "return isNumber(event)" } })
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Present Address:<span class="mandatory">*</span></label>
+                                        <div class="col-sm-7">
+                                            @Html.TextAreaFor(model => model.PresentAddress, new { @class = "form-control", @id = "PresentAddress" })
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Permanent Address:<span class="mandatory">*</span></label>
+                                        <div class="col-sm-7">
+                                            @Html.TextAreaFor(model => model.PermanentAddress, new { @class = "form-control", @id = "PermanentAddress" })
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Graduation:<span class="mandatory">*</span></label>
+                                        <div class="col-sm-7">
+                                            @Html.EditorFor(model => model.Graduation, new { htmlAttributes = new { @class = "form-control", @id = "Graduation", onkeypress = "return checkNum1(event)" } })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Post Graduation:</label>
+                                        <div class="col-sm-7">
+                                            @Html.EditorFor(model => model.PostGraduation, new { htmlAttributes = new { @class = "form-control", onkeypress = "return checkNum1(event)" } })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">OtherQualification:</label>
+                                        <div class="col-sm-7">
+                                            @Html.EditorFor(model => model.OtherQualification, new { htmlAttributes = new { @class = "form-control" } })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Category:<span class="mandatory">*</span></label>
+                                        <div class="col-sm-7">
+                                            @Html.DropDownList("Category", new[] {
+                                         new SelectListItem() {Text = "OC",Value = "OC"},
+                                                                    new SelectListItem() {Text = "BC-A",Value = "BC-A"},
+                                                                     new SelectListItem() {Text = "BC-B",Value = "BC-B" },
+                                                                      new SelectListItem() {Text = "BC-C",Value = "BC-C" },
+                                                                       new SelectListItem() {Text = "BC-D",Value = "BC-D" },
+                                                                        new SelectListItem() {Text = "BC-E",Value = "BC-E" },
+                                                                    new SelectListItem() {Text = "SC",Value = "SC" },
+                                                                    new SelectListItem() {Text = "ST",Value = "ST" },
+                                        }, "Select Category", new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Personal Email ID:<span class="mandatory">*</span></label>
+                                        <div class="col-sm-7">
+                                            @Html.EditorFor(model => model.PersonalEmailId, new { htmlAttributes = new { @class = "form-control", @id = "PersonalEmailId" } })
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Aadhaar Number:<span class="mandatory">*</span> </label>
+                                        <div class="col-sm-7">
+                                            @Html.EditorFor(model => model.AadharCardNo, new { htmlAttributes = new { @class = "form-control", @id = "AadharCardNo", maxlength = "12", onkeypress = "return isNumber(event)" } })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">PAN Number:<span class="mandatory">*</span> </label>
+                                        <div class="col-sm-7">
+                                            @Html.EditorFor(model => model.PanCardNo, new { htmlAttributes = new { @class = "form-control", @id = "PanCardNo", maxlength = 10 } })
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Blood Group:<span class="mandatory">*</span> </label>
+                                        <div class="col-sm-7">
+
+                                            @Html.DropDownList("BloodGroup", new[] {
+                                                                    new SelectListItem() {Text = "O-ve",Value = "O-ve"},
+                                                                    new SelectListItem() {Text = "O+ve",Value = "O+ve"},
+                                                                    new SelectListItem() {Text = "A-ve",Value = "A-ve" },
+                                                                    new SelectListItem() {Text = "A+ve",Value = "A+ve" },
+                                                                    new SelectListItem() {Text = "B-ve",Value = "B-ve" },
+                                                                    new SelectListItem() {Text = "B+ve",Value = "B+ve" },
+                                                                     new SelectListItem() {Text = "AB-ve",Value = "AB-ve" },
+                                                                     new SelectListItem() {Text = "AB+ve",Value = "AB+ve" },
+                                                                    }, "Select BloodGroup", new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Emergency Contact Name:<span class="mandatory">*</span> </label>
+                                        <div class="col-sm-7">
+                                            @Html.EditorFor(model => model.EmergencyName, new { htmlAttributes = new { @class = "form-control", @id = "EmergencyName", onkeypress = "return checkNum1(event)" } })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Emergency Contact Number:<span class="mandatory">*</span> </label>
+                                        <div class="col-sm-7">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">+91</span>
+                                                @Html.EditorFor(model => model.EmergencyContactNo, new { htmlAttributes = new { @class = "form-control", @id = "EmergencyContactNo", maxlength = "10", onkeypress = "return isNumber(event)" } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Short Name: <span class="mandatory">*</span></label>
+                                        <div class="col-sm-7">
+                                            @Html.EditorFor(model => model.ShortName, new { htmlAttributes = new { @class = "form-control", onkeypress = "return checkNum1(event)" } })
+                                            @Html.ValidationMessageFor(model => model.ShortName, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-2">
+                        </div>
+                        <div class="col-md-10 col-sm-10">
+                            <div class="main_heading">
+                                <h1>Professional Details</h1>
+                                <br />
+                                <div class="col-md-12">
+                                    @Html.RadioButtonFor(model => model.Branch_Value1, "42", new { id = "head" })
+                                    <label class="label_class" for="head">   HeadOffice </label>
+                                    @Html.RadioButtonFor(model => model.Branch_Value1, "43", new { id = "bran" })
+                                    <label class="label_class" for="bran">  Branch </label>
+                                </div>
+                                <br><br>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Employee Code:<span class="mandatory">*</span></label>
+                                        <div class="col-sm-7">
+                                            @Html.EditorFor(model => model.EmpId, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                            @Html.HiddenFor(model => model.EmpId)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="shift" class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Shift Timings:<span class="mandatory">*</span> </label>
+                                        <div class="col-sm-7">
+
+                                            @Html.DropDownListFor(model => model.Shift_Id, (SelectList)ViewBag.Shifts, new { @class = "form-control", @id = "shiftid" })
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="depthide" class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Department:<span class="mandatory">*</span> </label>
+                                        <div class="col-sm-7">
+                                            @Html.DropDownList("Department", ViewBag.Department as List<SelectListItem>, new { @class = "form-control", @id = "profeDept" })
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="branchide" class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Branch:<span class="mandatory">*</span> </label>
+                                        <div class="col-sm-7">
+                                            @Html.DropDownList("Branch", ViewBag.Branch as List<SelectListItem>, new { @class = "form-control", @id = "profeBranch", @onchange = "BranchofProfe()" })
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Joined Designation:<span class="mandatory">*</span> </label>
+                                        <div class="col-sm-7">
+                                            @Html.DropDownList("JoinedDesignation", ViewBag.JoinedDesignation as List<SelectListItem>, new { @class = "form-control" })
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+
+                                        <label class="col-sm-5 control-label">Current Designation:<span class="mandatory">*</span> </label>
+                                        <div class="col-sm-7">
+                                            @Html.DropDownList("CurrentDesignation", ViewBag.CurrentDesig as List<SelectListItem>, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Role:<span class="mandatory">*</span> </label>
+                                        <div class="col-sm-7">
+                                            @Html.DropDownList("Role", ViewBag.Role as List<SelectListItem>, new { @class = "form-control" })
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Official Email Id:</label>
+                                        <div class="col-sm-7">
+                                            @Html.EditorFor(model => model.OfficalEmailId, new { htmlAttributes = new { @class = "form-control" } })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Professional Qualifications:</label>
+                                        <div class="col-sm-7">
+                                            @Html.EditorFor(model => model.ProfessionalQualifications, new { htmlAttributes = new { @class = "form-control" } })
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Date of Joining:<span class="mandatory">*</span><br /><br /> </label>
+                                        <div class="col-sm-7">
+                                            <div class="input-group date" id="Event_Date2">
+                                                @Html.TextBoxFor(m => m.DOJ, "{0:dd/MM/yyyy}", new { @class = "form-control", onchange = "eventvalidates()" })<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+
+                                                @Html.ValidationMessageFor(model => model.DOJ, "", new { @class = "text-danger" })
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Total Experience:<br /><br /></label>
+                                        <div class="col-sm-7">
+                                            @Html.EditorFor(model => model.TotalExperience, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Relieving Reason:<span class="mandatory">*</span></label>
+                                        @*<div class="col-sm-7">
+                                                @Html.EditorFor(model => model.RelievingReason, new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>*@
+                                        <div class="col-sm-7">
+
+                                            @Html.DropDownList("Exit_type", new[] {
+                                        new SelectListItem() {Text = "Retirement",Value = "Retd"},
+                                        new SelectListItem() {Text = "Resignation",Value = "Resig"},
+                                        new SelectListItem() {Text = "VRS",Value = "Vrs"},
+                                        new SelectListItem() {Text = "Death",Value = "Death"}, //added new on 02/06/2020
+
+                                    }, "Select Relieving Reason", new { @class = "form-control", @id = "Exit_type" })
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Date of Relieving:<span class="mandatory">*</span> </label>
+                                        <div class="col-sm-7">
+                                            <div class="input-group date" id="Event_Date4">
+                                                @Html.TextBoxFor(m => m.RetirementDate, "{0:dd/MM/yyyy}", new { @class = "form-control", onchange = "return eventvalidate1();" })<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+
+                                                @Html.ValidationMessageFor(model => model.RetirementDate, "", new { @class = "text-danger" })
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-2">
+
+                        </div>
+
+                        <div class="col-md-10 col-sm-10">
+                            <div class="main_heading">
+                                <h1>Authorities</h1>
+
+                                <div class="col-md-6">
+                                    <br />
+                                    <div class="sub_main_heading">
+                                        <h1>Controlling  Authority  </h1>
+                                        <br />
+                                        <div class="col-md-12  radio_btn">
+                                            @Html.RadioButtonFor(model => model.Branch_Value_2, "1", new { id = "head1", onclick = "return pfp()" })
+                                            <label class="label_class" for="head1">  HeadOffice </label>
+
+                                            @Html.RadioButtonFor(model => model.Branch_Value_2, "2", new { id = "bran1", onclick = "return pp()" })
+                                            <label class="label_class" for="bran1">  Branch </label>
+
+                                        </div>
+                                        <br /><br />
+                                        <div id="depthide1" class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label">Department:<span class="mandatory">*</span> </label>
+                                                <div class="col-sm-8">
+
+                                                    @Html.DropDownListFor(model => model.ControllingDepartment, ViewBag.Department2d as SelectList, new { @class = "form-control", @id = "HDept", @onchange = "HFillBranches()" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="branchide1" class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label">Branch:<span class="mandatory">*</span> </label>
+                                                <div class="col-sm-8">
+
+                                                    @Html.DropDownListFor(model => model.ControllingBranch, ViewBag.Branch4b as SelectList, new { @class = "form-control", @id = "HbranchCon", @onchange = "BFillDesignation()" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label">Designation:<span class="mandatory">*</span> </label>
+                                                <div class="col-sm-8">
+                                                    @if (Session["Data"] != null)
+                                                    {
+                                                        @Html.DropDownListFor(model => model.ControllingDesignation, (SelectList)ViewBag.DataStatus, "Select Designation", new { @id = "Hdesignationcon", @class = "form-control" })
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.DropDownListFor(model => model.ControllingDesignation, ViewBag.CurrentDesignation3c as SelectList, new { @class = "form-control", @id = "Hdesignationcon", @onchange = "HFillDesignation()" })
+                                                    }
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label">Officer Name:<span class="mandatory">*</span> </label>
+                                                <div class="col-sm-8">
+                                                    @Html.DropDownList("ControllingAuthority", ViewBag.CurrentDesignation as List<SelectListItem>, new { @class = "form-control", @id = "HMN" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="hidden" value="@ViewBag.ControllingBranchId" id="ControllingBranchId" />
+                                <input type="hidden" value="@ViewBag.ControllingDepartmentId" id="ControllingDepartmentId" />
+                                <input type="hidden" value="@ViewBag.ControllingAuthorityId" id="ControllingAuthorityId" />
+                                <input type="hidden" value="@ViewBag.ControllingDesignationid" id="ControllingDesignationid" />
+                                <div class="col-md-6">
+                                    <br />
+                                    <div class="sub_main_heading">
+                                        <h1>Sanctioning Authority  </h1>
+                                        <br /><br />
+                                        <div class="col-md-12">
+                                            <br />
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label">Department:<span class="mandatory">*</span> </label>
+                                                <div class="col-sm-8">
+                                                    @Html.DropDownListFor(model => model.SanctioningDepartment, ViewBag.Department2sd as SelectList, new { @class = "form-control", @id = "DeptSan", @onchange = "FillBranchesSanc()" })
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label">Designation:<span class="mandatory">*</span> </label>
+                                                <div class="col-sm-8">
+                                                    @Html.DropDownListFor(model => model.SanctioningDesignation, ViewBag.CurrentDesignation3sc as SelectList, new { @class = "form-control", @id = "designationSan", @onchange = "FillDesignationSanc()" })
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label">Officer Name:<span class="mandatory">*</span> </label>
+                                                <div class="col-sm-8">
+
+                                                    @Html.DropDownList("SanctioningAuthority", ViewBag.SanctioningAuthority as List<SelectListItem>, new { @class = "form-control", @id = "mag" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 buttons_div">
+                            <div class="pull-right">
+                                <button type="reset" class="btn btn-default calcel">Cancel</button>
+                                <button type="submit" onclick="return RegFunction1();" class="btn btn-primary">Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+<script type="text/javascript">
+    function PreviewImageBeforeUpload(Imagepath) {
+        Checkfiles();
+        if (Imagepath.files && Imagepath.files[0]) {
+            $("#y").attr('checked', 'checked');
+            var Filerdr = new FileReader();
+            Filerdr.onload = function (e) {
+                $('#ImagePreview').attr('src', e.target.result);
+            }
+            Filerdr.readAsDataURL(Imagepath.files[0]);
+        }
+    }
+</script>
+<script type="text/javascript">
+    $('input[name="SpouseName"]').on('click', function () {
+        if ($("#r2").is(":checked")) {
+            $("#SpouseName").prop("readonly", false);
+        }
+        if ($("#r1").is(":checked")) {
+            $("#SpouseName").prop("readonly", true);
+            $("#SpouseName").val('');
+
+        }
+        $("input[name='MartialStatus']").click(function () {
+            if ($("#r1").is(":checked")) {
+                $("#SpouseName").prop("disabled", true);
+                $("#SpouseName").val('');
+            }
+            else if ($("#r2").is(":checked")) {
+
+                $("#SpouseName").prop("disabled", false);
+            }
+        });
+    });
+</script>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+        var Retdreason = $('#Exit_type').val();
+
+        $("#Exit_type").change(function () {
+
+            var Retdreason = $('#Exit_type').val();
+            if (Retdreason == "" || Retdreason == "undefined" || Retdreason == null) {
+                $("#Event_Date4").datepicker({
+
+                    format: "dd/mm/yyyy",
+                    autoclose: true,
+                    todayHighlight: true,
+                    startDate: "today",
+                    beforeShowDay: function nonWorkingDays(date) {
+                        var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
+                        var week = 0 | date.getDate() / 7 //get the week
+                        var dd = date.getDate();
+                        var month = date.getMonth();
+                        if (dd < 10) {
+                            dd = '0' + dd
+                        }
+
+                        if (month < 10) {
+                            month = '0' + month
+                        }
+                        var sunweek = date.getDay();
+                        var year = date.getFullYear();
+
+                        if (dd == 14 && day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                        if (dd == 28 && day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                        //check if it's second week or fourth week
+                        else if (week == 1 || week == 3) {
+                            if (dd == 7 && day == 6 || dd == 21 && day == 6) {
+                                //check for satruday
+
+                            }
+                            else {
+                                if (day == 6) {
+                                    return {
+                                        classes: 'secondClass'
+                                    };
+                                }
+                            }
+
+                        }
+                        //check for sunday
+                        if (day == 0) {
+                            return {
+                                classes: 'secondClass'
+                            };
+
+                        }
+                        //check for holidays
+                        var d = date;
+                        var curr_date = d.getDate();
+                        var curr_month = d.getMonth() + 1; //Months are zero based
+                        if (curr_date < 10) {
+                            curr_date = '0' + curr_date
+                        }
+                        var curr_year = d.getFullYear();
+                        var formattedDate = curr_date + "/" + curr_month + "/" + curr_year
+
+                        if ($.inArray(formattedDate, active_dates) != -1) {
+                            return {
+                                classes: 'activeClass'
+                            };
+                        }
+                        return [true];
+                    }
+                });
+            }
+            else if (Retdreason == "Resig" || Retdreason == "Vrs" || Retdreason == "Death") {
+                $("#Event_Date4").datepicker({
+
+                    format: "dd/mm/yyyy",
+                    autoclose: true,
+                    todayHighlight: true,
+                    // startDate: "today",
+                    beforeShowDay: function nonWorkingDays(date) {
+                        var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
+                        var week = 0 | date.getDate() / 7 //get the week
+                        var dd = date.getDate();
+                        var month = date.getMonth();
+                        if (dd < 10) {
+                            dd = '0' + dd
+                        }
+
+                        if (month < 10) {
+                            month = '0' + month
+                        }
+                        var sunweek = date.getDay();
+                        var year = date.getFullYear();
+
+                        if (dd == 14 && day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                        if (dd == 28 && day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                        //check if it's second week or fourth week
+                        else if (week == 1 || week == 3) {
+                            if (dd == 7 && day == 6 || dd == 21 && day == 6) {
+                                //check for satruday
+
+                            }
+                            else {
+                                if (day == 6) {
+                                    return {
+                                        classes: 'secondClass'
+                                    };
+                                }
+                            }
+
+                        }
+                        //check for sunday
+                        if (day == 0) {
+                            return {
+                                classes: 'secondClass'
+                            };
+
+                        }
+                        //check for holidays
+                        var d = date;
+                        var curr_date = d.getDate();
+                        var curr_month = d.getMonth() + 1; //Months are zero based
+                        if (curr_date < 10) {
+                            curr_date = '0' + curr_date
+                        }
+                        var curr_year = d.getFullYear();
+                        var formattedDate = curr_date + "/" + curr_month + "/" + curr_year
+
+                        if ($.inArray(formattedDate, active_dates) != -1) {
+                            return {
+                                classes: 'activeClass'
+                            };
+                        }
+                        return [true];
+                    }
+                });
+            }
+            else {
+
+                $("#Event_Date4").datepicker({
+
+                    format: "dd/mm/yyyy",
+                    autoclose: true,
+                    todayHighlight: true,
+                    startDate: "today",
+                    beforeShowDay: function nonWorkingDays(date) {
+                        var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
+                        var week = 0 | date.getDate() / 7 //get the week
+                        var dd = date.getDate();
+                        var month = date.getMonth();
+                        if (dd < 10) {
+                            dd = '0' + dd
+                        }
+
+                        if (month < 10) {
+                            month = '0' + month
+                        }
+                        var sunweek = date.getDay();
+                        var year = date.getFullYear();
+
+                        if (dd == 14 && day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                        if (dd == 28 && day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                        //check if it's second week or fourth week
+                        else if (week == 1 || week == 3) {
+                            if (dd == 7 && day == 6 || dd == 21 && day == 6) {
+                                //check for satruday
+
+                            }
+                            else {
+                                if (day == 6) {
+                                    return {
+                                        classes: 'secondClass'
+                                    };
+                                }
+                            }
+
+                        }
+                        //check for sunday
+                        if (day == 0) {
+                            return {
+                                classes: 'secondClass'
+                            };
+
+                        }
+                        //check for holidays
+                        var d = date;
+                        var curr_date = d.getDate();
+                        var curr_month = d.getMonth() + 1; //Months are zero based
+                        if (curr_date < 10) {
+                            curr_date = '0' + curr_date
+                        }
+                        var curr_year = d.getFullYear();
+                        var formattedDate = curr_date + "/" + curr_month + "/" + curr_year
+
+                        if ($.inArray(formattedDate, active_dates) != -1) {
+                            return {
+                                classes: 'activeClass'
+                            };
+                        }
+                        return [true];
+                    }
+                });
+            }
+        });
+
+        $("input[id='bran']").change(function () {
+            //reload dropdownlist
+            Get();
+
+        })
+    });
+    function BranchofProfe()
+    {
+         
+        var value = "";
+        var branch = $('#profeBranch').val();
+        var lvalue = '@ViewBag.CurrentDesignationId';
+        var shiftti = $('#shiftid').val();
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("LoadByBranches", "Register")',
+            dataType: "JSON",
+            data: { State: value, Branch: branch, Desig: lvalue },
+            success: function (response) {
+
+                //$("#shiftid").html("");
+                //$("#shiftid").append($('<option></option>').val(response.stiftimesval).html(response.stiftimes));
+                $("#shiftid").html("");
+                $("#shiftid").append($('<option></option>').val('0').html('Select Shift Time'));
+                $.each(response.shift, function (i, desg1) {
+                    $("#shiftid").append(
+                        $('<option></option>').val(desg1.Value).html(desg1.Text));
+                    if (desg1.Value == shiftti) {
+                        $("#shiftid").val(shiftti);
+                    }
+                });
+            }
+            });
+    }
+
+    function Get() {
+         
+        $("input[id='bran']").each(function () {
+            if ($(this).is(":checked")) {
+                
+                var value = $(this).val();
+                var branch = $('#profeBranch').val();
+                var lvalue = '@ViewBag.CurrentDesignationId';
+                var shiftti = $('#shiftid').val();
+                $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("LoadByBranches", "Register")',
+                    dataType: "JSON",
+                    data: { State: value, Branch: branch, Desig: lvalue },
+                    success: function (response) {
+                         
+                        $("#shiftid").html("");
+                        $("#shiftid").append($('<option></option>').val('0').html('Select Shift Time'));
+                        $.each(response.shift, function (i, desg1) {
+                            $("#shiftid").append(
+                                $('<option></option>').val(desg1.Value).html(desg1.Text));
+                            if (desg1.Value == shiftti) {
+                                $("#shiftid").val(shiftti);
+                            }
+                        });
+                        $("#desg1").html(""); // clear before appending new list
+                        $("#desg1").append(
+                            $('<option></option>').val('0').html('Select Designation'));
+                        $.each(response.stateData, function (i, desg1) {
+                            $("#desg1").append(
+                                $('<option></option>').val(desg1.Value).html(desg1.Text));
+                            if (desg1.Value == lvalue)
+                            {
+                                $("#desg1").val(lvalue);
+                            }
+                        });
+
+
+                    }
+                 });
+            }
+        });
+
+    }
+</script>
+
+<script type="text/javascript">
+        $(document).ready(function () {
+            $("input[id='head']").change(function () {
+                //reload dropdownlist
+                Get1();
+
+            })
+        });
+    function Get1() {
+         
+            var lvalue = '@ViewBag.CurrentDesignationId';
+             
+        $("input[id='head']").each(function () {
+            
+                if ($(this).is(":checked")) {
+                    var value = $(this).val();
+                    var dept = $('#profeDept').val();
+                    var lvalue = '@ViewBag.CurrentDesignationId';
+                    var shiftti = $('#shiftid').val();
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("LoadByBranches1", "Register")',
+                        dataType: "JSON",
+                        data: {
+                            State: value, Dept: dept, Desig: lvalue},
+                        success: function (response) {
+                             
+                            $("#shiftid").html("");
+                            $("#shiftid").append($('<option></option>').val('0').html('Select Shift Time'));
+                            $.each(response.shift, function (i, desg1) {
+                                $("#shiftid").append(
+                                    $('<option></option>').val(desg1.Value).html(desg1.Text));
+                                if (desg1.Value == shiftti) {
+                                    $("#shiftid").val(shiftti);
+                                }
+                            });
+                            $("#desg1").html(""); // clear before appending new list
+                            $("#desg1").append(
+                                $('<option></option>').val('0').html('Select Designation'));
+                            $.each(response.stateData, function (i, desg1) {
+                                $("#desg1").append(
+                                    $('<option></option>').val(desg1.Value).html(desg1.Text));
+                            });
+
+                           $("#desg1").val(lvalue);
+                        }
+                    });
+                }
+            });
+
+        }
+</script>
+
+
+
+<script type="text/javascript">
+        $(document).ready(function () {
+            $("input[id='bran1']").click(function () {
+                //reload dropdownlist
+                Get3();
+
+            })
+        });
+        function Get3() {
+           // alert($('#ControllingBranchId').val());
+          //  var lvalu=$("#ControllingBranchId option:selected").val();
+
+            $('#HbranchCon option').each(function () {
+                if ($(this).val() == $('#ControllingBranchId').val())
+                {
+                    $('#HbranchCon').val($('#ControllingBranchId').val());
+                }
+            });
+
+            //if (lvalu == $('#ControllingBranchId').val())
+            // {
+
+          //  }
+
+
+
+
+            $("input[id='bran1']").each(function () {
+                 
+                if ($(this).is(":checked")) {
+                    var value = $(this).val();
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("LoadByBranches", "Register")',
+                        dataType: "JSON",
+                        data: { State: value },
+                        success: function (stateData) {
+                             
+                            $("#Hdesignationcon").html(""); // clear before appending new list
+                            $("#Hdesignationcon").append(
+                                $('<option></option>').val('0').html('Select Designation'));
+                            $.each(stateData, function (i, Hdesignationcon) {
+                                $("#Hdesignationcon").append(
+                                    $('<option></option>').val(Hdesignationcon.Value).html(Hdesignationcon.Text));
+                                if (Hdesignationcon.Value == $('#ControllingDesignationid').val()) {
+                                    $('#Hdesignationcon').val($('#ControllingDesignationid').val()).change();
+                                }
+                            });
+
+
+
+                        }
+                    });
+                }
+            });
+
+        }
+</script>
+
+<script type="text/javascript">
+        $(document).ready(function () {
+            $("input[id='head1']").click(function () {
+                //reload dropdownlist
+                Get4();
+
+            })
+    });
+        function Get4()
+        {
+              
+
+            $('#HDept option').each(function () {
+                if ($(this).val() == $('#ControllingDepartmentId').val()) {
+                    $('#HDept').val($('#ControllingDepartmentId').val());
+                }
+            });
+
+
+
+
+            $("input[id='head1']").each(function () {
+                 
+                if ($(this).is(":checked")) {
+                    var value = $(this).val();
+                    var lvalue = '@ViewBag.CurrentDesignationId';
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("LoadByBranches1", "Register")',
+                        dataType: "JSON",
+                        data: { State: value },
+                        success: function (response) {
+                             
+                            $("#Hdesignationcon").html(""); // clear before appending new list
+                            $("#desg2").append(
+                                $('<option></option>').val('0').html('Select Designation'));
+                            $.each(response.stateData, function (i, Hdesignationcon) {
+                                $("#Hdesignationcon").append(
+                                    $('<option></option>').val(Hdesignationcon.Value).html(Hdesignationcon.Text));
+
+                                if (Hdesignationcon.Value == $('#ControllingDesignationid').val()) {
+                                    $('#Hdesignationcon').val($('#ControllingDesignationid').val()).change();
+                                }
+                            });
+
+
+                        }
+                    });
+                }
+            });
+
+        }
+</script>
+
+
+<script type="text/jscript">
+    //DEPARTMENT FILL
+    function HFillBranches() {
+
+        var stateId = $('#HDept').val();
+
+        $.ajax({
+            url: '/Register/HLoadByBranchId',
+            type: "GET",
+            dataType: "JSON",
+            data: { State: stateId },
+            success: function (stateData) {
+
+                $("#Hdesignationcon").html(""); // clear before appending new list
+                $("#Hdesignationcon").append(
+                    $('<option></option>').val('0').html('Select Designation'));
+                $.each(stateData, function (i, Hdesignationcon) {
+                    $("#Hdesignationcon").append(
+                        $('<option></option>').val(Hdesignationcon.Value).html(Hdesignationcon.Text));
+                });
+                $("#HMN").html(""); // clear before appending new list
+                $("#HMN").append(
+                    $('<option></option>').val('0').html('Select Officer'));
+                $.each(stateData, function (i, HMN) {
+                    $("#HMN").append(
+                        $('<option></option>').val(HMN.Value).html(HMN.Text));
+                });
+                //  $("#Hdesignationcon").val(1050).change();
+            }
+        });
+    }
+
+    //BRANCH FILL
+    function BFillDesignation() {
+
+
+        var stateId = $('#HbranchCon').val();
+
+        $.ajax({
+            url: '/Register/BLoadByBranchId',
+            type: "GET",
+            dataType: "JSON",
+            data: { State: stateId },
+            success: function (stateData) {
+
+                $("#Hdesignationcon").html(""); // clear before appending new list
+                $("#Hdesignationcon").append(
+                    $('<option></option>').val('0').html('Select Designation'));
+                $.each(stateData, function (i, Hdesignationcon) {
+                    $("#Hdesignationcon").append(
+                        $('<option></option>').val(Hdesignationcon.Value).html(Hdesignationcon.Text));
+                });
+                $("#HMN").html(""); // clear before appending new list
+                $("#HMN").append(
+                    $('<option></option>').val('0').html('Select Officer'));
+                $.each(stateData, function (i, HMN) {
+                    $("#HMN").append(
+                        $('<option></option>').val(HMN.Value).html(HMN.Text));
+                });
+                // $("#Hdesignationcon").val(1050).change();
+            }
+        });
+    }
+
+
+
+
+    //DESIGNATION FILL
+
+    function HFillDesignation() {
+
+        if ($("#head1").is(":checked")) {
+            var stateId = $('#HDept').val();
+            var stateID1 = $('#Hdesignationcon').val();
+            $.ajax({
+                url: '/Register/HeadOfficeId',
+                type: "GET",
+                dataType: "JSON",
+                data: { State: stateId, dept: stateID1 },
+                success: function (stateData) {
+                    $("#HMN").html(""); // clear before appending new list
+                    $("#HMN").append(
+                        $('<option></option>').val('0').html('Select Officer'));
+                    $.each(stateData, function (i, HMN) {
+                        $("#HMN").append(
+                            $('<option></option>').val(HMN.Value).html(HMN.Text));
+                        if (HMN.Value == $('#ControllingAuthorityId').val()) {
+                            $('#HMN').val($('#ControllingAuthorityId').val());
+                        }
+                    });
+
+
+                }
+            });
+        }
+        else {
+            var stateID2 = $('#HbranchCon').val();
+            var stateID1 = $('#Hdesignationcon').val();
+            $.ajax({
+                url: '/Register/HLoadByDesignationId',
+                type: "GET",
+                dataType: "JSON",
+                data: { State: stateId, dept: stateID1, branc: stateID2 },
+                success: function (stateData) {
+                    $("#HMN").html(""); // clear before appending new list
+                    $("#HMN").append(
+                        $('<option></option>').val('0').html('Select Officer'));
+                    $.each(stateData, function (i, HMN) {
+                        $("#HMN").append(
+                            $('<option></option>').val(HMN.Value).html(HMN.Text));
+                        if (HMN.Value == $('#ControllingAuthorityId').val()) {
+                            $('#HMN').val($('#ControllingAuthorityId').val());
+                        }
+                    });
+
+                }
+            });
+        }
+
+
+    }
+
+
+
+    /*----------------------Sacationing Autority dropdowns------------------*/
+
+    function FillBranchesSanc() {
+
+        var stateId = $('#DeptSan').val();
+
+        $.ajax({
+            url: '/Register/HSLoadByBranchId',
+            type: "GET",
+            dataType: "JSON",
+            data: { State: stateId },
+            success: function (stateData) {
+
+                $("#designationSan").html(""); // clear before appending new list
+                $("#designationSan").append(
+                    $('<option></option>').val('0').html('Select Designation'));
+                $.each(stateData, function (i, designationSan) {
+                    $("#designationSan").append(
+                        $('<option></option>').val(designationSan.Value).html(designationSan.Text));
+                });
+                $("#mag").html(""); // clear before appending new list
+                $("#mag").append(
+                    $('<option></option>').val('0').html('Select Officer'));
+                $.each(stateData, function (i, mag) {
+                    $("#mag").append(
+                        $('<option></option>').val(mag.Value).html(mag.Text));
+                });
+            }
+        });
+    }
+    function FillDesignationSanc() {
+
+        var stateId = $('#DeptSan').val();
+        var stateID1 = $('#designationSan').val();
+        $.ajax({
+            url: '/Register/HSLoadByDesignationId',
+            type: "GET",
+            dataType: "JSON",
+            data: { State: stateId, dept: stateID1 },
+            success: function (stateData) {
+                $("#mag").html(""); // clear before appending new list
+                $("#mag").append(
+                    $('<option></option>').val('0').html('Select Officer'));
+                $.each(stateData, function (i, mag) {
+                    $("#mag").append(
+                        $('<option></option>').val(mag.Value).html(mag.Text));
+                });
+            }
+        });
+    }
+
+</script>
+
+
+<script type="text/javascript">
+        $(document).ready(function () {
+           var lvale = '@ViewBag.SanctioningAuthorityId';
+       // alert(lvale);
+            $('#mag').val(lvale);
+            $("#HMN").val($("#ControllingAuthorityId").val());
+
+            if ($("#head").is(":checked")) {
+                document.getElementById('branchide').style.display = 'none';
+                document.getElementById('depthide').style.display = 'block';
+            }
+        });
+
+        $("input[name='Branch_Value1']").click(function () {
+
+            if ($("#head").is(":checked")) {
+
+                document.getElementById('branchide').style.display = 'none';
+                document.getElementById('depthide').style.display = 'block';
+
+            }
+            else if ($("#bran").is(":checked")) {
+           
+              //  document.getElementById('HDept').value = '';
+                document.getElementById('depthide').style.display = 'none';
+                document.getElementById('branchide').style.display = 'block';
+
+            }
+        });
+
+        if ($("#head1").is(":checked")) {
+            //  document.getElementById('HbranchCon').value = '';
+
+
+
+            document.getElementById('branchide1').style.display = 'none';
+            document.getElementById('depthide1').style.display = 'block';
+
+        }
+       //
+
+        $("input[name='Branch_Value_2']").click(function () {
+
+            if ($("#head1").is(":checked")) {
+             //   document.getElementById('HbranchCon').value = '';
+
+                document.getElementById('branchide1').style.display = 'none';
+                document.getElementById('depthide1').style.display = 'block';
+                //var skkk = document.getElementById('head1').value;
+                //alert(skkk);
+
+
+            }
+            else if ($("#bran1").is(":checked")) {
+
+               $("#HbranchCon").change();
+               $("#Hdesignationcon").val($("#ControllingDepartmentId").val());
+              //  document.getElementById('HDept').value = '';
+                document.getElementById('depthide1').style.display = 'none';
+                document.getElementById('branchide1').style.display = 'block';
+                //var skkk = document.getElementById('bran1').value;
+                //alert(skkk);
+
+            }
+        });
+
+        function pp() {
+            $("#Hdesignationcon")[0].selectedIndex = 0;
+            $('#HbranchCon')[0].selectedIndex = 0;
+            $('#HMN')[0].selectedIndex = 0
+
+        }
+        function pfp() {
+            $("#Hdesignationcon")[0].selectedIndex = 0;
+            $('#HDept')[0].selectedIndex = 0;
+            $('#HMN')[0].selectedIndex = 0
+        }
+</script>
+
+
+@*<script type='text/javascript'>
+        $(function () {
+            eventvalidates();
+                var dt = new Date();
+                dt.setFullYear(new Date().getFullYear() - 18);
+                $('#Event_Date4').datepicker({
+                    format: 'dd-mm-yyyy',
+                    startDate: '+0d',
+
+                    todayHighlight: true,
+                    autoclose: true
+                });
+                $('#Event_Date3').datepicker({
+                    format: 'dd-mm-yyyy',
+                    startDate: '+0d',
+
+                    todayHighlight: true,
+                    autoclose: true
+
+
+                });
+                $('#Event_Date1').datepicker({
+                    format: 'dd-mm-yyyy',
+                    viewMode: "years",
+                    endDate: dt,
+
+                    autoclose: true
+                });
+            });
+
+    </script>*@
+<script>
+    function Checkfiles() {
+
+        var fup = document.getElementById('file');
+        var fileName = fup.value;
+        var ext = fileName.substring(fileName.lastIndexOf('.') + 1);
+        if (ext == "JPEG" || ext == "jpeg" || ext == "jpg" || ext == "JPG" || ext == "png" || ext == "PNG") {
+            return true;
+        }
+        else {
+            alert("Upload JPEG,JPG,PNG image format only");
+            fup.focus();
+            document.getElementById("file").value = "";
+            return false;
+        }
+    }</script>
+
+<script>
+    function eventvalidate() {
+
+        var Joindate = document.getElementById("DOJ").value;
+        var Retdate = document.getElementById("RelievingDate").value;
+        var date = moment(Joindate, "DD.MM.YYYY");
+
+        var currentDate1 = moment(Retdate, "DD.MM.YYYY");
+        var duration = moment.duration(date.diff(currentDate1));
+
+
+        if (duration >= 0) {
+
+
+            alert('Relieving Date Should be More than DOJ Date');
+            document.getElementById("RelievingDate").focus();
+            document.getElementById("RelievingDate").value = '';
+            return false;
+
+        }
+        else {
+
+            return true;
+
+        }
+    }</script>
+<script>
+    //function selectrelievreason() {
+    ////
+    //    var value1 = value;
+    //    var relreason_new = document.getElementById("Exit_Type").value;
+    //    var relreason_new1 = document.getElementById("Exit_Type").Text;
+    //    var relreason_new = $("#Exit_Type").val;
+    //    if (relreason_new == "Death") {
+    //        document.getElementById("RetirementDate").value = '';
+    //    }
+    //}
+    function eventvalidate1() {
+        ////
+        var exittype = document.getElementById("Exit_type").value;
+        var Joindate = document.getElementById("DOJ").value;
+        var Retdate = document.getElementById("RetirementDate").value;
+        var todaydate = new Date();
+        var date = moment(Joindate, "DD.MM.YYYY");
+
+        var currentDate1 = moment(Retdate, "DD.MM.YYYY");
+        var duration = moment.duration(date.diff(currentDate1));
+        var rdates = moment(todaydate, "DD.MM.YYYY");
+        var retddiff = moment.duration(rdates.diff(currentDate1));
+
+
+        var d = new Date();
+        var curdate = d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear();
+        var dater = moment(Retdate, "DD.MM.YYYY");
+        var currentD = moment(curdate, "DD.MM.YYYY");
+        var Rduration = moment.duration(dater.diff(currentD));
+
+
+
+
+
+        var twoDigitMonth = (todaydate.getMonth() + 1) + ""; if (twoDigitMonth.length == 1) twoDigitMonth = "0" + twoDigitMonth;
+        var twoDigitDate = todaydate.getDate() + ""; if (twoDigitDate.length == 1) twoDigitDate = "0" + twoDigitDate;
+        var currentDatess = twoDigitDate + "/" + twoDigitMonth + "/" + todaydate.getFullYear();
+
+
+        if (retddiff > 0 && (Retdate != currentDatess)) {
+            if (exittype == "Retd") {
+
+                alert("Please select Today's Date or Future Date");
+                document.getElementById("RetirementDate").focus();
+                document.getElementById("RetirementDate").value = '';
+                return false;
+            }
+        }
+        //newly added for death on 06/05/2020 //should be less than or equal to current date
+        if (Rduration > 0) {
+            if (exittype == "Death") {
+                alert("Please select Today's Date or Lower Date");
+                document.getElementById("RetirementDate").focus();
+                document.getElementById("RetirementDate").value = '';
+                return false;
+            }
+        }
+        //end
+        if (duration >= 0) {
+
+
+            alert('Retirement Date Should be More than DOJ Date');
+            document.getElementById("RetirementDate").focus();
+            document.getElementById("RetirementDate").value = '';
+            return false;
+
+        }
+        else {
+
+            return true;
+
+        }
+    }
+</script>
+<script type="text/javascript">
+
+        var variable3 = '@ViewBag.myVar3';
+        if (variable3 == 'OtherBranch')
+        {
+            document.getElementById("bran").checked = true;
+            Get();
+            $('#depthide').hide();
+        }
+        else if (variable3 == 'HeadOffice')
+        {
+            document.getElementById("head").checked = true;
+
+            Get1();
+            $('#branchide').hide();
+        }
+</script>
+
+<script type="text/javascript">
+
+        var variable4 = '@ViewBag.myVar4';
+        //alert(variable4);
+    var variable5 = '@ViewBag.myVar5';
+    if (variable5 == 'HeadOffice')
+        {
+            document.getElementById("head1").checked = true;
+
+            $('#HDept').val($('#ControllingDepartmentId').val());
+            $('#Hdesignationcon').val($('#ControllingDesignationid').val());
+            $('#HMN').val($('#ControllingAuthorityId').val());
+
+            $('#depthide1').show();
+            $('#branchide1').hide();
+        }
+    else if (variable5 == 'OtherBranch')
+        {
+            document.getElementById("bran1").checked = true;
+
+            $('#HbranchCon').val($('#ControllingBranchId').val());
+            $('#Hdesignationcon').val($('#ControllingDesignationid').val());
+            $('#HMN').val($('#ControllingAuthorityId').val());
+
+            $('#branchide1').show();
+            $('#depthide1').hide();
+
+        }
+        var lSancationingDepartmentId = '@ViewBag.SancationingDepartmentId';
+        var lSancationingDesignationId = '@ViewBag.SancationingDesignationId';
+        $('#DeptSan').val(lSancationingDepartmentId);
+        $('#designationSan').val(lSancationingDesignationId);
+        $(".calcel").click(function () {
+            //document.getElementById("head").checked = true;
+            location.reload();
+        });
+</script>
+
+
+<script>
+
+    function eventvalidates() {
+        ////
+        var Joindate = document.getElementById("DOJ").value;
+        // var fields = Joindate.split("/");
+        // var day = fields[0];
+        // var mon = fields[1];
+        // var years = fields[2];
+
+        // var myjoindate = mon + "/" + day + "/" + years;
+        // var today = new Date();
+        // var month = today.getMonth() + 1;
+        // var day = today.getDate() + 1;
+        //// var year = today.getFullYear();
+
+
+
+        //if (day < 10) {
+        //    day = '0' + day;
+        //}
+        //if (month < 10) {
+        //    month = '0' + month;
+        //}
+
+        var a = moment(Joindate, "DD/MM/YYYY");
+        var b = moment(new Date());
+
+        var years = a.diff(b, 'year');
+        b.add(years, 'years');
+
+        var months = a.diff(b, 'months');
+        b.add(months, 'months');
+        if (a <= b) {
+            var days = b.diff(a, 'days') + 1;
+            var diff = (years != 0 ? years * -1 : years) + ' years ' + (months != 0 ? months * -1 : months) + ' months ' + days + ' days';
+            document.getElementById("TotalExperience").value = diff;
+        }
+        else if (a > b) {
+            alert("Please choose upto today's Date");
+            document.getElementById("TotalExperience").value = "";
+            document.getElementById("DOJ").value = "";
+        }
+        else {
+            document.getElementById("TotalExperience").value = "0 day";
+        }
+        // var days = b.diff(a, 'days') + 1;
+
+
+
+        //    var shortStartDate = month + "/" + day + "/" + year;
+        //    var m1 = moment(myjoindate, 'M/D/YYYY');
+        //    var m2 = moment(shortStartDate, 'M/D/YYYY');
+        //    if (years % 4 == 0) {
+        //        day += 1;
+        //    }
+        //    if (mon % 2 != 0) {
+        //        getDate += 1;
+        //    }
+        //    if (m1 > m2) {
+        //        alert('Please Enter Valid Date of Joining.');
+        //        document.getElementById("DOJ").focus();
+        //        document.getElementById("DOJ").value = '';
+        //        document.getElementById("TotalExperience").value = '';
+        //        return false;
+        //    }
+        //    else if (m1 < m2) {
+
+        //        var diff = moment.preciseDiff(m1, m2);
+        //       // var diff = Math.round((m2 - m1) / (1000 * 60 * 60 * 24));
+
+        //        document.getElementById("TotalExperience").value = diff;
+        //    }
+        //    else {
+        //        document.getElementById("TotalExperience").value = "0 day";
+        //    }
+    }
+</script>
+
+<script>
+    document.getElementById("a6").className = "active";
+
+</script>
+
+
+<script type='text/javascript'>
+    $(function getholidays() {
+        //eventvalidates();
+        var dt = new Date();
+        dt.setFullYear(new Date().getFullYear() - 18);
+        var active_dates = [];
+        $.ajax({
+            type: "GET",
+            async: false,
+            url: "/LeaveApply/GetDates",
+            dataType: "Json",
+            success: function (data) {
+                datesArray = data;
+                for (i = 0; i < datesArray.length; i++) {
+                    var result = datesArray[i].replace("-", "/");
+                    var result1 = result.replace("-", "/");
+                    var strArray = result1.split("/");
+                    var cdate = strArray[0] + "/" + parseInt(strArray[1]) + "/" + strArray[2]
+                    active_dates.push(cdate);
+
+                    if (i == datesArray.length - 1) {
+                        //loadcal(active_dates);
+                    }
+                }
+
+            }
+        });
+
+
+        $('#Event_Date2').datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            beforeShowDay: function nonWorkingDays(date) {
+                var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
+                var week = 0 | date.getDate() / 7 //get the week
+                var dd = date.getDate();
+                var month = date.getMonth();
+                if (dd < 10) {
+                    dd = '0' + dd
+                }
+
+                if (month < 10) {
+                    month = '0' + month
+                }
+                var sunweek = date.getDay();
+                var year = date.getFullYear();
+
+                if (dd == 14 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                if (dd == 28 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                //check if it's second week or fourth week
+                else if (week == 1 || week == 3) {
+                    if (dd == 7 && day == 6 || dd == 21 && day == 6) {
+                        //check for satruday
+
+                    }
+                    else {
+                        if (day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                    }
+
+                }
+                //check for sunday
+                if (day == 0) {
+                    return {
+                        classes: 'secondClass'
+                    };
+
+                }
+                //check for holidays
+                var d = date;
+                var curr_date = d.getDate();
+                var curr_month = d.getMonth() + 1; //Months are zero based
+                if (curr_date < 10) {
+                    curr_date = '0' + curr_date
+                }
+                var curr_year = d.getFullYear();
+                var formattedDate = curr_date + "/" + curr_month + "/" + curr_year
+
+                if ($.inArray(formattedDate, active_dates) != -1) {
+                    return {
+                        classes: 'activeClass'
+                    };
+                }
+                return [true];
+            }
+        });
+        $('#Event_Date1').datepicker({
+            format: "dd/mm/yyyy",
+            endDate: '-18y',
+            autoclose: true,
+            todayHighlight: true,
+            beforeShowDay: function nonWorkingDays(date) {
+                var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
+                var week = 0 | date.getDate() / 7 //get the week
+                var dd = date.getDate();
+                var month = date.getMonth();
+                if (dd < 10) {
+                    dd = '0' + dd
+                }
+
+                if (month < 10) {
+                    month = '0' + month
+                }
+                var sunweek = date.getDay();
+                var year = date.getFullYear();
+
+                if (dd == 14 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                if (dd == 28 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                //check if it's second week or fourth week
+                else if (week == 1 || week == 3) {
+                    if (dd == 7 && day == 6 || dd == 21 && day == 6) {
+                        //check for satruday
+
+                    }
+                    else {
+                        if (day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                    }
+
+                }
+                //check for sunday
+                if (day == 0) {
+                    return {
+                        classes: 'secondClass'
+                    };
+
+                }
+                //check for holidays
+                var d = date;
+                var curr_date = d.getDate();
+                var curr_month = d.getMonth() + 1; //Months are zero based
+                if (curr_date < 10) {
+                    curr_date = '0' + curr_date
+                }
+                var curr_year = d.getFullYear();
+                var formattedDate = curr_date + "/" + curr_month + "/" + curr_year
+
+                if ($.inArray(formattedDate, active_dates) != -1) {
+                    return {
+                        classes: 'activeClass'
+                    };
+                }
+                return [true];
+            }
+        });
+        $('.input-group.date').datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            //  startDate: "today",
+            beforeShowDay: function nonWorkingDays(date) {
+                var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
+                var week = 0 | date.getDate() / 7 //get the week
+                var dd = date.getDate();
+                var month = date.getMonth();
+                if (dd < 10) {
+                    dd = '0' + dd
+                }
+
+                if (month < 10) {
+                    month = '0' + month
+                }
+                var sunweek = date.getDay();
+                var year = date.getFullYear();
+
+                if (dd == 14 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                if (dd == 28 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                //check if it's second week or fourth week
+                else if (week == 1 || week == 3) {
+                    if (dd == 7 && day == 6 || dd == 21 && day == 6) {
+                        //check for satruday
+
+                    }
+                    else {
+                        if (day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                    }
+
+                }
+                //check for sunday
+                if (day == 0) {
+                    return {
+                        classes: 'secondClass'
+                    };
+
+                }
+                //check for holidays
+                var d = date;
+                var curr_date = d.getDate();
+                var curr_month = d.getMonth() + 1; //Months are zero based
+                if (curr_date < 10) {
+                    curr_date = '0' + curr_date
+                }
+                var curr_year = d.getFullYear();
+                var formattedDate = curr_date + "/" + curr_month + "/" + curr_year
+
+                if ($.inArray(formattedDate, active_dates) != -1) {
+                    return {
+                        classes: 'activeClass'
+                    };
+                }
+                return [true];
+            }
+        });
+    });
+</script>
+
+
+<style>
+    .activeClass {
+        background: #ffdb99;
+    }
+
+    .secondClass {
+        /*background: #FF9999;*/
+        color: red;
+    }
+</style>
+
+<script>
+    document.getElementById("e6").className = "active";
+
+</script>

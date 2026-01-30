@@ -1,0 +1,12 @@
+1.Employee Master --> pempmast
+
+2. LIC AND HFC --> PEmpOthDet
+
+3. RENT DETAILS -- > PItDet
+
+4. Personal Earning --> select p.FldDesp, p.Amount,p.SecCode,m.Empid from PItOther p left outer join pempmast m on p.Eid=m.Eid  where FinYear='2019-20' and EdFlag='E';
+
+5. Personal Deductions --> select p.FldDesp, p.Amount,p.SecCode,m.Empid from PItOther p left outer join pempmast m on p.Eid=m.Eid  where FinYear='2019-20' and EdFlag='D';
+
+
+

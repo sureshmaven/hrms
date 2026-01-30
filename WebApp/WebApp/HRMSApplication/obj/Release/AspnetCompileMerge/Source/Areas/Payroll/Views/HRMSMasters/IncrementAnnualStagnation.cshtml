@@ -1,0 +1,200 @@
+﻿@{
+    ViewBag.Title = "IncrementAnnualStagnation";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="leftmenu-container">
+            <div class="sidebar-menu">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="sidebar-content">
+                <div class="main_heading heading_main">
+                    <h1>Increment Annual Stagnation <span class="year-end">@ViewBag.Env_Fm_Fy</span></h1>
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table id="incr_annual_stagn" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                    <tr>
+                                        <th>
+                                            <input name="select" value="1" id="checkAll" type="checkbox" onclick="checkboxRowAll()">
+                                            <label for="checkbox1"><span></span></label>
+                                            @*<input name="select" value="1" id="checkAll" type="checkbox" onclick="checkboxRowAll()" />*@
+                                        </th>
+                                        <th>Emp Code</th>
+                                        <th>Emp Name</th>
+                                        <th>Designation</th>
+                                        <th>Date Of Join</th>
+                                        <th>Basic</th>
+                                        <th>Inc Amt(<i class="fa fa-rupee"></i>)</th>
+                                        <th>Increment Type</th>
+                                        <th>Increment W.E.F</th>
+
+                                    </tr>
+                                </thead>
+
+                            </table>
+                        </div>
+                        <table id="gridControlling"></table>
+                        <div class="mt_10">
+                            <div class="pull-right">
+                                <button type="reset" value="reset" id="btnCancel" class="btn btn-default calcel" title="Clear the data">Cancel</button>
+                                <button type="submit" id="btnsubmit" class="btn btn-primary" title="Submit details">Submit</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+			</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#incr_annual_stagn').DataTable();
+    });
+</script>
+<script>
+    $("#checkAll").click(function () {
+        $('.selectRow').not(this).prop('checked', this.checked);
+
+    });
+</script>
+<script>
+    var arrerresult = [];
+    var orgDdlist;
+    var cancelOrg;
+    $(document).ready(function () {
+       
+        var orgData;
+        CommonApiGET('/Payroll/HRMSMasters/getIncAnnualStag', function (respData) {
+            orgData = respData;
+            cancelOrg = respData;
+            fillDataTables(respData);
+        });
+        $("#btnCancel").click(function () {
+            // 
+            fillDataTables(cancelOrg);
+            $('#checkAll').attr("checked", false)
+
+        });
+        function fillDataTables(respData) {
+            // 
+            orgDdlist = respData;
+            $('#incr_annual_stagn').DataTable({
+                destroy: true,
+                "paging": false,
+                "ordering": true,
+                "info": false,
+                "bFilter": false,
+                "searching": true,
+                "language": {
+                    "search": "Filter records:"
+                },
+                data: respData,
+                "columns": [
+                    {
+                        "mData": null,
+                        "bSortable": false,
+                        'mRender': function (data, type, full) {
+                            return getColumnCheckBox(data.Id, data.Name);
+                        }
+                    },
+                    { "data": "Id" },
+                    { "data": "Name" },
+                    { "data": "desi_mid" },
+                    { "data": "DOJ" },
+                    { "data": "Basic" },
+                    { "data": "Increment" },
+                    { "data": "increment_type" },
+                    { "data": "increment_date" },
+
+                ],
+                "order": [[1, 'asc']]
+            });
+        }
+    });
+    //function checkboxRow(id) {
+    //    // 
+    //    $('input[type="checkbox"]').click(function () {
+    //        if ($(this).prop("checked") == true) {
+    //            orgDdlist.map(function (o) {
+    //                // 
+    //                if (o.Id == id) {
+    //                    // 
+    //                    arrerresult.push(o.Id);
+    //                }
+    //            });
+    //        }
+    //        else if ($(this).prop("checked") == false) {
+    //            orgDdlist.map(function (o) {
+    //                arrerresult = [];
+    //            });
+    //        }
+    //        console.log(JSON.stringify(arrerresult));
+    //    });
+    //};
+
+     function checkboxRow(id) {
+         
+        document.getElementById("checkAll").checked = false;
+        //$('#SelectAllcheckBoxes').checked = false;
+            if ($('#'+id).prop("checked") == true) {
+                  
+                orgDdlist.map(function (o) {
+                    if (o.Id == id) {
+                        arrerresult.push(id);
+                    }
+                });
+            } else if ($('#'+id).prop("checked") == false) {
+                 
+                var index = arrerresult.indexOf(id);
+                arrerresult.splice(index, 1);
+
+            }
+          
+        console.log(JSON.stringify(arrerresult));
+    };
+
+    // all checked
+    function checkboxRowAll() {
+          
+      arrerresult = [];
+       
+            if ($('#checkAll').prop("checked") == true) {
+                 
+                orgDdlist.map(function (o) {
+                    arrerresult.push(o.Id);
+                });
+            }
+            else if ($('#checkAll').prop("checked") == false) {
+                  
+                orgDdlist.map(function (o) {
+                    arrerresult = [];
+                });
+            }
+       
+    };
+    
+</script>
+<script>
+    $('#btnsubmit').click(function () {
+        //  
+            if (arrerresult.length > 0) {
+                CommonApiPOST("/Payroll/HRMSMasters/UpdateIncAnnualStag", JSON.stringify(arrerresult), function (isSuccess) {
+                    if (isSuccess) {
+                        setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                    } else { }
+                });
+            } else {
+            showGlobalModal("E#Required Field#Please Select Employee Code");
+        }
+    });
+   
+</script>
+

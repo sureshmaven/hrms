@@ -1,0 +1,268 @@
+﻿@{
+    ViewBag.Title = "LoanAdjustment";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <h1>Loan Adjustment</h1>
+                    <div class="emp-serch">
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label">Employee Id:</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-sm-1 col-xs-12"><button type="button" class="btn btn-primary btn-sm pull-right">Search</button></div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label">Employee Name :</label>
+                                    <div class="col-sm-6">
+                                        <label class="control-label"> raju sadhula</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label">Department :</label>
+                                    <div class="col-sm-6">
+                                        <label class="control-label">  IT</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label">Designation :</label>
+                                    <div class="col-sm-6">
+                                        <label class="control-label"> UI Developer</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label">Date of Joining :</label>
+                                    <div class="col-sm-6">
+                                        <label class="control-label"> 27/04/2017</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="inner_heading">
+                            <h1>Loan Sanctioned</h1>
+                            <table id="loan_sact" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Festival Advance</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Housing Addl.Loan - 2D 11%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Housing Loan Main (5%)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="inner_heading">
+                            <h1>Loan Details</h1>
+                            <table id="loan_details" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Loan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>15-03-2019 8546 0.00  1 PL</td>
+                                    </tr>
+                                    <tr>
+                                        <td>15-03-2019 8546 0.00  1 PL</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="row mt_10">
+                    <div class="mt_10">
+                        <div class="col-md-4">
+                                <div class="col-md-12 loan_adj">
+                                    <table id="interest_rec" class="display" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="2">
+                                                    Without Interest
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Amount:</td>
+                                                <td><input type="text" class="form-control"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Interest Amount:</td>
+                                                <td><input type="text" class="form-control"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Recovered Amount:</td>
+                                                <td><input type="text" class="form-control"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Principle Amount:</td>
+                                                <td><input type="text" class="form-control"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Interest Recovered:</td>
+                                                <td><input type="text" class="form-control"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="mt_10">
+                        <div class="col-md-4">
+                            <div class="loan_adj_border">
+                                <div class="border_box">
+                                    <label class="radio-inline">
+                                        <input type="radio" value="option1"> Full Clearning
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" value="option2"> Installments Clearing
+                                    </label>
+                                </div>
+                                <div class="border_box">
+                                    <label class="radio-inline">
+                                        <input type="radio" value="option1"> Cash Payment
+                                    </label>
+                                </div>
+                                <div class="col-md-12 mt_10">
+                                    <div class="form-group">
+                                        <label class="col-sm-6 control-label">Cash Paid On:</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="col-sm-6 control-label">No of Installments:</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="col-sm-6 control-label">Amount to be paid:</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt_10">
+                        <div class="col-md-4">
+                            <div class="col-md-12 loan_adj loan_adj_table">
+                               <table id="out_standing" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2">
+                                                Out Standing
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Loan Amount:</td>
+                                            <td><input type="text" class="form-control"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Interest Amount:</td>
+                                            <td><input type="text" class="form-control"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>This Month Interest:</td>
+                                            <td><input type="text" class="form-control"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Total Amount:</td>
+                                            <td><input type="text" class="form-control"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                        </div>
+                    <div class="col-md-12 mt_10">
+                        <div class="pull-right">
+                            <button type="reset" class="btn btn-default calcel">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    $(document).ready(function () {
+        $('#loan_sact').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+        });
+    });
+    $(document).ready(function () {
+        $('#loan_details').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+        });
+    });
+    $(document).ready(function () {
+        $('#interest_rec').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+        });
+    });
+    $(document).ready(function () {
+        $('#out_standing').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+        });
+    });
+</script>
+

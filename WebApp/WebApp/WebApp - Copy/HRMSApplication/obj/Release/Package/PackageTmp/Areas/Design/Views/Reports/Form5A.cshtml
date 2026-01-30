@@ -1,0 +1,115 @@
+﻿@{
+    ViewBag.Title = "Form5A";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <h1>Form 5A</h1>
+                    <div class="col-md-6">
+                        <div class="inner_heading">
+                            <h1>Month</h1>
+                            <div class="table-responsive month_name_tbl">
+                                <table id="month_name" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Month Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>MAR - 2018</td>
+                                        </tr>
+                                        <tr>
+                                            <td>APR - 2018</td>
+                                        </tr>
+                                        <tr>
+                                            <td>MAY - 2018</td>
+                                        </tr>
+                                        <tr>
+                                            <td>JUL - 2018</td>
+                                        </tr>
+                                        <tr>
+                                            <td>AUG - 2018</td>
+                                        </tr>
+                                        <tr>
+                                            <td>SEP - 2018</td>
+                                        </tr>
+                                        <tr>
+                                            <td>OCT - 2018</td>
+                                        </tr>
+                                        <tr>
+                                            <td>NOV - 2018</td>
+                                        </tr>
+                                        <tr>
+                                            <td>DEC - 2018</td>
+                                        </tr>
+                                        <tr>
+                                            <td>JAN - 2019</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="inner_heading">
+                            <h1>Region</h1>
+                            <div class="table-responsive month_name_tbl">
+                                <table id="region_name" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Region Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Head Office Staff</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Head Office Staff</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mt_10">
+                        <div class="pull-right">
+                            <button type="reset" class="btn btn-default cancel">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#month_name').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('#region_name').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+        });
+    });
+</script>
+

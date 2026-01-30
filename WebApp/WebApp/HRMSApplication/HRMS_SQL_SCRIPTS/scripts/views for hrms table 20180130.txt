@@ -1,0 +1,22 @@
+CREATE view [dbo].[V_Departments] as
+WITH cte AS
+(SELECT *,ROW_NUMBER() OVER (PARTITION BY name ORDER BY name DESC) as RowId FROM [Departments])
+SELECT * FROM cte WHERE RowId = 1 
+
+
+CREATE view [dbo].[V_Designations] as
+WITH cte AS
+(SELECT *,ROW_NUMBER() OVER (PARTITION BY name ORDER BY name DESC) as RowId FROM Designations)
+SELECT * FROM cte WHERE RowId = 1 
+
+CREATE view [dbo].[V_Branches] as
+WITH cte AS
+(SELECT *,ROW_NUMBER() OVER (PARTITION BY name ORDER BY name DESC) as RowId FROM Branches)
+SELECT * FROM cte WHERE RowId = 1 
+
+CREATE view [dbo].[V_Employees] as
+WITH cte AS
+(SELECT *,ROW_NUMBER() OVER (PARTITION BY EmpId,firstname,lastname,branch,department,currentdesignation ORDER BY empid DESC) as RowId FROM Employees
+)
+SELECT * FROM cte WHERE RowId = 1 
+

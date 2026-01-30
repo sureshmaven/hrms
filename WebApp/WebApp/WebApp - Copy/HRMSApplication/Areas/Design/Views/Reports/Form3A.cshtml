@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewBag.Title = "Form3A";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <h1>Form 3A<span class="year-end">TSCAB 01-04-2018 - 31-03-2019</span></h1>
+                    <div class="col-md-4 mt_10">
+                        <div class="inner_heading">
+                            <h1>Select Options</h1>
+                            <div class="col-md-8">
+                                <input id="file" type="radio" name="file" value="1"><label for="selectedemployees"><span><span></span></span>Selected Employees</label>
+                                <div class="clearfix"></div>
+                                <input id="file" type="radio" name="file" value="2"><label for="allemployees"><span><span></span></span>All Employees</label>
+                                <div class="clearfix"></div>
+                                <input id="file" type="radio" name="file" value="3"><label for="betweenids"><span><span></span></span>Between ID's</label>
+                                <div class="clearfix"></div>
+                                <input id="file" type="radio" name="file" value="4"><label for="window"><span><span></span></span>Window</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mt_10">
+                        <div class="inner_heading">
+                            <h1>Employee-Names</h1>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mt_10">
+                        <div class="inner_heading">
+                            <h1>Report Destination</h1>
+                            <div class="col-md-6">
+                                <input id="file" type="radio" name="file" value="1"><label for="screen"><span><span></span></span>Screen</label>
+                                <div class="clearfix"></div>
+                                <input id="file" type="radio" name="file" value="2"><label for="file"><span><span></span></span>File</label>
+                                <div class="clearfix"></div>
+                                <input id="file" type="radio" name="file" value="3"><label for="print"><span><span></span></span>Print</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="pull-right">
+                            <button type="reset" class="btn btn-default cancel">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

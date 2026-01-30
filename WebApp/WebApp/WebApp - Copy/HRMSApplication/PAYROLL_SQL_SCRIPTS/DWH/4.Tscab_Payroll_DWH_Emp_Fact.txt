@@ -1,0 +1,131 @@
+--drop table Emp_fact
+
+select e.EmpId,CONCAT(e.FirstName,' ',e.LastName) as Name,convert(varchar,e.DOJ,105) as DOJ,convert(varchar,e.RetirementDate,105) as RetirementDate,d.Name as Designation, case when b.Name = 'OtherBranch' then dep.name  else b.Name end as [Dept/Branch]
+,ps.id,ps.fm as ps_fm,ps.working_days, ps.lop, ps.er_basic, ps.er_da, ps.er_cca, ps.er_hra, ps.er_interim_relief, ps.er_telangana_inc, ps.gross_amount, ps.dd_provident_fund, ps.dd_income_tax, ps.dd_prof_tax, ps.dd_club_subscription, ps.dd_telangana_officers_assn, ps.lop_amount, ps.deductions_amount, ps.net_amount, ps.spl_da,ps.spl_allw,ps.spl_type
+
+into Emp_fact
+ from employees e
+ inner join Designations d on e.CurrentDesignation = d.Id
+ inner join Branches b on e.Branch = b.Id
+ inner join Departments dep on e.Department = dep.Id
+ inner join pr_emp_payslip ps on e.Empid=ps.emp_code
+ where ps.fm between '2019-04-01' and '2020-12-01' and ps.spl_type='Regular';
+
+
+alter TABLE [dbo].[emp_fact]
+add 
+	[aworking_days] [int] NULL,
+	[alop] [int] NULL,
+	[aer_basic] [float] NULL,
+	[aer_da] [float] NULL,
+	[aer_cca] [float] NULL,
+	[aer_hra] [float] NULL,
+	[aer_interim_relief] [float] NULL,
+	[aer_telangana_inc] [float] NULL,
+	[agross_amount] [float] NULL,
+	[add_provident_fund] [float] NULL,
+	[add_income_tax] [float] NULL,
+	[add_prof_tax] [float] NULL,
+	[add_club_subscription] [float] NULL,
+	[add_telangana_officers_assn] [float] NULL,
+	[alop_amount] [float] NULL,
+	[adeductions_amount] [float] NULL,
+	[anet_amount] [float] NULL,
+	[aactive] [bit] NULL,
+	[atrans_id] [int] NULL,
+	[aspl_da] [float] NULL,
+	[aspl_allw] [float] NULL,
+	[aspl_type] [nvarchar](20) NULL,
+	[asentmail] [bit] NULL,
+	[adownloadpdf] [bit] NULL,
+	[afinal_process] [bit] NULL,
+	[aerr_ceoallw] [float] NULL;
+
+update emp_fact set 
+emp_fact.[aworking_days]			=		b.[working_days]	,
+emp_fact.[alop]			=		b.[lop]	,
+emp_fact.[aer_basic]			=		b.[er_basic]	,
+emp_fact.[aer_da]			=		b.[er_da]	,
+emp_fact.[aer_cca]			=		b.[er_cca]	,
+emp_fact.[aer_hra]			=		b.[er_hra]	,
+emp_fact.[aer_interim_relief]			=		b.[er_interim_relief]	,
+emp_fact.[aer_telangana_inc]			=		b.[er_telangana_inc]	,
+emp_fact.[agross_amount]			=		b.[gross_amount]	,
+emp_fact.[add_provident_fund]			=		b.[dd_provident_fund]	,
+emp_fact.[add_income_tax]			=		b.[dd_income_tax]	,
+emp_fact.[add_prof_tax]			=		b.[dd_prof_tax]	,
+emp_fact.[add_club_subscription]			=		b.[dd_club_subscription]	,
+emp_fact.[add_telangana_officers_assn]			=		b.[dd_telangana_officers_assn]	,
+emp_fact.[alop_amount]			=		b.[lop_amount]	,
+emp_fact.[adeductions_amount]			=		b.[deductions_amount]	,
+emp_fact.[anet_amount]			=		b.[net_amount]	,
+emp_fact.[aactive]			=		b.[active]	,
+emp_fact.[atrans_id]			=		b.[trans_id]	,
+emp_fact.[aspl_da]			=		b.[spl_da]	,
+emp_fact.[aspl_allw]			=		b.[spl_allw]	,
+emp_fact.[aspl_type]			=		b.[spl_type]	,
+emp_fact.[asentmail]			=		b.[sentmail]	,
+emp_fact.[adownloadpdf]			=		b.[downloadpdf]	,
+emp_fact.[afinal_process]			=		b.[final_process]	,
+emp_fact.[aerr_ceoallw]			=		b.[err_ceoallw]	
+
+from pr_emp_payslip b where emp_fact.empid=b.emp_code and b.fm=emp_fact.ps_fm and b.spl_type='Adhoc';
+
+alter TABLE [dbo].[emp_fact]
+add 
+	[eworking_days] [int] NULL,
+	[elop] [int] NULL,
+	[eer_basic] [float] NULL,
+	[eer_da] [float] NULL,
+	[eer_cca] [float] NULL,
+	[eer_hra] [float] NULL,
+	[eer_interim_relief] [float] NULL,
+	[eer_telangana_inc] [float] NULL,
+	[egross_amount] [float] NULL,
+	[edd_provident_fund] [float] NULL,
+	[edd_income_tax] [float] NULL,
+	[edd_prof_tax] [float] NULL,
+	[edd_club_subscription] [float] NULL,
+	[edd_telangana_officers_assn] [float] NULL,
+	[elop_amount] [float] NULL,
+	[edeductions_amount] [float] NULL,
+	[enet_amount] [float] NULL,
+	[eactive] [bit] NULL,
+	[etrans_id] [int] NULL,
+	[espl_da] [float] NULL,
+	[espl_allw] [float] NULL,
+	[espl_type] [nvarchar](20) NULL,
+	[esentmail] [bit] NULL,
+	[edownloadpdf] [bit] NULL,
+	[efinal_process] [bit] NULL,
+	[eerr_ceoallw] [float] NULL;
+
+update emp_fact set 
+emp_fact.[eworking_days]			=		b.[working_days]	,
+emp_fact.[elop]			=		b.[lop]	,
+emp_fact.[eer_basic]			=		b.[er_basic]	,
+emp_fact.[eer_da]			=		b.[er_da]	,
+emp_fact.[eer_cca]			=		b.[er_cca]	,
+emp_fact.[eer_hra]			=		b.[er_hra]	,
+emp_fact.[eer_interim_relief]			=		b.[er_interim_relief]	,
+emp_fact.[eer_telangana_inc]			=		b.[er_telangana_inc]	,
+emp_fact.[egross_amount]			=		b.[gross_amount]	,
+emp_fact.[edd_provident_fund]			=		b.[dd_provident_fund]	,
+emp_fact.[edd_income_tax]			=		b.[dd_income_tax]	,
+emp_fact.[edd_prof_tax]			=		b.[dd_prof_tax]	,
+emp_fact.[edd_club_subscription]			=		b.[dd_club_subscription]	,
+emp_fact.[edd_telangana_officers_assn]			=		b.[dd_telangana_officers_assn]	,
+emp_fact.[elop_amount]			=		b.[lop_amount]	,
+emp_fact.[edeductions_amount]			=		b.[deductions_amount]	,
+emp_fact.[enet_amount]			=		b.[net_amount]	,
+emp_fact.[eactive]			=		b.[active]	,
+emp_fact.[etrans_id]			=		b.[trans_id]	,
+emp_fact.[espl_da]			=		b.[spl_da]	,
+emp_fact.[espl_allw]			=		b.[spl_allw]	,
+emp_fact.[espl_type]			=		b.[spl_type]	,
+emp_fact.[esentmail]			=		b.[sentmail]	,
+emp_fact.[edownloadpdf]			=		b.[downloadpdf]	,
+emp_fact.[efinal_process]			=		b.[final_process]	,
+emp_fact.[eerr_ceoallw]			=		b.[err_ceoallw]	
+
+from pr_emp_payslip b where emp_fact.empid=b.emp_code and b.fm=emp_fact.ps_fm and b.spl_type='Encashment';

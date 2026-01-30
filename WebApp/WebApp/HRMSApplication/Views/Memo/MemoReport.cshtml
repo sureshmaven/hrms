@@ -1,0 +1,232 @@
+﻿
+@model Entities.Latememo
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var rolepages = TempData["RolePages"].ToString();
+    ViewBag.RolePages = TempData["RolePages"];
+    var mid = TempData["latememos"];
+}
+@{
+    var message = TempData["AlertMessage1"] ?? string.Empty;
+}
+<script type="text/javascript">
+    var message = '@message';
+    if (message) alert(message);
+
+</script>
+<style>
+    .closeText:before {
+        content: "Close";
+    }
+
+    .activeClass {
+        background: #ffdb99;
+    }
+
+    .secondClass {
+        /*background: #FF9999;*/
+        color: red;
+    }
+</style>
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-heading">
+            @{
+                <ul class="nav nav-tabs">
+
+
+                    @if (rolepages.Contains("LFPMain"))
+                    {
+                        <li><a href=@Url.Action("MemoCreate", "Memo")>Issue Memo</a></li>
+                        <li><a href=@Url.Action("MemoList", "Memo")>Memos Report</a></li>
+                    }
+                    @if (rolepages.Contains("LFPMain"))
+                    {
+                        <li class="active"><a href=@Url.Action("MemoReport", "Memo")>My Pending Memos</a></li>
+                    }
+                    @if (rolepages.Contains("MemoMain"))
+                    {
+                        <li class="active"><a href=@Url.Action("MemoReport", "Memo")>My Pending Memos</a></li>
+                        //<li><a href=@Url.Action("Employeememoreport", "Memo")>My Memos History</a></li>
+                    }
+                    @if (rolepages.Contains("MemoSuper"))
+                    {
+                        <li><a href=@Url.Action("Employeememoreport", "Memo")>My Memos History</a></li>
+
+
+                    }
+                </ul>
+            }
+        </div>
+
+        @{
+            <div class="container">
+                <div class="page_st">
+                    <div class="page">
+                        <div class="form-horizontal form-horizontal2">
+                            <div class="page_start">
+                                <div class="col-md-12 col-sm-12">
+                                    <div class="main_heading">
+                                        <h1>Memo Explanation Form</h1>
+                                        <div class="form-horizontal col-md-12 col-sm-12 col-xs-12">
+                                            <table id="payslipStructure1" class="table table-bordered memo_table">
+                                                <tr>
+                                                    <th style="width:200px;">Memo Type</th>
+                                                    <th style="width:300px;">Memo Details</th>
+                                                    <th>#Days</th>
+                                                    <th style="width:100px;">Received Date</th>
+                                                    <th style="width:100px;">Due Date</th>
+                                                    <th>Explanation</th>
+                                                    <th>Action</th>
+                                                </tr>
+
+
+
+
+                                                <tbody>
+
+                                                    @foreach (var item in (IEnumerable<Entities.Latememo>)TempData["latememos"])
+                                                    {
+
+
+                                                        <tr>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.MemoType)
+                                                            </td>
+                                                            <td>
+                                                                @Html.HiddenFor(modelItem => item.Id, new { @id = "memoid" })
+                                                                @Html.DisplayFor(modelItem => item.Memodetails)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Noofdays)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.IssueDate)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Duedate)
+                                                            </td>
+                                                            <td>
+                                                                @{
+                                                                    if (DateTime.Compare(item.Duedate, DateTime.Now.AddDays(-1)) > 0)
+                                                                    {
+                                                                        <textarea id="txtArea" rows="5" cols="40"></textarea>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <textarea style="visibility:hidden" id="txtArea" rows="5" cols="40"></textarea>
+                                                                    }
+                                                                }
+                                                            </td>
+
+                                                            <td>
+
+                                                                @{
+                                                                    if (DateTime.Compare(item.Duedate, DateTime.Now.AddDays(-1)) > 0)
+                                                                    {
+                                                                        <div>
+                                                                            <button type="submit" class="btn btn-primary" name="Submit" value="Submit" id="btnsubmit">Submit</button>
+                                                                        </div>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <div>
+                                                                            <button type="submit" class="btn btn-default" name="Submit" onclick="return memoexperied()" value="Submit">Expired</button>
+                                                                        </div>
+                                                                    }
+
+                                                                }
+                                                            </td>
+                                                        </tr>
+
+                                                    }
+
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+</div>
+<script>
+    $("body").on("click", "#btnsubmit", function () {
+        const IdArray = [];
+        const clarifyArray = [];
+        var i = 0;
+        var row = $(this).closest("tr");
+        $("td", row).each(function () {
+            if ($(this).find("textarea").length > 0) {
+                //i++;
+                var span = $(this).find("span");
+                var input = $(this).find("input");
+                var textarea = $(this).find("textarea");
+                clarifyArray[i] = textarea.val();
+                var cl = input.val();
+                console.log('id', cl);
+                span.show();
+            }
+
+
+
+        });
+        i = 0;
+        $("td", row).each(function () {
+            if ($(this).find("input").length > 0) {
+                //i++;
+                var span = $(this).find("span");
+                var input = $(this).find("input");
+                var cl = input.val();
+                console.log('id', cl);
+                span.show();
+                IdArray[i] = cl;
+            }
+
+
+
+        });
+        var clarify = clarifyArray[0];
+        var Id = IdArray[0];
+        if (clarify == "") {
+            alert("Please enter Explanation");
+            return false;
+        }
+        $.ajax({
+            type: "POST",
+            url: "/Memo/MemoReport?Id=" + Id + "&Clarification=" + clarify,
+            dataType: "Json",
+            success: function (response) {
+
+                if (response != null) {
+                    alert("Latememo Explanation Updated Successfully");
+                    window.location.reload();
+                }
+                else {
+                    alert("Something went wrong");
+                }
+            },
+        });
+    });
+</script>
+<script>
+    function memoexperied() {
+        alert("Due Date Expired, Please Contact HR!");
+        return false;
+    }
+</script>
+<script>
+    document.getElementById("a20").className = "active";
+
+</script>
+<script>
+    document.getElementById("a21").className = "active";
+
+</script>

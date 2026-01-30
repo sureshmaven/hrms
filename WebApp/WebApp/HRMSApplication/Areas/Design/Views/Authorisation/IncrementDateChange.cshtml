@@ -1,0 +1,107 @@
+﻿@{
+    ViewBag.Title = "IncrementDateChange";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <h1>Increment Date Change Entry<span class="year-end">TGCAB 01-04-2019 - 31-04-2020</span></h1>
+                    <div class="mt_10">
+                        <div class="inner_heading">
+                                <div class="col-md-3">
+                                    <label>
+                                        <input id="radio1" type="radio" name="radio" value="1" checked="checked"><label for="radio1"><span><span></span></span> Employee Id wise</label>
+                                    </label>
+                                </div>
+                                <div class="col-md-3">
+                                    <label>
+                                        <input id="checkbox1" type="checkbox" name="checkbox" value="1" checked="checked"><label for="checkbox1"><span></span> Select All</label>
+                                    </label>
+                                </div>
+                                <div class="col-md-12 mt_10">
+                                    <div class="table-responsive">
+                                        <table id="incrm_date_change" class="display" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Emp Id</th>
+                                                    <th>Emp Name</th>
+                                                    <th>Desgn</th>
+                                                    <th>Inc Date</th>
+                                                    <th>Cinc Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <label class="checkbox-inline">
+                                                            <input type="checkbox" id="inlineCheckbox1" value="option1">347
+                                                        </label>
+                                                    </td>
+                                                    <td>Dr.S.Ramesh</td>
+                                                    <td>142</td>
+                                                    <td>
+                                                        <div class="input-group date">
+                                                            <input class="form-control">
+                                                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="input-group date">
+                                                            <input class="form-control">
+                                                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <label class="checkbox-inline">
+                                                            <input type="checkbox" id="inlineCheckbox1" value="option2">5161
+                                                        </label>
+                                                    </td>
+                                                    <td>N.RamMohan</td>
+                                                    <td>145</td>
+                                                    <td>
+                                                        <div class="input-group date">
+                                                            <input class="form-control">
+                                                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="input-group date">
+                                                            <input class="form-control">
+                                                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mt_10">
+                                    <div class="pull-right">
+                                        <button type="submit" class="btn btn-primary">Authorization</button>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#incrm_date_change').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false
+        });
+    });
+</script>

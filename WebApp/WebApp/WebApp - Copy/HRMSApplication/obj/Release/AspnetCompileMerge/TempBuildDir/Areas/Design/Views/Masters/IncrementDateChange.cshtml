@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewBag.Title = "IncrementDateChange";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <h1>Increment Date Change </h1>
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table id="incr_date_change" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Emp Id</th>
+                                        <th>Emp Name</th>
+                                        <th>Designation</th>
+                                        <th>Branch</th>
+                                        <th>Inc Date</th>
+                                        <th>Change Inc Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>John</td>
+                                        <td>Doe</td>
+                                        <td>john@example.com</td>
+                                        <td>John</td>
+                                        <td>Doe</td>
+                                        <td>
+                                            <div class="input-group date">
+                                                <input class="form-control">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mt_10">
+                        <div class="pull-right">
+                            <button type="reset" class="btn btn-default calcel">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#incr_date_change').DataTable();
+    });
+</script>
+
+
+

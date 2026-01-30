@@ -1,0 +1,52 @@
+﻿@{
+    ViewBag.Title = "PFMonthly";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <h1>PF Monthly</h1>
+                    <div class="col-md-4 mt_10">
+                        <div class="main_heading">
+                            <input id="file" type="radio" name="file" value="1"><label for="currentmonth"><span><span></span></span>Current Month</label>
+                            <div class="clearfix"></div>
+                            <input id="file" type="radio" name="file" value="2"><label for="monthly"><span><span></span></span>Monthly</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt_10">
+                        <div class="main_heading">
+                            <div class="col-md-8">
+                                <label class="radio-inline">
+                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">File Name <input type="text" class="form-control"/>
+                                </label>
+                            </div>
+                            <div class="col-md-7">
+                                <label class="radio-inline">
+                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option2"> QuickRep
+                                </label>
+                            </div>
+                            <div class="col-md-7">
+                                <label class="radio-inline">
+                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option3"> Export To Excel
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="pull-right">
+                                <button type="reset" class="btn btn-default cancel">Close</button>
+                                <button type="submit" class="btn btn-primary">OK</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

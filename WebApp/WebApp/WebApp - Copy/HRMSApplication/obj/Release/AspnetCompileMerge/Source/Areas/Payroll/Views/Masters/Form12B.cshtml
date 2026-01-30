@@ -1,0 +1,155 @@
+﻿
+@{
+    ViewBag.Title = "Form12B";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="leftmenu-container">
+                <div class="sidebar-menu">
+                    @{Html.RenderPartial("_PVPayrollMenu");}
+                </div>
+                <div class="sidebar-content">
+                    <div class="main_heading">
+                        <h1>Form 12 B<span class="year-end">@ViewBag.Env_Fm_Fy</span></h1>
+                        <div class="col-md-12"><h6 style="color: red;margin: 0 0 12px 0;float: right;"><span><b> *Note </b>- </span> Applied for only joining current financial year</h6></div>
+                        @{ Html.RenderPartial("_pvEmployeeSearch"); }
+                        <input type="hidden" id="hdnEmpCode" />
+                        <div class="col-md-12">
+                            <div class="inner_heading">
+                               
+                                <div class="form-horizontal">
+                                    <table id="grid12B" class="display" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:25%;">Name</th>
+                                                <th>Value</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt_10">
+                            <div class="pull-right">
+                                <button type="button" id="btnCancel" class="btn btn-default" title="Clear the data">Cancel</button>
+                                <button type="submit" id="btnsubmit" value="Submit" class="btn btn-primary" title="Submit details"> Submit</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var orgDdlist;
+    $(document).ready(function () {
+
+        $('#grid12B').DataTable({
+            "paging": false,
+            "sort": false,
+            "searching": false,
+            "language": {
+                "emptyTable": "No data available. Please enter employee code and search"
+            }
+        });
+
+
+    });
+
+    function getDataAfterEmpSearch1440(empcode) {
+
+        //$("#btnsubmit").attr("disabled", false);
+        $('#hdnEmpCode').val(empcode);
+        CommonApiGET('/Payroll/Masters/getForm12BDetails?EmpId=' + empcode, function (respData) {
+            debugger;
+            if (respData.length > 0) {
+                orgDdlist = respData;
+                fillDataTables(respData);
+            } else {
+                showGlobalModal("I#Required Field#Employee Did't Join In This Financial Year.");
+                setTimeout(function () { window.location.reload(); clearfields(); }, g_pagereload_seconds);
+            }
+            
+        });
+    }
+
+
+    $('#btnCancel').click(function () {
+
+        //fillDataTables(orgDdlist);
+        fillDataTables(orgDdlist);
+    });
+    function fillDataTables(respData) {
+       
+        $('#grid12B').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+            data: respData,
+            "columns": [
+                { "data": "Name" },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data) {
+                        if (data.Value == null) {
+                            data.Value = '';
+                        }
+                       
+                        if (data.Name == "TAN no") {
+                            return getColumnNumber(data.Id, data.Value);
+                        }
+                       else if (data.Name == "PAN no") {
+                            return getColumnReadOnlyAL(data.Id, data.Value);
+                        } 
+                        else if (data.Name == "Remarks") {
+                            return getColumnTextAreaWithoutReadOnly(data.Id, data.Value);
+                        } else {
+                            return getColumnNumber(data.Id, data.Value);
+                        }
+                        
+                    }
+                }
+            ],
+            "order": [[0, 'asc']]
+        });
+
+
+    }
+
+    $('#btnsubmit').click(function () {
+        debugger;
+        var table = $('#grid12B').DataTable();
+        var updateData = decodeURIComponent(table.$('input, select,textarea').serializeAndEncode());
+        var ModifiedErList = getModifiedDataFromJDT(updateData, orgDdlist);
+
+        var dataToSend = JSON.stringify({
+            'EntityId': $("#hdnEmpCode").val(),
+            'StringData': ModifiedErList
+            
+
+        });
+
+        CommonApiPOST('/Payroll/Masters/saveData12B', dataToSend, function (isSuccess) {
+            if (isSuccess) {
+                //
+                setTimeout(function () { window.location.reload(); clearfields(); }, g_pagereload_seconds);
+            }
+            else {
+
+            }
+        });
+
+    });
+</script>

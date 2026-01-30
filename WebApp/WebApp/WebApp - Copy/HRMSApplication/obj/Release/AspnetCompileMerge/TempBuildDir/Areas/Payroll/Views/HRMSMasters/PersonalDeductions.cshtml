@@ -1,0 +1,682 @@
+﻿
+@{
+    ViewBag.Title = "PersonalDeductions";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+<style>
+    #gridNeW_paginate {
+        display: none !important;
+    }
+    #gridNeW_length {
+        display: none !important;
+    }
+    #gridNeW_filter {
+        display: none !important;
+    }
+    #tablep thead tr th:nth-child(2),
+    tbody tr td:nth-child(2) {
+        width: 314px;
+    }
+</style>
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="leftmenu-container">
+            <div class="sidebar-menu">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="sidebar-content">
+                <div class="main_heading heading_main">
+                    <h1>Personal Deductions<span class="year-end">@ViewBag.Env_Fm_Fy</span></h1>
+                    @{ Html.RenderPartial("_pvEmployeeSearch"); }
+                    <input type="hidden" id="hdnEmpCode" />
+                    <div class="col-md-12 mt_10">
+                        <div class="pull-right">
+                            <button id="addRow" class="btn btn-default mr_0"><i class="glyphicon glyphicon-plus" title="Add Details"></i> Add</button>
+                        </div>
+                        <div class="pull-right">
+                            @*<button id="searchRow" class="btn btn-default mr_0"><i class="glyphicon glyphicon-search" title="Search Details"></i> Search</button>*@
+                            <button class="btn btn-default search_btn" title="Search Field Name" type="button" id="searchRow" onclick="searchfield();"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                        <div class="form-group col-lg-3 col-md-6 pull-right">
+                            <input type="text" id="stext" class="form-control" placeholder="Search">
+                        </div>
+
+                    </div>
+                    <div class="col-md-12 mt_10 mt_5 personal_eng_gride">
+                        <div class="table-responsive">
+                            <table id="gridDF" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th style="width:25%;">Personal Deductions</th>
+                                        <th>Amount(<i class="fa fa-rupee"></i>)</th>
+                                        <th>Section</th>
+
+                                    </tr>
+                                </thead>
+                            </table>
+
+                            @*for new button*@
+                            <table id="gridNeW" class="display" style="width:100%">
+                      <thead style="display:none;">
+                          <tr>
+                              <th style="width:20%;">Personal Deductions</th>
+                              <th>Amount(<i class="fa fa-rupee"></i>)</th>
+                              <th>Section</th>
+                              <th>Action</th>
+                          </tr>
+                            </thead>
+                            </table>
+
+                            </div>
+                        <br />
+                            <table id="tablep" class="display" style="width:100%; border-top: 1px solid #ddd;">
+                                <thead>
+                                    <tr>
+                                        <th style="width:20%;"></th>
+                                        <th></th>
+                                    </tr>
+                                <thead>
+                            </table>
+                        </div>
+                        <div class="col-md-12 mt_10">
+                            <div class="pull-right">
+                                @*<button id="addRow" class="btn btn-primary">Add</button>*@
+                                <button id="btnCancel" class="btn btn-default" title="Clear the data">Cancel</button>
+                                <button id="btnsubmit" class="btn btn-primary" type="button" title="Submit details"> Submit </button>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+			</div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#gridNeW').hide();
+    });
+</script>
+<style>
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        margin: 0;
+    }
+</style>
+<script>
+    var orgNew = [];
+    var orgData;
+    var orgCalcel;
+    var orgDdlist;
+    var SectionArray = [];
+    var incIndex = 0;
+    var arrDelete = [];
+    var arrSection = [];
+    $(document).ready(function () {
+        $("#tablep").hide();
+        $("#btnsubmit").attr("disabled", true);
+        $("#addRow").attr("disabled", true);
+        $("#stext").attr("disabled", true);
+        $("#searchRow").attr("disabled", true);
+        //on page load
+        $('#gridDF').DataTable({
+            "paging": false,
+            "sort": false,
+            "searching": false,
+            "language": {
+                "emptyTable": "No data available. Please enter employee code and search"
+            }
+        });
+
+
+    });
+
+    $("#btnCancel").click(function () {
+
+        incIndex = 0;
+
+        $('#gridNeW').empty();
+        fillEpfDt(orgCalcel);
+
+    });
+
+
+    function fillEpfDt(respData) {
+        debugger;
+        var stypesdata;
+        var sectiontypes = [];
+        arrSection = [];
+        sectiontypes.push(respData.sdetails);
+        stypesdata = sectiontypes[0];
+        SectionArray = stypesdata;
+        SectionArray.map(function (obj) {
+            arrSection.push(obj.constant);
+        });
+
+
+        var subData = [];
+        var count = 0;
+        orgCalcel = respData;
+        var deductiondata = respData.DfDetails;
+        orgData = deductiondata;
+        deductiondata.filter(function (obj) {
+            if (obj.Value != "") {
+                subData.push(obj);
+            }
+        });
+        // alert(JSON.stringify(subData));
+        //subData.map(function (obj) {
+        //    subData.map(function (obj1) {
+        //        if (obj.Section == obj1.Section) {
+        //            count++;
+        //        }
+
+        //    });
+        //});
+
+        let result = Object.values(subData.reduce((dup, v) => {
+            debugger;
+            if (!dup[v.Section]) {
+                dup[v.Section] = { Section: v.Section, Value: 0 };
+
+            }
+            if (v.Section == 'Section80C') {
+
+                dup[v.Section].Value += v.Value;
+                if (dup[v.Section].Value > 150000) {
+                    dup[v.Section].Value = 150000;
+                }
+
+            }
+            else {
+                dup[v.Section].Value += v.Value;
+
+            }
+
+
+            return dup;
+        }, {}));
+
+
+
+        var totalAmount = 0;
+        var df = [];
+        var dataObj = respData;
+
+        df.push(dataObj.DfDetails);
+        ////
+
+        var dfData = df[0];
+
+        orgDdlist = dfData;
+        if (dfData.Value != "") {
+
+            orgDdlist.map(function (obj) {
+                totalAmount = totalAmount + obj.Value;
+               
+
+
+            });
+        }
+        if (totalAmount > 0) {
+            $("#tablep").show();
+        } else {
+            $("#tablep").hide();
+        }
+
+        $('#gridDF').DataTable({
+
+            "destroy": true,
+            "paging": false,
+            "sort": false,
+            "searching": false,
+            data: dfData,
+
+            "columns": [
+                { "data": "Name" },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data) {
+
+                        return getColumnNumber('*' + data.Id, data.Value, data.mid);
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data) {
+
+                        return getColumnDropdown(data.Id, data.Section, arrSection);
+                    }
+                }
+            ],
+            "order": [[0, 'asc']]
+        });
+
+
+
+        $('#tablep').DataTable({
+
+            "destroy": true,
+            "drawCallback": function (settings) {
+                $("#tablep thead").remove();
+            },
+            "paging": false,
+            "sort": false,
+            "searching": false,
+            data: result,
+
+            "columns": [
+                { "data": "Section" },
+                { "data": "Value" },
+
+            ],
+            "order": [[0, 'asc']]
+        });
+    }
+
+    $('#btnsubmit').click(function () {
+        debugger;
+        var table = $('#gridDF').DataTable();
+        var updateData = table.$('input, select').serialize();
+        var arrer = updateData.split('*');
+        var PrDeductionsdata = [];
+
+        var table1 = $('#gridNeW').DataTable();
+        var updateDatanew = decodeURIComponent(table1.$('input, select').serializeAndEncode());
+        var arrUpdate = updateDatanew.split("*");
+        var arrSampleObJ = [];
+        arrer.forEach(function (element) {
+
+            if (element != "") {
+
+                var objEf = {};
+                var strRow = element.split("&");
+                var id = strRow[0].split("=");
+                objEf.id = id[0];
+                objEf.amount = id[1];
+
+                var section = strRow[1].split("=");
+                objEf.section = section[1];
+
+                orgData.map(function (org) {
+
+                    if (org.Id == objEf.id) {
+
+                        //if (objEf.amount != 0 || objEf.amount != "") {
+
+                        if ((org.Value != objEf.amount || org.Section != objEf.section)
+                            && (objEf.amount != "" || objEf.section != "Select")) {
+                            PrDeductionsdata.push(objEf);
+                        }
+                        else if ((org.Value != "" && org.Section != "Select") && (objEf.amount == "" && objEf.section == "Select")) {
+                            PrDeductionsdata.push(objEf);
+                            // modified.action = "update";
+                        }
+                        if (objEf.amount != "" && objEf.section == "Select" && objEf.amount != 0) {
+                            showGlobalModal("I#Required#Please select Section");
+                            // alert("Please Select Section ")
+                            e.preventDefault();
+                        }
+
+                        if ((objEf.amount == "" && objEf.section != "Select")) {
+                            showGlobalModal("I#Required#Please Enter Amount");
+                            // alert("Please Select Amount ")
+                            e.preventDefault();
+                        }
+                        //if (objEf.amount == 0 && objEf.section=="") {
+                        //    showGlobalModal("I#Required#Please Enter Amount");
+                        //    // alert("Please Select Amount ")
+                        //    e.preventDefault();
+                        //}
+                        //if (objEf.amount == 0 && objEf.section != "") {
+                        //
+                        //    showGlobalModal("I#Required#Please Enter Amount");
+                        //    // alert("Please Select Amount ")
+                        //    e.preventDefault();
+                        //}
+                        //}
+
+                    }
+                });
+
+            }
+        });
+
+        arrUpdate.forEach(function (element) {
+
+            if (element != "") {
+                var objEf = {};
+                var strRow = element.split("&");
+                var id = strRow[0].split("=");
+                objEf.id = id[0];
+                objEf.name = id[1];
+                var amt = strRow[1].split("=");
+                objEf.amount = amt[1];
+                var section = strRow[2].split("=");
+                objEf.section = section[1];
+
+                if (isNaN(id[0])) {
+                    objEf.action = "New";
+                } else {
+                    objEf.action = "Update";
+                }
+
+
+                //if (objEf.amount != ""
+                //    || objEf.section != "") {
+                //    objEf = objEf;
+                //}
+                // else {
+                //    objEf = {};
+                //}
+                if (objEf.name == "" && objEf.section != "Select") {
+                    showGlobalModal("I#Required#Please Enter Deduction Type");
+                    e.preventDefault();
+                }
+                if (objEf.name != "") {
+                    if (objEf.amount != "" && objEf.section == "Select") {
+                        showGlobalModal("I#Required#Please select Section");
+                        //alert("please select Section");
+                        e.preventDefault();
+                    }
+                    else if (objEf.amount == "" && objEf.section != "Select") {
+                        showGlobalModal("I#Required#Please Enter Amount");
+                        //alert("please select Amount");
+                        e.preventDefault();
+                    }
+
+                    else {
+
+                        objEf = objEf;
+                    }
+                }
+
+                else {
+                    objEf = {};
+                }
+
+                if (Object.keys(objEf).length > 0) {
+                    arrSampleObJ.push(objEf);
+                }
+
+
+
+            }
+        });
+
+        arrDelete.map(function (obj) {
+            arrSampleObJ.push(obj);
+        });
+
+
+        //var ModifiedErList = getModifiedDataFromJDT(PrDeductionsdata, orgDdlist);
+        PrDeductionsdata.map(function (modified) {
+
+            orgData.map(function (org) {
+
+                if (org.Id == modified.id) {
+                    //if (org.Value == "") {
+                    //    org.Value = 0;
+                    //}
+                    //if (modified.amount == "") {
+                    //    modified.amount = 0;
+                    //}
+
+
+                    if (org.Value === "") {
+                        modified.action = "new";
+                        //modified.action = "update";
+                    }
+                    else if (org.Value == 0) {
+                        modified.action = "update";
+                        //modified.action = "new";
+                    }
+                    else if (org.Value != "" && modified.amount != "") {
+                        modified.action = "update";
+                    }
+                    else if ((org.Value != "" && org.Section != "Select") && (modified.amount === "" && modified.section === "Select")) {
+
+                        //PrDeductionsdata.push(objEf);
+                        modified.action = "update";
+                    }
+                    //else {
+                    //    modified.action = "update";
+                    //}
+                }
+            });
+        });
+
+        var dataToSend = JSON.stringify({
+            'EntityId': $("#hdnEmpCode").val(),
+            objpd: PrDeductionsdata,
+            objperdednew: arrSampleObJ
+        });
+
+        CommonApiPOST('/Payroll/HRMSMasters/saveDataPerDeduction', dataToSend, function (isSuccess) {
+            if (isSuccess) {
+                //window.location.reload();
+                setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+            } else { }
+        });
+
+        return false;
+    });
+
+
+
+    function getDataAfterEmpSearch1440(empcode) {
+        debugger;
+        var type = 'Display';
+        $("#btnsubmit").attr("disabled", false);
+        $('#hdnEmpCode').val(empcode);
+        CommonApiGET('/Payroll/HRMSMasters/GetEmpDeductionDetails?EmpId=' + empcode + "&Field=" + type, function (respData) {
+            $("#btnsubmit").attr("disabled", false);
+            $("#addRow").attr("disabled", false);
+            $("#stext").attr("disabled", false);
+            $("#searchRow").attr("disabled", false);
+            fillEpfDt(respData);
+
+        });
+    }
+    function searchfield() {
+        debugger;
+        var type = $('#stext').val();
+        if (type == '' || type == null) {
+            showGlobalModal("I#Error#Enter Field Name to Search");
+            document.getElementById("stext").focus();
+            return false;
+        }
+        $("#btnsubmit").attr("disabled", false);
+        var empid = $("#hdnEmpCode").val();
+        CommonApiGET('/Payroll/HRMSMasters/GetEmpDeductionDetails?EmpId=' + empid + "&Field=" + type, function (respData) {
+            $("#btnsubmit").attr("disabled", false);
+            $("#addRow").attr("disabled", false);
+            document.getElementById('stext').value = "";
+            //$("#stext").val = "";
+            //$("#searchRow").attr("disabled", false);
+            fillEpfDt(respData);
+
+        });
+    }
+
+    $('#addRow').click(function () {
+
+        $('#gridNeW').show();
+        incIndex++;
+
+        if (incIndex == 1) {
+            var incId = "NeW" + incIndex;
+            var addNewEf = [{
+                "Id": incId,
+                "Name": "",
+                "Value": "",
+                "Action": "Delete"
+            }];
+            orgNew = addNewEf;
+            fillDataTables(addNewEf);
+        } else {
+
+            var table = $('#gridNeW').DataTable();
+            var updateData = decodeURIComponent(table.$('input, select').serializeAndEncode());;
+            var arrUpdate = updateData.split("*");
+            var arrSampleObJ = [];
+            arrUpdate.forEach(function (element) {
+                if (element != "") {
+                    var objEf = {}; //"NeW1=over+time&NeW1=123"
+                    var strRow = element.split("&");
+                    var id = strRow[0].split("=");
+                    objEf.Id = id[0];
+                    objEf.Name = id[1];
+                    var value = strRow[1].split("=");
+                    objEf.Value = value[1];
+                    if (isNaN(id[0])) {
+                        objEf.Action = "Delete";
+                    } else {
+                        objEf.Action = "Add";
+                    }
+                    arrSampleObJ.push(objEf);
+                }
+            });
+
+            modifiedData = arrSampleObJ;
+            var incId = "NeW" + incIndex;
+            var row = {
+                "Id": incId,
+                "Name": "",
+                "Value": "",
+                "Action": "Delete"
+            };
+            modifiedData.push(row);
+            fillDataTables(modifiedData);
+        }
+    });
+
+
+    function fillDataTables(respData) {
+
+        $('#gridNeW').DataTable({
+            "destroy": true,
+            "paging": false,
+            "sort": false,
+            "searching": false,
+            data: respData,
+            "columns": [
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data) {
+                        return getColumnTextbox("*" + data.Id, data.Name);
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data) {
+                        return getColumnNumberCountValue(data.Id, data.Value);
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return getColumnDropdown(data.Id, data.Value, arrSection);
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return getColumnButton(data.Id, data.Action);
+                    }
+                },
+            ],
+            "order": [[0, 'asc']]
+        });
+    }
+
+    function deleteRow(id) {
+        incIndex--;
+        var table = $('#gridNeW').DataTable();
+        var updateData = decodeURIComponent(table.$('input, select').serializeAndEncode());;
+        var arrUpdate = updateData.split("*");
+        var arrSampleObJ = [];
+        arrUpdate.forEach(function (element) {
+            if (element != "") {
+                var objEf = {}; //"NeW1=over+time&NeW1=123"
+                var strRow = element.split("&");
+                var id = strRow[0].split("=");
+                objEf.Id = id[0];
+                objEf.Name = id[1];
+                var value = strRow[1].split("=");
+                objEf.Value = value[1];
+                if (isNaN(id[0])) {
+                    objEf.Action = "Delete";
+                } else {
+                    objEf.Action = "Add";
+                }
+                arrSampleObJ.push(objEf);
+            }
+        });
+
+        modifiedData = arrSampleObJ;
+
+        modifiedData = modifiedData.filter(function (obj) {
+            return obj.Id !== id;
+        });
+
+        fillDataTables(modifiedData);
+        if (modifiedData.length == 0) {
+            $('#gridNeW').hide();
+        }
+    }
+
+    function deleteEntireRow(id) {
+        incIndex--;
+        var table = $('#gridNeW').DataTable();
+        var updateData = decodeURIComponent(table.$('input, select').serializeAndEncode());;
+        var arrUpdate = updateData.split("*");
+        var arrSampleObJ = [];
+        arrUpdate.forEach(function (element) {
+            if (element != "") {
+                var objEf = {}; //"NeW1=over+time&NeW1=123"
+                var strRow = element.split("&");
+                var id = strRow[0].split("=");
+                objEf.Id = id[0];
+                objEf.Name = id[1];
+                var value = strRow[1].split("=");
+                objEf.Value = value[1];
+                if (isNaN(id[0])) {
+                    objEf.Action = "Delete";
+                } else {
+                    objEf.Action = "Add";
+                }
+                arrSampleObJ.push(objEf);
+            }
+        });
+
+        modifiedData = arrSampleObJ;
+        modifiedData = modifiedData.filter(function (obj) {
+
+            if (obj.Id != "null" && id != "null") {
+                if (obj.Id == id) {
+                    obj.Action = "Deleted";
+                    arrDelete.push(obj);
+                } else {
+                    return obj.Id !== id;
+                }
+            }
+        });
+
+        fillDataTables(modifiedData);
+        if (modifiedData.length == 0) {
+            $('#gridNeW').hide();
+        }
+    }
+
+</script>
+
+

@@ -1,0 +1,54 @@
+
+CREATE TABLE [dbo].[pr_pf_contribution_audit](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[empid] [int] NULL,
+	[emp_code] [int] NULL,
+	[fm] [nvarchar](20) NULL,
+	[fy] [int] NULL,
+	[pfcont_own_tot] [decimal](18, 2) NULL,
+	[pfcont_vpf_tot] [decimal](18, 2) NULL,
+	[pfcont_bank_tot] [decimal](18, 2) NULL,
+	[pfcont_tot_own_bank_vpf] [decimal](18, 2) NULL,
+	[pfcont_inst_obbal] [decimal](18, 2) NULL,
+	[pfcont_intaccured_tot] [decimal](18, 2) NULL,
+	[pfcont_accur_openbal_own_bank_vpf] [decimal](18, 2) NULL,
+	[pfcont_int_accur] [decimal](18, 2) NULL,
+	[pfcont_totamt_epf_int_A] [decimal](18, 2) NULL,
+	[pfcont_avail_till_prev_yr_own] [decimal](18, 2) NULL,
+	[pfcont_during_till_prev_yr_own] [decimal](18, 2) NULL,
+	[pfcont_avail_till_prev_yr_bank] [decimal](18, 2) NULL,
+	[pfcont_during_till_prev_yr_bank] [decimal](18, 2) NULL,
+	[pf_cont_tot_nonrefund_loan_avail] [decimal](18, 2) NULL,
+	[pf_cont_int_tot_nonrefund_loan_avail] [decimal](18, 2) NULL,
+	[pf_cont_Total_ded_B] [decimal](18, 2) NULL,
+	[pf_cont_netamt_epf_int(A-B)] [decimal](18, 2) NULL,
+	[pf_cont_tot_repayloanout] [decimal](18, 2) NULL,
+	[trans_id] [int] NULL,
+	[runtime] [nvarchar](100) NULL
+) ON [PRIMARY]
+
+CREATE TABLE [dbo].[pr_ob_share_audit](
+[id] [int] NOT NULL IDENTITY(1,1),
+[emp_id] [int] NULL,
+[emp_code] [int] NULL,
+[Fy] [int] NULL,
+[Fm] [date] NULL,
+fund_own varchar(max) null,fund_bank varchar(max) null,fund_vpf varchar(max) null,
+insterest_own varchar(max) null,insterest_bank varchar(max) null,insterest_vpf varchar(max) null,
+fund_insterest_own_total_A varchar(max) null,fund_insterest_bank_total_A varchar(max) null,fund_insterest_vpf_total_A varchar(max) null,
+nonrepay_prev_own varchar(max) null,nonrepay_prev_bank varchar(max) null,nonrepay_prev_vpf varchar(max) null,
+nonrepay_prest_own varchar(max) null,nonrepay_prest_bank varchar(max) null,nonrepay_prest_vpf varchar(max) null,
+nonrepay_prev_prest_own_total_B varchar(max) null,nonrepay_prev_prest_bank_total_B varchar(max) null,nonrepay_prev_prest_vpf_total_B varchar(max) null,
+repay_PFloan1_own varchar(max) null,repay_PFloan1_bank varchar(max) null,repay_PFloan1_vpf varchar(max) null,
+repay_PFloan2_own varchar(max) null,repay_PFloan2_bank varchar(max) null,repay_PFloan2_vpf varchar(max) null,
+repay_pfloan1_2_own_total_C varchar(max) null,repay_pfloan1_2_bank_total_C varchar(max) null,repay_pfloan1_2_vpf_total_C varchar(max) null,
+[total(A-B+C)_own] varchar(max) null,[total(A-B+C)_bank] varchar(max) null,[total(A-B+C)_vpf] varchar(max) null,
+[total_(A-B+C)_own_bank_vpf] varchar(max) null,
+[runtime] [nvarchar](100) NULL
+)
+
+insert into transaction_touch values(1120,'i','pr_ob_share_audit',1120,null,null,null,null,null,null,null,null);
+insert into transaction_touch values(1120,'i','pr_pf_contribution_audit',1120,null,null,null,null,null,null,null,null);
+
+insert into new_num values('pr_pf_contribution_audit','id',0,0);
+insert into new_num values('pr_ob_share_audit','id',0,0);

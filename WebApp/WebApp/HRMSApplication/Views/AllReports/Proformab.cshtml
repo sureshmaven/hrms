@@ -1,0 +1,787 @@
+﻿@model Entities.view_employee
+
+@{
+    Layout = "~/Views/Shared/_ReportsLayout.cshtml";
+    var rolepages = TempData["RolePages"].ToString();
+    ViewBag.RolePages = TempData["RolePages"];
+    var reportTitle = ViewBag.ReportTitle;
+    var ReportPdfSize = ViewBag.PdfSize;
+    var ReportpageSize = ViewBag.pageSize;
+    var PdfExportColumns = ViewBag.ExportColumns;
+    var dataUrl = ViewBag.DataUrl;
+    var reportFilters = ViewBag.ReportFilters;
+    var searchBtn = ViewBag.SearchBtn;
+    var label = ViewBag.DdlOneLabel;
+    var roles = ViewBag.Role;
+
+}
+
+<link href="~/Assets/css/report-style.css" rel="stylesheet" />
+<style>
+    div#grid_filter {
+    display: none;
+}
+    .leave_acc_table {
+    border: 1px solid #3c8dbc;
+    padding: 10px;
+    margin: 10px 0;
+}
+    #pdfprint h1 {
+    text-align: center;
+
+}
+
+</style>
+@{
+    var message = TempData["AlertMessage"] ?? string.Empty;
+}
+
+<script type="text/javascript">
+
+    var message = '@message';
+    if (message) alert(message);
+</script>
+<div  class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade in active">
+                    <div class="page_st">
+                        <div class="page">
+                            <div class="col-md-12 col-sm-12 ">
+                                <div id="heading" class="main_heading">
+                                    <h1>Report List </h1>
+                                    <div>
+                                        @{Html.RenderPartial("_PartialViewForMenu");}
+                                    </div>
+                                </div>
+                                <div id="pdfprint" class="main_heading">
+                                    <h1>@reportTitle</h1>
+                                    <br />
+
+                                    @* Late Attendence Monthlymemo Report start *@
+                                    @if (reportFilters.Contains("ProformaFilters") && reportTitle.Contains("PROFORMA"))
+                                    {
+                                        <div class="form-horizontal">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="col-sm-5 control-label">EmpCode:<span class="mandatory">*</span></label>
+                                                    <div class="col-sm-7">
+                                                        <input type="text" id="txtEmpId" class="form-control">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="col-sm-5 control-label">Emp Name:<span class="mandatory">*</span></label>
+                                                    <div class="col-sm-7">
+                                                        @Html.EditorFor(model => model.EmpId, new { htmlAttributes = new { @class = "form-control", @id = "txtEmpname" } })
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="col-sm-5 control-label">Designation:<span class="mandatory">*</span></label>
+                                                    <div class="col-sm-7">
+
+                                                        @Html.EditorFor(model => model.EmpId, new { htmlAttributes = new { @class = "form-control", @id = "txtdes" } })
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="col-sm-5 control-label">LeaveTypes:<span class="mandatory">*</span></label>
+                                                    <div class="col-sm-7">
+                                                        @Html.DropDownList("Leaves", ViewBag.LeaveTypes1 as SelectList, "Select", new { @class = "form-control", id = "ltype" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="col-sm-5 control-label">From Date:</label>
+                                                    <div class="input-group date col-sm-7">
+                                                        <input type="text" id="ProformaFDate" class="form-control" onchange="return Dateevent4()"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="col-sm-5 control-label">To Date:</label>
+                                                    <div class="input-group date col-sm-7">
+                                                        <input type="text" id="ProformaTDate" class="form-control" onchange="return Dateevent5()"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="pull-left">
+                                                    <button type="button" id="btnpdf" class="btn btn-primary btn-sm">PrintPDF</button>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="pull-right">
+                                                    <button type="button" id="btnProformaSearch" class="btn btn-primary btn-sm">Search</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    }
+
+
+                                    <div class="col-md-12">
+                                        <div class="leave_acc_table">
+                                            <div class="row">
+                                                <div class="pull-right">
+                                                         <div class="form-group">
+                                                            <label class="col-sm-5 control-label">Opening Balance:</label>
+                                                            <div class="col-sm-7">
+                                                                @Html.EditorFor(model => model.EmpId, new { htmlAttributes = new { @class = "form-control", @id = "txtEmpname" } })
+
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <div class="table-responsive">
+                                                <table id="grid" class="display reports-grids" cellspacing="0" width="100%">
+                                                    <thead>
+                                                        <tr>
+
+                                                            <th>Date</th>
+                                                            <th>DebitLeave</th>
+                                                            <th>CreditLeave</th>
+                                                            <th>LeaveBalance</th>
+
+
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <br />
+                                            <div class="row">
+                                                <div class="pull-right">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-5 control-label">Closing Balance:</label>
+                                                            <div class="col-sm-7">
+                                                                @Html.EditorFor(model => model.EmpId, new { htmlAttributes = new { @class = "form-control", @id = "txtEmpname" } })
+
+                                                            </div>
+                                                        </div>
+                                               </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    var reportMsgTop = '';
+
+    var fnMessageTop = function () {
+        return (reportMsgTop == '' ? '' : 'Filters : ' + reportMsgTop);
+    };
+
+    $(document).ready(function () {
+
+        $.noConflict();
+        var serviceurl = '@dataUrl';
+        serviceurl = serviceurl.replace('&amp;', '&');
+
+
+
+        var table = $('#grid').DataTable({
+            scrollX: true,
+            scrollCollapse: true,
+            bSort: false,
+            // "destroy" : true,
+            "ajax": {
+                "url": serviceurl,
+                "type": "GET",
+                "datatype": "json",
+                "dataSrc": ""
+            },
+            dom: 'Bfrtip',
+
+            buttons: [
+                {
+                            extend: 'excelHtml5',
+                            text: '<i class="fa fa-file-excel-o dt-export-icon-excel"></i>',
+                            titleAttr: 'Excel',
+                            title: 'TGCAB - @reportTitle',
+                            messageTop: fnMessageTop,
+                            exportOptions: {@PdfExportColumns},
+                            className: 'dt-export-btn',
+                            color:'red'
+                        },
+                {
+                            extend: 'pdfHtml5',
+                            text: '<i class="fa fa-file-pdf-o dt-export-icon-pdf"></i>',
+                            className: 'dt-export-btn',
+                            titleAttr: 'Pdf',
+                            orientation: '@ReportPdfSize',
+                            pageSize: '@ReportpageSize',
+                            exportOptions: {@PdfExportColumns},
+                            title: 'TGCAB - @reportTitle',
+
+                            messageTop: fnMessageTop,
+                            customize: function (doc) {
+                                doc.styles.tableHeader.alignment = 'left';
+
+                                doc.content.splice(1, 0, {
+                                    margin: [0, -50, 0, 10],
+                                    alignment: 'left',
+                                    image: 'data:image/jpeg;base64,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'
+                                });
+
+                                doc.content[0].text = doc.content[0].text.trim();
+                                doc.styles.title = {
+                                    fontSize: '20',
+                                    alignment: 'center'
+                                };
+                                doc.styles.message = {
+                                    fontSize: '9',
+                                    alignment: 'center'
+                                };
+                                doc['footer'] = (function (page, pages) {
+                                    return {
+                                        columns: [
+                                            'By: @ViewBag.LoginUserName , @ViewBag.LoginBranchName .',
+                                            {
+                                                alignment: 'right',
+                                                text: [
+                                                    new Date().toLocaleDateString("en-IN", { day: "2-digit", month: "2-digit", year: "numeric", hour: '2-digit', minute: '2-digit' }),
+                                                    '    Page ', { text: page.toString() }, ' of ', { text: pages.toString() }
+                                                ]
+                                            }
+                                        ],
+                                        fontSize: '9',
+                                        margin: [40, 10]
+                                    }
+                                });
+                            }
+                        }
+            ],
+            "columns": [
+
+          { data: "UpdatedDate" },
+          { data: "DebitLeave" },
+          { data: "CreditLeave" },
+          { data: "LeaveBalance" },
+
+            ]
+
+        });
+    });
+
+    //proforma
+    $("#btnProformaSearch").click(function () {
+        debugger;
+        var ltypes = $("#ltype").val();
+        var empid = $("#txtEmpId").val();
+        if (empid == "") {
+            alert("Please Enter EmpCode");
+            return false;
+        }
+
+        $.ajax({
+            type: "GET",
+            url: "/AllReports/GetEmpData?empid=" + empid,
+            dataType: "Json",
+            success: function (response) {
+
+                if (response != null) {
+
+                    document.getElementById("txtEmpname").value = response.lempname;
+                    document.getElementById("txtdes").value = response.ldisignation;
+
+                }
+                else {
+                    // alert("Something went wrong");
+                }
+            },
+        });
+        if (ltypes == "") {
+            alert("Please Select LeaveType");
+            return false;
+        }
+
+        var leavetype = $("#Leaves option:selected").text();
+        var leaveid = $("#ltype").val();
+        var empid = $("#txtEmpId").val();
+        ajaxSpinnerShow();
+        // TODO - need dynamic way to get values and url
+
+        var fromDate = $("#ProformaFDate").val();
+        var toDate = $("#ProformaTDate").val();
+
+        var ajaxurl = '/AllReports/CreditDebitLeaveData?leaveid=' + leaveid + '&empid=' + empid + '&fdate=' + fromDate + '&tdate=' + toDate;
+
+        $('#grid').DataTable().ajax.url(ajaxurl).load(function () {
+            ajaxSpinnerHide();
+        });
+    });
+
+
+
+    document.getElementById("a6").className = "active";
+</script>
+
+<script type='text/javascript'>
+
+    $(function getholidays() {
+        var active_dates = [];
+        $.ajax({
+            type: "GET",
+            async: false,
+            url: "/LeaveApply/GetDates",
+            dataType: "Json",
+            success: function (data) {
+                datesArray = data;
+                for (i = 0; i < datesArray.length; i++) {
+                    var result = datesArray[i].replace("-", "/");
+                    var result1 = result.replace("-", "/");
+                    var strArray = result1.split("/");
+                    var cdate = strArray[0] + "/" + parseInt(strArray[1]) + "/" + strArray[2]
+                    active_dates.push(cdate);
+
+                    if (i == datesArray.length - 1) {
+                        //loadcal(active_dates);
+                    }
+                }
+
+            }
+        });
+        $('.input-group.date#futdatedis').datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            endDate: '+0d',
+            beforeShowDay: function nonWorkingDays(date) {
+                var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
+                var week = 0 | date.getDate() / 7 //get the week
+                var dd = date.getDate();
+                var month = date.getMonth();
+                if (dd < 10) {
+                    dd = '0' + dd
+                }
+
+                if (month < 10) {
+                    month = '0' + month
+                }
+                var sunweek = date.getDay();
+                var year = date.getFullYear();
+
+                if (dd == 14 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                if (dd == 28 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                    //check if it's second week or fourth week
+                else if (week == 1 || week == 3) {
+                    if (dd == 7 && day == 6 || dd == 21 && day == 6) {
+                        //check for satruday
+
+                    }
+                    else {
+                        if (day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                    }
+
+                }
+                //check for sunday
+                if (day == 0) {
+                    return {
+                        classes: 'secondClass'
+                    };
+
+                }
+                //check for holidays
+                var d = date;
+                var curr_date = d.getDate();
+                var curr_month = d.getMonth() + 1; //Months are zero based
+                if (curr_date < 10) {
+                    curr_date = '0' + curr_date
+                }
+                var curr_year = d.getFullYear();
+                var formattedDate = curr_date + "/" + curr_month + "/" + curr_year
+
+                if ($.inArray(formattedDate, active_dates) != -1) {
+                    return {
+                        classes: 'activeClass'
+                    };
+                }
+                return [true];
+            }
+        });
+        $('.input-group.date').datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            beforeShowDay: function nonWorkingDays(date) {
+                var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
+                var week = 0 | date.getDate() / 7 //get the week
+                var dd = date.getDate();
+                var month = date.getMonth();
+                if (dd < 10) {
+                    dd = '0' + dd
+                }
+
+                if (month < 10) {
+                    month = '0' + month
+                }
+                var sunweek = date.getDay();
+                var year = date.getFullYear();
+
+                if (dd == 14 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                if (dd == 28 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                    //check if it's second week or fourth week
+                else if (week == 1 || week == 3) {
+                    if (dd == 7 && day == 6 || dd == 21 && day == 6) {
+                        //check for satruday
+
+                    }
+                    else {
+                        if (day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                    }
+
+                }
+                //check for sunday
+                if (day == 0) {
+                    return {
+                        classes: 'secondClass'
+                    };
+
+                }
+                //check for holidays
+                var d = date;
+                var curr_date = d.getDate();
+                var curr_month = d.getMonth() + 1; //Months are zero based
+                if (curr_date < 10) {
+                    curr_date = '0' + curr_date
+                }
+                var curr_year = d.getFullYear();
+                var formattedDate = curr_date + "/" + curr_month + "/" + curr_year
+
+                if ($.inArray(formattedDate, active_dates) != -1) {
+                    return {
+                        classes: 'activeClass'
+                    };
+                }
+                return [true];
+            }
+        });
+
+    });
+</script>
+
+<script>
+    //Start And End Date Validation
+    function Dateevent1() {
+
+        var Joindate = document.getElementById("fromDate").value;
+        var Retdate = document.getElementById("toDate").value;
+        var date = moment(Joindate, "DD.MM.YYYY");
+
+        var currentDate1 = moment(Retdate, "DD.MM.YYYY");
+        var duration = moment.duration(date.diff(currentDate1));
+
+
+        if (duration > 0) {
+
+
+            alert("Please ensure that To Date is greater than or equal to From Date.");
+            document.getElementById("toDate").focus();
+            document.getElementById("toDate").value = '';
+            return false;
+
+        }
+
+        else {
+            if (Joindate != '' && Retdate != '') {
+                // datescheck();
+            }
+            return true;
+
+        }
+    }
+
+    function Dateevent3() {
+
+
+        var StartDate = document.getElementById('fromDate').value;
+        var EndDate = document.getElementById('toDate').value;
+        var eDate = moment(EndDate, "DD.MM.YYYY");
+        var sDate = moment(StartDate, "DD.MM.YYYY");
+
+        if (StartDate != '' && EndDate != '' && sDate > eDate) {
+            alert("Please ensure that To Date is greater than or equal to From Date.");
+            document.getElementById('fromDate').value = '';
+            document.getElementById("fromDate").focus();
+            return false;
+
+        }
+
+        else {
+            if (StartDate != '' && EndDate != '') {
+                // datescheck();
+            }
+            else if (EndDate != '' && StartDate != '') {
+                // Combinationdatescheck2();
+            }
+            // eventvalidates();
+
+            return true;
+        }
+    }
+</script>
+<script>
+    function datevalidate() {
+        var StartDate = document.getElementById('fromDate').value;
+        var EndDate = document.getElementById('toDate').value;
+
+        if (StartDate != "" && EndDate == "") {
+            window.alert("Please Select To Date");
+            $("#fromDate").focus();
+            //   $("#fromDate").val('');
+            return false;
+        }
+        if (StartDate == "" && EndDate != "") {
+            window.alert("Please Select From Date");
+            $("#toDate").focus();
+            // $("#toDate").val('');
+            return false;
+        }
+        else {
+            return true;
+        }
+
+    }
+
+    function Dateevent4() {
+        var StartDate = document.getElementById('toDate').value;
+        var EndDate = document.getElementById('toDate1').value;
+        var eDate = moment(EndDate, "DD.MM.YYYY");
+        var sDate = moment(StartDate, "DD.MM.YYYY");
+
+        if (StartDate != '' && EndDate != '' && sDate > eDate) {
+            alert("Please ensure that To Date is greater than or equal to From Date.");
+            document.getElementById('toDate').value = '';
+            document.getElementById("toDate").focus();
+            return false;
+        }
+    }
+
+    function Dateevent5() {
+        var StartDate = document.getElementById('toDate').value;
+        var EndDate = document.getElementById('toDate1').value;
+        var eDate = moment(EndDate, "DD.MM.YYYY");
+        var sDate = moment(StartDate, "DD.MM.YYYY");
+
+        if (StartDate != '' && EndDate != '' && sDate > eDate) {
+            alert("Please ensure that To Date is greater than or equal to From Date.");
+            document.getElementById('toDate1').value = '';
+            document.getElementById("toDate1").focus();
+            return false;
+        }
+    }
+
+    function Dateevent6() {
+        var StartDate = document.getElementById('rtfromDate1').value;
+        var EndDate = document.getElementById('rttoDate1').value;
+        var eDate = moment(EndDate, "DD.MM.YYYY");
+        var sDate = moment(StartDate, "DD.MM.YYYY");
+
+        if (StartDate != '' && EndDate != '' && sDate > eDate) {
+            alert("Please ensure that To Date is greater than or equal to From Date.");
+            document.getElementById('rtfromDate1').value = '';
+            document.getElementById("rtfromDate1").focus();
+            return false;
+        }
+    }
+
+    function Dateevent7() {
+        var StartDate = document.getElementById('rtfromDate1').value;
+        var EndDate = document.getElementById('rttoDate1').value;
+        var eDate = moment(EndDate, "DD.MM.YYYY");
+        var sDate = moment(StartDate, "DD.MM.YYYY");
+
+        if (StartDate != '' && EndDate != '' && sDate > eDate) {
+            alert("Please ensure that To Date is greater than or equal to From Date.");
+            document.getElementById('rttoDate1').value = '';
+            document.getElementById("rttoDate1").focus();
+            return false;
+        }
+    }
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".date").datepicker().datepicker("setDate", new Date());
+
+        var todayTimeStamp = new Date;
+        var oneDayTimeStamp = 1000 * 60 * 60 * 24;
+        var diff = todayTimeStamp - oneDayTimeStamp;
+        var yesterdayDate = new Date(diff);
+        var startDate = yesterdayDate.getDate() + '/' + (yesterdayDate.getMonth() + 1) + '/' + yesterdayDate.getFullYear();
+
+        $(".pdate").datepicker().datepicker("setDate", startDate);
+
+        //Default for todaty date in calender
+        var difftoday = todayTimeStamp;
+        var todayDate = new Date(difftoday);
+        var startDatetoday = yesterdayDate.getDate() + '/' + (yesterdayDate.getMonth() + 1) + '/' + yesterdayDate.getFullYear();
+        $("#futdatedis").datepicker().datepicker("setDate", startDatetoday);
+        $(".futdatehide").datepicker().datepicker("setDate", startDatetoday);
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var d = new Date();
+
+        var currMonth = d.getMonth();
+        var currYear = d.getFullYear();
+        var startDate = new Date(currYear, currMonth, 1);
+        $(".from").datepicker().datepicker("setDate", startDate);
+        $(".fromFudis").datepicker().datepicker("setDate", startDate);
+    });
+</script>
+<script src="~/Assets/hrms/Register.js"></script>
+<script>
+    $('.from').datepicker({
+        minViewMode: 1,
+        autoclose: true,
+        format: 'M-yyyy'
+    });
+    $('.pdate').datepicker({
+        minViewMode: 1,
+        autoclose: true,
+        format: 'dd/mm/yyyy'
+    });
+    $('#months').datepicker({
+        minViewMode: 1,
+        autoclose: true,
+        format: 'M-yyyy',
+    });
+    $('#monthyear').datepicker({
+        minViewMode: 1,
+        autoclose: true,
+        format: 'M-yyyy',
+        endDate: '+0m'
+    });
+</script>
+<script>
+    $(document).ready(function () {
+
+        var i = $("input[type=radio][value='True']:checked").val();
+        if (i == "True") {
+            $("#selfbranch").show();
+            $("#Allbranch").hide();
+            //textbox
+            $("#SelfEmpid").show();
+            $("#AllEmpid").hide();
+        }
+        else {
+            $("#Allbranch").show();
+            $("#selfbranch").hide();
+            //textbox
+            $("#AllEmpid").show();
+            $("#SelfEmpid").hide();
+        }
+    });
+    $('input[type=radio][name=numbers]').change(function () {
+        if (this.value == 'True') {
+
+            $("#selfbranch").show();
+            $("#Allbranch").hide();
+            //textbox
+            $("#SelfEmpid").show();
+            $("#AllEmpid").hide();
+        }
+        else if (this.value == 'False') {
+
+            $('#selfbranch').val() == '';
+            $("#Allbranch").show();
+            $("#selfbranch").hide();
+
+            //textbox
+            $('#SelfEmpid').val() == '';
+            $("#AllEmpid").show();
+            $("#SelfEmpid").hide();
+        }
+    });
+</script>
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>*@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.0/jspdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rasterizehtml/1.3.0/rasterizeHTML.allinone.js"></script>
+<script>
+    //var doc = new jsPDF();
+    $('#btnpdf').click(function () {
+      //debugger;
+         $('#btnProformaSearch').hide();
+      $('#btnpdf').hide();
+
+      //var canvas = $(HTMLDivElement).find('#pdfprint');
+      var doc = new jsPDF("p", "pt", "a4");
+      doc.addHTML($('#pdfprint'), 15, 15, function () {
+          doc.save('ProformaB.pdf');
+          //backgroundColor: '#FFFFFF'
+      });
+      $('#btnProformaSearch').show();
+      $('#btnpdf').show();
+      //html2canvas(document.body, {
+      //    onrendered: function (canvas) {
+
+      //        var img = canvas.toDataURL("image/jpeg");
+
+      //        var imgWidth = 208;
+
+      //        var pageHeight = 280;
+      //        var imgHeight = canvas.height * imgWidth / canvas.width;
+      //        var heightLeft = imgHeight;
+      //        var position = 0;
+      //        doc.addImage(img, 'JPEG', 0, 20, 210, 270)
+
+      //        doc.save('LateMemo.pdf');
+      //       // $('#display').show();
+      //      //  $('#displayBack').show();
+      //    }
+
+      //});
+
+  });</script>

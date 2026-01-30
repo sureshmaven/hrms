@@ -1,0 +1,413 @@
+﻿@model PayrollModels.loansTypes
+@{
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+    var reportTitle = ViewBag.ReportTitle;
+    ViewBag.Title = reportTitle + " Report";
+    var dataUrl = ViewBag.DataUrl;
+    var ExportColumns = ViewBag.ExportColumns;
+    var PdfOrientation = ViewBag.PdfOrientation;
+    
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/css/bootstrap-select.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/js/bootstrap-select.min.js"></script>
+
+<div class="page">
+    <div class="form-horizontal">
+        <div class="page_start">
+            <div class="leftmenu-container">
+                <div class="sidebar-menu">
+                    @{Html.RenderPartial("_PVPayrollMenu");}
+                </div>
+                <div class="sidebar-content">
+                   
+                    <div class="main_heading heading_main">
+                        <h1>@ViewBag.ReportTitle Report</h1>
+                        <div class="col-md-12">
+                            <div class="fancy-collapse-panel">
+                                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading" role="tab" id="headingOne">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#reportsearch" aria-expanded="true" aria-controls="reportsearch">
+                                                    Report Filter
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="reportsearch" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                            <div class="panel-body">
+                                                <div class="reports_search">
+                                                    <div class="rep_down_fields">
+                                                        @{
+                                                            if (ViewBag.ReportFiltersTemplate == "T10-OneMonthPickerTwoRadioButtons")
+                                                            {
+                                                                <div class="col-md-12">
+
+                                                                    <div class="col-md-2">
+                                                                        <div class="form-group">
+                                                                            <input id="rdRegbEmp" type="radio" name="wise" value="Regular" checked="checked"><label for="rdRegbEmp"><span><span></span></span> Regular Employee</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <div class="form-group">
+                                                                            @*<label class="control-label">*@
+                                                                            <input id="rdbSupEmp" type="radio" name="wise" value="Supplement"><label for="rdbSupEmp"><span><span></span></span>Supplementery Employee</label>
+                                                                            @*</label>*@
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                            <label class="col-sm-4 control-label dept_label">Select @ViewBag.OneMonthPickerLabel1</label>
+                                                                            <div class="col-md-8 date input-group p0" id="dtOneMonthPickerYear">
+                                                                                <input type="text" class="form-control form-control-1 input-sm from fromFudis" placeholder="Select-Month" id="dtOneMonthPicker">
+                                                                                <span class="input-group-addon">
+                                                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-md-3">
+                                                                        <div class="pull-right">
+                                                                            <button class="btn btn-primary btn-sm" id="btnOneMonthPickerSearchtsheet">Search</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="table-responsive ">
+                                <table id="rptGrid" class="display reports-grids" title="hidden" cellspacing="0" style="width:100%"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var ReportColumnsCount = '@ViewBag.ReportColumnsCount';
+
+    var reportMsgTop = '';
+    var fnMessageTop = function () {
+        return (reportMsgTop == '' ? '' : 'Filters : ' + reportMsgTop);
+    };
+
+    $(document).ready(function () {
+        setTimeout(pageInitLoad(), 2000);
+    });
+
+    function pageInitLoad() {
+        // 
+        //$.noConflict();
+        var serviceurl = '@dataUrl';
+        serviceurl = serviceurl.replace('&amp;', '&');
+
+        $('#rptGrid').DataTable({
+            scrollX: true,
+            scrollCollapse: true,
+            "language": {
+                "search": "Filter records:"
+            },
+            //"destroy" : true,
+            "ajax": {
+                "url": serviceurl,
+                "type": "GET",
+                "datatype": "json",
+                "dataSrc": ""
+
+            },
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'excelHtml5',
+                    text: '<i class="fa fa-file-excel-o dt-export-icon-excel"></i>',
+                    titleAttr: 'Excel',
+                    title: 'TGCAB - @reportTitle',
+                    messageTop: fnMessageTop,
+                    exportOptions: {@ExportColumns},
+                    className: 'dt-export-btn',
+                    color: 'red'
+                },
+                {
+                    extend: 'pdfHtml5',
+                    text: '<i class="fa fa-file-pdf-o dt-export-icon-pdf"></i>',
+                    className: 'dt-export-btn',
+                    titleAttr: 'Pdf',
+                    orientation: '@PdfOrientation',
+                    exportOptions: {@ExportColumns},
+                    title: 'TGCAB - @reportTitle',
+                    messageTop: fnMessageTop,
+                    customize: function (doc) {
+                        // 
+                        doc.styles.tableHeader.alignment = 'left';
+                        doc.content.splice(1, 0, {
+                            margin: [0, -50, 0, 10],
+                            alignment: 'left',
+                            image: 'data:image/jpeg;base64,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'
+                        });
+
+                        var bod = [];
+                        var docIdx = reportMsgTop != '' ? 3 : 2;
+
+                        doc.content[docIdx].table.body.forEach(function (line, i) {
+                            // 
+                            if (i < doc.content[docIdx].table.body.length) {
+                                // 
+                                if (line[0].text.startsWith('~')) { //header
+                                    bod.push([
+                                        { text: PdfHeaderFooterFormat('~', line[0].text), colSpan: ReportColumnsCount, fillColor: '#C8EAFB' },
+                                    ]);
+                                }
+                                else if (line[0].text.startsWith('^')) { //footer
+                                    bod.push([
+                                        { text: PdfHeaderFooterFormat('^', line[0].text), colSpan: ReportColumnsCount, fillColor: '#eef8fd' },
+                                    ]);
+                                } else { //body rows
+                                    var arrBodyPush = [];
+                                    for (var y = 0; y < ReportColumnsCount; y++) {
+                                        arrBodyPush.push({ text: line[y].text, style: 'defaultStyle' });
+                                    }
+                                    bod.push(arrBodyPush);
+                                    //bod.push([
+                                    //    { text: line[0].text, style: 'defaultStyle' },
+                                    //    { text: line[1].text, style: 'defaultStyle' },
+                                    //    { text: line[2].text, style: 'defaultStyle' },
+                                    //    //{ text: line[3].text, style: 'defaultStyle' },
+                                    //    //{ text: line[4].text, style: 'defaultStyle' },
+                                    //    //{ text: line[5].text, style: 'defaultStyle' },
+                                    //    //{ text: line[6].text, style: 'defaultStyle' }
+                                    //]);
+                                }
+                            }
+                        });
+
+                        doc.content[docIdx].table.body = bod;
+                        doc.content[docIdx].table.widths = [@ViewBag.PdfColumnsWidths];
+                        doc.content[docIdx].layout = 'lightHorizontalLines';
+
+                        doc.content[0].text = doc.content[0].text.trim();
+                        doc.styles.title = {
+                            fontSize: '20',
+                            alignment: 'center'
+                        };
+                        doc.styles.message = {
+                            fontSize: '9',
+                            alignment: 'center'
+                        };
+                        doc['footer'] = (function (page, pages) {
+                            return {
+                                columns: [
+                                    'By: @ViewBag.LoginUserName , @ViewBag.LoginBranchName .',
+                                    {
+                                        alignment: 'right',
+                                        text: [
+                                            new Date().toLocaleDateString("en-IN", { day: "2-digit", month: "2-digit", year: "numeric", hour: '2-digit', minute: '2-digit' }),
+                                            '    Page ', { text: page.toString() }, ' of ', { text: pages.toString() }
+                                        ]
+                                    }
+                                ],
+                                fontSize: '9',
+                                margin: [40, 10]
+                            }
+                        });
+                    }
+                }
+            ],
+            "columns": @Html.Raw(ViewBag.ReportColumns),
+            "rowCallback": function (row, data, index) {
+                // 
+                if (data.HRF=="H") {
+                    $('td', row).css('background-color', '#C8EAFB');
+                    $('td:eq(0)', row).attr('colspan', ReportColumnsCount);
+                    for (y = 1; y < ReportColumnsCount; y++) {
+                        $('td:eq('+ y +')', row).css('display', 'none');
+                    }
+                    //$('td:eq(0)', row).attr('colspan', 3);
+                    //$('td:eq(1)', row).css('display', 'none');
+                    //$('td:eq(2)', row).css('display', 'none');
+                    //$('td:eq(4)', row).css('display', 'none');
+                    //$('td:eq(5)', row).css('display', 'none');
+                    //$('td:eq(6)', row).css('display', 'none');
+                }
+                else if (data.HRF=="F")
+                {
+                    $('td', row).css('background-color', '#eef8fd');
+                    $('td:eq(0)', row).attr('colspan', ReportColumnsCount);
+                    for (y = 1; y < ReportColumnsCount; y++) {
+                        $('td:eq('+ y +')', row).css('display', 'none');
+                    }
+                    //$('td:eq(0)', row).attr('colspan', 3);
+                    //$('td:eq(1)', row).css('display', 'none');
+                    //$('td:eq(2)', row).css('display', 'none');
+                    ////$('td:eq(4)', row).css('display', 'none');
+                    ////$('td:eq(5)', row).css('display', 'none');
+
+                }
+
+
+            }
+        });
+    };
+
+    function PdfHeaderFooterFormat(symbol, txt) {
+        var sRet = txt.replace(symbol, '');
+        sRet = sRet.split('_').join(' ');
+        return sRet;
+    }
+
+    $("#btntwoDtpickersSearch").click(function ()
+    {
+        //  
+        var fromDate = $("#rtfromDate").val();
+        var toDate = $("#rttoDate").val();
+
+        if ($("#rttoDate").val() == "") {
+            showGlobalModal('E#Save Error#Please Select Todate ');
+            //$('#rttoDate').focus();
+        }
+        else {
+            var Todate = $('#rttoDate').val();
+        }
+        if ($("#rtfromDate").val() == "") {
+            showGlobalModal('E#Save Error#Please Select Fromdate ');
+            $('#rtfromDate').focus();
+        } else {
+            var Fromdate = $('#rtfromDate').val();
+        }
+        if (Fromdate != undefined && Todate != undefined) {
+            ajaxSpinnerShow();
+            var mainUrl = '@dataUrl';
+
+            //var fromDate = $("#rtfromDate").val();
+            //    var toDate = $("#rttoDate").val();
+            var ajaxurl = mainUrl.replace('^1', fromDate);
+            ajaxurl = ajaxurl.replace('^2', toDate);
+            ajaxurl = ajaxurl.replace('&amp;', '&');
+
+            reportMsgTop = '@ViewBag.twoDtpickersLabel1 : ' + fromDate + ' - ' + toDate;
+            $('#rptGrid').DataTable().ajax.url(ajaxurl).load(function () {
+                ajaxSpinnerHide();
+            });
+        }
+    });
+    //validation for From date greater then To date
+    function fun() {
+        // 
+        var fm = $("#rtfromDate").val();
+        var fm2 = $("#rttoDate").val();
+
+        var fromdate = fm.split('-');
+        var dd = parseInt(fromdate[0]);
+        var mm = parseInt(fromdate[1]);
+        var yy = parseInt(fromdate[2]);
+        var todate = fm2.split('-');
+        var dd2 = parseInt(todate[0]);
+        var mm2 = parseInt(todate[1]);
+        var yy2 = parseInt(todate[2]);
+        // checking
+        if (dd > dd2 || mm > mm2 || yy > yy2 ) {
+            showGlobalModal('E#Warning #Please Enter From date greater then To date');
+            var fm2 = $("#rttoDate").val('');
+            $('#rttoDate').focus();
+        }
+        else {
+
+        }
+    }
+
+
+     //LIC Report Search function
+   $("#btnT4AllEmpSearchOneMultiSelOneMonthpic").click(function () {
+       // 
+
+       var emp_code = $("#txtEmployeeSearchBox1450").val();
+        var mnth = $("#dtOneMonthPicker").val();
+       var Types = $("#DDLActivites").val();
+       var Finance = $("#DDLActivites").text();
+       var emp_code = $("#txtEmployeeSearchBox1450").val();
+       var allemp = $("input[id='rdbEmpAll']:checked").val();
+
+       if (allemp == "All") {
+           emp_code = $("input[id='rdbEmpAll']:checked").val();
+       }
+       if (emp_code == undefined || emp_code == "") {
+           showGlobalModal('E#Warning #Please Enter Employee Code');
+           return false;
+       }
+
+
+        if (emp_code != undefined && mnth != undefined ) {
+            ajaxSpinnerShow();
+            var mainUrl = '@dataUrl';
+
+            var ajaxurl = mainUrl.replace('^1', emp_code);
+            ajaxurl = ajaxurl.replace('^2', Types );
+            ajaxurl = ajaxurl.replace('^3', mnth );
+            ajaxurl = ajaxurl.split('&amp;').join('&');
+
+           // reportMsgTop = 'Employee : ' + emp_code + ' , @ViewBag.T3MultiSelLabel : ' + Finance + ' , of Month : ' + mnth;
+            $('#rptGrid').DataTable().ajax.url(ajaxurl).load(function () {
+                ajaxSpinnerHide();
+            });
+        }
+
+    });
+
+
+
+    $('#dtOneMonthPickerYear').datepicker({
+        minViewMode: 1,
+        autoclose: true,
+        format: 'MM-yyyy',
+    }).datepicker("setDate", "+0d");
+
+    $('#dtOneMonthPickerYear').datepicker({
+        minViewMode: 1,
+        autoclose: true,
+        format: 'MM-yyyy',
+    }).datepicker("setDate", "+0d");
+
+
+
+     //Tsum report
+    $("#btnOneMonthPickerSearchtsheet").click(function () {
+        // 
+        var RegEmp = $("input[id='rdRegbEmp']:checked").val();
+        var SupEmp = $("input[id='rdbSupEmp']:checked").val();
+        var mnpkrVal = $("#dtOneMonthPicker").val();
+        if (mnpkrVal == "") {
+            showGlobalModal('E#Validation#Please Select Month');
+            return;
+        }
+
+        //if (SupEmp == undefined) {
+        //    $("input[id='rdRegbEmp']:checked").val();
+
+        //}
+
+        ajaxSpinnerShow();
+        var mainUrl = '@dataUrl';
+
+        var ajaxurl = mainUrl.replace('^1', mnpkrVal);
+        ajaxurl = ajaxurl.replace('^2', RegEmp);
+        ajaxurl = ajaxurl.replace('^3', SupEmp);
+        ajaxurl = ajaxurl.split('&amp;').join('&');
+        reportMsgTop = '@ViewBag.OneMonthPickerLabel1 : ' + mnpkrVal + ', RegEmp:'+RegEmp, 'SupEmp:'+SupEmp;
+        $('#rptGrid').DataTable().ajax.url(ajaxurl).load(function () {
+            ajaxSpinnerHide();
+        });
+    });
+
+</script>

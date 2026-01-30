@@ -1,0 +1,250 @@
+﻿@{
+    ViewBag.Title = "RepayableLoans";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <h1>Repayable Loans<span class="year-end">TGCAB 01-04-2019 - 31-04-2020</span></h1>
+                    <div class="emp-serch">
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label">Employee Id:</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-sm-1 col-xs-12"><button type="button" class="btn btn-primary btn-sm pull-right">Search</button></div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label">Employee Name :</label>
+                                    <div class="col-sm-6">
+                                        <label class="control-label"> raju sadhula</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label">Department :</label>
+                                    <div class="col-sm-6">
+                                        <label class="control-label">IT</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label">Designation :</label>
+                                    <div class="col-sm-6">
+                                        <label class="control-label"> UI Developer</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label">Date of Joining :</label>
+                                    <div class="col-sm-6">
+                                        <label class="control-label"> 27/04/2017</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="inner_heading">
+                            <h1>PF Details</h1>
+                            <div class="form-horizontal">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">P.F Account No:</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Purpose of Advance:</label>
+                                        <div class="col-sm-7">
+                                            <select class="form-control">
+                                                <option>Select</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Rate of Basic & D A:</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="inner_heading">
+                            <h1>List of Documents Enclosed</h1>
+                            <div class="form-horizontal">
+                                <div class="col-md-7">
+                                    <ul>
+                                        <li>
+                                            <div class="col-md-7">i. Title Deed_Non_Encumberance Certficate</div>
+                                            <div class="col-md-5">
+                                                <label class="radio-inline">
+                                                    <input type="radio" value="option1"> Yes
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" value="option2"> No
+                                                </label>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="col-md-7">ii. An estimate of Cost of Construction</div>
+                                            <div class="col-md-5">
+                                                <label class="radio-inline">
+                                                    <input type="radio" value="option1"> Yes
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" value="option2"> No
+                                                </label>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="col-md-7">iii. Sanction / Approved plan</div>
+                                            <div class="col-md-5">
+                                                <label class="radio-inline">
+                                                    <input type="radio" value="option1"> Yes
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" value="option2"> No
+                                                </label>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="inner_heading">
+                            <h1>Eligibility</h1>
+                            <div class="form-horizontal form_label_left">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">i. (Basic+DA)*12</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">ii. Own Share:</label>
+                                        <div class="col-sm-7">
+                                            <select class="form-control">
+                                                <option>Select</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">iii. Amount applied for:</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Least of i,ii,iii</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="inner_heading">
+                            <h1>Sanctioned</h1>
+                            <div class="form-horizontal form_label_left">
+                                <div class="col-md-10">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label"></label>
+                                        <div class="col-sm-4">
+                                        </div>
+                                        <label class="col-sm-5 control-label">Available</label>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-md-10">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">From Own Share</label>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control">
+                                        </div>
+                                        <label class="col-sm-5 control-label">27158.00</label>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-md-10">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">From V.P.F</label>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control">
+                                        </div>
+                                        <label class="col-sm-5 control-label">27158.00</label>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-md-10">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">From Bank Share</label>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control">
+                                        </div>
+                                        <label class="col-sm-5 control-label">27158.00</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label"></label>
+                                        <div class="col-sm-4">
+                                            <strong>Total Recommended for sanction</strong>
+                                        </div>
+                                        <label class="col-sm-5 control-label"><strong>27158.00</strong></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mt_10">
+                        <div class="pull-right">
+                            <button type="reset" class="btn btn-default cancel">Cancel</button>
+                            <button type="submit" class="btn btn-primary">OB Share</button>
+                            <button type="submit" class="btn btn-primary">Delete</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

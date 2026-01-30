@@ -1,0 +1,215 @@
+﻿@{
+    ViewBag.Title = "AnnualStagIncrementAuthorisation";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+		<div class="leftmenu-container">
+            <div class="sidebar-menu">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="sidebar-content">
+                <div class="main_heading heading_main">
+                    <h1>Annual Stag Increment Authorisation <span class="year-end">@ViewBag.Env_Fm_Fy</span></h1>
+                   
+                        <div class="inner_heading">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table id="incrm_stag_auth" class="display" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        <input name="select" value="1" id="checkAll" type="checkbox" onclick="checkboxRowAll()">
+                                                        <label for="checkbox1"><span></span></label>
+                                                    </th>
+                                                    <th>Emp Code</th>
+                                                    <th>Empname</th>
+                                                    <th>Designation</th>
+                                                    <th>Inc Amount(<i class="fa fa-rupee"></i>)</th>
+                                                    <th>Basic</th>
+                                                    <th>Increment Type</th>
+                                                    <th>Increment W.E.F</th>
+                                                    <th>Stages</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mt_10">
+                                    <div class="pull-right">
+                                        <button type="reset" id="btnCancel" class="btn btn-default calcel">Close</button>
+                                        <button type="submit" id="btnsubmit" class="btn btn-primary">Authorize</button>
+                                    </div>
+                                </div>
+                        </div>
+                    
+                </div>
+            </div>
+			</div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#incrm_stag_auth').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false
+        });
+    });
+</script>
+<script>
+     $("#checkAll").click(function () {
+      $('.selectRow').not(this).prop('checked', this.checked);
+
+  });
+</script>
+
+<script>
+    var respData;
+    var orgDdlist;
+    var arrerresult = [];
+    var cancelOrg;
+    $(document).ready(function () {
+        // 
+        var orgData;
+        CommonApiGET('/Payroll/Authorization/getAuthStagIncrementDateChange', function (respData) {
+            orgData = respData;
+            cancelOrg = respData;
+            fillDataTables(respData);
+        });
+       
+        function fillDataTables(respData) {
+            // 
+
+            orgDdlist = respData;
+            $('#incrm_stag_auth').DataTable({
+                destroy: true,
+                "paging": false,
+                "ordering": true,
+                "info": false,
+                "bFilter": false,
+                "searching": true,
+                "language": {
+                    "search": "Filter records:"
+                },
+                data: respData,
+                "columns": [
+                    {
+                        "mData": null,
+                        "bSortable": false,
+                        'mRender': function (data, type, full) {
+                            return getColumnCheckBox(data.Id, data.value);
+                        }
+                    },
+
+                    { "data": "Id" },
+                    { "data": "Name" },
+                    { "data": "desi_mid" },
+                    { "data": "Increment" },
+                    { "data": "Basic" },
+                    { "data": "increment_type" },
+                    { "data": "increment_date" },
+                    { "data": "stages" },
+                    
+
+                ],
+                "order": [[1, 'asc']]
+            });
+        }
+        $("#btnCancel").click(function () {
+            // 
+            fillDataTables(cancelOrg);
+            $('#checkAll').attr("checked", false)
+        });
+       
+      
+    });
+    </script>
+<script>
+     //single row check
+    //function checkboxRow(id) {
+    //    // 
+    //    orgDdlist.map(function (o) {
+    //        if (o.Id == id) {
+    //            arrerresult.push(o.Id);
+    //        }
+    //    });
+    //    console.log(JSON.stringify(arrerresult));
+    //};
+    ////click all check boxes
+    //function checkboxRowAll() {
+    //    // 
+    //    $('input[type="checkbox"]').click(function () {
+    //        if ($(this).prop("checked") == true) {
+    //            orgDdlist.map(function (o) {
+    //                arrerresult.push(o.Id);
+    //            });
+    //        }
+    //        else if ($(this).prop("checked") == false) {
+    //            orgDdlist.map(function (o) {
+    //                arrerresult = [];
+    //            });
+    //        }
+    //    });
+    //};
+
+     function checkboxRow(id) {
+         
+        document.getElementById("checkAll").checked = false;
+        //$('#SelectAllcheckBoxes').checked = false;
+            if ($('#'+id).prop("checked") == true) {
+                  
+                orgDdlist.map(function (o) {
+                    if (o.Id == id) {
+                        arrerresult.push(id);
+                    }
+                });
+            } else if ($('#'+id).prop("checked") == false) {
+                 
+                var index = arrerresult.indexOf(id);
+                arrerresult.splice(index, 1);
+
+            }
+          
+        console.log(JSON.stringify(arrerresult));
+    };
+
+    // all checked
+    function checkboxRowAll() {
+          
+      arrerresult = [];
+       
+            if ($('#checkAll').prop("checked") == true) {
+                 
+                orgDdlist.map(function (o) {
+                    arrerresult.push(o.Id);
+                });
+            }
+            else if ($('#checkAll').prop("checked") == false) {
+                  
+                orgDdlist.map(function (o) {
+                    arrerresult = [];
+                });
+            }
+       
+    };
+
+    $('#btnsubmit').click(function () {
+        // 
+        if (arrerresult.length > 0) {
+            CommonApiPOST("/Payroll/Authorization/UpAuthStagIncDateChange", JSON.stringify(arrerresult), function (isSuccess) {
+                if (isSuccess) {
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+        } else {
+            showGlobalModal("E#Required Field#Please Select Employee Code");
+        }
+    });
+</script>

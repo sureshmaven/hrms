@@ -1,0 +1,67 @@
+﻿@{
+    ViewBag.Title = "LoansAdvances";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <h1>Loans & Advances<span class="year-end">TSCAB 01-04-2019 - 31-04-2020</span></h1>
+                    <div class="col-md-12">
+                        <div class="table-responsive mb_10">
+                            <table id="loan_adv" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Loan Id</th>
+                                        <th>Loan Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>CD2</td>
+                                        <td>CD LOAN 2 </td>
+                                    </tr>
+                                    <tr>
+                                        <td>EDUC</td>
+                                        <td>Education Loan</td>
+                                    </tr>
+                                    <tr>
+                                        <td>FEST</td>
+                                        <td>Festival Advance</td>
+                                    </tr>
+                                    <tr>
+                                        <td>HL2</td>
+                                        <td>Housing Loan - 2 -6%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="pull-right">
+                            <button type="reset" class="btn btn-default calcel">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Edit</button>
+                            <button type="submit" class="btn btn-primary">Delete</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#loan_adv').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+        });
+    });
+</script>

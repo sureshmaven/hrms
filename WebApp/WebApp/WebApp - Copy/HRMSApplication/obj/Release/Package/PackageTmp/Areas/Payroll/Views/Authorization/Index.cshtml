@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="leftmenu-container">
+                <div class="sidebar-menu">
+
+                    @{Html.RenderPartial("_PVPayrollMenu");}
+
+                </div>
+                <div class="sidebar-content">
+                    <div class="main_heading heading_main">
+                        <h1>Payroll Authorisation </h1>
+                        <div class="col-md-12">
+                            <ul class="index-menus">
+                                <li><a href="@Url.Action("PromotionAuthorisation", "Authorization")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="Promotion Authorisation" aria-hidden="true"></i> <span>Promotion Authorisation</span> </a> <span> : It Authorizes The Employee Promotions,Applied in HRMS Masters-Promotion Page</span></li>
+                                <li><a href="@Url.Action("IncrementDateChange", "Authorization")"><i class="fa fa-exchange" data-toggle="tooltip" data-placement="right" title="Increment Date Change" aria-hidden="true"></i><span> Increment Date Change </span> </a> <span> : It is used to Authorize the Increment Date Change,Applied by the Employees in HRMS Masters-Increment Date Change</span></li>
+                                <li><a href="@Url.Action("AnnualStagIncrementAuthorisation", "Authorization")"><i class="fa fa-user" data-toggle="tooltip" data-placement="right" title="Annual Stag Increment Authorisation" aria-hidden="true"></i><span> Annual Stag Increment Authorisation </span></a> <span> : It Authorizes Annual and Stagnation Increments Applied in HRMS Masters-Annual Stag Increment</span></li>
+                                <li><a href="@Url.Action("JAIIBCAIIBIncrAuthrization", "Authorization")"><i class="fa fa-lock" data-toggle="tooltip" data-placement="right" title="JAIIB / CAIIB / General" aria-hidden="true"></i><span> JAIIB / CAIIB / General </span></a> <span> : It is used to Authorize the JAIIB / CAIIB / General  Increments Applied in HRMS Masters-JAIIB / CAIIB / General</span></li>
+                                <li>
+                                    <a href="#"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="PF Loans" aria-hidden="true"></i><span> PF Loans</span></a> <span> : It contains the Authorization of PF Non Repayable and Repayable Loans</span>
+                                    <ul class="index-menus2">
+                                        <li><a href="@Url.Action("PFNonRepayable", "Authorization")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="NonRepayable" aria-hidden="true"></i><span> Non Repayable </span></a> <span> : It Authorizes PF Non Repayable Loans</span></li>
+                                        <li><a href="@Url.Action("PFRepayable", "Authorization")"><i class="fa fa-exchange" data-toggle="tooltip" data-placement="right" title="Repayable Loans" aria-hidden="true"></i><span> Repayable Loans</span> </a> <span> : It is used to Authorize the PF Repayable Loans</span></li>
+                                    </ul>
+                                </li>
+                                @*<li><a href="@Url.Action("PFAuthorisation", "Authorization")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="PF Authorisation" aria-hidden="true"></i><span> PF Authorisation</span> </a> <span> : Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's</span></li>*@
+                                <li><a href="@Url.Action("AdminPLApply", null, new { area = string.Empty, controller = "PLE_Type" }, Request.Url.Scheme)"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="Encashment" aria-hidden="true"></i><span> Encashment </span></a> <span> : It is used to Authorize the Encashment Process</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

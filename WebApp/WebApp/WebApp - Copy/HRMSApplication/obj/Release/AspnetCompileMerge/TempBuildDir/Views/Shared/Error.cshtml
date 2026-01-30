@@ -1,0 +1,34 @@
+﻿
+@{
+    ViewBag.Title = "Error";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>TSCAB-HRMS</title>   
+</head>
+<body>
+    <div class="container">
+        <div class="page_st">
+            <div class="page">
+                <div class="error-template">
+                    <h1>
+                        Oops!@Session["Error"]
+                    </h1>
+                    <h2>
+                        404 Not Found
+                    </h2>
+                    <div class="error-details">
+                        Sorry, an error has occured, Requested page not found!
+                    </div>
+                    <div class="error-actions">
+                        <a href="~/Home/Help" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-envelope"></span> Contact Support </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

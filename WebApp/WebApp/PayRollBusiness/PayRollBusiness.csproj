@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1370CD1A-47F3-412C-874C-C9B9F57AA777}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PayRollBusiness</RootNamespace>
+    <AssemblyName>PayRollBusiness</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\..\SchedulerServices\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\HRMSSCHEDULER\HrmsScheduler\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\HRMSSCHEDULER\HrmsScheduler\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\HRMSSCHEDULER\HrmsScheduler\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\HRMSSCHEDULER\HrmsScheduler\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\HRMSSCHEDULER\HrmsScheduler\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Autorization\AuthouIncrementDateChangeBusiness.cs" />
+    <Compile Include="Autorization\JAIIBCAIIBIncrementAuthBusiness.cs" />
+    <Compile Include="Autorization\PFNonReyPayableAuthBusiness.cs" />
+    <Compile Include="Autorization\PFPayableBusinessAuth.cs" />
+    <Compile Include="Autorization\PromotionAutBus.cs" />
+    <Compile Include="CommonBusiness.cs" />
+    <Compile Include="Customization\EarningsMISReport.cs" />
+    <Compile Include="Customization\LoanMISReport.cs" />
+    <Compile Include="Customization\Loans_MasterBusiness.cs" />
+    <Compile Include="Customization\PFMISReport.cs" />
+    <Compile Include="LoansPaymentProcess.cs" />
+    <Compile Include="Masters\AllowanceBusiness.cs" />
+    <Compile Include="Masters\AnnualIncrement.cs" />
+    <Compile Include="Masters\Form12BABusiness.cs" />
+    <Compile Include="Masters\Form16ScreenBusiness.cs" />
+    <Compile Include="Masters\IncomeTaxBankPayment.cs" />
+    <Compile Include="Masters\IncrementAnnualStagnationBusiness.cs" />
+    <Compile Include="Masters\JAIIBCAIIBIncrementBusiness.cs" />
+    <Compile Include="Masters\LoansAdvancesBus.cs" />
+    <Compile Include="Masters\OtherTdsDeductionBusiness.cs" />
+    <Compile Include="Masters\PayslipPdfBusiness.cs" />
+    <Compile Include="Masters\PersonalDeductionsBusiness.cs" />
+    <Compile Include="Masters\PersonalEarnings.cs" />
+    <Compile Include="Masters\EmployeeMasterBusiness.cs" />
+    <Compile Include="Masters\HouseRentalDetailsBusiness.cs" />
+    <Compile Include="Masters\IncrementDateChangeBusiness.cs" />
+    <Compile Include="Masters\EncashmentBusiness.cs" />
+    <Compile Include="Masters\PFFinalSettlement.cs" />
+    <Compile Include="Masters\PfNomineeBusiness.cs" />
+    <Compile Include="Masters\PFNonPayableBusiness.cs" />
+    <Compile Include="Masters\PFPayableBusiness.cs" />
+    <Compile Include="Masters\PFPayableOBShareBusiness.cs" />
+    <Compile Include="Masters\PromotionBusiness.cs" />
+    <Compile Include="PayrollService\DayEndProcess.cs" />
+    <Compile Include="PayrollService\EmpAllowences.cs" />
+    <Compile Include="PayrollService\HourEndProcess.cs" />
+    <Compile Include="PayrollService\JAIIBCAIIBService.cs" />
+    <Compile Include="PayrollService\LoansBeforeMonthEndProcess.cs" />
+    <Compile Include="PayrollService\MonthEndProcess.cs" />
+    <Compile Include="PayrollService\MonthlyAdjustmentsLoans.cs" />
+    <Compile Include="PayrollService\PaySlipSer.cs" />
+    <Compile Include="PayrollService\YearEndProcess.cs" />
+    <Compile Include="Poc\PocBusiness.cs" />
+    <Compile Include="Process\CalculatePFforRetirementBusiness.cs" />
+    <Compile Include="Process\LoansPaymentProcess.cs" />
+    <Compile Include="Process\PayslipBusiness.cs" />
+    <Compile Include="Process\PFNonReyPayableProcessBusiness.cs" />
+    <Compile Include="Process\PFPayableBusinessProcess.cs" />
+    <Compile Include="Process\ProcessBusiness.cs" />
+    <Compile Include="Process\TdsProcessBusiness.cs" />
+    <Compile Include="Process\TDSUpdateBusiness.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\AllDeductionBusiness.cs" />
+    <Compile Include="Reports\AllAllowanceBusiness.cs" />
+    <Compile Include="Reports\AllLoanReportBusiness.cs" />
+    <Compile Include="Reports\AllLoansReportBusines.cs" />
+    <Compile Include="Reports\EmployeeLoanDetailsBusiness.cs" />
+    <Compile Include="Reports\EncashmentReportBusiness.cs" />
+    <Compile Include="Reports\EncashmentSummaryBus.cs" />
+    <Compile Include="Reports\Form12BReportBusiness.cs" />
+    <Compile Include="Reports\Form16Business.cs" />
+    <Compile Include="Reports\Form3ABusiness.cs" />
+    <Compile Include="Reports\Form5AReport.cs" />
+    <Compile Include="Reports\AllowanceReportBusiness.cs" />
+    <Compile Include="Reports\Form7Business.cs" />
+    <Compile Include="Reports\Form8.cs" />
+    <Compile Include="Reports\GeneralVochersReportBusiness.cs" />
+    <Compile Include="Reports\IncrementDateChangeReportBusiness.cs" />
+    <Compile Include="Reports\IncrementReportBusiness.cs" />
+    <Compile Include="Reports\InterfaceVocherBusiness.cs" />
+    <Compile Include="Reports\JAIIB_CAIIB_Business.cs" />
+    <Compile Include="Reports\LICReport.cs" />
+    <Compile Include="Reports\LoanledgerBusiness.cs" />
+    <Compile Include="Reports\LoanReportBusiness.cs" />
+    <Compile Include="Reports\LoanScheduleReportBusiness.cs" />
+    <Compile Include="Reports\MembersLeavingServiceReport.cs" />
+    <Compile Include="Reports\MonthDetailsReportBusiness.cs" />
+    <Compile Include="Reports\MultirateBusiness.cs" />
+    <Compile Include="Reports\NegativeNetSalaryBusiness.cs" />
+    <Compile Include="Reports\PFFundBusiness.cs" />
+    <Compile Include="Reports\PFPayableReportBusiness.cs" />
+    <Compile Include="Reports\PocReportBusiness.cs" />
+    <Compile Include="Reports\PromotionReportBusiness.cs" />
+    <Compile Include="Reports\SalBrReportBusiness.cs" />
+    <Compile Include="Reports\SingleRateLoanOutStandingBus.cs" />
+    <Compile Include="Reports\TDSReportBusiness.cs" />
+    <Compile Include="Reports\TsheetReportBusiness.cs" />
+    <Compile Include="Reports\TSumReportBusiness.cs" />
+    <Compile Include="Reports\YearlyPayBusiness.cs" />
+    <Compile Include="Transaction\AddMonthDetails.cs" />
+    <Compile Include="Transaction\AdhocPaymentsBusiness.cs" />
+    <Compile Include="Transaction\AdjestPaymentsBusiness.cs" />
+    <Compile Include="Transaction\AdjustmentsLoansBusiness.cs" />
+    <Compile Include="Transaction\AllowanceBusiness.cs" />
+    <Compile Include="Transaction\AttendenceMonthlyBusiness.cs" />
+    <Compile Include="Transaction\DateOfLeavingBusiness.cs" />
+    <Compile Include="Transaction\DeputationEntryBusiness.cs" />
+    <Compile Include="Transaction\EmployeePayFieldsBus.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Mavensoft.Common\Mavensoft.Common.csproj">
+      <Project>{e65635f4-0929-4560-9256-8e4f9611fd44}</Project>
+      <Name>Mavensoft.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mavensoft.DAL\Mavensoft.DAL.csproj">
+      <Project>{7cae4e34-3093-41ae-9016-fe8fc910743a}</Project>
+      <Name>Mavensoft.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PayrollModels\PayrollModels.csproj">
+      <Project>{27EBB842-D631-4E9A-9C95-D3897BCA5980}</Project>
+      <Name>PayrollModels</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

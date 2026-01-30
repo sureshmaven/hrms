@@ -1,0 +1,11 @@
+update pr_emp_adv_loans set interest_installment_amount=1210 where emp_code=308 and loan_type_mid=24;
+update pr_emp_adv_loans set interest_installment_amount=11235 where emp_code=371 and loan_type_mid=25;
+
+update pr_emp_adv_loans set interest_installment_amount=5210 where emp_code=6209 and loan_type_mid=25;
+
+update pr_emp_adv_loans set installment_start_date='2020-12-21' where emp_code=982 and loan_type_mid=3 and active=1;
+
+update pr_emp_adv_loans set installment_amount=2540 where emp_code=562 and loan_type_mid=16;
+update pr_emp_adv_loans_child set interest_rate=10.75
+where emp_adv_loans_mid in (select id from pr_emp_adv_loans where loan_type_mid=16 and emp_code=562);
+Inst

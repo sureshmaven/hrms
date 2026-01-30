@@ -1,0 +1,1236 @@
+﻿@model Entities.Timesheet_Request_Form
+
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var rolepages = TempData["RolePages"].ToString();
+    ViewBag.RolePages = TempData["RolePages"];
+}
+
+@{
+    var message = TempData["AlertMessage"] ?? string.Empty;
+}
+@*<script type="text/javascript" src="~/Assets/hrms/Register.js"></script>*@
+<script type="text/javascript">
+    var message = '@message';
+    if (message) alert(message);
+
+</script>
+
+<style>
+    .closeText:before {
+    content: "Close";
+}
+    .activeClass {
+        background: #ffdb99;
+    }
+
+    .secondClass {
+        /*background: #FF9999;*/
+        color: red;
+    }
+</style>
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-heading">
+            @{
+            <ul class="nav nav-tabs">
+                @if (rolepages.Contains("ADERG"))
+                {
+                    <li><a href=@Url.Action("InsertEmployees", "Register")>Employee Registration</a></li>
+                }
+                @if (rolepages.Contains("ADTPO"))
+                {
+                    <li><a href="@Url.Action("Index","Transfer")">Transfer/Promotions</a></li>
+                }
+                @if (rolepages.Contains("ADCAU"))
+                {
+                    <li><a href="@Url.Action("Index","ChangeAuthority")">Change Authority</a></li>
+                }
+                @if (rolepages.Contains("ADCPR"))
+                {
+                    <li><a href="@Url.Action("Index","ChangeProfile")">Change Profile</a></li>
+                }
+                @if (rolepages.Contains("ADLTCA"))
+                {
+                    <li><a href=@Url.Action("AdminLTCApply", "LeaveTravel")>Apply LTC </a></li>
+                }
+
+                @if (rolepages.Contains("ADPLA"))
+                {
+                    <li><a href=@Url.Action("AdminPLApply", "PLE_Type")>Apply PL Encashment</a></li>
+                }
+                @if (rolepages.Contains("ADWDA"))
+                {
+                    <li><a href=@Url.Action("WorkApprovalAdmin", "WorkDiary")>Delete Work Dairy</a></li>
+                }
+                @if (rolepages.Contains("ADUSRO"))
+                {
+                    <li><a href=@Url.Action("UserRolesView", "AllReports")>User Roles</a></li>
+                }
+                @if (rolepages.Contains("ADCBRMG"))
+                {
+                    <li><a href=@Url.Action("ChangeBranchManager", "ChangeBranchManager")>Change Branch Manager</a></li>
+                }
+                @if (rolepages.Contains("TsheetMain"))
+                {
+                    <li class="active"><a href=@Url.Action("Timesheetrequestform", "TimeSheet")>TimeSheet Manual Form</a></li>
+                }
+                @if (rolepages.Contains("TsheetApp"))
+                {
+                    <li><a href=@Url.Action("TSApprovalView", "TimeSheet")>TimeSheet Manual Approvals</a></li>
+                }
+            </ul>
+            }
+        </div>
+        @using (Html.BeginForm("Timesheetrequestform", "TimeSheet", FormMethod.Post))
+        {
+            <div class="container">
+                <div class="page_st">
+                    <div class="page">
+                        <div class="form-horizontal form-horizontal2">
+                            <div class="page_start">
+                                @{
+
+
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="main_heading">
+                                            <h1>TimeSheet Manual Form</h1>
+                                            <div class="form-horizontal col-md-12 col-sm-12 col-xs-12">
+                                                <div class="col-md-12 col-sm-12">
+                                                                                    <div class="main_heading">
+                                                                                        <h1>Apply Request</h1>
+                                                                                        <br />
+                                                                                        <div class="form-horizontal col-md-12 col-sm-12 col-xs-12">
+                                                                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label class="col-sm-4 control-label">EmpCode:<span class="mandatory">*</span></label>
+                                                                                                    <div class="col-sm-6">
+                                                                                                        <input type="text" id="empcode" name="UserId" class="form-control" onkeypress="return isNumber(event)" />
+                                                                                                        @*@Html.EditorFor(model => model.UserId, new { htmlAttributes = new { @class = "form-control", id = "empcode", onkeypress = "return isNumber(event)" } })*@
+                                                                                                    </div>
+                                                                                                    <div class="col-sm-2">
+                                                                                                        <button type="button" id="btnApplysearch" class="btn btn-primary btn-sm pull-right">Search</button>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="clearfix"></div>
+
+
+                                                                                        </div>
+                                                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                                            <div class="form-group">
+                                                                                                <label class="col-sm-4 control-label">Name:</label>
+
+                                                                                                <div class="col-sm-8">
+                                                                                                    @Html.TextBoxFor(model => model.UserId, new { @class = "form-control", @readonly = "readonly", @id = "shortname" })
+
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                                            <div class="form-group">
+                                                                                                <label class="col-sm-4 control-label">Designation:</label>
+
+                                                                                                <div class="col-sm-8">
+                                                                                                    @Html.TextBoxFor(model => model.DesignationId, new { @class = "form-control", @readonly = "readonly", @id = "desigid" })
+
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                                            <div class="form-group">
+                                                                                                <label class="col-sm-4 control-label">Br/Dept:</label>
+
+                                                                                                <div class="col-sm-8">
+                                                                                                    @Html.TextBoxFor(model => model.BranchId, new { @class = "form-control", @readonly = "readonly", @id = "branchid" })
+
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        @Html.HiddenFor(model => model.UserId)
+                                                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                                            <div class="form-group">
+                                                                                                <label class="col-sm-4 control-label">Sanctioning Authority:</label>
+
+                                                                                                <div class="col-sm-8">
+                                                                                                    @Html.TextBoxFor(model => model.CA, new { @class = "form-control", @readonly = "readonly", @id = "ControllingAuthority" })
+
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                                            <div class="form-group">
+                                                                                                <label class="col-sm-4 control-label">Request Date:<span class="mandatory">*</span></label>
+                                                                                                <div class="input-group date col-sm-8" id="Event_Date2">
+                                                                                                    @Html.EditorFor(model => model.ReqFromDate, new { htmlAttributes = new { @class = "form-control", @id = "edates", onkeypress = "return nokeyword(event)", onchange = "return datescheck1();" } })
+                                                                                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                                            <div class="form-group">
+                                                                                                <label class="col-sm-4 control-label">Reason Type:<span class="mandatory">*</span></label>
+                                                                                                <div class="col-sm-8">
+
+                                                                                                    @Html.DropDownList("Reason_Type", new[] {
+                                                                                                   new SelectListItem() {Text = "All",Value = "All"},
+                                                                                                                   new SelectListItem() {Text = "Machine Problem",Value = "Machine Problem"},
+                                                                                                                    new SelectListItem() {Text = "Internet Issue",Value = "Internet Issue"},
+                                                                                                                     new SelectListItem() {Text = "Power Problem",Value = "Power Problem"},
+                                                                                                                     new SelectListItem() {Text = "Other",Value = "Other" },
+
+                                                                                        }, "Select Reason", new { @class = "form-control", @id = "Type", @onchange = "reasontype();" })
+
+                                                                                                    @Html.ValidationMessageFor(model => model.Reason_Type, "", new { @class = "text-danger", @id = "Type" })
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                                            <div class="form-group">
+                                                                                                <label class="col-sm-4 control-label">Entry Time:<span class="mandatory">*</span></label>
+
+                                                                                                <div class="col-sm-8">
+                                                                                                    <div class='input-group' id='enpicker'>
+                                                                                                        @Html.TextBoxFor(model => model.entrytime, new { @class = "form-control", @id = "entime",onblur="Compare();" })
+                                                                                                        @*<input type='text' id="entime" name="entrytime" value="" class="form-control" onblur="Compare();" />*@
+                                                                                                        <span class="input-group-addon">
+                                                                                                            <span class="glyphicon glyphicon-time"></span>
+                                                                                                        </span>
+                                                                                                    </div>
+
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                                            <div class="form-group">
+                                                                                                <label class="col-sm-4 control-label">Exit Time:<span class="mandatory">*</span></label>
+                                                                                                <div class="input-group  col-sm-8">
+                                                                                                    <div class='input-group' id='expicker'>
+                                                                                                        @Html.TextBoxFor(model => model.exittime, new { @class = "form-control", @id = "extime", onblur = "Compare();" })
+                                                                                                        <span class="input-group-addon">
+                                                                                                            <span class="glyphicon glyphicon-time"></span>
+                                                                                                        </span>
+                                                                                                    </div>
+
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+
+
+
+                                                                                        @*<div class="col-md-6 col-sm-6 col-xs-12">
+                                                                                            <div class="form-group">
+                                                                                                <label class="col-sm-4 control-label">Description:<span class="mandatory">*</span></label>
+                                                                                                <div class="col-sm-8">
+                                                                                                    @Html.TextAreaFor(model => model.Reason_Desc, new { @class = "form-control", @id = "rdes", @maxlength = 500 })
+                                                                                                    @Html.ValidationMessageFor(model => model.Reason_Desc, "", new { @class = "text-danger" })
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>*@
+                                                                                        <div class="col-md-12">
+                                                                                            <div class="pull-right">
+                                                                                                <button type="button" onclick="resetForm()" value="reset" class="btn btn-default">Cancel</button>
+                                                                                                <button type="submit" id="btsubmit" onclick="return timesheetapply();" class="btn btn-primary subleave">Submit</button>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 col-sm-12">
+                                                    <div class="main_heading">
+                                                        <h1>Request History</h1>
+
+                                                        <div class="form-horizontal">
+                                                            <div class="col-md-4 col-sm-3 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-4 control-label label_left">From Date:<span class="mandatory">*</span></label>
+                                                                    <div class="input-group date col-sm-7">
+                                                                        <input type="text" id="SDate" class="form-control" onkeypress="return nokeyword(event)" , onchange="return Dateevent4();"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-4 control-label">To Date:<span class="mandatory">*</span></label>
+                                                                    <div class="input-group date col-sm-8">
+                                                                        <input type="text" id="EDate" class="form-control" onkeypress="return nokeyword(event)" , onchange="return Dateevent2();"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="col-md-1 col-sm-1 col-xs-12">
+                                                                <button type="button" onclick="return TimesheetHistory();" id="btnApply" class="btn btn-primary btn-sm pull-right">Search</button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                        <div class="col-md-12">
+                                                            <div class="table-responsive m_20">
+                                                                <div id="grid"></div>
+                                                            </div>
+
+                                                            <div style='margin-top: 20px;'>
+                                                                <div style='float: left;'>
+                                                                    <input type="button" value="Download PDF" class="btn btn-info" id='excelExport' onclick='window.location ="@Url.Action("CreatePdfTS", "TimeSheet")";' />
+
+
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    function reasontype() {
+
+        var Textb = document.getElementById('rdes');
+        var parLab = document.getElementById('Type').options[document.getElementById('Type').selectedIndex].text;
+
+        if (parLab != 'Other') {
+            rdes.value = parLab;
+
+           // $('#rdes').attr("disabled", true)
+
+        }
+        else {
+
+            rdes.value = '';
+            $('#rdes').attr("disabled", false)
+        }
+
+    }
+</script>
+
+
+
+<script type="text/javascript">
+    document.getElementById("a1").className = "active";
+    $(document).ready(function () {
+
+        // prepare the data for BlockPeriodView
+        var theme = otherTheme;
+        // prepare the data
+        var url = "../TimeSheet/TimesheetView";
+        var source =
+        {
+            type: "Get",
+            datatype: "json",
+            datafields: [
+                { name: 'Id', type: 'int' },
+                { name: 'EmpId', type: 'string' },
+                { name: 'EmployeeName', type: 'string' },
+                { name: 'ReqFromDate', type: 'date' },
+               // { name: 'ReqToDate', type: 'date' },
+                { name: 'entrytime', type: 'string' },
+                { name: 'exittime', type: 'string' },
+                { name: 'Reason_Type', type: 'string' },
+                { name: 'Reason_Desc', type: 'string' },
+                { name: 'designation', type: 'string' },
+                { name: 'AppliedDate', type: 'date' },
+                { name: 'Deptbranch', type: 'string' },
+                { name: 'Status', type: 'string' },
+
+
+            ],
+            async: false,
+            url: url,
+            data: {
+                featureClass: "P",
+                style: "full",
+                username: "jqwidgets"
+            }
+        };
+        var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties, rowdata) {
+            if (value == "Pending") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #FFA500;">' + value + '</span>';
+            }
+            else if (value == "Forwarded") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #33b5e5;">' + value + '</span>';
+            }
+            else if (value == "Approved") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #00C851;">' + value + '</span>';
+            }
+            else {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #ff4444;">' + value + '</span>';
+            }
+        }
+        var dataAdapter = new $.jqx.dataAdapter(source,
+            {
+                formatData: function (data) {
+                    data.ProductName = $("#searchField").val();
+                    return data;
+                }
+            }
+        );
+        // initialize jqxGrid
+        var editrowindex = -1;
+        var delrowindex = -1;
+        $("#grid").jqxGrid(
+            {
+                width: '99.5%',
+                source: dataAdapter,
+                theme: otherTheme,// for theme refernce go to Layout.cshtml
+                autoheight: true,
+                sortable: true,
+                pageable: true,
+                columnsResize: true,
+                altRows: true,
+                filterable: true,
+                autoshowfiltericon: true,
+
+                ready: function () {
+                    $("#grid").jqxGrid('localizestrings', localizationObject);
+                },
+                updatefilterconditions: function (type, defaultconditions) {
+                    switch (type) {
+                        case 'stringfilter':
+                            return stringcomparisonoperators;
+                        case 'numericfilter':
+                            return numericcomparisonoperators;
+                        case 'datefilter':
+                            return datecomparisonoperators;
+                        case 'booleanfilter':
+                            return booleancomparisonoperators;
+                    }
+                },
+                updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                    filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                    var index1 = 0;
+                    var index2 = 0;
+                    if (columnfilter != null) {
+                        var filter1 = columnfilter.getfilterat(0);
+                        var filter2 = columnfilter.getfilterat(1);
+                        if (filter1) {
+                            index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                            var value1 = filter1.filtervalue;
+                            filterinputfield1.val(value1);
+                        }
+                        if (filter2) {
+                            index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                            var value2 = filter2.filtervalue;
+                            filterinputfield2.val(value2);
+                        }
+                    }
+                    filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                    filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                },
+                columns: [
+                    {
+                        text: 'SNO', sortable: false, filterable: false, editable: false, align: "center",
+                        groupable: false, draggable: false, resizable: false,
+                        datafield: '', columntype: 'number', width: 80,
+                        cellsrenderer: function (row, column, value) {
+                            return "<div style='margin:4px; text-align:center;'>" + (value + 1) + "</div>";
+                        }
+                    },
+                    // { text: 'Id', groupable: true, datafield: 'Id', editable: false, width: 90, hidden: true, sortable: false },
+                    { text: "Emp Code", datafield: "EmpId", width: 80, sortable: false, editable: false },
+                    { text: "Employee Name", datafield: "EmployeeName", width: 127, sortable: false, editable: false },
+                    { text: "Branch/Department", datafield: "Deptbranch", editable: false, width: 120, sortable: false },
+                    { text: 'Designation', editable: false, datafield: 'designation', align: 'center', width: 90, sortable: false },
+                    { text: 'Applied Date', editable: false, datafield: 'AppliedDate', align: 'center', width: 100, cellsformat: 'dd/MM/yyyy', sortable: false },
+                    { text: 'Request Date', editable: false, datafield: 'ReqFromDate', align: 'center', width: 100, cellsformat: 'dd/MM/yyyy', sortable: false },
+                    // { text: 'Request to date', editable: false, datafield: 'ReqToDate', align: 'center', width: 100, cellsformat: 'dd/MM/yyyy', sortable: false },
+                    { text: 'Entry Time', editable: false, datafield: 'entrytime', align: 'center', width: 100, sortable: false },
+                     { text: 'Exit Time', editable: false, datafield: 'exittime', align: 'center', width: 100, sortable: false },
+                   
+
+                    { text: 'Reason Type', editable: false, datafield: 'Reason_Type', align: 'center', width: 170, sortable: false },
+                   // { text: 'Description', editable: false, datafield: 'Reason_Desc', align: 'center', width: 270, sortable: false },
+                    { text: 'Status', editable: false, datafield: 'Status', cellsrenderer: cellsrenderer, align: 'center', width: 70, sortable: false },
+                    {
+                        text: 'Edit', datafield: 'Edit', sortable: false, filterable: false, columngroup: 'Actions', columntype: 'button', width: 80, cellsrenderer: function (row) {
+
+                            var Value = $('#grid').jqxGrid('getcellvalue', row, 'Status');
+                            if (Value == "Pending") {
+                                return "Edit";
+                            }
+                            else if (Value == "Approved") {
+                                return "Approved";
+                            }
+                            else if (Value == "Denied") {
+                                return "Denied";
+                            }
+                            else if (Value == "Cancelled") {
+                                return "Cancelled";
+                            }
+
+                        }, buttonclick: function (row) {
+                            var Value = $('#grid').jqxGrid('getcellvalue', row, 'Status');
+                            if (Value == "Pending") {
+
+                                editrowindex = row;
+                                var paginginformation = $('#grid').jqxGrid('getpaginginformation');
+                                var id = $("#grid").jqxGrid('getcellvalue', row, "Id");
+                                window.location = '/TimeSheet/Edit/?id=' + id + '&page=' + paginginformation.pagenum;
+                            }
+                            else if (Value == "Approved" || Value == "Denied" || Value == "Cancelled") {
+                            }
+
+                        }
+                    },
+                    {
+                        text: 'Delete', datafield: 'Delete', columngroup: 'Actions', sortable: false, filterable: false, columntype: 'button', name: 'delete', width: 80, cellsrenderer: function (row) {
+                            var Value = $('#grid').jqxGrid('getcellvalue', row, 'Status');
+                            if (Value == "Pending") {
+                                return "Delete";
+                            }
+                            else if (Value == "Approved") {
+                                return "Approved";
+                            }
+                            else if (Value == "Denied") {
+                                return "Denied";
+                            }
+                            else if (Value == "Cancelled") {
+                                return "Cancelled";
+                            }
+                        },
+                        buttonclick: function (row) {
+                            var Value = $('#grid').jqxGrid('getcellvalue', row, 'Status');
+                            if (Value == "Pending") {
+                                var res = confirm("Do You Want to Delete");
+                                if (res) {
+                                    delrowindex = row;
+                                    var id = $("#grid").jqxGrid('getcellvalue', row, "Id");
+
+                                    var paginginformation = $('#grid').jqxGrid('getpaginginformation');
+                                    window.location = '/TimeSheet/Delete/?id=' + id + '&page=' + paginginformation.pagenum;
+                                }
+                                else
+                                    return res;
+                            }
+                            else if (Value == "Approved" || Value == "Denied" || Value == "Cancelled") {
+
+                            }
+                        }
+                    }
+                ],
+                columngroups:
+                    [
+                        { text: 'Action', align: 'center', name: 'Actions', width: 120 },
+                    ],
+            });
+    });
+
+</script>
+
+<script type="text/javascript">
+    var totaldays;
+        // To calulate difference b/w two dates
+    function CalculateDiff() {
+        debugger;
+        if ($("#SDate").val() != "" && $("#EDate").val() != "") {
+            var startdate = $("#SDate").val();
+                var endate = $("#EDate").val();
+                var arr1 = [];
+            var arr2 = [];
+            arr1.push(startdate.split('/'));
+            arr2.push(endate.split('/'));
+            startdate = arr1[0][1] + "/" + arr1[0][0] + "/" + arr1[0][2];
+            endate = arr2[0][1] + "/" + arr2[0][0] + "/" + arr2[0][2];
+            var From_date = new Date(startdate);
+                var To_date = new Date(endate);
+        var diff_date =  To_date - From_date;
+
+        var years = Math.floor(diff_date/31536000000);
+        var months = Math.floor((diff_date % 31536000000)/2628000000);
+        var days = Math.floor(((diff_date % 31536000000) % 2628000000)/86400000);
+             totaldays = Math.floor(years * 365) + Math.floor(months * 30) + Math.floor(days);
+        }
+
+    }
+
+
+    $("#btnApply").click(function () {
+        debugger;
+        //alert(1);
+        var startdate = $("#SDate").val();
+        var enddate = $("#EDate").val();
+        CalculateDiff();
+        if (totaldays <= 149) {
+            ajaxSpinnerShow();
+            var source =
+            {
+                type: "Post",
+                datatype: "json",
+                datafields: [
+                    { name: 'Id', type: 'int' },
+                    { name: 'EmpId', type: 'string' },
+                    { name: 'EmployeeName', type: 'string' },
+                    { name: 'ReqFromDate', type: 'date' },
+                    { name: 'entrytime', type: 'string' },
+                    { name: 'exittime', type: 'string' },
+                    { name: 'Reason_Type', type: 'string' },
+                    { name: 'Reason_Desc', type: 'string' },
+                    { name: 'designation', type: 'string' },
+                    { name: 'AppliedDate', type: 'date' },
+                    { name: 'Deptbranch', type: 'string' },
+                    { name: 'Status', type: 'string' },
+
+
+                ],
+                async: false,
+
+                url: "/TimeSheet/TimesheetSearchViewfilters?StartDate=" + startdate + "&EndDate=" + enddate,
+                data: {
+                    featureClass: "P",
+                    style: "full",
+                    username: "jqwidgets"
+                },
+                loadComplete: function () {
+                    ajaxSpinnerHide();
+                }
+            };
+        }
+        else {
+            alert("Difference Between start Date and End Date not More than 4 Months");
+            $("#SDate").val('');
+            $("#EDate").val('');
+
+        }
+        var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties, rowdata) {
+            if (value == "Pending") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #FFA500;">' + value + '</span>';
+            }
+            else if (value == "Forwarded") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #33b5e5;">' + value + '</span>';
+            }
+            else if (value == "Approved") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #00C851;">' + value + '</span>';
+            }
+            else {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #ff4444;">' + value + '</span>';
+            }
+        }
+        var dataAdapter = new $.jqx.dataAdapter(source,
+            {
+                formatData: function (data) {
+                    data.ProductName = $("#searchField").val();
+                    return data;
+                }
+            }
+        );
+        // initialize jqxGrid
+        var editrowindex = -1;
+        var delrowindex = -1;
+        $("#grid").jqxGrid(
+            {
+                width: '99.5%',
+                source: dataAdapter,
+                theme: otherTheme,// for theme refernce go to Layout.cshtml
+                autoheight: true,
+                sortable: true,
+                pageable: true,
+                columnsResize: true,
+                altRows: true,
+                filterable: true,
+                autoshowfiltericon: true,
+
+                ready: function () {
+                    $("#grid").jqxGrid('localizestrings', localizationObject);
+                },
+                updatefilterconditions: function (type, defaultconditions) {
+                    switch (type) {
+                        case 'stringfilter':
+                            return stringcomparisonoperators;
+                        case 'numericfilter':
+                            return numericcomparisonoperators;
+                        case 'datefilter':
+                            return datecomparisonoperators;
+                        case 'booleanfilter':
+                            return booleancomparisonoperators;
+                    }
+                },
+                updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                    filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                    var index1 = 0;
+                    var index2 = 0;
+                    if (columnfilter != null) {
+                        var filter1 = columnfilter.getfilterat(0);
+                        var filter2 = columnfilter.getfilterat(1);
+                        if (filter1) {
+                            index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                            var value1 = filter1.filtervalue;
+                            filterinputfield1.val(value1);
+                        }
+                        if (filter2) {
+                            index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                            var value2 = filter2.filtervalue;
+                            filterinputfield2.val(value2);
+                        }
+                    }
+                    filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                    filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                  
+                },
+                columns: [
+                    {
+                        text: 'SNO', sortable: false, filterable: false, editable: false, align: "center",
+                        groupable: false, draggable: false, resizable: false,
+                        datafield: '', columntype: 'number', width: 80,
+                        cellsrenderer: function (row, column, value) {
+                            return "<div style='margin:4px; text-align:center;'>" + (value + 1) + "</div>";
+                        }
+                    },
+                    // { text: 'Id', groupable: true, datafield: 'Id', editable: false, width: 90, hidden: true, sortable: false },
+                    { text: "Emp Code", datafield: "EmpId", width: 80, sortable: false, editable: false },
+                    { text: "Employee Name", datafield: "EmployeeName", width: 127, sortable: false, editable: false },
+                    { text: "Branch/Department", datafield: "Deptbranch", editable: false, width: 120, sortable: false },
+                    { text: 'Designation', editable: false, datafield: 'designation', align: 'center', width: 90, sortable: false },
+                    { text: 'Applied Date', editable: false, datafield: 'AppliedDate', align: 'center', width: 100, cellsformat: 'dd/MM/yyyy', sortable: false },
+                    { text: 'Request Date', editable: false, datafield: 'ReqFromDate', align: 'center', width: 100, cellsformat: 'dd/MM/yyyy', sortable: false },
+                   
+                    { text: 'Entry Time', editable: false, datafield: 'entrytime', align: 'center', width: 100, sortable: false },
+                     { text: 'Exit Time', editable: false, datafield: 'exittime', align: 'center', width: 100, sortable: false },
+                    { text: 'Reason Type', editable: false, datafield: 'Reason_Type', align: 'center', width: 170, sortable: false },
+
+                   // { text: 'Description', editable: false, datafield: 'Reason_Desc', align: 'center', width: 270, sortable: false },
+                    { text: 'Status', editable: false, datafield: 'Status', cellsrenderer: cellsrenderer, align: 'center', width: 70, sortable: false },
+                    {
+                        text: 'Edit', datafield: 'Edit', sortable: false, filterable: false, columngroup: 'Actions', columntype: 'button', width: 80, cellsrenderer: function (row) {
+
+                            var Value = $('#grid').jqxGrid('getcellvalue', row, 'Status');
+                            if (Value == "Pending") {
+                                return "Edit";
+                            }
+                            else if (Value == "Approved") {
+                                return "Approved";
+                            }
+                            else if (Value == "Denied") {
+                                return "Denied";
+                            }
+                            else if (Value == "Cancelled") {
+                                return "Cancelled";
+                            }
+
+                        }, buttonclick: function (row) {
+                            var Value = $('#grid').jqxGrid('getcellvalue', row, 'Status');
+                            if (Value == "Pending") {
+
+                                editrowindex = row;
+                                var paginginformation = $('#grid').jqxGrid('getpaginginformation');
+                                var id = $("#grid").jqxGrid('getcellvalue', row, "Id");
+                                window.location = '/TimeSheet/Edit/?id=' + id + '&page=' + paginginformation.pagenum;
+                            }
+                            else if (Value == "Approved" || Value == "Denied" || Value == "Cancelled") {
+                            }
+
+                        }
+                    },
+                    {
+                        text: 'Delete', datafield: 'Delete', columngroup: 'Actions', sortable: false, filterable: false, columntype: 'button', name: 'delete', width: 80, cellsrenderer: function (row) {
+                            var Value = $('#grid').jqxGrid('getcellvalue', row, 'Status');
+                            if (Value == "Pending") {
+                                return "Delete";
+                            }
+                            else if (Value == "Approved") {
+                                return "Approved";
+                            }
+                            else if (Value == "Denied") {
+                                return "Denied";
+                            }
+                            else if (Value == "Cancelled") {
+                                return "Cancelled";
+                            }
+                        },
+                        buttonclick: function (row) {
+                            var Value = $('#grid').jqxGrid('getcellvalue', row, 'Status');
+                            if (Value == "Pending") {
+                                var res = confirm("Do You Want to Delete");
+                                if (res) {
+                                    delrowindex = row;
+                                    var id = $("#grid").jqxGrid('getcellvalue', row, "Id");
+
+                                    var paginginformation = $('#grid').jqxGrid('getpaginginformation');
+                                    window.location = '/TimeSheet/Delete/?id=' + id + '&page=' + paginginformation.pagenum;
+                                }
+                                else
+                                    return res;
+                            }
+                            else if (Value == "Approved" || Value == "Denied" || Value == "Cancelled") {
+
+                            }
+                        }
+                    }
+                ],
+                columngroups:
+                    [
+                        { text: 'Action', align: 'center', name: 'Actions', width: 120 },
+                    ],
+            });
+        $("#excelExport").jqxButton();
+
+
+        $("#excelExport").click(function () {
+            $("#grid1").jqxGrid('exportdata', 'pdf', 'MYDeputationHistory');
+        });
+    });
+</script>
+
+
+<script type='text/javascript'>
+    $(function getholidays() {
+
+        var active_dates = [];
+        $.ajax({
+            type: "GET",
+            async: false,
+            url: "/LeaveApply/GetDates",
+            dataType: "Json",
+            success: function (data) {
+                datesArray = data;
+                for (i = 0; i < datesArray.length; i++) {
+                    var result = datesArray[i].replace("-", "/");
+                    var result1 = result.replace("-", "/");
+                    var strArray = result1.split("/");
+                    var cdate = strArray[0] + "/" + parseInt(strArray[1]) + "/" + strArray[2]
+                    active_dates.push(cdate);
+
+                    if (i == datesArray.length - 1) {
+                        //loadcal(active_dates);
+                    }
+                }
+
+            }
+        });
+          $('#Event_Date2').datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            beforeShowDay: function nonWorkingDays(date) {
+                var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
+                var week = 0 | date.getDate() / 7 //get the week
+                var dd = date.getDate();
+                var month = date.getMonth();
+                if (dd < 10) {
+                    dd = '0' + dd
+                }
+
+                if (month < 10) {
+                    month = '0' + month
+                }
+                var sunweek = date.getDay();
+                var year = date.getFullYear();
+
+                if (dd == 14 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                if (dd == 28 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                //check if it's second week or fourth week
+                else if (week == 1 || week == 3) {
+                    if (dd == 7 && day == 6 || dd == 21 && day == 6) {
+                        //check for satruday
+
+                    }
+                    else {
+                        if (day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                    }
+
+                }
+                //check for sunday
+                if (day == 0) {
+                    return {
+                        classes: 'secondClass'
+                    };
+
+                }
+                //check for holidays
+                var d = date;
+                var curr_date = d.getDate();
+                var curr_month = d.getMonth() + 1; //Months are zero based
+                if (curr_date < 10) {
+                    curr_date = '0' + curr_date
+                }
+                var curr_year = d.getFullYear();
+                var formattedDate = curr_date + "/" + curr_month + "/" + curr_year
+
+                if ($.inArray(formattedDate, active_dates) != -1) {
+                    return {
+                        classes: 'activeClass'
+                    };
+                }
+                return [true];
+            }
+        });
+
+        $('.input-group.date').datepicker({
+           
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+
+            beforeShowDay: function nonWorkingDays(date) {
+                var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
+                var week = 0 | date.getDate() / 7 //get the week
+                var dd = date.getDate();
+                var month = date.getMonth();
+                if (dd < 10) {
+                    dd = '0' + dd
+                }
+
+                if (month < 10) {
+                    month = '0' + month
+                }
+                var sunweek = date.getDay();
+                var year = date.getFullYear();
+
+                if (dd == 14 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                if (dd == 28 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                //check if it's second week or fourth week
+                else if (week == 1 || week == 3) {
+                    if (dd == 7 && day == 6 || dd == 21 && day == 6) {
+                        //check for satruday
+
+                    }
+                    else {
+                        if (day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                    }
+
+                }
+                //check for sunday
+                if (day == 0) {
+                    return {
+                        classes: 'secondClass'
+                    };
+
+                }
+                //check for holidays
+                var d = date;
+                var curr_date = d.getDate();
+                var curr_month = d.getMonth() + 1; //Months are zero based
+                if (curr_date < 10) {
+                    curr_date = '0' + curr_date
+                }
+                var curr_year = d.getFullYear();
+                var formattedDate = curr_date + "/" + curr_month + "/" + curr_year
+
+                if ($.inArray(formattedDate, active_dates) != -1) {
+                    return {
+                        classes: 'activeClass'
+                    };
+                }
+                return [true];
+            }
+        });
+
+
+    });
+</script>
+
+<script>
+    function resetForm() {
+        $("#Type").val('');
+        $("#edates").val('');
+        $("#rdes").val('');
+    }
+   
+</script>
+<script>
+   
+    function datescheck() {
+        eventvalidates();
+        
+        var x = location.hostname;
+        var url = window.location.href
+        var arr = url.split("/");
+        var requestdate = document.getElementById("edates").value;
+        if (requestdate == "" || requestdate != "null") {
+        }
+        else {
+            // var result = "https://" + arr[2] + "/" + "TimeSheet/checkForHoliday?RequestDate=" + requestdate;
+            var result = "" + arr[0] + "//" + arr[2] + "/" + "TimeSheet/checkForHoliday?RequestDate=" + requestdate;
+            $.ajax({
+                type: "GET",
+                url: result,
+
+                dataType: "json",
+                success: function (data) {
+
+                    var input = data.message;
+
+                    var fields = input.split('/');
+                    var status = fields[0];
+                    var dates = fields[1];
+
+                    if (status == "false") {
+
+                    }
+                    else
+                        if (status == "true") {
+                            document.getElementById("edates").value = "";
+                            alert(dates);
+                        }
+                },
+                error: function () {
+
+                }
+            });
+        }
+    }
+</script>
+<script>
+    function datescheck1() {
+         $('.glyphicon glyphicon-calendar').hide();
+        
+        var x = location.hostname;
+        var url = window.location.href
+        var arr = url.split("/");
+        var requestdate = document.getElementById("edates").value;
+         var empcode = document.getElementById("empcode").value;
+
+        //var result = "https://" + arr[2] + "/" + "TimeSheet/checkForRequestDate?RequestDate=" + requestdate;
+        var result = "" + arr[0] + "//" + arr[2] + "/" + "TimeSheet/checkForRequestDate?RequestDate=" + requestdate+"&empcode="+empcode;
+        $.ajax({
+            type: "GET",
+            url: result,
+
+            dataType: "json",
+            success: function (data) {
+
+                var input = data.message;
+
+                var fields = input.split('/');
+                var status = fields[0];
+                var dates = fields[1];
+
+                if (status == "false") {
+
+                }
+                else
+                    if (status == "true") {
+                        document.getElementById("edates").value = "";
+                        //alert(dates);
+                        //showGlobalModal("I#Error#Time Sheet has already been applied on this Date");
+                        showGlobalModal("I#Error#" + dates + "");
+                    }
+            },
+            error: function () {
+
+            }
+        });
+         datescheck();
+    }
+</script>
+
+<script>
+
+    //To Date and From Date Validation
+    function Dateevent2() {
+
+
+        var fromdate = document.getElementById("SDate").value;
+        var todate = document.getElementById("EDate").value;
+        var date = moment(fromdate, "DD.MM.YYYY");
+
+        var currentDate1 = moment(todate, "DD.MM.YYYY");
+        var duration = moment.duration(date.diff(currentDate1));
+
+
+        if (duration > 0) {
+
+            alert("Please ensure that To Date is greater than or equal to From Date.");
+            document.getElementById("EDate").focus();
+            document.getElementById("EDate").value = '';
+            return false;
+
+        }
+    }
+    function Dateevent4() {
+        var StartDate = document.getElementById('SDate').value;
+        var EndDate = document.getElementById('EDate').value;
+        var eDate = moment(EndDate, "DD.MM.YYYY");
+        var sDate = moment(StartDate, "DD.MM.YYYY");
+        if (StartDate != '' && EndDate != '' && sDate > eDate) {
+            alert("Please ensure that To Date is greater than or equal to From Date.");
+            document.getElementById('SDate').value = '';
+            document.getElementById("SDate").focus();
+            return false;
+        }
+    }
+</script>
+
+
+<script>
+    function eventvalidates() {
+        debugger;
+        var Joindate = document.getElementById("edates").value;
+        var a = moment(Joindate, "DD/MM/YYYY");
+        var b = moment(new Date());
+        var years = a.diff(b, 'year');
+        b.add(years, 'years');
+        var months = a.diff(b, 'months');
+        b.add(months, 'months');
+        if (a <= b) {
+            var days = b.diff(a, 'days') + 1;
+            var diff = (years != 0 ? years * -1 : years) + ' years ' + (months != 0 ? months * -1 : months) + ' months ' + days + ' days';
+           // document.getElementById("TotalExperience").value = diff;
+        }
+        else if (a > b) {
+            alert("Please choose upto today's Date");
+          
+            document.getElementById("edates").value = "";
+        }
+    }
+</script>
+
+<script type="text/javascript">
+    $("#empcode").keypress(function (event) {
+        if (event.keyCode == 13) {
+            event.preventDefault();
+        }
+    });
+    $("#btnApplysearch").click(function () {
+
+        var lempid = $("#empcode").val();
+        if (lempid == "") {
+            showGlobalModal("I#Required#Please Enter EmpCode.");
+            $("#empcode").focus();
+            return false;
+        }
+        $("#shortname").val('');
+                    $("#desigid").val('');
+                    $("#branchid").val('');
+        $("#ControllingAuthority").val('');
+         ajaxSpinnerShow();
+        
+        $.ajax({
+           
+            url: "/TimeSheet/GetEmployeeData?empcode=" + lempid,
+            dataType: "Json",
+            cache: false,
+            success: function (response) {
+               
+                if (response != null) {
+                    ajaxSpinnerHide();
+                    var name = response.lshortnmaeAjax;
+                    $("#shortname").val(name);
+                    $("#desigid").val(response.ldesigAjax);
+                    $("#branchid").val(response.lbranchAjax);
+                    $("#ControllingAuthority").val(response.lcaajax);
+                 if (response.Status == "Notfound") {
+                             ajaxSpinnerHide();
+                            showGlobalModal("I#Error#Employee doesn't exists.");
+                             $("#empcode").val('');
+                           $("#shortname").val(name);
+                    $("#desigid").val(response.ldesigAjax);
+                    $("#branchid").val(response.lbranchAjax);
+                    $("#ControllingAuthority").val(response.lcaajax);
+                        }
+                        else if (response.Status == "AlreadyRetired") {
+                              ajaxSpinnerHide();
+                     showGlobalModal("I#Error#Employee is Retired.");
+                      $("#empcode").val('');
+                          $("#shortname").val(name);
+                    $("#desigid").val(response.ldesigAjax);
+                    $("#branchid").val(response.lbranchAjax);
+                    $("#ControllingAuthority").val(response.lcaajax);
+
+                        }
+
+
+                }
+                else {
+                    // alert("Something went wrong");
+                }
+            },
+        });
+       
+
+    });
+    $(function () {
+        //$('#enpicker').datetimepicker({
+        //    format: 'LT',
+        //   // autoclose: true
+        //});
+
+         $('#enpicker').datetimepicker({
+
+             format: 'LT',
+        toolbarPlacement: 'bottom',
+        showClose: true,
+         icons: {
+            close: 'closeText'
+        }
+ 
+
+      });
+        $('#expicker').datetimepicker({
+
+             format: 'LT',
+        toolbarPlacement: 'bottom',
+        showClose: true,
+         icons: {
+            close: 'closeText'
+        }
+ 
+
+      });
+    });
+    function Compare() {
+       // alert("hi");
+    var strStartTime = document.getElementById("entime").value;
+    var strEndTime = document.getElementById("extime").value;
+  
+    var startTime = new Date().setHours(GetHours(strStartTime), GetMinutes(strStartTime), 0);
+    var endTime = new Date(startTime)
+    endTime = endTime.setHours(GetHours(strEndTime), GetMinutes(strEndTime), 0);
+    
+    if (startTime > endTime) {
+        showGlobalModal("I#Error#End Time should be greater than Start Time.");
+        document.getElementById("extime").value = '';
+    }
+}
+function GetHours(d) {
+    var h = parseInt(d.split(':')[0]);
+    if (d.split(':')[1].split(' ')[1] == "PM") {
+        h = h + 12;
+    }
+    return h;
+}
+function GetMinutes(d) {
+    return parseInt(d.split(':')[1].split(' ')[0]);
+}
+</script>

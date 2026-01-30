@@ -1,0 +1,218 @@
+alter table pr_emp_general add NPS varchar(5);
+alter table pr_emp_payslip add NPS float;
+alter table pr_ob_Share add NPS_own_share float;
+alter table pr_ob_Share add NPS_bank_share float;
+alter table pr_ob_Share add NPS_pension_open float;
+
+alter table pr_ob_share_adhoc add NPS_own_share float;
+alter table pr_ob_share_adhoc add NPS_bank_share float;
+alter table pr_ob_share_adhoc add NPS_pension_open float;
+alter table pr_ob_share_adhoc add op_bal_inst float;
+
+alter table pr_ob_share_encashment add NPS_own_share float;
+alter table pr_ob_share_encashment add NPS_bank_share float;
+alter table pr_ob_share_encashment add NPS_pension_open float;
+alter table pr_ob_share_encashment add op_bal_inst float;
+
+
+
+insert into all_constants values('payroll','GenPayslip','PFPercentageNPS',0.120,1,111,2021);
+insert into all_constants values('payroll','GenPayslip','NPSPercentage',0.015,1,111,2021);
+
+update pr_emp_general set NPS='No';
+update pr_emp_payslip set NPS=0;
+update pr_ob_share set NPS_own_share=0,NPS_bank_share=0,NPS_pension_open=0;
+
+ALTER procedure [dbo].[nulls] @empid int as   
+begin  
+select case when emp_code is null then (SELECT EmpId FROM Employees WHERE EmpId=@empid)   
+else emp_code end as emp_code,   
+case when sex is null then (SELECT Gender FROM Employees WHERE EmpId=@empid) else sex end as sex,  
+case when martial_status is null then (SELECT MartialStatus FROM Employees WHERE EmpId=@empid) else martial_status end as martial_status,zone,
+case when Designation is null then (select d.name as designation FROM Employees e join Designations d on e.CurrentDesignation = d.Id WHERE empid=@empid) else Designation end as designation,  
+designation_category,  
+region_for_p_tax,p_tax_region,address,per_address,  
+case when per_phoneno is null then (SELECT per_phoneno FROM Employees WHERE EmpId=@empid) else per_phoneno end as per_phoneno,native_place,division,  
+case when dob is null then (SELECT FORMAT (dob, 'yyyy-MM-dd') as dob FROM Employees WHERE EmpId=@empid) else FORMAT (dob, 'yyyy-MM-dd') end as dob,   
+case when exp is null then (SELECT TotalExperience FROM Employees WHERE EmpId=@empid) else exp end as exp,pf_no,uan_no,FORMAT (doj_pf, 'yyyy-MM-dd') as doj_pf,  
+case when email_id is null then (SELECT email_id FROM Employees WHERE EmpId=@empid) else email_id end as email_id,identify_mark1,identify_mark2,
+case when blood_group is null then (SELECT BloodGroup FROM Employees WHERE EmpId=@empid)   
+else blood_group end as blood_group,religion,cur_reservation,join_reservation,case when pan_no is null   
+then (SELECT PanCardNo FROM Employees WHERE EmpId=@empid)   
+else pan_no end as pan_no,reg_order,branch_code,pay_bank,account_code,bank_accno,  
+customer_id,acc_with_dccb,phy_handicapped,house_provided,emp_age,designation_no,stl_temp,  
+fest_adv,artr_emp,case when aadhaar_no is null then (SELECT AadharCardNo FROM Employees WHERE EmpId=@empid)   
+else aadhaar_no end as aadhaar_no,
+case when NPS is null then (SELECT NPS FROM Employees WHERE EmpId=@empid)   
+else NPS end as NPS
+from pr_emp_general where emp_code=@empid;  
+end; 
+
+
+ALTER procedure [dbo].[exist] @empid int as   
+begin  
+SELECT CASE  
+WHEN EXISTS(SELECT emp_code  
+FROM pr_emp_general  
+WHERE emp_code=@empid)  
+THEN (select emp_code  
+FROM pr_emp_general  
+WHERE emp_code=@empid)  
+ELSE (select EmpId  
+FROM Employees  
+WHERE empid=@empid)  
+END as emp_code,CASE  
+WHEN EXISTS(SELECT sex  
+FROM pr_emp_general  
+WHERE emp_code=@empid)  
+THEN (select sex  
+FROM pr_emp_general  
+WHERE emp_code=@empid)  
+ELSE (select Gender  
+FROM Employees  
+WHERE empid=@empid)  
+END as sex,CASE  
+WHEN EXISTS(SELECT martial_status  
+FROM pr_emp_general  
+WHERE emp_code=@empid)  
+THEN (select martial_status  
+FROM pr_emp_general  
+WHERE emp_code=@empid)  
+ELSE (select MartialStatus  
+FROM Employees  
+WHERE empid=@empid)  
+END as martial_status,(select zone from pr_emp_general where emp_code=@empid) as zone,  
+(select designation_category from pr_emp_general where emp_code=@empid) as designation_category,
+CASE WHEN EXISTS(SELECT Designation   
+FROM pr_emp_general  
+WHERE emp_code=@empid)  
+THEN (select Designation   
+FROM pr_emp_general  
+WHERE emp_code=@empid)  
+ELSE (select d.name as designation FROM Employees e join Designations d on e.CurrentDesignation = d.Id WHERE empid=@empid) END as designation,  
+(select region_for_p_tax from pr_emp_general where emp_code=@empid) as region_for_p_tax,  
+(select p_tax_region from pr_emp_general where emp_code=@empid) as p_tax_region,  
+CASE WHEN EXISTS(SELECT address   
+FROM pr_emp_general  
+WHERE emp_code=@empid)  
+THEN (select address   
+FROM pr_emp_general  
+WHERE emp_code=@empid)  
+ELSE (select PresentAddress   
+FROM Employees  
+WHERE empid=@empid) end as address,
+CASE WHEN EXISTS(SELECT per_address   
+FROM pr_emp_general  
+WHERE emp_code=@empid)  
+THEN (select per_address   
+FROM pr_emp_general  
+WHERE emp_code=@empid)  
+ELSE (select PermanentAddress   
+FROM Employees  
+WHERE empid=@empid) end as per_address,  
+CASE WHEN EXISTS(SELECT per_phoneno   
+FROM pr_emp_general  
+WHERE emp_code=@empid)  
+THEN (select per_phoneno   
+FROM pr_emp_general  
+WHERE emp_code=@empid)  
+ELSE (select MobileNumber   
+FROM Employees  
+WHERE empid=@empid) end as per_phoneno,  
+(select native_place from pr_emp_general where emp_code=@empid) as native_place,  
+(select division from pr_emp_general where emp_code=@empid) as division,  
+CASE WHEN EXISTS(SELECT FORMAT (dob, 'yyyy-MM-dd') as dob   
+FROM pr_emp_general  
+WHERE emp_code=@empid)  
+THEN (select FORMAT (dob, 'yyyy-MM-dd') as dob  
+FROM pr_emp_general  
+WHERE emp_code=@empid)  
+ELSE (select FORMAT (dob, 'yyyy-MM-dd') as dob  
+FROM Employees  
+WHERE empid=@empid) end as dob,
+CASE WHEN EXISTS(SELECT emp_age   
+FROM pr_emp_general  
+WHERE emp_code=@empid)  
+THEN (select emp_age   
+FROM pr_emp_general  
+WHERE emp_code=@empid)  
+ELSE (select (year(getdate()) - year(dob)) 
+FROM Employees  
+WHERE empid=@empid) end as emp_age,
+CASE WHEN EXISTS(SELECT exp   
+FROM pr_emp_general  
+WHERE emp_code=@empid)  
+THEN (select exp   
+FROM pr_emp_general  
+WHERE emp_code=@empid)  
+ELSE (select TotalExperience   
+FROM Employees  
+WHERE empid=@empid) end as exp,  
+(select pf_no from pr_emp_general where emp_code=@empid) as pf_no,  
+(select uan_no from pr_emp_general where emp_code=@empid) as uan_no,  
+(select FORMAT (doj_pf, 'yyyy-MM-dd') as doj_pf from pr_emp_general where emp_code=@empid) as doj_pf,  
+CASE WHEN EXISTS(SELECT email_id   
+FROM pr_emp_general  
+WHERE emp_code=@empid)  
+THEN (select email_id   
+FROM pr_emp_general  
+WHERE emp_code=@empid)  
+ELSE (select PersonalEmailId   
+FROM Employees  
+WHERE empid=@empid) end as email_id,  
+(select identify_mark1 from pr_emp_general where emp_code=@empid) as identify_mark1,  
+(select identify_mark2 from pr_emp_general where emp_code=@empid) as identify_mark2,CASE  
+WHEN EXISTS(SELECT blood_group  
+FROM pr_emp_general  
+WHERE emp_code=@empid)  
+THEN (select blood_group  
+FROM pr_emp_general  
+WHERE emp_code=@empid)  
+ELSE (select BloodGroup  
+FROM Employees  
+WHERE empid=@empid)  
+END as blood_group,(select religion from pr_emp_general where emp_code=@empid) as religion,  
+(select cur_reservation from pr_emp_general where emp_code=@empid) as cur_reservation,  
+(select reg_order from pr_emp_general where emp_code=@empid) as reg_order ,  
+(select join_reservation from pr_emp_general where emp_code=@empid) as join_reservation,
+CASE  
+WHEN EXISTS(SELECT pan_no  
+FROM pr_emp_general  
+WHERE emp_code=@empid)  
+THEN (select pan_no  
+FROM pr_emp_general  
+WHERE emp_code=@empid)  
+ELSE (select PanCardNo  
+FROM Employees  
+WHERE empid=@empid)  
+END as pan_no,
+(select branch_code from pr_emp_general where emp_code=@empid) as branch_code,
+(select pay_bank from pr_emp_general where emp_code=@empid) as pay_bank,  
+(select account_code from pr_emp_general where emp_code=@empid) as account_code,  
+(select bank_accno from pr_emp_general where emp_code=@empid) as bank_accno,  
+(select customer_id from pr_emp_general where emp_code=@empid) as customer_id,  
+(select acc_with_dccb from pr_emp_general where emp_code=@empid) as acc_with_dccb,  
+(select phy_handicapped from pr_emp_general where emp_code=@empid) as phy_handicapped,  
+(select house_provided from pr_emp_general where emp_code=@empid) as house_provided,  
+(select designation_no from pr_emp_general where emp_code=@empid) as designation_no,  
+(select stl_temp from pr_emp_general where emp_code=@empid) as stl_temp,  
+(select fest_adv from pr_emp_general where emp_code=@empid) as fest_adv,  
+(select artr_emp from pr_emp_general where emp_code=@empid) as artr_emp,CASE  
+WHEN EXISTS(SELECT aadhaar_no  
+FROM pr_emp_general  
+WHERE emp_code=@empid)  
+THEN (select aadhaar_no  
+FROM pr_emp_general  
+WHERE emp_code=@empid)  
+ELSE (select AadharCardNo  
+FROM Employees  
+WHERE empid=@empid)  
+END as aadhaar_no,
+(select NPS from pr_emp_general where emp_code=@empid) as NPS
+end; 
+
+
+insert pr_deduction_field_master (id,name,type,trans_id,benefit,code,emp_master_Code) values(586,'NPS','Adhoc',1,null,null,null);
+
+insert into  pr_contribution_field_master (id,name,type,active,trans_id) values(42,'Bank NPS Contribution','adhoc',1,162);
+

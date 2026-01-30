@@ -1,0 +1,247 @@
+﻿@model Entities.view_employee
+@{
+    Layout = "~/Views/Shared/_ReportsLayout.cshtml";
+    var rolepages = TempData["RolePages"].ToString();
+    ViewBag.RolePages = TempData["RolePages"];
+    var reportTitle = ViewBag.ReportTitle;
+    var ReportPdfSize = ViewBag.PdfSize;
+    var ReportpageSize = ViewBag.pageSize;
+    var PdfExportColumns = ViewBag.ExportColumns;
+    var dataUrl = ViewBag.DataUrl;
+    var reportFilters = ViewBag.ReportFilters;
+    var searchBtn = ViewBag.SearchBtn;
+}
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade in active">
+                    <div class="page_st">
+                        <div class="page">
+                            <div class="col-md-12 col-sm-12 ">
+                                <div class="main_heading">
+                                    <h1>Report List </h1>
+                                    <div>
+                                        @{Html.RenderPartial("_PartialViewForMenu");}
+                                    </div>
+                                </div>
+                                <div class="main_heading">
+                                    <h1>@reportTitle</h1>
+                                    <br />
+                                   
+                                    @if (reportFilters.Contains("timesheetreports"))
+                                    {
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label label_left">Branch</label>
+                                                <div class="col-sm-8">
+                                                    @Html.DropDownList("BranchName", ViewBag.Branchess as SelectList, "Select", new { @class = "form-control",id= "BranchName" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-5 col-sm-4 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="col-sm-5 control-label p0">Select Month and Year:</label>
+                                                <div class="col-md-7 col-sm-4 col-xs-12">
+                                                    <input type="text" class="form-control form-control-1 input-sm fromFudis" placeholder="Select-Month" id="monthyear">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-1">
+                                            <button class="btn btn-primary btn-sm pull-right" id="earlydeptSrch">Search</button>
+                                        </div>
+                                    }
+                                    <div class="col-md-12 emp_m_report">
+                                        <div class="table-responsive">
+                                            <table id="grid1" class="display reports-grids" style="width:100%"></table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+   // var currentDate = new Date();
+  //  $("#fromDate").datepicker("setDate", currentDate);
+
+    var reportMsgTop = '';
+
+    var fnMessageTop = function () {
+        return (reportMsgTop == '' ? '' : 'Filters : ' + reportMsgTop);
+    };
+
+    $(document).ready(function () {
+        debugger;
+        $.noConflict();
+        var groupColumn = 0;
+        var serviceurl = '@dataUrl';
+        serviceurl = serviceurl.split('&amp;').join('&');
+
+        var table = $('#grid1').DataTable( {
+            "ajax": {
+                "url": serviceurl,
+                "type": "GET",
+                "datatype": "json",
+                "dataSrc": ""
+            },
+           
+            dom: 'Bfrtip',
+            
+            "columns": @Html.Raw(ViewBag.ReportColumns),
+          
+        });
+        var Branchname = $("#BranchName").val();
+        var monthyear = $("#monthyear").val();
+        ajaxSpinnerShow();
+        var ajaxurl = '/AllReports/EmpMonthlyreportS?branch=' + Branchname + '&monthyear=' + monthyear;
+
+        $('#grid1').DataTable().ajax.url(ajaxurl).load(function () {
+            ajaxSpinnerHide();
+        });
+    });
+
+  
+
+    document.getElementById("a6").className = "active";
+
+  
+     @* Early Dept Report Serach  *@
+    $("#earlydeptSrch").click(function () {
+        debugger;
+                var Branchname = $("#BranchName").val();
+                var monthyear = $("#monthyear").val();
+                ajaxSpinnerShow();
+                var ajaxurl = '/AllReports/EmpMonthlyreportS?branch=' + Branchname + '&monthyear=' + monthyear;
+
+                $('#grid1').DataTable().ajax.url(ajaxurl).load(function () {
+                    ajaxSpinnerHide();
+                });
+            });
+            @* Early Dept Report Serach end *@
+    //Start And End Date Validation
+    function function1()
+    {
+        alert("dfg");
+    }
+    function Dateevent1() {
+
+        var Joindate = document.getElementById("fromDate").value;
+         var Retdate = document.getElementById("toDate").value;
+         var date = moment(Joindate, "DD.MM.YYYY");
+
+        var currentDate1 = moment(Retdate, "DD.MM.YYYY");
+        var duration = moment.duration(date.diff(currentDate1));
+
+
+
+        if (duration > 0) {
+
+
+            alert("Please ensure that To Date is greater than or equal to From Date.");
+            document.getElementById("toDate").focus();
+            document.getElementById("toDate").value = '';
+            return false;
+
+        }
+
+        else {
+            if (Joindate != '' && Retdate != '') {
+               // datescheck();
+            }
+            return true;
+
+        }
+    }
+
+    function Dateevent3() {
+
+
+        var StartDate = document.getElementById('fromDate').value;
+        var EndDate = document.getElementById('toDate').value;
+        var eDate = moment(EndDate, "DD.MM.YYYY");
+        var sDate = moment(StartDate, "DD.MM.YYYY");
+
+        if (StartDate != '' && EndDate != '' && sDate > eDate) {
+            alert("Please ensure that To Date is greater than or equal to From Date.");
+            document.getElementById('fromDate').value = '';
+            document.getElementById("fromDate").focus();
+            return false;
+
+        }
+
+        else {
+            if (StartDate != '' && EndDate != '') {
+               // datescheck();
+            }
+            else if (EndDate != '' && StartDate != '') {
+               // Combinationdatescheck2();
+            }
+           // eventvalidates();
+
+            return true;
+        }
+    }
+    function datevalidate()
+    {
+        var StartDate = document.getElementById('fromDate').value;
+        var EndDate = document.getElementById('toDate').value;
+
+        if (StartDate != "" && EndDate=="") {
+            window.alert("Please Select To Date");
+            $("#fromDate").focus();
+         //   $("#fromDate").val('');
+            return false;
+        }
+        if (StartDate == "" && EndDate!="") {
+            window.alert("Please Select From Date");
+            $("#toDate").focus();
+           // $("#toDate").val('');
+            return false;
+        }
+        else{
+            return true;
+        }
+
+    }
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".date").datepicker().datepicker("setDate", new Date());
+        var d = new Date();
+        var currMonth = d.getMonth();
+        var currYear = d.getFullYear();
+        var startDate = new Date(currYear, currMonth, 1);
+        $(".from").datepicker().datepicker("setDate", startDate);
+        $(".fromFudis").datepicker().datepicker("setDate", startDate);
+    });
+</script>
+<script>
+    $('.from').datepicker({
+        minViewMode: 1,
+        autoclose: true,
+        format: 'M-yyyy'
+    })
+    $('#monthyear').datepicker({
+        minViewMode: 1,
+        autoclose: true,
+        format: 'M-yyyy',
+        endDate: '+0d'
+    });
+    $('.pdate').datepicker({
+        minViewMode: 1,
+        autoclose: true,
+        format: 'dd/mm/yyyy'
+    });
+</script>
+
+<script src="~/Assets/hrms/Register.js"></script>

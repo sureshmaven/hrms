@@ -1,0 +1,112 @@
+﻿
+@{
+    ViewBag.Title = "PFContributionCard";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <h1>PF Contribution Card</h1>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">As on Date:</label>
+                            <div class="col-sm-8 input-group date">
+                                <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <input id="idwise" type="radio" name="wise" value="idwise"><label for="idwise"><span><span></span></span>ST Employees</label>
+                        <input id="namewise" type="radio" name="wise" value="namewise"><label for="namewise"><span><span></span></span>LT Employees</label>
+                       
+                    </div>
+                    <div class="ledger_checkbox">
+                        <div class="col-sm-12">
+                            <input id="idwise" type="radio" name="wise" value="idwise"><label for="idwise"><span><span></span></span>Employee Id Wise</label>
+                            <input id="namewise" type="radio" name="wise" value="namewise"><label for="namewise"><span><span></span></span>Employee Name Wise</label>
+                            <input id="selectall" type="checkbox" name="selectall" value="1"><label for="selectall"><span></span>Select All</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt_10">
+                        <div class="col-md-9">
+                            <div class="form-group">
+                                <label class="col-sm-5 control-label">Employee Name:</label>
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-3 col-xs-12"><button type="button" class="btn btn-primary btn-sm pull-right">Search</button></div>
+                    </div>
+                    <div class="col-md-12 mt_10">
+                        <div class="inner_heading">
+                            <h1>PF Interest Calculations</h1>
+                            <div class="table-responsive">
+                                <table id="ledger_report" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:7%"><input id="selectallrow" type="checkbox" name="selectall" value="1"><label for="selectall"><span></span></label></th>
+                                            <th>Emp Code</th>
+                                            <th>Employee Name</th>
+                                            <th>Designation</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><input id="select1" type="checkbox" name="select1" value="1"><label for="select1"><span></span></label></td>
+                                            <td>121</td>
+                                            <td>P.DURGESH GOUD</td>
+                                            <td>AGM</td>
+                                        </tr>
+                                        <tr>
+                                            <td><input id="select2" type="checkbox" name="select2" value="2"><label for="select2"><span></span></label></td>
+                                            <td>147</td>
+                                            <td>A.NAGESWARI</td>
+                                            <td>DY.GENERAL MANAGER</td>
+                                        </tr>
+                                        <tr>
+                                            <td><input id="select3" type="checkbox" name="select3" value="3"><label for="select3"><span></span></label></td>
+                                            <td>175</td>
+                                            <td>M.MASOOD ALI</td>
+                                            <td>SA</td>
+                                        </tr>
+                                        <tr>
+                                            <td><input id="select4" type="checkbox" name="select4" value="4"><label for="select4"><span></span></label></td>
+                                            <td>176</td>
+                                            <td>V.VENKATESHWARLU</td>
+                                            <td>AGM</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mt_10">
+                        <div class="pull-right">
+                            <button type="reset" class="btn btn-default cancel">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#ledger_report').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+        });
+    });
+</script>

@@ -1,0 +1,196 @@
+﻿
+@{
+    ViewBag.Title = "TDSUpdate";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="leftmenu-container">
+                <div class="sidebar-menu">
+                    @{Html.RenderPartial("_PVPayrollMenu");}
+                </div>
+                <div class="sidebar-content">
+                    <div class="main_heading heading_main">
+                        <h1>TDS Update <span class="year-end">@ViewBag.Env_Fm_Fy</span></h1>
+                        <div class="col-md-12 mt_10">
+                            <div class="table-responsive">
+                                <table id="incr_annual_stagn" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                        <tr>
+                                            <th>
+                                                <input name="select" value="1" id="checkAll" type="checkbox" onclick="checkboxRowAll()">
+                                                <label for="checkbox1"><span></span></label>
+                                                @*<input name="select" value="1" id="checkAll" type="checkbox" onclick="checkboxRowAll()" />*@
+                                            </th>
+                                            <th>Emp Code</th>
+                                            <th>Emp Name</th>
+                                            <th class="dol_align">DOL</th>
+                                            <th>Present TDS(<i class="fa fa-rupee"></i>)</th>
+                                            <th>Future TDS(<i class="fa fa-rupee"></i>)</th>
+                                            <th>Differance(<i class="fa fa-rupee"></i>)</th>
+
+                                        </tr>
+                                    </thead>
+
+                                </table>
+                            </div>
+                            <table id="gridControlling"></table>
+                            <div class="mt_10">
+                                <div class="pull-right">
+                                    <button type="reset" value="reset" id="btnCancel" class="btn btn-default calcel" title="Clear the data">Cancel</button>
+                                    <button type="submit" id="btnsubmit" class="btn btn-primary" title="Submit details">Submit</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .dol_align {
+        width:100px;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        $('#incr_annual_stagn').DataTable();
+    });
+</script>
+<script>
+
+  $("#checkAll").click(function () {
+      $('.selectRow').not(this).prop('checked', this.checked);
+
+  });
+
+</script>
+<script>
+    var arrerresult = [];
+    var orgDdlist;
+    var cancelOrg;
+    $(document).ready(function () {
+
+        var orgData;
+        CommonApiGET('/Payroll/Process/getTDSDatatoUpdate', function (respData) {
+
+            orgData = respData;
+             orgDdlist = respData;
+            cancelOrg = respData;
+            fillDataTables(respData);
+        });
+        $("#btnCancel").click(function () {
+           
+            fillDataTables(cancelOrg);
+            $('#checkAll').attr("checked", false)
+
+        });
+        function fillDataTables(respData) {
+            $('#incr_annual_stagn').DataTable({
+                destroy: true,
+                "paging": false,
+                "ordering": true,
+                "info": false,
+                "bFilter": false,
+                "searching": true,
+                 data: respData,
+                "language": {
+                    "search": "Filter records:"
+                },
+                "columns": [
+                    {
+                        "mData": null,
+                        "bSortable": false,
+                        'mRender': function (data, type, full) {
+                            return getColumnCheckBox(data.Id, data.Name);
+                        }
+                    },
+                    { "data": "Id" },
+                    { "data": "Name" },
+                    { "data": "DOL" },
+                    { "data": "tax_deducted_at_source" },
+                    { "data": "tds_per_month" },
+                    { "data": "diff" }
+
+                ],
+                "order": [[1, 'asc']]
+            });
+        }
+    });
+    
+
+    //row wise checked
+    function checkboxRow(id) {
+        document.getElementById("checkAll").checked = false;
+            if ($('#'+id).prop("checked") == true) {
+                  
+                orgDdlist.map(function (o) {
+                    if (o.Id == id) {
+                        var obj = {};
+                obj.id = o.Id;
+                obj.amount = o.tds_per_month;
+                arrerresult.push(obj);
+                       
+                    }
+                });
+            } else if ($('#'+id).prop("checked") == false) {
+                 
+                //var index = arrerresult.indexOf(id);
+                //arrerresult.splice(index, 1);
+
+                arrerresult = arrerresult.filter(function (obj) {
+                    return obj.Id !== id;
+                }); 
+
+            }
+          
+        console.log(JSON.stringify(arrerresult));
+    };
+
+    // all checked
+  
+    function checkboxRowAll() {
+          
+      arrerresult = [];
+       
+            if ($('#checkAll').prop("checked") == true) {
+                 
+                orgDdlist.map(function (o) {
+                    var obj = {};
+                obj.id = o.Id;
+                obj.amount = o.tds_per_month;
+                arrerresult.push(obj);
+                });
+            }
+            else if ($('#checkAll').prop("checked") == false) {
+                  
+                orgDdlist.map(function (o) {
+                    arrerresult = [];
+                });
+            }
+       
+    };
+
+</script>
+<script>
+    $('#btnsubmit').click(function () {
+        if (arrerresult.length > 0) {
+            var dataTosend = JSON.stringify({
+                update: arrerresult
+            });
+            CommonApiPOST("/Payroll/Process/UpdateTDS", dataTosend, function (isSuccess) {
+                if (isSuccess) {
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+        } else {
+            showGlobalModal("E#Required Field#Please Select Employee Code");
+        }
+    });
+
+</script>
+

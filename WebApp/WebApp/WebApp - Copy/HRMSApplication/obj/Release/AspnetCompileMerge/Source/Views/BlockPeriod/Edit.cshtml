@@ -1,0 +1,282 @@
+﻿@model Entities.BlockPeriod
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var rolepages = TempData["RolePages"].ToString();
+    ViewBag.RolePages = TempData["RolePages"];
+}
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-heading">
+            @{
+                <ul class="nav nav-tabs">
+                    @if (rolepages.Contains("MABAN"))
+                    {
+                        <li><a href="@Url.Action("Create", "Banks")" data-toggle="tab" id="1">Bank</a></li>}
+                    @if (rolepages.Contains("MABRA"))
+                    {
+                        <li><a href=@Url.Action("Create", "Branches")>Branch</a></li>}
+
+                    @if (rolepages.Contains("MADEP"))
+                    {
+                        <li><a href=@Url.Action("Create", "Departments")>Department</a></li>}
+                    @if (rolepages.Contains("MADES"))
+                    {
+                        <li><a href=@Url.Action("Create", "Designations")>Designation</a></li>}
+                    @if (rolepages.Contains("MAROL"))
+                    {
+                        <li><a href=@Url.Action("Create", "Roles")>Role</a></li>}
+                    @if (rolepages.Contains("MALTY"))
+                    {
+                        <li><a href=@Url.Action("Create", "LeaveTypes")>LeaveType</a></li>}
+                    @if (rolepages.Contains("MAHLI"))
+                    {
+                        <li><a href=@Url.Action("Create", "HolidayLists")>HolidayList</a></li>}
+                    @if (rolepages.Contains("MACDL"))
+                    {
+                        <li><a href=@Url.Action("CreditDebitleaves", "MyLeaves")>Credit / Debit leaves</a></li>}
+                    @if (rolepages.Contains("MABCY"))
+                    {
+                        <li><a href=@Url.Action("Createbranchcount", "Branches")>Branch Category</a></li>}
+                    @if (rolepages.Contains("MAODY"))
+                    {
+                        <li><a href=@Url.Action("OtherdutyCreate", "LeaveTypes")>Other Duty</a></li>}
+                    @if (rolepages.Contains("MABPD"))
+                    {
+                        <li class="active"><a href=@Url.Action("Create", "BlockPeriod")>BlockPeriod</a></li>}
+                    @if (rolepages.Contains("MANES"))
+                    {
+                        <li><a href=@Url.Action("Create", "News")>News</a></li>}
+                </ul>
+            }
+
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="container">
+        <div class="page_st">
+            <div class="page">
+                <div class="form-horizontal">
+                    <div class="page_start">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="main_heading">
+                                <h1>Edit BlockPeriod </h1>
+
+                                <div class="leave_cont_start">
+                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                        <label class="col-sm-4 control-label ">Start Year:<span class="mandatory">*</span></label>
+                                        <div class="col-sm-8">
+                                            <div class="input-group date" id="Event_Date1">
+                                                @Html.TextBoxFor(m => m.StartYear, "{0:dd/MM/yyyy}", new { @class = "form-control", onchange = "return Yearevent1();" })<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label ">End Year:<span class="mandatory">*</span></label>
+                                            <div class="col-sm-8">
+                                                <div class="input-group date" id="Event_Date2">
+                                                    @Html.TextBoxFor(m => m.EndYear, "{0:dd/MM/yyyy}", new { @class = "form-control", onchange = "return blockperiodcheck();" })<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                        @*<div class="form-group">
+
+                                                <label class="col-sm-5 control-label">Address Line 2:<span class="mandatory">*</span></label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextAreaFor(model => model.AddressLine2, new { @class = "form-control" })
+                                                </div>
+                                            </div>*@
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                        @*<div class="form-group">
+
+                                                <label class="col-sm-4 control-label">City:<span class="mandatory">*</span></label>
+                                                <div class="col-sm-8">
+                                                    @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })
+                                                </div>
+                                            </div>*@
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                        @*<div class="form-group">
+
+                                                <label class="col-sm-5 control-label">PhoneNo 1:<span class="mandatory">*</span></label>
+                                                <div class="col-sm-7">
+                                                    @Html.EditorFor(model => model.PhoneNo1, new { htmlAttributes = new { @class = "form-control", maxlength = "12", onkeypress = "return isNumber(event)", @id = "lbanksphone1" } })
+                                                </div>
+                                            </div>*@
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                        @*<div class="form-group">
+                                                @Html.Label("PhoneNo 2:", htmlAttributes: new { @class = "control-label col-sm-5" })
+                                                <div class="col-sm-7">
+                                                    @Html.EditorFor(model => model.PhoneNo2, new { htmlAttributes = new { @class = "form-control", @id = "lbanksphone2", maxlength = "12", onkeypress = "return isNumber(event)" } })
+                                                </div>
+                                            </div>*@
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                        @*<div class="form-group">
+                                                @Html.Label("PhoneNo 3:", htmlAttributes: new { @class = "control-label col-sm-4" })
+                                                <div class="col-sm-8">
+                                                    @Html.EditorFor(model => model.PhoneNo3, new { htmlAttributes = new { @class = "form-control", maxlength = "12", onkeypress = "return isNumber(event)", @id = "lbanksphone3" } })
+                                                </div>
+                                            </div>*@
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="pull-right">
+                                            <input type="reset" value="Cancel" class="btn btn-default" />
+                                            <input type="submit" value="Update" onclick="return blockPeriodedit();" class="btn btn-primary" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+    <script>
+        function blockperiodcheck() {
+
+            var x = location.hostname;
+            var url = window.location.href
+            var arr = url.split("/");
+            var textBoxValue = document.getElementById("StartYear").value;
+            var textBoxValue2 = document.getElementById("EndYear").value;
+
+           // var result = "https://" + arr[2] + "/" + "BlockPeriod/block?year1=" + textBoxValue + "&year2=" + textBoxValue2;
+            var result = "" + arr[0] +  "//" + arr[2] +  "/"+ "BlockPeriod/block?year1=" + textBoxValue + "&year2=" + textBoxValue2;
+
+
+            $.ajax({
+                type: "GET",
+                url: result,
+
+                dataType: "json",
+                success: function (data) {
+
+                    if (data.message == "use") {
+
+                    }
+                    if (data.message == "used") {
+
+                        document.getElementById("StartYear").value = "";
+                        document.getElementById("EndYear").value = "";
+                        alert("This Block Period already Exist!");
+                    }
+
+                },
+                error: function () {
+
+                }
+            });
+
+            Yearevent();
+        }
+    </script>
+<script type='text/javascript'>
+
+    $(function () {
+        $('.input-group.date').datepicker({
+            format: 'yyyy',
+            viewMode: "years",
+            minViewMode: "years",
+            todayHighlight: true,
+            autoclose: true
+        });
+    });
+
+</script>
+
+@{
+
+    var message = TempData["AlertMessage"] ?? string.Empty;
+
+}
+<script type="text/javascript">
+    var message = '@message';
+
+    if (message) alert(message);
+
+</script>
+
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        document.getElementById("a2").className = "active";
+
+    </script>
+   
+    @*Validation for blockPeriod Create*@
+    <script>
+        function blockPeriodedit() {
+            var startyear = $("#StartYear").val();
+            var endyear = $('#EndYear').val();
+            if (startyear == "") {
+                window.alert("Please Enter StartYear.");
+                $("#StartYear").focus();
+                return false;
+            }
+            else if (endyear == "") {
+                window.alert("Please Enter EndYear.");
+                $("#EndYear").focus();
+                return false;
+            }
+
+        }
+    </script>
+    @*Validation for StartYear and EndYear*@
+    <script>
+        function Yearevent1() {
+            blockperiodcheck();
+            var StartYear = document.getElementById('StartYear').value;
+            var EndYear = document.getElementById('EndYear').value;
+            if (StartYear != "" && EndYear != "" && StartYear > EndYear) {
+                alert("Please Ensure that EndYear is greater than or equal to StartYear.");
+                document.getElementById("StartYear").focus();
+                document.getElementById("StartYear").value = '';
+                return false;
+            }
+            else {
+                return true;
+            }
+            
+        }
+        function Yearevent() {
+            var StartYear = document.getElementById('StartYear').value;
+            var EndYear = document.getElementById('EndYear').value;
+            if (StartYear != "" && EndYear != "" && StartYear > EndYear) {
+                alert("Please Ensure that EndYear is greater than or equal to StartYear.");
+                document.getElementById("EndYear").focus();
+                document.getElementById("EndYear").value = '';
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+    </script>
+    <script type='text/javascript'>
+
+        $(function () {
+            $('.input-group.date').datepicker({
+                format: 'yyyy',
+                viewMode: "years",
+                minViewMode: "years",
+                todayHighlight: true,
+                autoclose: true
+            });
+        });
+
+    </script>
+
+
+
+

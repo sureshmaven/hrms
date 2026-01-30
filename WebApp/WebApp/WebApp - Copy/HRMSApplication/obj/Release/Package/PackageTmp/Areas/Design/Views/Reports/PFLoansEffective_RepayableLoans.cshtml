@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "PFLoansEffective_RepayableLoans";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <h1>Repayable Loans</h1>
+                    <div class="col-md-4">
+                        <div class="inner_heading">
+                            <h1>Employees</h1>
+                            <input id="file" type="radio" name="file" value="1"><label for="stemployees"><span><span></span></span>ST Employees</label>
+                            <div class="clearfix"></div>
+                            <input id="file" type="radio" name="file" value="1"><label for="ltemployees"><span><span></span></span>LT Employees</label>
+                            <div class="clearfix"></div>
+                            <input id="file" type="radio" name="file" value="1"><label for="both"><span><span></span></span>BOTH [ST & LT]</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="inner_heading">
+                            <div class="form-group">
+                                <label class="col-sm-5 control-label">From Date:</label>
+                                <div class="col-sm-6 input-group date">
+                                    <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-5 control-label">To Date:</label>
+                                <div class="col-sm-6 input-group date">
+                                    <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="pull-right">
+                            <button type="reset" class="btn btn-default cancel">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

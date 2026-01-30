@@ -1,0 +1,162 @@
+﻿@{
+    ViewBag.Title = "PayslipReports";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <h1>Payslip Reports</h1>
+                    <div class="col-md-12">
+                        <div class="payslip_rchk">
+                            <label class="col-sm-1 control-label">Include:</label>
+                            <div class="col-sm-10">
+                                <input id="regular" type="checkbox" name="regular" value="regular" checked="checked"><label for="regular"><span></span>Regular</label>
+                                <input id="adhoc" type="checkbox" name="adhoc" value="adhoc"><label for="adhoc"><span></span>Adhoc</label>
+                                <input id="adjustment" type="checkbox" name="adjustment" value="adjustment"><label for="adjustment"><span></span>Adjustment</label>
+                                <input id="encashment" type="checkbox" name="encashment" value="encashment"><label for="encashment"><span></span>Encashment</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mt_10">
+                        <div class="inner_heading">
+                            <h1>Payslip Options</h1>
+                            <div class="table-responsive month_name_tbl">
+                                <table id="month_name" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Month Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>MAR - 2018</td>
+                                        </tr>
+                                        <tr>
+                                            <td>APR - 2018</td>
+                                        </tr>
+                                        <tr>
+                                            <td>MAY - 2018</td>
+                                        </tr>
+                                        <tr>
+                                            <td>JUL - 2018</td>
+                                        </tr>
+                                        <tr>
+                                            <td>AUG - 2018</td>
+                                        </tr>
+                                        <tr>
+                                            <td>SEP - 2018</td>
+                                        </tr>
+                                        <tr>
+                                            <td>OCT - 2018</td>
+                                        </tr>
+                                        <tr>
+                                            <td>NOV - 2018</td>
+                                        </tr>
+                                        <tr>
+                                            <td>DEC - 2018</td>
+                                        </tr>
+                                        <tr>
+                                            <td>JAN - 2019</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="inner_heading mt_10">
+                            <h1>Payslip Options</h1>
+                            <div class="table-responsive">
+                                <table id="format_name" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Format Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>TSHEET</td>
+                                        </tr>
+                                        <tr>
+                                            <td>ADHSLIP</td>
+                                        </tr>
+                                        <tr>
+                                            <td>MAY - 2018</td>
+                                        </tr>
+                                        <tr>
+                                            <td>PAYNEW</td>
+                                        </tr>
+                                        <tr>
+                                            <td>PAYSLIPH</td>
+                                        </tr>
+                                        <tr>
+                                            <td>PAYSLIPB</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-7 col-md-offset-1 mt_10">
+                        <div class="inner_heading">
+                            <h1>Payslip Options</h1>
+                            <div>
+                                <input id="radio1" type="radio" name="radio" value="1" checked="checked"><label for="radio1"><span><span></span></span>All Employees</label>
+                            </div>
+                            <div>
+                                <input id="radio2" type="radio" name="radio" value="2"><label for="radio2"><span><span></span></span>Selected Employees</label>
+                            </div>
+                        </div> 
+                        <div class="inner_heading mt_10">
+                            <h1>Designation</h1>
+                            <div>
+                                <input id="radio3" type="radio" name="radio" value="3" checked="checked"><label for="radio3"><span><span></span></span>Designation</label>
+                            </div>
+                        </div>
+                        <div class="inner_heading mt_10">
+                            <h1>Report Destination</h1>
+                            <div>  
+                                <input id="radio4" type="radio" name="radio" value="4" checked="checked"><label for="radio4"><span><span></span></span>File</label>
+                            </div>
+                            <div>
+                                <input id="radio5" type="radio" name="radio" value="5" checked="checked"><label for="radio5"><span><span></span></span>Print</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mt_10">
+                        <div class="pull-right">
+                            <button type="reset" class="btn btn-default cancel">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#month_name').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('#format_name').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+        });
+    });
+</script>
+

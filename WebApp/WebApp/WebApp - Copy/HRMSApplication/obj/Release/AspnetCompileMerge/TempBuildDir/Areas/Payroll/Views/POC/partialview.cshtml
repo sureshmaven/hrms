@@ -1,0 +1,168 @@
+﻿@{
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+    var reportTitle = ViewBag.ReportTitle;
+    ViewBag.Title = reportTitle + " Report";
+    var dataUrl = ViewBag.DataUrl;
+    var ExportColumns = ViewBag.ExportColumns;
+    var PdfOrientation = ViewBag.PdfOrientation;
+    var PdfColumnsWidths = ViewBag.PdfColumnsWidths;
+    var All = ViewBag.All;
+var Empwise = ViewBag.Empwise;
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/css/bootstrap-select.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/js/bootstrap-select.min.js"></script>
+
+<div class="page">
+    <div class="form-horizontal">
+        <div class="page_start">
+            <div class="leftmenu-container">
+                <div class="sidebar-menu">
+                    @{Html.RenderPartial("_PVPayrollMenu");}
+                </div>
+                <div class="sidebar-content">
+                    <div class="main_heading heading_main">
+                        <h1>@ViewBag.ReportTitle Report</h1>
+                        <div class="col-md-12">
+                            <div class="fancy-collapse-panel">
+                                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading" role="tab" id="headingOne">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#reportsearch" aria-expanded="true" aria-controls="reportsearch">
+                                                    Report Filter
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="reportsearch" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                            <div class="panel-body">
+                                                <div class="reports_search">
+                                                    <div class="rep_down_fields">
+                                                        @{
+                                                        if (ViewBag.ReportFiltersTemplate == "GroupingT1-AllEmpSearchOneMultiSelOneMonthpic")
+                                                        {
+                                                        <div id="reportsearch" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                                            <div class="panel-body">
+                                                                <div class="reports_search">
+                                                                    <div class="col-md-12">
+                                                                        @{ Html.RenderPartial("_POCmodalPopupPV"); }
+
+                                                                        <div class="rep_down_fields">
+                                                                            <div class="row">
+                                                                                <div class="col-md-5">
+                                                                                    <div class="form-group">
+                                                                                        <label class="col-sm-4 control-label dept_label"></label>
+                                                                                        <div class="col-sm-8 mul_drop">
+                                                                                            <select id="AllowanceTypes" data-style="btn-default" class="selectpicker form-control" multiple data-max-options="50">
+                                                                                              
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="col-md-5">
+                                                                                    <div class="form-group">
+                                                                                        <label class="col-sm-5 control-label dept_label"> @ViewBag.OneMonthPickerLabel1</label>
+                                                                                        <div class="col-sm-6 mul_drop">
+                                                                                            <div class="col-sm-9 date input-group p0" id="dtOneMonthPickerYear">
+                                                                                                <input type="text" class="form-control form-control-1 input-sm from fromFudis" placeholder="Select-Month" id="dtOneMonthPicker">
+                                                                                                <span class="input-group-addon">
+                                                                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                                                                </span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-2">
+                                                                                    <div class="pull-right">
+                                                                                        <button class="btn btn-primary" id="btnT4AllEmpSearchOneMultiSelOneMonthpic">Search</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        }
+
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="table-responsive ">
+                                <table id="rptGrpGrid" class="display reports-grids" style="width:100%"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var all = '@All';
+    var emp_codes = '@Empwise';
+    $(document).ready(function () {
+        if (emp_codes == 'EmpCode') {
+            $("#EmpCode").hide();
+            $("#LoanWise").hide();
+        }
+        else if (emp_codes != 'EmpCode') {
+            $("#EmpAll").show();
+            $("#ScheduleWise").show();
+        }
+    });
+
+</script>
+
+<script>
+    //Loan Ledger Report
+    $("#btnT3AllEmpSearchOneMultiSelOneDropdown").click(function () {
+        // 
+        var LoansTypes = [];
+        var empcode = $("#txtEmployeeSearchBox1450").val();
+        var Loans = $("#T3_LoansTypes").val();
+        $('#T3_LoansTypes :selected').each(function (i, sel) {
+            LoansTypes.push($(sel).text());
+        });
+        if (LoansTypes.length == 0) {
+            LoansTypes.push("All");
+        }
+        var fYear = $("#fY option:selected").text();
+        fYear = fYear.substring(5, fYear.length);
+        if (empcode == "") {
+            empcode = $("input[id='rdbEmpAll']:checked").val();
+        }
+
+        if (empcode == undefined) {
+            showGlobalModal('E#Warning #Please Enter Employee Code');
+            return false;
+        }
+        var allemp = $("input[id='rdbEmpAll']:checked").val();
+
+        if (allemp == "All") {
+            empcode = $("input[id='rdbEmpAll']:checked").val();
+        }
+        ajaxSpinnerShow();
+        var mainUrl = '@dataUrl';
+        var ajaxurl = mainUrl.replace('^1', empcode);
+        ajaxurl = ajaxurl.replace('^2', Loans);
+        ajaxurl = ajaxurl.replace('^3', fYear);
+        ajaxurl = ajaxurl.split('&amp;').join('&');
+
+        reportMsgTop = 'Employee : ' + empcode + ' , @ViewBag.T3MultiSelLabel : ' + LoansTypes + ' , FY : ' + fYear;
+        if (fYear != undefined && empcode != undefined) { //Loans != undefined &&
+            $('#rptGrpGrid').DataTable().ajax.url(ajaxurl).load(function () {
+                ajaxSpinnerHide();
+            });
+        }
+    });
+</script>

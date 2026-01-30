@@ -1,0 +1,87 @@
+﻿
+@{
+    ViewBag.Title = "UpdateColumns";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="leftmenu-container">
+                <div class="sidebar-menu">
+                <div class="main_heading left-menu">
+                    @{Html.RenderPartial("_PVPayrollMenu");}
+                </div>
+            </div>
+            <div class="sidebar-content">
+                <div class="main_heading">
+                    <h1>Update Columns</h1>
+                    @{ Html.RenderPartial("_pvEmployeeSearch"); }
+                    <input type="hidden" id="hdnEmpCode" />
+                    <div>
+                        <table id="updateColumn" class="display" style="width:100%">
+                        </table>
+                    </div>
+                    <div>
+                        <button id="btnsubmit" type="button">Click!!</button>
+                    </div>
+                </div>
+            </div>
+			</div>
+        </div>
+    </div>
+</div>
+<script>
+    var originalData;
+    var arrSex = ["Male", "Female"];
+    function getDataAfterEmpSearch1440(empcode) {
+        $('#hdnEmpCode').val(empcode);
+        CommonApiGET('/Payroll/AsyncPOC/getEmpMasters', function (respData) {
+            originalData = respData;
+            fillDataTables(respData);
+        });
+    }
+    function fillDataTables(respData) {
+        $('#updateColumn').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+            data: respData,
+            "columns": [
+                { "data": "Id" },
+                { "data": "Name" },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        if (data.Name == "Sex") {
+                            return getColumnDropdown(data.Id, data.Value, arrSex)
+                        } else if (data.Name == "Empolyee Short Name" ||
+                            data.Name == "Exp" ||
+                            data.Name == "Blood" ||
+                            data.Name == "Email") {
+                            return getColumnTextboxReq(data.Id, data.Value);
+                        } else if (data.Name == "Dob") {
+                            return getColumnDate(data.Id, data.Value);
+                        } else {
+                            return getColumnNumber(data.Id, data.Value);
+                        }
+                    }
+                },
+            ],
+            "order": [[2, 'desc']]
+        });
+    }
+    $('#btnsubmit').click(function () {
+
+        //******* validation *************
+        if (grid_Textbox_validation('.txtbox-required')) {
+            var table = $('#updateColumn').DataTable();
+            var test = decodeURIComponent(table.$('input, select').serializeAndEncode());
+            alert(test);
+        }
+        //********** end of validation
+    });
+</script>

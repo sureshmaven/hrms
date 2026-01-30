@@ -1,0 +1,204 @@
+﻿
+@model Entities.Latememo
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var rolepages = TempData["RolePages"].ToString();
+    ViewBag.RolePages = TempData["RolePages"];
+}
+@{
+    var message = TempData["AlertMessage1"] ?? string.Empty;
+}
+<script type="text/javascript">
+    var message = '@message';
+    if (message) alert(message);
+
+</script>
+<style>
+    .closeText:before {
+        content: "Close";
+    }
+
+    .activeClass {
+        background: #ffdb99;
+    }
+
+    .secondClass {
+        /*background: #FF9999;*/
+        color: red;
+    }
+    #payslipStructure {
+        counter-reset: serial-number; /* Set the serial number counter to 0 */
+    }
+
+        #payslipStructure td:first-child:before {
+            counter-increment: serial-number; /* Increment the serial number counter */
+            content: counter(serial-number); /* Display the counter */
+        }
+</style>
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-heading">
+            @{
+            <ul class="nav nav-tabs">
+
+
+                @if (rolepages.Contains("LFPMain"))
+                {
+                    <li><a href=@Url.Action("MemoCreate", "Memo")>Issue Memo</a></li>
+                    <li><a href=@Url.Action("MemoList", "Memo")>Memos Report</a></li>
+                }
+                @if (rolepages.Contains("LFPMain"))
+                {
+                    <li><a href=@Url.Action("MemoReport", "Memo")>My Pending Memos</a></li>
+                }
+                @if (rolepages.Contains("MemoMain"))
+                {
+                    <li><a href=@Url.Action("MemoReport", "Memo")>My Pending Memos</a></li>
+
+                }
+                @*@if (rolepages.Contains("MemoMain"))
+                {
+                    <li class="active"><a href=@Url.Action("Employeememoreport", "Memo")>My Memos History</a></li>
+                }*@
+                @if (rolepages.Contains("MemoSuper"))
+                {
+                    <li class="active"><a href=@Url.Action("Employeememoreport", "Memo")>My Memos History</a></li>
+
+                }
+            </ul>
+            }
+        </div>
+
+        @{
+            <div class="container">
+                <div class="page_st">
+                    <div class="page">
+                        <div class="form-horizontal form-horizontal2">
+                            <div class="page_start">
+                                <div class="col-md-12 col-sm-12">
+                                    <div class="main_heading">
+                                        <h1>Memo Explanation Details</h1>
+                                        <div class="form-horizontal col-md-12 col-sm-12 col-xs-12">
+                                            <table id="payslipStructure" class="table table-bordered memo_table">
+                                                <tr>
+                                                    <th>SLNo</th>
+                                                    <th>Memo Type</th>
+                                                    <th style="width:300px;">Memo Details</th>
+                                                    <th>#Days</th>
+                                                    <th style="width:100px;">Received Date</th>
+                                                    <th style="width:100px;">Due Date</th>
+                                                    <th style="width:100px;">ResponseDate</th>
+                                                    <th>Explanation</th>
+                                                    <th>Status</th>
+                                                    <th>Action</th>
+
+                                                </tr>
+
+
+
+                                                <tbody id="tblBykeLists">
+
+                                                    @foreach (var item in (IEnumerable<Entities.Latememo>)TempData["latememos"])
+                                                    {
+
+
+                                                    <tr>
+                                                        <td></td>
+                                                        <td>
+                                                            @Html.HiddenFor(modelItem => item.MemoType, new { @class = "form-control", @id = "memotype" })
+                                                            @Html.DisplayFor(modelItem => item.MemoType)
+                                                        </td>
+                                                        <td>
+                                                            @Html.HiddenFor(modelItem => item.Id, new { @class = "form-control", @id = "memoid" })
+                                                            @Html.DisplayFor(modelItem => item.Memodetails)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.Noofdays)
+                                                        </td>
+
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.IssueDate)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.Duedate)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.Responsedate)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.Clarification)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.Status)
+                                                        </td>
+                                                        <td>
+                                                            <div>
+                                                                <button type="button" id="btnMemo" class="form-control">Memo</button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+
+                                                    }
+
+                                                <tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+</div>
+<script>
+    $("body").on("click", "#btnMemo", function () {
+        const MemoArray = [];
+        var i = 0;
+        var row = $(this).closest("tr");
+        $("td", row).each(function () {
+            if ($(this).find("input").length > 0) {
+                i++;
+                var span = $(this).find("span");
+                var input = $(this).find("input");
+
+                var cl = input.val();
+                MemoArray[i] = cl;
+                console.log('id', cl);
+                console.log('MemoArray', MemoArray);
+                span.show();
+            }
+
+
+
+        });
+        var memotype = MemoArray[1];
+        var memoid = MemoArray[2];
+        console.log(MemoArray);
+        window.location = '/Memo/Latememo/?MemoType=' + memotype + '&memoid=' + memoid;
+
+        //if (memotype == "LateMemo") {
+        //    window.location = '/Memo/Latememo/?MemoType=' + memotype + '&memoid=' + memoid;
+
+        //}
+        //else if (memotype == "Absent memo") {
+        //    window.location = '/Memo/Latememo/?MemoType=' + memotype + '&memoid=' + memoid;
+        //}
+        // else if (memotype == "Non updation of work dairy") {
+        //    window.location = '/Memo/WorkDiaryMemo/?MemoType=' + memotype + '&memoid=' + memoid;
+        //}
+        //  else if (memotype == "Non submission of medical certificate") {
+        //    window.location = '/Memo/MedicalMemo/?MemoType=' + memotype + '&memoid=' + memoid;
+        //}
+    });
+</script>
+<script>
+            document.getElementById("a20").className = "active";
+</script>
+<script>
+    document.getElementById("a21").className = "active";
+</script>

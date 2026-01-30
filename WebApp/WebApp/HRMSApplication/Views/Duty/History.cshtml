@@ -1,0 +1,1002 @@
+﻿@model Entities.OD_OtherDuty
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var rolepages = TempData["RolePages"].ToString();
+    ViewBag.RolePages = TempData["RolePages"];
+    var reportTitle = ViewBag.ReportTitle;
+    var ReportPdfSize = ViewBag.PdfSize;
+    var ReportpageSize = ViewBag.pageSize;
+    var PdfExportColumns = ViewBag.ExportColumns;
+    var dataUrl = ViewBag.DataUrl;
+    var reportFilters = ViewBag.ReportFilters;
+    var reportFiltersTwo = ViewBag.ReportFiltersTwo;
+    var reportFiltersThree = ViewBag.ReportFiltersThree;
+    var searchBtn = ViewBag.SearchBtn;
+}
+<div class="container">
+    <div class="container">
+        <div class="panel with-nav-tabs panel-primary">
+            <div class="panel-body">
+                <div class="tab-content">
+                    <div class="tab-pane fade in active">
+                        <div class="page_st">
+                            <div class="page">
+                                <div class="col-md-12 col-sm-12">
+                                    <div class="main_heading">
+                                        <h1>Report List </h1>
+                                        <div class="report-list">
+                                            @{
+                                                <ul>
+                                                    @if (rolepages.Contains("RPBRA"))
+                                                    {
+                                                        <li class='@(reportTitle == "Branches List" ? "active" : "")'><a href=@Url.Action("Index", "AllReports")>Branches</a></li>}
+                                                    @if (rolepages.Contains("RPBRC"))
+                                                    {
+                                                        <li class='@(reportTitle == "Branches Contacts List" ? "active" : "")'><a href=@Url.Action("BranchContacts", "AllReports")>Branch Contacts</a></li>}
+                                                    @if (rolepages.Contains("RPCDR"))
+                                                    {
+                                                        @*<li><a href=@Url.Action("CadreReport", "Reports")>Cadre</a></li>*@
+                                                        <li class='@(reportTitle == "Cadre List" ? "active" : "")'><a href=@Url.Action("CadreList", "AllReports")>Cadre</a></li>
+                                                    }
+                                                    @if (rolepages.Contains("RPCAT"))
+                                                    {
+                                                        <li class='@(reportTitle == "Categeory List" ? "active" : "")'><a href=@Url.Action("staffCategoryList", "AllReports")>Category</a></li>}
+                                                    @if (rolepages.Contains("RPDOB"))
+                                                    {
+                                                        <li class='@(reportTitle == "DOB List" ? "active" : "")'><a href=@Url.Action("EmpDob", "AllReports")>DOB</a></li>}
+                                                    @if (rolepages.Contains("RPEMP"))
+                                                    {
+                                                        <li class='@(reportTitle == "Employee List" ? "active" : "")'><a href=@Url.Action("EmployeesRept", "AllReports")>Employees</a></li>}
+                                                    @if (rolepages.Contains("RPEAL"))
+                                                    {
+                                                        <li class='@(reportTitle == "Future Applied Leaves" ? "active" : "")'><a href=@Url.Action("FutureAppliedLeaves", "AllReports")>Future Applied Leaves</a></li>}
+                                                    @if (rolepages.Contains("RPHOF"))
+                                                    {
+                                                        <li class='@(reportTitle == "Head Office List" ? "active" : "")'><a href=@Url.Action("HeadOfficeList", "AllReports")>Head Office</a></li>}
+                                                    @if (rolepages.Contains("RPHOA"))
+                                                    {
+                                                        <li class='@(reportTitle == "Head Office Attender List" ? "active" : "")'><a href=@Url.Action("HeadOfcAttenders", "AllReports")>Head Office Attenders</a></li>}
+                                                    @if (rolepages.Contains("RPKOF"))
+                                                    {
+                                                        <li class='@(reportTitle == "Work Profile Of Key Officials" ? "active" : "")'><a href=@Url.Action("KeyOfficials", "AllReports")>Key Officials</a></li>}
+                                                    @if (rolepages.Contains("RPLTC"))
+                                                    {
+                                                        <li class='@(reportTitle == "LTC List" ? "active" : "")'><a href=@Url.Action("LTCList", "AllReports")>LTC</a></li>}
+                                                    @if (rolepages.Contains("RPLEV"))
+                                                    {
+                                                        <li class="active"><a href=@Url.Action("LeaveSearch", "MyLeaves")>Leaves</a></li>}
+                                                    @if (rolepages.Contains("RPLLE"))
+                                                    {
+                                                        <li class='@(reportTitle == "Long Leaves" ? "active" : "")'><a href=@Url.Action("LongLeaves", "AllReports")>Long Leaves</a></li>}
+                                                    @if (rolepages.Contains("RPLFA"))
+                                                    {
+                                                        <li class='@(reportTitle == "Leave Approval List" ? "active" : "")'><a href=@Url.Action("LeavesCarryForward", "AllReports")>Leaves Forwarded/Approved</a></li>}
+                                                    @if (rolepages.Contains("RPLAL"))
+                                                    {
+                                                        <li class='@(reportTitle == "Late Applied Leaves List" ? "active" : "")'><a href=@Url.Action("LateAppliedLeaves", "AllReports")>Late Applied Leaves</a></li>}
+                                                    @if (rolepages.Contains("RPLCD"))
+                                                    {
+                                                        <li class='@(reportTitle == "Cancelled Leaves" ? "active" : "")'><a href=@Url.Action("LeaveCancelled", "AllReports")>Leaves Cancelled</a></li>}
+                                                    @if (rolepages.Contains("RPCMP"))
+                                                    {
+                                                        <li class='@(reportTitle == "Month Wise CL/ML/PL" ? "active" : "")'><a href=@Url.Action("MonthwiseCLMLPL", "AllReports")>Month Wise CL/ML/PL</a></li>}
+                                                    @if (rolepages.Contains("RPMWL"))
+                                                    {
+                                                        <li class='@(reportTitle == "Month Wise Leaves" ? "active" : "")'><a href=@Url.Action("MonthWiseLeaves", "AllReports")>Month Wise Leaves</a></li>}
+                                                    @if (rolepages.Contains("RPMWO"))
+                                                    {
+                                                        <li class='@(reportTitle == "Month Wise OD" ? "active" : "")'><a href=@Url.Action("MonthWiseOD", "AllReports")>Month Wise OD</a></li>}
+                                                    @if (rolepages.Contains("RPMTT"))
+                                                    {
+                                                        <li class='@(reportTitle == "Month Wise Temporary Transfer" ? "active" : "")'><a href=@Url.Action("MonthWiseTemporaryTransfer", "AllReports")>Month Wise Temporary Transfer</a></li>}
+                                                    @if (rolepages.Contains("RPODD"))
+                                                    {
+                                                        <li class='@(reportTitle == "OD List" ? "active" : "")'><a href=@Url.Action("OdDuty", "AllReports")>OD</a></li>}
+                                                    @if (rolepages.Contains("RPPTS"))
+                                                    {
+                                                        <li class='@(reportTitle == "Permanent Transfer List" ? "active" : "")'><a href=@Url.Action("PermanentTransfer", "AllReports")>Permanent Transfers</a></li>}
+                                                    @if (rolepages.Contains("RPPRO"))
+                                                    {
+                                                        <li class='@(reportTitle == "Transfer List" ? "active" : "")'><a href=@Url.Action("EmpPromotions", "AllReports")>Promotion</a></li>}
+                                                    @if (rolepages.Contains("RPSPL"))
+                                                    {
+                                                        <li class='@(reportTitle == "PL List" ? "active" : "")'><a href=@Url.Action("PrivilegeLeave", "AllReports")>PL</a></li>}
+                                                    @if (rolepages.Contains("RPRET"))
+                                                    {
+                                                        <li><a href=@Url.Action("RetirementReport", "Reports")>Retirements</a></li>}
+                                                    @if (rolepages.Contains("RPSEN"))
+                                                    {
+                                                        <li class='@(reportTitle == "Seniorty List" ? "active" : "")'><a href=@Url.Action("Seniorty", "AllReports")>Seniority</a></li>}
+                                                    @if (rolepages.Contains("RPSMA"))
+                                                    {
+                                                        <li class='@(reportTitle == "StaffMaster List" ? "active" : "")'><a href=@Url.Action("StaffMaster", "AllReports")>Staff Master</a></li>}
+                                                    @if (rolepages.Contains("RPTXH"))
+                                                    {
+                                                        <li class='@(reportTitle == "Transaction History" ? "active" : "")'><a href=@Url.Action("TxHistory", "AllReports")>TX History</a></li>}
+                                                    @if (rolepages.Contains("RPTTS"))
+                                                    {
+                                                        <li class='@(reportTitle == "Temporary Transfer List" ? "active" : "")'><a href=@Url.Action("TempTrnsfr", "AllReports")>Temporary Transfers</a></li>}
+                                                    @if (rolepages.Contains("RPTMT"))
+                                                    {
+                                                        <li class='@(reportTitle == "Top ManagementList List" ? "active" : "")'><a href=@Url.Action("Topmanagement", "AllReports")>TopManagement</a></li>}
+                                                    @if (rolepages.Contains("RPWDY"))
+                                                    {
+                                                        <li class='@(reportTitle == "Work Diary" ? "active" : "")'><a href=@Url.Action("WorkDiary", "AllReports")>WorkDiary </a></li>}
+                                                    @if (rolepages.Contains("RPYLB"))
+                                                    {
+                                                        @*<li><a href=@Url.Action("YearWiseLeaveBalanceReport", "Reports")>YearWiseLeaveBalance</a></li>*@
+                                                        <li class='@(reportTitle == "Year Wise Leave Balance" ? "active" : "")'><a href=@Url.Action("LeavesCreditDebit", "AllReports")>YearWiseLeaveBalance</a></li>}
+
+                                                </ul>
+                                            }
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </div>
+                                    <div class="main_heading">
+                                        <h1>OD List </h1>
+                                        @using (Html.BeginForm())
+                                        {
+                                            <div id="allleaves">
+                                                <div class="form-horizontal">
+                                                    <div class="col-md-12">
+                                                        <div class="col-md-3 col-sm-4 col-xs-12">
+                                                            <div class="col-md-4 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <button type="button" id="Todaybtn" class="btn btn-primary btn-sm pull-right" onclick="return resetform();">Today OD</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-5 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <button type="button" id="ALLbtn" class="active btn btn-primary btn-sm pull-right">ALL OD</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="col-md-4 col-sm-4 col-xs-12">
+
+                                                            <div id="radio1">
+                                                                <div class="col-md-6 col-xs-12">
+                                                                    <div class="form-group">
+                                                                        @Html.RadioButton("Status", "Applied", new { id = "lApplied", @checked = true, onclick = "appliedrequest(this.value)" })
+                                                                        <label class="label_class" for="lApplied">   Applied Date </label>
+
+</div>
+                                                                </div>
+                                                                <div class="col-md-6 col-xs-12">
+                                                                    <div class="form-group">
+                                                                        @Html.RadioButton("Status", "Request", new { id = "lRequest", onclick = "appliedrequest(this.value)" })
+                                                                        <label class="label_class" for="lRequest"> OD Date </label>
+</div>
+                                                                </div>
+                                                            </div>
+                                                            <input type="hidden" name="Status1" id="leaveapplied" value="Applied" />
+                                                        </div>
+                                                    </div>
+                                                    <div id="radio2">
+                                                        <div class="col-md-4 col-sm-4 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">From Date:<span class="mandatory">*</span></label>
+                                                                <div class="input-group date col-sm-8">
+                                                                    <input type="text" id="Stdate1" class="form-control" onchange="return Dateevent4();"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4 col-sm-4 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label label_padding">To Date:<span class="mandatory">*</span></label>
+                                                                <div class="input-group date col-sm-8">
+                                                                    <input type="text" id="Endate1" class="form-control" onchange="return Dateevent2();"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-1">
+                                                           <button type="button" id="btnGet" onclick="return ODhistoryadmin();" class="btn btn-primary btn-sm pull-right">Search</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <div class="col-md-12">
+                                                <div class="table-responsive m_20">
+                                                    <div id="grid"></div>
+                                                    <div style='margin-top: 20px;'>
+                                                        <div style='float: left;'>
+                                                            <input type="button" value="Export to Excel" id='excelExport' />
+                                                        </div>
+                                                        <div id="div1" style='float: left; margin:  0px 0 0 5px;'>
+                                                            <input type="button" class="jqx-rc-all jqx-button jqx-widget jqx-fill-state-normal" value="Download PDF" id='pdfall1' onclick='window.location = "@Url.Action("CreatePdfAllOD", "Duty")";' />
+                                                            <input type="button" class="jqx-rc-all jqx-button jqx-widget jqx-fill-state-normal" value="Export to Excel" id='excelExportall' onclick='window.location = "@Url.Action("ExportToExcelAllOD", "Duty")";' />
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="table-responsive m_20">
+                                                    <div id="grid1"></div>
+                                                    <div style='margin-top: 20px;'>
+                                                        <div style='float: left;'>
+                                                            <input type="button" value="Export to Excel" id='excelExport1' />
+                                                            <input type="button" class="jqx-rc-all jqx-button jqx-widget jqx-fill-state-normal" value="Export to Excel" id='excelExporttoday' onclick='window.location = "@Url.Action("ExportToExcelTodayOD", "Duty")";' />
+                                                            
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div id="div1" style='float: left; margin:  0px 0 0 5px;'>
+                                                        <input type="button" class="jqx-rc-all jqx-button jqx-widget jqx-fill-state-normal" value="Download PDF" id='pdftoday' onclick='window.location = "@Url.Action("CreatePdfTodayOD", "Reports")";' />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@{
+    var message = TempData["status"] ?? string.Empty;
+}
+<script type="text/javascript">
+    var message = '@message';
+    if (message) alert(message);
+</script>
+<script type="text/javascript">
+
+        $(document).ready(function () {
+         // prepare the data
+                var source =
+                    {
+                        type: "Get",
+                        datatype: "json",
+                        datafields: [
+                            { name: 'Id', type: 'int' },
+                            { name: 'EmpId', type: 'int' },
+                            { name: 'EmployeeName', type: 'string' },
+                            { name: 'designation', type: 'string' },
+                            { name: 'Deptbranch', type: 'string' },
+                            { name: 'VistorFrom', type: 'string' },
+                            { name: 'VistorTo', type: 'string' },
+                            { name: 'StartDate', type: 'date' },
+                            { name: 'EndDate', type: 'date' },
+                            { name: 'Purpose', type: 'string' },
+                            { name: 'Status', type: 'string' },
+                            { name: 'UpdatedDate', type: 'date' },
+                            { name: 'Duration', type: 'string' },
+                            { name: 'Description', type: 'string' },
+                            { name: 'Action', type: 'string' },
+                        ],
+                        async: false,
+                        url: '/Duty/Todaysdeputation',
+                        data: {
+                            featureClass: "P",
+                            style: "full",
+                            username: "jqwidgets",
+                        }
+                    };
+                var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties, rowdata) {
+                    if (value == "Pending") {
+                        return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #FFA500;">' + value + '</span>';
+                    }
+                    else if (value == "Forwarded") {
+                        return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #33b5e5;">' + value + '</span>';
+                    }
+                    else if (value == "Approved") {
+                        return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #00C851;">' + value + '</span>';
+                    }
+                    else if (value == "Denied") {
+                        return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #8B008B;">' + value + '</span>';
+                    }
+                    else {
+                        return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #ff4444;">' + value + '</span>';
+                    }
+                }
+                var dataAdapter = new $.jqx.dataAdapter(source,
+                    {
+                        formatData: function (data) {
+                            data.ProductName = $("#searchField").val();
+                            return data;
+                        }
+                    }
+                );
+                // initialize jqxGrid
+                var editrowindex = -1;
+                var delrowindex = -1;
+                $("#grid1").jqxGrid(
+                    {
+                        width: '99%',
+                        source: dataAdapter,
+                        theme: otherTheme,// for theme refernce go to Layout.cshtml
+                        autoheight: true,
+                        sortable: true,
+                        pageable: true,
+                        pagesize: 20,
+                        columnsResize: true,
+                        altRows: true,
+                        filterable: true,
+                        autoshowfiltericon: true,
+
+                        ready: function () {
+                            $("#grid1").jqxGrid('localizestrings', localizationObject);
+                        },
+                        updatefilterconditions: function (type, defaultconditions) {
+                            switch (type) {
+                                case 'stringfilter':
+                                    return stringcomparisonoperators;
+                                case 'numericfilter':
+                                    return numericcomparisonoperators;
+                                case 'datefilter':
+                                    return datecomparisonoperators;
+                                case 'booleanfilter':
+                                    return booleancomparisonoperators;
+                            }
+                        },
+                        updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                            filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                            var index1 = 0;
+                            var index2 = 0;
+                            if (columnfilter != null) {
+                                var filter1 = columnfilter.getfilterat(0);
+                                var filter2 = columnfilter.getfilterat(1);
+                                if (filter1) {
+                                    index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                                    var value1 = filter1.filtervalue;
+                                    filterinputfield1.val(value1);
+                                }
+                                if (filter2) {
+                                    index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                                    var value2 = filter2.filtervalue;
+                                    filterinputfield2.val(value2);
+                                }
+                            }
+                            filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                            filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                        },
+                        columns: [
+                             {
+                                text: 'SNO', sortable: false, filterable: false, editable: false, 
+                                 groupable: false, draggable: false, resizable: false,
+                                 datafield: '', columntype: 'number', width: 35,
+                                 cellsrenderer: function (row, column, value) {
+                                     return "<div style='margin:4px;'>" + (value + 1) + "</div>";
+                                 }
+                             },
+                            { text: "Emp Code", datafield: "EmpId", editable: false, width: 75 },
+                            { text: "Employee Name", datafield: "EmployeeName", editable: false, width: 170 },
+                            { text: "Designation", datafield: "designation", editable: false, width: 85 },
+                            { text: "Applied Date", datafield: "UpdatedDate", editable: false, width: 90, cellsformat: "dd/MM/yyyy" },
+                            { text: "Department/Branch", datafield: "Deptbranch", width: 140, editable: false },
+                            { text: "Visit From", datafield: "VistorFrom", editable: false, align: 'center', columngroup: 'Branch/Institution/Training to be visited', width: 150 },
+                            { text: "Visit To", datafield: "VistorTo", editable: false, align: 'center', columngroup: 'Branch/Institution/Training to be visited', width: 150 },
+                            { text: "From", datafield: "StartDate", editable: false, align: 'center', columngroup: 'Days with Time', width: 150, cellsformat: "dd/MM/yyyy h:mm tt" },
+                            { text: "To", datafield: "EndDate", editable: false, align: 'center', columngroup: 'Days with Time', width: 150, cellsformat: "dd/MM/yyyy h:mm tt" },
+                            { text: 'Days-hh:mm:ss', editable: false, columngroup: 'Days-hh:mm:ss', cellsalign: 'center', align: 'center', datafield: 'Duration', width: 120 },
+                            { text: "Purpose", datafield: "Purpose", editable: false, width: 90 },
+                            { text: "Status", datafield: "Status", editable: false, cellsrenderer: cellsrenderer, width: 85 },
+                            { text: "Description", datafield: "Description", editable: false, width: 92 },
+                            {text: 'Action', datafield: 'Cancel', columntype: 'button', width: 70, cellsrenderer: function (row) {
+                                    var bidd = $("#grid1").jqxGrid('getcellvalue', row, "Action");
+                                    return bidd;
+                                }, buttonclick: function (row) {
+                                    var bidval = $("#grid1").jqxGrid('getcellvalue', row, "Action");
+                                    if (bidval == "Cancelled") {
+                                    } else {
+                                        var res = confirm("Are you sure to Cancel OD");
+                                        if (res) {
+                                            var LeaveId = $("#grid1").jqxGrid('getcellvalue', row, "Id");
+                                            window.location = '/Duty/ODCancelRequest?LeaveId=' + LeaveId;
+                                        }
+                                        else
+                                            return res;
+                                    }
+
+                                }
+                            },
+                        ],
+                        columngroups:
+                        [
+                            { text: 'Days with Time', align: 'center', editable: false, name: 'Days with Time' },
+                            { text: 'Branch/Institution/Training to be visited', align: 'center', editable: false, name: 'Branch/Institution/Training to be visited' },
+                            { text: "Durations", align: 'center', editable: false, name: 'Days-hh:mm:ss' }
+                        ],
+
+
+                    });
+                $("#excelExport1").jqxButton();
+
+
+                $("#excelExport1").click(function () {
+                    $("#grid1").jqxGrid('exportdata', 'xls', 'Today OD History');
+                });
+            });
+
+</script>
+<script type="text/javascript">
+
+        $("#ALLbtn").click(function () {
+
+            // prepare the data
+            var source =
+                {
+                    type: "Get",
+                    datatype: "json",
+                    datafields: [
+                        { name: 'Id', type: 'int' },
+                        { name: 'EmpId', type: 'int' },
+                        { name: 'EmployeeName', type: 'string' },
+                        { name: 'designation', type: 'string' },
+                        { name: 'Deptbranch', type: 'string' },
+                        { name: 'VistorFrom', type: 'string' },
+                        { name: 'VistorTo', type: 'string' },
+                        { name: 'StartDate', type: 'date' },
+                        { name: 'EndDate', type: 'date' },
+                        { name: 'Purpose', type: 'string' },
+                        { name: 'Status', type: 'string' },
+                        { name: 'UpdatedDate', type: 'date' },
+                        { name: 'Duration', type: 'string' },
+                        { name: 'Description', type: 'string' },
+                        { name: 'Action', type: 'string' },
+                    ],
+                    async: false,
+                    url: '/Duty/ODHistoryViews',
+                    data: {
+                        featureClass: "P",
+                        style: "full",
+                        username: "jqwidgets",
+                    }
+                };
+            var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties, rowdata) {
+                if (value == "Pending") {
+                    return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #FFA500;">' + value + '</span>';
+                }
+                else if (value == "Forwarded") {
+                    return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #33b5e5;">' + value + '</span>';
+                }
+                else if (value == "Denied") {
+                    return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #8B008B;">' + value + '</span>';
+                }
+                else if (value == "Approved") {
+                    return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #00C851;">' + value + '</span>';
+                }
+                else {
+                    return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #ff4444;">' + value + '</span>';
+                }
+            }
+            var dataAdapter = new $.jqx.dataAdapter(source,
+                {
+                    formatData: function (data) {
+                        data.ProductName = $("#searchField").val();
+                        return data;
+                    }
+                }
+            );
+            // initialize jqxGrid
+            var editrowindex = -1;
+            var delrowindex = -1;
+            $("#grid").jqxGrid(
+                {
+                    width: '99%',
+                    source: dataAdapter,
+                    theme: otherTheme,// for theme refernce go to Layout.cshtml
+                    autoheight: true,
+                    sortable: true,
+                    pageable: true,
+                    pagesize: 20,
+                    columnsResize: true,
+                    altRows: true,
+                    filterable: true,
+                    autoshowfiltericon: true,
+
+                    ready: function () {
+                        $("#grid").jqxGrid('localizestrings', localizationObject);
+                    },
+                    updatefilterconditions: function (type, defaultconditions) {
+                        switch (type) {
+                            case 'stringfilter':
+                                return stringcomparisonoperators;
+                            case 'numericfilter':
+                                return numericcomparisonoperators;
+                            case 'datefilter':
+                                return datecomparisonoperators;
+                            case 'booleanfilter':
+                                return booleancomparisonoperators;
+                        }
+                    },
+                    updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                        filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                        var index1 = 0;
+                        var index2 = 0;
+                        if (columnfilter != null) {
+                            var filter1 = columnfilter.getfilterat(0);
+                            var filter2 = columnfilter.getfilterat(1);
+                            if (filter1) {
+                                index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                                var value1 = filter1.filtervalue;
+                                filterinputfield1.val(value1);
+                            }
+                            if (filter2) {
+                                index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                                var value2 = filter2.filtervalue;
+                                filterinputfield2.val(value2);
+                            }
+                        }
+                        filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                        filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                    },
+                    columns: [
+                        {
+                            text: 'SNO', sortable: false, filterable: false, editable: false, 
+                            groupable: false, draggable: false, resizable: false,
+                            datafield: '', columntype: 'number', width: 35,
+                            cellsrenderer: function (row, column, value) {
+                                return "<div style='margin:4px;'>" + (value + 1) + "</div>";
+                            }
+                        },
+                            { text: "Emp Code", datafield: "EmpId", editable: false, width: 75 },
+                            { text: "Employee Name", datafield: "EmployeeName", editable: false, width: 155 },
+                            { text: "Designation", datafield: "designation", editable: false, width: 85 },
+                            { text: "Applied Date", datafield: "UpdatedDate", editable: false, width: 90, cellsformat: "dd/MM/yyyy" },
+                            { text: "Department/Branch", datafield: "Deptbranch", width: 140  ,editable: false},
+                            { text: "Visit From", datafield: "VistorFrom", editable: false, align: 'center', columngroup: 'Branch/Institution/Training to be visited', width: 150 },
+                            { text: "Visit To", datafield: "VistorTo", editable: false, align: 'center', columngroup: 'Branch/Institution/Training to be visited', width: 150 },
+                            { text: "From", datafield: "StartDate", editable: false, align: 'center', columngroup: 'Days with Time', width: 150, cellsformat: "dd/MM/yyyy h:mm tt" },
+                            { text: "To", datafield: "EndDate", editable: false, align: 'center', columngroup: 'Days with Time', width: 150, cellsformat: "dd/MM/yyyy h:mm tt" },
+                            { text: 'Days-hh:mm:ss', editable: false, columngroup: 'Days-hh:mm:ss', cellsalign: 'center', align: 'center', datafield: 'Duration', width: 120 },
+                            { text: "Purpose", datafield: "Purpose", editable: false, width: 90 },
+                            { text: "Status", datafield: "Status", editable: false, cellsrenderer: cellsrenderer, width: 85 },
+                            { text: "Description", datafield: "Description", editable: false, width: 92 },
+                                {text: 'Action', datafield: 'Cancel', columntype: 'button', width: 70, cellsrenderer: function (row) {
+                                        var bidd = $("#grid").jqxGrid('getcellvalue', row, "Action");
+                                        return bidd;
+                                    }, buttonclick: function (row) {
+                                        var bidval = $("#grid").jqxGrid('getcellvalue', row, "Action");
+                                        if (bidval == "Cancelled") {
+                                            //var bid = $("#grid1").jqxGrid('getcellvalue', row, "Id");
+                                            //window.location = '/Registration/EditBrokerList?bid=' + bid;
+
+                                        } else {
+                                            var res = confirm("Are you sure to Cancel OD");
+                                            if (res) {
+                                                var LeaveId = $("#grid").jqxGrid('getcellvalue', row, "Id");
+                                                window.location = '/Duty/ODCancelRequest?LeaveId=' + LeaveId;
+                                            }
+                                            else
+                                                return res;
+                                        }
+
+                                    }
+                                },
+                ],
+                    columngroups:
+            [
+                { text: 'Days with Time', align: 'center', editable: false, name: 'Days with Time' },
+                { text: 'Branch/Institution/Training to be visited', align: 'center', editable: false, name: 'Branch/Institution/Training to be visited' },
+                { text: "Durations", align: 'center', editable: false, name: 'Days-hh:mm:ss' }
+            ],
+                });
+
+            $("#excelExport").jqxButton();
+
+
+            $("#excelExport").click(function () {
+                $("#grid").jqxGrid('exportdata', 'xls', 'OD History');
+            });
+        });
+   
+        $("#btnGet").click(function () {
+   
+            var startdate = $("#Stdate1").val();
+            var enddate = $("#Endate1").val();
+            var lstatus = $("#leaveapplied").val();
+            $("#pdfall1").show();
+            // prepare the data
+            var source =
+                {
+                    type: "Post",
+                    datatype: "json",
+                    datafields: [
+                            { name: 'Id', type: 'int' },
+                            { name: 'EmpId', type: 'int' },
+                            { name: 'EmployeeName', type: 'string' },
+                            { name: 'designation', type: 'string' },
+                            { name: 'Deptbranch', type: 'string' },
+                            { name: 'VistorFrom', type: 'string' },
+                            { name: 'VistorTo', type: 'string' },
+                            { name: 'StartDate', type: 'date' },
+                            { name: 'EndDate', type: 'date' },
+                            { name: 'Purpose', type: 'string' },
+                            { name: 'Status', type: 'string' },
+                            { name: 'UpdatedDate', type: 'date' },
+                            { name: 'Duration', type: 'string' },
+                            { name: 'Description', type: 'string' },
+                            { name: 'Action', type: 'string' },
+                    ],
+                    async: false,
+                    url: '/Duty/ODHistoryView',
+                    data: {
+                        featureClass: "P",
+                        style: "full",
+                        username: "jqwidgets",
+                        Stdate: startdate,
+                        Endate: enddate,
+                        lApplied: lstatus,
+                    }
+                };
+            var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties, rowdata) {
+                if (value == "Pending") {
+                    return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #FFA500;">' + value + '</span>';
+                }
+                else if (value == "Forwarded") {
+                    return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #33b5e5;">' + value + '</span>';
+                }
+                else if (value == "Denied") {
+                    return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #8B008B;">' + value + '</span>';
+                }
+                else if (value == "Approved") {
+                    return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #00C851;">' + value + '</span>';
+                }
+                else {
+                    return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #ff4444;">' + value + '</span>';
+                }
+            }
+            var dataAdapter = new $.jqx.dataAdapter(source,
+                {
+                    formatData: function (data) {
+                        data.ProductName = $("#searchField").val();
+                        return data;
+                    }
+                }
+            );
+            // Check if grid already exists, destroy it first
+           
+            // initialize jqxGrid
+            var editrowindex = -1;
+            var delrowindex = -1;
+            $("#grid").jqxGrid(
+                {
+                    width: '99%',
+                    source: dataAdapter,
+                    theme: otherTheme,// for theme refernce go to Layout.cshtml
+                    autoheight: true,
+                    sortable: true,
+                    pageable: true,
+                    pagesize: 20,
+                    columnsResize: true,
+                    altRows: true,
+                    filterable: true,
+                    autoshowfiltericon: true,
+
+                    ready: function () {
+                        $("#grid").jqxGrid('localizestrings', localizationObject);
+                    },
+                    updatefilterconditions: function (type, defaultconditions) {
+                        switch (type) {
+                            case 'stringfilter':
+                                return stringcomparisonoperators;
+                            case 'numericfilter':
+                                return numericcomparisonoperators;
+                            case 'datefilter':
+                                return datecomparisonoperators;
+                            case 'booleanfilter':
+                                return booleancomparisonoperators;
+                        }
+                    },
+                    updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                        filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                        var index1 = 0;
+                        var index2 = 0;
+                        if (columnfilter != null) {
+                            var filter1 = columnfilter.getfilterat(0);
+                            var filter2 = columnfilter.getfilterat(1);
+                            if (filter1) {
+                                index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                                var value1 = filter1.filtervalue;
+                                filterinputfield1.val(value1);
+                            }
+                            if (filter2) {
+                                index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                                var value2 = filter2.filtervalue;
+                                filterinputfield2.val(value2);
+                            }
+                        }
+                        filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                        filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                    },
+                    columns: [
+                        {
+                            text: 'SNO', sortable: false, filterable: false, editable: false, 
+                            groupable: false, draggable: false, resizable: false,
+                            datafield: '', columntype: 'number', width: 35,
+                            cellsrenderer: function (row, column, value) {
+                                return "<div style='margin:4px;'>" + (value + 1) + "</div>";
+                            }
+                        },
+                            { text: "Emp Code", datafield: "EmpId", editable: false, width: 75 },
+                            { text: "Employee Name", datafield: "EmployeeName", editable: false, width: 155 },
+                            { text: "Designation", datafield: "designation", editable: false, width: 85 },
+                            { text: "Applied Date", datafield: "UpdatedDate", editable: false, width: 90, cellsformat: "dd/MM/yyyy" },
+                            { text: "Department/Branch", datafield: "Deptbranch", width: 140 },
+                            { text: "Visit From", datafield: "VistorFrom", editable: false, align: 'center', columngroup: 'Branch/Institution/Training to be visited', width: 150 },
+                            { text: "Visit To", datafield: "VistorTo", editable: false, align: 'center', columngroup: 'Branch/Institution/Training to be visited', width: 150 },
+                            { text: "From", datafield: "StartDate", editable: false, align: 'center', columngroup: 'Days with Time', width: 150, cellsformat: "dd/MM/yyyy h:mm tt" },
+                            { text: "To", datafield: "EndDate", editable: false, align: 'center', columngroup: 'Days with Time', width: 150, cellsformat: "dd/MM/yyyy h:mm tt" },
+                            { text: 'Days-hh:mm:ss', editable: false, columngroup: 'Days-hh:mm:ss', cellsalign: 'center', align: 'center', datafield: 'Duration', width: 120 },
+                            { text: "Purpose", datafield: "Purpose", editable: false, width: 90 },
+                            { text: "Status", datafield: "Status", editable: false, cellsrenderer: cellsrenderer, width: 85 },
+                            { text: "Description", datafield: "Description", editable: false, width: 92 },
+                         { text: 'Action', datafield: 'Cancel', columntype: 'button', width: 70, cellsrenderer: function (row) {
+                                 var bidd = $("#grid").jqxGrid('getcellvalue', row, "Action");
+                                 return bidd;
+                             }, buttonclick: function (row) {
+                                 var bidval = $("#grid").jqxGrid('getcellvalue', row, "Action");
+                                 if (bidval == "Cancelled") {
+                                     //var bid = $("#grid").jqxGrid('getcellvalue', row, "Id");
+                                     //window.location = '/Registration/EditBrokerList?bid=' + bid;
+
+                                 } else {
+                                     var res = confirm("Are you sure to Cancel OD");
+                                     if (res) {
+                                         var LeaveId = $("#grid").jqxGrid('getcellvalue', row, "Id");
+                                         window.location = '/Duty/ODCancelRequest?LeaveId=' + LeaveId;
+                                     }
+                                     else
+                                         return res;
+                                 }
+
+                             }
+                         },
+
+                    ],
+                    columngroups:
+                    [
+                        { text: 'Action', align: 'center', name: 'Actions', width: 160 },
+                        { text: 'Days with Time', align: 'center', editable: false, name: 'Days with Time' },
+                        { text: 'Branch/Institution/Training to be visited', align: 'center', editable: false, name: 'Branch/Institution/Training to be visited' },
+                        { text: "Durations", align: 'center', editable: false, name: 'Days-hh:mm:ss' }
+                    ],
+
+
+                });
+            $("#excelExport").jqxButton();
+
+            $("#excelExport").click(function () {
+                $("#grid").jqxGrid('exportdata', 'xls', 'OD History');
+            });
+
+        });
+   
+</script>
+<script>
+    document.getElementById("a6").className = "active";
+</script>
+<script>
+function pp() {
+     if (document.getElementById("lApplied").checked == true) {
+         document.getElementById("lRequest").checked = false;
+         document.getElementById("Stdate1").value = "";
+         document.getElementById("Endate1").value = "";
+
+     }
+     else {
+         document.getElementById("lRequest").checked = true;
+         document.getElementById("Stdate1").value = "";
+         document.getElementById("Endate1").value = "";
+
+     }
+
+}
+</script>
+<script>
+ function appliedrequest(val) {
+     //alert(val);
+     $("#leaveapplied").val(val);
+     pp();
+ }
+</script>
+<script>
+//To Date and From Date Validation
+    function Dateevent2() {
+
+
+
+        var fromdate = document.getElementById("Stdate1").value;
+        var todate = document.getElementById("Endate1").value;
+        var date = moment(fromdate, "DD.MM.YYYY");
+
+        var currentDate1 = moment(todate, "DD.MM.YYYY");
+        var duration = moment.duration(date.diff(currentDate1));
+
+
+        if (duration > 0) {
+
+
+            alert("Please ensure that To Date is greater than or equal to From Date.");
+            document.getElementById("Endate1").focus();
+            document.getElementById("Endate1").value = '';
+            return false;
+
+        }
+    }
+     function Dateevent4() {
+         var StartDate = document.getElementById('Stdate1').value;
+         var EndDate = document.getElementById('Endate1').value;
+         var eDate = moment(EndDate, "DD.MM.YYYY");
+         var sDate = moment(StartDate, "DD.MM.YYYY");
+         if (StartDate != '' && EndDate != '' && sDate > eDate) {
+             alert("Please ensure that To Date is greater than or equal to From Date.");
+             document.getElementById('Stdate1').value = '';
+             document.getElementById("Stdate1").focus();
+             return false;
+         }
+     }
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#radio1").hide();
+        $("#radio2").hide();
+        $("#grid").hide();
+        $("#grid1").show();
+        $("#excelExport1").hide();
+        $("#excelExport").hide();
+        $("#pdftoday").show();
+        $("#pdfall1").hide();
+        $("#excelExporttoday").show();
+        $("#excelExportall").hide();
+        var property = document.getElementById("Todaybtn");
+        property.style.backgroundColor = "#e6a74e"
+        $("#ALLbtn").click(function () {
+            var property = document.getElementById("Todaybtn");
+            property.style.backgroundColor = "#067213";
+            var property = document.getElementById("ALLbtn");
+            property.style.backgroundColor = "#e6a74e";
+                $("#radio1").show();
+                $("#radio2").show();
+                $("#grid").show();
+                $("#grid1").hide();
+                $("#excelExport1").hide();
+                $("#excelExport").hide();
+                $("#pdftoday").hide();
+                $("#pdfall1").show();
+                $("#excelExporttoday").hide();
+                $("#excelExportall").show();
+
+            });
+        $("#Todaybtn").click(function () {
+            var property = document.getElementById("Todaybtn");
+            property.style.backgroundColor = "#e6a74e"
+            var property = document.getElementById("ALLbtn");
+            property.style.backgroundColor = "#067213";
+                $("#radio1").hide();
+                $("#radio2").hide();
+                $("#grid1").show();
+                $("#grid").hide();
+                $("#excelExport1").hide();
+                $("#excelExport").hide();
+                $("#pdftoday").show();
+                $("#pdfall1").hide();
+                $("#excelExporttoday").show();
+                $("#excelExportall").hide();
+            });
+        });
+</script>
+<style>
+    .activeClass {
+        background: #ffdb99;
+    }
+
+    .secondClass {
+        /*background: #FF9999;*/
+        color: red;
+    }
+</style>
+<script type='text/javascript'>
+    $(function getholidays() {
+        var active_dates = [];
+    $.ajax({
+        type: "GET",
+        async: false,
+        url: "/LeaveApply/GetDates",
+        dataType: "Json",
+        success: function (data) {
+            datesArray = data;
+            for (i = 0; i < datesArray.length; i++) {
+                var result = datesArray[i].replace("-", "/");
+                var result1 = result.replace("-", "/");
+                var strArray = result1.split("/");
+                var cdate = strArray[0] + "/" + parseInt(strArray[1]) + "/" + strArray[2]
+                active_dates.push(cdate);
+
+                if(i==datesArray.length-1)
+                {
+                    //loadcal(active_dates);
+                }
+            }
+
+        }
+    });
+        $('.input-group.date').datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            beforeShowDay: function nonWorkingDays(date) {
+                var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
+                var week = 0 | date.getDate() / 7 //get the week
+                var dd = date.getDate();
+                var month = date.getMonth();
+                if (dd < 10) {
+                    dd = '0' + dd
+                }
+
+                if (month < 10) {
+                    month = '0' + month
+                }
+                var sunweek = date.getDay();
+                var year = date.getFullYear();
+
+                if (dd == 14 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                if (dd == 28 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                    //check if it's second week or fourth week
+                else if (week == 1 || week == 3) {
+                    if (dd == 7 && day == 6 || dd == 21 && day == 6) {
+                        //check for satruday
+
+                    }
+                    else {
+                        if (day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                    }
+
+                }
+                //check for sunday
+                if (day == 0) {
+                    return {
+                        classes: 'secondClass'
+                    };
+
+                }
+                //check for holidays
+                var d = date;
+                var curr_date = d.getDate();
+                var curr_month = d.getMonth() + 1; //Months are zero based
+                if (curr_date < 10) {
+                    curr_date = '0' + curr_date
+                }
+                var curr_year = d.getFullYear();
+                var formattedDate = curr_date + "/" + curr_month + "/" + curr_year
+
+                if ($.inArray(formattedDate, active_dates) != -1) {
+                    return {
+                        classes: 'activeClass'
+                    };
+                }
+                return [true];
+            }
+        });
+  });
+</script>
+<script>
+function resetform()
+{ 
+$("#Stdate1").val('');
+$("#Endate1").val('');
+}
+</script>

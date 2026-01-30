@@ -1,0 +1,710 @@
+﻿@{
+    ViewBag.Title = "PFFinalSettlement";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+<div class="page">
+    <div class="page_start">
+        <div class="leftmenu-container">
+            <div class="sidebar-menu">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="sidebar-content">
+                <div class="main_heading heading_main">
+                    <h1>PF Final Settlement <span class="year-end">@ViewBag.Env_Fm_Fy</span></h1>
+                    <div class="col-md-12">
+                        <div class="fancy-collapse-panel">
+                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" role="tab" id="headingOne">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#reportsearch" aria-expanded="true" aria-controls="reportsearch">
+                                                Report Filter
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="reportsearch" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                        <div class="panel-body">
+                                            <div class="reports_search">
+                                                @{ Html.RenderPartial("_PvEmployeeSearchwithCheckboxes"); }
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label class="control-label col-sm-5">Interest calulated up To :</label>
+                                <label class="control-label col-sm-7"> 14-03-2019 </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-5">Settlement Done on :</label>
+                                <label class="control-label col-sm-7">  </label>
+                            </div>
+                            </div>
+                        </div>
+                            <div class="col-md-12">
+                                <div class="col-md-8">
+
+                                    <table class="table bordered-one">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th><b>PF</b></th>
+                                                <th><b>VPF</b></th>
+                                                <th><b>Bank</b></th>
+                                                <th><b>Total</b></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><b>Opening Balance :</b></td>
+                                                <td>456</td>
+                                                <td>8976</td>
+                                                <td>4612</td>
+                                                <td>585</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Interest :</b></td>
+                                                <td>563535</td>
+                                                <td>8256</td>
+                                                <td>62525</td>
+                                                <td>7553</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Nr Withdrawals :</b></td>
+                                                <td>85266</td>
+                                                <td>4545433</td>
+                                                <td>7866</td>
+                                                <td>7563</td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td>-------</td>
+                                                <td>-------</td>
+                                                <td>-------</td>
+                                                <td>-------</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Total :</b></td>
+                                                <td>1233</td>
+                                                <td>7856</td>
+                                                <td>7898522</td>
+                                                <td>578675</td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-horizontal">
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-5"><b>PF Withdrawal:</b></label>
+                                            <div class="col-sm-7">
+                                                <input type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-5"><b>VPF Withdrawal:</b></label>
+                                            <div class="col-sm-7">
+                                                <input type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-5"><b>Bank Withdrawal:</b></label>
+                                            <div class="col-sm-7">
+                                                <input type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-5"><b>Total:</b></label>
+                                            <label class="control-label col-sm-7"> 465461654 </label>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="payslip_process">
+                                    <div class="col-md-2">
+                                        <input id="Finalprocess" type="checkbox" name="Finalprocess" value="Finalprocess">
+                                        <label for="Finalprocess"><span><span></span></span></label>
+                                        <button class="btn btn-danger" id="btnSubmit">Finalprocess</button>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="pull-right">
+                                            <button class="btn btn-primary" id="AllAndSingleEmpSearchRbtn1450" data_target="empSearchModal" data-toggle="modal">Process</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    </div>
+</div>
+<div class="modal fade" id="tds_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal_custome">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">PF Final Settlement</h4>
+            </div>
+            <div class="modal-body">
+                <div class="tds_process">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <table class="display table-borderless borderless" style="width:100%;" id="table4">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Name and Address of the Employer:  </td>
+                                            <td id="employer_name_address"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>PAN NO:  </td>
+                                            <td id="employer_pan"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>TAN NO  </td>
+                                            <td id="employer_tan"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                <table class="display table-borderless borderless" style="width:100%" id="table5">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Name:  </td>
+                                            <td id="name"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>EmpId:  </td>
+                                            <td id="emp_code"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Designation:  </td>
+                                            <td id="designation"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Gender:  </td>
+                                            <td id="sex"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>PAN No:  </td>
+                                            <td id="pan_no"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Month:  </td>
+                                            <td id="fm"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <table class="display" style="width:100%" id="printTable">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td width="400px">PF BALANCE AS ON : 02-08-2019   </td>
+                                    <td colspan="3" id="basic"></td>
+                                </tr>
+                                <tr>
+                                    <td>INTEREST 8.55% FROM 01-04-2019-02-08-2019  </td>
+                                    <td colspan="3" id="per_allowance"></td>
+                                </tr>
+                                <tr>
+                                    <td>INTEREST BALANCE AS ON : 01-04-2019      </td>
+                                    <td colspan="3" id="fpa_allow"></td>
+                                </tr>
+                                <tr>
+                                    <td>INTEREST 8.55% FROM 01-04-2019-02-08-2019 </td>
+                                    <td id="fpiip"></td>
+                                </tr>
+                                <tr>
+                                    <td>Total </td>
+                                    <td colspan="3" id="da_percent"></td>
+                                </tr>
+                                <tr>
+                                    <td>LESS :     </td>
+                                    <td colspan="3" id="hra"></td>
+                                </tr>
+                                <tr>
+                                    <td>NR WITHDRAWALS (O.B)  </td>
+                                    <td colspan="3" id="cca"></td>
+                                </tr>
+                                <tr>
+                                    <td>INT.ON WITHDRAWALS   </td>
+                                    <td colspan="3" id="int_ref"></td>
+                                <tr>
+                                    <td>TOTAL DEDUCTIONS  </td>
+                                    <td colspan="3" id="t_inc"></td>
+                                <tr>
+                                    <td> NET AMOUNT PAYABLE </td>
+                                    <td colspan="3" id="spl_allowance"></td>
+                                <tr>
+                                    <td>PRODUCT-WISE :  </td>
+                                    <td colspan="3" id="spl_da"></td>
+                                <tr>
+                                    <td>PRODUCTS ON PRINCIPAL  </td>
+                                    <td colspan="3" id="pf_perk"></td>
+                                <tr>
+                                    <td> PRODUCTS ON INTEREST </td>
+                                    <td colspan="3" id="loan_perk"></td>
+                                </tr>
+                                <tr>
+                                    <td>LESS:PRODUCTS ON LOANS    </td>
+                                    <td colspan="3" id="incentives"></td>
+                                </tr>
+                                <tr>
+                                    <td>NET PRODUCTS  </td>
+                                    <td colspan="3" id="values_of_17_2"></td>
+                                </tr>
+                                <tr>
+                                    <td> NET INTEREST ACCRUED  </td>
+                                    <td colspan="3" id="values_of_17_3"></td>
+                                </tr>
+                                <tr>
+                                    <td>TOTAL AMOUNT PAYABLE AS UNDER  </td>
+                                    <td colspan="3" id="gross">  </td>
+                                </tr>
+
+                               
+                                <tr>
+                                    <td>PRINCIPAL  </td>
+                                    <td colspan="3" id="house_rent_allowance"></td>
+                                </tr>
+                                <tr>
+                                    <td>INTEREST OP.BALANCE  </td>
+                                    <td id="total_section"></td>
+                                </tr>
+                                <tr>
+                                    <td>NET INTEREST ACCRUED  </td>
+                                    <td colspan="3" id="balance"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">LESS LOANS AVAILED  </td>
+                                </tr>
+                                <tr>
+                                    <td>AMOUNT PAYABLE     </td>
+                                    <td colspan="3" id="standard_deduction"></td>
+                                </tr>
+                                <tr>
+                                    <td>AMOUNT SETTLED ON  </td>
+                                    <td colspan="3" id="emp_tax"></td>
+                                </tr>
+                                <tr>
+                                    <td>NET AMOUNT PAYABLE </td>
+                                    <td colspan="3" id="aggregate_of_4"></td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                    
+                       
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12 mt_10">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" title="Close the window">Ok</button>
+                    @*<button type="button" class="btn btn-primary" id="Print" title="Submit the data">Print TDS</button>*@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*<script src="~/Areas/Payroll/Assets/libs/jquery/jspdf.debug.js"></script>
+    <script src="~/Areas/Payroll/Assets/libs/jquery/jspdf.plugin.autotable.js"></script>*@
+<style>
+    .borderless td, .borderless th {
+        border: none;
+    }
+</style>
+
+@*<script>
+
+        $('#Print').click(function () {
+
+            var pdf = new jsPDF('p', 'pt', 'A4');
+
+            var elem4 = document.getElementById('table4');
+
+            var data4 = pdf.autoTableHtmlToJson(elem4);
+
+            var elem5 = document.getElementById('table5');
+
+            var data5 = pdf.autoTableHtmlToJson(elem5);
+
+
+
+            var elem2 = document.getElementById('printTable');
+
+            var data2 = pdf.autoTableHtmlToJson(elem2);
+
+            var elem3 = document.getElementById('table2');
+
+            var data3 = pdf.autoTableHtmlToJson(elem3);
+
+
+
+            var img = "data:image/jpeg;base64,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";
+
+            var header = function (data) {
+                pdf.setFontSize(18);
+                pdf.setTextColor(40);
+                pdf.setFontStyle('normal');
+                pdf.addImage(img, 'JPEG', data.settings.margin.left, 20, 0, 0);
+                pdf.text("TDS Report", 200, 50);
+            };
+
+
+            var startingPage = pdf.internal.getCurrentPageInfo().pageNumber;
+
+            pdf.autoTable(data4.columns, data4.data, {
+                margin: { left: 30, right: 250, top: 80, bottom: 40 }, addPageContent: header, theme: 'plain', drawHeaderRow: function (row, data) {
+                    return false;
+                },
+            }, { startY: 80 }, {
+
+                    avoidPageSplit: true,
+                });
+            pdf.setPage(startingPage);
+            pdf.autoTable(data5.columns, data5.data, {
+                startY: 80,
+                theme: 'plain',
+                avoidPageSplit: true,
+                margin: { left: 330, right: 10, top: 80, bottom: 40 },
+                //startY: pdf.autoTableEndPosY() + 10,
+                drawHeaderRow: function (row, data) {
+                    return false;
+                }
+            });
+            //pdf.addPage();
+
+
+            // pdf.addPage();
+            pdf.autoTable(data2.columns, data2.data, {
+                startY: pdf.autoTableEndPosY() + 10,
+                drawHeaderRow: function (row, data) {
+                    return false;
+                }
+            });
+            //pdf.addPage();
+            pdf.autoTable(data3.columns, data3.data, {
+                startY: pdf.autoTableEndPosY() + 10,
+                drawHeaderRow: function (row, data) {
+                    return false;
+                }
+            });
+
+
+            pdf.save('TDS Report.pdf');
+        });
+
+    </script>*@
+<script>
+    var orgData;
+    var generalData;
+    var ccPostData;
+    var cccPostData;
+    var ccdPostData;
+    var otherPostData;
+    var Finalprocess = false;
+    var empAll = true;
+  //  $("#pvBtnSearchEmpCodeWithChkModalPopup1450").attr("disabled", true);
+    $(document).ready(function () {
+
+        $("#txtEmployeeSearchBox1450").attr("disabled", true);
+        $("#rdbEmpAll1empsearch").click(function () {
+            $('[id=rdbEmpAll1empsearch]').on('change', function () {
+                empAll = false;
+                $("#txtEmployeeSearchBox1450").attr("disabled", false);
+            })
+        });
+        $("#rdbEmpAll").click(function () {
+            empAll = true;
+            $("#txtEmployeeSearchBox1450").attr("disabled", true);
+        });
+    })
+    $("#Finalprocess").click(function () {
+
+        if ($(this).prop("checked") == true) {
+
+            $('#Finalprocess').attr('checked', this.checked);
+            Finalprocess = true;
+
+            $("#Process").modal();
+            //showGlobalModal('S#Process Elert#' + "Finalprocess" );
+        }
+        else {
+
+            Finalprocess = false;
+        }
+    });
+
+    $("#AllAndSingleEmpSearchRbtn1450").click(function () {
+
+        var empId = $("#txtEmployeeSearchBox1450").val();
+
+
+        if (empAll == false && empId == "") {
+            showGlobalModal("E#Eroor#Please Enter Employee Id");
+        } else if (empAll == true && empId == "") {
+            var dataToSend = JSON.stringify({
+                flag: empAll,
+                final: Finalprocess
+            });
+            CommonApiPOST("/Payroll/Process/processTDSForAll", dataToSend, function (isSuccess) {
+                if (isSuccess) {
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+
+        } else {
+
+            CommonApiGET('/Payroll/Process/getTdsData?emp_code=' + empId + '&final=' + Finalprocess, function (respData) {
+                if (respData.startsWith("E")) {
+                    showGlobalModal(respData);
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else {
+                    $('#tds_modal').modal('show');
+                orgData = respData;
+                fillDataobshare(respData);
+                }
+
+            });
+        }
+
+    });
+    function fillDataobshare(respData) {
+
+        var TDS = [];
+        var CC = [];
+        var CCC = [];
+        var CCD = [];
+        var OTHER = [];
+
+
+        var dataObj = JSON.parse(respData);
+        TDS.push(dataObj.tds);
+        CC.push(dataObj.cc);
+        CCC.push(dataObj.ccc);
+        CCD.push(dataObj.ccd);
+        OTHER.push(dataObj.other);
+
+        var tdsData = TDS[0];
+        var ccData = CC[0];
+        var cccData = CCC[0];
+        var ccdData = CCD[0];
+        var otherData = OTHER[0];
+
+        var tds = tdsData[0];
+        var cc = ccData[0];
+        var ccc = cccData[0];
+        var ccd = ccdData[0];
+        var other = otherData[0];
+
+        generalData = tds;
+        ccPostData = CC[0];
+        cccPostData = CCC[0];
+        ccdPostData = CCD[0];
+        otherPostData = OTHER[0];
+
+
+        var name = tds.name;
+        var per_address = tds.per_address;
+        var pan_no = tds.pan_no;
+        var emp_code = tds.emp_code;
+        var designation = tds.designation;
+        var sex = tds.sex;
+        var fm = tds.fm;
+        var employer_name_address = tds.employer_name_address;
+        var employer_pan = tds.employer_pan;
+        var employer_tan = tds.employer_tan;
+        var basic = tds.basic;
+        var da_percent = tds.da_percent;
+        var per_allowance = tds.per_allowance;
+        var int_ref = tds.int_ref;
+        var t_inc = tds.t_inc;
+        var fpa_allow = tds.fpa_allow;
+        var fpiip = tds.fpiip;
+        var pf_perk = tds.pf_perk;
+        var loan_perk = tds.loan_perk;
+        var incentives = tds.incentives;
+        var spl_allowance = tds.spl_allowance;
+        var spl_da = tds.spl_da;
+        var hra = tds.hra;
+        var cca = tds.cca;
+        var gross = tds.gross;
+        var standard_deduction = tds.standard_deduction;
+        var ent_allowance = tds.ent_allowance;
+        var emp_tax = tds.emp_tax;
+        var aggregate_of_4 = tds.aggregate_of_4;
+        var Income_chargable = tds.Income_chargable;
+        var other = tds.other;
+        var houseloan_allownace = tds.houseloan_allownace;
+        var total_gross_income = tds.total_gross_income;
+        //var section_cd = tds.section_cd;
+        //var section_cd_amount = tds.section_cd_amount;
+        var loan_instl_amt = tds.loan_instl_amt;
+        //var section_ccc = tds.section_ccc;
+        //var section_ccd = tds.section_ccd;
+        //var edu_allowance = tds.edu_allowance;
+        var deductible = tds.deductible;
+        var total_income = tds.total_income;
+        var income = tds.income;
+        var edu_cess = tds.edu_cess;
+        var tax_payable = tds.tax_payable;
+        var tax_till = tds.tax_till;
+        var tax_balance = tds.tax_balance;
+        var balance_month = tds.balance_month;
+        var tds_per_month = tds.tds_per_month;
+        //var vpf = tds.vpf;
+        //var section_vpf_amount = tds.section_vpf_amount;
+        //var section_ccc_amount = tds.section_ccc_amount;
+        //var section_ccd_amount = tds.section_ccd_amount;
+        var house_rent_allowance = tds.house_rent_allowance;
+        var total_section = tds.total_section;
+        var balance = tds.balance;
+        var round_income = tds.round_income;
+        var section_87a = tds.section_87a;
+
+        var values_of_17_2 = tds.values_of_17_2;
+        var values_of_17_3 = tds.values_of_17_3;
+        var paid_by_emp = tds.paid_by_emp;
+
+        document.getElementById("values_of_17_2").innerHTML = values_of_17_2;
+        document.getElementById("values_of_17_3").innerHTML = values_of_17_3;
+        document.getElementById("paid_by_emp").innerHTML = paid_by_emp;
+
+        document.getElementById("round_income").innerHTML = round_income;
+        document.getElementById("section_87a").innerHTML = section_87a;
+        document.getElementById("name").innerHTML = name;
+        //document.getElementById("per_address").innerHTML = per_address;
+        document.getElementById("pan_no").innerHTML = pan_no;
+        document.getElementById("emp_code").innerHTML = emp_code;
+        document.getElementById("designation").innerHTML = designation;
+        document.getElementById("sex").innerHTML = sex;
+        document.getElementById("fm").innerHTML = fm;
+        document.getElementById("employer_name_address").innerHTML = employer_name_address;
+        document.getElementById("employer_pan").innerHTML = employer_pan;
+        document.getElementById("employer_tan").innerHTML = employer_tan;
+        document.getElementById("basic").innerHTML = basic;
+        document.getElementById("da_percent").innerHTML = da_percent;
+        document.getElementById("per_allowance").innerHTML = per_allowance;
+        document.getElementById("int_ref").innerHTML = int_ref;
+        document.getElementById("t_inc").innerHTML = t_inc;
+        document.getElementById("fpa_allow").innerHTML = fpa_allow;
+        document.getElementById("fpiip").innerHTML = fpiip;
+        document.getElementById("pf_perk").innerHTML = pf_perk;
+        document.getElementById("loan_perk").innerHTML = loan_perk;
+        document.getElementById("incentives").innerHTML = incentives;
+        document.getElementById("spl_allowance").innerHTML = spl_allowance;
+        document.getElementById("spl_da").innerHTML = spl_da;
+        document.getElementById("hra").innerHTML = hra;
+        document.getElementById("cca").innerHTML = cca;
+        document.getElementById("gross").innerHTML = gross;
+        document.getElementById("standard_deduction").innerHTML = standard_deduction;
+        //document.getElementById("ent_allowance").innerHTML = ent_allowance;
+        document.getElementById("emp_tax").innerHTML = emp_tax;
+        document.getElementById("aggregate_of_4").innerHTML = aggregate_of_4;
+        document.getElementById("Income_chargable").innerHTML = Income_chargable;
+        document.getElementById("other").innerHTML = other;
+        document.getElementById("houseloan_allownace").innerHTML = houseloan_allownace;
+        document.getElementById("total_gross_income").innerHTML = total_gross_income;
+        //document.getElementById("section_cd").innerHTML = section_cd;
+        //document.getElementById("section_cd_amount").innerHTML = section_cd_amount;
+        //document.getElementById("loan_instl_amt").innerHTML = loan_instl_amt;
+        //document.getElementById("section_ccc").innerHTML = section_ccc;
+        //document.getElementById("section_ccd").innerHTML = section_ccd;
+        //document.getElementById("edu_allowance").innerHTML = edu_allowance;
+        document.getElementById("deductible").innerHTML = deductible;
+
+        document.getElementById("total_income").innerHTML = total_income;
+        document.getElementById("income").innerHTML = income;
+        document.getElementById("edu_cess").innerHTML = edu_cess;
+
+        document.getElementById("tax_payable").innerHTML = tax_payable;
+        document.getElementById("tax_till").innerHTML = tax_till;
+        document.getElementById("tax_balance").innerHTML = tax_balance;
+
+        document.getElementById("balance_month").innerHTML = balance_month;
+        document.getElementById("tds_per_month").innerHTML = tds_per_month;
+
+        //document.getElementById("vpf").innerHTML = vpf;
+        //document.getElementById("section_vpf_amount").innerHTML = section_vpf_amount;
+
+        //document.getElementById("section_ccc_amount").innerHTML = section_ccc_amount;
+        //document.getElementById("section_ccd_amount").innerHTML = section_ccd_amount;
+
+        document.getElementById("house_rent_allowance").innerHTML = house_rent_allowance;
+        document.getElementById("total_section").innerHTML = total_section;
+        document.getElementById("balance").innerHTML = balance;
+
+        $('#cc').empty();
+        $('#ccc').empty();
+        $('#ccd').empty();
+        $('#otherSection').empty();
+
+        for (i = 0; i < ccData.length; i++) {
+
+            var value = i;
+            var id = ++value;
+            if (ccData[i].amount != 0) {
+                //$("#cc").append('<tr><td><label for="name">' + id + '. ' + ccData[i].name + '</label><label for="name">' + ccData[i].amount + '</label><label for="name">' + ccData[i].allowance_amount + '</label><label for="name">' + ccData[i].ded_amount + '</label></td></tr><br>');
+                $("#cc").append('<tr><td width="400px"><label for="name">' + id + '. ' + ccData[i].name + '</label></td><td><label for="name">' + ccData[i].amount + '</label></td><td><label for="name">' + ccData[i].allowance_amount + '</label></td><td><label for="name">' + ccData[i].ded_amount + '</label></td></tr>');
+            }
+        }
+        for (i = 0; i < cccData.length; i++) {
+            var value = i;
+            var id = ++value;
+            if (cccData[i].amount != 0) {
+                $("#ccc").append('<tr><td width="400px"><label for="name">' + id + '. ' + cccData[i].name + '</label></td><td><label for="name">' + cccData[i].amount + '</label></td><td><label for="name">' + cccData[i].allowance_amount + '</label></td><td><label for="name">' + cccData[i].ded_amount + '</label></td></tr>');
+            }
+        }
+        for (i = 0; i < ccdData.length; i++) {
+            var value = i;
+            var id = ++value;
+            if (ccdData[i].amount != 0) {
+                //$("#ccd").append('<tr><td><label for="name">' + id + '. ' + ccdData[i].name + '</label><label for="name">' + ccdData[i].amount + '</label><label for="name">' + ccdData[i].allowance_amount + '</label><label for="name">' + ccdData[i].ded_amount + '</label></td></tr><br>');
+                $("#ccd").append('<tr><td width="400px"><label for="name">' + id + '. ' + ccdData[i].name + '</label></td><td><label for="name">' + ccdData[i].amount + '</label></td><td><label for="name">' + ccdData[i].allowance_amount + '</label></td><td><label for="name">' + ccdData[i].ded_amount + '</label></td></tr>');
+            }
+        }
+        for (i = 0; i < otherData.length; i++) {
+            var value = i;
+            var id = ++value;
+            if (otherData[i].amount != 0) {
+                $("#otherSection").append('<tr><td width="400px"><label for="name">' + id + '. ' + otherData[i].section + ',   ' + otherData[i].name + '</label></td><td><label for="name">' + otherData[i].amount + '</label></td><td><label for="name">' + otherData[i].allowance_amount + '</label></td><td><label for="name">' + otherData[i].ded_amount + '</label></td></tr>');
+            }
+        }
+    }
+
+
+
+</script>

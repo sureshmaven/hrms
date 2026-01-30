@@ -1,0 +1,1248 @@
+﻿@model Entities.WorkDiary
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var rolepages = TempData["RolePages"].ToString();
+    ViewBag.RolePages = TempData["RolePages"];
+}
+@{ var message = TempData["cancel"] ?? string.Empty;
+}
+@{
+    var message1 = TempData["Forward"] ?? string.Empty;
+}
+@{
+    var message2 = TempData["Approve"] ?? string.Empty;
+}
+@{
+    var message3 = TempData["Denied"] ?? string.Empty;
+}
+<script type="text/javascript">
+        var message = '@message';
+        if (message) alert(message);
+</script>
+<script type="text/javascript">
+        var message1 = '@message1';
+        if (message1) alert(message1);
+</script>
+<script type="text/javascript">
+        var message2 = '@message2';
+        if (message2) alert(message2);
+</script>
+
+<script type="text/javascript">
+        var message3 = '@message3';
+        if (message3) alert(message3);
+</script>
+
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-heading">
+
+            @{
+            <ul class="nav nav-tabs">
+                @if (rolepages.Contains("ADERG"))
+           {
+               <li><a href=@Url.Action("InsertEmployees",
+"Register")>Employee Registration</a></li>
+                    }
+                    @if (rolepages.Contains("ADTPO"))
+                    {
+                       <li><a href="@Url.Action("Index","Transfer")">Transfer/Promotions</a></li>
+                    }
+                    @if (rolepages.Contains("ADCAU"))
+                    {
+                        <li><a href="@Url.Action("Index","ChangeAuthority")">Change Authority</a></li>
+                    }
+                    @if (rolepages.Contains("ADCPR"))
+                    {
+                        <li><a href="@Url.Action("Index","ChangeProfile")">Change Profile</a></li>
+                    }
+                    @if (rolepages.Contains("ADLTCA"))
+                    {
+                        <li><a href=@Url.Action("AdminLTCApply", "LeaveTravel")>Apply LTC </a></li>
+                    }
+
+                    @if (rolepages.Contains("ADPLA"))
+                    {
+                        <li><a href=@Url.Action("AdminPLApply", "PLE_Type")>Apply PL Encashment</a></li>
+                    }
+                    @if (rolepages.Contains("ADWDA"))
+                    {
+                        <li class="active"><a href=@Url.Action("WorkApprovalAdmin", "WorkDiary")>Delete Work Dairy</a></li>
+                    }
+                    @if (rolepages.Contains("ADUSRO"))
+                    {
+                        <li><a href=@Url.Action("UserRolesView", "AllReports")>User Roles</a></li>
+                    }
+                    @if (rolepages.Contains("ADCBRMG"))
+                    {
+                        <li><a href=@Url.Action("ChangeBranchManager", "ChangeBranchManager")>Change Branch Manager</a></li>
+                    }
+                    @if (rolepages.Contains("TsheetMain"))
+                    {
+                        <li><a href=@Url.Action("Timesheetrequestform", "TimeSheet")>TimeSheet Manual Form</a></li>
+                    }
+                    @if (rolepages.Contains("TsheetApp"))
+                    {
+                        <li><a href=@Url.Action("TSApprovalView", "TimeSheet")>TimeSheet Manual Approvals</a></li>
+                    }
+                </ul>
+            }
+
+        </div>
+    </div>
+</div>
+<div class="panel-body">
+    <div class="tab-content">
+        <div class="tab-pane fade  in active" id="tab2primary">
+            <div class="page_st">
+                <div class="page">
+                    <div class="col-md-12">
+                        <div class="main_heading">
+                            <h1>Work Diary Approvals List</h1>
+                            <div class="">
+                                <div class="form-horizontal">
+                                    <div class="col-md-2 col-sm-2 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-6 control-label p0 label_left emp_lable">Emp Code:<span class="mandatory">*</span></label>
+                                            <div class="input-group  col-sm-6">
+                                                <input type="text" id="EmpId" class="form-control" , maxlength="10" , onkeypress="return isNumber(event)">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-4 col-xs-12">
+
+                                        <label class="col-sm-5 control-label label_left p0">From Date:<span class="mandatory">*</span></label>
+                                        <div class="input-group date col-sm-7 p0">
+                                            <input type="text" id="fdate" class="form-control" onkeypress="return nokeyword(event)" onchange="return Dateevent1();"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-4 col-xs-12">
+
+                                        <label class="col-sm-5 control-label label_left">To Date:<span class="mandatory">*</span></label>
+                                        <div class="input-group date col-sm-7 p0">
+                                            <input type="text" id="tdate" class="form-control" onkeypress="return nokeyword(event)" onchange="return Dateevent2();"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-1 col-sm-1 col-xs-12">
+                                        <button type="button" id="btnApply" class="btn btn-primary btn-sm pull-right">Search</button>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+
+
+                            <div class="branch_search">
+                                <div class="col-sm-12">
+                                    <div class="form-horizontal">
+
+                                        <div id="myModal" class="modal" style="z-index: 9999999999;">
+
+                                            <!-- Modal content -->
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="submit" id="btnclosepop" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                    <h4 class="modal-title">WorkDiary Approval</h4>
+                                                </div>
+
+                                                <table id="myTextArea" style="margin: 25px auto;width: 92%;"></table>
+
+                                                <div class="modal-footer">
+                                                    <button type="submit" id="btnPreviouspopup" class="btn btn-default leaveprev">Previous</button>
+
+                                                    <button style="margin: 0 6px 0 6px;" type="submit" id="btnDeletePopup" class="btn btn-danger">Delete</button>
+                                                    <button type="submit" id="btnNextpopup" class="btn btn-default leavenext">Next</button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div id="gridControlling"></div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div>
+                                    @*<input type="button" class="btn btn-info" value="Export to Excel" id='excelExport' />*@
+                                    <input type="button" class="btn btn-info" value="Export to Excel" id='exceltoExport' />
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <div class="pull-right">
+
+                                    <button type="submit" id="btnDelete" class="btn btn-danger">Delete</button>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+<div id="pagenation" style="visibility:hidden"></div>
+<input id="currentpos" type="hidden" />
+<script>
+    // Get the modal
+    var modal = document.getElementById('myModal');
+</script>
+<input id="currentControlling" value="@ViewBag.Controllings" type="hidden" />
+<input id="currentSanctioning" value="@ViewBag.Sanctioning" type="hidden" />
+
+<style>
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+    .modal-content {
+        margin: auto;
+        padding: 0px;
+        border: 1px solid rgb(136, 136, 136);
+        width: 50%;
+        z-index: 99999999999;
+        left: 25%;
+        background: rgb(219, 238, 247);
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+    .modal-header {
+        min-height: 16.42857143px;
+        padding: 13px;
+        border-bottom: 1px solid rgb(221, 221, 221);
+        background: rgba(60, 141, 188, 0.4);
+    }
+
+        .modal-header h4 {
+            font-size: 18px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgb(255, 255, 255);
+        }
+
+    #myTextArea td {
+        border: 1px solid #c2c2c2;
+        padding: 3px 5px 3px 5px;
+    }
+
+    .modal-header .close {
+        margin-top: -2px;
+        color: rgb(0, 0, 0);
+        opacity: 4;
+        /* background: rgb(0, 0, 0); */
+    }
+</style>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(function () {
+
+            $('.input-group.date').datepicker({
+                calendarWeeks: true,
+                todayHighlight: true,
+                autoclose: true,
+                daysOfWeekDisabled: [0, 6]
+            });
+        });
+
+        $("#gridControlling").jqxGrid('selectrow', 0);
+        $("#gridControlling").jqxGrid('selectrow', 1);
+        // prepare the data for BankView
+        var theme = otherTheme;
+        // prepare the data
+        var url = "../WorkDiary/WorkApprovalViewDelete";
+        var source =
+        {
+            type: "Get",
+            datatype: "json",
+            datafields: [
+                { name: 'available', type: 'bool' },
+                { name: 'Id', type: 'int' },
+                { name: 'EmpId', type: 'int' },
+                { name: 'ShortName', type: 'string' },
+                { name: 'BrDepot', type: 'string' },
+                { name: 'Designation', type: 'string' },
+                { name: 'UpdatedDate', type: 'date' },
+                { name: 'WDDate', type: 'date' },
+                { name: 'Name', type: 'string' },
+                { name: 'Status', type: 'string' },
+                { name: 'Desc', type: 'string' },
+            ],
+            async: false,
+            url: url,
+            data: {
+                featureClass: "P",
+                style: "full",
+                username: "jqwidgets"
+            }
+        };
+        var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties, rowdata) {
+            if (value == "Pending") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #FFA500;">' + value + '</span>';
+            }
+            else if (value == "Forwarded") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #33b5e5;">' + value + '</span>';
+            }
+            else if (value == "Approved") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #00C851;">' + value + '</span>';
+            }
+            else if (value == "Denied") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #8B008B;">' + value + '</span>';
+            }
+            else {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #ff4444;">' + value + '</span>';
+            }
+        }
+        var dataAdapter = new $.jqx.dataAdapter(source,
+            {
+                formatData: function (data) {
+                    data.ProductName = $("#searchField").val();
+                    return data;
+                }
+            }
+        );
+        // initialize jqxGrid
+        var editrowindex = -1;
+        var delrowindex = -1;
+        $("#gridControlling").jqxGrid(
+            {
+                width: '100%',
+                source: dataAdapter,
+                theme: otherTheme,// for theme refernce go to Layout.cshtml
+                autoheight: true,
+                sortable: true,
+                pageable: true,
+                columnsResize: true,
+                altRows: true,
+                filterable: true,
+                autoshowfiltericon: true,
+                editable: true,
+                selectionmode: 'multiplerows',
+                cellhover: function (element, pageX, pageY, record) {
+                    var index = $("#gridControlling").jqxGrid('hoveredrow');
+                    var data = $('#gridControlling').jqxGrid('getrowdata', index);
+                    var e_status = data.e_status; // get hover row data
+                    var employeeno = data.EmpId;
+                    var employeename = data.EmployeeName;
+                    var ldesignation = data.Designation;
+                    var lDeptbranch = data.BrDepot;
+                    var lappliedDate = data.AppliedDate;
+                    var lapplied = lappliedDate.getDate() + '/' + (lappliedDate.getMonth() + 1) + '/' + lappliedDate.getFullYear();
+                    var lStartDate = data.StartDate;
+                    var lstartdate = lStartDate.getDate() + '/' + (lStartDate.getMonth() + 1) + '/' + lStartDate.getFullYear();
+                    var lEndDate = data.EndDate;
+                    var lenddate = lEndDate.getDate() + '/' + (lEndDate.getMonth() + 1) + '/' + lEndDate.getFullYear();
+                    var lLeaveDays = data.LeaveDays;
+                    var lCode = data.Code;
+                    var lReason = data.Reason;
+                    var lstatus = data.Status;
+                    $("#gridControlling").jqxTooltip({
+                        content: '<table style="width:100%; text-align: left;"><tr><th>Employee Code :</th><td>' + employeeno + '</td></tr><tr><th>Employee Name :</th><td>' + employeename + '</td></tr><tr><th>Designation :</th><td>' + ldesignation + '</td></tr><tr><th>AppliedDate :</th><td>' + lapplied + '</td></tr><tr><th>Department/Branch :</th><td>' + lDeptbranch + '</td></tr><tr><th>Start Date :</th><td>' + lstartdate + '</td></tr><tr><th>End Date :</th><td>' + lenddate + '</td></tr><tr><th>#Leaves  :</th><td>' + lLeaveDays + '</td></tr><tr><th>LeaveType  :</th><td>' + lCode + '</td></tr><tr><th>Reason  :</th><td>' + lReason + '</td></tr><tr><th>Status  :</th><td>' + lstatus + '</td></tr></table>'
+
+                    });
+                    $("#gridControlling").jqxTooltip('open', pageX + 15, pageY + 15);
+                },
+                ready: function () {
+                    $("#gridControlling").jqxGrid('localizestrings', localizationObject);
+                },
+                updatefilterconditions: function (type, defaultconditions) {
+                    switch (type) {
+                        case 'stringfilter':
+                            return stringcomparisonoperators;
+                        case 'numericfilter':
+                            return numericcomparisonoperators;
+                        case 'datefilter':
+                            return datecomparisonoperators;
+                        case 'booleanfilter':
+                            return booleancomparisonoperators;
+                    }
+                },
+                updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                    filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                    var index1 = 0;
+                    var index2 = 0;
+                    if (columnfilter != null) {
+                        var filter1 = columnfilter.getfilterat(0);
+                        var filter2 = columnfilter.getfilterat(1);
+                        if (filter1) {
+                            index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                            var value1 = filter1.filtervalue;
+                            filterinputfield1.val(value1);
+                        }
+                        if (filter2) {
+                            index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                            var value2 = filter2.filtervalue;
+                            filterinputfield2.val(value2);
+                        }
+                    }
+                    filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                    filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+
+                },
+                columns: [
+                    { text: 'Action', datafield: 'available', exportable: false, columntype: 'checkbox', width: 50, sortable: false },
+                    { text: 'Work Id', groupable: true, datafield: 'Id', editable: false, width: 90, hidden: true, sortable: false },
+                    { text: "Emp Code", datafield: "EmpId", width: 80, sortable: false, editable: false },
+                    { text: "Employee Name", datafield: "ShortName", width: 127, sortable: false, editable: false },
+                    { text: "Branch/Department", datafield: "BrDepot", editable: false, width: 120, sortable: false },
+                    { text: 'Designation', editable: false, datafield: 'Designation', align: 'center', width: 90, sortable: false },
+                    { text: 'Applied Date', editable: false, datafield: 'UpdatedDate', align: 'center', width: 100, cellsformat: 'dd/MM/yyyy', sortable: false },
+                    { text: 'Work Date', editable: false, datafield: 'WDDate', align: 'center', width: 100, cellsformat: 'dd/MM/yyyy', sortable: false },
+                    //{ text: 'Work Name', editable: false, datafield: 'Name', align: 'center', width: 170, sortable: false },
+                    { text: 'Work Description', editable: false, datafield: 'Desc', align: 'center', width: 270, sortable: false },
+                    { text: 'Status', cellsrenderer: cellsrenderer, editable: false, datafield: 'Status', align: 'center', width: 70, sortable: false },
+                ],
+                columngroups:
+                    [
+                        { text: 'Action', align: 'center', name: 'Actions', width: 160 },
+                    ],
+
+
+            });
+        $("#gridControlling").on("rowselect", function (event) {
+            var rowindex = $('#gridControlling').jqxGrid('getselectedrowindex');
+            var args = event.args;
+            var row = args.rowindex;
+            var rows = $('#gridControlling').jqxGrid('getrows');
+            var value = rows[row].Id;
+            document.getElementById("currentpos").value = row;
+            var rowlength = $('#gridControlling').jqxGrid('getrows').length;
+            if (rowlength <= 1) {
+                document.getElementById('btnPreviouspopup').style.display = 'none';
+                document.getElementById('btnNextpopup').style.display = 'none';
+            }
+            var string = "";
+            for (var i = 0; i < rows.length; i++) {
+                string += "<input type='text' id='" + i + "' value='" + rows[i].Id + "'/>";
+            }
+            document.getElementById("pagenation").innerHTML = string;
+            $('.leavenext').attr("disabled", false);
+            $('.leaveprev').attr("disabled", false);
+            $.ajax({
+
+                url: "/WorkDiary/WDTooltipDelete?WorkId=" + value,
+                Type: 'Get',
+                dataType: 'json',
+                success: function (response) {
+
+                    if (response != null) {
+
+                        if (!rows[row].available) {
+
+                            modal.style.display = "block";
+                        }
+                        for (var i = 0; i < response.length; i++) {
+                            var workdates = response[i].WDDate;
+                            var date = workdates;
+                            var d = new Date(date.split("/").reverse().join("-"));
+                            var dd = d.getDate();
+                            var mm = d.getMonth() + 1;
+                            var yy = d.getFullYear();
+                            var newdate = dd + "/" + mm + "/" + yy;
+                            var text =
+                                "<tr><td>EmployeeId:</td><td>" + " " + " " + response[i].EmpId
+                                + "</td></tr> <tr><td> EmployeeName:</td><td>" + " " + " " + response[i].ShortName
+                                + "</td></tr> <tr><td> Designation:</td><td>" + " " + " " + response[i].Designation
+                                + "</td></tr><tr><td> Branch/Dept:</td><td>" + " " + " " + response[i].BrDepot + "</td></tr>"
+                                + "</td></tr><tr><td> AppliedDate:</td><td>" + " " + " " + response[i].UpdatedDate + "</td></tr>"
+                                + "</td></tr><tr><td> WorkDate:</td><td>" + " " + " " + newdate + "</td></tr>"
+                                + "</td></tr><tr><td> WorkName:</td><td>" + " " + " " + response[i].Name + "</td></tr>"
+                                + "</td></tr><tr><td> Work Description:</td><td>" + " " + " " + response[i].Desc + "</td></tr>"
+                                + "</td></tr><tr><td> Status:</td><td>" + " " + " " + response[i].Status + "</td></tr>";
+                            document.getElementById("myTextArea").innerHTML = text;
+                        }
+                    }
+                },
+            });
+
+        });
+
+        /*$("#excelExport").jqxButton();*/
+        $("#excelExport").click(function () {
+            $("#gridControlling").jqxGrid('exportdata', 'xls', 'WorkDairyApprovals');
+        });
+        $("#gridControlling").bind('cellendedit', function (event) {
+            if (event.args.value) {
+                $("#gridControlling").jqxGrid('selectrow', event.args.rowindex);
+            }
+            else {
+                $("#gridControlling").jqxGrid('unselectrow', event.args.rowindex);
+            }
+        });
+        //$("#btnApprovals").click(function () {
+        //    var rows = $("#gridControlling").jqxGrid('selectedrowindexes');
+        //    var myArray = new Array();
+        //    var names = '';
+        //    var types = '';
+        //    var ids = '';
+
+        //    var allRows = $("#gridControlling").jqxGrid('getrows');
+        //    for (var i = 0; i < allRows.length; i++) {
+        //        if (allRows[i].available == true) {
+        //            myArray[myArray.length] = allRows
+        //            names = names + allRows[i].Id + ',';
+        //            // types = types + allRows[i].Code + ',';
+        //            ids = ids + allRows[i].Id + ',';
+        //        }
+        //    };
+        //    if (myArray == '' || myArray == null) {
+        //        alert("Please select checkbox");
+        //        //window.location.reload();
+        //    }
+        //    else {
+        //       // $('.leaveapprove').attr("disabled", true);
+        //        $.ajax({
+        //            type: "Post",
+        //            url: "/WorkDiary/WorkApprovals?WorkId=" + names,
+        //            dataType: "Json",
+        //            success: function (response) {
+        //                if (response != null) {
+        //                    window.location.reload();
+
+        //                }
+        //                else {
+
+
+        //                }
+        //            },
+        //        });
+
+        //    }
+
+        //});
+
+
+
+
+        //delete pending records
+
+        $("#btnDelete").click(function () {
+            var rows = $("#gridControlling").jqxGrid('selectedrowindexes');
+            var myArray = new Array();
+            var names = '';
+            var types = '';
+            var ids = '';
+
+            var allRows = $("#gridControlling").jqxGrid('getrows');
+            for (var i = 0; i < allRows.length; i++) {
+                if (allRows[i].available == true) {
+                    myArray[myArray.length] = allRows
+                    names = names + allRows[i].Id + ',';
+                    // types = types + allRows[i].Code + ',';
+                    ids = ids + allRows[i].Id + ',';
+                }
+            };
+            if (myArray == '' || myArray == null) {
+                alert("Please select checkbox");
+                //window.location.reload();
+            }
+            else {
+                //  $('.leaveapprove').attr("disabled", true);
+                $.ajax({
+                    type: "Post",
+                    url: "/WorkDiary/WorkDairyDelete1?WorkId=" + names,
+                    dataType: "Json",
+                    success: function (response) {
+                        if (response != null) {
+                            window.location.reload();
+
+                        }
+                        else {
+
+
+                        }
+                    },
+                });
+
+            }
+
+        });
+
+
+
+
+
+        $("#btnclosepop").click(function () {
+            modal.style.display = "none";
+            document.getElementById("pagenation").innerHTML = '';
+        });
+    });
+    //$("#btnApprovalspopup").click(function () {
+
+    //    var rows = $("#gridControlling").jqxGrid('selectedrowindexes');
+    //    var lval = document.getElementById("currentpos").value;
+    //    if (rows == '' || rows == null) {
+    //        alert("Please select checkbox");
+    //        //window.location.reload();
+    //    }
+    //    else {
+
+    //        var selectedRecords = new Array();
+    //        var names = '';
+    //        var types = '';
+    //        var ids = '';
+    //        //for (var m = lval; m < rows.length; m++) {
+    //        var row = $("#gridControlling").jqxGrid('getrowdata', lval);
+    //        selectedRecords[selectedRecords.length] = row;
+    //        if (row == undefined) {
+    //            window.alert("There is no Data. Please Click on Previous button to get Data.");
+    //        }
+    //        else {
+    //            names = names + row.Id + ',';
+    //            $('.leaveapprove').attr("disabled", true);
+
+    //            //}
+    //            $.ajax({
+    //                type: "Post",
+    //                url: "/WorkDiary/WorkApprovals?WorkId=" + names,
+    //                dataType: "Json",
+    //                success: function (response) {
+    //                    if (response != null) {
+    //                        window.location.reload();
+
+    //                    }
+    //                    else {
+    //                        // alert("Something went wrong");
+    //                    }
+    //                },
+    //            });
+    //        }
+    //    }
+    //});
+
+    //delete workdairy in modal
+    $("#btnDeletePopup").click(function () {
+        var rows = $("#gridControlling").jqxGrid('selectedrowindexes');
+        var lval = document.getElementById("currentpos").value;
+        if (rows == '' || rows == null) {
+            alert("Please select checkbox");
+            //window.location.reload();
+        }
+        else {
+
+            var selectedRecords = new Array();
+            var names = '';
+            var types = '';
+            var ids = '';
+            //for (var m = lval; m < rows.length; m++) {
+            var row = $("#gridControlling").jqxGrid('getrowdata', lval);
+            selectedRecords[selectedRecords.length] = row;
+            if (row == undefined) {
+                window.alert("There is no Data. Please Click on Previous button to get Data.");
+            }
+            else {
+                names = names + row.Id + ',';
+                $('.leaveapprove').attr("disabled", true);
+
+                //}
+                $.ajax({
+                    type: "Post",
+                    url: "/WorkDiary/WorkDairyDelete1?WorkId=" + names,
+                    dataType: "Json",
+                    success: function (response) {
+                        if (response != null) {
+                            window.location.reload();
+
+                        }
+                        else {
+                            // alert("Something went wrong");
+                        }
+                    },
+                });
+            }
+        }
+    });
+
+
+
+
+    $("#btnNextpopup").click(function () {
+
+        var rows = $('#gridControlling').jqxGrid('getrows');
+        var prev;
+        var lss;
+        var lval = document.getElementById("currentpos").value;
+        if (lval < rows) {
+            lss = 1;
+        }
+        else {
+            lss = 0;
+        }
+        var next = parseInt(document.getElementById("currentpos").value) + parseInt(lss);
+        document.getElementById("currentpos").value = next;
+        var rows = $('#gridControlling').jqxGrid('getrows');
+        var lcount = rows.length;
+
+        if (next < lcount) {
+            $('.leaveprev').attr("disabled", false);
+            var ss = document.getElementById(next).value;
+            var value = ss;
+            $.ajax({
+                url: 'WDNexttipDelete?WorkId=' + value,
+                Type: 'Get',
+                dataType: 'json',
+                success: function (response) {
+                    if (response != null) {
+                        for (i = 0; i < response.length; i++) {
+                            var workdates = response[i].WDDate;
+                            var date = workdates;
+                            var d = new Date(date.split("/").reverse().join("-"));
+                            var dd = d.getDate();
+                            var mm = d.getMonth() + 1;
+                            var yy = d.getFullYear();
+                            var newdate = dd + "/" + mm + "/" + yy;
+                            var text =
+                                "<tr><td>EmployeeId:</td><td>" + " " + " " + response[i].EmpId
+                                + "</td></tr> <tr><td> EmployeeName:</td><td>" + " " + " " + response[i].ShortName
+                                + "</td></tr> <tr><td> Designation:</td><td>" + " " + " " + response[i].Designation
+                                + "</td></tr><tr><td> Branch/Dept:</td><td>" + " " + " " + response[i].BrDepot + "</td></tr>"
+                                + "</td></tr><tr><td> AppliedDate:</td><td>" + " " + " " + response[i].UpdatedDate + "</td></tr>"
+                                + "</td></tr><tr><td> WorkDate:</td><td>" + " " + " " + newdate + "</td></tr>"
+                                + "</td></tr><tr><td> WorkName:</td><td>" + " " + " " + response[i].Name + "</td></tr>"
+                                + "</td></tr><tr><td> Work Description:</td><td>" + " " + " " + response[i].Desc + "</td></tr>"
+                                + "</td></tr><tr><td> Status:</td><td>" + " " + " " + response[i].Status + "</td></tr>";
+                            document.getElementById("myTextArea").innerHTML = text;
+                            // next button
+                            if (next == lcount - 1) {
+                                $('.leavenext').attr("disabled", true);
+                            }
+                        }
+                    }
+                },
+            });
+        }
+        else {
+            $('.leavenext').attr("disabled", true);
+            //var text =
+            //    "<tr><td>EmployeeId:</td><td>" + " " + " "
+            //    + "</td></tr> <tr><td> EmployeeName:</td><td>" + " " + " "
+            //    + "</td></tr> <tr><td> Designation:</td><td>" + " " + " "
+            //    + "</td></tr><tr><td> Branch/Dept:</td><td>" + " " + " "  + "</td></tr>"
+            //    + "</td></tr><tr><td> WorkDate:</td><td>" + " " + " "  + "</td></tr>"
+            //    + "</td></tr><tr><td> WorkName:</td><td>" + " " + " "  + "</td></tr>"
+            //    + "</td></tr><tr><td> Work Description:</td><td>" + " " + " "  + "</td></tr>"
+            //    + "</td></tr><tr><td> Status:</td><td>" + " " + " "  + "</td></tr>";
+            //document.getElementById("myTextArea").innerHTML = text;
+        }
+    });
+    $("#btnPreviouspopup").click(function () {
+
+        var rows = $('#gridControlling').jqxGrid('getrows');
+        var prev;
+        var lss;
+        var lval = document.getElementById("currentpos").value - 1;
+        if (lval < rows) {
+            lss = 0;
+        }
+        else {
+            lss = 1;
+        }
+        prev = parseInt(document.getElementById("currentpos").value) - parseInt(lss);
+        document.getElementById("currentpos").value = prev;
+        var lcount = rows.length;
+        if (prev == -1) {
+            document.getElementById("currentpos").value = 0;
+            $('.leaveprev').attr("disabled", true);
+        }
+        else if (prev <= lcount) {
+            $('.leavenext').attr("disabled", false);
+            var ss = document.getElementById(prev).value;
+            var value = ss;
+            $.ajax({
+                url: 'WDPrevioustipDelete?WorkId=' + value,
+                Type: 'Get',
+                dataType: 'json',
+                success: function (response) {
+                    if (response != null) {
+                        for (var i = 0; i < response.length; i++) {
+                            var workdates = response[i].WDDate;
+                            var date = workdates;
+                            var d = new Date(date.split("/").reverse().join("-"));
+                            var dd = d.getDate();
+                            var mm = d.getMonth() + 1;
+                            var yy = d.getFullYear();
+                            var newdate = dd + "/" + mm + "/" + yy;
+                            var text =
+                                "<tr><td>EmployeeId:</td><td>" + " " + " " + response[i].EmpId
+                                + "</td></tr> <tr><td> EmployeeName:</td><td>" + " " + " " + response[i].ShortName
+                                + "</td></tr> <tr><td> Designation:</td><td>" + " " + " " + response[i].Designation
+                                + "</td></tr><tr><td> Branch/Dept:</td><td>" + " " + " " + response[i].BrDepot + "</td></tr>"
+                                + "</td></tr><tr><td> AppliedDate:</td><td>" + " " + " " + response[i].UpdatedDate + "</td></tr>"
+                                + "</td></tr><tr><td> WorkDate:</td><td>" + " " + " " + newdate + "</td></tr>"
+                                + "</td></tr><tr><td> WorkName:</td><td>" + " " + " " + response[i].Name + "</td></tr>"
+                                + "</td></tr><tr><td> Work Description:</td><td>" + " " + " " + response[i].Desc + "</td></tr>"
+                                + "</td></tr><tr><td> Status:</td><td>" + " " + " " + response[i].Status + "</td></tr>";
+                            document.getElementById("myTextArea").innerHTML = text;
+                        }
+                    }
+                },
+            });
+        }
+        else {
+            $('.leaveprev').attr("disabled", true);
+        }
+    });
+</script>
+
+
+<style>
+    table, th, td {
+        border-collapse: collapse;
+    }
+
+    .activeClass {
+        background: #ffdb99;
+    }
+
+    .secondClass {
+        /*background: #FF9999;*/
+        color: red;
+    }
+</style>
+
+
+
+<script type='text/javascript'>
+    $(function getholidays() {
+
+        var active_dates = [];
+        $.ajax({
+            type: "GET",
+            async: false,
+            url: "/LeaveApply/GetDates",
+            dataType: "Json",
+            success: function (data) {
+                datesArray = data;
+                for (i = 0; i < datesArray.length; i++) {
+                    var result = datesArray[i].replace("-", "/");
+                    var result1 = result.replace("-", "/");
+                    var strArray = result1.split("/");
+                    var cdate = strArray[0] + "/" + parseInt(strArray[1]) + "/" + strArray[2]
+                    active_dates.push(cdate);
+
+                    if (i == datesArray.length - 1) {
+                        //loadcal(active_dates);
+                    }
+                }
+
+            }
+        });
+        $('.input-group.date').datepicker({
+
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            beforeShowDay: function nonWorkingDays(date) {
+
+                var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
+                var week = 0 | date.getDate() / 7 //get the week
+                var dd = date.getDate();
+                var month = date.getMonth();
+                if (dd < 10) {
+                    dd = '0' + dd
+                }
+
+                if (month < 10) {
+                    month = '0' + month
+                }
+                var sunweek = date.getDay();
+                var year = date.getFullYear();
+
+                if (dd == 14 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                if (dd == 28 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                //check if it's second week or fourth week
+                else if (week == 1 || week == 3) {
+                    if (dd == 7 && day == 6 || dd == 21 && day == 6) {
+                        //check for satruday
+
+                    }
+                    else {
+                        if (day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                    }
+
+                }
+                //check for sunday
+                if (day == 0) {
+                    return {
+                        classes: 'secondClass'
+                    };
+
+                }
+                //check for holidays
+                var d = date;
+                var curr_date = d.getDate();
+                var curr_month = d.getMonth() + 1; //Months are zero based
+                if (curr_date < 10) {
+                    curr_date = '0' + curr_date
+                }
+                var curr_year = d.getFullYear();
+                var formattedDate = curr_date + "/" + curr_month + "/" + curr_year
+
+                if ($.inArray(formattedDate, active_dates) != -1) {
+                    return {
+                        classes: 'activeClass'
+                    };
+                }
+                return [true];
+            }
+        });
+
+
+    });
+</script>
+
+
+<script type="text/javascript">
+
+    $("#btnApply").click(function () {
+
+
+        var employeecode = $("#EmpId").val();
+        var wdate = $("#fdate").val();
+        var tdate = $("#tdate").val();
+        var status = $("#status").val();
+
+        if (employeecode == "") {
+            window.alert("Please Enter EmpId");
+            $("#EmpId").focus();
+            return false;
+        }
+        else if (wdate != "" && tdate == "") {
+            window.alert("Please Enter To Date");
+            $("#tdate").focus();
+        }
+        else if (wdate == "" && tdate != "") {
+            window.alert("Please Enter From Date");
+            $("#fdate").focus();
+        }
+        ajaxSpinnerShow();
+        // url: "/WorkDiary/WDApprovalSearchDelete?EmpId=" + employeecode + "&wdate=" + wdate + "&tdate=" + tdate + "&status=" + status;
+        // prepare the data
+        var source =
+        {
+            type: "Post",
+            datatype: "json",
+            datafields: [
+                { name: 'available', type: 'bool' },
+                { name: 'Id', type: 'int' },
+                { name: 'EmpId', type: 'int' },
+                { name: 'ShortName', type: 'string' },
+                { name: 'BrDepot', type: 'string' },
+                { name: 'Designation', type: 'string' },
+                { name: 'UpdatedDate', type: 'date' },
+                { name: 'WDDate', type: 'date' },
+                { name: 'Name', type: 'string' },
+                { name: 'Status', type: 'string' },
+                { name: 'Desc', type: 'string' },
+
+            ],
+            async: false,
+            url: "/WorkDiary/WDApprovalSearchDelete?EmpId=" + employeecode + "&wdate=" + wdate + "&tdate=" + tdate + "&status=" + status,
+            data: {
+                featureClass: "P",
+                style: "full",
+                username: "jqwidgets",
+                EmpId: employeecode,
+                tdate: tdate,
+                wdate: wdate,
+                status: status,
+
+            },
+            loadComplete: function () {
+                ajaxSpinnerHide();
+            }
+        };
+        var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties, rowdata) {
+            if (value == "Pending") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #FFA500;">' + value + '</span>';
+            }
+            else if (value == "Forwarded") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #33b5e5;">' + value + '</span>';
+            }
+            else if (value == "Approved") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #00C851;">' + value + '</span>';
+            }
+            else if (value == "Denied") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #8B008B;">' + value + '</span>';
+            }
+            else {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #ff4444;">' + value + '</span>';
+            }
+        }
+        var dataAdapter = new $.jqx.dataAdapter(source,
+            {
+                formatData: function (data) {
+                    data.ProductName = $("#searchField").val();
+                    return data;
+                }
+            }
+        );
+        // initialize jqxGrid
+        var editrowindex = -1;
+        var delrowindex = -1;
+        $("#gridControlling").jqxGrid(
+            {
+                width: '99%',
+                source: dataAdapter,
+                theme: otherTheme,// for theme refernce go to Layout.cshtml
+                autoheight: true,
+                sortable: true,
+                pageable: true,
+                columnsResize: true,
+                altRows: true,
+                filterable: true,
+                autoshowfiltericon: true,
+
+                ready: function () {
+                    $("#gridControlling").jqxGrid('localizestrings', localizationObject);
+                },
+                updatefilterconditions: function (type, defaultconditions) {
+                    switch (type) {
+                        case 'stringfilter':
+                            return stringcomparisonoperators;
+                        case 'numericfilter':
+                            return numericcomparisonoperators;
+                        case 'datefilter':
+                            return datecomparisonoperators;
+                        case 'booleanfilter':
+                            return booleancomparisonoperators;
+                    }
+                },
+                updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                    filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                    var index1 = 0;
+                    var index2 = 0;
+                    if (columnfilter != null) {
+                        var filter1 = columnfilter.getfilterat(0);
+                        var filter2 = columnfilter.getfilterat(1);
+                        if (filter1) {
+                            index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                            var value1 = filter1.filtervalue;
+                            filterinputfield1.val(value1);
+                        }
+                        if (filter2) {
+                            index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                            var value2 = filter2.filtervalue;
+                            filterinputfield2.val(value2);
+                        }
+                    }
+                    filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                    filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                },
+                columns: [
+                    { text: 'Action', datafield: 'available', exportable: false, columntype: 'checkbox', width: 50, sortable: false },
+                    { text: 'Work Id', groupable: true, datafield: 'Id', editable: false, width: 90, hidden: true, sortable: false },
+                    { text: "Emp Code", datafield: "EmpId", width: 80, sortable: false, editable: false },
+                    { text: "Employee Name", datafield: "ShortName", width: 127, sortable: false, editable: false },
+                    { text: "Branch/Department", datafield: "BrDepot", editable: false, width: 120, sortable: false },
+                    { text: 'Designation', editable: false, datafield: 'Designation', align: 'center', width: 90, sortable: false },
+                    { text: 'Applied Date', editable: false, datafield: 'UpdatedDate', align: 'center', width: 100, cellsformat: 'dd/MM/yyyy', sortable: false },
+                    { text: 'Work Date', editable: false, datafield: 'WDDate', align: 'center', width: 100, cellsformat: 'dd/MM/yyyy', sortable: false },
+                    //{ text: 'Work Name', editable: false, datafield: 'Name', align: 'center', width: 170, sortable: false },
+                    { text: 'Work Description', editable: false, datafield: 'Desc', align: 'center', width: 270, sortable: false },
+                    { text: 'Status', cellsrenderer: cellsrenderer, editable: false, datafield: 'Status', align: 'center', width: 70, sortable: false },
+                ],
+
+
+
+            });
+    });
+
+</script>
+<script>
+    //Start And End Date Validation
+    function Dateevent1() {
+
+        var StartDate = document.getElementById('fdate').value;
+        var EndDate = document.getElementById('tdate').value;
+        var eDate = moment(StartDate, "DD.MM.YYYY");
+        var sDate = moment(EndDate, "DD.MM.YYYY");
+
+
+        var diff = moment.duration(eDate.diff(sDate, 'days'));
+
+        if (diff > 91) {
+            alert("Date range should not be greater than 3 months");
+            document.getElementById('fdate').value = '';
+            return false;
+        }
+
+        //if (StartDate != '' && EndDate != '' && sDate > eDate) {
+        //    alert("Please ensure that To Date is greater than or equal to From Date.");
+        //    document.getElementById('fdate').value = '';
+        //    return false;
+
+        //}
+
+        else {
+
+
+            return true;
+
+        }
+    }
+
+    function Dateevent2() {
+
+        var StartDate = document.getElementById('fdate').value;
+        var EndDate = document.getElementById('tdate').value;
+        var eDate = moment(EndDate, "DD.MM.YYYY");
+        var sDate = moment(StartDate, "DD.MM.YYYY");
+        var diff = moment.duration(eDate.diff(sDate, 'days'));
+        var fields = StartDate.split('/');
+        var day = fields[0];
+        var mon = fields[1];
+        var years = fields[2];
+        var myjoindate = mon + "-" + day + "-" + years;
+        var today = new Date();
+        var month = today.getMonth() + 1
+        var day = today.getDate();
+        var year = today.getFullYear();
+        var shortStartDate = month + "-" + day + "-" + year;
+
+        var m4 = moment(myjoindate, 'MM/DD/YYYY').add(3, 'M').format('DD/MM/YYYY');
+        var m3 = moment(myjoindate, 'MM/DD/YYYY').add(3, 'M').format('YYYY/MM/DD');
+        if (diff > 91) {
+            alert("Date range should not be greater than 3 months");
+            document.getElementById('tdate').value = '';
+            return false;
+        }
+        if (StartDate != '' && EndDate != '' && sDate > eDate) {
+            alert("Please ensure that To Date is greater than or equal to From Date.");
+            document.getElementById('tdate').value = '';
+            return false;
+
+        }
+
+        else {
+
+
+            //document.getElementById("toDate").value = m4;
+            return true;
+
+        }
+    }
+
+</script>
+
+<script>
+    document.getElementById("a1").className = "active";
+
+</script>
+
+
+<!-- Include XLSX library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+<!-- Include FileSaver library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Add click event handler to the download Excel button
+        $("#exceltoExport").click(function () {
+            // Get filtered data from the grid
+            var filteredData = $("#gridControlling").jqxGrid('getrows');
+
+            // Process the data to convert dates to human-readable format
+            const processedData = filteredData.map(item => ({
+                ...item,
+                IssueDate: item.IssueDate ? formatDate(parseDate(item.IssueDate)) : '',
+                Duedate: item.Duedate ? formatDate(parseDate(item.Duedate)) : '',
+                Leaveapplieddate: item.Leaveapplieddate ? formatDate(parseDate(item.Leaveapplieddate)) : '',
+                Responsedate: item.Responsedate ? formatDate(parseDate(item.Responsedate)) : ''
+            }));
+
+            // Create a workbook and worksheet
+            var wb = XLSX.utils.book_new();
+            var ws = XLSX.utils.json_to_sheet(processedData);
+
+            // Add worksheet to workbook
+            XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+            // Convert workbook to binary data
+            var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+
+            // Create a Blob object from the binary data
+            var blob = new Blob([s2ab(wbout)], { type: 'application/octet-stream' });
+
+            // Trigger download
+            saveAs(blob, 'WorkDairyApprovals.xlsx');
+
+            return false;
+        });
+    });
+
+    // Function to parse date string from /Date(timestamp)/ format to Date object
+    function parseDate(dateString) {
+        // Check for /Date(xxxxxxx)/ format
+        const match = /\/Date\((\d+)\)\//.exec(dateString);
+        if (match) {
+            return new Date(parseInt(match[1], 10));
+        }
+        // Check for ISO string format
+        return new Date(dateString);
+    }
+
+    // Function to format Date object to DD/MM/YYYY format
+    function formatDate(date) {
+        if (!date || isNaN(date.getTime())) return '';
+        var day = String(date.getDate()).padStart(2, '0');
+        var month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+        var year = date.getFullYear();
+        return `${day}/${month}/${year}`; // Format: DD/MM/YYYY
+    }
+
+    // Function to convert string to ArrayBuffer
+    function s2ab(s) {
+        var buf = new ArrayBuffer(s.length);
+        var view = new Uint8Array(buf);
+        for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+        return buf;
+    }
+</script>

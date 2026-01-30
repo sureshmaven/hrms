@@ -1,0 +1,168 @@
+﻿
+@{
+    ViewBag.Title = "PFNominee";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <h1>PF-Nominee Details</h1>
+                        <div class="col-md-12">
+                            <div class="emp-serch">
+                                <div class="col-md-12">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Employee Id:</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1 col-sm-1 col-xs-12"><button type="button" class="btn btn-primary btn-sm pull-right">Search</button></div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-sm-6 control-label">Date:</label>
+                                            <div class="col-sm-6">
+                                                <select class="form-control">
+                                                    <option>08-07-2018</option>
+                                                    <option>08-07-2019</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="col-sm-6 control-label">Employee Name :</label>
+                                            <div class="col-sm-6">
+                                                <label class="control-label"> raju sadhula</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="clearfix"></div>
+                            </div>
+                            </div>
+                            <div class="col-md-12 mt_10">
+                                <table id="pf_nomine" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Member Name</th>
+                                            <th>Gender</th>
+                                            <th>Relation</th>
+                                            <th>Date of birth</th>
+                                            <th>Age</th>
+                                            <th>Date</th>
+                                            <th>Percentage</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Tiger Nixon</td>
+                                            <td>Male</td>
+                                            <td>Father</td>
+                                            <td>2011/04/25</td>
+                                            <td>25</td>
+                                            <td>2018/05/15</td>
+                                            <td>70</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Garrett Winters</td>
+                                            <td>Male</td>
+                                            <td>Brother</td>
+                                            <td>2011/07/25</td>
+                                            <td>28</td>
+                                            <td>2018/03/10</td>
+                                            <td>60</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ashton Cox</td>
+                                            <td>Male</td>
+                                            <td>Brother</td>
+                                            <td>2009/01/12</td>
+                                            <td>19</td>
+                                            <td>2018/02/11</td>
+                                            <td>50</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Cedric Kelly</td>
+                                            <td>Senior Javascript Developer</td>
+                                            <td>Edinburgh</td>
+                                            <td>22</td>
+                                            <td>2012/03/29</td>
+                                            <td>$433,060</td>
+                                            <td>65</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Airi Satou</td>
+                                            <td>Accountant</td>
+                                            <td>Tokyo</td>
+                                            <td>33</td>
+                                            <td>2008/11/28</td>
+                                            <td>$162,700</td>
+                                            <td>76</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Brielle Williamson</td>
+                                            <td>Integration Specialist</td>
+                                            <td>New York</td>
+                                            <td>61</td>
+                                            <td>2012/12/02</td>
+                                            <td>$372,000</td>
+                                            <td>85</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Herrod Chandler</td>
+                                            <td>Sales Assistant</td>
+                                            <td>San Francisco</td>
+                                            <td>59</td>
+                                            <td>2012/08/06</td>
+                                            <td>$137,500</td>
+                                            <td>73</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="6" style="text-align:right;">Total Percentage</td>
+                                            <td>2.01%</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="6" style="text-align:right;">Available Percentage</td>
+                                            <td>2.01%</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <div class="col-md-12 mt_10">
+                                <div class="pull-right">
+                                    <button type="reset" class="btn btn-default calcel">Close</button>
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#pf_nomine').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+        });
+    });
+</script>
+
+
+
+
+

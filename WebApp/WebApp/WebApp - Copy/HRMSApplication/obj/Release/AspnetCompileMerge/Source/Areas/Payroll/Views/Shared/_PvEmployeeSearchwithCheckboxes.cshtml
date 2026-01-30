@@ -1,0 +1,205 @@
+﻿<div id="reportsearch" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+    <div class="panel-body">
+        <div class="reports_search">
+            <div class="col-md-12">
+                <div class="report_search_emp">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label class="col-sm-6 control-label pl-24">
+                                Employee:
+                            </label>
+                            <div class="col-md-6">
+                                <input id="rdbEmpAll" type="radio" name="wise" value="All" checked="checked"><label for="rdbEmpAll"><span><span></span></span>All</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="form-group">
+                            <label class="col-sm-6 control-label">
+                                <input id="rdbEmpAll1empsearch" type="radio" name="wise" value=""><label for="rdbEmpAll1empsearch"><span><span></span></span>Emp Code:</label>
+                            </label>
+                            <div class="col-sm-6">
+                                <div class="navbar-form" role="search">
+                                    <div class="input-group">
+                                        <input type="text" id="txtEmployeeSearchBox1450" name="txtsearchemp" class="form-control" placeholder="Search">
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-default search_btn" title="Search Employee" type="button" id="pvBtnSearchEmpCodeWithChkModalPopup1450"><i class="glyphicon glyphicon-search"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="empSearchModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Search & select employee</h4>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table id="jdtEmpSearch1440" class="display fixed_header" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Code</th>
+                                <th>Employee Name</th>
+                                @*<th>Designation</th>*@
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="btnbtnEmpSearchModalCancel" data-dismiss="modal" title="Close the window">Cancel</button>
+                <button type="button" class="btn btn-primary" id="btnEmpSearchModalOK" title="Submit the data">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var txtids = [];
+    var empids = [];
+    $("#pvBtnSearchEmpCodeWithChkModalPopup1450").attr("disabled", true);
+    $("#btnEmpSearchModalOK").click(function () {
+        debugger;
+        $('#jdtEmpSearch1440').dataTable().fnFilter('');
+       // empids = [];
+        $("#rdbEmpAll1empsearch").prop("checked", true);
+        //$("input:checkbox[name=checkbox]:checked").each(function () {
+        //    debugger;
+        //    empids.push($(this).val());
+        //});
+        $('input[name=txtsearchemp]').val(empids);
+        $('#empSearchModal').modal('toggle'); //or  $('#IDModal').modal('hide');
+       // empids = [];
+        return false;
+    });
+    $("input[id='rdbEmpAll1empsearch']").click(function () {
+        $("#rptGrid").find("tr:gt('')").remove();
+        document.getElementById("txtEmployeeSearchBox1450").disabled = false;
+        document.getElementById("pvBtnSearchEmpCodeWithChkModalPopup1450").disabled = false;
+        document.getElementById("rdbEmpAll1empsearch").checked = true;
+    });
+    $("input[id='rdbEmpAll']").click(function () {
+        $("#rptGrid").find("tr:gt('')").remove();
+        document.getElementById("txtEmployeeSearchBox1450").disabled = true;
+        document.getElementById("txtEmployeeSearchBox1450").value = "";
+        document.getElementById("pvBtnSearchEmpCodeWithChkModalPopup1450").disabled = true;
+        $("#rdbEmpAll").prop("checked", true);
+        //$('input[name=txtsearchemp]').val('');
+        $("#rdbEmpAll1empsearch").prop("checked", false);
+    });
+    //$("input[type='radio']").change(function () {
+
+    //    empids = [];
+    //    $("#rdbEmpAll").prop("checked", true);
+    //    $('input[name=txtsearchemp]').val('');
+    //    $("#rdbEmpAll1empsearch").prop("checked", false);
+    //    return false;
+    //})
+ 
+
+    $('#txtEmployeeSearchBox1450').keypress(function (event) {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+            rdbEmpAll1empsearch();
+            return false;
+        }
+        else if (keycode != '44' && (keycode < 48 || keycode > 57)) {
+            return false;
+        }
+    });
+    $("#pvBtnSearchEmpCodeWithChkModalPopup1450").click(function () {
+        
+        rdbEmpAll1empsearch();
+        var ids = $("#txtEmployeeSearchBox1450").val();
+        var txtdata = ids.split(',');
+        txtids.push(txtdata);
+        return false;
+
+    });
+    function rdbEmpAll1empsearch() {
+        CommonApiGET('/Payroll/Common/SearchEmployeeWithChkIDs?EmpCode=' + $("#txtEmployeeSearchBox1450").val(), function (respData) {
+
+            if (respData.length == 0) {
+                toasterOptions();
+                toastr.error('No user with Name / Code: ' + $("#txtEmployeeSearchBox1450").val(), 'No user');
+                setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+            }
+            //else if (respData.length == 1) {
+            //    setSingleEmployee1440(respData[0]);
+            //}
+            else if (respData.length > 0) {
+                //
+                //open modal
+                $("#empSearchModal").modal();
+                //fill users data
+                $('#jdtEmpSearch1440').DataTable({
+                    "bFilter": true,
+                    "destroy": true,
+                    "paging": false,
+                    "info": false,
+
+                    data: respData,
+
+                    "columns": [
+                        {
+                            "mData": null,
+                            "bSortable": false,
+                            "mRender": function (data, type, full) {
+                                var array = $('#txtEmployeeSearchBox1450').val().split(",");
+                                $.each(array, function (i) {
+                                    if (i >= 0) {
+                                        $("input[value='" + array[i] + "']").prop('checked', true);
+                                    }
+                                });
+
+                                return '<input id="' + data.ECode + '" type="checkbox" name="checkbox" value="' + data.ECode + '" onclick="modalcheckboxRows(this.id)" ><label><span></span></label>';
+                            }
+                        },
+                        { "data": "ECode" },
+                        { "data": "EName" },
+                    ],
+                    "order": [[0, 'asc']]
+                });
+            }
+        });
+    }
+</script>
+
+<script>
+    //row wise checked
+    
+    function modalcheckboxRows(id) {
+        debugger;
+       // document.getElementById("checkAll").checked = false;
+        if ($('#' + id).prop("checked") == true) {
+            if (empids.indexOf(id) === -1)
+            {
+                empids.push(id)
+            }
+                    //empids.push(id);
+          
+        } else if ($('#' + id).prop("checked") == false) {
+
+            //var index = empids.indexOf(id);
+            //empids.splice(index, 1);
+
+            empids = empids.filter(function (oid) {
+                return oid !== id;
+                empids = [];
+            });
+
+        }
+
+        //console.log(JSON.stringify(arrerresult));
+    };
+</script>

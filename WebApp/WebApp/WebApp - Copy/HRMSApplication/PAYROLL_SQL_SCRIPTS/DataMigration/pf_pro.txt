@@ -1,0 +1,19 @@
+create procedure pf @empcode int, @year int as 
+
+CREATE TABLE #pf(id  int identity(1,1), [EId] [int] NULL,Empcode int, [year] [int] NULL,[pfprint] Float ,[vpfprint] Float,[BankPrint] Float,[PFint] Float,
+[VPFint] Float,[Bankint] Float,PFreturn int,VPFreturn int,Bankreturn int,pfintcurr int,vpfintcurr int,bankintcurr int,intDate Date, pfintrate int, 
+active bit, trans_id int) 
+
+insert into #pf select
+pf1.Eid,
+mas.Empid as empcode,Year,PFprin,VPFprin,Bankprin,PFint,VPFint,Bankint,PFreturn,VPFreturn,Bankreturn,pfintcurr,vpfintcurr,bankintcurr,
+case when IntDate is null then '' else IntDate end as IntDate,pfintrate,'1' as active, '101' as trans_id
+from [PFopen] pf1 join PEMPMAST mas on pf1.eid=mas.Eid where year=@year and mas.empid=@empcode;
+
+ insert into [pr_aug12_indhu].[dbo].[pr_pfopeningbal] select id,Eid,
+empcode,Year,pfprint,VPFprint,Bankprint,PFint,VPFint,Bankint,PFreturn,VPFreturn,Bankreturn,pfintcurr,vpfintcurr,bankintcurr,
+cast(IntDate as date) ,pfintrate,active,trans_id from #pf;
+
+drop table #pf;
+
+--exec pf 544,2012

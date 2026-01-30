@@ -1,0 +1,112 @@
+update employees set branch=(select id from branches where name='BADANGPET'),Branch_Value1=43,branch_value_2=2
+ where empid=516;
+
+update employees set branch=(select id from branches where name='OtherBranch'),department=
+(select id from departments where code='HRD'),Branch_Value1=42,branch_value_2=1  where empid=6373;
+
+update employees set branch=(select id from branches where name='OtherBranch'),department=
+(select id from departments where code='RMD-Risk Management Dept'),Branch_Value1=42,branch_value_2=1 where empid=6331;
+
+update employees set branch=(select id from branches where name='OtherBranch'),department=
+(select id from departments where code='Public Relations Dept'),Branch_Value1=42,branch_value_2=1 where empid=926;
+
+
+ALTER  view [dbo].[V_Tx_History] 
+as 
+select th.Id,th.Tx_type,th.Tx_subtype,
+Concat(th.Tx_by,' - ',e.ShortName)as Tx_By,
+Concat(th.Tx_on,+' - '+(select e1.ShortName from employees e1 where e1.empid=th.Tx_on))as Tx_On,
+th.Tx_date,th.Notes,th.Comments  from Tx_History th join Employees e on e.EmpId=th.Tx_by
+
+
+insert into leaves values(300,196,223,4,'2007-03-01','2007-06-28','Maternity Leave','Maternity Leave',223,'2007-03-01','Approved',119,119,getdate(),2007,'','');
+insert into leaves values(236,196,223,4,'2009-03-23','2009-07-20','Maternity Leave','Maternity Leave',223,'2009-03-16','Approved',119,119,getdate(),2009,'','');
+insert into leaves values(236,196,223,3,'2009-07-21','2009-08-29','Privilege Leave','Privilege Leave',223,'2009-07-18','Approved',39,39,getdate(),2009,'','');
+insert into leaves values(300,196,223,4,'2010-09-01','2011-02-27','Maternity Leave','Maternity Leave',223,'2010-08-27','Approved',179,179,getdate(),2010,'','');
+insert into leaves values(334,232,223,7,'2012-04-09','2012-05-23','Special Casual Leave','Special Casual Leave',223,'2012-04-11','Approved',44,44,getdate(),2012,'','');
+--insert into leaves values(0,,,4,'2014-08-21','2015-02-20','Maternity Leave','Maternity Leave',223,'2014-10-27','Approved',183,183,getdate(),2014,'','');
+insert into leaves values(35,171,223,4,'2015-04-15','2015-10-14','Maternity Leave','Maternity Leave',223,'2015-03-30','Approved',182,182,getdate(),2015,'','');
+insert into leaves values(39,15,223,4,'2015-08-17','2016-02-16','Maternity Leave','Maternity Leave',223,'2015-08-12','Approved',183,183,getdate(),2015,'','');
+insert into leaves values(107,304,223,4,'2016-05-09','2016-11-08','Maternity Leave','Maternity Leave',223,'2016-05-21','Approved',183,183,getdate(),2016,'','');
+insert into leaves values(28,196,223,4,'2016-03-18','2016-09-17','Maternity Leave','Maternity Leave',223,'2016-06-29','Approved',183,183,getdate(),2016,'','');
+insert into leaves values(47,157,223,4,'2016-07-20','2017-01-19','Maternity Leave','Maternity Leave',223,'2016-08-03','Approved',183,183,getdate(),2016,'','');
+insert into leaves values(46,332,223,4,'2016-09-06','2017-03-05','Maternity Leave','Maternity Leave',223,'2016-08-17','Approved',180,180,getdate(),2016,'','');
+insert into leaves values(70,196,223,4,'2016-09-12','2017-03-11','Maternity Leave','Maternity Leave',223,'2016-09-07','Approved',180,180,getdate(),2016,'','');
+insert into leaves values(51,232,223,4,'2016-10-01','2017-04-30','Maternity Leave','Maternity Leave',223,'2016-10-03','Approved',211,211,getdate(),2016,'','');
+insert into leaves values(49,2,223,4,'2017-02-03','2017-08-02','Maternity Leave','Maternity Leave',223,'2017-02-07','Approved',180,180,getdate(),2017,'','');
+insert into leaves values(48,3,223,4,'2017-04-17','2017-10-16','Maternity Leave','Maternity Leave',223,'2017-04-04','Approved',182,182,getdate(),2017,'','');
+insert into leaves values(56,196,223,4,'2017-05-02','2017-11-01','Maternity Leave','Maternity Leave',223,'2017-06-05','Approved',183,183,getdate(),2017,'','');
+insert into leaves values(43,300,223,4,'2017-07-15','2018-01-14','Maternity Leave','Maternity Leave',223,'2017-07-11','Approved',183,183,getdate(),2017,'','');
+insert into leaves values(80,11,223,4,'2017-08-16','2018-02-15','Maternity Leave','Maternity Leave',223,'2017-07-21','Approved',183,183,getdate(),2017,'','');
+insert into leaves values(33,236,223,4,'2017-08-16','2018-02-12','Maternity Leave','Maternity Leave',223,'2017-09-07','Approved',180,180,getdate(),2017,'','');
+insert into leaves values(108,157,223,4,'2017-09-18','2018-03-16','Maternity Leave','Maternity Leave',223,'2017-09-13','Approved',179,179,getdate(),2017,'','');
+insert into leaves values(138,214,223,4,'2017-12-04','2018-06-03','Maternity Leave','Maternity Leave',223,'2017-11-27','Approved',181,181,getdate(),2017,'','');
+insert into leaves values(23,196,223,4,'2017-09-11','2018-03-10','Maternity Leave','Maternity Leave',223,'2017-11-27','Approved',180,180,getdate(),2017,'','');
+insert into leaves values(98,214,223,4,'2017-12-06','2018-05-05','Maternity Leave','Maternity Leave',223,'2017-12-11','Approved',150,150,getdate(),2017,'','');
+insert into leaves values(120,214,223,4,'2017-12-12','2018-06-11','Maternity Leave','Maternity Leave',223,'2017-12-11','Approved',181,181,getdate(),2017,'','');
+insert into leaves values(79,214,223,4,'2018-01-16','2018-07-15','Maternity Leave','Maternity Leave',223,'2018-01-06','Approved',180,180,getdate(),2018,'','');
+insert into leaves values(89,68,223,4,'2018-02-12','2018-08-11','Maternity Leave','Maternity Leave',223,'2018-02-09','Approved',180,180,getdate(),2018,'','');
+insert into leaves values(134,235,223,4,'2018-02-19','2018-08-18','Maternity Leave','Maternity Leave',223,'2018-02-19','Approved',180,180,getdate(),2018,'','');
+insert into leaves values(169,196,223,4,'2018-03-27','2018-09-26','Maternity Leave','Maternity Leave',223,'2018-03-14','Approved',183,183,getdate(),2018,'','');
+insert into leaves values(415,56,223,4,'2018-05-02','2018-11-01','Maternity Leave','Maternity Leave',223,getdate(),'Approved',183,183,getdate(),2018,'','');
+insert into leaves values(124,171,223,4,'2018-06-11','2018-12-10','Maternity Leave','Maternity Leave',223,getdate(),'Approved',182,182,getdate(),2018,'','');
+insert into leaves values(454,192,223,4,'2018-05-14','2018-11-13','Maternity Leave','Maternity Leave',223,getdate(),'Approved',183,183,getdate(),2018,'','');
+insert into leaves values(146,213,223,4,'2018-03-05','2018-03-17','Maternity Leave','Maternity Leave',223,'2018-05-25','Approved',12,12,getdate(),2018,'','');
+insert into leaves values(51,232,223,6,'2017-05-29','2018-04-21','Extraordinary Leave','Extraordinary Leave',223,getdate(),'Approved',327,327,getdate(),2017,'','');
+insert into leaves values(86,230,223,4,'2018-05-05','2018-06-15','Maternity Leave','Maternity Leave',223,'2018-01-06','Approved',41,41,getdate(),2018,'','');
+
+
+create index Leaves_ControllingAuthority_idx on Leaves(ControllingAuthority);
+create index Leaves_SanctioningAuthority_idx on Leaves(SanctioningAuthority);
+create index Leaves_EmpId_idx on Leaves(EmpId);
+create index Employees_Branch_idx on Employees(Branch);
+create index Employees_JoinedDesignation_idx on Employees(JoinedDesignation);
+create index Employees_Role_idx on Employees(Role);
+create index Branch_Designation_Mapping_BranchId_idx on Branch_Designation_Mapping(BranchId);
+create index Branch_Designation_Mapping_DesignationId_idx on Branch_Designation_Mapping(DesignationId);
+create index Branches_BankName_idx on Branches(BankName);
+create index BranchStaffCount_Branchid_idx on BranchStaffCount(Branchid);
+create index DeliveryDate_PTL_LeaveId_idx on DeliveryDate_PTL(LeaveId);
+create index DeliveryDate_PTL_UpdatedBy_idx on DeliveryDate_PTL(UpdatedBy);
+create index EmpLeaveBalance_LeaveTypeId_idx on EmpLeaveBalance(LeaveTypeId);
+create index EmpLeaveBalance_EmpId_idx on EmpLeaveBalance(EmpId);
+create index Employee_Transfer_EmpId_idx on Employee_Transfer(EmpId);
+create index Employee_Transfer_OldDesignation_idx on Employee_Transfer(OldDesignation);
+create index Employee_Transfer_NewDesignation_idx on Employee_Transfer(NewDesignation);
+create index Employee_Transfer_OldBranch_idx on Employee_Transfer(OldBranch);
+create index Employee_Transfer_NewBranch_idx on Employee_Transfer(NewBranch);
+create index Employee_Transfer_OldDepartment_idx on Employee_Transfer(OldDepartment);
+create index Employee_Transfer_NewDepartment_idx on Employee_Transfer(NewDepartment);
+create index OD_OtherDuty_EmpId_idx on OD_OtherDuty(EmpId);
+create index OD_OtherDuty_ControllingAuthority_idx on OD_OtherDuty(ControllingAuthority);
+create index OD_OtherDuty_SanctioningAuthority_idx on OD_OtherDuty(SanctioningAuthority);
+create index OD_OtherDuty_VistorFrom_idx on OD_OtherDuty(VistorFrom);
+create index OD_OtherDuty_Purpose_idx on OD_OtherDuty(Purpose);
+create index Leaves_CreditDebit_EmpId_idx on Leaves_CreditDebit(EmpId);
+create index Leaves_CreditDebit_LeaveTypeId_idx on Leaves_CreditDebit(LeaveTypeId);
+create index Leaves_CreditDebit_Department_idx on Leaves_CreditDebit(Department);
+create index Leaves_CreditDebit_Branch_idx on Leaves_CreditDebit(Branch);
+create index Leaves_CreditDebit_CurrentDesignation_idx on Leaves_CreditDebit(CurrentDesignation);
+create index Leaves_CarryForward_EmpId_idx on Leaves_CarryForward(EmpId);
+create index Leaves_CarryForward_LeaveTypeId_idx on Leaves_CarryForward(LeaveTypeId);
+create index LeaveInfo_EmpId_idx on LeaveInfo(EmpId);
+create index LeaveInfo_LeaveId_idx on LeaveInfo(LeaveId);
+create index LeaveInfo_LeaveType_idx on LeaveInfo(LeaveType);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,336 @@
+﻿@model PayrollModels.Transactions.AdjestPaymentsModel
+@{
+    ViewBag.Title = "AdhocPaymetnsView";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+    var siteUrl = System.Configuration.ConfigurationManager.AppSettings["websiteUrl"];
+}<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="leftmenu-container"> 
+                <div class="sidebar-menu">
+                    @{Html.RenderPartial("_PVPayrollMenu");}
+                </div>
+                <div class="sidebar-content">
+                    <div class="main_heading heading_main">
+                        <h1>Adhoc Payments<span class="year-end">@ViewBag.Env_Fm_Fy</span></h1>
+                        @{ Html.RenderPartial("_pvEmployeeSearch"); }
+                        <input type="hidden" id="hdnEmpCode"/>
+                        <div class="clearfix"></div>
+                        <div class="col-md-12 mt_10">
+                            <div class="inner_heading">
+                                <h1>Adhoc Payments Details</h1>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Date:</label>
+                                        <div class="col-sm-7 input-group date" id="apdate">
+                                            <input type="text" class="form-control" id="txtdate" required>
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="hidden" id="hdnRmId" />
+                                        <label class="col-sm-3 control-label">Cheque No:</label>
+                                        <div class="col-sm-7">
+                                            @Html.TextBox("txtChqno", null, new { @class = "form-control", maxlength = "10" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Remarks:</label>
+                                        <div class="col-sm-9 p0">
+                                            @Html.TextArea("txtareaRemarks", null, new { @class = "form-control", @rows = 4 })
+                                        </div>
+                                    </div>
+
+                                    @*<div class="form-group">
+                                        <input type="hidden" id="AdhocType1" />
+                                        <label class="col-sm-3 control-label">Adhoc Type</label>
+                                        <div class="col-sm-8">
+                                            @Html.DropDownList("AdhocType", new[] {
+                                            new SelectListItem() {Text = "Previous Month Stop Salary",Value = "PreviousMonthStopSalary"},
+                                            new SelectListItem() {Text = "Promotion First Part",Value = "PromotionFirstPart"},
+                                            }, "Select Adhoc Type", new { @class = "form-control", Value = "@ViewBag.status", id = "AdhocType" })
+                                        </div>
+                                    </div>*@
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-md-4">
+                            <table id="gridEF" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Earning Fields</th>
+                                        <th>Amount (<i class="fa fa-rupee"></i>)</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="col-md-4">
+                            <table id="gridDF" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Deduction Fields</th>
+                                        <th>Amount (<i class="fa fa-rupee"></i>) </th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="col-md-4">
+                            <table id="gridCF" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Contribution Fields</th>
+                                        <th>Amount (<i class="fa fa-rupee"></i>) </th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="pull-right mt_10">
+                                <button id="btnCancel" value="reset" class="btn btn-default" title="Clear the data">Cancel</button>
+                                <button id="btnsubmit" class="btn btn-primary" type="button" title="Submit details"> Submit </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var orgErlist;
+    var orgDdlist;
+    var orgCdlist;
+
+    $(document).ready(function () {
+       //  
+         $(".txtdate").datepicker({
+            forceParse: false
+        });
+
+        var dat=acivemonth = "@ViewBag.Fm_AdjustLoanDatePicker";
+        var acivemonth = [];
+        acivemonth.push(dat);
+        var datepic = acivemonth[0];
+        $('#apdate').datepicker('setDate', new Date(dat));
+        $('#txtdate').val('');
+
+
+
+        $("#btnsubmit").attr("disabled", true);
+       //  
+        //on page load
+        $('#gridEF').DataTable({
+            "paging": false,
+            "bInfo": false,
+            "sort": false,
+            "searching": false,
+            "bPaginate": false,
+            "language": {
+                "emptyTable": "No data available. Please enter employee code and search"
+            }
+        });
+
+        $('#gridDF').DataTable({
+            "paging": false,
+            "bInfo": false,
+            "sort": false,
+            "searching": false,
+            "bPaginate": false,
+            "language": {
+                "emptyTable": "No data available. Please enter employee code and search"
+            }
+        });
+
+        $('#gridCF').DataTable({
+            "paging": false,
+            "bInfo": false,
+            "sort": false,
+            "searching": false,
+            "bPaginate": false,
+            "language": {
+                "emptyTable": "No data available. Please enter employee code and search"
+            }
+        });
+    });
+
+    $("#btnCancel").click(function () {
+        var empid = $("#hdnEmpCode").val();
+        if (empid == "") {
+            //window.location.reload();
+        }
+        else {
+            getDataAfterEmpSearch1440(empid);
+        }
+    });
+
+    $('#btnsubmit').click(function () {
+        if ($("#txtdate").val() == "") {
+            showGlobalModal('E#Waring#Please Select Date');
+        }
+      
+        else {
+            var updErList = $('#gridEF').DataTable().$('input, select').serialize();
+            var updDfList = $('#gridDF').DataTable().$('input, select').serialize();
+            var updCfList = $('#gridCF').DataTable().$('input, select').serialize();
+            var updRmList = $("#txtChqno").val() + "," + $("#txtareaRemarks").val() + "," + $("#txtdate").val();
+
+
+             
+            var ModifiedErList = getModifiedDataFromJDT(updErList, orgErlist);
+            var ModifiedDfList = getModifiedDataFromJDT(updDfList, orgDdlist);
+            var ModifiedCfList = getModifiedDataFromJDT(updCfList, orgCdlist);
+
+            var dataToSend = JSON.stringify({
+                'EntityId': $("#hdnEmpCode").val(),
+                'StringData': updErList,
+                'StringData2': updDfList,
+                'StringData3': updCfList,
+                'StringData4': updRmList,
+                
+            });
+
+            CommonApiPOST('/Payroll/Transaction/SaveDataAdhocPayments', dataToSend, function (isSuccess) {
+                if (isSuccess) {
+                    //
+                    setTimeout(function () { window.location.reload(); clearfields(); }, g_pagereload_seconds);
+                }
+                else {
+
+                }
+            });
+        }
+        return false;
+    });
+
+
+    function fillDataTables(respData) {
+        var df = [];
+        var ef = [];
+        var cf = [];
+        var Rm = [];
+        var dataObj = JSON.parse(respData);
+        df.push(dataObj.DfDetails);
+        ef.push(dataObj.EfDetails);
+        cf.push(dataObj.CfDetails);
+        Rm.push(dataObj.RMarksDetails);
+
+
+        var dfData = df[0];
+        var efData = ef[0];
+        var cfData = cf[0];
+        var RmData = Rm[0];
+
+        orgErlist = efData;
+        orgDdlist = dfData;
+        orgCdlist = cfData;
+        orgRmlist = RmData;
+        //
+        $("#txtdate").val(RmData[0].date);
+        $("#txtChqno").val(RmData[0].cheque_no);
+        $("#txtareaRemarks").val(RmData[0].remarks);
+        $("#AdhocType").val(RmData[0].adhoc_type);
+        //alert(adhoc_type);
+
+        $('#gridEF').DataTable({
+            "destroy": true,
+            "bInfo": false,
+            "paging": false,
+            "sort": false,
+            "searching": false,
+            "bPaginate": false,
+            data: efData,
+
+            "columns": [
+                { "data": "Name" },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data) {
+                        return getColumnNumber(data.Id, data.Value);
+                    }
+                }
+            ],
+            "order": [[0, 'asc']]
+        });
+
+        $('#gridDF').DataTable({
+            "destroy": true,
+            "paging": false,
+            "bInfo": false,
+            "sort": false,
+            "searching": false,
+            "bPaginate": false,
+            data: dfData,
+            "columns": [
+                { "data": "Name" },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data) {
+                        return getColumnNumber(data.Id, data.Value);
+                    }
+                }
+            ],
+            "order": [[0, 'asc']]
+        });
+
+        $('#gridCF').DataTable({
+            "bInfo": false,
+            "destroy": true,
+            "paging": false,
+            "sort": false,
+            "searching": false,
+            "bPaginate": false,
+            data: cfData,
+            "columns": [
+                { "data": "Name" },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data) {
+                        return getColumnNumber(data.Id, data.Value);
+                    }
+                }
+            ],
+            "order": [[0, 'asc']]
+        });
+    }
+    function getDataAfterEmpSearch1440(empcode) {
+        $("#btnsubmit").attr("disabled", false);
+        $('#hdnEmpCode').val(empcode);
+        CommonApiGET('/Payroll/Transaction/GetAdhocPayFields?EmpId=' + empcode, function (respData) {
+
+            fillDataTables(respData);
+
+        });
+    }
+
+
+
+    $("#txtdate").change(function () {
+        // 
+        var date = $('#txtdate').val();
+        var empcode = $('#hdnEmpCode').val();
+        if (empcode != "" && date !== "") {
+
+            CommonApiGET('/Payroll/Transaction/GetAdhocPayFieldsOnDateSearch?EmpId=' + empcode + "&date=" + date, function (respData) {
+                fillDataTables(respData);
+
+            });
+        }
+    });
+  
+    function clearfields() {
+        $('#txtChqno').val('');
+        $('#txtareaRemarks').val('');
+        $("#txtdate").val('');
+        $("#pvTxtEmpCode1440").val('');
+    }
+
+    
+</script>
+

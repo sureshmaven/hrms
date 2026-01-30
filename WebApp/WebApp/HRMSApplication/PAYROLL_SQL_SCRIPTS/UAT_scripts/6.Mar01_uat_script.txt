@@ -1,0 +1,10 @@
+update pr_month_attendance set working_days=31 where fm='2020-12-01'
+update pr_month_attendance set lop_days=0 where fm='2020-12-01'
+
+update pr_month_attendance set lop_days=2 where fm='2020-12-01' and emp_code=6452
+update pr_month_attendance set lop_days=5 where fm='2020-12-01' and emp_code=319
+update pr_month_attendance set lop_days=2 where fm='2020-12-01' and emp_code=490
+update pr_month_attendance set lop_days=4 where fm='2020-12-01' and emp_code=6346
+update pr_month_attendance set lop_days=14 where fm='2020-12-01' and emp_code=6453
+update pr_month_attendance set lop_days=1 where fm='2020-12-01' and emp_code=6466
+update pr_month_attendance set lop_days=12 where fm='2020-12-01' and emp_code=887

@@ -1,0 +1,191 @@
+﻿
+@{
+    /**/
+
+    ViewBag.Title = "ROIChange";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <h1>Rate Of Interest<span class="year-end">TGCAB 01-04-2019 - 31-04-2020</span></h1>
+                    <div class="col-md-12">
+                        <div class="inner_heading">
+                            <h1>Employee search</h1>
+                            <div class="form-horizontal">
+                                <div class="col-md-7">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Employee Id:</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Employee Name:</label>
+                                        <div class="col-sm-6">
+                                            <label>Jagadish Gurijala</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1 col-sm-1 col-xs-12"><button type="button" class="btn btn-primary btn-sm pull-right">Search</button></div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="inner_heading">
+                                    <h1>Loan Search</h1>
+                                    <div class="form-horizontal">
+                                        <div class="col-md-7">
+                                            <div class="form-group">
+                                                <label class="col-sm-5 control-label">Loan Name:</label>
+                                                <div class="col-sm-6">
+                                                    <select class="form-control">
+                                                        <option>Select</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <div class="form-group">
+                                                <label class="col-sm-5 control-label">Loan Method:</label>
+                                                <div class="col-sm-6">
+                                                    <label>Interest With Equal Instalments</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1 col-sm-1 col-xs-12"><button type="button" class="btn btn-primary btn-sm pull-right">Search</button></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="inner_heading">
+                                    <h1>Loan Details</h1>
+                                    <div class="col-md-7">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Loan Amount:</label>
+                                            <div class="col-sm-6">
+                                                <label></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Curr ROI(%):</label>
+                                            <div class="col-sm-6">
+                                                <label></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Cum Loan Repaid:</label>
+                                            <div class="col-sm-6">
+                                                <label></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Curr Instl Amt:</label>
+                                            <div class="col-sm-6">
+                                                <label></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Balance:</label>
+                                            <div class="col-sm-6">
+                                                <label></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">New ROI(%):</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Interest Amt:</label>
+                                            <div class="col-sm-6">
+                                                <label></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">New Instl Amt:</label>
+                                            <div class="col-sm-6">
+                                                <label></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Cum Int Repaid:</label>
+                                            <div class="col-sm-6">
+                                                <label></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Balance:</label>
+                                            <div class="col-sm-6">
+                                                <label></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Period:</label>
+                                            <div class="col-sm-6">
+                                                <label></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Instalments Completed:</label>
+                                            <div class="col-sm-6">
+                                                <label></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Balance Instalments:</label>
+                                            <div class="col-sm-6">
+                                                <label></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="pull-right">
+                                    <button type="reset" class="btn btn-default cancel">Close</button>
+                                    <button type="submit" class="btn btn-primary">Authorize</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

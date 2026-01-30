@@ -1,0 +1,1749 @@
+﻿@model Entities.Employees
+@{
+    ViewBag.RolePages = TempData["RolePages"];
+    var rolepages = TempData["RolePages"].ToString();
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var message = TempData["AlertMessage"] ?? string.Empty;
+}
+
+<script type="text/javascript">
+    var message = '@message';
+    if (message) alert(message);
+
+
+</script>
+<style>
+    .form-horizontal .control-label {
+        text-align: left;
+    }
+</style>
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-heading">
+
+            @{
+            <ul class="nav nav-tabs">
+                @if (rolepages.Contains("ADERG"))
+                {
+                    <li class="active"><a href=@Url.Action("InsertEmployees", "Register")>Employee Registration</a></li>
+                }
+                @if (rolepages.Contains("ADTPO"))
+                {
+                    <li><a href="@Url.Action("Index","Transfer")">Transfer/Promotions</a></li>
+                }
+                @if (rolepages.Contains("ADCAU"))
+                {
+                    <li><a href="@Url.Action("Index","ChangeAuthority")">Change Authority</a></li>
+                }
+                @if (rolepages.Contains("ADCPR"))
+                {
+                    <li><a href="@Url.Action("Index","ChangeProfile")">Change Profile</a></li>
+                }
+                @if (rolepages.Contains("ADLTCA"))
+                {
+                    <li><a href=@Url.Action("AdminLTCApply", "LeaveTravel")>Apply LTC </a></li>
+                }
+
+                @if (rolepages.Contains("ADPLA"))
+                {
+                    <li><a href=@Url.Action("AdminPLApply", "PLE_Type")>Apply PL Encashment</a></li>
+                }
+                @if (rolepages.Contains("ADWDA"))
+                {
+                    <li><a href=@Url.Action("WorkApprovalAdmin", "WorkDiary")> Delete Work Dairy</a></li>
+                }
+                @if (rolepages.Contains("ADUSRO"))
+                {
+                    <li><a href=@Url.Action("UserRolesView", "AllReports")>User Roles</a></li>
+                }
+                @if (rolepages.Contains("ADCBRMG"))
+                {
+                    <li><a href=@Url.Action("ChangeBranchManager", "ChangeBranchManager")>Change Branch Manager</a></li>
+                }
+                @if (rolepages.Contains("TsheetMain"))
+                {
+                    <li><a href=@Url.Action("Timesheetrequestform", "TimeSheet")>TimeSheet Manual Form</a></li>
+                }
+                @if (rolepages.Contains("TsheetApp"))
+                {
+                    <li><a href=@Url.Action("TSApprovalView", "TimeSheet")>TimeSheet Manual Approvals</a></li>
+                }
+            </ul>
+            }
+
+        </div>
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="reg">
+                    <div class="page_st">
+                        <div class="page">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="main_heading">
+                                    <h1>Employee Registration</h1>
+                                    <br />
+                                    <div>
+                                        @using (Html.BeginForm("InsertEmployeesadmin", "Register", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                        {
+
+
+
+                                            <div class="form-horizontal">
+                                                <div class="page_start">
+                                                    <div class="col-md-2 col-sm-2">
+                                                        <div class="side_heading">
+                                                            <h1>Profile Picture</h1>
+                                                            <div class="profile_pic">
+
+                                                                <img src="~/uploads/m.png" id="ImagePreview" />
+                                                                <div class="col-md-12">
+                                                                    <label>Size(3.5 x 4.5 cm)</label>
+                                                                    <label for="file" class="btn btn-primary profile_pic_btn">Choose Photo</label>
+                                                                    <input type="file" id="file" style="visibility:hidden;" name="file" onchange="PreviewImageBeforeUpload(this);Checkfiles()" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="side_heading">
+                                                            <label class="col-sm-12 control-label">Photo Uploaded:</label>
+                                                            <div class="col-sm-12">
+
+                                                                <label class="radio-inline">
+                                                                    @Html.RadioButtonFor(model => model.photo, "Yes", new { @id = "y" })
+
+                                                                    Yes
+                                                                </label>
+                                                                <label class="radio-inline">
+                                                                    @Html.RadioButtonFor(model => model.photo, "No", new { @id = "n", @checked = "checked" })
+
+                                                                    No
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    
+                                                    </div>
+                                                    <div class="col-md-10 col-sm-10">
+                                                        <div class="main_heading" style="margin: 0px;">
+                                                            <h1>Personal Details</h1>
+                                                            <br />
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">First Name: <span class="mandatory">*</span></label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", onkeypress = "return checkNum1(event)" } })
+                                                                        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">Last Name: <span class="mandatory">*</span></label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", onkeypress = "return checkNum1(event)" } })
+                                                                      
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">Password: <span class="mandatory">*</span></label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", type = "password", id = "pw1" , maxlength = "15" } })
+                                                                      
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">Confirm Password: <span class="mandatory">*</span></label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", type = "password", id = "pw2" , maxlength = "15" } })
+                                                                        
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">Gender:<span class="mandatory">*</span></label>
+                                                                    <div class="col-sm-7">
+                                                                        <label class="radio-inline">
+                                                                            @Html.RadioButtonFor(model => model.Gender, "Male", new { id = "m" })
+
+                                                                            Male
+                                                                        </label>
+                                                                        <label class="radio-inline">
+                                                                            @Html.RadioButtonFor(model => model.Gender, "Female", new { id = "f" })
+                                                                            Female
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">Date of Birth:<span class="mandatory">*</span></label>
+                                                                    <div class="col-sm-7">
+                                                                        <div class="input-group date" id="Event_Date1">
+                                                                            @Html.TextBoxFor(m => m.DOB, "{0:dd/MM/yyyy}", new { @class = "form-control" , onkeypress = "return nokeyword(event)" })<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+
+
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">Marital Status:<span class="mandatory">*</span></label>
+                                                                    <div class="col-sm-7">
+                                                                        <label class="radio-inline">
+                                                                            @Html.RadioButtonFor(model => model.MartialStatus, "Single", new { id = "r1" })
+                                                                            Single
+                                                                        </label>
+                                                                        <label class="radio-inline">
+
+                                                                            @Html.RadioButtonFor(model => model.MartialStatus, "Married", new { id = "r2" })
+                                                                            Married
+
+                                                                        </label>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">Spouse:</label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.EditorFor(model => model.SpouseName, new { htmlAttributes = new { @class = "form-control" } })
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">Father's Name:<span class="mandatory">*</span></label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.EditorFor(model => model.FatherName, new { htmlAttributes = new { @class = "form-control", onkeypress = "return checkNum1(event)" } })
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">Mother's Name:<span class="mandatory">*</span></label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.EditorFor(model => model.MotherName, new { htmlAttributes = new { @class = "form-control", onkeypress = "return checkNum1(event)" } })
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">Mobile Number:<span class="mandatory">*</span></label>
+
+                                                                    <div class="col-sm-7">
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-addon">+91</span>
+                                                                            @Html.EditorFor(model => model.MobileNumber, new { htmlAttributes = new { @class = "form-control", maxlength = "10", onkeypress = "return isNumber(event)" } })
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">Landline Number:</label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.EditorFor(model => model.HomeNumber, new { htmlAttributes = new { @class = "form-control", onkeypress = "return isNumber(event)", maxlength = "11" } })
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">Present Address:<span class="mandatory">*</span></label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.TextAreaFor(model => model.PresentAddress, new { @class = "form-control" })
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">Permanent Address:<span class="mandatory">*</span></label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.TextAreaFor(model => model.PermanentAddress, new { @class = "form-control" })
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">Graduation:<span class="mandatory">*</span></label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.EditorFor(model => model.Graduation, new { htmlAttributes = new { @class = "form-control", onkeypress = "return checkNum1(event)" } })
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">Post Graduation:</label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.EditorFor(model => model.PostGraduation, new { htmlAttributes = new { @class = "form-control", onkeypress = "return checkNum1(event)" } })
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">OtherQualification:</label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.EditorFor(model => model.OtherQualification, new { htmlAttributes = new { @class = "form-control" } })
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">Category:<span class="mandatory">*</span></label>
+                                                                    <div class="col-sm-7">
+
+
+                                                                        @Html.DropDownList("Category", new[] {
+                                                                     new SelectListItem() {Text = "OC",Value = "OC"},
+                                                                    new SelectListItem() {Text = "BC-A",Value = "BC-A"},
+                                                                     new SelectListItem() {Text = "BC-B",Value = "BC-B" },
+                                                                      new SelectListItem() {Text = "BC-C",Value = "BC-C" },
+                                                                       new SelectListItem() {Text = "BC-D",Value = "BC-D" },
+                                                                        new SelectListItem() {Text = "BC-E",Value = "BC-E" },
+                                                                    new SelectListItem() {Text = "SC",Value = "SC" },
+                                                                    new SelectListItem() {Text = "ST",Value = "ST" },
+
+                                                                    }, "Select Category", new { @class = "form-control" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">Personal Email ID:<span class="mandatory">*</span></label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.EditorFor(model => model.PersonalEmailId, new { htmlAttributes = new { @class = "form-control" } })
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">Aaadhar Number:<span class="mandatory">*</span> </label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.EditorFor(model => model.AadharCardNo, new { htmlAttributes = new { @class = "form-control", maxlength = "12", onkeypress = "return isNumber(event)" } })
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">PAN Number:<span class="mandatory">*</span> </label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.EditorFor(model => model.PanCardNo, new { htmlAttributes = new { @class = "form-control", maxlength = 10 } })
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">Blood Group:<span class="mandatory">*</span> </label>
+                                                                    <div class="col-sm-7">
+
+                                                                        @Html.DropDownList("BloodGroup", new[] {
+                                                                    new SelectListItem() {Text = "O-ve",Value = "O-ve"},
+                                                                    new SelectListItem() {Text = "O+ve",Value = "O+ve"},
+                                                                    new SelectListItem() {Text = "A-ve",Value = "A-ve" },
+                                                                    new SelectListItem() {Text = "A+ve",Value = "A+ve" },
+                                                                    new SelectListItem() {Text = "B-ve",Value = "B-ve" },
+                                                                    new SelectListItem() {Text = "B+ve",Value = "B+ve" },
+                                                                     new SelectListItem() {Text = "AB-ve",Value = "AB-ve" },
+                                                                     new SelectListItem() {Text = "AB+ve",Value = "AB+ve" },
+                                                                    }, "Select BloodGroup", new { @class = "form-control" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">Emergency Contact Name:<span class="mandatory">*</span> </label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.EditorFor(model => model.EmergencyName, new { htmlAttributes = new { @class = "form-control", onkeypress = "return checkNum1(event)" } })
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">Emergency Contact Number:<span class="mandatory">*</span> </label>
+                                                                    <div class="col-sm-7">
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-addon">+91</span>
+                                                                            @Html.EditorFor(model => model.EmergencyContactNo, new { htmlAttributes = new { @class = "form-control", maxlength = "10", onkeypress = "return isNumber(event)" } })
+                                                                        </div>
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">Short Name: <span class="mandatory">*</span></label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.EditorFor(model => model.ShortName, new { htmlAttributes = new { @class = "form-control", onkeypress = "return checkNum1(event)" } })
+                                                                        @Html.ValidationMessageFor(model => model.ShortName, "", new { @class = "text-danger" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 col-sm-2">
+
+                                                    </div>
+                                                    <div class="col-md-10 col-sm-10">
+                                                        <div class="main_heading">
+
+                                                            <h1>Professional Details</h1>
+
+
+                                                            <div class="col-md-12">
+                                                                @Html.RadioButtonFor(model => model.Branch_Value1, "HeadOffice", new { id = "head", @checked = "checked" })
+                                                                <label class="label_class" for="head"> HeadOffice </label>
+
+                                                                @Html.RadioButtonFor(model => model.Branch_Value1, "OtherBranch", new { id = "bran" })
+                                                                <label class="label_class" for="bran"> Branch </label>
+
+                                                            </div>
+
+                                                            <br><br>
+
+
+
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">Employee Code:<span class="mandatory">*</span></label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.EditorFor(model => model.EmpId, new { htmlAttributes = new { @class = "form-control", @id = "empidd", maxlength = "10", onBlur = "empidcheck()", onkeypress = "return isNumber(event)" } })
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div id="depthide" class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">Department:<span class="mandatory">*</span> </label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.DropDownListFor(model => model.Department, (SelectList)ViewBag.Department, "Select Department", new { @class = "form-control", @id = "profeDept" })
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div id="branchide" class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">Branch:<span class="mandatory">*</span> </label>
+                                                                    <div class="col-sm-7">
+
+
+                                                                        @Html.DropDownListFor(model => model.Branch, (SelectList)ViewBag.Branch, "Select Branch", new { @class = "form-control", @id = "profeBranch", @onchange = "BranchofProfe()" })
+
+
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">Joined Designation:<span class="mandatory">*</span> </label>
+                                                                    <div class="col-sm-7">
+
+
+                                                                        @Html.DropDownListFor(model => model.JoinedDesignation, (SelectList)ViewBag.JoinedDesignation, "Select Designation", new { @class = "form-control" })
+
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">Current Designation:<span class="mandatory">*</span> </label>
+                                                                    <div class="col-sm-7">
+                                                                        @if (Session["Data"] != null)
+                                                                        {
+                                                                            @Html.DropDownListFor(model => model.CurrentDesignation, (SelectList)ViewBag.DataStatus, "Select Designation", new { @id = "desg1", @class = "form-control" })
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            @Html.DropDownListFor(model => model.CurrentDesignation, (SelectList)ViewBag.CurrentDesignation2sc, "Select Designation", new { @id = "desg1", @class = "form-control" })
+                                                                        }
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">Role:<span class="mandatory">*</span> </label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.DropDownListFor(model => model.Role, (SelectList)ViewBag.Role, "Select Role", new { @class = "form-control" })
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">Official Email Id:</label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.EditorFor(model => model.OfficalEmailId, new { htmlAttributes = new { @class = "form-control" } })
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">Date of Joining:<span class="mandatory">*</span> <br /><br /></label>
+                                                                    <div class="col-sm-7">
+                                                                        <div class="input-group date" id="Event_Date2">
+                                                                            @Html.TextBoxFor(m => m.DOJ, "{0:dd/MM/yyyy}", new { @class = "form-control", onkeypress = "return nokeyword(event)", onchange = "eventvalidates()" })<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+
+
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">Total Experience: <br /><br /></label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.EditorFor(model => model.TotalExperience, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            @*<div class="col-md-6">
+            <div class="form-group">
+                <label class="col-sm-5 control-label">Relieving Date:</label>
+                <div class="col-sm-7">
+                    <div class="input-group date" id="Event_Date3">
+                        @Html.TextBoxFor(m => m.RelievingDate, "{0:dd/MM/yyyy}", new { @class = "form-control", onchange = "return eventvalidate();" })<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+
+                        @Html.ValidationMessageFor(model => model.RelievingDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">Relieving Reason:<span class="mandatory">*</span></label>
+                                                                    @*<div class="col-sm-7">
+                    @Html.EditorFor(model => model.RelievingReason, new { htmlAttributes = new { @class = "form-control" } })
+                </div>*@
+                                                                    <div class="col-sm-7">
+
+                                                                        @Html.DropDownList("Exit_type", new[] {
+                                                                    new SelectListItem() {Text = "Retirement",Value = "Retd"},
+                                                                    new SelectListItem() {Text = "Resignation",Value = "Resig"},
+                                                                    new SelectListItem() {Text = "VRS",Value = "Vrs"},
+                                                                    //new SelectListItem() {Text = "Death",Value = "Death"}, //added new on 02/06/2020
+
+                                                                }, "Select Relieving Reason", new { @class = "form-control",@id= "Exit_type" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">Date of Relieving:<span class="mandatory">*</span><br /><br /></label>
+                                                                    <div class="col-sm-7">
+                                                                        <div class="input-group date" id="Event_Date4">
+                                                                            @Html.TextBoxFor(m => m.RetirementDate, "{0:dd/MM/yyyy}", new { @class = "form-control", onkeypress = "return nokeyword(event)", onchange = "return eventvalidate1();" })<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">Professional Qualifications:</label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.EditorFor(model => model.ProfessionalQualifications, new { htmlAttributes = new { @class = "form-control" } })
+                                                                        
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                                                                                
+                                                    </div>
+                                                    <div class="col-md-2 col-sm-2">
+
+                                                    </div>
+                                                    <div class="col-md-10 col-sm-10">
+                                                        <div class="main_heading">
+                                                            <h1>Authorities</h1>
+
+                                                            <div class="col-md-6">
+                                                                <div class="sub_main_heading">
+
+                                                                    <h1>Controlling  Authority  </h1>
+                                                                    <div class="col-md-12 radio_btn">
+                                                                        @Html.RadioButtonFor(model => model.Branch_Value_2, "1", new { id = "head1", @checked = "checked", onclick = "return pfp()" })
+                                                                      <label class="label_class" for="head1">  HeadOffice </label>
+
+                                                                        @Html.RadioButtonFor(model => model.Branch_Value_2, "2", new { id = "bran1", onclick = "return pp()" })
+                                                                          <label class="label_class" for="bran1">  Branch </label>
+
+</div>
+                                                                    <br /><br />
+
+                                                                    <div id="depthide1" class="col-md-12">
+                                                                        <div class="form-group">
+                                                                            <label class="col-sm-4 control-label">Department:<span class="mandatory">*</span> </label>
+                                                                            <div class="col-sm-8">
+                                                                                @Html.DropDownListFor(model => model.ControllingDepartment, (SelectList)ViewBag.Department3d, "Select Department", new { @class = "form-control", @id = "HDept", @onchange = "HFillBranches()" })
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div id="branchide1" class="col-md-12">
+                                                                        <div class="form-group">
+                                                                            <label class="col-sm-4 control-label">Branch:<span class="mandatory">*</span> </label>
+                                                                            <div class="col-sm-8">
+
+                                                                                @Html.DropDownListFor(model => model.ControllingBranch, (SelectList)ViewBag.Branch5b, "Select Branch", new { @class = "form-control", @id = "HbranchCon", @onchange = "BFillDesignation()" })
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <div class="form-group">
+                                                                            <label class="col-sm-4 control-label">Designation:<span class="mandatory">*</span> </label>
+                                                                            <div class="col-sm-8">
+
+
+                                                                                @Html.DropDownListFor(model => model.ControllingDesignation, (SelectList)ViewBag.CurrentDesignation2c, "Select Designation", new { @class = "form-control", @id = "Hdesignationcon", @onchange = "HFillDesignation()" })
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <div class="form-group">
+                                                                            <label class="col-sm-4 control-label">Officer Name:<span class="mandatory">*</span> </label>
+                                                                            <div class="col-sm-8">
+
+                                                                                @Html.DropDownListFor(model => model.ControllingAuthority, (SelectList)ViewBag.ControllingAuthority, "Select Officer", new { @class = "form-control", @id = "HMN" })
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+
+
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="sub_main_heading">
+                                                                    <h1>Sanctioning Authority  </h1>
+                                                                    <div class="col-md-12">
+                                                                        <br /><br />
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <div class="form-group">
+                                                                            <label class="col-sm-4 control-label">Department:<span class="mandatory">*</span> </label>
+                                                                            <div class="col-sm-8">
+                                                                                @Html.DropDownListFor(model => model.SanctioningDepartment, (SelectList)ViewBag.Sanctioningddepartment, "Select Department", new { @class = "form-control", @id = "DeptSan", @onchange = "FillBranchesSanc()" })
+                                                                                @*@Html.DropDownListFor(model => model.SanctioningDepartment, (SelectList)ViewBag.Department3sd, "Select Department", new { @class = "form-control", @id = "DeptSan", @onchange = "FillBranchesSanc()" })*@
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-md-12">
+                                                                        <div class="form-group">
+                                                                            <label class="col-sm-4 control-label">Designation:<span class="mandatory">*</span> </label>
+                                                                            <div class="col-sm-8">
+                                                                                @Html.DropDownListFor(model => model.SanctioningDesignation, (SelectList)ViewBag.CurrentDesignation2sc, "Select Designation", new { @class = "form-control", @id = "designationSan", @onchange = "FillDesignationSanc()" })
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <div class="form-group">
+                                                                            <label class="col-sm-4 control-label">Officer Name:<span class="mandatory">*</span> </label>
+
+                                                                            <div class="col-sm-8">
+
+                                                                                @Html.DropDownListFor(model => model.SanctioningAuthority, (SelectList)ViewBag.SanctioningAuthority, "Select Officer", new { @class = "form-control", @id = "mag" })
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12 buttons_div">
+                                                        <div class="pull-right">
+                                                            <button type="reset" class="btn btn-default">Cancel</button>
+                                                            <button type="submit" onclick="return RegFunction();" class="btn btn-primary">Submit</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function PreviewImageBeforeUpload(Imagepath) {
+        debugger;
+        if (Imagepath.files && Imagepath.files[0]) {
+            $("#y").attr('checked', 'checked');
+            var Filerdr = new FileReader();
+            Filerdr.onload = function (e) {
+                $('#ImagePreview').attr('src', e.target.result);
+            }
+            Filerdr.readAsDataURL(Imagepath.files[0]);
+        }
+        else {
+            $("#n").attr('checked', 'checked');
+        }
+    }
+</script>
+
+
+
+<script type="text/javascript">
+
+    $('input[name="SpouseName"]').on('click', function () {
+        if ($("#r2").is(":checked")) {
+            $("#SpouseName").prop("readonly", false);
+        }
+        if ($("#r1").is(":checked")) {
+            $("#SpouseName").prop("readonly", true);
+            $("#SpouseName").val('');
+
+        }
+        $("input[name='MartialStatus']").click(function () {
+            if ($("#r1").is(":checked")) {
+                $("#SpouseName").prop("disabled", true);
+                $("#SpouseName").val('');
+            }
+            else if ($("#r2").is(":checked")) {
+
+                $("#SpouseName").prop("disabled", false);
+            }
+        });
+    });
+</script>
+
+<script>
+
+    function empidcheck() {
+        var x = location.hostname;
+        var url = window.location.href
+        var arr = url.split("/");
+        var textBoxValue = document.getElementById("empidd").value;
+
+    //    var result = "https://" + arr[2] + "/" + "Register/checkEmailExistOrNot?empid=" + textBoxValue;
+     var result = "" + arr[0] +  "//" + arr[2] +  "/"+ "Register/checkEmailExistOrNot?empid=" + textBoxValue;
+
+        $.ajax({
+            type: "GET",
+            url: result,
+
+            dataType: "json",
+            success: function (data) {
+
+                if (data.message == "use") {
+
+                }
+                if (data.message == "used") {
+
+                    document.getElementById("empidd").value = "";
+
+                    alert("This EmpId already Exist!");
+                }
+                //if (data.message == "zero") {
+                //    document.getElementById("empidd").value = "";
+                //    alert("The EmpId cannot start with zero!");
+
+                //}
+
+            },
+            error: function () {
+
+            }
+        });
+
+
+    }
+</script>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+       
+        var Retdreason = $('#Exit_type').val();
+       
+        $("#Exit_type").change(function () {
+            
+                var Retdreason = $('#Exit_type').val();
+            if (Retdreason == "" || Retdreason == "undefined" || Retdreason == null) {
+                $("#Event_Date4").datepicker({
+
+                    format: "dd/mm/yyyy",
+                    autoclose: true,
+                    todayHighlight: true,
+                    startDate: "today",
+                    beforeShowDay: function nonWorkingDays(date) {
+                        var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
+                        var week = 0 | date.getDate() / 7 //get the week
+                        var dd = date.getDate();
+                        var month = date.getMonth();
+                        if (dd < 10) {
+                            dd = '0' + dd
+                        }
+
+                        if (month < 10) {
+                            month = '0' + month
+                        }
+                        var sunweek = date.getDay();
+                        var year = date.getFullYear();
+
+                        if (dd == 14 && day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                        if (dd == 28 && day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                        //check if it's second week or fourth week
+                        else if (week == 1 || week == 3) {
+                            if (dd == 7 && day == 6 || dd == 21 && day == 6) {
+                                //check for satruday
+
+                            }
+                            else {
+                                if (day == 6) {
+                                    return {
+                                        classes: 'secondClass'
+                                    };
+                                }
+                            }
+
+                        }
+                        //check for sunday
+                        if (day == 0) {
+                            return {
+                                classes: 'secondClass'
+                            };
+
+                        }
+                        //check for holidays
+                        var d = date;
+                        var curr_date = d.getDate();
+                        var curr_month = d.getMonth() + 1; //Months are zero based
+                        if (curr_date < 10) {
+                            curr_date = '0' + curr_date
+                        }
+                        var curr_year = d.getFullYear();
+                        var formattedDate = curr_date + "/" + curr_month + "/" + curr_year
+
+                        if ($.inArray(formattedDate, active_dates) != -1) {
+                            return {
+                                classes: 'activeClass'
+                            };
+                        }
+                        return [true];
+                    }
+                });
+            }
+            else if (Retdreason == "Resig" || Retdreason == "Vrs" ) {
+                $("#Event_Date4").datepicker({
+
+                    format: "dd/mm/yyyy",
+                    autoclose: true,
+                    todayHighlight: true,
+                    // startDate: "today",
+                    beforeShowDay: function nonWorkingDays(date) {
+                        var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
+                        var week = 0 | date.getDate() / 7 //get the week
+                        var dd = date.getDate();
+                        var month = date.getMonth();
+                        if (dd < 10) {
+                            dd = '0' + dd
+                        }
+
+                        if (month < 10) {
+                            month = '0' + month
+                        }
+                        var sunweek = date.getDay();
+                        var year = date.getFullYear();
+
+                        if (dd == 14 && day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                        if (dd == 28 && day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                        //check if it's second week or fourth week
+                        else if (week == 1 || week == 3) {
+                            if (dd == 7 && day == 6 || dd == 21 && day == 6) {
+                                //check for satruday
+
+                            }
+                            else {
+                                if (day == 6) {
+                                    return {
+                                        classes: 'secondClass'
+                                    };
+                                }
+                            }
+
+                        }
+                        //check for sunday
+                        if (day == 0) {
+                            return {
+                                classes: 'secondClass'
+                            };
+
+                        }
+                        //check for holidays
+                        var d = date;
+                        var curr_date = d.getDate();
+                        var curr_month = d.getMonth() + 1; //Months are zero based
+                        if (curr_date < 10) {
+                            curr_date = '0' + curr_date
+                        }
+                        var curr_year = d.getFullYear();
+                        var formattedDate = curr_date + "/" + curr_month + "/" + curr_year
+
+                        if ($.inArray(formattedDate, active_dates) != -1) {
+                            return {
+                                classes: 'activeClass'
+                            };
+                        }
+                        return [true];
+                    }
+                });
+            }
+            else {
+               
+                $("#Event_Date4").datepicker({
+                   
+                    format: "dd/mm/yyyy",
+                    autoclose: true,
+                    todayHighlight: true,
+                    startDate: "today",
+                    beforeShowDay: function nonWorkingDays(date) {
+                        var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
+                        var week = 0 | date.getDate() / 7 //get the week
+                        var dd = date.getDate();
+                        var month = date.getMonth();
+                        if (dd < 10) {
+                            dd = '0' + dd
+                        }
+
+                        if (month < 10) {
+                            month = '0' + month
+                        }
+                        var sunweek = date.getDay();
+                        var year = date.getFullYear();
+
+                        if (dd == 14 && day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                        if (dd == 28 && day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                        //check if it's second week or fourth week
+                        else if (week == 1 || week == 3) {
+                            if (dd == 7 && day == 6 || dd == 21 && day == 6) {
+                                //check for satruday
+
+                            }
+                            else {
+                                if (day == 6) {
+                                    return {
+                                        classes: 'secondClass'
+                                    };
+                                }
+                            }
+
+                        }
+                        //check for sunday
+                        if (day == 0) {
+                            return {
+                                classes: 'secondClass'
+                            };
+
+                        }
+                        //check for holidays
+                        var d = date;
+                        var curr_date = d.getDate();
+                        var curr_month = d.getMonth() + 1; //Months are zero based
+                        if (curr_date < 10) {
+                            curr_date = '0' + curr_date
+                        }
+                        var curr_year = d.getFullYear();
+                        var formattedDate = curr_date + "/" + curr_month + "/" + curr_year
+
+                        if ($.inArray(formattedDate, active_dates) != -1) {
+                            return {
+                                classes: 'activeClass'
+                            };
+                        }
+                        return [true];
+                    }
+                });
+            }
+            });
+            
+               
+       
+            $("input[id='bran']").change(function () {
+                //reload dropdownlist
+                Get();
+
+            })
+    });
+        function Get()
+        {
+            $("input[id='bran']").each(function () {
+                if ($(this).is(":checked")) {
+                    var value = $(this).val();
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("LoadByBranches", "Register")',
+                        dataType: "JSON",
+                        data: { State: value },
+                        success: function (response) {
+                            $("#desg1").html(""); // clear before appending new list
+                            $("#desg1").append(
+                                $('<option></option>').val('0').html('Select Designation'));
+                            $.each(response.stateData, function (i, desg1) {
+                                $("#desg1").append(
+                                    $('<option></option>').val(desg1.Value).html(desg1.Text));
+                            });
+                        }
+                    });
+                }
+            });
+
+        }
+</script>
+
+<script>
+    function BranchofProfe()
+    {
+        // debugger;
+        var value = "";
+        var branch = $('#profeBranch').val();
+                 var lvalue = '@ViewBag.CurrentDesignationId';
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("LoadByBranches", "Register")',
+            dataType: "JSON",
+            data: { State: value, Branch: branch },
+            success: function (response) {
+                // debugger;
+                $("#shiftid").html("");
+                $("#shiftid").append($('<option></option>').val(response.stiftimesval).html(response.stiftimes));
+            }
+            });
+    }
+</script>
+
+<script type="text/javascript">
+        $(document).ready(function () {
+            $("input[id='head']").change(function () {
+                //reload dropdownlist
+                Get1();
+
+            })
+    });
+        function Get1()
+        {
+            $("input[id='head']").each(function () {
+                if ($(this).is(":checked")) {
+                    var value = $(this).val();
+                    var dept = $('#profeDept').val();
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("LoadByBranches1", "Register")',
+                        dataType: "JSON",
+                        data: {
+                            State: value, Dept: dept
+                        },
+                        success: function (response) {
+                            $("#desg1").html(""); // clear before appending new list
+                            $("#desg1").append(
+                                $('<option></option>').val('0').html('Select Designation'));
+                            $.each(response.stateData, function (i, desg1) {
+                                $("#desg1").append(
+                                    $('<option></option>').val(desg1.Value).html(desg1.Text));
+                            });
+                        }
+                    });
+                }
+            });
+
+        }
+</script>
+
+
+<script type="text/jscript">
+
+    function HFillBranches() {
+
+        var stateId = $('#HDept').val();
+
+        $.ajax({
+            url: '/Register/HLoadByBranchId',
+            type: "GET",
+            dataType: "JSON",
+            data: { State: stateId },
+            success: function (stateData) {
+
+                $("#Hdesignationcon").html(""); // clear before appending new list
+                $("#Hdesignationcon").append(
+                    $('<option></option>').val('0').html('Select Designation'));
+                $.each(stateData, function (i, Hdesignationcon) {
+                    $("#Hdesignationcon").append(
+                        $('<option></option>').val(Hdesignationcon.Value).html(Hdesignationcon.Text));
+                });
+                $("#HMN").html(""); // clear before appending new list
+                $("#HMN").append(
+                    $('<option></option>').val('0').html('Select Officer'));
+                $.each(stateData, function (i, HMN) {
+                    $("#HMN").append(
+                        $('<option></option>').val(HMN.Value).html(HMN.Text));
+                });
+            }
+        });
+    }
+    function BFillDesignation() {
+
+        var stateId = $('#HbranchCon').val();
+
+        $.ajax({
+            url: '/Register/BLoadByBranchId',
+            type: "GET",
+            dataType: "JSON",
+            data: { State: stateId },
+            success: function (stateData) {
+
+                $("#Hdesignationcon").html(""); // clear before appending new list
+                $("#Hdesignationcon").append(
+                    $('<option></option>').val('0').html('Select Designation'));
+                $.each(stateData, function (i, Hdesignationcon) {
+                    $("#Hdesignationcon").append(
+                        $('<option></option>').val(Hdesignationcon.Value).html(Hdesignationcon.Text));
+                });
+                $("#HMN").html(""); // clear before appending new list
+                $("#HMN").append(
+                    $('<option></option>').val('0').html('Select Officer'));
+                $.each(stateData, function (i, HMN) {
+                    $("#HMN").append(
+                        $('<option></option>').val(HMN.Value).html(HMN.Text));
+                });
+            }
+        });
+    }
+
+    function HFillDesignation() {
+
+        if ($("#head1").is(":checked")) {
+            var stateId = $('#HDept').val();
+            var stateID1 = $('#Hdesignationcon').val();
+            $.ajax({
+                url: '/Register/HeadOfficeId',
+                type: "GET",
+                dataType: "JSON",
+                data: { State: stateId, dept: stateID1 },
+                success: function (stateData) {
+                    $("#HMN").html(""); // clear before appending new list
+                    $("#HMN").append(
+                        $('<option></option>').val('0').html('Select Officer'));
+                    $.each(stateData, function (i, HMN) {
+                        $("#HMN").append(
+                            $('<option></option>').val(HMN.Value).html(HMN.Text));
+                    });
+                }
+            });
+        }
+        else {
+            var stateID2 = $('#HbranchCon').val();
+            var stateID1 = $('#Hdesignationcon').val();
+            $.ajax({
+                url: '/Register/HLoadByDesignationId',
+                type: "GET",
+                dataType: "JSON",
+                data: { State: stateId, dept: stateID1, branc: stateID2 },
+                success: function (stateData) {
+                    $("#HMN").html(""); // clear before appending new list
+                    $("#HMN").append(
+                        $('<option></option>').val('0').html('Select Officer'));
+                    $.each(stateData, function (i, HMN) {
+                        $("#HMN").append(
+                            $('<option></option>').val(HMN.Value).html(HMN.Text));
+                    });
+                }
+            });
+        }
+
+
+    }
+
+
+
+    /*----------------------Sacationing Autority dropdowns------------------*/
+
+    function FillBranchesSanc() {
+
+        var stateId = $('#DeptSan').val();
+
+        $.ajax({
+            url: '/Register/HSLoadByBranchId',
+            type: "GET",
+            dataType: "JSON",
+            data: { State: stateId },
+            success: function (stateData) {
+
+                $("#designationSan").html(""); // clear before appending new list
+                $("#designationSan").append(
+                    $('<option></option>').val('0').html('Select Designation'));
+                $.each(stateData, function (i, designationSan) {
+                    $("#designationSan").append(
+                        $('<option></option>').val(designationSan.Value).html(designationSan.Text));
+                });
+                $("#mag").html(""); // clear before appending new list
+                $("#mag").append(
+                    $('<option></option>').val('0').html('Select Officer'));
+                $.each(stateData, function (i, mag) {
+                    $("#mag").append(
+                        $('<option></option>').val(mag.Value).html(mag.Text));
+                });
+            }
+        });
+    }
+    function FillDesignationSanc() {
+
+        var stateId = $('#DeptSan').val();
+        var stateID1 = $('#designationSan').val();
+        $.ajax({
+            url: '/Register/HSLoadByDesignationId',
+            type: "GET",
+            dataType: "JSON",
+            data: { State: stateId, dept: stateID1 },
+            success: function (stateData) {
+                $("#mag").html(""); // clear before appending new list
+                $("#mag").append(
+                    $('<option></option>').val('0').html('Select Officer'));
+                $.each(stateData, function (i, mag) {
+                    $("#mag").append(
+                        $('<option></option>').val(mag.Value).html(mag.Text));
+                });
+            }
+        });
+    }
+
+</script>
+
+
+
+
+
+<script>
+    document.getElementById("a1").className = "active";
+
+</script>
+ 
+<script>
+    function Checkfiles() {
+
+        var fup = document.getElementById('file');
+        var fileName = fup.value;
+        var ext = fileName.substring(fileName.lastIndexOf('.') + 1);
+        if (ext == "JPEG" || ext == "jpeg" || ext == "jpg" || ext == "JPG" || ext == "png" || ext == "PNG") {
+            return true;
+        }
+        else {
+            alert("Upload JPEG,JPG,PNG image format only");
+            fup.focus();
+            document.getElementById("file").value = "";
+            return false;
+        }
+    }</script>
+
+<script>
+    function eventvalidates() {
+        
+        var Joindate = document.getElementById("DOJ").value;
+        var a = moment(Joindate, "DD/MM/YYYY");
+        var b = moment(new Date());
+        var years = a.diff(b, 'year');
+        b.add(years, 'years');
+        var months = a.diff(b, 'months');
+        b.add(months, 'months');
+        if (a <= b) {
+            var days = b.diff(a, 'days') + 1;
+            var diff = (years != 0 ? years * -1 : years) + ' years ' + (months != 0 ? months * -1 : months) + ' months ' + days + ' days';
+            document.getElementById("TotalExperience").value = diff;
+        }
+        else if (a > b) {
+            alert("Please choose upto today's Date");
+            document.getElementById("TotalExperience").value = "";
+            document.getElementById("DOJ").value = "";
+        }
+        else {
+            document.getElementById("TotalExperience").value = "0 day";
+        }
+        eventvalidate1();
+    }
+
+    function eventvalidate() {
+
+        var Joindate = document.getElementById("DOJ").value;
+        var Retdate = document.getElementById("RelievingDate").value;
+        var date = moment(Joindate, "DD.MM.YYYY");
+
+        var currentDate1 = moment(Retdate, "DD.MM.YYYY");
+        var duration = moment.duration(date.diff(currentDate1));
+
+
+
+        if (duration >= 0) {
+
+
+            alert('Relieving Date Should be More than DOJ Date');
+            document.getElementById("RelievingDate").focus();
+            document.getElementById("RelievingDate").value = '';
+            return false;
+
+        }
+        else {
+
+            return true;
+
+        }
+    }</script>
+<script>
+    function eventvalidate1() {
+       
+        var exittype = document.getElementById("Exit_type").value;
+        var Joindate = document.getElementById("DOJ").value;
+        var Retdate = document.getElementById("RetirementDate").value;
+        var todaydate = new Date();
+        var date = moment(Joindate, "DD.MM.YYYY");
+
+        var currentDate1 = moment(Retdate, "DD.MM.YYYY");
+        var duration = moment.duration(date.diff(currentDate1));
+        var rdates = moment(todaydate, "DD.MM.YYYY");
+        var retddiff = moment.duration(rdates.diff(currentDate1));
+       
+        var twoDigitMonth =(todaydate.getMonth()+1) + ""; if (twoDigitMonth.length == 1) twoDigitMonth = "0" + twoDigitMonth;
+        var twoDigitDate = todaydate.getDate() + ""; if (twoDigitDate.length == 1) twoDigitDate = "0" + twoDigitDate;
+        var currentDatess = twoDigitDate + "/" + twoDigitMonth  + "/" + todaydate.getFullYear(); 
+      
+
+        if (retddiff > 0 && (Retdate != currentDatess)) {
+            if (exittype == "Retd") {
+               
+                alert("Please select Today's Date or Future Date");
+                document.getElementById("RetirementDate").focus();
+                document.getElementById("RetirementDate").value = '';
+                return false;
+            }
+        }
+        
+        if (duration >= 0) {
+
+
+            alert('Retirement Date Should be More than DOJ Date');
+            document.getElementById("RetirementDate").focus();
+            document.getElementById("RetirementDate").value = '';
+            return false;
+
+        }
+        else {
+
+            return true;
+
+        }
+    }
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('input[name=Branch_Value1]:first').attr('checked', true);
+
+        if ($("#head").is(":checked")) {
+            document.getElementById('branchide').style.display = 'none';
+            document.getElementById('depthide').style.display = 'block';
+
+        }
+    });
+
+    $("input[name='Branch_Value1']").click(function () {
+
+        if ($("#head").is(":checked")) {
+
+            document.getElementById('branchide').style.display = 'none';
+            document.getElementById('depthide').style.display = 'block';
+            document.getElementById('HbranchCon').value = '';
+        }
+        else if ($("#bran").is(":checked")) {
+            document.getElementById('HDept').value = '';
+            document.getElementById('depthide').style.display = 'none';
+            document.getElementById('branchide').style.display = 'block';
+        }
+    });
+
+
+    $('input[name=Branch_Value_2]:first').attr('checked', true);
+
+    if ($("#head1").is(":checked")) {
+        document.getElementById('HbranchCon').value = '';
+        document.getElementById('branchide1').style.display = 'none';
+        document.getElementById('depthide1').style.display = 'block';
+
+    }
+
+
+    $("input[name='Branch_Value_2']").click(function () {
+
+        if ($("#head1").is(":checked")) {
+            document.getElementById('HbranchCon').value = '';
+            document.getElementById('branchide1').style.display = 'none';
+            document.getElementById('depthide1').style.display = 'block';
+
+        }
+        else if ($("#bran1").is(":checked")) {
+
+            document.getElementById('HDept').value = '';
+            document.getElementById('depthide1').style.display = 'none';
+            document.getElementById('branchide1').style.display = 'block';
+        }
+    });
+
+    function pp() {
+        $("#Hdesignationcon")[0].selectedIndex = 0;
+        $('#HbranchCon')[0].selectedIndex = 0;
+        $('#HMN')[0].selectedIndex = 0
+
+    }
+    function pfp() {
+        $("#Hdesignationcon")[0].selectedIndex = 0;
+        $('#HDept')[0].selectedIndex = 0;
+        $('#HMN')[0].selectedIndex = 0
+    }
+</script>
+
+
+<script type='text/javascript'>
+    $(function getholidays() {
+       
+        //eventvalidates();
+        var dt = new Date();
+        dt.setFullYear(new Date().getFullYear() - 18);
+        var active_dates = [];
+        $.ajax({
+            type: "GET",
+            async: false,
+            url: "/LeaveApply/GetDates",
+            dataType: "Json",
+            success: function (data) {
+                datesArray = data;
+                for (i = 0; i < datesArray.length; i++) {
+                    var result = datesArray[i].replace("-", "/");
+                    var result1 = result.replace("-", "/");
+                    var strArray = result1.split("/");
+                    var cdate = strArray[0] + "/" + parseInt(strArray[1]) + "/" + strArray[2]
+                    active_dates.push(cdate);
+
+                    if (i == datesArray.length - 1) {
+                        //loadcal(active_dates);
+                    }
+                }
+
+            }
+        });
+       
+
+        $('#Event_Date2').datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            beforeShowDay: function nonWorkingDays(date) {
+                var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
+                var week = 0 | date.getDate() / 7 //get the week
+                var dd = date.getDate();
+                var month = date.getMonth();
+                if (dd < 10) {
+                    dd = '0' + dd
+                }
+
+                if (month < 10) {
+                    month = '0' + month
+                }
+                var sunweek = date.getDay();
+                var year = date.getFullYear();
+
+                if (dd == 14 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                if (dd == 28 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                //check if it's second week or fourth week
+                else if (week == 1 || week == 3) {
+                    if (dd == 7 && day == 6 || dd == 21 && day == 6) {
+                        //check for satruday
+
+                    }
+                    else {
+                        if (day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                    }
+
+                }
+                //check for sunday
+                if (day == 0) {
+                    return {
+                        classes: 'secondClass'
+                    };
+
+                }
+                //check for holidays
+                var d = date;
+                var curr_date = d.getDate();
+                var curr_month = d.getMonth() + 1; //Months are zero based
+                if (curr_date < 10) {
+                    curr_date = '0' + curr_date
+                }
+                var curr_year = d.getFullYear();
+                var formattedDate = curr_date + "/" + curr_month + "/" + curr_year
+
+                if ($.inArray(formattedDate, active_dates) != -1) {
+                    return {
+                        classes: 'activeClass'
+                    };
+                }
+                return [true];
+            }
+        });
+
+        $('#Event_Date1').datepicker({
+            format: "dd/mm/yyyy",
+            endDate: '-18y',
+            autoclose: true,
+            todayHighlight: true,
+            beforeShowDay: function nonWorkingDays(date) {
+                var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
+                var week = 0 | date.getDate() / 7 //get the week
+                var dd = date.getDate();
+                var month = date.getMonth();
+                if (dd < 10) {
+                    dd = '0' + dd
+                }
+
+                if (month < 10) {
+                    month = '0' + month
+                }
+                var sunweek = date.getDay();
+                var year = date.getFullYear();
+
+                if (dd == 14 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                if (dd == 28 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                //check if it's second week or fourth week
+                else if (week == 1 || week == 3) {
+                    if (dd == 7 && day == 6 || dd == 21 && day == 6) {
+                        //check for satruday
+
+                    }
+                    else {
+                        if (day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                    }
+
+                }
+                //check for sunday
+                if (day == 0) {
+                    return {
+                        classes: 'secondClass'
+                    };
+
+                }
+                //check for holidays
+                var d = date;
+                var curr_date = d.getDate();
+                var curr_month = d.getMonth() + 1; //Months are zero based
+                if (curr_date < 10) {
+                    curr_date = '0' + curr_date
+                }
+                var curr_year = d.getFullYear();
+                var formattedDate = curr_date + "/" + curr_month + "/" + curr_year
+
+                if ($.inArray(formattedDate, active_dates) != -1) {
+                    return {
+                        classes: 'activeClass'
+                    };
+                }
+                return [true];
+            }
+        });
+        $('.input-group.date').datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+          //  startDate: "today",
+            beforeShowDay: function nonWorkingDays(date) {
+                var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
+                var week = 0 | date.getDate() / 7 //get the week
+                var dd = date.getDate();
+                var month = date.getMonth();
+                if (dd < 10) {
+                    dd = '0' + dd
+                }
+
+                if (month < 10) {
+                    month = '0' + month
+                }
+                var sunweek = date.getDay();
+                var year = date.getFullYear();
+
+                if (dd == 14 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                if (dd == 28 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                //check if it's second week or fourth week
+                else if (week == 1 || week == 3) {
+                    if (dd == 7 && day == 6 || dd == 21 && day == 6) {
+                        //check for satruday
+
+                    }
+                    else {
+                        if (day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                    }
+
+                }
+                //check for sunday
+                if (day == 0) {
+                    return {
+                        classes: 'secondClass'
+                    };
+
+                }
+                //check for holidays
+                var d = date;
+                var curr_date = d.getDate();
+                var curr_month = d.getMonth() + 1; //Months are zero based
+                if (curr_date < 10) {
+                    curr_date = '0' + curr_date
+                }
+                var curr_year = d.getFullYear();
+                var formattedDate = curr_date + "/" + curr_month + "/" + curr_year
+
+                if ($.inArray(formattedDate, active_dates) != -1) {
+                    return {
+                        classes: 'activeClass'
+                    };
+                }
+                return [true];
+            }
+        });
+    });
+</script>
+
+<style>
+    .activeClass {
+        background: #ffdb99;
+    }
+
+    .secondClass {
+        /*background: #FF9999;*/
+        color: red;
+    }
+</style>

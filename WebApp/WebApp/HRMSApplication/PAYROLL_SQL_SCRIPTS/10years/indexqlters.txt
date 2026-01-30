@@ -1,0 +1,84 @@
+SELECT count (1)   FROM.[dm_emp_mn_task1]
+SELECT count (1)   FROM.[dm_emp_mn_task2]
+SELECT count (1)   FROM.[dm_emp_mn_task3]
+
+SELECT i.name AS Index_Name, i.index_id, i.type_desc, s.name AS 'Schema_Name', o.name AS Table_Name
+FROM sys.indexes i
+JOIN sys.objects o on o.object_id = i.object_id
+JOIN sys.schemas s on s.schema_id = o.schema_id
+WHERE i.is_disabled = 0
+and o.name like 'pr%' and i.name is not null and o.name not like '%master' 
+
+ORDER BY
+ Table_Nam
+
+drop index 	pr_emp_general.pr_emp_general_emp_code
+drop index 	pr_emp_hfc_details.pr_emp_hfc_details_active
+drop index 	pr_emp_hfc_details.pr_emp_hfc_details_amount
+drop index 	pr_emp_hfc_details.pr_emp_hfc_details_code
+drop index 	pr_emp_hfc_details.pr_emp_hfc_details_fm
+drop index 	pr_emp_hfc_details.pr_emp_hfc_details_fy
+drop index 	pr_emp_inc_anual_stag.pr_emp_inc_anual_stag_active
+drop index 	pr_emp_inc_anual_stag.pr_emp_inc_anual_stag_authorisation
+drop index 	pr_emp_inc_anual_stag.pr_emp_inc_anual_stag_increment_date
+drop index 	pr_emp_lic_details.pr_emp_lic_details_active
+drop index 	pr_emp_lic_details.pr_emp_lic_details_amount
+drop index 	pr_emp_lic_details.pr_emp_lic_details_code
+drop index 	pr_emp_lic_details.pr_emp_lic_details_fm
+drop index 	pr_emp_lic_details.pr_emp_lic_details_fy
+drop index 	pr_emp_loans_projection.pr_emp_loans_projection_active
+drop index 	pr_emp_loans_projection.pr_emp_loans_projection_fm
+drop index 	pr_emp_loans_projection.pr_emp_loans_projection_interest_rate
+drop index 	pr_emp_tds_section_deductions.pr_emp_tds_section_deductions_active
+drop index 	pr_emp_tds_section_deductions.pr_emp_tds_section_deductions_empcode
+drop index 	pr_emp_tds_section_deductions.pr_emp_tds_section_deductions_m_id
+drop index 	pr_emp_tds_section_deductions.pr_emp_tds_section_deductions_section_type
+drop index 	pr_month_details.pr_month_details_activeON
+drop index 	pr_month_details.pr_month_details_fm
+drop index 	pr_emp_biological_field.pr_emp_biological_field_revision_of_date_change
+
+USE [TEST2]
+GO
+
+SET ANSI_PADDING ON
+GO
+
+/****** Object:  Index [idx_PPayslipPMonth]    Script Date: 17-07-2020 06:24:30 ******/
+CREATE NONCLUSTERED INDEX [idx_eid_PEncashmt] ON [dbo].[PEncashment]
+(
+	eid ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+
+CREATE NONCLUSTERED INDEX [idx_eid_PEncash] ON [dbo].[PEncash]
+(
+	eid ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+
+CREATE NONCLUSTERED INDEX [idx_eid_PPayslipPMonth] ON [dbo].[PPayslip]
+(
+	PMonth ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+
+CREATE NONCLUSTERED INDEX [idx_eid_PPayslipeid] ON [dbo].[PPayslip]
+(
+	eid ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+
+CREATE NONCLUSTERED INDEX [idx_eid_PAdhslip] ON [dbo].PAdhslip
+(
+	eid ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+
+CREATE NONCLUSTERED INDEX [idx_PayDate_PAdhslip] ON [dbo].PAdhslip
+(
+	PayDate ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GOMsg 515, Level 16, State 2, Server maven-windows\SQLEXPRESS, Procedure sp_dm_ob_share_emp_data, Line 15
+Cannot insert the value NULL into column 'emp_code', table 'pr_jul10_kavili.dbo.dm_emp_mn_task'; column does not allow nulls. INSERT fails.
+The statement has been terminated.
+

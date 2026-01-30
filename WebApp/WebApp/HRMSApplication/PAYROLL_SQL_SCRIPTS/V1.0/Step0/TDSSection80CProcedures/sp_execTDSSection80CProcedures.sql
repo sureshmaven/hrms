@@ -1,0 +1,19 @@
+CREATE procedure sp_execTDSSection80CProcedures
+as
+
+exec sp_TDSgsli
+exec sp_TDSgsliRetiring
+exec sp_TDShouse2b2c
+exec sp_TDShouse2b2cRetiring
+exec sp_TDShouseloan2a
+exec sp_TDShouseloan2aRetiring
+exec sp_TDShouseloan2d
+exec sp_TDShouseloan2dRetiring
+exec sp_TDShouseloanmain
+exec sp_TDShouseloanmainRetiring
+exec sp_TDSLIC
+exec sp_TDSLICRetiring
+exec sp_TDSPF
+exec sp_TDSPFRetiring
+exec sp_TDSVPF
+exec sp_TDSVPFRetiring

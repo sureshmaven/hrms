@@ -1,0 +1,156 @@
+﻿@{
+    ViewBag.Title = "MISonTransactions";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <h1>MIS on Transactions</h1> 
+                    <div class="col-md-8 mt_10">
+                        <div class="inner_heading">
+                            <h1>Report Options</h1>
+                            <div class="table-responsive month_name_tbl">
+                                <table id="report_name" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Existing Report</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>2019-1234</td>
+                                        </tr>
+                                        <tr>
+                                            <td>24Q</td>
+                                        </tr>
+                                        <tr>
+                                            <td>24Q-1</td>
+                                        </tr>
+                                        <tr>
+                                            <td>36 BR-SB</td>
+                                        </tr>
+                                        <tr>
+                                            <td>36 SB HO</td>
+                                        </tr>
+                                        <tr>
+                                            <td>36 STOP SAL</td>
+                                        </tr>
+                                        <tr>
+                                            <td>727 BR COD</td>
+                                        </tr>
+                                      
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="payslip_rchk">
+                            <label class="col-sm-1 control-label">Salary Mode:</label>
+                            <div class="col-sm-10">
+                                <input id="regular" type="checkbox" name="regular" value="regular" checked="checked"><label for="regular"><span></span>Regular</label>
+                                <input id="adhoc" type="checkbox" name="adhoc" value="adhoc"><label for="adhoc"><span></span>Adhoc</label>
+                                <input id="adjustment" type="checkbox" name="adjustment" value="adjustment"><label for="adjustment"><span></span>Adjustment</label>
+                                <input id="encashment" type="checkbox" name="encashment" value="encashment"><label for="encashment"><span></span>Encashment</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-md-offset-1 mt_10">
+                        <div class="inner_heading">
+                            <h1>Between Months</h1>
+                            <div class="form-group">
+                                <label class="col-sm-6 control-label">Start Month:</label>
+                                <div class="col-sm-8 input-group date">
+                                    <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-6 control-label">End Month:</label>
+                                <div class="col-sm-8
+                                     input-group date">
+                                    <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="main_heading mt_10">
+                            <div class="form-group">
+                                <label class="col-sm-8 control-label">Starting Page Number</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-8 control-label">Space Between Lines</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <label>
+                                <input id="checkbox1" type="checkbox" name="checkbox" value="1"><label for="checkbox1"><span></span>Sl No to be Printed</label>
+                            </label>
+                            <label>
+                                <input id="checkbox2" type="checkbox" name="checkbox" value="2"><label for="checkbox1"><span></span>Revaluate Formula Totals</label>
+                            </label>
+                            <label>
+                                <input id="checkbox3" type="checkbox" name="checkbox" value="3"><label for="checkbox1"><span></span>Page Skip</label>  <input id="checkbox3" type="checkbox" name="checkbox" value="3"><label for="checkbox1">
+                                    <span></span>Center Heads
+                                </label>
+                            </label>
+                        </div>
+                        <div class="inner_heading mt_10">
+                            <h1>Options</h1>
+                            <div>
+                                <input id="radio1" type="radio" name="radio" value="1" checked="checked"><label for="radio1"><span><span></span></span>All Employees</label>
+                            </div>
+                            <div>
+                                <input id="radio2" type="radio" name="radio" value="2"><label for="radio2"><span><span></span></span>Window</label>
+                            </div>
+                            <div>
+                                <input id="radio2" type="radio" name="radio" value="3"><label for="radio3"><span><span></span></span>Between IDs</label>
+                            </div>
+                        </div>
+                        <div class="inner_heading mt_10">
+                            <h1>Report Destination</h1>
+                            <div>
+                                <input id="radio4" type="radio" name="radio" value="4" checked="checked"><label for="radio4"><span><span></span></span>Screen</label>
+                            </div>
+                            <div>
+                                <input id="radio5" type="radio" name="radio" value="5" checked="checked"><label for="radio5"><span><span></span></span>Excel</label>
+                            </div>
+                            <div>
+                                <input id="radio4" type="radio" name="radio" value="4" checked="checked"><label for="radio6"><span><span></span></span>File</label>
+                            </div>
+                            <div>
+                                <input id="radio5" type="radio" name="radio" value="5" checked="checked"><label for="radio7"><span><span></span></span>Printer</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mt_10">
+                        <div class="pull-right">
+                            <button type="reset" class="btn btn-default cancel">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#report_name').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+        });
+    });
+</script>
+
+
+
+

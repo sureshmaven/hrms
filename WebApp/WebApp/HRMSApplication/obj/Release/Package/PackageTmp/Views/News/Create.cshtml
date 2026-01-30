@@ -1,0 +1,282 @@
+﻿@model Entities.News
+
+@{
+    var rolepages = TempData["RolePages"].ToString();
+    ViewBag.RolePages = TempData["RolePages"];
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+
+        <div class="panel-heading">
+            @{
+                <ul class="nav nav-tabs">
+                    @if (rolepages.Contains("MABAN"))
+                    {
+                        <li><a href=@Url.Action("Create", "Banks")>Bank</a></li>}
+                    @if (rolepages.Contains("MABRA"))
+                    {
+                        <li><a href=@Url.Action("Create", "Branches")>Branch</a></li>}
+
+                    @if (rolepages.Contains("MADEP"))
+                    {
+                        <li><a href=@Url.Action("Create", "Departments")>Department</a></li>}
+                    @if (rolepages.Contains("MADES"))
+                    {
+                        <li><a href=@Url.Action("Create", "Designations")>Designation</a></li>}
+                    @if (rolepages.Contains("MAROL"))
+                    {
+                        <li><a href=@Url.Action("Create", "Roles")>Role</a></li>}
+                    @if (rolepages.Contains("MALTY"))
+                    {
+                        <li><a href=@Url.Action("Create", "LeaveTypes")>LeaveType</a></li>}
+                    @if (rolepages.Contains("MAHLI"))
+                    {
+                        <li><a href=@Url.Action("Create", "HolidayLists")>HolidayList</a></li>}
+                    @if (rolepages.Contains("MACDL"))
+                    {
+                        <li><a href=@Url.Action("CreditDebitleaves", "MyLeaves")>Credit / Debit leaves</a></li>}
+                    @if (rolepages.Contains("MABCY"))
+                    {
+                        <li><a href=@Url.Action("Createbranchcount", "Branches")>Branch Category</a></li>}
+                    @if (rolepages.Contains("MAODY"))
+                    {
+                        <li><a href=@Url.Action("OtherdutyCreate", "LeaveTypes")>Other Duty</a></li>}
+                    @if (rolepages.Contains("MABPD"))
+                    {
+                        <li><a href=@Url.Action("Create", "BlockPeriod")>BlockPeriod</a></li>}
+                    @if (rolepages.Contains("MANES"))
+                    {
+                        <li class="active"><a href=@Url.Action("Create", "News")>News</a></li>}
+                </ul>
+            }
+        </div>
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="bank">
+                    <div class="page_st">
+                        <div class="page">
+                            <div class="col-md-12 col-sm-12">
+                                
+                                    <div>
+                                        @using (Html.BeginForm("Create", "News", FormMethod.Post))
+                                             {
+                                    @Html.AntiForgeryToken()
+                                            <div class="main_heading">
+                                                <h1>News Creation</h1>
+                                                <div class="col-sm-4">
+                                                    <div class="form-horizontal">
+                                                        <label class="col-sm-4 control-label">Subject:</label>
+                                                        <div class="col-sm-8">
+                                                            @Html.TextAreaFor(model => model.Subject, new { @class = "form-control", @id = "subject" })
+                                                            @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-4">
+                                                    <div class="form-horizontal">
+                                                        <label class="col-sm-4 control-label">Content:<span class="mandatory">*</span></label>
+                                                        <div class="col-sm-8">
+                                                            @Html.TextAreaFor(model => model.Content, new { @class = "form-control", @id = "content" })
+                                                            @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <div class="pull-left">
+                                                        <input type="reset" value="Cancel" class="btn btn-default" />
+                                                        <input type="submit" value="Create" class="btn btn-primary" onclick="return news();" />
+                                                    </div>
+                                                </div>
+                                                </div>
+
+                                                <div class="clearfix"></div>
+                                                <div class="main_heading">
+                                                    <h1>News List</h1>
+                                                    <div class="col-md-12">
+                                                        <div class="table-responsive">
+                                                            <div id="grid"></div>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+
+
+                                                    }
+
+                                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+        @{
+        var message = TempData["AlertMessage"] ?? string.Empty;
+        }
+<script type="text/javascript">
+var message = '@message';
+if (message) alert(message);
+</script>
+
+            <script type="text/javascript">
+
+                $(document).ready(function () {
+                    // prepare the data for BlockPeriodView
+                    var theme = otherTheme;
+                    // prepare the data
+                    var url = "../News/NotesView";
+                    var source =
+                        {
+                            type: "Get",
+                            datatype: "json",
+                            datafields: [
+                                { name: 'Id', type: 'int' },
+                                { name: 'Content', type: 'string' },
+                                { name: 'Subject', type: 'string' },
+                                { name: 'Notes', type: 'string' },
+                                { name: 'UpdatedBy', type: 'string' },
+                                { name: 'UpdatedDate', type: 'date' },
+                             
+
+                            ],
+                            async: false,
+                            url: url,
+                            data: {
+                                featureClass: "P",
+                                style: "full",
+                                username: "jqwidgets"
+                            }
+                        };
+                    var dataAdapter = new $.jqx.dataAdapter(source,
+                        {
+                            formatData: function (data) {
+                                data.ProductName = $("#searchField").val();
+                                return data;
+                            }
+                        }
+                    );
+                    // initialize jqxGrid
+                    var editrowindex = -1;
+                    var delrowindex = -1;
+                    $("#grid").jqxGrid(
+                        {
+                            width: '99.5%',
+                            source: dataAdapter,
+                            theme: otherTheme,// for theme refernce go to Layout.cshtml
+                            autoheight: true,
+                            sortable: true,
+                            pageable: true,
+                            columnsResize: true,
+                            altRows: true,
+                            filterable: true,
+                            autoshowfiltericon: true,
+
+                            ready: function () {
+                                $("#grid").jqxGrid('localizestrings', localizationObject);
+                            },
+                            updatefilterconditions: function (type, defaultconditions) {
+                                switch (type) {
+                                    case 'stringfilter':
+                                        return stringcomparisonoperators;
+                                    case 'numericfilter':
+                                        return numericcomparisonoperators;
+                                    case 'datefilter':
+                                        return datecomparisonoperators;
+                                    case 'booleanfilter':
+                                        return booleancomparisonoperators;
+                                }
+                            },
+                            updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                                filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                                var index1 = 0;
+                                var index2 = 0;
+                                if (columnfilter != null) {
+                                    var filter1 = columnfilter.getfilterat(0);
+                                    var filter2 = columnfilter.getfilterat(1);
+                                    if (filter1) {
+                                        index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                                        var value1 = filter1.filtervalue;
+                                        filterinputfield1.val(value1);
+                                    }
+                                    if (filter2) {
+                                        index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                                        var value2 = filter2.filtervalue;
+                                        filterinputfield2.val(value2);
+                                    }
+                                }
+                                filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                                filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                            },
+                            columns: [
+                                {
+                                    text: 'SNO', sortable: false, filterable: false, editable: false, align: "center",
+                                    groupable: false, draggable: false, resizable: false,
+                                    datafield: '', columntype: 'number', width: 80,
+                                    cellsrenderer: function (row, column, value) {
+                                        return "<div style='margin:4px; text-align:center;'>" + (value + 1) + "</div>";
+                                    }
+                                },
+                               
+                                { text: "Subject", datafield: "Subject", editable: false, width: 300 },
+                                { text: "Content", datafield: "Content", editable: false, width: 300 },
+                                { text: "Date", datafield: "UpdatedDate", editable: false,cellsformat: "dd/MM/yyyy" , width: 270 },
+                                {
+                                    text: 'Edit', datafield: 'Edit', sortable: false, filterable: false, columngroup: 'Actions', columntype: 'button', width: 60, cellsrenderer: function () {
+
+                                        return "Edit";
+                                    }, buttonclick: function (row) {
+                                        editrowindex = row;
+                                        var paginginformation = $('#grid').jqxGrid('getpaginginformation');
+                                        var id = $("#grid").jqxGrid('getcellvalue', row, "Id");
+                                        window.location = '/News/Edit/?id=' + id + '&page=' + paginginformation.pagenum;
+                                    }
+                                },
+                                {
+                                    text: 'Delete', datafield: 'Delete', columngroup: 'Actions', sortable: false, filterable: false, columntype: 'button', name: 'delete', width: 60, cellsrenderer: function () {
+                                        return "Delete";
+                                    },
+                                    buttonclick: function (row) {
+                                        var res = confirm("Do You Want to Delete");
+                                        if (res) {
+                                            delrowindex = row;
+                                            var id = $("#grid").jqxGrid('getcellvalue', row, "Id");
+
+                                            var paginginformation = $('#grid').jqxGrid('getpaginginformation');
+                                            window.location = '/News/Delete/?id=' + id + '&page=' + paginginformation.pagenum;
+                                        }
+                                        else
+                                            return res;
+                                    }
+                                }
+                            ],
+                            columngroups:
+                            [
+                                { text: 'Action', align: 'center', name: 'Actions', width: 120 },
+                            ],
+                        });
+                });
+
+            </script>
+
+        <script>
+                function news()
+                {
+                    var content = $("#content").val();
+                    if (content == "")
+                    {
+                       // window.alert("Please Enter Content.");
+                        showGlobalModal("I#Required#Please Enter Content.");
+                        $("#content").focus();
+                        return false;
+                    }
+                }
+       </script>
+        <script>
+                document.getElementById("a2").className = "active";
+
+        </script>

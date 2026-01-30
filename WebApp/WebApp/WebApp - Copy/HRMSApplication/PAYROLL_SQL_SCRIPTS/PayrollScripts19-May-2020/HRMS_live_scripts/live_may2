@@ -1,0 +1,67 @@
+Dear Sir,
+
+--It is to inform you that Smt R Ramadevi Mgr Scl-1, Emp code 293, has taken voluntary retirement  from the services of the bank on 03.04.2020 So please reflect the same in the retirement/resignation in HRMS portal.
+
+--select exit_type,retirementdate from employees where empid=293;
+update employees set retirementdate='2020-04-03 00:00:00.000' where empid=293;
+
+
+
+------------To Apply Leave
+
+--It is to inform you that Smt mary jeevitha gopu availed maternity leave from 31.10.2019 to 30.04.2020  her date of joining is 02.05.2020(01.05.2020) being a public holiday. But she didn't report duties on said date and continued her leave till 08.05.2020.
+--As she didn't report duties  02.05.2020, 01.05.2020 is also included in the leave period. Hence apply privilege leave for the said employee from 01.05.2020  to 08.05.2020(8days).
+
+
+declare @Empid int;
+declare @Leavetypeid int;
+declare @StartDate Date;
+declare @EndDate Date;
+declare @UpdatedBy_EmployeeId int;
+declare @Status varchar(10);
+declare @LeaveDays int;
+declare @TotalDays int;
+declare @MaternityType varchar(10);
+declare @pre_leave_balance int;
+
+
+set @Empid=721;
+set @Leavetypeid=3;
+set @StartDate='2020-05-01';
+set @EndDate='2020-05-08';
+set @UpdatedBy_EmployeeId=123456;
+set @Status='Pending';
+set @LeaveDays=8;
+set @TotalDays=8;
+set @MaternityType='';
+set @pre_leave_balance=((select leavebalance from EmpLeaveBalance where empid =
+(select id from employees where empid=721) and leavetypeid=3 and year=2020));
+
+
+INSERT INTO [dbo].[Leaves]([EmpId],[ControllingAuthority],[SanctioningAuthority],[LeaveType],[StartDate],[EndDate],[Subject],[Reason],
+[UpdatedBy],[UpdatedDate],[Status],[LeaveDays],[TotalDays],[LeaveTimeStamp],[LeavesYear],[Stage],[CancelReason],[MaternityType],
+[BranchId],[DepartmentId],[DesignationId],[leave_balance]) 
+VALUES((select id from employees where empid=@empid),
+(select ControllingAuthority from employees where empid=@empid),
+(select SanctioningAuthority from employees where empid=@empid),
+@Leavetypeid,@StartDate,@EndDate,'Leave Applied','Leave Applied Manually',
+@UpdatedBy_EmployeeId,GETDATE(),@Status,@LeaveDays,@TotalDays,GETDATE(),2020,'','',
+@MaternityType,(select Branch from employees where empid=@empid),
+(select Department from employees where empid=@empid),
+(select CurrentDesignation from employees where empid=@empid),@pre_leave_balance);
+
+
+------- To update Leavebalances
+
+declare @Empid int;
+declare @LeaveTypeId int;
+declare @LeaveBalance int;
+
+set @Empid=721;
+set @LeaveTypeId=3;
+set @Leavebalance=((select leavebalance from EmpLeaveBalance where empid =
+(select id from employees where empid=721) and leavetypeid=3 and year=2020)-8);
+
+update EmpLeaveBalance set LeaveBalance=@Leavebalance where LeaveTypeId=@LeaveTypeId and empid=
+(select id from employees where empid=@Empid) and year=2020;
+

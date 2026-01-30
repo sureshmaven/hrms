@@ -1,0 +1,181 @@
+/* pr_deduction_field_master */
+
+insert into pr_deduction_field_master values(150,'UCO HOUSING LOAN PRINCIPLE','per_ded',1,'','');
+insert into pr_deduction_field_master values(151,'UCO HOUSING LOAN INTEREST','per_ded',1,'','');
+insert into pr_deduction_field_master values(152,'PNB HOUSING LOAN PRINCIPLE','per_ded',1,'','');
+insert into pr_deduction_field_master values(153,'PNB HOUSING LOAN INTEREST','per_ded',1,'','');
+insert into pr_deduction_field_master values(154,'HLOAN INT InHouse','per_ded',1,'','');
+insert into pr_deduction_field_master values(155,'HDFC HOUSING LOAN PRINCIPLE','per_ded',1,'','');
+insert into pr_deduction_field_master values(156,'HDFC HOUSING LOAN INTEREST','per_ded',1,'','');
+insert into pr_deduction_field_master values(157,'HelpAge India Donation','per_ded',1,'','');
+insert into pr_deduction_field_master values(158,'SBI HOUSING LOAN PRINCIPLE','per_ded',1,'','');
+insert into pr_deduction_field_master values(159,'SBI HOUSING LOAN INTEREST','per_ded',1,'','');
+insert into pr_deduction_field_master values(160,'ICICI LOMBARD MEDICAL INSURANCE PREMIUM','per_ded',1,'','');
+insert into pr_deduction_field_master values(161,'LIP','per_ded',1,'','');
+insert into pr_deduction_field_master values(162,'HFC','per_ded',1,'','');
+insert into pr_deduction_field_master values(163,'HFC INT','per_ded',1,'','');
+insert into pr_deduction_field_master values(164,'LIC HOUSING LOAN PRINCIPLE','per_ded',1,'','');
+insert into pr_deduction_field_master values(165,'LIC HOUSING LOAN INTEREST','per_ded',1,'','');
+insert into pr_deduction_field_master values(166,'ICICI HOUSING LOAN PRINCIPLE','per_ded',1,'','');
+insert into pr_deduction_field_master values(167,'ICICI HOUSING LOAN INTEREST','per_ded',1,'','');
+insert into pr_deduction_field_master values(168,'RELIANCE MUTUAL FUND','per_ded',1,'','');
+insert into pr_deduction_field_master values(169,'DSP MUTUAL FUND','per_ded',1,'','');
+insert into pr_deduction_field_master values(170,'MAX CURE ANNUAL HEALTH CHECKUP','per_ded',1,'','');
+insert into pr_deduction_field_master values(171,'HDFC LIP','per_ded',1,'','');
+insert into pr_deduction_field_master values(172,'NPS','per_ded',1,'','');
+insert into pr_deduction_field_master values(173,'LIC HFL HOUSING LOAN PRINCIPLE','per_ded',1,'','');
+insert into pr_deduction_field_master values(174,'LIC HFL HOUSING LOAN INTEREST','per_ded',1,'','');
+insert into pr_deduction_field_master values(175,'LIC HFL PRINCIPLE','per_ded',1,'','');
+insert into pr_deduction_field_master values(176,'LIC HFL INTEREST','per_ded',1,'','');
+insert into pr_deduction_field_master values(177,'SYNDICATE BANK HOUSING LOAN PRINCIPLE','per_ded',1,'','');
+insert into pr_deduction_field_master values(178,'SYNDICATE BANK HOUSING LOAN INTEREST','per_ded',1,'','');
+insert into pr_deduction_field_master values(179,'CORPORATION EDUCATION LOAN INTEREST','per_ded',1,'','');
+insert into pr_deduction_field_master values(180,'PNB EDUCATION LOAN INTEREST','per_ded',1,'','');
+insert into pr_deduction_field_master values(181,'TUTION FEE','per_ded',1,'','');
+insert into pr_deduction_field_master values(182,'PHYSICAL DISABILITY','per_ded',1,'','');
+insert into pr_deduction_field_master values(183,'APCOB HOUSING LOAN PRINCIPLE','per_ded',1,'','');
+insert into pr_deduction_field_master values(184,'APCOB HOUSING LOAN INTEREST','per_ded',1,'','');
+insert into pr_deduction_field_master values(185,'JAMIA NIZAMIA DONATION','per_ded',1,'','');
+
+
+/* TEMP Table   */
+
+
+/* Temp table creation  */
+create table temp(emp_code int,name varchar(150),section varchar(20),amount float(20));				
+insert into temp values(176,'TAX SAVER FD','80C',110000);
+insert into temp values(266,'UCO HOUSING LOAN PRINCIPLE','80C',121062);
+insert into temp values(266,'UCO HOUSING LOAN INTEREST','24(b)',319729);
+insert into temp values(271,'PNB HOUSING LOAN PRINCIPLE','80C',19464);
+insert into temp values(271,'PNB HOUSING LOAN INTEREST','24(b)',209201);
+insert into temp values(279,'HLOAN INT InHouse','24(b)',348);
+insert into temp values(288,'HLOAN INT InHouse','24(b)',24602);
+insert into temp values(293,'HLOAN INT InHouse','24(b)',9178);
+insert into temp values(303,'HLOAN INT InHouse','24(b)',413);
+insert into temp values(340,'HDFC HOUSING LOAN PRINCIPLE','80C',63576);
+insert into temp values(340,'HDFC HOUSING LOAN INTEREST','24(b)',811528);
+insert into temp values(356,'HelpAge India Donation','80G',3600);
+insert into temp values(359,'HLOAN INT InHouse','24(b)',21237);
+insert into temp values(361,'HLOAN INT InHouse','24(b)',2393);
+insert into temp values(365,'SBI HOUSING LOAN PRINCIPLE','80C',186274);
+insert into temp values(365,'SBI HOUSING LOAN INTEREST','24(b)',293726);
+insert into temp values(371,'HLOAN INT InHouse','24(b)',12210);
+insert into temp values(373,'HLOAN INT InHouse','24(b)',41104);
+insert into temp values(377,'HLOAN INT InHouse','24(b)',4442);
+insert into temp values(377,'ICICI LOMBARD MEDICAL INSURANCE PREMIUM','80D',15209);
+insert into temp values(421,'HLOAN INT InHouse','24(b)',24058);
+insert into temp values(425,'HLOAN INT InHouse','24(b)',20795);
+insert into temp values(427,'HLOAN INT InHouse','24(b)',12059);
+insert into temp values(428,'HLOAN INT InHouse','24(b)',29071);
+insert into temp values(429,'HLOAN INT InHouse','24(b)',126599);
+insert into temp values(432,'LIP','80C',1756);
+insert into temp values(438,'HLOAN INT InHouse','24(b)',435);
+insert into temp values(440,'HLOAN INT InHouse','24(b)',45178);
+insert into temp values(443,'HLOAN INT InHouse','24(b)',24513);
+insert into temp values(444,'HLOAN INT InHouse','24(b)',28286);
+insert into temp values(445,'HLOAN INT InHouse','24(b)',22329);
+insert into temp values(452,'HLOAN INT InHouse','24(b)',47175);
+insert into temp values(460,'HLOAN INT InHouse','24(b)',104012);
+insert into temp values(474,'HLOAN INT InHouse','24(b)',27024);
+insert into temp values(480,'HFC','80C',91678);
+insert into temp values(480,'HFC INT','24(b)',118655);
+insert into temp values(480,'HLOAN INT InHouse','24(b)',120717);
+insert into temp values(484,'LIP','80C',10113);
+insert into temp values(493,'HLOAN INT InHouse','24(b)',38215);
+insert into temp values(505,'HLOAN INT InHouse','24(b)',111760);
+insert into temp values(507,'HLOAN INT InHouse','24(b)',202648);
+insert into temp values(517,'HLOAN INT InHouse','24(b)',115537);
+insert into temp values(518,'HLOAN INT InHouse','24(b)',34559);
+insert into temp values(526,'HLOAN INT InHouse','24(b)',82864);
+insert into temp values(528,'HLOAN INT InHouse','24(b)',139691);
+insert into temp values(530,'HLOAN INT InHouse','24(b)',88987);
+insert into temp values(535,'HLOAN INT InHouse','24(b)',71627);
+insert into temp values(539,'HLOAN INT InHouse','24(b)',109306);
+insert into temp values(544,'HLOAN INT InHouse','24(b)',78423);
+insert into temp values(548,'LIC HOUSING LOAN PRINCIPLE','80C',52026);
+insert into temp values(548,'LIC HOUSING LOAN INTEREST','24(b)',473189);
+insert into temp values(556,'LIP','80C',38460);
+insert into temp values(557,'ICICI HOUSING LOAN PRINCIPLE','80C',64463);
+insert into temp values(557,'ICICI HOUSING LOAN INTEREST','24(b)',151633);
+insert into temp values(562,'HLOAN INT InHouse','24(b)',70356);
+insert into temp values(565,'HLOAN INT InHouse','24(b)',253345);
+insert into temp values(566,'LIP','80C',5962);
+insert into temp values(570,'HLOAN INT InHouse','24(b)',289835);
+insert into temp values(574,'HLOAN INT InHouse','24(b)',266430);
+insert into temp values(586,'RELIANCE MUTUAL FUND','80C',26500);
+insert into temp values(586,'DSP MUTUAL FUND','80C',28000);
+insert into temp values(721,'HLOAN INT InHouse','24(b)',166082);
+insert into temp values(777,'HLOAN INT InHouse','24(b)',283804);
+insert into temp values(785,'MAX CURE ANNUAL HEALTH CHECKUP','80D',2699);
+insert into temp values(785,'HDFC LIP','80C',13266);
+insert into temp values(785,'HLOAN INT InHouse','24(b)',290299);
+insert into temp values(788,'NPS','80CCC',3000);
+insert into temp values(788,'HLOAN INT InHouse','24(b)',151824);
+insert into temp values(789,'HDFC HOUSING LOAN PRINCIPLE','80C',92460);
+insert into temp values(789,'HDFC HOUSING LOAN INTEREST','24(b)',434088);
+insert into temp values(793,'HLOAN INT InHouse','24(b)',294614);
+insert into temp values(801,'HDFC LIP','80C',31623);
+insert into temp values(817,'ICICI HOUSING LOAN PRINCIPLE','80C',210228);
+insert into temp values(817,'ICICI HOUSING LOAN INTEREST','24(b)',303852);
+insert into temp values(832,'HLOAN INT InHouse','24(b)',79518);
+insert into temp values(835,'HLOAN INT InHouse','24(b)',68256);
+insert into temp values(837,'HLOAN INT InHouse','24(b)',277185);
+insert into temp values(845,'LIC HFL HOUSING LOAN PRINCIPLE','80C',32907);
+insert into temp values(845,'LIC HFL HOUSING LOAN INTEREST','24(b)',334616);
+insert into temp values(853,'HLOAN INT InHouse','24(b)',186584);
+insert into temp values(867,'LIP','80C',34843);
+insert into temp values(915,'LIP','80C',99900);
+insert into temp values(922,'ICICI HOUSING LOAN INTEREST','24(b)',85123);
+insert into temp values(922,'ICICI HOUSING LOAN PRINCIPLE','80C',97037);
+insert into temp values(935,'HLOAN INT InHouse','24(b)',286554);
+insert into temp values(954,'LIC HFL PRINCIPLE','80C',90391);
+insert into temp values(954,'LIC HFL INTEREST','24(b)',345544);
+insert into temp values(963,'LIP','80C',11745);
+insert into temp values(983,'LIP','80C',5712);
+insert into temp values(989,'SYNDICATE BANK HOUSING LOAN PRINCIPLE','80C',35089);
+insert into temp values(989,'SYNDICATE BANK HOUSING LOAN INTEREST','24(b)',119364);
+insert into temp values(5150,'HFC INT','24(b)',139053);
+insert into temp values(5150,'HFC','80C',232680);
+insert into temp values(5161,'HFC INT','24(b)',11514);
+insert into temp values(5161,'HFC','80C',246686);
+insert into temp values(5660,'HLOAN INT InHouse','24(b)',51146);
+insert into temp values(5768,'HLOAN INT InHouse','24(b)',17077);
+insert into temp values(5770,'PNB HOUSING LOAN INTEREST','24(b)',29524);
+insert into temp values(5770,'CORPORATION EDUCATION LOAN INTEREST','80E',49183);
+insert into temp values(5770,'PNB EDUCATION LOAN INTEREST','80E',132250);
+insert into temp values(5770,'PNB HOUSING LOAN PRINCIPLE','80C',159676);
+insert into temp values(5794,'HLOAN INT InHouse','24(b)',18978);
+insert into temp values(5802,'LIC HFL HOUSING LOAN PRINCIPLE','80C',83780);
+insert into temp values(5802,'LIC HFL HOUSING LOAN INTEREST','24(b)',156298);
+insert into temp values(5824,'TUTION FEE','80C',24000);
+insert into temp values(5866,'HLOAN INT InHouse','24(b)',122324);
+insert into temp values(5869,'PHYSICAL DISABILITY','80DD',75000);
+insert into temp values(5882,'LIC HFL HOUSING LOAN PRINCIPLE','80C',58828);
+insert into temp values(5882,'LIC HFL HOUSING LOAN INTEREST','24(b)',64747);
+insert into temp values(5882,'APCOB HOUSING LOAN PRINCIPLE','80C',73417);
+insert into temp values(5882,'APCOB HOUSING LOAN INTEREST','24(b)',194279);
+insert into temp values(5888,'HLOAN INT InHouse','24(b)',17463);
+insert into temp values(5908,'HLOAN INT InHouse','24(b)',10123);
+insert into temp values(5909,'HLOAN INT InHouse','24(b)',106049);
+insert into temp values(6177,'JAMIA NIZAMIA DONATION','80G',10000);
+insert into temp values(6191,'HFC','80C',50645);
+insert into temp values(6191,'HFC INT','24(b)',159631);
+insert into temp values(6191,'HLOAN INT InHouse','24(b)',159800);
+insert into temp values(6193,'HLOAN INT InHouse','24(b)',100051);
+insert into temp values(6194,'HLOAN INT InHouse','24(b)',80176);
+insert into temp values(6199,'HLOAN INT InHouse','24(b)',14470);
+insert into temp values(6302,'LIC HFL PRINCIPLE','80C',350259);
+insert into temp values(6302,'LIC HFL INTEREST','24(b)',405426);
+insert into temp values(6339,'LIP','80C',6256);
+
+--Query to Run
+declare @StartValue int;
+set @StartValue=(select last_num from new_num where table_name = 'pr_emp_perdeductions');
+
+insert into pr_emp_perdeductions(id,fy,fm,emp_id,emp_code,m_id,m_type,amount,section,trans_id) 
+select @StartValue+ROW_NUMBER() OVER(ORDER BY emp_code) AS Row,
+year(getdate()),convert(varchar, getdate(), 23),e.id,emp_code,m.id,m.type,amount,t.name,1000 from temp t join Employees e on e.EmpId=t.emp_code join  pr_deduction_field_master m 
+ on t.name=m.name where m.type='per_ded'
+ declare @lastnum int;
+ set @lastnum = (select top 1 id from pr_emp_perdeductions order by id desc)
+ update new_num set last_num=@lastnum where table_name='pr_emp_perdeductions'

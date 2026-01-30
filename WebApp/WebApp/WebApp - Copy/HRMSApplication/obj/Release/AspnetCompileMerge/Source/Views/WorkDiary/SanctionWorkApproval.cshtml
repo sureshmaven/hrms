@@ -1,0 +1,782 @@
+﻿@model Entities.WorkDiary
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var rolepages = TempData["RolePages"].ToString();
+    ViewBag.RolePages = TempData["RolePages"];
+}
+
+@{
+    var message = TempData["cancel"] ?? string.Empty;
+}
+@{
+    var message1 = TempData["Forward"] ?? string.Empty;
+}
+@{
+    var message2 = TempData["Approve"] ?? string.Empty;
+}
+@{
+    var message3 = TempData["Denied"] ?? string.Empty;
+}
+
+
+<script type="text/javascript">
+    var message = '@message';
+    if (message) alert(message);
+</script>
+<script type="text/javascript">
+    var message1 = '@message1';
+    if (message1) alert(message1);
+</script>
+<script type="text/javascript">
+    var message2 = '@message2';
+    if (message2) alert(message2);
+</script>
+
+<script type="text/javascript">
+    var message3 = '@message3';
+    if (message3) alert(message3);
+</script>
+
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-heading">
+            @{
+                <ul class="nav nav-tabs">
+                    @if (rolepages.Contains("WDIAR"))
+                    {
+                        <li><a href=@Url.Action("Index", "WorkDiary")>Work Dairy Apply</a></li>}
+                    @if (rolepages.Contains("WDAPL"))
+                    {
+                        <li><a href=@Url.Action("WorkApproval", "WorkDiary")>Work Dairy Approvals</a></li>}
+
+                    @if (rolepages.Contains("WDSHY"))
+                    {
+                        <li class="active"><a href=@Url.Action("SanctionWorkApproval", "WorkDiary")>Sanctioning History</a></li>}
+                </ul>
+            }
+
+        </div>
+    </div>
+</div>
+<div class="panel-body">
+    <div class="tab-content">
+        <div class="tab-pane fade  in active" id="tab2primary">
+            <div class="page_st">
+                <div class="page">
+                    <div class="col-md-12">
+                        <div class="main_heading">
+                            <h1>Work Diary Approvals List</h1>
+                            <div class="col-md-12">
+                                <div class="form-horizontal">
+                                    <div class="col-md-3 col-sm-3 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label label_left">Emp Code:</label>
+                                            <div class="input-group  col-sm-7">
+                                                <input type="text" id="EmpId" class="form-control" maxlength="10" onkeypress="return isNumber(event)">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-3 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label label_left">Work Date From:<span class="mandatory">*</span></label>
+                                            <div class="input-group date col-sm-6">
+                                                <input type="text" id="Wdate" class="form-control" onkeypress="return nokeyword(event)"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-3 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label label_left">Work Date To:<span class="mandatory">*</span></label>
+                                            <div class="input-group date col-sm-6">
+                                                <input type="text" id="tdate" class="form-control" onkeypress="return nokeyword(event)"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-1 col-sm-1 col-xs-12">
+                                        <button type="button" id="btnApply" class="btn btn-primary btn-sm pull-right">Search</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-12">
+                                    <div class="branch_search">
+
+                                        <div class="form-horizontal">
+
+                                            <div id="myModal" class="modal" style="z-index: 9999999999;">
+
+                                                <!-- Modal content -->
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="submit" id="btnclosepop" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                        <h4 class="modal-title">WorkDiary Approval</h4>
+                                                    </div>
+                                                    <table id="myTextArea" style="margin: 25px auto;width: 92%;"></table>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" id="btnPreviouspopup" class="btn btn-default leaveprev">Previous</button>
+                                                        <button style="margin: 0 6px 0 6px;" type="submit" id="btnApprovalspopup" class="btn btn-primary leaveapprove">Approve</button>
+                                                        <button type="submit" id="btnNextpopup" class="btn btn-default leavenext">Next</button>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div id="gridControlling"></div>
+                                            <div style='margin-top: 20px;'>
+                                                <div style='float: left;'>
+                                                    <input type="button" class="btn btn-info jqx-rc-all jqx-button jqx-widget jqx-fill-state-normal" value="Export To Excel" id='export' onclick='window.location = "@Url.Action("ExportGridToExcelSanctionWD", "WorkDiary")";' />
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<div id="pagenation" style="visibility:hidden"></div>
+<input id="currentpos" type="hidden" />
+
+<script>
+    // Get the modal
+    var modal = document.getElementById('myModal');
+
+</script>
+<input id="currentControlling" value="@ViewBag.Controllings" type="hidden" />
+<input id="currentSanctioning" value="@ViewBag.Sanctioning" type="hidden" />
+
+<style>
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+    .modal-content {
+        margin: auto;
+        padding: 0px;
+        border: 1px solid rgb(136, 136, 136);
+        width: 50%;
+        z-index: 99999999999;
+        left: 25%;
+        background: rgb(219, 238, 247);
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+    .modal-header {
+        min-height: 16.42857143px;
+        padding: 13px;
+        border-bottom: 1px solid rgb(221, 221, 221);
+        background: rgba(60, 141, 188, 0.4);
+    }
+
+        .modal-header h4 {
+            font-size: 18px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgb(255, 255, 255);
+        }
+
+    #myTextArea td {
+        border: 1px solid #c2c2c2;
+        padding: 3px 5px 3px 5px;
+    }
+
+    .modal-header .close {
+        margin-top: -2px;
+        color: rgb(0, 0, 0);
+        opacity: 4;
+        /* background: rgb(0, 0, 0); */
+    }
+</style>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(function () {
+
+            $('.input-group.date').datepicker({
+                calendarWeeks: true,
+                todayHighlight: true,
+                autoclose: true,
+                daysOfWeekDisabled: [0, 6]
+            });
+        });
+
+        $("#gridControlling").jqxGrid('selectrow', 0);
+        $("#gridControlling").jqxGrid('selectrow', 1);
+        // prepare the data for BankView
+        var theme = otherTheme;
+        // prepare the data
+        var url = "../WorkDiary/SanctionWorkdairyApprovalView";
+        var source =
+        {
+            type: "Get",
+            datatype: "json",
+            datafields: [
+                { name: 'Id', type: 'int' },
+                { name: 'EmpId', type: 'int' },
+                { name: 'ShortName', type: 'string' },
+                { name: 'BrDepot', type: 'string' },
+                { name: 'Designation', type: 'string' },
+                { name: 'UpdatedDate', type: 'date' },
+                { name: 'WDDate', type: 'date' },
+                { name: 'Name', type: 'string' },
+                { name: 'Status', type: 'string' },
+                { name: 'Desc', type: 'string' },
+            ],
+            async: false,
+            url: url,
+            data: {
+                featureClass: "P",
+                style: "full",
+                username: "jqwidgets"
+            }
+        };
+        var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties, rowdata) {
+            if (value == "Pending") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #FFA500;">' + value + '</span>';
+            }
+            else if (value == "Forwarded") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #33b5e5;">' + value + '</span>';
+            }
+            else if (value == "Approved") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #00C851;">' + value + '</span>';
+            }
+            else if (value == "Denied") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #8B008B;">' + value + '</span>';
+            }
+            else {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #ff4444;">' + value + '</span>';
+            }
+        }
+        var dataAdapter = new $.jqx.dataAdapter(source,
+            {
+                formatData: function (data) {
+                    data.ProductName = $("#searchField").val();
+                    return data;
+                }
+            }
+        );
+        // initialize jqxGrid
+        var editrowindex = -1;
+        var delrowindex = -1;
+        $("#gridControlling").jqxGrid(
+            {
+                width: '100%',
+                source: dataAdapter,
+                theme: otherTheme,// for theme refernce go to Layout.cshtml
+                autoheight: true,
+                sortable: true,
+                pageable: true,
+                columnsResize: true,
+                altRows: true,
+                filterable: true,
+                autoshowfiltericon: true,
+                editable: true,
+                selectionmode: 'multiplerows',
+                cellhover: function (element, pageX, pageY, record) {
+                    var index = $("#gridControlling").jqxGrid('hoveredrow');
+                    var data = $('#gridControlling').jqxGrid('getrowdata', index);
+                    var e_status = data.e_status; // get hover row data
+                    var employeeno = data.EmpId;
+                    var employeename = data.EmployeeName;
+                    var ldesignation = data.Designation;
+                    var lDeptbranch = data.BrDepot;
+                    var lappliedDate = data.AppliedDate;
+                    var lapplied = lappliedDate.getDate() + '/' + (lappliedDate.getMonth() + 1) + '/' + lappliedDate.getFullYear();
+                    var lStartDate = data.StartDate;
+                    var lstartdate = lStartDate.getDate() + '/' + (lStartDate.getMonth() + 1) + '/' + lStartDate.getFullYear();
+                    var lEndDate = data.EndDate;
+                    var lenddate = lEndDate.getDate() + '/' + (lEndDate.getMonth() + 1) + '/' + lEndDate.getFullYear();
+                    var lLeaveDays = data.LeaveDays;
+                    var lCode = data.Code;
+                    var lReason = data.Reason;
+                    var lstatus = data.Status;
+                    $("#gridControlling").jqxTooltip({
+                        content: '<table style="width:100%; text-align: left;"><tr><th>Employee Code :</th><td>' + employeeno + '</td></tr><tr><th>Employee Name :</th><td>' + employeename + '</td></tr><tr><th>Designation :</th><td>' + ldesignation + '</td></tr><tr><th>AppliedDate :</th><td>' + lapplied + '</td></tr><tr><th>Department/Branch :</th><td>' + lDeptbranch + '</td></tr><tr><th>Start Date :</th><td>' + lstartdate + '</td></tr><tr><th>End Date :</th><td>' + lenddate + '</td></tr><tr><th>#Leaves  :</th><td>' + lLeaveDays + '</td></tr><tr><th>LeaveType  :</th><td>' + lCode + '</td></tr><tr><th>Reason  :</th><td>' + lReason + '</td></tr><tr><th>Status  :</th><td>' + lstatus + '</td></tr></table>'
+
+                    });
+                    $("#gridControlling").jqxTooltip('open', pageX + 15, pageY + 15);
+
+                    // $("#gridControlling").jqxTooltip('close');
+
+                },
+                ready: function () {
+                    $("#gridControlling").jqxGrid('localizestrings', localizationObject);
+                },
+                updatefilterconditions: function (type, defaultconditions) {
+                    switch (type) {
+                        case 'stringfilter':
+                            return stringcomparisonoperators;
+                        case 'numericfilter':
+                            return numericcomparisonoperators;
+                        case 'datefilter':
+                            return datecomparisonoperators;
+                        case 'booleanfilter':
+                            return booleancomparisonoperators;
+                    }
+                },
+                updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                    filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                    var index1 = 0;
+                    var index2 = 0;
+                    if (columnfilter != null) {
+                        var filter1 = columnfilter.getfilterat(0);
+                        var filter2 = columnfilter.getfilterat(1);
+                        if (filter1) {
+                            index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                            var value1 = filter1.filtervalue;
+                            filterinputfield1.val(value1);
+                        }
+                        if (filter2) {
+                            index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                            var value2 = filter2.filtervalue;
+                            filterinputfield2.val(value2);
+                        }
+                    }
+                    filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                    filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+
+                },
+                columns: [
+                    { text: 'Work Id', groupable: true, datafield: 'Id', editable: false, width: 90, hidden: true, sortable: false, exportable: false },
+                    { text: "Emp Code", datafield: "EmpId", width: 80, sortable: false, editable: false },
+                    { text: "Employee Name", datafield: "ShortName", width: 127, sortable: false, editable: false },
+                    { text: "Branch/Department", datafield: "BrDepot", editable: false, width: 120, sortable: false },
+                    { text: 'Designation', editable: false, datafield: 'Designation', align: 'center', width: 180, sortable: false },
+                    { text: 'Applied Date', editable: false, datafield: 'UpdatedDate', align: 'center', width: 100, cellsformat: 'dd/MM/yyyy', sortable: false },
+                    { text: 'Work Date', editable: false, datafield: 'WDDate', align: 'center', width: 100, cellsformat: 'dd/MM/yyyy', sortable: false },
+                    //{ text: 'Work Name', editable: false, datafield: 'Name', align: 'center', width: 170, sortable: false },
+                    { text: 'Work Description', editable: false, datafield: 'Desc', align: 'center', width: 270, sortable: false },
+                    { text: 'Status', cellsrenderer: cellsrenderer, editable: false, datafield: 'Status', align: 'center', width: 70, sortable: false },
+                ],
+                columngroups:
+                    [
+                        { text: 'Action', align: 'center', name: 'Actions', width: 160 },
+                    ],
+            });
+    });
+
+
+
+</script>
+
+<style>
+    table, th, td {
+        border-collapse: collapse;
+    }
+
+    .activeClass {
+        background: #ffdb99;
+    }
+
+    .secondClass {
+        /*background: #FF9999;*/
+        color: red;
+    }
+</style>
+
+
+
+<script type='text/javascript'>
+    $(function getholidays() {
+
+        var active_dates = [];
+        $.ajax({
+            type: "GET",
+            async: false,
+            url: "/LeaveApply/GetDates",
+            dataType: "Json",
+            success: function (data) {
+                datesArray = data;
+                for (i = 0; i < datesArray.length; i++) {
+                    var result = datesArray[i].replace("-", "/");
+                    var result1 = result.replace("-", "/");
+                    var strArray = result1.split("/");
+                    var cdate = strArray[0] + "/" + parseInt(strArray[1]) + "/" + strArray[2]
+                    active_dates.push(cdate);
+
+                    if (i == datesArray.length - 1) {
+                        //loadcal(active_dates);
+                    }
+                }
+
+            }
+        });
+        $('.input-group.date').datepicker({
+
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            beforeShowDay: function nonWorkingDays(date) {
+
+                var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
+                var week = 0 | date.getDate() / 7 //get the week
+                var dd = date.getDate();
+                var month = date.getMonth();
+                if (dd < 10) {
+                    dd = '0' + dd
+                }
+
+                if (month < 10) {
+                    month = '0' + month
+                }
+                var sunweek = date.getDay();
+                var year = date.getFullYear();
+
+                if (dd == 14 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                if (dd == 28 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                //check if it's second week or fourth week
+                else if (week == 1 || week == 3) {
+                    if (dd == 7 && day == 6 || dd == 21 && day == 6) {
+                        //check for satruday
+
+                    }
+                    else {
+                        if (day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                    }
+
+                }
+                //check for sunday
+                if (day == 0) {
+                    return {
+                        classes: 'secondClass'
+                    };
+
+                }
+                //check for holidays
+                var d = date;
+                var curr_date = d.getDate();
+                var curr_month = d.getMonth() + 1; //Months are zero based
+                if (curr_date < 10) {
+                    curr_date = '0' + curr_date
+                }
+                var curr_year = d.getFullYear();
+                var formattedDate = curr_date + "/" + curr_month + "/" + curr_year
+
+                if ($.inArray(formattedDate, active_dates) != -1) {
+                    return {
+                        classes: 'activeClass'
+                    };
+                }
+                return [true];
+            }
+        });
+
+
+    });
+</script>
+
+
+
+<script>
+    document.getElementById("a11").className = "active";
+</script>
+<script type="text/javascript">
+    $(function () {
+        $("#btnApply").click(function () {
+
+            
+            ajaxSpinnerShow();
+
+            var darray = document.getElementById('Wdate').value.split(" ");
+            var darraye = document.getElementById('tdate').value.split(" ");
+            var Joindate = darray[0];
+
+            var Retdate = darraye[0];
+            var date = moment(Joindate, "DD.MM.YYYY");
+
+            var currentDate1 = moment(Retdate, "DD.MM.YYYY");
+            var duration = moment.duration(date.diff(currentDate1));
+
+            var employeecode = $("#EmpId").val();
+            var wdate = $("#Wdate").val();
+            var tdate = $("#tdate").val();
+            if (wdate == "")
+            {
+                window.alert("Please Select FromDate");
+                $("#Wdate").focus();                
+            }
+            else if (tdate == "")
+            {
+                window.alert("Please Select ToDate");
+                $("#tdate").focus();
+            }
+            else if (duration > 0) {
+                window.alert("Please ensure that To Date is greater than or equal to From Date.");
+               $("#tdate").val("");
+               $("#tdate").focus();             
+            }
+            
+            url: "/WorkDiary/WDApprovalSanctionSearch?EmpId=" + employeecode + "&wdate=" + wdate + "&tdate=" + tdate;
+            // prepare the data
+            var source =
+            {
+                type: "Post",
+                datatype: "json",
+                datafields: [
+                    { name: 'Id', type: 'int' },
+                    { name: 'EmpId', type: 'int' },
+                    { name: 'ShortName', type: 'string' },
+                    { name: 'BrDepot', type: 'string' },
+                    { name: 'Designation', type: 'string' },
+                    { name: 'UpdatedDate', type: 'date' },
+                    { name: 'WDDate', type: 'date' },
+                    { name: 'Name', type: 'string' },
+                    { name: 'Status', type: 'string' },
+                    { name: 'Desc', type: 'string' },
+
+                ],
+                async: false,
+                url: "/WorkDiary/WDApprovalSanctionSearch?EmpId=" + employeecode + "&wdate=" + wdate + "&tdate=" + tdate,
+                data: {
+                    featureClass: "P",
+                    style: "full",
+                    username: "jqwidgets",
+                    EmpId: employeecode,
+                    wdate: wdate,
+                    tdate: tdate,
+                },
+                loadComplete: function () {
+                    ajaxSpinnerHide();
+                }
+            };
+            var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties, rowdata) {
+                if (value == "Pending") {
+                    return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #FFA500;">' + value + '</span>';
+                }
+                else if (value == "Forwarded") {
+                    return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #33b5e5;">' + value + '</span>';
+                }
+                else if (value == "Approved") {
+                    return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #00C851;">' + value + '</span>';
+                }
+                else if (value == "Denied") {
+                    return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #8B008B;">' + value + '</span>';
+                }
+                else {
+                    return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #ff4444;">' + value + '</span>';
+                }
+            }
+            var dataAdapter = new $.jqx.dataAdapter(source,
+                {
+                    formatData: function (data) {
+                        data.ProductName = $("#searchField").val();
+                        return data;
+                    }
+                }
+            );
+            // initialize jqxGrid
+            var editrowindex = -1;
+            var delrowindex = -1;
+            $("#gridControlling").jqxGrid(
+                {
+                    width: '100%',
+                    source: dataAdapter,
+                    theme: otherTheme,// for theme refernce go to Layout.cshtml
+                    autoheight: true,
+                    sortable: true,
+                    pageable: true,
+                    columnsResize: true,
+                    altRows: true,
+                    filterable: true,
+                    autoshowfiltericon: true,
+
+                    ready: function () {
+                        $("#gridControlling").jqxGrid('localizestrings', localizationObject);
+                    },
+                    updatefilterconditions: function (type, defaultconditions) {
+                        switch (type) {
+                            case 'stringfilter':
+                                return stringcomparisonoperators;
+                            case 'numericfilter':
+                                return numericcomparisonoperators;
+                            case 'datefilter':
+                                return datecomparisonoperators;
+                            case 'booleanfilter':
+                                return booleancomparisonoperators;
+                        }
+                    },
+                    updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                        filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                        var index1 = 0;
+                        var index2 = 0;
+                        if (columnfilter != null) {
+                            var filter1 = columnfilter.getfilterat(0);
+                            var filter2 = columnfilter.getfilterat(1);
+                            if (filter1) {
+                                index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                                var value1 = filter1.filtervalue;
+                                filterinputfield1.val(value1);
+                            }
+                            if (filter2) {
+                                index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                                var value2 = filter2.filtervalue;
+                                filterinputfield2.val(value2);
+                            }
+                        }
+                        filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                        filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                    },
+                    columns: [
+                        { text: 'Work Id', groupable: true, datafield: 'Id', editable: false, width: 90, hidden: true, sortable: false, exportable: false },
+                        { text: "Emp Code", datafield: "EmpId", width: 80, sortable: false, editable: false },
+                        { text: "Employee Name", datafield: "ShortName", width: 127, sortable: false, editable: false },
+                        { text: "Branch/Department", datafield: "BrDepot", editable: false, width: 120, sortable: false },
+                        { text: 'Designation', editable: false, datafield: 'Designation', align: 'center', width: 180, sortable: false },
+                        { text: 'Applied Date', editable: false, datafield: 'UpdatedDate', align: 'center', width: 100, cellsformat: 'dd/MM/yyyy', sortable: false },
+                        { text: 'Work Date', editable: false, datafield: 'WDDate', align: 'center', width: 100, cellsformat: 'dd/MM/yyyy', sortable: false },
+                        //{ text: 'Work Name', editable: false, datafield: 'Name', align: 'center', width: 170, sortable: false },
+                        { text: 'Work Description', editable: false, datafield: 'Desc', align: 'center', width: 270, sortable: false },
+                        { text: 'Status', cellsrenderer: cellsrenderer, editable: false, datafield: 'Status', align: 'center', width: 70, sortable: false },
+                    ],
+
+
+
+                });
+        });
+    });
+</script>
+
+<script>
+    $(function getholidays() {
+        var active_dates = [];
+        $.ajax({
+            type: "GET",
+            async: false,
+            url: "/LeaveApply/GetDates",
+            dataType: "Json",
+            success: function (data) {
+                datesArray = data;
+                for (i = 0; i < datesArray.length; i++) {
+                    var result = datesArray[i].replace("-", "/");
+                    var result1 = result.replace("-", "/");
+                    var strArray = result1.split("/");
+                    var cdate = strArray[0] + "/" + parseInt(strArray[1]) + "/" + strArray[2]
+                    active_dates.push(cdate);
+
+                    if (i == datesArray.length - 1) {
+                        //loadcal(active_dates);
+                    }
+                }
+
+            }
+        });
+        $('.input-group.date').datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            beforeShowDay: function nonWorkingDays(date) {
+                var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
+                var week = 0 | date.getDate() / 7 //get the week
+                var dd = date.getDate();
+                var month = date.getMonth();
+                if (dd < 10) {
+                    dd = '0' + dd
+                }
+
+                if (month < 10) {
+                    month = '0' + month
+                }
+                var sunweek = date.getDay();
+                var year = date.getFullYear();
+
+                if (dd == 14 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                if (dd == 28 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                //check if it's second week or fourth week
+                else if (week == 1 || week == 3) {
+                    if (dd == 7 && day == 6 || dd == 21 && day == 6) {
+                        //check for satruday
+
+                    }
+                    else {
+                        if (day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                    }
+
+                }
+                //check for sunday
+                if (day == 0) {
+                    return {
+                        classes: 'secondClass'
+                    };
+
+                }
+                //check for holidays
+                var d = date;
+                var curr_date = d.getDate();
+                var curr_month = d.getMonth() + 1; //Months are zero based
+                if (curr_date < 10) {
+                    curr_date = '0' + curr_date
+                }
+                var curr_year = d.getFullYear();
+                var formattedDate = curr_date + "/" + curr_month + "/" + curr_year
+
+                if ($.inArray(formattedDate, active_dates) != -1) {
+                    return {
+                        classes: 'activeClass'
+                    };
+                }
+                return [true];
+            }
+        });
+    });
+</script>

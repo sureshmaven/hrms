@@ -1,0 +1,780 @@
+﻿@{
+    Layout = "~/Views/Shared/_ReportsLayout.cshtml";
+    var rolepages = TempData["RolePages"].ToString();
+    ViewBag.RolePages = TempData["RolePages"];
+    var reportTitle = ViewBag.ReportTitle;
+    var dataUrl = ViewBag.DataUrl;
+    var ReportPdfSize = ViewBag.PdfSize;
+    var ReportpageSize = ViewBag.pageSize;
+}
+<link href="~/Assets/css/report-style.css" rel="stylesheet" />
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade in active">
+                    <div class="page_st">
+                        <div class="page">
+                            <div class="col-md-12 col-sm-12 ">
+                                <div class="main_heading">
+                                    <h1>Report List </h1>
+                                    <div class="report-list">
+                                        @{
+                                            <ul>
+                                                @if (rolepages.Contains("RPBRA"))
+                                                {
+                                                    <li class='@(reportTitle == "Branches List" ? "active" : "")'><a href=@Url.Action("Index", "AllReports")>Branches</a></li>}
+                                                @if (rolepages.Contains("RPBRC"))
+                                                {
+                                                    <li class='@(reportTitle == "Branches Contacts List" ? "active" : "")'><a href=@Url.Action("BranchContacts", "AllReports")>Branch Contacts</a></li>}
+                                                @if (rolepages.Contains("RPCDR"))
+                                                {
+                                                    @*<li><a href=@Url.Action("CadreReport", "Reports")>Cadre</a></li>*@
+                                                    <li class='@(reportTitle == "Cadre List" ? "active" : "")'><a href=@Url.Action("CadreList", "AllReports")>Cadre</a></li>
+                                                }
+                                                @if (rolepages.Contains("RPCAT"))
+                                                {
+                                                    <li><a href=@Url.Action("staffCategoryList", "AllReports")>Category</a></li>}
+                                                @if (rolepages.Contains("RPDOB"))
+                                                {
+                                                    <li class='@(reportTitle == "DOB List" ? "active" : "")'><a href=@Url.Action("EmpDob", "AllReports")>DOB</a></li>}
+                                                @if (rolepages.Contains("RPEMP"))
+                                                {
+                                                    <li class='@(reportTitle == "Employee List" ? "active" : "")'><a href=@Url.Action("EmployeesRept", "AllReports")>Employees</a></li>}
+                                                @if (rolepages.Contains("RPEAL"))
+                                                {
+                                                    <li class='@(reportTitle == "Future Applied Leaves" ? "active" : "")'><a href=@Url.Action("FutureAppliedLeaves", "AllReports")>Future Applied Leaves</a></li>}
+                                                @if (rolepages.Contains("RPHOF"))
+                                                {
+                                                    <li class='@(reportTitle == "Head Office List" ? "active" : "")'><a href=@Url.Action("HeadOfficeList", "AllReports")>Head Office</a></li>}
+                                                @if (rolepages.Contains("RPHOA"))
+                                                {
+                                                    <li class='@(reportTitle == "Head Office Attender List" ? "active" : "")'><a href=@Url.Action("HeadOfcAttenders", "AllReports")>Head Office Attenders</a></li>}
+                                                @if (rolepages.Contains("RPKOF"))
+                                                {
+                                                    <li class='@(reportTitle == "Work Profile Of Key Officials" ? "active" : "")'><a href=@Url.Action("KeyOfficials", "AllReports")>Key Officials</a></li>}
+                                                @if (rolepages.Contains("RPLTC"))
+                                                {
+                                                    <li class='@(reportTitle == "LTC List" ? "active" : "")'><a href=@Url.Action("LTCList", "AllReports")>LTC</a></li>}
+                                                @if (rolepages.Contains("RPLEV"))
+                                                {
+                                                    <li class='@(reportTitle == "Emp Leave History" ? "active" : "")'><a href=@Url.Action("LeavesHistory", "AllReports")>Leaves</a></li>}
+                                                @if (rolepages.Contains("RPLLE"))
+                                                {
+                                                    <li class='@(reportTitle == "Long Leaves" ? "active" : "")'><a href=@Url.Action("LongLeaves", "AllReports")>Long Leaves</a></li>}
+                                                @if (rolepages.Contains("RPLFA"))
+                                                {
+                                                    <li class='@(reportTitle == "Leave Approval List" ? "active" : "")'><a href=@Url.Action("LeavesCarryForward", "AllReports")>Leaves Forwarded/Approved</a></li>}
+                                                @if (rolepages.Contains("RPLAL"))
+                                                {
+                                                    <li class='@(reportTitle == "Late Applied Leaves List" ? "active" : "")'><a href=@Url.Action("LateAppliedLeaves", "AllReports")>Late Applied Leaves</a></li>}
+                                                @if (rolepages.Contains("RPLCD"))
+                                                {
+                                                    <li class='@(reportTitle == "Cancelled Leaves" ? "active" : "")'><a href=@Url.Action("LeaveCancelled", "AllReports")>Leaves Cancelled</a></li>}
+                                                @if (rolepages.Contains("RPCMP"))
+                                                {
+                                                    <li class='@(reportTitle == "Month Wise CL/ML/PL" ? "active" : "")'><a href=@Url.Action("MonthwiseCLMLPL", "AllReports")>Month Wise CL/ML/PL</a></li>}
+                                                @if (rolepages.Contains("RPMWL"))
+                                                {
+                                                    <li class='@(reportTitle == "Month Wise Leaves" ? "active" : "")'><a href=@Url.Action("MonthWiseLeaves", "AllReports")>Month Wise Leaves</a></li>}
+                                                @if (rolepages.Contains("RPMWO"))
+                                                {
+                                                    <li class='@(reportTitle == "Month Wise OD" ? "active" : "")'><a href=@Url.Action("MonthWiseOD", "AllReports")>Month Wise OD</a></li>}
+                                                @if (rolepages.Contains("RPMTT"))
+                                                {
+                                                    <li class='@(reportTitle == "Month Wise Temporary Transfer" ? "active" : "")'><a href=@Url.Action("MonthWiseTemporaryTransfer", "AllReports")>Month Wise Temporary Transfer</a></li>}
+                                                @if (rolepages.Contains("RPODD"))
+                                                {
+                                                    <li class='@(reportTitle == "OD List" ? "active" : "")'><a href=@Url.Action("OdDuty", "AllReports")>OD</a></li>}
+                                                @if (rolepages.Contains("RPPTS"))
+                                                {
+                                                    <li class='@(reportTitle == "Permanent Transfer List" ? "active" : "")'><a href=@Url.Action("PermanentTransfer", "AllReports")>Permanent Transfers</a></li>}
+                                                @if (rolepages.Contains("RPPRO"))
+                                                {
+                                                    <li class='@(reportTitle == "Transfer List" ? "active" : "")'><a href=@Url.Action("EmpPromotions", "AllReports")>Promotion</a></li>}
+                                                @if (rolepages.Contains("RPSPL"))
+                                                {
+                                                    <li class='@(reportTitle == "PL List" ? "active" : "")'><a href=@Url.Action("PrivilegeLeave", "AllReports")>PL</a></li>}
+                                                @if (rolepages.Contains("RPRET"))
+                                                {
+                                                    <li class='@(reportTitle == "Retirement List" ? "active" : "")'><a href=@Url.Action("Retirement", "AllReports")>Retirements</a></li>}
+                                                @if (rolepages.Contains("RPSEN"))
+                                                {
+                                                    <li class='@(reportTitle == "Seniorty List" ? "active" : "")'><a href=@Url.Action("Seniorty", "AllReports")>Seniority</a></li>}
+                                                @if (rolepages.Contains("RPSMA"))
+                                                {
+                                                    <li class='@(reportTitle == "StaffMaster List" ? "active" : "")'><a href=@Url.Action("StaffMaster", "AllReports")>Staff Master</a></li>}
+                                                @if (rolepages.Contains("RPTXH"))
+                                                {
+                                                    <li class='@(reportTitle == "Transaction History" ? "active" : "")'><a href=@Url.Action("TxHistory", "AllReports")>TX History</a></li>}
+                                                @if (rolepages.Contains("RPTTS"))
+                                                {
+                                                    <li class='@(reportTitle == "Temporary Transfer List" ? "active" : "")'><a href=@Url.Action("TempTrnsfr", "AllReports")>Temporary Transfers</a></li>}
+                                                @if (rolepages.Contains("RPTMT"))
+                                                {
+                                                    <li class='@(reportTitle == "Top ManagementList List" ? "active" : "")'><a href=@Url.Action("Topmanagement", "AllReports")>TopManagement</a></li>}
+                                                @if (rolepages.Contains("RPWDY"))
+                                                {
+                                                    <li class='@(reportTitle == "Work Diary" ? "active" : "")'><a href=@Url.Action("WorkDiary", "AllReports")>WorkDiary </a></li>}
+                                                @if (rolepages.Contains("RPYLB"))
+                                                {
+                                                    @*<li><a href=@Url.Action("YearWiseLeaveBalanceReport", "Reports")>YearWiseLeaveBalance</a></li>*@
+                                                    <li class='@(reportTitle == "Year Wise Leave Balance" ? "active" : "")'><a href=@Url.Action("LeavesCreditDebit", "AllReports")>YearWiseLeaveBalance</a></li>}
+
+                                            </ul>
+                                        }
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                                <div class="main_heading">
+                                    <!--  <h1>@reportTitle</h1> -->
+                                    <h1>Grouping</h1>
+                                    <br />
+
+                                    <table id="example" class="display" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Position</th>
+                                                <th></th>
+                                                <th>Age</th>
+                                                <th>Start date</th>
+                                                <th>Salary</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>61</td>
+                                                <td>2011/04/25</td>
+                                                <td>$320,800</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Garrett Winters</td>
+                                                <td>Accountant</td>
+                                                <td>Tokyo</td>
+                                                <td>63</td>
+                                                <td>2011/07/25</td>
+                                                <td>$170,750</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Ashton Cox</td>
+                                                <td>Junior Technical Author</td>
+                                                <td>San Francisco</td>
+                                                <td>66</td>
+                                                <td>2009/01/12</td>
+                                                <td>$86,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Cedric Kelly</td>
+                                                <td>Senior Javascript Developer</td>
+                                                <td>Edinburgh</td>
+                                                <td>22</td>
+                                                <td>2012/03/29</td>
+                                                <td>$433,060</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Airi Satou</td>
+                                                <td>Accountant</td>
+                                                <td>Tokyo</td>
+                                                <td>33</td>
+                                                <td>2008/11/28</td>
+                                                <td>$162,700</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Brielle Williamson</td>
+                                                <td>Integration Specialist</td>
+                                                <td>New York</td>
+                                                <td>61</td>
+                                                <td>2012/12/02</td>
+                                                <td>$372,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Herrod Chandler</td>
+                                                <td>Sales Assistant</td>
+                                                <td>San Francisco</td>
+                                                <td>59</td>
+                                                <td>2012/08/06</td>
+                                                <td>$137,500</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Rhona Davidson</td>
+                                                <td>Integration Specialist</td>
+                                                <td>Tokyo</td>
+                                                <td>55</td>
+                                                <td>2010/10/14</td>
+                                                <td>$327,900</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Colleen Hurst</td>
+                                                <td>Javascript Developer</td>
+                                                <td>San Francisco</td>
+                                                <td>39</td>
+                                                <td>2009/09/15</td>
+                                                <td>$205,500</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Sonya Frost</td>
+                                                <td>Software Engineer</td>
+                                                <td>Edinburgh</td>
+                                                <td>23</td>
+                                                <td>2008/12/13</td>
+                                                <td>$103,600</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Jena Gaines</td>
+                                                <td>Office Manager</td>
+                                                <td>London</td>
+                                                <td>30</td>
+                                                <td>2008/12/19</td>
+                                                <td>$90,560</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Quinn Flynn</td>
+                                                <td>Support Lead</td>
+                                                <td>Edinburgh</td>
+                                                <td>22</td>
+                                                <td>2013/03/03</td>
+                                                <td>$342,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Charde Marshall</td>
+                                                <td>Regional Director</td>
+                                                <td>San Francisco</td>
+                                                <td>36</td>
+                                                <td>2008/10/16</td>
+                                                <td>$470,600</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Haley Kennedy</td>
+                                                <td>Senior Marketing Designer</td>
+                                                <td>London</td>
+                                                <td>43</td>
+                                                <td>2012/12/18</td>
+                                                <td>$313,500</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tatyana Fitzpatrick</td>
+                                                <td>Regional Director</td>
+                                                <td>London</td>
+                                                <td>19</td>
+                                                <td>2010/03/17</td>
+                                                <td>$385,750</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Michael Silva</td>
+                                                <td>Marketing Designer</td>
+                                                <td>London</td>
+                                                <td>66</td>
+                                                <td>2012/11/27</td>
+                                                <td>$198,500</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Paul Byrd</td>
+                                                <td>Chief Financial Officer (CFO)</td>
+                                                <td>New York</td>
+                                                <td>64</td>
+                                                <td>2010/06/09</td>
+                                                <td>$725,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Gloria Little</td>
+                                                <td>Systems Administrator</td>
+                                                <td>New York</td>
+                                                <td>59</td>
+                                                <td>2009/04/10</td>
+                                                <td>$237,500</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Bradley Greer</td>
+                                                <td>Software Engineer</td>
+                                                <td>London</td>
+                                                <td>41</td>
+                                                <td>2012/10/13</td>
+                                                <td>$132,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Dai Rios</td>
+                                                <td>Personnel Lead</td>
+                                                <td>Edinburgh</td>
+                                                <td>35</td>
+                                                <td>2012/09/26</td>
+                                                <td>$217,500</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Jenette Caldwell</td>
+                                                <td>Development Lead</td>
+                                                <td>New York</td>
+                                                <td>30</td>
+                                                <td>2011/09/03</td>
+                                                <td>$345,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Yuri Berry</td>
+                                                <td>Chief Marketing Officer (CMO)</td>
+                                                <td>New York</td>
+                                                <td>40</td>
+                                                <td>2009/06/25</td>
+                                                <td>$675,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Caesar Vance</td>
+                                                <td>Pre-Sales Support</td>
+                                                <td>New York</td>
+                                                <td>21</td>
+                                                <td>2011/12/12</td>
+                                                <td>$106,450</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Doris Wilder</td>
+                                                <td>Sales Assistant</td>
+                                                <td>Sidney</td>
+                                                <td>23</td>
+                                                <td>2010/09/20</td>
+                                                <td>$85,600</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Angelica Ramos</td>
+                                                <td>Chief Executive Officer (CEO)</td>
+                                                <td>London</td>
+                                                <td>47</td>
+                                                <td>2009/10/09</td>
+                                                <td>$1,200,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Gavin Joyce</td>
+                                                <td>Developer</td>
+                                                <td>Edinburgh</td>
+                                                <td>42</td>
+                                                <td>2010/12/22</td>
+                                                <td>$92,575</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Jennifer Chang</td>
+                                                <td>Regional Director</td>
+                                                <td>Singapore</td>
+                                                <td>28</td>
+                                                <td>2010/11/14</td>
+                                                <td>$357,650</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Brenden Wagner</td>
+                                                <td>Software Engineer</td>
+                                                <td>San Francisco</td>
+                                                <td>28</td>
+                                                <td>2011/06/07</td>
+                                                <td>$206,850</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Fiona Green</td>
+                                                <td>Chief Operating Officer (COO)</td>
+                                                <td>San Francisco</td>
+                                                <td>48</td>
+                                                <td>2010/03/11</td>
+                                                <td>$850,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Shou Itou</td>
+                                                <td>Regional Marketing</td>
+                                                <td>Tokyo</td>
+                                                <td>20</td>
+                                                <td>2011/08/14</td>
+                                                <td>$163,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Michelle House</td>
+                                                <td>Integration Specialist</td>
+                                                <td>Sidney</td>
+                                                <td>37</td>
+                                                <td>2011/06/02</td>
+                                                <td>$95,400</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Suki Burks</td>
+                                                <td>Developer</td>
+                                                <td>London</td>
+                                                <td>53</td>
+                                                <td>2009/10/22</td>
+                                                <td>$114,500</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Prescott Bartlett</td>
+                                                <td>Technical Author</td>
+                                                <td>London</td>
+                                                <td>27</td>
+                                                <td>2011/05/07</td>
+                                                <td>$145,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Gavin Cortez</td>
+                                                <td>Team Leader</td>
+                                                <td>San Francisco</td>
+                                                <td>22</td>
+                                                <td>2008/10/26</td>
+                                                <td>$235,500</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Martena Mccray</td>
+                                                <td>Post-Sales support</td>
+                                                <td>Edinburgh</td>
+                                                <td>46</td>
+                                                <td>2011/03/09</td>
+                                                <td>$324,050</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Unity Butler</td>
+                                                <td>Marketing Designer</td>
+                                                <td>San Francisco</td>
+                                                <td>47</td>
+                                                <td>2009/12/09</td>
+                                                <td>$85,675</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Howard Hatfield</td>
+                                                <td>Office Manager</td>
+                                                <td>San Francisco</td>
+                                                <td>51</td>
+                                                <td>2008/12/16</td>
+                                                <td>$164,500</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Hope Fuentes</td>
+                                                <td>Secretary</td>
+                                                <td>San Francisco</td>
+                                                <td>41</td>
+                                                <td>2010/02/12</td>
+                                                <td>$109,850</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Vivian Harrell</td>
+                                                <td>Financial Controller</td>
+                                                <td>San Francisco</td>
+                                                <td>62</td>
+                                                <td>2009/02/14</td>
+                                                <td>$452,500</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Timothy Mooney</td>
+                                                <td>Office Manager</td>
+                                                <td>London</td>
+                                                <td>37</td>
+                                                <td>2008/12/11</td>
+                                                <td>$136,200</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Jackson Bradshaw</td>
+                                                <td>Director</td>
+                                                <td>New York</td>
+                                                <td>65</td>
+                                                <td>2008/09/26</td>
+                                                <td>$645,750</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Olivia Liang</td>
+                                                <td>Support Engineer</td>
+                                                <td>Singapore</td>
+                                                <td>64</td>
+                                                <td>2011/02/03</td>
+                                                <td>$234,500</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Bruno Nash</td>
+                                                <td>Software Engineer</td>
+                                                <td>London</td>
+                                                <td>38</td>
+                                                <td>2011/05/03</td>
+                                                <td>$163,500</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Sakura Yamamoto</td>
+                                                <td>Support Engineer</td>
+                                                <td>Tokyo</td>
+                                                <td>37</td>
+                                                <td>2009/08/19</td>
+                                                <td>$139,575</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Thor Walton</td>
+                                                <td>Developer</td>
+                                                <td>New York</td>
+                                                <td>61</td>
+                                                <td>2013/08/11</td>
+                                                <td>$98,540</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Finn Camacho</td>
+                                                <td>Support Engineer</td>
+                                                <td>San Francisco</td>
+                                                <td>47</td>
+                                                <td>2009/07/07</td>
+                                                <td>$87,500</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Serge Baldwin</td>
+                                                <td>Data Coordinator</td>
+                                                <td>Singapore</td>
+                                                <td>64</td>
+                                                <td>2012/04/09</td>
+                                                <td>$138,575</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Zenaida Frank</td>
+                                                <td>Software Engineer</td>
+                                                <td>New York</td>
+                                                <td>63</td>
+                                                <td>2010/01/04</td>
+                                                <td>$125,250</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Zorita Serrano</td>
+                                                <td>Software Engineer</td>
+                                                <td>San Francisco</td>
+                                                <td>56</td>
+                                                <td>2012/06/01</td>
+                                                <td>$115,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Jennifer Acosta</td>
+                                                <td>Junior Javascript Developer</td>
+                                                <td>Edinburgh</td>
+                                                <td>43</td>
+                                                <td>2013/02/01</td>
+                                                <td>$75,650</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Cara Stevens</td>
+                                                <td>Sales Assistant</td>
+                                                <td>New York</td>
+                                                <td>46</td>
+                                                <td>2011/12/06</td>
+                                                <td>$145,600</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Hermione Butler</td>
+                                                <td>Regional Director</td>
+                                                <td>London</td>
+                                                <td>47</td>
+                                                <td>2011/03/21</td>
+                                                <td>$356,250</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Lael Greer</td>
+                                                <td>Systems Administrator</td>
+                                                <td>London</td>
+                                                <td>21</td>
+                                                <td>2009/02/27</td>
+                                                <td>$103,500</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Jonas Alexander</td>
+                                                <td>Developer</td>
+                                                <td>San Francisco</td>
+                                                <td>30</td>
+                                                <td>2010/07/14</td>
+                                                <td>$86,500</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Shad Decker</td>
+                                                <td>Regional Director</td>
+                                                <td>Edinburgh</td>
+                                                <td>51</td>
+                                                <td>2008/11/13</td>
+                                                <td>$183,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Michael Bruce</td>
+                                                <td>Javascript Developer</td>
+                                                <td>Singapore</td>
+                                                <td>29</td>
+                                                <td>2011/06/27</td>
+                                                <td>$183,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Donna Snider</td>
+                                                <td>Customer Support</td>
+                                                <td>New York</td>
+                                                <td>27</td>
+                                                <td>2011/01/25</td>
+                                                <td>$112,000</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $.noConflict();
+        var groupColumn = 2;
+
+        var table = $('#example').DataTable({
+            "columnDefs": [
+                { "visible": false, "targets": groupColumn }
+            ],
+            dom: 'Bfrtip',
+
+            buttons: [
+                {
+                    //text: 'PDF',
+                    //extend: 'pdf',
+                    //footer: true,
+                    //header: true,
+                    //orientation: 'portrait',
+                    extend: 'pdfHtml5',
+                    text: '<i class="fa fa-file-pdf-o dt-export-icon-pdf"></i>',
+                    className: 'dt-export-btn',
+                    titleAttr: 'Pdf',
+                    title: 'TGCAB - Title',
+                    messageTop: 'filter : nil',
+                    customize: function (doc) {
+                      
+                        doc.styles.title = {
+                            fontSize: '20',
+                            alignment: 'center'
+                        };
+                        doc.styles.message = {
+                            fontSize: '9',
+                            alignment: 'center'
+                        };
+                        doc.styles.tableHeader.alignment = 'center';
+                        //doc.content.splice(1, 0, {
+                        //    margin: [0, -50, 0, 10],
+                        //    alignment: 'left',
+                        //    image: 'data:image/jpeg;base64,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'
+                        //});
+                        //doc.content[0].text = doc.content[0].text.trim();
+                        doc.content[0].text = 'ABCD';
+                        
+
+                        var lastColX = null;
+                        var lastColY = null;
+                        var bod = []; // this will become our new body (an array of arrays(lines))
+                        //Loop over all lines in the table
+                        // api.column(groupColumn, { page: 'current' }).data().each(function (line, i) {
+                        var oldOffice = '';
+                       
+                        doc.content[2].table.body.forEach(function (line, i) {
+                            //Group based on first column (ignore empty cells)
+                            if (lastColX != line[2].text && line[2].text != '' && oldOffice != line[2].text) {
+                                //Add line with group header
+                                bod.push([{ text: line[2].text, style: 'tableHeader' }, '', '', '', '']);
+                                //Update last
+                                // lastColX = line[2].text;
+                                oldOffice = line[2].text;
+                            }
+                            //Add line with data except grouped data
+                            if (i < doc.content[2].table.body.length - 1) {
+                                bod.push([{ text: line[0].text, style: 'defaultStyle' },
+                                    { text: line[1].text, style: 'defaultStyle' },
+                                    '',
+                                    { text: line[3].text, style: 'defaultStyle' },
+                                    { text: line[4].text, style: 'defaultStyle' }]);
+                            }
+                            ////Make last line bold, blue and a bit larger
+                            //else {
+                            //    bod.push(['', '', { text: line[2].text, style: 'lastLine' },
+                            //        { text: line[3].text, style: 'lastLine' },
+                            //        { text: line[4].text, style: 'lastLine' }]);
+                            //}
+                        });
+                        //Overwrite the old table body with the new one.
+                        // doc.content[2].table.headerRows = 3;
+                        doc.content[2].table.widths = [125, 125, 0, 100, 100];
+                        doc.content[2].table.body = bod;
+                        doc.content[2].layout = 'lightHorizontalLines';
+
+                        doc['footer'] = (function (page, pages) {
+                            return {
+                                columns: [
+                                    'By: @ViewBag.LoginUserName , @ViewBag.LoginBranchName .',
+                                    {
+                                        alignment: 'right',
+                                        text: [
+                                            new Date().toLocaleDateString("en-IN", { day: "2-digit", month: "2-digit", year: "numeric", hour: '2-digit', minute: '2-digit' }),
+                                            '    Page ', { text: page.toString() }, ' of ', { text: pages.toString() }
+                                        ]
+                                    }
+                                ],
+                                fontSize: '9',
+                                margin: [40, 10]
+                            }
+                        });
+
+                        doc.styles = {
+                            subheader: {
+                                fontSize: 10,
+                                bold: true,
+                                color: 'black'
+                            },
+                            tableHeader: {
+                                bold: true,
+                                fontSize: 11,
+                                color: 'black',
+                                background: '#DCDCDC'
+                            },
+                            lastLine: {
+                                bold: true,
+                                fontSize: 11,
+                                color: 'blue'
+                            },
+                            defaultStyle: {
+                                fontSize: 10,
+                                color: 'black'
+                            }
+                        }
+                    }
+                }
+            ],
+            "order": [[groupColumn, 'asc']],
+            "displayLength": 25,
+            "drawCallback": function (settings) {
+                var api = this.api();
+                var rows = api.rows({ page: 'current' }).nodes();
+                var last = null;
+
+                api.column(groupColumn, { page: 'current' }).data().each(function (group, i) {
+                    if (last !== group) {
+                        $(rows).eq(i).before(
+                            '<tr class="group"><td colspan="5">' + group + '</td></tr>'
+                        );
+
+                        last = group;
+                    }
+                });
+            }
+        });
+
+
+
+        // Order by the grouping
+        $('#example tbody').on('click', 'tr.group', function () {
+            var currentOrder = table.order()[0];
+            if (currentOrder[0] === groupColumn && currentOrder[1] === 'asc') {
+                table.order([groupColumn, 'desc']).draw();
+            }
+            else {
+                table.order([groupColumn, 'asc']).draw();
+            }
+        });
+    });
+
+</script>
+<style type="text/css">
+    tr.group,
+    tr.group:hover {
+        background-color: #ddd !important;
+    }
+</style>

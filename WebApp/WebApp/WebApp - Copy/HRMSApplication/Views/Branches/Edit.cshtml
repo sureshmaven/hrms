@@ -1,0 +1,300 @@
+﻿@model Entities.Branches
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.RolePages = TempData["RolePages"];
+    var rolepages = TempData["RolePages"].ToString();
+}
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-heading">
+
+            @{
+                <ul class="nav nav-tabs">
+                    @if (rolepages.Contains("MABAN"))
+                    {
+                        <li><a href="@Url.Action("Create", "Banks")" data-toggle="tab" id="1">Bank</a></li>}
+                    @if (rolepages.Contains("MABRA"))
+                    {
+                        <li class="active"><a href=@Url.Action("Create","Branches")>Branch</a></li>}
+
+                    @if (rolepages.Contains("MADEP"))
+                    {
+                        <li><a href=@Url.Action("Create", "Departments")>Department</a></li>}
+                    @if (rolepages.Contains("MADES"))
+                    {
+                        <li><a href=@Url.Action("Create", "Designations")>Designation</a></li>}
+                    @if (rolepages.Contains("MAROL"))
+                    {
+                        <li><a href=@Url.Action("Create", "Roles")>Role</a></li>}
+                    @if (rolepages.Contains("MALTY"))
+                    {
+                        <li><a href=@Url.Action("Create", "LeaveTypes")>LeaveType</a></li>}
+                    @if (rolepages.Contains("MAHLI"))
+                    {
+                        <li><a href=@Url.Action("Create", "HolidayLists")>HolidayList</a></li>}
+                    @if (rolepages.Contains("MACDL"))
+                    {
+                        <li><a href=@Url.Action("CreditDebitleaves", "MyLeaves")>Credit / Debit leaves</a></li>}
+                    @if (rolepages.Contains("MABCY"))
+                    {
+                        <li><a href=@Url.Action("Createbranchcount", "Branches")>Branch Category</a></li>}
+                    @if (rolepages.Contains("MAODY"))
+                    {
+                        <li><a href=@Url.Action("OtherdutyCreate", "LeaveTypes")>Other Duty</a></li>}
+                    @if (rolepages.Contains("MABPD"))
+                    {
+                        <li><a href=@Url.Action("Create", "BlockPeriod")>BlockPeriod</a></li>}
+                    @if (rolepages.Contains("MANES"))
+                    {
+                        <li><a href=@Url.Action("Create", "News")>News</a></li>}
+                </ul>
+            }
+        </div>
+    </div>
+</div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="container">
+        <div class="page_st">
+            <div class="page">
+                <div class="form-horizontal">
+                    <div class="page_start">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="main_heading">
+                                <h1>Edit Branch </h1>
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Bank Name:<span class="mandatory">*</span></label>
+                                        <div class="col-sm-7">
+                                            @Html.DropDownListFor(model => model.BankName, (SelectList)ViewBag.Banks, "Select Bank", new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Branch:<span class="mandatory">*</span></label>
+                                        <div class="col-sm-7">
+                                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @id = "brName", onBlur = "OnChangeEvent()", onkeypress = "return onlyAlphabets(event)" } })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Branch Code:</label>
+                                        <div class="col-sm-7">
+                                            @Html.EditorFor(model => model.BranchCode, new { htmlAttributes = new { @class = "form-control", @id = "bc", onBlur = "brcode()", onkeypress = "return onlyAlphabets(event)" } })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Address Line 1:<span class="mandatory">*</span></label>
+                                        <div class="col-sm-7">
+                                            @Html.TextAreaFor(model => model.AddressLine1, new { @class = "form-control", @id = "add1" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Address Line 2:<span class="mandatory">*</span></label>
+                                        <div class="col-sm-7">
+                                            @Html.TextAreaFor(model => model.AddressLine2, new { @class = "form-control", @id = "add2" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">City:<span class="mandatory">*</span></label>
+                                        <div class="col-sm-7">
+                                            @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", @id = "cit" } })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">PhoneNo 1:<span class="mandatory">*</span></label>
+                                        <div class="col-sm-7">
+                                            @Html.EditorFor(model => model.PhoneNo1, new { htmlAttributes = new { @class = "form-control", maxlength = "12", onkeypress = "return isNumbercheck(event)" } })
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        @Html.Label("PhoneNo 2:", htmlAttributes: new { @class = "control-label col-sm-5" })
+                                        <div class="col-sm-7">
+                                            @Html.EditorFor(model => model.PhoneNo2, new { htmlAttributes = new { @class = "form-control", maxlength = "12", onkeypress = "return isNumber(event)" } })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        @Html.Label("PhoneNo 3:", htmlAttributes: new { @class = "control-label col-sm-5" })
+                                        <div class="col-sm-7">
+                                            @Html.EditorFor(model => model.PhoneNo3, new { htmlAttributes = new { @class = "form-control", maxlength = "12", onkeypress = "return isNumber(event)" } })
+                                        </div>
+                                    </div>
+                                </div>
+                                @*<div class="col-md-4 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            @Html.Label("Branch Category:", htmlAttributes: new { @class = "control-label col-sm-5" })
+                                            <div class="col-sm-7">
+                                                @Html.DropDownList("BranchCategory", new[] {
+                                                               new SelectListItem() {Text = "Small",Value = "Small"},
+                                                               new SelectListItem() {Text = "Medium",Value = "Medium"},
+                                                               new SelectListItem() {Text = "Large",Value = "Large" },
+                                                              }, "Select Category", new { @class = "form-control" })
+
+                                            </div>
+                                        </div>
+                                    </div>*@
+
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Start Time:</label>
+                                        <div class="col-sm-7">
+                                            <div class="input-group bootstrap-timepicker">
+                                                @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "form-control", id = "Start_Time" } })
+
+                                                <span class="input-group-addon"><span class="glyphicon glyphicon-time" aria-hidden="true"></span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">End Time:</label>
+                                        <div class="col-sm-7">
+                                            <div class="input-group bootstrap-timepicker">
+                                                @Html.EditorFor(model => model.EndTime, new { htmlAttributes = new { @class = "form-control", id = "End_Time" } })
+                                                <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-time" aria-hidden="true"></span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-12">
+                                    <div class="pull-right">
+                                        <input type="reset" value="Cancel" class="btn btn-default" />
+                                        <input type="submit" value="Update" onclick="return EditBranches();" class="btn btn-primary" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@{
+
+    var message = TempData["AlertMessage"] ?? string.Empty;
+
+}
+<script type="text/javascript">
+    var message = '@message';
+
+    if (message) alert(message);
+
+</script>
+
+
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        function OnChangeEvent() {
+
+
+            var x = location.hostname;
+            var url = window.location.href
+            var arr = url.split("/");
+            var textBoxValue = document.getElementById("brName").value;
+
+           // var result = "https://" + arr[2] + "/" + "Branches/CheckBranch?Name=" + textBoxValue;
+             var result = "" + arr[0] +  "//" + arr[2] +  "/"+ "Branches/CheckBranch?Name=" + textBoxValue;
+
+            $.ajax({
+                type: "GET",
+                url: result,
+
+                dataType: "json",
+                success: function (data) {
+
+                    if (data.message == "use") {
+
+                    }
+                    if (data.message == "used") {
+
+                        document.getElementById("brName").value = "";
+
+                        alert("This Branch Name already Exist!");
+                    }
+
+                },
+                error: function () {
+
+                }
+            });
+
+
+        }
+    </script>
+    <script>
+        function brcode() {
+
+
+            var x = location.hostname;
+            var url = window.location.href
+            var arr = url.split("/");
+            var textBoxValue = document.getElementById("bc").value;
+
+          //  var result = "https://" + arr[2] + "/" + "Branches/branchcode?Code=" + textBoxValue;
+
+            var result = "" + arr[0] +  "//" + arr[2] +  "/"+ "Branches/branchcode?Code=" + textBoxValue;
+            $.ajax({
+                type: "GET",
+                url: result,
+
+                dataType: "json",
+                success: function (data) {
+
+                    if (data.message == "use") {
+
+                    }
+                    if (data.message == "used") {
+
+                        document.getElementById("bc").value = "";
+
+                        alert("This Branch Code already Exist!");
+                    }
+
+                },
+                error: function () {
+
+                }
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        $('#Start_Time').timepicker({
+            minuteStep: 1,
+            defaultTime: false,
+            disableFocus: true,
+            autoclose: true
+        });
+        $('#End_Time').timepicker({
+            minuteStep: 1,
+            defaultTime: false,
+            disableFocus: true,
+            autoclose: true
+        });
+    </script>
+    <script>
+        document.getElementById("a2").className = "active";
+
+    </script>
+

@@ -1,0 +1,148 @@
+﻿<div class="col-md-12">
+    <div class="emp-serch_report">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label"> <input id="idwise" type="radio" name="wise" value="idwise"><label for="idwise"><span><span></span></span> Emp Code:</label></label>
+                    <div class="col-sm-8">
+                        <div class="navbar-form" role="search">
+                            <div class="input-group">
+                                <input type="text" id="pvTxtEmpCode1440" class="form-control" placeholder="Search">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default search_btn" type="button" id="pvBtnSearchEmpCode1440"><i class="glyphicon glyphicon-search"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+          </div>
+         
+    </div>
+<div id="empSearchModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Search & select employee</h4>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table id="jdtEmpSearch1440" class="display fixed_header" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Employee Name</th>
+                                <th>Designation</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" id="btnEmpSearchModalOK">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+  
+    function pvEmpCommonSearch1440() {
+        if ($("#pvTxtEmpCode1440").val() == "") {
+            toasterOptions();
+            toastr.error('Employee Id cannot be empty', 'Required');
+        }
+        else {
+           
+            CommonApiGET('/Payroll/Common/SearchEmployee?EmpCode=' + $("#pvTxtEmpCode1440").val(), function (respData) {
+                if (respData.length == 0) {
+                    toasterOptions();
+                    toastr.error('No user with Name / Code: ' + $("#pvTxtEmpCode1440").val(), 'No user');
+                } else if (respData.length == 1) {
+                    setSingleEmployee1440(respData[0]);
+                } else {
+           
+                    //open modal
+                    $("#empSearchModal").modal();
+                    //fill users data
+                    $('#jdtEmpSearch1440').DataTable({
+                        "bFilter": true,
+                        "destroy": true,
+                        "paging": false,
+                        "info": false,
+                        data: respData,
+                        "columns": [
+                            { "data": "ECode" },
+                            { "data": "EName" },
+                            { "data": "EDesignation" }
+                        ],
+                        "order": [[0, 'asc']]
+                    });
+                }
+            });
+        }
+    }
+
+    $('#pvTxtEmpCode1440').keypress(function (event) {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+            pvEmpCommonSearch1440();
+            return false;
+        }
+    });
+
+    $("#pvBtnSearchEmpCode1440").click(function (e) {
+        pvEmpCommonSearch1440();
+        return false;
+    });
+
+    function setSingleEmployee1440(respData) {
+        //** set values
+        $("#pvTxtEmpCode1440").val(respData.ECode);
+        $("#lblEmpName").text(respData.EName);
+        $("#lblDeptBranch").text(respData.EBranch);
+        $("#lblDesig").text(respData.EDesignation);
+        $("#lblDOJ").text(respData.EDoj);
+        $("#lblDOC").text(respData.EDoc);
+        $("#lblDOR").text(respData.EDRetire);
+
+
+        //call parent page method
+        getDataAfterEmpSearch1440(respData.ECode);
+    }
+
+    $(document).ready(function () {
+       
+        var table = $('#jdtEmpSearch1440').DataTable();
+
+        $('#jdtEmpSearch1440 tbody').on('click', 'tr', function () {
+      
+            if ($(this).hasClass('selected')) {
+                $(this).removeClass('selected');
+            }
+            else {
+                table.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+
+
+            }
+        });
+
+        
+        $('#btnEmpSearchModalOK').click(function () {
+           
+            var table = $('#jdtEmpSearch1440').DataTable();
+            var idx = table.row('.selected').index();
+            if (table.rows(idx) != undefined && table.rows(idx).data() != undefined) {
+                var rowsel = table.rows(idx).data()[0];
+                console.log(rowsel);
+                //set emp data
+                setSingleEmployee1440(rowsel);
+
+                //close modal
+                $('#empSearchModal').modal('toggle');
+            }
+        });
+    });
+
+</script>

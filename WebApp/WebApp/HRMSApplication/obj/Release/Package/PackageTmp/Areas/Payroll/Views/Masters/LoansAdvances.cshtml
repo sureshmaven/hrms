@@ -1,0 +1,1158 @@
+﻿@using Mavensoft.Common
+@{
+    ViewBag.Title = "LoansAdvances";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+
+
+}
+
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="leftmenu-container">
+                <div class="sidebar-menu">
+                    @{Html.RenderPartial("_PVPayrollMenu");}
+                </div>
+
+
+                <div class="sidebar-content">
+                    <div class="main_heading heading_main">
+                        <h1>Advances - Loans  <span class="year-end">@ViewBag.Env_Fm_Fy</span></h1>
+                        @{ Html.RenderPartial("_pvEmployeeSearch");}
+                        <input type="hidden" id="hdnEmpCode" />
+                        <input type="hidden" id="hdnretirementdate" />
+                        <input type="hidden" id="Loancode" />
+
+                        <p id="lblLoan" style="text-align: center; color:red; text-align:center;    margin: 140px 0 0 0; display:none;" for="lblloan">This Loan Type is Already Applied For This User, Please select Another Loan Type</p>
+                        <div class="col-md-5 mt_10" id="hdndiv" style="display:none">
+                            <table id="loans_advances" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Description</th>
+                                        <th>Enter Particulars</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="col-md-7">
+                        <div class="col-md-12 mt_10 mb_10" id="subloansdiv">
+                            <button type="submit" class="btn btn-primary" id="btnAddsubloan" data-toggle="modal" data-target="#adv_loans_modal_sub">Add Sub Loans</button>
+                        </div>
+
+                        <div class="col-md-12" id="hdnld" style="display:none">
+                            <table class="display" id="gridConfirmation" style="width:100%;">
+                                <thead>
+                                    <tr>
+                                        <th style="width:10%;">Priority</th>
+                                        <th>Date Disburse</th>
+                                        <th style="width:20%;">Loan Amount (<i class="fa fa-rupee"></i>)</th>
+                                        <th>Intrest Rate (%)</th>
+                                        <th>Intrest Accured (<i class="fa fa-rupee"></i>)</th>
+                                        @*<th>Principal Amount Recovered (<i class="fa fa-rupee"></i>)</th>
+                                            <th>Interest Amount Recovered (<i class="fa fa-rupee"></i>)</th>*@
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                        </div>
+                        <div class="col-md-12 mt_10">
+                            <div class="pull-right">
+                                <button type="reset" class="btn btn-default cancel" onclick="reloadoncancel();">Cancel</button>
+                                <button type="submit" class="btn btn-primary" id="btnSubmit">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="adv_loans_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow:auto">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel"> Select Loan Type</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table id="gridLoantype" class="display fixed_header fixed_header_adv_loan" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>All Loans</th>
+                                    <th>Interest Rate</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="btnLoanTypeModalOK">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="adv_loans_modal_sub" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Sub Loan Details</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="mb_10">
+                        <div class="pull-right">
+                            <button id="addRow" class="btn btn-default mr_0"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="table-responsive mt_10 mb_10">
+                        <table class="display dataTable" id="gridVLA" style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <th style="width:10%;">Priority</th>
+                                    <th>Date Disburse</th>
+                                    <th style="width:20%;">Loan Amount (<i class="fa fa-rupee"></i>)</th>
+                                    <th>Interest Rate (%)</th>
+                                    <th>Interest Accured (<i class="fa fa-rupee"></i>)</th>
+                                    @*<th>Principal Amount Recovered (<i class="fa fa-rupee"></i>)</th>
+                                        <th>Interest Amount Recovered (<i class="fa fa-rupee"></i>)</th>*@
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="btnNext" onclick="readloandiviontable()">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var LoanVendor = [];
+    var OnloadLoantypeValue;
+    var orgLTlist;
+    var orgALlist;
+    var orgLDList;
+    var cfmdata = [];
+    var arrSampleObJ = [];
+    var loantype = "";
+    var loanid = 0;
+    var loancode;
+    var loancode2;
+    var interestrate;
+    var ldData=[];
+    var alData = [];
+    var loanvendorData = [];
+    var originalData = [];
+    var incIndex = 0;
+    var modifiedData = [];
+    var arrDelete = [];
+    var loantypedate = [];
+    var methodarr = ['With Out Interest', 'Interest With Equal Installments', 'Interest to be Recovered at End'];
+    var code_masterarray = [];
+    //onload
+    $(document).ready(function () {
+        //document.getElementById("hdndiv").style.visibility = "hidden";
+        //document.getElementById("hdnld").style.visibility = "hidden";
+
+
+        $('#btnSubmit').attr('disabled', true);
+        $('#btnAddsubloan').hide();
+
+        var table = $('#gridLoantype').DataTable();
+
+        $('#gridLoantype tbody').on('click', 'tr', function () {
+           
+            if ($(this).hasClass('selected')) {
+              
+                $(this).removeClass('selected');
+               
+            }
+            else {
+               
+                table.$('tr.selected').removeClass('selected');
+                $(this).toggleClass('selected').siblings().removeClass('selected');
+         
+            }
+
+        });
+
+        $('#btnLoanTypeModalOK').click(function () {
+          
+            var table = $('#gridLoantype').DataTable();
+            var idx = table.row('.selected').index();
+            if (table.rows(idx) != undefined && table.rows(idx).data() != undefined) {
+               
+                var rowsel = table.rows(idx).data()[0];
+                loantype = rowsel.loan_description;
+                loanid = rowsel.id;
+                loancode = rowsel.loan_id;
+                interestrate = rowsel.interest_rate;
+                if (loancode == "@PrConstants.PF_LOANST1_CODE" || loancode == "@PrConstants.PF_LOANST2_CODE" || loancode == "@PrConstants.PF_LOANLT1_CODE" || loancode == "@PrConstants.PF_LOANLT2_CODE" || loancode == "@PrConstants.PF_LOANLT3_CODE" || loancode == "@PrConstants.PF_LOANLT4_CODE" ||loancode =="@PrConstants.PF_LOAN1_CODE" || loancode == "@PrConstants.PF_LOAN2_CODE" || loancode == "@PrConstants.FESTIVAL_LOAN_CODE" ) {
+                $('#btnAddsubloan').hide();
+                $('#hdnld').hide();
+            }
+                else {
+                    
+                $('#btnAddsubloan').show();
+                $('#hdnld').show();
+            }
+                if ($('#hdnEmpCode').val() != null) {
+                   
+                $('#loans_advances').DataTable().clear();
+                empcode = $('#hdnEmpCode').val();
+
+                code_masterarray = [];
+                CommonApiGET('/Payroll/Masters/GetLoanfieldDetails?EmpId=' + empcode + "&type=" + loantype + "&id=" + loanid + "&loancode=" + loancode, function (respData) {
+                    var n = respData;
+                  
+                    fillLoanSearchDetails(respData);
+
+                    if ($("[name='total_amount']").val() == "") {
+                        document.getElementById("lblLoan").style.display = "none";
+                        $('#btnSubmit').attr('disabled', false);
+                        $('#btnAddsubloan').attr('disabled', false);
+                    }
+                    else {
+                        document.getElementById("lblLoan").style.display = "block";
+                        $('#btnSubmit').attr('disabled', false);
+                    }
+
+
+                });
+            }
+        }
+            $('#adv_loans_modal').modal('toggle');
+
+    });
+
+    });
+
+    //ajax call for load master
+    function loaddata() {
+        CommonApiGET('/Payroll/Masters/Getloansmasterdetails', function (respData) {
+
+            //var ld = [];
+            //var dataObj = JSON.parse(respData);
+
+            //ld.push(dataObj.LTDetails)
+            //ldData = ld[0];
+
+            loantypedate = respData;
+            fillLoantypeDetails(respData);
+
+        });
+    }
+
+
+
+    function BindingLoanVendorstoDropDown(alData) {
+        LoanVendor = alData;
+        LoanVendor.map(function (obj) {
+            code_masterarray.push(obj.Name);
+        });
+    }
+    var hdnretirementdate;
+    function getDataAfterEmpSearch1440(empcode) {
+
+        $('#btnAddsubloan').show();
+        $('#txtLoantype').val('');
+        arrSampleObJ = [];
+        fillconfirmationdetails(arrSampleObJ);
+        $('#hdnEmpCode').val(empcode);
+        hdnretirementdate = $("#lblDOR").text();
+        loantype = "";
+        loanid = 0;
+        CommonApiGET('/Payroll/Masters/GetLoanfieldDetails?EmpId=' + empcode + "&type=" + loantype + "&id=" + loanid, function (respData) {
+
+            if (respData == "") {
+                $('#btnSubmit').attr('disabled', true);
+                document.getElementById("lblLoan").style.display = "none";
+            }
+            else {
+                fillLoanSearchDetails(respData);
+                if ($("[name='total_amount']").val() != "") {
+
+                    document.getElementById("lblLoan").style.display = "block";
+                    $('#btnSubmit').attr('disabled', false);
+                    $('#btnAddsubloan').attr('disabled', true);
+
+                }
+                else {
+                    $('#btnSubmit').attr('disabled', false);
+                    $('#btnAddsubloan').attr('disabled', false);
+                   
+                    document.getElementById("lblLoan").style.display = "none";
+                }
+            }
+        });
+        loaddata();
+        document.getElementById("hdndiv").style.display = "block";
+        document.getElementById("hdnld").style.display = "block";
+
+
+
+
+    }
+
+    //fill LoanType datatables from loanmaster table
+    function fillLoantypeDetails(respData) {
+        var lt = [];
+        var dataObj = JSON.parse(respData);
+        lt.push(dataObj.LTDetails);
+        var ltData = lt[0];
+        orgLTlist = ltData;
+        $('#gridLoantype').DataTable({
+            "destroy": true,
+            "paging": false,
+            "sort": false,
+            "footer": false,
+            "bInfo": false,
+            "language": {
+                "search": "Filter records:"
+            },
+            data: ltData,
+            "columns": [
+                { "data": "id", "visible": false },
+                { "data": "loan_description" },
+                { "data": "interest_rate" },
+            ],
+            "order": [[0, 'asc']]
+        });
+    }
+
+    //fill Loandetails datatable from pr_emp_adv_loans
+    function fillLoanSearchDetails(respData)
+    {
+         
+        var ld = [];
+        var al = [];
+        var lv = [];
+
+        var dataObj = JSON.parse(respData);
+
+        ld.push(dataObj.LDDetails)
+        al.push(dataObj.ALDetails);
+        lv.push(dataObj.LVDetails);
+
+        ldData = ld[0];
+        alData = al[0];
+        loanvendorData = lv[0];
+        if (al.length > 0) {
+            
+            $('#btnAddsubloan').attr('disabled', true);
+        }
+        BindingLoanVendorstoDropDown(loanvendorData);
+
+        OnloadLoantypeValue = ldData[0].Value;
+
+        loancode2 = ldData[11].Value;
+
+        orgALlist = alData;
+        orgLDList = ldData;
+        $('#loans_advances').DataTable({
+            "destroy": true,
+            "paging": false,
+            "sort": false,
+            "footer": false,
+            "searching": false,
+            "bInfo": false,
+            data: ldData,
+            "columns": [
+                { "data": "display" },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "sort": false,
+                    "mRender": function (data, type, full) {
+                      
+                        if (data.Name == "id") {
+                            return getColumnNumberloans(data.Name, data.Value);
+                        }
+                        else if (data.Name == "loan_description") {
+                            return '<input type="text" class="form-control" data-toggle="modal" name="' + data.Name + '" value ="' + data.Value + '" data-target="#adv_loans_modal" id="txtLoantype" onchange="loantypechanges()" >';
+                        }
+                        else if (data.Name == "total_amount") {
+                            if (data.Value != "") {
+                                return '<input type="number"  class = "form-control" name="' + data.Name + '" value="' + data.Value + '" onkeydown = "javascript: return event.keyCode == 69 || event.keyCode == 189? false : true" onkeypress="javascript:return isNumber(event)"  onkeyup ="autofillemiamount_onamountenter();" required readonly="readonly"/>';
+                            }
+                            else {
+                                return '<input type="number"  class = "form-control" name="' + data.Name + '" value="' + data.Value + '" onkeydown = "javascript: return event.keyCode == 69 || event.keyCode == 189? false : true" onkeypress="javascript:return isNumber(event)"  onkeyup ="autofillemiamount_onamountenter();" required />';
+
+                            }
+                        }
+                        else if (data.Name == "principal_installment") {
+                            if (data.Value != "") {
+                                return '<input type="number"  class = "form-control" name="' + data.Name + '" value="' + data.Value + '" onkeydown = "javascript: return event.keyCode == 69 || event.keyCode == 189? false : true" onkeypress="javascript:return isNumber(event)"  onkeyup ="autofillemiamount();" required readonly="readonly"/>';
+                            }
+                            else {
+                                return '<input type="number"  class = "form-control" name="' + data.Name + '" value="' + data.Value + '" onkeydown = "javascript: return event.keyCode == 69 || event.keyCode == 189? false : true" onkeypress="javascript:return isNumber(event)"  onkeyup ="autofillemiamount();" required />';
+
+                            }
+                        }
+                        else if (data.Name == "interest_installment") {
+                            if (data.Value != "") {
+                                return '<input type="number"  class = "form-control" name="' + data.Name + '" value="' + data.Value + '" onkeydown = "javascript: return event.keyCode == 69 || event.keyCode == 189? false : true" onkeypress="javascript:return isNumber(event)"  onkeyup ="autofillemiamount();" required readonly="readonly"/>';
+                            }
+                            else {
+                                return '<input type="number"  class = "form-control" name="' + data.Name + '" value="' + data.Value + '" onkeydown = "javascript: return event.keyCode == 69 || event.keyCode == 189? false : true" onkeypress="javascript:return isNumber(event)"  onkeyup ="autofillemiamount();" required />';
+
+                            }
+
+                          // return getColumnNumberloans(data.Name, data.Value);
+                        }
+                        else if (data.Name == "sanction_date") {
+                            if (data.Value != "") {
+                                return '<input type=date (yyyy-mm-dd) class = "form-control" id="sanctiondate" name="' + data.Name + '" value="' + data.Value + '"  readonly="readonly"/>';
+                            }
+                            else {
+                                return '<input type=date (yyyy-mm-dd) class = "form-control" id="sanctiondate" name="' + data.Name + '" value="' + data.Value + '"  />';
+
+                            }
+                        }
+                        else if (data.Name == "method") {
+                            var returndata;
+                            if (data.Value != "") {
+                                returndata = '<select class="form-control" size="1" name="' + data.Name + '"  onchange="pfemicalculation();"  readonly="readonly">';
+                            }
+                            else {
+                                returndata = '<select class="form-control" size="1" name="' + data.Name + '"  onchange="pfemicalculation();"  >';
+
+                            }
+                            returndata += '<option  value="Select">Select</option>';
+                            methodarr.map(function (x) {
+                                if (x === data.Value)
+                                    returndata += '<option value="' + x + '" selected="selected">' + x + '</option >';
+                                else
+                                    returndata += '<option value="' + x + '">' + x + '</option >';
+                            });
+                            returndata += '</select>';
+
+                            return returndata;
+                            // return getColumnDropdown(data.Name, data.Value, methodarr);
+                        }
+                        else if (data.Name == "interest_rate") {
+                            if (data.Value != 0) {
+                                return '<input type="text" class="form-control"  name="' + data.Name + '" value ="' + data.Value + '"  id="txtinterestrate"   readonly="readonly">';
+                                getColumnNumberloans(data.Name, data.Value);
+                            }
+                            else {
+                                return '<input type="text" class="form-control"  name="' + data.Name + '" value ="' + data.Value + '"  id="txtinterestrate" >';
+                                getColumnNumberloans(data.Name, data.Value);
+                            }
+                     
+                        }
+                        else if (data.Name == "installment_amount") {
+                            return getColumnNumberloans(data.Name, data.Value);
+                        }
+                        else if (data.Name == "interest_installment_amount") {
+                            if (loancode == "@PrConstants.PF_LOANST1_CODE" || loancode == "@PrConstants.PF_LOANST2_CODE" || loancode == "@PrConstants.PF_LOANLT1_CODE" || loancode == "@PrConstants.PF_LOANLT2_CODE" || loancode == "@PrConstants.PF_LOANLT3_CODE" || loancode == "@PrConstants.PF_LOANLT4_CODE" || loancode == "@PrConstants.PF_LOAN1_CODE" || loancode == "@PrConstants.PF_LOAN2_CODE" || loancode == "@PrConstants.FESTIVAL_LOAN_CODE" || loancode2 == "@PrConstants.PF_LOAN1_CODE" || loancode2 == "@PrConstants.PF_LOAN2_CODE" || loancode2 == "@PrConstants.FESTIVAL_LOAN_CODE" || loancode2 == "@PrConstants.PF_LOANST1_CODE" || loancode2 == "@PrConstants.PF_LOANST2_CODE" || loancode2 == "@PrConstants.PF_LOANLT1_CODE" || loancode2 == "@PrConstants.PF_LOANLT2_CODE" || loancode2 == "@PrConstants.PF_LOANLT3_CODE" || loancode2 == "@PrConstants.PF_LOANLT4_CODE" ) {
+                                return '<input type="text"  class = "form-control" id="interest_installment_amount" name="' + data.Name + '" value="' + data.Value + '" id="interestinstallmentamount" onkeydown = "javascript: return event.keyCode == 69 ? false : true" required/>';
+                            }
+                            else {
+                                return getColumnNumberloans(data.Name, data.Value);
+                            }
+
+                        }
+                        else if (data.Name == "total_recovered_amount") {
+                            return getColumnNumberloans(data.Name, data.Value);
+                        }
+                        else if (data.Name == "completed_installment") {
+                            return getColumnNumberloans(data.Name, data.Value);
+                        }
+                        else if (data.Name == "loan_start_from") {
+                            if (data.Value != "") {
+                                return '<input type=date (yyyy-mm-dd) class = "form-control" id="loanstartfrom" name="' + data.Name + '" value="' + data.Value + '" onchange="fun();"  readonly="readonly" />';
+                            }
+                            else {
+                                return '<input type=date (yyyy-mm-dd) class = "form-control" id="loanstartfrom" name="' + data.Name + '" value="' + data.Value + '" onchange="fun();"  />';
+
+                            }
+                        }
+                        else if (data.Name == "code_master") {
+                            if (loancode == "@PrConstants.PF_LOANST1_CODE" || loancode == "@PrConstants.PF_LOANST2_CODE" || loancode == "@PrConstants.PF_LOANLT1_CODE" || loancode == "@PrConstants.PF_LOANLT2_CODE" || loancode == "@PrConstants.PF_LOANLT3_CODE" || loancode == "@PrConstants.PF_LOANLT4_CODE" || loancode == "@PrConstants.PF_LOAN1_CODE" || loancode == "@PrConstants.PF_LOAN2_CODE" || loancode == "@PrConstants.FESTIVAL_LOAN_CODE" || loancode2 == "@PrConstants.PF_LOAN1_CODE" || loancode2 == "@PrConstants.PF_LOAN2_CODE" || loancode2 == "@PrConstants.FESTIVAL_LOAN_CODE" || loancode2 == "@PrConstants.PF_LOANST1_CODE" || loancode2 == "@PrConstants.PF_LOANST2_CODE" || loancode2 == "@PrConstants.PF_LOANLT1_CODE" || loancode2 == "@PrConstants.PF_LOANLT2_CODE" || loancode2 == "@PrConstants.PF_LOANLT3_CODE" || loancode2 == "@PrConstants.PF_LOANLT4_CODE" ) {
+                                return '<input type="text" disabled class = "form-control" id="codemaster" name="' + data.Name + '" value="' + data.Value + '"  onkeydown = "javascript: return event.keyCode == 69 ? false : true" required  readonly="readonly"/>';
+                            }
+                            else {
+                                return getColumnDropdown(data.Name, data.Value, code_masterarray);
+                            }
+                        }
+                        else if (data.Name == "loan_id") {
+                            return '<input type="text" disabled class = "form-control" id="loanid" name="' + data.Name + '" value="' + data.Value + '"  onkeydown = "javascript: return event.keyCode == 69 ? false : true" required/>';
+                        }
+                    }
+                }
+
+            ],
+            "order": [[1, 'asc']]
+        });
+
+        if (loancode2=="") {
+            $("[name='loan_id'").val(loancode);
+        }
+
+        fillvendordetails(alData);
+        fillconfirmationdetails(alData)
+        if ($('#txtLoantype').val() == '') {
+            $('#txtLoantype').val(loantype);
+            $('#txtinterestrate').val(interestrate);
+        }
+    }
+
+
+    //autofillemiamount_on amount enter
+    function autofillemiamount_onamountenter() {
+
+        if ($("[name='principal_installment']").val() != "") {
+            $("[name='installment_amount']").val(Math.round($("[name='total_amount']").val() / $("[name='principal_installment']").val()));
+        }
+    }
+
+    //installment calculation
+    function autofillemiamount() {
+        $("[name='installment_amount']").val(Math.round($("[name='total_amount']").val() / $("[name='principal_installment']").val()));
+    }
+
+    // installment calculation if loan is pf with equall installment
+    function pfemicalculation() {
+
+        if ($("[name='method']").val() == "@PrConstants.PF_LOAN_METHOD") {
+            var noofinstallments = $("[name='principal_installment']").val();
+            var totalamount = $("[name='total_amount']").val();
+            //var EMI = ((totalamount((11.50 / 100)) / 12)(1 + (11.50 / 100)) ^ (noofinstallments)) / ([(1 + (11.50 / 100)) ^ (noofinstallments)] - 1);
+            var EMI = (totalamount * (@PrConstants.PF_ROI / 12) * (Math.pow(1 + @PrConstants.PF_ROI / 12, noofinstallments)) / ([Math.pow(1 + @PrConstants.PF_ROI / 12, noofinstallments)] - 1));
+            $("[name='installment_amount']").val(Math.round(EMI));
+        }
+        else {
+            $("[name='installment_amount']").val(Math.round($("[name='total_amount']").val() / $("[name='principal_installment']").val()));
+        }
+    }
+
+    //fill sub loandetails datatable from pr_emp_adv_loanschild
+    function fillvendordetails(alData) {
+        $('#gridVLA').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+            data: alData,
+            "columns": [
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return getColumnNumber('*' + data.id, data.priority);
+                    }
+                },
+
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return getColumnDate('date_disburse', data.date_disburse);
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return getColumnNumber('loan_amount', data.loan_amount);
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return getColumnNumber('interest_rate', data.interest_rate);
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return getColumnNumber('interest_accured', data.interest_accured);
+                    }
+                },
+                //{
+                //    "mData": null,
+                //    "bSortable": false,
+                //    "mRender": function (data, type, full) {
+                //        return getColumnNumber('principal_amount_recovered', data.principal_amount_recovered);
+                //    }
+                //},
+                //{
+                //    "mData": null,
+                //    "bSortable": false,
+                //    "mRender": function (data, type, full) {
+                //        return getColumnNumber('interest_amount_recovered', data.interest_amount_recovered);
+                //    }
+                //},
+
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return getColumnButton(data.id, data.Action);
+                    }
+                },
+            ],
+            "order": [[1, 'asc']]
+        });
+    }
+
+
+
+    //fill confirmationdetails of subloans
+    function fillconfirmationdetails(arrSampleObJ) {
+        cfmdata = arrSampleObJ;
+        $('#gridConfirmation').DataTable({
+            "destroy": true,
+            "paging": false,
+            "sort": false,
+            "footer": false,
+            "searching": false,
+            "bInfo": false,
+            data: cfmdata,
+            "columns": [
+                { "data": "priority" },
+                { "data": "date_disburse" },
+                { "data": "loan_amount" },
+                { "data": "interest_rate" },
+                { "data": "interest_accured" },
+                //{ "data": "principal_amount_recovered" },
+                //{ "data": "interest_amount_recovered" },
+
+            ],
+            "order": [[0, 'asc']]
+        });
+        if (loancode == "@PrConstants.PF_LOANST1_CODE" || loancode == "@PrConstants.PF_LOANST2_CODE" || loancode == "@PrConstants.PF_LOANLT1_CODE" || loancode == "@PrConstants.PF_LOANLT2_CODE" || loancode == "@PrConstants.PF_LOANLT3_CODE" || loancode == "@PrConstants.PF_LOANLT4_CODE"  || loancode == "@PrConstants.PF_LOAN1_CODE" || loancode == "@PrConstants.PF_LOAN2_CODE" || loancode == "Fest" || loancode2 == "@PrConstants.PF_LOAN1_CODE" || loancode2 == "@PrConstants.PF_LOAN2_CODE" || loancode2 == "@PrConstants.FESTIVAL_LOAN_CODE" || loancode2 == "@PrConstants.PF_LOANST1_CODE" || loancode2 == "@PrConstants.PF_LOANST2_CODE" || loancode == "@PrConstants.PF_LOANLT1_CODE" || loancode2 == "@PrConstants.PF_LOANLT2_CODE" || loancode2 == "@PrConstants.PF_LOANLT3_CODE" || loancode2 == "@PrConstants.PF_LOANLT4_CODE" ) {
+            $('#hdnld').hide();
+            $('#btnAddsubloan').hide();
+        }
+        document.getElementById("subloansdiv").style.display = "block";
+    }
+
+    //add new row in subloans datatable
+    $('#addRow').click(function () {
+        var table = $('#gridVLA').DataTable();
+        if (table.data().count() <= 1) {
+            var updateData = table.$('input, select').serialize();
+            var arrUpdate = updateData.split("*");
+            var arrSampleObJ = [];
+            arrUpdate.forEach(function (element) {
+                if (element != "") {
+                    var objEf = {};
+                    var strRow = element.split("&");
+                    var id = strRow[0].split("=");
+                    objEf.id = id[0];
+                    objEf.priority = id[1];
+
+                    var ddburse = strRow[1].split("=");
+                    objEf.date_disburse = ddburse[1];
+
+                    var amt = strRow[2].split("=");
+                    objEf.loan_amount = amt[1];
+
+                    var intrt = strRow[3].split("=");
+                    objEf.interest_rate = intrt[1];
+
+                    var intacc = strRow[4].split("=");
+                    objEf.interest_accured = intacc[1];
+
+                    //var lnrep = strRow[5].split("=");
+                    //objEf.principal_amount_recovered = lnrep[1];
+
+                    //var intrep = strRow[6].split("=");
+                    //objEf.interest_amount_recovered = intrep[1];
+
+                    //var prity = strRow[7].split("=");
+                    //objEf.priority = prity[1];
+
+                    if (isNaN(id[0])) {
+                        objEf.Action = "Delete";
+                    } else {
+                        objEf.Action = "Add";
+                    }
+                    arrSampleObJ.push(objEf);
+                }
+            });
+            modifiedData = arrSampleObJ;
+            //var priorityNum1& 2 = modifiedData
+            incIndex++;
+            var incId = "NeW" + incIndex;
+            var row = {
+                "id": incId,
+                "priority": "",
+                "date_disburse": "",
+                "amount": "",
+                "interest_rate": "",
+                "interest_accured": "",
+                "loan_repaid": "",
+                "insterest_repaid": "",
+                "Action": "Delete"
+            };
+            modifiedData.push(row);
+            fillvendordetails(modifiedData);
+        }
+    });
+
+    //delete row in subloan
+    function deleteRow(id) {
+         
+        var table = $('#gridVLA').DataTable();
+        var updateData = table.$('input, select').serialize();
+        var arrUpdate = updateData.split("*");
+        var arrSampleObJ = [];
+        arrUpdate.forEach(function (element) {
+            if (element != "") {
+                var objEf = {};
+                var strRow = element.split("&");
+                var id = strRow[0].split("=");
+                objEf.id = id[0];
+                objEf.priority = id[1];
+
+                var ddburse = strRow[1].split("=");
+                objEf.date_disburse = ddburse[1];
+
+                var amt = strRow[2].split("=");
+                objEf.loan_amount = amt[1];
+
+                var intrt = strRow[3].split("=");
+                objEf.interest_rate = intrt[1];
+
+                var intacc = strRow[4].split("=");
+                objEf.interest_accured = intacc[1];
+
+                //var lnrep = strRow[5].split("=");
+                //objEf.principal_amount_recovered = lnrep[1];
+
+                //var intrep = strRow[6].split("=");
+                //objEf.interest_amount_recovered = intrep[1];
+
+                //var prity = strRow[7].split("=");
+                //objEf.priority = prity[1];
+
+                if (isNaN(id[0])) {
+                    objEf.Action = "Delete";
+                } else {
+                    objEf.Action = "Add";
+                }
+                arrSampleObJ.push(objEf);
+            }
+        });
+
+        modifiedData = arrSampleObJ;
+
+        modifiedData = modifiedData.filter(function (obj) {
+            return obj.id !== id;
+        });
+        cfmdata = modifiedData;
+
+        fillvendordetails(modifiedData);
+    }
+
+    function deleteEntireRow(id) {
+        var table = $('#gridVLA').DataTable();
+        var updateData = table.$('input, select').serialize();
+        var arrUpdate = updateData.split("*");
+        var arrSampleObJ = [];
+        arrUpdate.forEach(function (element) {
+            if (element != "") {
+                var objEf = {};
+                var strRow = element.split("&");
+                var id = strRow[0].split("=");
+                objEf.id = id[0];
+                objEf.priority = id[1];
+
+                var ddburse = strRow[1].split("=");
+                objEf.date_disburse = ddburse[1];
+
+                var amt = strRow[2].split("=");
+                objEf.loan_amount = amt[1];
+
+                var intrt = strRow[3].split("=");
+                objEf.interest_rate = intrt[1];
+
+                var intacc = strRow[4].split("=");
+                objEf.interest_accured = intacc[1];
+
+                //var lnrep = strRow[5].split("=");
+                //objEf.principal_amount_recovered = lnrep[1];
+
+                //var intrep = strRow[6].split("=");
+                //objEf.interest_amount_recovered = intrep[1];
+
+                //var prity = strRow[7].split("=");
+                //objEf.priority = prity[1];
+
+                if (isNaN(id[0])) {
+                    objEf.Action = "Delete";
+                } else {
+                    objEf.Action = "Add";
+                }
+                arrSampleObJ.push(objEf);
+            }
+        });
+
+        modifiedData = arrSampleObJ;
+        modifiedData = modifiedData.filter(function (obj) {
+
+            if (obj.id != "null" && id != "null") {
+                if (obj.id == id) {
+                    obj.Action = "Deleted";
+                    arrDelete.push(obj);
+                } else {
+                    return obj.id !== id;
+                }
+            }
+        });
+
+        fillvendordetails(modifiedData);
+    }
+
+    //$('#btnNext').click(function () {
+    //    document.getElementById("hdnld").style.display = "block";
+    //});
+
+
+    $('#btnSubmit').click(function () {
+         
+        var emp_id1 = $('#pvTxtEmpCode1440').val();
+        console.log(JSON.stringify(ldData));
+        var addmonths = parseInt($("[name='principal_installment']").val()) + parseInt($("[name='interest_installment']").val());
+        //loan start date
+        var l_s_date = $("[name='loan_start_from']").val();
+        var Loan_start_date = new Date(l_s_date);
+
+        //adding number of installments (months) to loan start date to compare with retirement date
+        Loan_start_date.setMonth(Loan_start_date.getMonth() + addmonths);
+        var ls_day = Loan_start_date.getDate();
+        var ls_month = Loan_start_date.getMonth() + 1;
+        var ls_year = Loan_start_date.getFullYear();
+
+        //retirement date
+        var r_date = hdnretirementdate.split('-');
+        var r_year = parseInt(r_date[2]);
+        var r_month = parseInt(r_date[1]);
+        var r_day = parseInt(r_date[0]);
+        var int_install_amount = $("[name='interest_installment_amount']").val();
+
+
+        if ($("[name='loan_description']").val() == '') {
+            showGlobalModal("I#Warning!# Please Select Loan Type");
+        }
+        else if ($("[name='total_amount']").val() == '') {
+            showGlobalModal("I#Warning!# Please Enter Total Amount");
+        }
+        else if ($("[name='principal_installment']").val() == '') {
+            showGlobalModal("I#Warning!# Please Enter No of Installments");
+        }
+        else if ($("[name='interest_installment']").val() == '') {
+            showGlobalModal("I#Warning!# Please Enter Interest Installment");
+        }
+        else if ($("[name='sanction_date']").val() == '') {
+            showGlobalModal("I#Warning!# Please Select Sanction Date");
+        }
+        else if ($("[name='method']").val() == '' || $("[name='method']").val() == "Select") {
+            showGlobalModal("I#Warning!# Please Select Method");
+        }
+        else if ($("[name='interest_rate']").val() == '') {
+            showGlobalModal("I#Warning!# Please Enter Interest Rate");
+        }
+        else if ($("[name='installment_amount']").val() == '' || $("[name='installment_amount']").val() == 0) {
+            showGlobalModal("I#Warning!# Please Enter Installment Amount");
+        }
+        else if ($("[name='interest_installment_amount']").val() == '' && loancode != "@PrConstants.PF_LOANST1_CODE" && loancode != "@PrConstants.PF_LOANST2_CODE" && loancode != "@PrConstants.PF_LOANLT1_CODE" && loancode != "@PrConstants.PF_LOANLT2_CODE" && loancode != "@PrConstants.PF_LOANLT3_CODE" && loancode != "@PrConstants.PF_LOANLT4_CODE" && loancode != "@PrConstants.PF_LOAN1_CODE" && loancode != "@PrConstants.PF_LOAN2_CODE" && loancode != "@PrConstants.FESTIVAL_LOAN_CODE" && loancode2 != "@PrConstants.PF_LOAN1_CODE" && loancode2 != "@PrConstants.PF_LOAN2_CODE" && loancode2 != "@PrConstants.FESTIVAL_LOAN_CODE"  && loancode2 != "@PrConstants.PF_LOANST1_CODE" && loancode2 != "@PrConstants.PF_LOANST2_CODE" && loancode2 != "@PrConstants.PF_LOANLT1_CODE" && loancode2 != "@PrConstants.PF_LOANLT2_CODE" && loancode2 != "@PrConstants.PF_LOANLT3_CODE" && loancode2 != "@PrConstants.PF_LOANLT4_CODE") {
+            showGlobalModal("I#Warning!# Please Enter Interest Installment Amount");
+        }
+        else if (int_install_amount == "" && loancode == "@PrConstants.FESTIVAL_LOAN_CODE"){
+            showGlobalModal("I#Warning!# Please Enter Interest Installment Amount");
+        }
+        else if ($("[name='total_recovered_amount']").val() == '') {
+            showGlobalModal("I#Warning!# Please Enter Total Recovered Amount");
+        }
+        else if ($("[name='completed_installment']").val() == '') {
+            showGlobalModal("I#Warning!# Please Enter Completed Installment");
+        }
+        else if ($("[name='loan_start_from']").val() == '') {
+            showGlobalModal("I#Warning!# Please Select Loan Start From");
+        }
+        else if (($("[name='code_master']").val() == '' || $("[name='code_master']").val() == "Select") && loancode != "@PrConstants.PF_LOANST1_CODE" && loancode != "@PrConstants.PF_LOANST2_CODE" && loancode != "@PrConstants.PF_LOANLT1_CODE" && loancode != "@PrConstants.PF_LOANLT2_CODE" && loancode != "@PrConstants.PF_LOANLT3_CODE" && loancode != "@PrConstants.PF_LOANLT4_CODE" && loancode != "@PrConstants.PF_LOAN1_CODE" && loancode != "@PrConstants.PF_LOAN2_CODE" && loancode != "@PrConstants.FESTIVAL_LOAN_CODE" && loancode2 != "@PrConstants.PF_LOAN1_CODE" && loancode2 != "@PrConstants.PF_LOAN2_CODE" && loancode2 != "@PrConstants.FESTIVAL_LOAN_CODE" && loancode2 != "@PrConstants.PF_LOANST1_CODE" && loancode2 != "@PrConstants.PF_LOANST2_CODE" && loancode2 != "@PrConstants.PF_LOANLT1_CODE" && loancode2 != "@PrConstants.PF_LOANLT2_CODE" && loancode2 != "@PrConstants.PF_LOANLT3_CODE" && loancode2 != "@PrConstants.PF_LOANLT4_CODE" )
+        {
+            showGlobalModal("I#Warning!# Please Select Loan Vendor Name");
+        }
+        else if (cfmdata.length==0 && loancode != "@PrConstants.PF_LOAN1_CODE" && loancode != "@PrConstants.PF_LOAN2_CODE" && loancode != "@PrConstants.PF_LOANST1_CODE" && loancode != "@PrConstants.PF_LOANST2_CODE" && loancode != "@PrConstants.PF_LOANLT1_CODE" && loancode != "@PrConstants.PF_LOANLT2_CODE" && loancode != "@PrConstants.PF_LOANLT3_CODE" && loancode != "@PrConstants.PF_LOANLT4_CODE" && loancode != "@PrConstants.FESTIVAL_LOAN_CODE" && loancode2 != "@PrConstants.PF_LOAN1_CODE" && loancode2 != "@PrConstants.PF_LOAN2_CODE" && loancode2 != "@PrConstants.PF_LOANST1_CODE" && loancode2 != "@PrConstants.PF_LOANST2_CODE" && loancode2 != "@PrConstants.PF_LOANLT1_CODE" && loancode2 != "@PrConstants.PF_LOANLT2_CODE" && loancode2 != "@PrConstants.PF_LOANLT3_CODE" && loancode2 != "@PrConstants.PF_LOANLT4_CODE" && loancode2 != "@PrConstants.FESTIVAL_LOAN_CODE")
+        {
+            showGlobalModal("I#Warning!# Please Enter Sub Loan Details");
+        }
+
+        else if (ls_year == r_year && ls_month == r_month && ls_day > r_day && emp_id1 != 374) {
+
+            showGlobalModal('E#Warning #Loan End Date is Greater than Retirement date, Please Enter Less Installments');
+            $("[name='loan_start_from']").val('mm/dd/yyyy');
+        }
+        else if (ls_year == r_year && ls_month > r_month && emp_id1 != 374) {
+            showGlobalModal('E#Warning #Loan End Date is Greater than Retirement date, Please Enter Less Installments');
+            $("[name='loan_start_from']").val('mm/dd/yyyy');
+        }
+
+        else if (ls_year > r_year && emp_id1 != 374) {
+            showGlobalModal('E#Warning #Loan End Date is Greater than Retirement date, Please Enter Less Installments');
+            $("[name='loan_start_from']").val('mm/dd/yyyy');
+        }
+
+        else {
+             
+            var emp_id = $('#pvTxtEmpCode1440').val();
+            //loaddata();
+            var table = $('#loans_advances').DataTable();
+            var updateData = decodeURIComponent(table.$('input, select').serializeAndEncode());
+            var arrerresult = [];
+            var res = updateData.replace("+", " ");
+            var res1 = res.replace("+", " ");
+            var res2 = res1.replace("+", " ");
+            var arrer = res2.split('&');
+            
+            arrer.map(function (x) {
+               
+                var arrkeys = x.split('=');
+                orgLDList.map(function (o) {
+                   
+                    if (o.Name == arrkeys[0] && o.Value != arrkeys[1]) {
+                       
+                        x = x+"#"+o.Action;
+                        arrerresult.push(x);
+                    }
+                });
+            });
+          
+            var arrEf = [];
+            if (arrerresult.length > 0) {
+                arrerresult.forEach(function (element) {
+                    console.log(element);
+                     
+                    var objEf = {};
+                    var strEf = element.split("#");
+                    var strValues = strEf[0].split("=");
+                    objEf.Name = strValues[0];
+                    objEf.value = strValues[1];
+                    objEf.Action = strEf[1]
+                    arrEf.push(objEf);
+                });
+
+                var dataToSend = JSON.stringify({
+                    'EntityId': emp_id,
+                    'StringData': $("[name='loan_id'").val(),
+                    'Loancols': arrEf,
+                    'objectLD': cfmdata,
+                });
+
+                if (arrEf.length > 0) {
+                    CommonApiPOST("/payroll/Masters/SaveLoanDetailsfields", dataToSend, function (isSuccess) {
+                        if (isSuccess) {
+                            //window.location.reload();
+                            setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                        }
+                    });
+
+                }
+
+            }
+        }
+
+    });
+
+    function readloandiviontable(callback) {
+         
+        var _id;
+        var _ddburse;
+        var _amt;
+        var _intrt;
+        var _intacc;
+        var _lnrep;
+        var _intrep;
+
+        var data = $('#gridVLA').DataTable().$('input, select').serialize();
+        var nrows = data.split('*');
+
+        var arrSampleObJ = [];
+        nrows.forEach(function (element) {
+            if (element != "") {
+                var objEf = {};
+                var strRow = element.split("&");
+                var id = strRow[0].split("=");
+                objEf.id = id[0];
+                objEf.priority = id[1];
+                _id = id[1];
+
+                var ddburse = strRow[1].split("=");
+                objEf.date_disburse = moment(ddburse[1]).format('DD-MM-YYYY');
+                _ddburse = moment(ddburse[1]).format('DD-MM-YYYY');
+                if (_ddburse == "Invalid date") {
+                    objEf.date_disburse = "dd-mm-yyy";
+                   // $('#gridConfirmation').dataTable();
+                }
+                var amt = strRow[2].split("=");
+                objEf.loan_amount = amt[1];
+                _amt = amt[1];
+
+                var intrt = strRow[3].split("=");
+                objEf.interest_rate = intrt[1];
+                _intrt == intrt[1];
+
+                var intacc = strRow[4].split("=");
+                objEf.interest_accured = intacc[1];
+                _intacc = intacc[1];
+
+                //var lnrep = strRow[5].split("=");
+                //objEf.principal_amount_recovered = lnrep[1];
+                //_lnrep = lnrep[1];
+
+                //var intrep = strRow[6].split("=");
+                //objEf.interest_amount_recovered = intrep[1];
+                //_intrep = intrep[1];
+                //var prity = strRow[7].split("=");
+                //objEf.priority = prity[1];
+
+                if (isNaN(id[0])) {
+                    objEf.Action = "Delete";
+                } else {
+                    objEf.Action = "Add";
+                }
+                if (id[1] > 2) {
+                    showGlobalModal("I#Warning!# Please Enter Priority Less than 3");
+                    _id = "";
+                }
+                else if (id[1]=="")
+                {
+                    showGlobalModal("I#Warning!# Please Enter Priority");
+                }
+
+                else if (ddburse[1]=="") {
+                    showGlobalModal("I#Warning!# Please Enter Date of Disburse");
+                }
+                else if (amt[1] == "") {
+                    showGlobalModal("I#Warning!# Please Enter Loan Amount");
+                }
+                else if (intrt[1] == "") {
+                    showGlobalModal("I#Warning!# Please Enter Innterest Rate");
+                }
+                else if (intacc[1] == "") {
+                    showGlobalModal("I#Warning!# Please Enter Innterest Accured");
+                }
+                //else if (lnrep[1] == "") {
+                //    showGlobalModal("I#Warning!# Please Enter Principal Amount Recovered");
+                //}
+                //else if (intrep[1] == "") {
+                //    showGlobalModal("I#Warning!# Please Enter Interest Amount Recovered");
+                //}
+                else (objEf.priority != "" || objEf.loan_amount != "" && objEf.priority < 3)
+                {
+                    arrSampleObJ.push(objEf);
+                    fillconfirmationdetails(arrSampleObJ);
+
+                }
+            }
+
+        });
+        if (data == "") {
+            $('#gridConfirmation').dataTable().fnClearTable();
+        }
+        if (_id != "" && _ddburse != "" && _amt != "" && _intrt != "" && _intacc != "") {
+            // && _lnrep[1] != "" && _intrep[1] != ""
+            $('#adv_loans_modal_sub').modal('toggle');
+      
+        }
+      
+          
+ 
+
+    }
+
+
+    function reloadoncancel() {
+
+        var empid = $("#hdnEmpCode").val();
+        if (empid == "") {
+            window.location.reload();
+
+        }
+        else {
+            CommonApiGET('/Payroll/Masters/GetLoanfieldDetails?EmpId=' + empcode + "&type=" + loantype + "&id=" + loanid, function (respData) {
+                if (respData == "") {
+
+                    $('#btnSubmit').attr('disabled', true);
+                }
+                else {
+                    fillLoanSearchDetails(respData);
+                    $('#btnSubmit').attr('disabled', false);
+                    $('#btnAddsubloan').attr('disabled', false);
+                }
+            });
+        }
+    }
+
+    function SubLoanCancel() {
+        var empid = $("#hdnEmpCode").val();
+        if (empid == "") {
+            window.location.reload();
+        }
+        else {
+            //fillLoanSearchDetails(respData)
+            fillvendordetails(alData);
+        }
+    }
+
+    //validate loanstartfrom date
+    function fun() {
+         
+        var fm = $("[name='sanction_date']").val();
+        var fm2 = $("[name='loan_start_from']").val();
+
+        //var fromdate = fm.split('-');
+        //var yyyy = parseInt(fromdate[0]);
+        //var mm = parseInt(fromdate[1]);
+        //var dd = parseInt(fromdate[2]);
+        //var todate = fm2.split('-');
+        //var yyyy2 = parseInt(todate[0]);
+        //var mm2 = parseInt(todate[1]);
+        //var dd2 = parseInt(todate[2]);
+        // checking
+      
+        //var eDate = moment(fm2, "DD.MM.YYYY");
+        //var sDate = moment(fm, "DD.MM.YYYY");
+        if (fm > fm2) {
+            showGlobalModal('E#Warning #Please ensure that Loan Start Date is greater than or equal to sanction Date.');           
+            $("[name='loan_start_from']").val('mm/dd/yyyy');
+            return false;
+        }
+       
+        //if (mm == mm2 && yyyy == yyyy2 && dd > dd2) {
+        //    showGlobalModal('E#Warning #Please Enter Loan Start from date greater than sanction date');
+        //    $("[name='loan_start_from']").val('mm/dd/yyyy');
+        //}
+        //else if (mm > mm2 || yyyy >yyyy2) {
+        //    showGlobalModal('E#Warning #Please Enter Loan Start from date greater than sanction date');
+        //    $("[name='loan_start_from']").val('mm/dd/yyyy');
+        //}
+    }
+
+    function validation() {
+
+    }
+
+</script>
+<script src="~/Areas/Payroll/Assets/libs/jquery/moment.js"></script>
+

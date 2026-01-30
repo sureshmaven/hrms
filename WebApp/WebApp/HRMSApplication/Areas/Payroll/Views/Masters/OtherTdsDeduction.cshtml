@@ -1,0 +1,131 @@
+﻿
+@{
+    ViewBag.Title = "OtherTdsDeduction";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="leftmenu-container">
+                <div class="sidebar-menu">
+                    @{Html.RenderPartial("_PVPayrollMenu");}
+                </div>
+                <div class="sidebar-content">
+                    <div class="main_heading">
+                        <h1>Other TDS Deductions<span class="year-end">@ViewBag.Env_Fm_Fy</span></h1>
+                        @{ Html.RenderPartial("_pvEmployeeSearch"); }
+                        <input type="hidden" id="hdnEmpCode" />
+                        <div class="col-md-12 mt_10">
+                            <div class="table-responsive">
+                                <table id="otherTDSGrid" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>TDS Details</th>
+                                            <th>Enter Particulars</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt_10">
+                            <div class="pull-right">
+                                <button type="button" id="btnCancel" class="btn btn-default" title="Clear the data">Cancel</button>
+                                <button type="submit" id="btnsubmit" value="Submit" class="btn btn-primary" title="Submit details"> Submit</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+
+    var orgDdlist;
+    $(document).ready(function () {
+
+        $('#otherTDSGrid').DataTable({
+            "paging": false,
+            "sort": false,
+            "searching": false,
+            "language": {
+                "emptyTable": "No data available. Please enter employee code and search"
+            }
+        });
+
+
+    });
+
+    function getDataAfterEmpSearch1440(empcode) {
+
+        //$("#btnsubmit").attr("disabled", false);
+        $('#hdnEmpCode').val(empcode);
+        CommonApiGET('/Payroll/Masters/getOtherTDSDeductions?EmpId=' + empcode, function (respData) {
+            orgDdlist = respData;
+            fillDataTables(respData);
+
+        });
+    }
+
+
+    $('#btnCancel').click(function () {
+        //fillDataTables(orgDdlist);
+        fillDataTables(orgDdlist);
+    });
+    function fillDataTables(respData) {
+
+        $('#otherTDSGrid').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+            data: respData,
+            "columns": [
+                { "data": "Name" },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        if (data.Id == "action_type") {
+                            var ele = getHiddenField(data.Id, data.Value);
+                        } else if (data.Name == "TDS Amount") { //arrDesignationList
+                            var ele = getColumnNumber(data.Id, data.Value);
+                        }
+                        else {
+                            var ele = getColumnTextAreaWithoutReadOnly(data.Id, data.Value);
+                        }
+                        return ele;
+                    }
+                }
+
+            ],
+            "order": [[1, 'asc']]
+        });
+
+    }
+    $('#btnsubmit').click(function () {
+        var general = $('#otherTDSGrid').DataTable();
+        var updateData = decodeURIComponent(general.$('input, select,textarea').serializeAndEncode());
+        var ModifiedPayList = getModifiedDataFromJDT(updateData, orgDdlist);
+        if (ModifiedPayList != "") {
+            var dataToSend = JSON.stringify({
+                'EntityId': $("#hdnEmpCode").val(),
+                'stringData': updateData
+            });
+            CommonApiPOST("/Payroll/Masters/saveOtherTDSDeductions", dataToSend, function (isSuccess) {
+                if (isSuccess) {
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+        }
+        else {
+            showGlobalModal('E#Save Error#Please Enter/Modify Data ');
+            return false;
+        }
+    });
+
+</script>

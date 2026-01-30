@@ -1,0 +1,43 @@
+
+Insert into pr_emp_allowances_spl ([id],[emp_id],[emp_code],[fy],[fm],[m_id],[m_type],[amount],[active],[trans_id]) values (((select max(id)+1 from pr_emp_allowances_spl)),(select id from employees where empid=425),425,2021,'2021-01-01',24,'EMPA', 1000,1, (select max(trans_id)+1 from pr_emp_allowances_spl));
+
+Insert into pr_emp_allowances_spl ([id],[emp_id],[emp_code],[fy],[fm],[m_id],[m_type],[amount],[active],[trans_id]) values (((select max(id)+1 from pr_emp_allowances_spl)),(select id from employees where empid=516),516,2021,'2021-01-01',24,'EMPA', 1000,1, (select max(trans_id)+1 from pr_emp_allowances_spl));
+
+Insert into pr_emp_allowances_spl ([id],[emp_id],[emp_code],[fy],[fm],[m_id],[m_type],[amount],[active],[trans_id]) values (((select max(id)+1 from pr_emp_allowances_spl)),(select id from employees where empid=521),521,2021,'2021-01-01',24,'EMPA', 1000,1, (select max(trans_id)+1 from pr_emp_allowances_spl));
+
+Insert into pr_emp_allowances_spl ([id],[emp_id],[emp_code],[fy],[fm],[m_id],[m_type],[amount],[active],[trans_id]) values (((select max(id)+1 from pr_emp_allowances_spl)),(select id from employees where empid=6195),6195,2021,'2021-01-01',24,'EMPA', 1000,1, (select max(trans_id)+1 from pr_emp_allowances_spl));
+
+Insert into pr_emp_allowances_spl ([id],[emp_id],[emp_code],[fy],[fm],[m_id],[m_type],[amount],[active],[trans_id]) values (((select max(id)+1 from pr_emp_allowances_spl)),(select id from employees where empid=6366),6366,2021,'2021-01-01',24,'EMPA', 1000,1, (select max(trans_id)+1 from pr_emp_allowances_spl));
+
+Insert into pr_emp_allowances_spl ([id],[emp_id],[emp_code],[fy],[fm],[m_id],[m_type],[amount],[active],[trans_id]) values (((select max(id)+1 from pr_emp_allowances_spl)),(select id from employees where empid=6450),6450,2021,'2021-01-01',24,'EMPA', 1000,1, (select max(trans_id)+1 from pr_emp_allowances_spl));
+
+Insert into pr_emp_allowances_spl ([id],[emp_id],[emp_code],[fy],[fm],[m_id],[m_type],[amount],[active],[trans_id]) values (((select max(id)+1 from pr_emp_allowances_spl)),(select id from employees where empid=505),505,2021,'2021-01-01',49,'EMPA', 1200,1, (select max(trans_id)+1 from pr_emp_allowances_spl));
+
+Insert into pr_emp_allowances_spl ([id],[emp_id],[emp_code],[fy],[fm],[m_id],[m_type],[amount],[active],[trans_id]) values (((select max(id)+1 from pr_emp_allowances_spl)),(select id from employees where empid=954),954,2021,'2021-01-01',52,'EMPA', 750,1, (select max(trans_id)+1 from pr_emp_allowances_spl));
+
+Insert into pr_emp_allowances_spl ([id],[emp_id],[emp_code],[fy],[fm],[m_id],[m_type],[amount],[active],[trans_id]) values (((select max(id)+1 from pr_emp_allowances_spl)),(select id from employees where empid=6334),6334,2021,'2021-01-01',52,'EMPA', 750,1, (select max(trans_id)+1 from pr_emp_allowances_spl));
+
+Insert into pr_emp_allowances_spl ([id],[emp_id],[emp_code],[fy],[fm],[m_id],[m_type],[amount],[active],[trans_id]) values (((select max(id)+1 from pr_emp_allowances_spl)),(select id from employees where empid=6425),6425,2021,'2021-01-01',52,'EMPA', 387.10,1, (select max(trans_id)+1 from pr_emp_allowances_spl));
+
+
+update pr_month_attendance set lop_days=1 , working_days=30 where emp_code=789 and active=1;
+
+update pr_month_attendance set lop_days=1 , working_days=30 where emp_code=6483 and active=1;
+
+update pr_emp_allowances_spl set amount=500 where m_id=27 and fm='2021-01-01' and emp_code=805 and active=1;
+
+update employees set RetirementDate='2048-01-31 00:00:00.000' where empid=6477;
+
+--CCS-HYD
+update pr_emp_deductions set amount=0 where emp_code=508 and fm='2021-01-01' and m_id=34
+update pr_emp_deductions set amount=0 where emp_code=538 and fm='2021-01-01' and m_id=34
+update pr_emp_deductions set amount=0 where emp_code=789 and fm='2021-01-01' and m_id=34
+update pr_emp_deductions set amount=0 where emp_code=831 and fm='2021-01-01' and m_id=34
+
+--LIC
+update pr_emp_lic_details set stop='Yes' where emp_code=301 AND active=1 AND amount>0 and stop='No' and amount=142 and fm='2021-01-01';
+update pr_emp_lic_details set stop='Yes' where emp_code=462 AND active=1 AND amount>0 and stop='No' and amount=508 and fm='2021-01-01';
+update pr_emp_lic_details set amount=2943 where emp_code=854 AND active=1 AND amount>0 and stop='No' and fm='2021-01-01';
+
+--NON PRIORITY PERSONAL LOAN
+update pr_emp_deductions set amount=19590 where fm='2021-01-01' and emp_code=789 and amount!=0 and m_id=163;

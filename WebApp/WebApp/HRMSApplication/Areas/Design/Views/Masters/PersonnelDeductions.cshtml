@@ -1,0 +1,121 @@
+﻿
+@{
+    ViewBag.Title = "PersonnelDeductions";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <h1>Personal Deductions<span class="year-end">TGCAB 01-04-2019 - 31-04-2020</span></h1>
+                    <div class="emp-serch">
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label">Employee Id:</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-sm-1 col-xs-12"><button type="button" class="btn btn-primary btn-sm pull-right">Search</button></div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label">Employee Name :</label>
+                                    <div class="col-sm-6">
+                                        <label class="control-label"> raju sadhula</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label">Department :</label>
+                                    <div class="col-sm-6">
+                                        <label class="control-label">  IT</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label">Designation :</label>
+                                    <div class="col-sm-6">
+                                        <label class="control-label"> UI Developer</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label">Date of Joining :</label>
+                                    <div class="col-sm-6">
+                                        <label class="control-label"> 27/04/2017</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="col-md-12 mt_10">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class="table-responsive">
+                                    <table id="personal_ded" class="display" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Description</th>
+                                                <th>Amount</th>
+                                                <th>Section</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>HFC INT</td>
+                                                <td>0.00</td>
+                                                <td>Housing Loan</td>
+                                            </tr>
+                                            <tr>
+                                                <td>HLOAN INT INHOUSE </td>
+                                                <td>8062.00</td>
+                                                <td>Housing Loan</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-2 mt_24">
+                                <div class="main_heading">
+                                    <div class="house_loan">
+                                        <p>
+                                            Housing Loan Interest 8062.0
+                                            Section 8oc,LIC PF107900.00
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mt_10">
+                        <div class="pull-right">
+                            <button type="reset" class="btn btn-default cancel">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Delete Row</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#personal_ded').DataTable();
+    });
+</script>
+
+

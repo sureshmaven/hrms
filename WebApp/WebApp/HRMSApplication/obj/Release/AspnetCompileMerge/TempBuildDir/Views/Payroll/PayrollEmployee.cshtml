@@ -1,0 +1,736 @@
+﻿@model Entities.Payroll_FW
+
+
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var rolepages = TempData["RolePages"].ToString();
+    ViewBag.RolePages = TempData["RolePages"];
+}
+
+@{
+    var message = TempData["AlertMessage"] ?? string.Empty;
+}
+@*<script type="text/javascript" src="~/Assets/hrms/Register.js"></script>*@
+<script type="text/javascript">
+    var message = '@message';
+    if (message) alert(message);
+
+</script>
+
+
+@{
+    var message1 = TempData["AlertMessage1"] ?? string.Empty;
+}
+@*<script type="text/javascript" src="~/Assets/hrms/Register.js"></script>*@
+<script type="text/javascript">
+    var message1 = '@message1';
+    if (message1) alert(message1);
+
+</script>
+
+<style>
+    .activeClass {
+        background: #ffdb99;
+    }
+
+    .secondClass {
+        /*background: #FF9999;*/
+        color: red;
+    }
+</style>
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-heading">
+            @{
+                <ul class="nav nav-tabs">
+                    @if (rolepages.Contains("PRMain"))
+                    {
+                        <li class="active"><a href=@Url.Action("Index", "Payroll")>PAYROLL</a></li>}
+
+                </ul>
+            }
+        </div>
+        @using (Html.BeginForm("Create", "Payroll", FormMethod.Post))
+        {
+            <div class="container">
+                <div class="page_st">
+                    <div class="page">
+                        <div class="form-horizontal form-horizontal2">
+                            <div class="page_start">
+                                @{
+
+
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="main_heading">
+                                            <h1>Employee Fixed Wages</h1>
+                                            <div class="form-horizontal col-md-12 col-sm-12 col-xs-12">
+                                                <div class="col-md-12 col-sm-12">
+                                                    <div class="form-horizontal">
+                                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-md-12 col-sm-12">
+                                                <div class="main_heading">
+                                                    <h1>Employee Details </h1>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-5 control-label">Employee Name: <span class="mandatory">*</span></label>
+                                                            <div class="col-sm-7">
+                                                                
+                                                                <input type="text" id="EmpName" class="form-control" value=@ViewBag.Name readonly="readonly">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-5 control-label">Employee Code: <span class="mandatory">*</span></label>
+                                                            <div class="col-sm-7">
+                                                                @Html.EditorFor(model => model.EmpCode, new { htmlAttributes = new { @class = "form-control", @Value = ViewBag.EmpCode, @readonly = "readonly", @id = "Empcode" } })
+                                                                
+                                                                @*<input type="text" id="EmpId" class="form-control" value=@ViewBag.EmpId readonly="readonly">*@
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        @Html.HiddenFor(model => model.empid, new { id = "hdnFlag", @Value = ViewBag.EmpId })
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-5 control-label">Branch/Dept: <span class="mandatory">*</span></label>
+                                                            <div class="col-sm-7">
+                                                                @*@Html.EditorFor(model => model.EmpBranch, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.EmpBranch, "", new { @class = "text-danger" })*@
+                                                                @*<input type="text" id="EmpId" class="form-control" value=@ViewBag.DdlOneData1 readonly="readonly">*@
+
+                                                                <input type="text" id="EmpBranch" class="form-control" value=@ViewBag.branchname readonly="readonly">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-5 control-label">Designation: <span class="mandatory">*</span></label>
+                                                            <div class="col-sm-7">
+                                                                @*@Html.EditorFor(model => model.EmpDesignation, new { htmlAttributes = new { @class = "form-control", @Value = ViewBag.Designation, @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.EmpDesignation, "", new { @class = "text-danger" })*@
+                                                                <input type="text" id="EmpId" class="form-control" value=@ViewBag.Designation readonly="readonly">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-5 control-label">PAN No: <span class="mandatory">*</span></label>
+                                                            <div class="col-sm-7">
+                                                                @Html.EditorFor(model => model.EmpPANno, new { htmlAttributes = new { @class = "form-control", @Value = ViewBag.Pan, @readonly = "readonly" } })
+                                                                
+                                                                @*<input type="text" id="EmpId" class="form-control" value=@ViewBag.Pan readonly="readonly">*@
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-5 control-label">Email ID: <span class="mandatory">*</span></label>
+                                                            <div class="col-sm-7">
+                                                                @Html.EditorFor(model => model.EmpEmailId, new { htmlAttributes = new { @class = "form-control", @Value = ViewBag.email, @readonly = "readonly" } })
+                                                               
+                                                                @*<input type="text" id="EmpId" class="form-control" value=@ViewBag.email readonly="readonly">*@
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12 col-sm-12">
+                                                <div class="main_heading">
+                                                    <h1>Account Details </h1>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-5 control-label">ESI No:</label>
+                                                            <div class="col-sm-7">
+                                                                @Html.EditorFor(model => model.EmpESIno, null, new { htmlAttributes = new { @class = "form-control", @Value = ViewBag.EmpESIno } })
+                                                               
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-5 control-label">UAN-PF No: <span class="mandatory">*</span></label>
+                                                            <div class="col-sm-7">
+                                                                @Html.EditorFor(model => model.EmpUAN_PFno, new { htmlAttributes = new { @class = "form-control", @Value = ViewBag.EmpUAN_PFno , @id = "UANno" } })
+                                                               
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-5 control-label">Bank Account No: <span class="mandatory">*</span></label>
+                                                            <div class="col-sm-7">
+                                                                @Html.EditorFor(model => model.EmpBankAccountno, new { htmlAttributes = new { @class = "form-control", @Value = ViewBag.EmpBankAccountno, @id = "BAno" } })
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="main_heading">
+                                                            <h1>Monthly(Net Salary)</h1>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">Fixed Gross: <span class="mandatory">*</span></label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.EditorFor(model => model.FixedGross, new { htmlAttributes = new { @class = "form-control", @Value = ViewBag.FixedGross, onkeyup = "fill();", @id = "FixedGross" } })
+                                                                       
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">Fixed Basic: <span class="mandatory">*</span></label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.EditorFor(model => model.FixedBasic, new { htmlAttributes = new { @class = "form-control" } })
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">Fixed HRA: <span class="mandatory">*</span></label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.EditorFor(model => model.FixedHRA, new { htmlAttributes = new { @class = "form-control" } })
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">Fixed Conveyance: <span class="mandatory">*</span></label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.EditorFor(model => model.FixedConveyance, new { htmlAttributes = new { @class = "form-control", onkeyup = "fill2();" } })
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">Fixed Medical: <span class="mandatory">*</span></label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.EditorFor(model => model.FixedMedical, new { htmlAttributes = new { @class = "form-control", onkeyup = "fill3();" } })
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">Fixed Special Allowance: <span class="mandatory">*</span></label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.EditorFor(model => model.FixedSA, new { htmlAttributes = new { @class = "form-control", onkeyup = "fill4();" } })
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">Employer-PF: <span class="mandatory">*</span></label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.EditorFor(model => model.PFEmployer, new { htmlAttributes = new { @class = "form-control" } })
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">Employer-ESI:</label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.EditorFor(model => model.ESIEmployer, new { htmlAttributes = new { @class = "form-control" } })
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 control-label">CTC: <span class="mandatory">*</span></label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.EditorFor(model => model.CTC, new { htmlAttributes = new { @class = "form-control" } })
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="main_heading">
+                                                            <h1>Yearly(CTC)</h1>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+
+                                                                    <div class="col-sm-8">
+                                                                        @Html.Editor("YearlyGross", new { htmlAttributes = new { @class = "form-control", @id = "YearlyGross" } })
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+
+                                                                    <div class="col-sm-8">
+                                                                        @Html.Editor("YearlyBasic", new { htmlAttributes = new { @class = "form-control", @id = "YearlyBasic" } })
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+
+                                                                    <div class="col-sm-8">
+                                                                        @Html.Editor("YearlyHRA", new { htmlAttributes = new { @class = "form-control", @id = "YearlyHRA" } })
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+
+                                                                    <div class="col-sm-8">
+                                                                        @Html.Editor("YearlyConveyance", new { htmlAttributes = new { @class = "form-control", @id = "YearlyConveyance" } })
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+
+                                                                    <div class="col-sm-8">
+                                                                        @Html.Editor("YearlyMedical", new { htmlAttributes = new { @class = "form-control", @id = "YearlyMedical" } })
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+
+                                                                    <div class="col-sm-8">
+                                                                        @Html.Editor("YearlySA", new { htmlAttributes = new { @class = "form-control", @id = "YearlySA" } })
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+
+                                                                    <div class="col-sm-8">
+                                                                        @Html.Editor("YearlyPFEmployer", new { htmlAttributes = new { @class = "form-control", @id = "YearlyPFEmployer" } })
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+
+                                                                    <div class="col-sm-8">
+                                                                        @Html.Editor("YearlyESIEmployer", new { htmlAttributes = new { @class = "form-control", @id = "YearlyESIEmployer" } })
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <div class="col-sm-8">
+                                                                        @Html.Editor("YearlyCTC", new { htmlAttributes = new { @class = "form-control", @id = "YearlyCTC" } })
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="col-sm-4">
+                                                    <label class="col-sm-6 control-label label_left">Effiective From:</label>
+                                                    <div class="input-group date col-sm-6">
+                                                        <div class="input-group date" id="Event_Date1">
+                                                            @Html.TextBoxFor(m => m.Effectivedate, "{0:dd/MM/yyyy}", new { @class = "form-control", onkeypress = "return nokeyword(event)" ,@Value=DateTime.Now.Date})<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+
+
+                                                        </div>
+                      
+                                                        @*@Html.TextBoxFor(model=>model.Effectivedate, new { @id = "mydate",@value= ViewBag.date,  @class = "glyphicon glyphicon-calendar" })*@
+                                                        @*@Html.EditorFor(model => model.Effectivedate, new { htmlAttributes = new { @class = "form-control form-control form-control-1 input-sm pdater" } })*@
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class=" pull-right">
+
+                                                    @*<input type="submit" id="Delete" value="Delete" class="btn btn-danger" onclick="javascript:return ShowMessage();" />*@
+                                                    <input type="button" id="Cancel" formaction="Cancel" value="Cancel" class="btn btn-default Cancel" />
+                                                    <input type="submit" id="Submit" value="Submit" class="btn btn-primary" onclick="return PayrollAlerts() ;" />
+                                                    <input type="submit" id="Update" value="Update" class="btn btn-primary" onclick="return PayrollAlerts() ;" />
+
+
+
+                                                    @*<button type="reset" class="btn btn-default calcel">Cancel</button>
+                                                    <button type="submit" onclick="return RegFunction1();" id="Update" class="btn btn-primary">Update</button>*@
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                }
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        @*@using (Html.BeginForm("Delete", "Payroll", FormMethod.Post))
+            {
+                <input type="submit" id="Delete" value="Delete" class="btn btn-danger" />
+            }*@
+
+
+    </div>
+</div>
+
+
+
+
+
+<script type="text/javascript">
+    $('#Cancel').click(function () {
+        document.location = '@Url.Action("Index","Payroll")';
+    });
+</script>
+
+
+<script>
+    function ShowMessage() {
+        var result = confirm("Do your want to Delete this Payroll?");
+        if (result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+</script>
+@*<script>
+        $(document).ready(function () {
+
+            $("#Fgross").on("keydown keyup", function() {
+                calculateSum();
+            });
+        });
+
+        function calculateSum() {
+
+
+
+            if (document.getElementById("FixedGross").value) {
+                $("#Submit").hide();
+                $("#Cancel").show();
+                //$("#Delete").show();
+                $("#Update").show();
+                var FixedGross = document.getElementById('FixedGross').value;
+                document.getElementById('YearlyGross').value = parseInt(document.getElementById('FixedGross').value) * 12;
+                document.getElementById('FixedBasic').value = parseInt(FixedGross) * 0.51;
+                document.getElementById('YearlyBasic').value = parseInt(document.getElementById('FixedBasic').value) * 12;
+                document.getElementById('FixedHRA').value = (FixedGross * 0.51) * 0.5;
+                document.getElementById('YearlyHRA').value = parseInt(document.getElementById('FixedHRA').value) * 12;
+                document.getElementById('FixedConveyance').value = 800;
+
+                document.getElementById('YearlyConveyance').value = parseInt(document.getElementById('FixedConveyance').value) * 12;
+                document.getElementById('FixedMedical').value = 500;
+                document.getElementById('YearlyMedical').value = parseInt(document.getElementById('FixedMedical').value) * 12;
+
+                document.getElementById('FixedSA').value = parseInt(FixedGross) - (parseInt(document.getElementById('FixedBasic').value) + parseInt(document.getElementById('FixedHRA').value) + parseInt(document.getElementById('FixedConveyance').value) + parseInt(document.getElementById('FixedMedical').value));
+
+
+                document.getElementById('YearlySA').value = parseInt(document.getElementById('FixedSA').value) * 12;
+
+                if (document.getElementById('FixedBasic').value <= 15000) {
+                    document.getElementById('PFEmployer').value = (document.getElementById('FixedBasic').value) * 0.12;
+                }
+                else {
+                    document.getElementById('PFEmployer').value = 1800;
+                }
+                document.getElementById('YearlyPFEmployer').value = parseInt(document.getElementById('PFEmployer').value) * 12;
+
+                if (document.getElementById('FixedGross').value <= 21000) {
+                    document.getElementById('ESIEmployer').value = (document.getElementById('FixedGross').value) * 0.0175;
+
+                }
+                else {
+                    document.getElementById('ESIEmployer').value = 0;
+                }
+                document.getElementById('YearlyESIEmployer').value = parseInt(document.getElementById('ESIEmployer').value) * 12;
+
+                document.getElementById('CTC').value = parseInt(FixedGross) + parseInt(document.getElementById('PFEmployer').value) + parseInt(document.getElementById('ESIEmployer').value);
+
+
+
+                document.getElementById('YearlyCTC').value = parseInt(document.getElementById('CTC').value) * 12;
+
+
+            }
+            else {
+                $("#Submit").show();
+                $("#Cancel").hide();
+                //$("#Delete").hide();
+                $("#Update").hide();
+            }
+
+            function fill() {
+                FixedGross = document.getElementById('FixedGross').value;
+                document.getElementById('YearlyGross').value = parseInt(document.getElementById('FixedGross').value) * 12;
+                document.getElementById('FixedBasic').value = FixedGross * 0.51;
+                document.getElementById('YearlyBasic').value = parseInt(document.getElementById('FixedBasic').value) * 12;
+                document.getElementById('FixedHRA').value = (FixedGross * 0.51) * 0.5;
+                document.getElementById('YearlyHRA').value = parseInt(document.getElementById('FixedHRA').value) * 12;
+                (document.getElementById('FixedConveyance').value = 800);
+                document.getElementById('YearlyConveyance').value = parseInt(document.getElementById('FixedConveyance').value) * 12;
+                document.getElementById('FixedMedical').value = 500;
+                document.getElementById('YearlyMedical').value = parseInt(document.getElementById('FixedMedical').value) * 12;
+
+                document.getElementById('FixedSA').value = parseInt(FixedGross) - (parseInt(document.getElementById('FixedBasic').value) + parseInt(document.getElementById('FixedHRA').value) + parseInt(document.getElementById('FixedConveyance').value) + parseInt(document.getElementById('FixedMedical').value));
+
+                document.getElementById('YearlySA').value = parseInt(document.getElementById('FixedSA').value) * 12;
+                if (document.getElementById('FixedBasic').value <= 15000) {
+                    document.getElementById('PFEmployer').value = (document.getElementById('FixedBasic').value) * 0.12;
+                }
+                else {
+                    document.getElementById('PFEmployer').value = 1800;
+                }
+                document.getElementById('YearlyPFEmployer').value = parseInt(document.getElementById('PFEmployer').value) * 12;
+
+                if (document.getElementById('FixedGross').value <= 21000) {
+                    document.getElementById('ESIEmployer').value = (document.getElementById('FixedGross').value) * 0.0175;
+                }
+                else {
+                    document.getElementById('ESIEmployer').value = 0;
+                }
+                document.getElementById('YearlyESIEmployer').value = parseInt(document.getElementById('ESIEmployer').value) * 12;
+                document.getElementById('CTC').value = parseInt(FixedGross) + parseInt(document.getElementById('PFEmployer').value) + parseInt(document.getElementById('ESIEmployer').value);
+
+
+
+                document.getElementById('YearlyCTC').value = parseInt(document.getElementById('CTC').value) * 12;
+
+            }
+            function fill2() {
+                if (document.getElementById('FixedConveyance').value == 800) {
+                    document.getElementById('YearlyConveyance').value = parseInt(document.getElementById('FixedConveyance').value) * 12;
+                } else {
+                    document.getElementById('YearlyConveyance').value = parseInt(document.getElementById('FixedConveyance').value) * 12;
+                }
+            }
+
+            function fill3() {
+                if (document.getElementById('FixedMedical').value == 500) {
+                    document.getElementById('YearlyMedical').value = parseInt(document.getElementById('FixedMedical').value) * 12;
+                } else {
+                    document.getElementById('YearlyMedical').value = parseInt(document.getElementById('FixedMedical').value) * 12;
+                }
+            }
+            function fill4() {
+                if (document.getElementById('FixedSA').value == 1000) {
+                    document.getElementById('YearlySA').value = parseInt(document.getElementById('FixedSA').value) * 12;
+                } else {
+                    document.getElementById('YearlySA').value = parseInt(document.getElementById('FixedSA').value) * 12;
+                }
+            }
+            //var sum = 0;
+            ////iterate through each textboxes and add the values
+            //$(".txt").each(function () {
+            //    //add only if the value is number
+            //    if (!isNaN(this.value) && this.value.length != 0) {
+            //        sum += parseFloat(this.value);
+            //        $(this).css("background-color", "#FEFFB0");
+            //    }
+            //    else if (this.value.length != 0) {
+            //        $(this).css("background-color", "red");
+            //    }
+            //});
+
+
+        }
+
+
+    </script>*@
+
+`
+
+
+
+
+<script>
+    if (document.getElementById("FixedGross").value) {
+        $("#Submit").hide();
+        $("#Cancel").show();
+        //$("#Delete").show();
+        $("#Update").show();
+        var FixedGross = document.getElementById('FixedGross').value;
+        document.getElementById('YearlyGross').value = parseInt(document.getElementById('FixedGross').value) * 12;
+        document.getElementById('FixedBasic').value = parseInt(FixedGross) * 0.51;
+        document.getElementById('YearlyBasic').value = parseInt(document.getElementById('FixedBasic').value) * 12;
+        document.getElementById('FixedHRA').value = (FixedGross * 0.51) * 0.5;
+        document.getElementById('YearlyHRA').value = parseInt(document.getElementById('FixedHRA').value) * 12;
+        document.getElementById('FixedConveyance').value = 800;
+
+        document.getElementById('YearlyConveyance').value = parseInt(document.getElementById('FixedConveyance').value) * 12;
+        document.getElementById('FixedMedical').value = 500;
+        document.getElementById('YearlyMedical').value = parseInt(document.getElementById('FixedMedical').value) * 12;
+
+        document.getElementById('FixedSA').value = parseInt(FixedGross) - (parseInt(document.getElementById('FixedBasic').value) + parseInt(document.getElementById('FixedHRA').value) + parseInt(document.getElementById('FixedConveyance').value) + parseInt(document.getElementById('FixedMedical').value));
+
+
+        document.getElementById('YearlySA').value = parseInt(document.getElementById('FixedSA').value) * 12;
+
+        if (document.getElementById('FixedBasic').value <= 15000) {
+            document.getElementById('PFEmployer').value = (document.getElementById('FixedBasic').value) * 0.12;
+        }
+        else {
+            document.getElementById('PFEmployer').value = 1800;
+        }
+        document.getElementById('YearlyPFEmployer').value = parseInt(document.getElementById('PFEmployer').value) * 12;
+
+        if (document.getElementById('FixedGross').value <= 21000) {
+            document.getElementById('ESIEmployer').value = (document.getElementById('FixedGross').value) * 0.0175;
+
+        }
+        else {
+            document.getElementById('ESIEmployer').value = 0;
+        }
+        document.getElementById('YearlyESIEmployer').value = parseInt(document.getElementById('ESIEmployer').value) * 12;
+
+        document.getElementById('CTC').value = parseInt(FixedGross) + parseInt(document.getElementById('PFEmployer').value) + parseInt(document.getElementById('ESIEmployer').value);
+
+
+
+        document.getElementById('YearlyCTC').value = parseInt(document.getElementById('CTC').value) * 12;
+
+
+    }
+    else {
+        $("#Submit").show();
+        $("#Cancel").show();
+        //$("#Delete").hide();
+        $("#Update").hide();
+    }
+
+    function fill() {
+        FixedGross = document.getElementById('FixedGross').value;
+        document.getElementById('YearlyGross').value = parseInt(document.getElementById('FixedGross').value) * 12;
+        document.getElementById('FixedBasic').value = FixedGross * 0.51;
+        document.getElementById('YearlyBasic').value = parseInt(document.getElementById('FixedBasic').value) * 12;
+        document.getElementById('FixedHRA').value = (FixedGross * 0.51) * 0.5;
+        document.getElementById('YearlyHRA').value = parseInt(document.getElementById('FixedHRA').value) * 12;
+        (document.getElementById('FixedConveyance').value = 800);
+        document.getElementById('YearlyConveyance').value = parseInt(document.getElementById('FixedConveyance').value) * 12;
+        document.getElementById('FixedMedical').value = 500;
+        document.getElementById('YearlyMedical').value = parseInt(document.getElementById('FixedMedical').value) * 12;
+
+        document.getElementById('FixedSA').value = parseInt(FixedGross) - (parseInt(document.getElementById('FixedBasic').value) + parseInt(document.getElementById('FixedHRA').value) + parseInt(document.getElementById('FixedConveyance').value) + parseInt(document.getElementById('FixedMedical').value));
+
+        document.getElementById('YearlySA').value = parseInt(document.getElementById('FixedSA').value) * 12;
+        if (document.getElementById('FixedBasic').value <= 15000) {
+            document.getElementById('PFEmployer').value = (document.getElementById('FixedBasic').value) * 0.12;
+        }
+        else {
+            document.getElementById('PFEmployer').value = 1800;
+        }
+        document.getElementById('YearlyPFEmployer').value = parseInt(document.getElementById('PFEmployer').value) * 12;
+
+        if (document.getElementById('FixedGross').value <= 21000) {
+            document.getElementById('ESIEmployer').value = (document.getElementById('FixedGross').value) * 0.0175;
+        }
+        else {
+            document.getElementById('ESIEmployer').value = 0;
+        }
+        document.getElementById('YearlyESIEmployer').value = parseInt(document.getElementById('ESIEmployer').value) * 12;
+        document.getElementById('CTC').value = parseInt(FixedGross) + parseInt(document.getElementById('PFEmployer').value) + parseInt(document.getElementById('ESIEmployer').value);
+
+
+
+        document.getElementById('YearlyCTC').value = parseInt(document.getElementById('CTC').value) * 12;
+
+    }
+    function fill2() {
+        if (document.getElementById('FixedConveyance').value == 800) {
+            document.getElementById('YearlyConveyance').value = parseInt(document.getElementById('FixedConveyance').value) * 12;
+        } else {
+            document.getElementById('YearlyConveyance').value = parseInt(document.getElementById('FixedConveyance').value) * 12;
+        }
+    }
+
+    function fill3() {
+        if (document.getElementById('FixedMedical').value == 500) {
+            document.getElementById('YearlyMedical').value = parseInt(document.getElementById('FixedMedical').value) * 12;
+        } else {
+            document.getElementById('YearlyMedical').value = parseInt(document.getElementById('FixedMedical').value) * 12;
+        }
+    }
+    function fill4() {
+        if (document.getElementById('FixedSA').value == 1000) {
+            document.getElementById('YearlySA').value = parseInt(document.getElementById('FixedSA').value) * 12;
+        } else {
+            document.getElementById('YearlySA').value = parseInt(document.getElementById('FixedSA').value) * 12;
+        }
+    }
+</script>
+<script src="~/Assets/hrms/Register.js"></script>
+
+@*<script type="text/jscript">
+        $(document).ready(function () {
+            $("#Delete").click(function () {
+                var EmpCode = $("#EmpCode").value;
+                $.ajax({
+                    type: "DELETE",
+                    url: "/Payroll/Delete?EmpCode=" + EmpCode,
+                    dataType: "Json",
+                    success: function (response) {
+                        if (response != null) {
+                            alert("Deleted Successfully")
+                            window.location.reload();
+
+                        }
+                        else {
+
+
+                        }
+                    },
+                });
+
+            })
+              });
+
+
+
+    </script>*@

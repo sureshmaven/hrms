@@ -1,0 +1,1638 @@
+﻿@model Entities.ViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var rolepages = TempData["RolePages"].ToString();
+    ViewBag.RolePages = TempData["RolePages"];
+}
+
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-heading">
+            @{
+            <ul class="nav nav-tabs">
+                @if (rolepages.Contains("ADERG"))
+                {
+                    <li><a href=@Url.Action("InsertEmployees", "Register")>Employee Registration</a></li>
+                }
+                @if (rolepages.Contains("ADTPO"))
+                {
+                    <li><a href="@Url.Action("Index","Transfer")">Transfer/Promotions</a></li>
+                }
+                @if (rolepages.Contains("ADCAU"))
+                {
+                    <li><a href="@Url.Action("Index","ChangeAuthority")">Change Authority</a></li>
+                }
+                @if (rolepages.Contains("ADCPR"))
+                {
+                    <li><a href="@Url.Action("Index","ChangeProfile")">Change Profile</a></li>
+                }
+
+                @if (rolepages.Contains("ADLTCA"))
+                {
+                    <li class="active"><a href=@Url.Action("AdminLTCApply", "LeaveTravel")>Apply LTC </a></li>
+                }
+                @if (rolepages.Contains("ADPLA"))
+                {
+                    <li><a href=@Url.Action("AdminPLApply", "PLE_Type")>Apply PL Encashment</a></li>
+                }
+                @if (rolepages.Contains("ADWDA"))
+                {
+                    <li><a href=@Url.Action("WorkApprovalAdmin", "WorkDiary")>Delete Work Dairy</a></li>
+                }
+                @if (rolepages.Contains("ADUSRO"))
+                {
+                    <li><a href=@Url.Action("UserRolesView", "AllReports")>User Roles</a></li>
+                }
+                @if (rolepages.Contains("ADCBRMG"))
+                {
+                    <li><a href=@Url.Action("ChangeBranchManager", "ChangeBranchManager")>Change Branch Manager</a></li>
+                }
+                @if (rolepages.Contains("TsheetMain"))
+                {
+                    <li><a href=@Url.Action("Timesheetrequestform", "TimeSheet")>TimeSheet Manual Form</a></li>
+                }
+                @if (rolepages.Contains("TsheetApp"))
+                {
+                    <li><a href=@Url.Action("TSApprovalView", "TimeSheet")>TimeSheet Manual Approvals</a></li>
+                }
+            </ul>
+            }
+        </div>
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade  in active" id="tab2primary">
+                    <div class="page_st">
+                        <div class="page">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="main_heading">
+                                    <h1>LTC Availment/Encashment</h1>
+                                    <div class="leave_cont_start">
+                                        @using (Html.BeginForm("LTCPost", "LeaveTravel", FormMethod.Post, new { @id = "LTCapplyform" }))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <div class="col-md-12 col-sm-12">
+                                                <div class="form-horizontal col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">EmpCode:<span class="mandatory">*</span></label>
+                                                            <div class="col-sm-6">
+                                                                @Html.EditorFor(model => model.EmpId, new { htmlAttributes = new { @class = "form-control", id = "empcode", onkeypress = "return isNumber(event)" } })
+                                                            </div>
+                                                            <div class="col-sm-2">
+                                                                <button type="button" id="btnApplys" class="btn btn-primary btn-sm pull-right">Search</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">Employee Name:<span class="mandatory">*</span></label>
+                                                            <div class="col-sm-8">
+                                                                @Html.EditorFor(model => model.EmpId, new { htmlAttributes = new { @class = "form-control", @id = "Shortname",@readonly="readonly" } })
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">Designation:<span class="mandatory">*</span></label>
+                                                            <div class="col-sm-8">
+
+                                                                @Html.EditorFor(model => model.EmpId, new { htmlAttributes = new { @class = "form-control", @id = "desig", @readonly = "readonly" } })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">Br/Dept:<span class="mandatory">*</span></label>
+                                                            <div class="col-sm-8">
+
+                                                                @Html.EditorFor(model => model.EmpId, new { htmlAttributes = new { @class = "form-control", @id = "Branchdept", @ViewBag.branchname, @readonly = "readonly" } })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">Total Experience:<span class="mandatory">*</span></label>
+                                                            <div class="col-sm-8">
+                                                                @Html.EditorFor(model => model.TotalExperience, new { htmlAttributes = new { @class = "form-control", @id = "TotalExperience", @readonly = "readonly" } })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">Total CL:<span class="mandatory">*</span></label>
+                                                            <div class="col-sm-8">
+                                                                @Html.EditorFor(model => model.EmpId, new { htmlAttributes = new { @class = "form-control", @id = "TotalCl", @readonly = "readonly" } })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">Total PL<span class="mandatory">*</span></label>
+                                                            <div class="col-sm-8">
+                                                                @Html.EditorFor(model => model.EmpId, new { htmlAttributes = new { @class = "form-control", @id = "TotalPl", @readonly = "readonly" } })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="col-md-12 col-sm-12">
+
+                                                <div class="main_heading">
+                                                    <h1>Apply LTC</h1>
+                                                    <br />
+                                                   
+                                                    <div class="ltc_radio">
+
+                                                        <label for="C" class="radio-inline">  @Html.RadioButtonFor(model => model.lleavetravel.LtcType, "Availment", new { id = "C", onclick = "return pp()", @checked = "checked" })  Availment</label>
+
+                                                        <label for="D" class="radio-inline"> @Html.RadioButtonFor(model => model.lleavetravel.LtcType, "Encashment", new { id = "D", onclick = "return pfp()" }) Encashment</label>
+                                                    </div>
+
+                                                    <div class="form-horizontal col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Block Period:<span class="mandatory">*</span></label>
+                                                                <div class="col-sm-8">
+                                                                    @Html.DropDownListFor(model => model.Block_Period, (SelectList)ViewBag.Blockperiod, "Select BlockPeriod", new { @class = "form-control", @id = "Bperiod", onchange = "return blockperiodonchange();" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Leave Type:<span class="mandatory">*</span></label>
+                                                                <div class="col-sm-8">
+                                                                    @Html.DropDownListFor(model => model.lleavetravel.LeaveType, ViewBag.LeaveTypes as SelectList, "Select", new { @class = "form-control", @id = "Type" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-horizontal col-md-12 col-sm-12 col-xs-12">
+                                                       
+                                                     
+                                                        <div class="col-md-6 col-sm-6 col-xs-12" id="Placeofvis">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Places of Visits:<span class="mandatory">*</span></label>
+                                                                <div class="col-sm-8">
+                                                                    @Html.EditorFor(model => model.lleavetravel.PlaceOfVisits, new { htmlAttributes = new { @class = "form-control", @id = "Placeofvisit", onkeypress = "return checkNum1(event)" } })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Start Date:<span class="mandatory">*</span></label>
+                                                                <div class="col-sm-8">
+                                                                    <div class="input-group date" id="Event_Date1">
+                                                                        @Html.TextBoxFor(model => model.lleavetravel.StartDate, new { @class = "form-control", id = "sdate", onkeypress = "return nokeyword(event)", onchange = "return Dateevent3();" })<span class="input-group-addon datepick"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">End Date:<span class="mandatory">*</span></label>
+                                                                <div class="col-sm-8">
+                                                                    <div class="input-group date" id="Event_Date2">
+                                                                        @Html.TextBoxFor(model => model.lleavetravel.EndDate, new { @class = "form-control", id = "edate", onkeypress = "return nokeyword(event)", onchange = "return Dateevent1();" })<span class="input-group-addon datepick"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6 col-sm-6 col-xs-12" id="ModeofTransports">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">ModeOf Transport:<span class="mandatory">*</span></label>
+                                                                <div class="col-sm-8">
+                                                                    @Html.DropDownList("ModeOfTransport", new List<SelectListItem>{
+                                                                                                    new SelectListItem() {Text = "Flight",Value = "Flight"},
+                                                                                                    new SelectListItem() {Text = "Train",Value = "Train"},
+                                                                                                     new SelectListItem() {Text = "Bus",Value = "Bus"},
+                                                                                                      new SelectListItem() {Text = "Other Mode",Value = "Other Mode"},
+                                                                                                                           }, "Select Transport", new { @class = "form-control", @id = "Mtrans" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Subject:<span class="mandatory">*</span></label>
+                                                                <div class="col-sm-8">
+                                                                    @Html.TextAreaFor(model => model.lleavetravel.Subject, new { @class = "form-control", style = "width:100% !important", rows = "3", @id = "subjects" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12" id="TravelAdvance">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Travel Advance:<span class="mandatory">*</span></label>
+                                                                <div class="col-sm-8">
+                                                                    @Html.TextBoxFor(model => model.lleavetravel.TravelAdvance, new { @class = "form-control", style = "width:100% !important", rows = "3", @id = "TravelAdvances", onkeypress = "return isNumber(event)", maxlength = "10" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="fetch_results" id="Availment">
+                                                                <table class="table table-bordered relation" id="addedRows_new" style="width:100%">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Relationship</th>
+                                                                            <th>Name</th>
+                                                                            <th>Age</th>
+                                                                            <th>Occupation</th>
+                                                                            <th>Action &nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td class="Relation" id="allvalues">
+                                                                                <select class="form-control" id="Relation__" name="relation[]" onchange="changevalue('')">
+                                                                                    <option value="">Select Relation</option>
+                                                                                    <option value="Spouse">Spouse</option>
+                                                                                    <option value="Children">Children</option>
+                                                                                    <option value="Mother">Mother</option>
+                                                                                    <option value="Father">Father</option>
+                                                                                </select>
+                                                                            </td>
+                                                                            <td class="Name">
+                                                                                <input class="form-control" id="rname" name="name[]" onkeypress="return checkNum1(event)" style="width:100% !important" type="text" value="" />
+                                                                            </td>
+                                                                            <td class="Age"><input type="text" class="form-control" id="rage" name="RelationAge[]" onblur="Ageres('0')" maxlength="3" onkeypress="return isNumber(event);" style="width:100% !important"  value="" /></td>
+                                                                            <td class="Occupation"><input class="form-control" id="roocu" name="Occupation[]" onkeypress="return checkNum1(event)" style="width:100% !important" type="text" value="" /></td>
+                                                                            <td id="Occupation_add"><input type="button" class="btn btn-info" value="add" onclick="addMoreRows()" /></td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                         
+
+
+                                                        </div>
+                                                        <div id="Declarationform1" style="display:none;">
+                                                            <input type="hidden" id="DeclarationType1" name="DeclarationType1" value="DeclartionForm1" />
+                                                            <div class="col-md-12">
+                                                                <div class="main_heading">
+                                                                    <h1 style="text-transform: uppercase;">Declaration form NO.1</h1>
+                                                                    <div class="col-md-12">
+                                                                        <p>I hereby declare that my parents for whom I claimed LTC facility are wholly dependent having no income not exceeding RS.2550/- and residing with me. Further I also declare that children mentioned in the application are wholly dependent  on me and they  are not employed elsewhere</p>
+                                                                        <br />
+                                                                        <p><b>@Html.CheckBox("Form1CheckBox", true) The above particulars furnished by me if proved to be false later, I will be liable for any action that is being taken against me by the Bank. </b></p>
+                                                                        <br />
+                                                                        <div class="row">
+                                                                            <div class="col-md-7">
+                                                                                <div class="col-md-6">
+
+                                                                                    <div class="form-group">
+                                                                                        <label class="col-sm-4 control-label">Date:<span class="mandatory">*</span></label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <div class="input-group">
+
+                                                                                                @Html.TextBoxFor(m => m.Form1Date, new { @class = "form-control", @value = DateTime.Now, @readonly = "readonly", onkeypress = "return nokeyword(event)" })<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                                                                @Html.HiddenFor(m => m.Form1Date)
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <div class="form-group">
+                                                                                        <label class="col-sm-4 control-label">Place:<span class="mandatory">*</span></label>
+                                                                                        <div class="col-sm-8">
+                                                                                            @Html.TextBoxFor(model => model.Form1Place, new { @class = "form-control", @id = "Place", onkeypress = "return checkNum1(event)" })
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-5">
+                                                                                <div class="pull-right">
+                                                                                    <div class="col-md-12">
+                                                                                        <div class="form-group">
+                                                                                            <label class="col-sm-5 control-label">Employee Code : </label>
+                                                                                            <div class="col-sm-7">
+
+                                                                                                <input class="form-control" name="FormEmpid1" id="formempId" type="text"  readonly="readonly" />
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div id="Declarationform2" style="display:none;">
+                                                            <input type="hidden" id="DeclarationType2" name="DeclarationType2" value="DeclartionForm2" />
+                                                            <div class="col-md-12">
+                                                                <div class="main_heading">
+                                                                    <h1 style="text-transform: uppercase;">Declaration form NO.2</h1>
+                                                                    <div class="col-md-12">
+                                                                        <div class="row">
+                                                                            <div class="col-md-12">
+                                                                                <p>
+                                                                                    I hereby declare that my <span><input type="radio" name="Relation1" value="Wife" checked> </span> Wife / <input type="radio" name="Relation1" value="Husband"> Husband is/not an employee of
+                                                                                </p>
+                                                                            </div>
+
+                                                                            <div class="col-md-4">
+                                                                                @Html.TextAreaFor(model => model.lrelation.EmpWorking, new { @class = "form-control", style = "width:100% !important", rows = "3", @id = "EmpWorking" })
+                                                                            </div>
+                                                                            <div class="col-md-8">
+                                                                                @Html.TextAreaFor(model => model.lrelation.EmpAddress, new { @class = "form-control", style = "width:100% !important", rows = "3", @id = "EmpAddress" })
+
+                                                                            </div>
+                                                                        </div>
+                                                                        <p>(please give full address of the office where he/she is working). He / She is not availing the Leave Travel Concession facility from the said organization.</p>
+                                                                        <br />
+                                                                        <p><b>@Html.CheckBox("Form2CheckBox", true) The above particulars furnished by me if proved to be false later, I will be liable for any action that is being taken against me by the Bank. </b></p>
+                                                                        <br />
+                                                                        <div class="row">
+                                                                            <div class="col-md-7">
+                                                                                <div class="col-md-6">
+
+                                                                                    <div class="form-group">
+                                                                                        <label class="col-sm-4 control-label">Date:<span class="mandatory">*</span></label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <div class="input-group">
+                                                                                                @Html.TextBoxFor(m => m.Form2Date, new { @class = "form-control", @readonly = "readonly", @value = DateTime.UtcNow, onkeypress = "return nokeyword(event)" })<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                                                                @Html.HiddenFor(m => m.Form2Date)
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <div class="form-group">
+                                                                                        <label class="col-sm-4 control-label">Place:<span class="mandatory">*</span></label>
+                                                                                        <div class="col-sm-8">
+                                                                                            @Html.TextBoxFor(model => model.Form2Place, new { @class = "form-control", @id = "spousePlace", onkeypress = "return checkNum1(event)" })
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-5">
+                                                                                <div class="pull-right">
+                                                                                    <div class="col-md-12">
+                                                                                        <div class="form-group">
+                                                                                            <label class="col-sm-5 control-label">Employee Code : </label>
+                                                                                            <div class="col-sm-7">
+
+                                                                                                <input class="form-control" name="FormEmpid1" id="formempId1" type="text" readonly="readonly" />
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div id="child_divs">
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="pull-right">
+                                                                <br />
+                                                                <button type="button" onclick="resetForm()" value="reset" class="btn btn-default">Cancel</button>
+                                                                <button type="submit" id="btsubmit" onclick="return LeaveTravel();" class="btn btn-primary">Submit</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                           
+                                        }
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+
+
+<script>
+    var rowCount = 1;
+    function addMoreRows() {
+        var x = document.getElementsByName("relation[]");
+        rowCount = x.length;
+        if (rowCount < 5) {
+            var recRow = '<tr id="rowCount' + rowCount + '"><td><select class="form-control" id="Relation__' + rowCount + '" name="relation[]" onchange="changevalue(' + rowCount + ');"><option value="">Select Relation</option><option value="Spouse">Spouse</option><option value="Children">Children</option><option value="Father">Father</option><option value="Mother">Mother</option></select></td><td><input class="form-control" id="subject" name="name[]" style="width:100% !important" type="text" value="" /></td><td><input class="form-control" id="Relationage__' + rowCount + '"  name="RelationAge[]" style="width:100% !important" type="text" onkeypress="return isNumber(event)" maxlength="3" value="" onchange="Ageres(' + rowCount + ');"/></td><td><input class="form-control" id="subject" name="Occupation[]" style="width:100% !important" onkeypress="return checkNum1(event)" type="text" value="" /></td><td><input type="button" value="remove" class="btn btn-info" onclick="removeRow(' + rowCount + ');" /></td></tr>';
+
+            jQuery('#addedRows_new').append(recRow);
+        }
+        else {
+            alert("Can't add more than 5 relations");
+        }
+    }
+    function removeRow(removeNum) {
+
+        jQuery('#rowCount' + removeNum).remove();
+        var x = document.getElementsByName("relation[]");
+        var i;
+        var spouse = false;
+        var other = false;
+        for (i = 0; i < x.length; i++) {
+
+            if (x[i].value == "Father" || x[i].value == "Children" || x[i].value == "Mother") {
+
+                other = true;
+            }
+            //else {
+            //    if (x[i].value != "Spouse") {
+            //        other = true;
+            //    }
+
+            //}
+            if (x[i].value == "Spouse") {
+
+                spouse = true;
+            }
+
+        }
+        if (spouse) {
+            $("#Declarationform2").show();
+        }
+        else {
+            $("#Declarationform2").hide();
+        }
+        if (other) {
+            $("#Declarationform1").show();
+        }
+        else {
+            $("#Declarationform1").hide();
+        }
+
+    }
+    function changevalue(idnumber) {
+        $("#Relation__" + idnumber).val();
+
+        var Children = 0;
+        var Father = 0;
+        var Fatherindex = '';
+        var Motherindex = '';
+        var Childrenindex = '';
+        var Spouseindex = '';
+        var Mother = 0;
+        var Spouse = 0;
+        var x = document.getElementsByName("relation[]");
+        var i;
+        var spouse = false;
+        var other = false;
+
+        for (i = 0; i < x.length; i++) {
+
+            if (x[i].value == "Father") {
+
+                Father = Father + 1;
+                Fatherindex += '_' + i;
+
+            }
+            if (x[i].value == "Mother") {
+
+                Mother = Mother + 1;
+                Motherindex += '_' + i;
+            }
+            if (x[i].value == "Children") {
+
+                Children = Children + 1;
+                Childrenindex += '_' + i;
+            }
+            if (x[i].value == "Spouse") {
+
+                Spouse = Spouse + 1;
+                Spouseindex += '_' + i;
+            }
+        }
+        if (Father > 1) {
+
+            var FatherArray = Fatherindex.split("_");
+
+            for (var j = 2; j < FatherArray.length; j++) {
+
+                alert('Please select another relation');
+                x[FatherArray[j]].value = '';
+            }
+        }
+        if (Mother > 1) {
+
+            var MotherArray = Motherindex.split("_");
+
+            for (var k = 2; k < MotherArray.length; k++) {
+
+                alert('Please select another relation');
+                x[MotherArray[k]].value = '';
+            }
+        }
+        if (Spouse > 1) {
+
+            var SpouseArray = Spouseindex.split("_");
+
+            for (var m = 2; m < SpouseArray.length; m++) {
+
+                alert('Please select another relation');
+                x[SpouseArray[m]].value = '';
+            }
+        }
+        if (Children > 2) {
+
+            var ChildrenArray = Childrenindex.split("_");
+
+            for (var l = 3; l < ChildrenArray.length; l++) {
+
+                x[ChildrenArray[l]].value = '';
+                alert('Please select another relation');
+            }
+        }
+
+        if ($("#Relation__" + idnumber).val() == "Spouse") {
+            $("#Declarationform2").show();
+        }
+        //Mother
+        if ($("#Relation__" + idnumber).val() == "Father" || $("#Relation__" + idnumber).val() == "Children" || $("#Relation__" + idnumber).val() == "Mother") {
+            $("#Declarationform1").show();
+
+
+
+
+
+
+        }
+    }
+</script>
+<script>
+    function Ageres(id) {
+        //
+
+        if (id == '0') {
+            var textBoxValue = document.getElementById("rage").value;
+            if (textBoxValue == "0" || textBoxValue == "00" || textBoxValue == "000") {
+                window.alert("Please Enter valid Age.");
+                $("#rage").focus();
+                $("#rage").val('');
+                return false;
+            }
+
+            if (document.getElementById("Relation__").value == "Children") {
+
+                if (textBoxValue > 25) {
+                    alert("Please enter below 26 Age");
+                    document.getElementById("rage").value = '';
+                }
+
+
+            }
+            else if (document.getElementById("Relation__").value == "Spouse" || document.getElementById("Relation__").value == "Mother" || document.getElementById("Relation__").value == "Father")
+            {
+                if (textBoxValue < 21) {
+                    alert("Please enter above 21 Age");
+                    document.getElementById("rage").value = '';
+                }
+            }
+        }
+        else {
+            var textBoxlat = document.getElementById("Relationage__" + id).value;
+            if (textBoxlat == "0" || textBoxlat == "00" || textBoxlat == "000") {
+                window.alert("Please Enter valid Age.");
+                document.getElementById("Relationage__" + id).value = '';
+
+            }
+            if (document.getElementById("Relation__" + id).value == "Children") {
+
+                if (textBoxlat > 25) {
+                    alert("Please enter below 26 Age");
+                    document.getElementById("Relationage__" + id).value = '';
+                }
+            }
+
+            else if (document.getElementById("Relation__" + id).value == "Spouse" || document.getElementById("Relation__" + id).value == "Mother" || document.getElementById("Relation__" + id).value == "Father" ) {
+                if (textBoxlat < 21) {
+                    alert("Please enter above 21 Age");
+                    document.getElementById("Relationage__" + id).value = '';
+                }
+            }
+        }
+
+    }
+</script>
+<style>
+    table, th, td {
+        border-collapse: collapse;
+    }
+
+    .activeClass {
+        background: #ffdb99;
+    }
+
+    .secondClass {
+        /*background: #FF9999;*/
+        color: red;
+    }
+</style>
+@{
+    var message = TempData["AlertMessage"] ?? string.Empty;
+}
+
+<script type='text/javascript'>
+    $(function getholidays() {
+        var active_dates = [];
+        $.ajax({
+            type: "GET",
+            async: false,
+            url: "/LeaveApply/GetDates",
+            dataType: "Json",
+            success: function (data) {
+                datesArray = data;
+                for (i = 0; i < datesArray.length; i++) {
+                    var result = datesArray[i].replace("-", "/");
+                    var result1 = result.replace("-", "/");
+                    var strArray = result1.split("/");
+                    var cdate = strArray[0] + "/" + parseInt(strArray[1]) + "/" + strArray[2]
+                    active_dates.push(cdate);
+
+                    if (i == datesArray.length - 1) {
+                        //loadcal(active_dates);
+                    }
+                }
+
+            }
+        });
+        $('.input-group.date').datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            beforeShowDay: function nonWorkingDays(date) {
+                var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
+                var week = 0 | date.getDate() / 7 //get the week
+                var dd = date.getDate();
+                var month = date.getMonth();
+                if (dd < 10) {
+                    dd = '0' + dd
+                }
+
+                if (month < 10) {
+                    month = '0' + month
+                }
+                var sunweek = date.getDay();
+                var year = date.getFullYear();
+
+                if (dd == 14 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                if (dd == 28 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                //check if it's second week or fourth week
+                else if (week == 1 || week == 3) {
+                    if (dd == 7 && day == 6 || dd == 21 && day == 6) {
+                        //check for satruday
+
+                    }
+                    else {
+                        if (day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                    }
+
+                }
+                //check for sunday
+                if (day == 0) {
+                    return {
+                        classes: 'secondClass'
+                    };
+
+                }
+                //check for holidays
+                var d = date;
+                var curr_date = d.getDate();
+                var curr_month = d.getMonth() + 1; //Months are zero based
+                if (curr_date < 10) {
+                    curr_date = '0' + curr_date
+                }
+                var curr_year = d.getFullYear();
+                var formattedDate = curr_date + "/" + curr_month + "/" + curr_year
+
+                if ($.inArray(formattedDate, active_dates) != -1) {
+                    return {
+                        classes: 'activeClass'
+                    };
+                }
+                return [true];
+            }
+        });
+
+
+    });
+</script>
+
+
+<script type="text/javascript">
+    var message = '@message';
+
+    if (message) alert(message);
+
+</script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#empcode").keypress(function (event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+            }
+        });
+    });
+
+    $("#btnApplys").click(function () {
+        var lempid = $("#empcode").val();
+        if (lempid == "")
+        {
+            showGlobalModal("I#Required#Please Enter EmpCode.");
+            $("#empcode").focus();
+            return false;
+        }
+        $.ajax({
+
+            url: "/LeaveTravel/GetEmployeeData?empcode=" + lempid,
+            dataType: "Json",
+            success: function (response) {
+
+                if (response != null) {
+                    document.getElementById("formempId").value = lempid;
+                    document.getElementById("formempId1").value = lempid;
+                    document.getElementById("Shortname").value = response.lshortnmaeAjax;
+                    document.getElementById("desig").value = response.ldesigAjax;
+                    document.getElementById("Branchdept").value = response.lbranchAjax;
+                    document.getElementById("TotalExperience").value = response.lTotalexpAjax;
+                    document.getElementById("TotalCl").value = response.lcasual;
+                    document.getElementById("TotalPl").value = response.lprivilege;
+                  
+                }
+                else {
+                    // alert("Something went wrong");
+                }
+            },
+        });
+
+     
+        $.ajax({
+            type: "GET",
+            url: "/ChangeAuthority/Authority111?prefix=" + lempid,
+            dataType: "Json",
+            success: function (response) {
+                if (response != null) {
+
+                    if (response.Status == "false") {
+                    }
+                    else if (response.Status == "Notfound") {
+                        alert("EmpCode doesnot exists");
+                        $("#Shortname").val("");
+                        $("#desig").val("");
+                        $("#Branchdept").val("");
+                        $("#TotalExperience").val("");
+                        $("#empcode").val(""); TotalCl
+                        $("#TotalCl").val("");
+                        $("#TotalPl").val("");
+                    }
+                    else if (response.Status == "AlreadyRetired") {
+                        alert("This Employee is Retired");
+                        $("#Shortname").val("");
+                        $("#desig").val("");
+                        $("#Branchdept").val("");
+                        $("#TotalExperience").val("");
+                        $("#empcode").val("");
+
+                        $("#TotalCl").val("");
+                        $("#TotalPl").val("");
+
+                    }
+
+                }
+                else {
+                }
+            },
+        });
+    });
+    $("#LTCapplyform").submit(function (event) {
+        if ($('#C').prop('checked')) {
+            Cookies.set('current_form', 1);
+        }
+        if ($('#D').prop('checked')) {
+            Cookies.set('current_form', 2);
+        }
+    });
+
+    if (Cookies.get('current_form') == 1) {
+        console.log('need to check C');
+        $('input[id=C]').attr('checked', true);
+    }
+    else if (Cookies.get('current_form') == 2) {
+        console.log('need to check D');
+        //$('input[id=D]').attr('checked', true);
+        //$("#Availment").hide();
+        //$("#Encashment").show();
+        //$("#gridApply2").show();
+        //$("#gridApply1").hide();
+        //$("#2").show();
+        //$("#1").hide();
+        //$("#btnApplyencash").show();
+        //$("#btnApply").hide();
+        $('input[id=D]').attr('checked', true);
+    }
+
+    $('.login').click(function () {
+        Cookies.set('current_form', null);
+        $('input[id=D]').attr('checked', false);
+    });
+
+    $('#LeaveTravelmenu').click(function () {
+        Cookies.set('current_form', null);
+        $('input[id=D]').attr('checked', false);
+    });
+
+    $('#a8').click(function () {
+        Cookies.set('current_form', null);
+        $('input[id=D]').attr('checked', false);
+    });
+
+</script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        var lempid = $("#empcode").val();
+      
+        if (Cookies.get('current_form') != 2) {
+          //  $("#Encashment").hide();
+            $("#Availment").show();
+           // $("#gridApplyl").show();
+           // $("#gridApply2").hide();
+            $("#1").show();
+            $("#2").hide();
+            $("#btnApply").show();
+            $("#btnApplyencash").hide();
+        }
+    });
+
+
+    $("#D").click(function () {
+        $(".datepick").css("display", "table-cell");
+        $("#Placeofvis").show();
+        $("#ModeofTransports").show();
+        $("#TravelAdvance").show();
+        $("#Occupation_add").show();
+       // $("#Encashment").hide();
+        $("#Availment").show();
+      //  $("#gridApplyl").show();
+      //  $("#gridApply2").hide();
+        $("#1").show();
+        $("#2").hide();
+        $("#btnApply").show();
+        $("#btnApplyencash").hide();
+        $("#TravelAdvances").attr('disabled', false);
+        $("#subjects").attr('disabled', false);
+        $("#Type").attr('disabled', false);
+        $("#sdate").attr('disabled', false);
+        $("#edate").attr('disabled', false);
+        $("#Placeofvisit").attr('disabled', false);
+        $("#Mtrans").attr('disabled', false);
+
+    });
+    $("#C").click(function () {
+        $(".datepick").css("display", "table-cell");
+        $("#Placeofvis").show();
+        $("#ModeofTransports").show();
+        $("#TravelAdvance").show();
+        $("#Occupation_add").show();
+       // $("#Encashment").hide();
+        $("#Availment").show();
+       // $("#gridApplyl").show();
+      //  $("#gridApply2").hide();
+        $("#1").show();
+        $("#2").hide();
+        $("#btnApply").show();
+        $("#btnApplyencash").hide();
+        $("#TravelAdvances").attr('disabled', false);
+        $("#subjects").attr('disabled', false);
+        $("#Type").attr('disabled', false);
+        $("#sdate").attr('disabled', false);
+        $("#edate").attr('disabled', false);
+        $("#Placeofvisit").attr('disabled', false);
+        $("#Mtrans").attr('disabled', false);
+       // document.getElementById("SDate").value = '';
+      //  document.getElementById("EDate").value = '';
+    });
+</script>
+
+
+
+
+<script type="text/javascript">
+    $("#Relation__").change(function () {
+
+        if ($(this).val() == "Mother") {
+            $("#Declarationform1").show();
+            $("#Declarationform2").hide();
+        }
+        else if ($(this).val() == "Father") {
+            $("#Declarationform1").show();
+            $("#Declarationform2").hide();
+        }
+        else if ($(this).val() == "Children") {
+            $("#Declarationform1").show();
+            $("#Declarationform2").hide();
+        }
+        else if ($(this).val() == "Spouse") {
+            $("#Declarationform2").show();
+            $("#Declarationform1").hide();
+        }
+
+    });
+
+</script>
+<script type="text/javascript">
+   
+
+    function datescheck() {
+        debugger;
+        var x = location.hostname;
+        var url = window.location.href
+        var arr = url.split("/");
+        // var darray = document.getElementById('sdate').value;
+        // var darraye = document.getElementById('edate').value;
+        var empid = document.getElementById('empcode').value;
+        var sdate = document.getElementById('sdate').value;
+        var edate = document.getElementById('edate').value;
+
+        var selected = $('[name="lleavetravel.LtcType"]:checked').val();
+        if (sdate != '' && edate != '') {
+         //   var result = "https://" + arr[2] + "/" + "LeaveTravel/checkLeaveEligebleOrNot?StartDate=" + sdate + "&EndDate=" + edate + "&Ltctype=" + selected;
+            var result = "" + arr[0] + "//" + arr[2] + "/" + "LeaveTravel/checkLeaveEligebleOrNot?empid=" + empid+"&StartDate=" + sdate + "&EndDate=" + edate + "&Ltctype=" + selected;
+            $.ajax({
+                type: "GET",
+                url: result,
+
+                dataType: "json",
+                success: function (data) {
+
+                    var input = data.message;
+
+                    var fields = input.split('/');
+                    var status = fields[0];
+                    var dates = fields[1];
+
+                    if (status == "false") {
+                        document.getElementById("sdate").value = "";
+                        document.getElementById("edate").value = "";
+                        alert(dates);
+                    }
+                    if (status == "countzero") {
+                        /// alert("Leaves are not available");
+                    }
+
+                },
+                error: function () {
+
+                }
+            });
+        }
+
+    }
+    function datescheckEncashment() {
+        var x = location.hostname;
+        var url = window.location.href
+        var arr = url.split("/");
+        // var darray = document.getElementById('sdate').value;
+        // var darraye = document.getElementById('edate').value;
+        var sdate = document.getElementById('sdate').value;
+        var edate = document.getElementById('edate').value;
+
+        var selected = $('[name="lleavetravel.LtcType"]:checked').val();
+        if (sdate != '' && edate != '') {
+            //var result = "https://" + arr[2] + "/" + "LeaveTravel/checkLTCEligebleOrNot?StartDate=" + sdate + "&EndDate=" + edate + "&Ltctype=" + selected;
+            var result = "" + arr[0] +  "//" + arr[2] +  "/"+ "LeaveTravel/checkLTCEligebleOrNot?StartDate=" + sdate + "&EndDate=" + edate + "&Ltctype=" + selected;
+            $.ajax({
+                type: "GET",
+                url: result,
+
+                dataType: "json",
+                success: function (data) {
+
+                    var input = data.message;
+
+                    var fields = input.split('/');
+                    var status = fields[0];
+                    var dates = fields[1];
+
+                    if (status == "false") {
+                        document.getElementById("sdate").value = "";
+                        document.getElementById("edate").value = "";
+                        document.getElementById("Placeofvisit").value = "";
+                        document.getElementById("subjects").value = "";
+                        document.getElementById("TravelAdvances").value = "";
+                        document.getElementById("Mtrans").value = "";
+                        document.getElementById("Type").value = "";
+                        $("#addedRows").find("tr:gt(0)").remove();
+                        //$("#addedRows > tbody").append("<tr><td class='Relation'></td><td class='Name'></td><td class='Age'></td><td class='Occupation'></td></tr>");
+                        alert(dates);
+                    }
+                    if (status == "countzero") {
+                        /// alert("Leaves are not available");
+                    }
+
+                },
+                error: function () {
+
+                }
+            });
+        }
+
+    }
+    function blockperiodcheck() {
+        var x = location.hostname;
+        var url = window.location.href
+        var arr = url.split("/");
+        var lempid = $("#empcode").val();
+        var block = document.getElementById('Bperiod').value;
+        //var result = "https://" + arr[2] + "/" + "LeaveTravel/checkBlockPeriodEligebleOrNot?EmpCode=" + lempid + "&blockperiod=" + block;
+        var result = "" + arr[0] +  "//" + arr[2] +  "/"+ "LeaveTravel/checkBlockPeriodEligebleOrNot?EmpCode=" + lempid + "&blockperiod=" + block;
+        $.ajax({
+            type: "GET",
+            url: result,
+
+            dataType: "json",
+            success: function (data) {
+
+                var input = data.message;
+
+                var fields = input.split('/');
+                var status = fields[0];
+                var dates = fields[1];
+
+                if (status == "false") {
+                    document.getElementById("Bperiod").value = "";
+                    alert(dates);
+                }
+                if (status == "countzero") {
+                    /// alert("BlockPeriod is not available");
+                }
+
+            },
+            error: function () {
+
+            }
+        });
+
+
+    }
+    function blockperiodcheck1() {
+        var x = location.hostname;
+        var url = window.location.href
+        var arr = url.split("/");
+        var lempid = $("#empcode").val();
+        var block = document.getElementById('Bperiod').value;
+       // var result = "https://" + arr[2] + "/" + "LeaveTravel/checkBlockPeriodEligebleOrNot1?EmpCode=" + lempid + "&blockperiod=" + block;
+         var result = "" + arr[0] +  "//" + arr[2] +  "/"+ "LeaveTravel/checkBlockPeriodEligebleOrNot1?EmpCode=" + lempid + "&blockperiod=" + block;
+        $.ajax({
+            type: "GET",
+            url: result,
+
+            dataType: "json",
+            success: function (data) {
+
+                var input = data.message;
+
+                var fields = input.split('/');
+                var status = fields[0];
+                var dates = fields[1];
+
+                if (status == "false") {
+                    document.getElementById("Bperiod").value = "";
+                    alert(dates);
+                }
+                if (status == "countzero") {
+                    /// alert("BlockPeriod is not available");
+                }
+
+            },
+            error: function () {
+
+            }
+        });
+
+
+    }
+</script>
+<script type="text/javascript">
+    /*------------------ Click event button -----------*/
+    function datescheckCLML() {
+        //
+        var x = location.hostname;
+        var url = window.location.href
+        var arr = url.split("/");
+        // var darray = document.getElementById('sdate').value;
+        var empcode = document.getElementById('empcode').value;
+        var sdate = document.getElementById('sdate').value;
+        var edate = document.getElementById('edate').value;
+
+        // var selected = $('[name="lleavetravel.LtcType"]:checked').val();
+        var selected = $('#Type :selected').val();
+        if (sdate != '' && edate != '') {
+            var result = "" + arr[0] + "//" + arr[2] + "/" + "LeaveTravel/CLMLPLHolidayLeave?empid=" + empcode + "&appStDate=" + sdate + "&appEndDate=" + edate + "&leavetype=" + selected;
+            $.ajax({
+                type: "GET",
+                url: result,
+
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    var input = data.message;
+                    console.log(input);
+                    var fields = input.split('/');
+                    var status = fields[0];
+                    var dates = fields[1];
+
+                    if (status == "false") {
+                        document.getElementById("sdate").value = "";
+                        document.getElementById("edate").value = "";
+                        alert(dates);
+                    }
+                    if (status == "countzero") {
+                        /// alert("Leaves are not available");
+                    }
+
+                },
+                error: function () {
+
+                }
+            });
+        }
+
+    }
+
+
+    //// for holiday check
+    //function datescheck() {
+    //    
+    //    var x = location.hostname;
+    //    var url = window.location.href
+    //    var arr = url.split("/");
+    //    var sdate = document.getElementById("sdate").value;
+    //    var edate = document.getElementById("edate").value;
+    //    var ltype = document.getElementById("Type").value;
+    //    if (ltype == "") {
+    //        ltype = 0;
+    //    }
+
+    //    //var result = "http://" + arr[2] + "/" + "LeaveApply/checkLeaveEligebleOrNot?StartDate=" + sdate + "&EndDate=" + edate + "&LeaveType=" + ltype;
+    //    // var result = url+"/checkLeaveEligebleOrNot?StartDate=" + sdate + "&EndDate=" + edate + "&LeaveType=" + ltype;
+    //    var result = "" + arr[0] + "//" + arr[2] + "/" + "LeaveApply/checkLeaveEligebleOrNot?StartDate=" + sdate + "&EndDate=" + edate + "&LeaveType=" + ltype;
+    //    $.ajax({
+    //        type: "GET",
+    //        url: result,
+
+    //        dataType: "json",
+    //        success: function (data) {
+
+    //            var input = data.message;
+
+    //            var fields = input.split('/');
+    //            var status = fields[0];
+    //            var dates = fields[1];
+
+    //            if (status == "false") {
+
+    //                document.getElementById("sdate").value = "";
+    //                document.getElementById("edate").value = "";
+    //                alert(dates);
+
+    //            }
+    //            else if (status != "false") {
+    //                if (ltype == "4") {
+    //                    Joindatescheck();
+    //                }
+    //                else
+    //                    if (ltype == "5") {
+    //                        Joindatescheck();
+    //                    }
+    //            }
+    //            else {
+    //                Combinationdatescheck2();
+    //            }
+    //            if (status == "countzero") {
+    //                alert(dates);
+    //            }
+
+
+    //        },
+    //        error: function () {
+
+    //        }
+    //    });
+
+    //}
+
+</script>
+<script>
+    //Start And End Date Validation
+    function Dateevent1() {
+        
+        var darray = document.getElementById('sdate').value.split(" ");
+        var darraye = document.getElementById('edate').value.split(" ");
+        var Joindate = darray[0];
+
+        var Retdate = darraye[0];
+        var date = moment(Joindate, "DD.MM.YYYY");
+
+        var currentDate1 = moment(Retdate, "DD.MM.YYYY");
+        var duration = moment.duration(date.diff(currentDate1));
+
+
+        if (duration > 0) {
+            alert("Please ensure that End Date is greater than or equal to Start Date.");
+            document.getElementById("edate").focus();
+            document.getElementById("edate").value = '';
+            return false;
+
+        }
+        else {
+            datescheck();
+            datescheckCLML();
+            return true;
+
+        }
+    }
+    //$("#datetimepicker1")
+
+
+    function Dateevent3() {
+
+        // alert("okokokokoko");
+
+        var darray = document.getElementById('sdate').value.split(" ");
+        var darraye = document.getElementById('edate').value.split(" ");
+        var StartDate = darray[0];
+        //  console.log(StartDate);
+        var EndDate = darraye[0];
+
+        var eDate = moment(EndDate, "DD.MM.YYYY");
+        var sDate = moment(StartDate, "DD.MM.YYYY");
+        if (StartDate != '' && EndDate != '' && sDate > eDate) {
+            alert("Please ensure that End Date is greater than or equal to Start Date.");
+            document.getElementById('sdate').value = '';
+            document.getElementById("sdate").focus();
+            return false;
+        }
+        else {
+            datescheck();
+            return true;
+
+        }
+    }
+</script>
+<script>
+    //Start And End Date Validation
+    function Dateevent1() {
+
+        
+        var Joindate = document.getElementById("sdate").value;
+        var Retdate = document.getElementById("edate").value;
+        var date = moment(Joindate, "DD.MM.YYYY");
+
+        var currentDate1 = moment(Retdate, "DD.MM.YYYY");
+        var duration = moment.duration(date.diff(currentDate1));
+
+
+        if (duration > 0) {
+
+
+            alert("Please ensure that End Date is greater than or equal to Start Date.");
+            document.getElementById("edate").focus();
+            document.getElementById("edate").value = '';
+            return false;
+
+        }
+        else {
+            datescheck();
+            datescheckCLML();
+            return true;
+
+        }
+    }
+
+    function Dateevent3() {
+
+
+        var StartDate = document.getElementById('sdate').value;
+        var EndDate = document.getElementById('edate').value;
+        var eDate = moment(EndDate, "DD.MM.YYYY");
+        var sDate = moment(StartDate, "DD.MM.YYYY");
+        if (StartDate != '' && EndDate != '' && sDate > eDate) {
+            alert("Please ensure that End Date is greater than or equal to Start Date.");
+            document.getElementById('sdate').value = '';
+            document.getElementById("sdate").focus();
+            return false;
+        }
+    }
+</script>
+
+<script>
+    //To Date and From Date Validation
+    function Dateevent2() {
+
+
+        var fromdate = document.getElementById("SDate").value;
+        var todate = document.getElementById("EDate").value;
+        var date = moment(fromdate, "DD.MM.YYYY");
+
+        var currentDate1 = moment(todate, "DD.MM.YYYY");
+        var duration = moment.duration(date.diff(currentDate1));
+
+
+        if (duration > 0) {
+
+
+            alert("Please ensure that To Date is greater than or equal to From Date.");
+            document.getElementById("EDate").focus();
+            document.getElementById("EDate").value = '';
+            return false;
+
+        }
+    }
+    function Dateevent4() {
+        var StartDate = document.getElementById('SDate').value;
+        var EndDate = document.getElementById('EDate').value;
+        var eDate = moment(EndDate, "DD.MM.YYYY");
+        var sDate = moment(StartDate, "DD.MM.YYYY");
+        if (StartDate != '' && EndDate != '' && sDate > eDate) {
+            alert("Please ensure that To Date is greater than or equal to From Date.");
+            document.getElementById('SDate').value = '';
+            document.getElementById("SDate").focus();
+            return false;
+        }
+    }
+</script>
+<script>
+    $(function () {
+        $('#Event_Date1').datepicker({
+            format: 'dd-mm-yyyy',
+
+
+            todayHighlight: true,
+            autoclose: true
+        })
+        $('#Event_Date2').datepicker({
+            format: 'dd-mm-yyyy',
+
+
+            todayHighlight: true,
+            autoclose: true
+        })
+
+    });
+</script>
+<script>
+    function clearleavedata() {
+        $('#reason').val('');
+        $('#edate').val('');
+        $('#sdate').val('');
+        $('#subject').val('');
+    }
+</script>
+<script>
+
+    var resetForm = function () {
+        $("#Declarationform2").hide();
+        $("#Declarationform1").hide();
+        $('.fetch_results').find('input:text').val('');
+        $('select').not('[readonly],[disabled],:button').val('');
+        $("#Bperiod").val('');
+        $("#Type").val('');
+        $("#sdate").val('');
+        $("#edate").val('');
+        $("#Placeofvisit").val('');
+        $("#Mtrans").val('');
+        $("#subjects").val('');
+        $("#TravelAdvances").val('');
+        $("#Relation__").val('');
+        $("#rname").val('');
+        $("#rage").val('');
+        $("#roocu").val('');
+        $("#Form1CheckBox").val('');
+        $("#Form2CheckBox").val('');
+        $("#EmpWorking").val('');
+        $("#EmpAddress").val('');
+        $("#formdatespouse").val('');
+        $("#spousePlace").val('');
+        $("#formdate").val('');
+        $("#Place").val('');
+        $("#addedRows_new").find("tr:gt(1)").remove();
+       // $("#addedRows").find("tr:gt(0)").remove();
+    }
+    function pp() {
+        $("#Bperiod").val('');
+        $("#Type").val('');
+        $("#sdate").val('');
+        $("#edate").val('');
+        $("#Placeofvisit").val('');
+        $("#ModeOfTransport").val('');
+        $("#subjects").val('');
+        $("#TravelAdvances").val('');
+        $("#Relation__").val('');
+        $("#rname").val('');
+        $("#rage").val('');
+        $("#roocu").val('');
+        $("#Form1CheckBox").val('');
+        $("#Form2CheckBox").val('');
+        $("#EmpWorking").val('');
+        $("#EmpAddress").val('');
+        $("#formdatespouse").val('');
+        $("#spousePlace").val('');
+        $("#formdate").val('');
+        $("#Place").val('');
+        //$("#addedRows").hide();
+    }
+    function pfp() {
+        $("#Bperiod").val('');
+        $("#Type").val('');
+        $("#sdate").val('');
+        $("#edate").val('');
+        $("#Placeofvisit").val('');
+        $("#ModeOfTransport").val('');
+        $("#subjects").val('');
+        $("#TravelAdvances").val('');
+        $("#Relation__").val('');
+        $("#rname").val('');
+        $("#rage").val('');
+        $("#roocu").val('');
+        $("#Form1CheckBox").val('');
+        $("#Form2CheckBox").val('');
+        $("#EmpWorking").val('');
+        $("#EmpAddress").val('');
+        $("#formdatespouse").val('');
+        $("#spousePlace").val('');
+        $("#formdate").val('');
+        $("#Place").val('');
+        $("#addedRows").find("tr:gt(0)").remove();
+
+    }
+</script>
+<script type="text/javascript">
+    $('.subleave1').click(function () {
+    })
+</script>
+<script>
+    document.getElementById("a1").className = "active";
+</script>
+<script type='text/javascript'>
+    $(function getholidays() {
+
+        var active_dates = [];
+        $.ajax({
+            type: "GET",
+            async: false,
+            url: "/LeaveApply/GetDates",
+            dataType: "Json",
+            success: function (data) {
+                datesArray = data;
+                for (i = 0; i < datesArray.length; i++) {
+                    var result = datesArray[i].replace("-", "/");
+                    var result1 = result.replace("-", "/");
+                    var strArray = result1.split("/");
+                    var cdate = strArray[0] + "/" + parseInt(strArray[1]) + "/" + strArray[2]
+                    active_dates.push(cdate);
+
+                    if (i == datesArray.length - 1) {
+                        //loadcal(active_dates);
+                    }
+                }
+
+            }
+        });
+        $('#Date').datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            beforeShowDay: function nonWorkingDays(date) {
+                var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
+                var week = 0 | date.getDate() / 7 //get the week
+                var dd = date.getDate();
+                var month = date.getMonth();
+                if (dd < 10) {
+                    dd = '0' + dd
+                }
+
+                if (month < 10) {
+                    month = '0' + month
+                }
+                var sunweek = date.getDay();
+                var year = date.getFullYear();
+
+                if (dd == 14 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                if (dd == 28 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                //check if it's second week or fourth week
+                else if (week == 1 || week == 3) {
+                    if (dd == 7 && day == 6 || dd == 21 && day == 6) {
+                        //check for satruday
+
+                    }
+                    else {
+                        if (day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                    }
+
+                }
+                //check for sunday
+                if (day == 0) {
+                    return {
+                        classes: 'secondClass'
+                    };
+
+                }
+                //check for holidays
+                var d = date;
+                var curr_date = d.getDate();
+                var curr_month = d.getMonth() + 1; //Months are zero based
+                if (curr_date < 10) {
+                    curr_date = '0' + curr_date
+                }
+                var curr_year = d.getFullYear();
+                var formattedDate = curr_date + "/" + curr_month + "/" + curr_year
+
+                if ($.inArray(formattedDate, active_dates) != -1) {
+                    return {
+                        classes: 'activeClass'
+                    };
+                }
+                return [true];
+            }
+        });
+    });
+</script>
+
+<script>
+    function blockperiodonchange() {
+        var bp = $("#Bperiod").val();
+        var lempid = $("#empcode").val();
+        var selected = $('[name="lleavetravel.LtcType"]:checked').val();
+        if (selected == "Encashment") {
+            blockperiodcheck1();
+        }
+        else if (selected == "Availment") {
+            blockperiodcheck();
+        }
+    }
+</script>
+
+
+<script>
+    $(function () {
+        $("#Event_Date1p").datepicker();
+        myDate = new Date();
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1; //January is 0!
+
+        var yyyy = today.getFullYear();
+        if (dd < 10) {
+            dd = '0' + dd;
+        }
+        if (mm < 10) {
+            mm = '0' + mm;
+        }
+        var today = dd + '/' + mm + '/' + yyyy;
+        document.getElementById("Form1Date").value = today;
+        document.getElementById("Form2Date").value = today;
+        // $(".selector").datepicker("setDate", new Date());
+        // $('#Event_Date1p').datepicker('setDate', today);
+    });
+
+
+   
+</script>

@@ -1,0 +1,496 @@
+﻿<style>
+    .menu_col:after {
+        font-family: "Glyphicons Halflings";
+        content: "\e114";
+        float: right;
+        margin-left: 15px;
+    }
+    /* Icon when the collapsible content is hidden */
+    .menu_col.collapsed:after {
+        content: "\e080";
+    }
+</style>
+@if (ViewBag.SectionName == "Transaction")
+{
+    <div class="main_heading left-menu">
+        <div class="leftmenu-container">
+
+            <h1>
+                <a href="#" class="sidebar-icon"> <span class="fa fa-th-list"></span> </a> <a href="#">
+                    <span id="leftmenu-title">Transactions</span>
+                </a>
+            </h1>
+
+            <div class="leftmenu">
+                <ul id="leftmenu">
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "MonthDetails" ? "active" : "")"><a href="@Url.Action("MonthDetails", "Transaction", new { area = "Payroll" })"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="Month Details" aria-hidden="true"></i><span> Month Details </span></a></li>
+                    @*<li><a href="">Attendence</a></li>*@
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "AttendenceMonthly" ? "active" : "")"><a href="@Url.Action("AttendenceMonthly", "Transaction", new { area = "Payroll" })"><i class="fa fa-exchange" data-toggle="tooltip" data-placement="right" title="Attendence" aria-hidden="true"></i> <span>Attendance </span></a></li>
+                    @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "EmployeePayFields" ? "active" : "")"><a href="@Url.Action("EmployeePayFields","Transaction", new { area="Payroll"})"><i class="fa fa-user" aria-hidden="true"></i> Pay Details</a></li>*@
+                    @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "AdjPaymetnsView" ? "active" : "")"><a href="@Url.Action("AdjPaymetnsView","Transaction", new { area="Payroll" })"><i class="fa fa-lock" aria-hidden="true"></i> Adjustment</a></li>*@
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Dateofleaving" ? "active" : "")"><a href="@Url.Action("Dateofleaving", "Transaction", new { area = "Payroll" })"><i class="fa fa-user" data-toggle="tooltip" data-placement="right" title="Date of leaving" aria-hidden="true"></i> <span>Date of leaving </span></a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "AdjustmentsLoans" ? "active" : "")"><a href="@Url.Action("AdjustmentsLoans", "Transaction", new { area = "Payroll" })"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="Loan Adjustment" aria-hidden="true"></i> <span>Loan Adjustment </span></a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "AdhocPaymetnsView" ? "active" : "")"><a href="@Url.Action("AdhocPaymetnsView", "Transaction", new { area = "Payroll" })"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="Adhoc Payment" aria-hidden="true"></i><span> Adhoc Payments</span> </a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "DeputationEntryFields" ? "active" : "")"><a href="@Url.Action("DeputationEntryFields", "Transaction", new { area = "Payroll" })"><i class="fa fa-pencil-square-o" data-toggle="tooltip" data-placement="right" title="Deputation" aria-hidden="true"></i><span> Deputation </span></a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "EmpAllowance" ? "active" : "")"><a href="@Url.Action("EmpAllowance", "Transaction", new { area = "Payroll" })"><i class="fa fa-exchange" data-toggle="tooltip" data-placement="right" title="Allowance" aria-hidden="true"></i><span> Allowance </span></a></li>
+                </ul>
+            </div>
+
+
+        </div>
+    </div>
+}
+else if (ViewBag.SectionName == "Masters")
+{
+    <div class="main_heading left-menu">
+        <div class="leftmenu-container">
+
+            <h1>
+                <a href="#" class="sidebar-icon"> <span class="fa fa-th-list"></span> </a> <a href="#">
+                    <span id="leftmenu-title">Payroll Masters</span>
+                </a>
+            </h1>
+
+            <div class="leftmenu">
+                <ul id="leftmenu">
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "EmployeeMaster" ? "active" : "")"><a href="@Url.Action("EmployeeMaster", "Masters")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="Employee Master" aria-hidden="true"></i> <span> Employee Master </span></a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "LoansAdvances" ? "active" : "")"><a href="@Url.Action("LoansAdvances", "Masters")"><i class="fa fa-exchange" data-toggle="tooltip" data-placement="right" title="Loans & Advances" aria-hidden="true"></i> <span> Loans & Advances </span></a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "PersonalEarnings" ? "active" : "")"><a href="@Url.Action("PersonalEarnings", "HRMSMasters")"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="Personal Earnings" aria-hidden="true"></i><span> Personal Earnings </span></a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "PersonalDeductions" ? "active" : "")"><a href="@Url.Action("PersonalDeductions", "HRMSMasters")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="Personal Deductions" aria-hidden="true"></i> <span> Personal Deductions </span></a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "RentDetails" ? "active" : "")"><a href="@Url.Action("RentDetails", "Masters")"><i class="fa fa-lock" data-toggle="tooltip" data-placement="right" title="Rent Details" aria-hidden="true"></i> <span> Rent Details </span></a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Allowance" ? "active" : "")"><a href="@Url.Action("Allowance", "Masters")"><i class="fa fa-user" data-toggle="tooltip" data-placement="right" title="Allowance Master" aria-hidden="true"></i> <span> Allowance Master </span></a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "IncomeTaxBankPayment" ? "active" : "")"><a href="@Url.Action("IncomeTaxBankPayment", "HRMSMasters")"><i class="fa fa-pencil-square-o" data-toggle="tooltip" data-placement="right" title="Income Tax Bank Payments" aria-hidden="true"></i> <span> Income Tax Bank Payments </span></a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Form12BA" ? "active" : "")"><a href="@Url.Action("Form12BA", "Masters")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="Form 12BA" aria-hidden="true"></i> <span> Form 12BA </span></a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Form12B" ? "active" : "")"><a href="@Url.Action("Form12B", "Masters")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="Form 12B" aria-hidden="true"></i> <span> Form 12B </span></a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "OtherTdsDeduction" ? "active" : "")"><a href="@Url.Action("OtherTdsDeduction", "Masters")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="Other TDS Deductions" aria-hidden="true"></i> <span> Other TDS Deductions </span></a></li>
+                    @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "PFFinalSettlement" ? "active" : "")"><a href="@Url.Action("PFFinalSettlement", "Masters")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="PF Final Settlement" aria-hidden="true"></i> <span> PF Final Settlement</span></a></li>*@
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Form16" ? "active" : "")"><a href="@Url.Action("Form16", "Masters")"><i class="fa fa-exchange" data-toggle="tooltip" data-placement="right" title="Form 16" aria-hidden="true"></i> <span> Form 16</span></a></li>
+
+                </ul>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+    <div class="main_heading left-menu" style="margin-top:10px;">
+        <div class="leftmenu-container">
+
+            <h1>
+                <a href="#" class="sidebar-icon"> <span class="fa fa-th-list"></span> </a><a href="#">
+                    <span id="leftmenu-title">HRMS Masters</span>
+                </a>
+            </h1>
+
+            <div class="leftmenu">
+                <ul id="leftmenu">
+                    <li><a target="_blank" href="@Url.Action("Index/PayrollPromotion", null, new { area = string.Empty, controller = "Transfer" }, Request.Url.Scheme)"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="Promotions" aria-hidden="true"></i> <span>Promotion</span></a></li>
+                    @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Promotion" ? "active" : "")"><a href="@Url.Action("Promotion", "HRMSMasters")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="Promotions" aria-hidden="true"></i><span> Promotion</span></a></li>*@
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "IncrementDateChange" ? "active" : "")"><a href="@Url.Action("IncrementDateChange", "HRMSMasters")"><i class="fa fa-exchange" data-toggle="tooltip" data-placement="right" title="Increment Date Change" aria-hidden="true"></i> <span>Increment Date Change </span></a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "IncrementAnnualStagnation" ? "active" : "")"><a href="@Url.Action("IncrementAnnualStagnation", "HRMSMasters")"><i class="fa fa-user" data-toggle="tooltip" data-placement="right" title="Increment Annual Stagnation" aria-hidden="true"></i><span> Increment Annual Stagnation </span></a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "JAIIBCAIIBIncr" ? "active" : "")"><a href="@Url.Action("JAIIBCAIIBIncr", "HRMSMasters")"><i class="fa fa-lock" data-toggle="tooltip" data-placement="right" title="JAIIB / CAIIB /General" aria-hidden="true"></i><span> JAIIB / CAIIB / General </span></a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "AnnualIncrement" || ViewContext.RouteData.Values["Action"].ToString() == "StagnationIncrement" ? "active" : "")">
+                        <a href="#"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="Basic Pay Structure" aria-hidden="true"></i><span>Basic Pay Structure</span><span class="fa fa-angle-right" style="float: right;"></span></a>
+                        <ul>
+                            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "AnnualIncrement" ? "active" : "")"><a href="@Url.Action("AnnualIncrement", "HRMSMasters")"><i class="fa fa-file-text-o"></i> Annual Increment</a></li>
+                            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "StagnationIncrement" ? "active" : "")"><a href="@Url.Action("StagnationIncrement", "HRMSMasters")"><i class="fa fa-pencil-square-o"></i> Stagnation Increment </a></li>
+                        </ul>
+                    </li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "PfNominee" ? "active" : "")"><a href="@Url.Action("PfNominee", "HRMSMasters")"><i class="fa fa-lock" data-toggle="tooltip" data-placement="right" title="PfNominee" aria-hidden="true"></i><span>PF Nominee</span></a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "NonRepayableLoans" || ViewContext.RouteData.Values["Action"].ToString() == "RepayableLoans" ? "active" : "")">
+                        <a href="#"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="PF Loans" aria-hidden="true"></i><span> PF Loans</span><span class="fa fa-angle-right" style="float: right;"></span></a>
+                        <ul>
+                            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "NonRepayableLoans" ? "active" : "")"><a href="@Url.Action("NonRepayableLoans", "Masters")"><i class="fa fa-pencil-square-o"></i>PF Non Re-Payable Loans </a></li>
+                            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "RepayableLoans" ? "active" : "")"><a href="@Url.Action("RepayableLoans", "Masters")"><i class="fa fa-file-text-o"></i>PF Re-Payable Loans</a></li>
+                        </ul>
+                    </li>
+                    
+                </ul>
+            </div>
+
+
+        </div>
+    </div>
+}
+else if (ViewBag.SectionName == "Authorisation")
+{
+    <div class="main_heading left-menu">
+        <div class="leftmenu-container">
+
+            <h1>
+                <a href="#" class="sidebar-icon"> <span class="fa fa-th-list"></span> </a> <a href="#">
+                    <span id="leftmenu-title">Authorisation</span>
+                </a>
+            </h1>
+
+            <div class="leftmenu">
+                <ul id="leftmenu">
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "PromotionAuthorisation" ? "active" : "")"><a href="@Url.Action("PromotionAuthorisation", "Authorization")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="Promotion Authorisation" aria-hidden="true"></i> <span>Promotion </span> </a></li>
+                    @*<li><a href="#"> </a></li>*@
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "IncrementDateChange" ? "active" : "")"><a href="@Url.Action("IncrementDateChange", "Authorization")"><i class="fa fa-exchange" data-toggle="tooltip" data-placement="right" title="Increment Date Change" aria-hidden="true"></i><span> Increment Date Change </span> </a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "AnnualStagIncrementAuthorisation" ? "active" : "")"><a href="@Url.Action("AnnualStagIncrementAuthorisation", "Authorization")"><i class="fa fa-user" data-toggle="tooltip" data-placement="right" title="Annual Stag Increment Authorisation" aria-hidden="true"></i><span> Annual Stag Increment Authorisation </span></a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "JAIIBCAIIBIncrAuthrization" ? "active" : "")"><a href="@Url.Action("JAIIBCAIIBIncrAuthrization", "Authorization")"><i class="fa fa-lock" data-toggle="tooltip" data-placement="right" title="JAIIB / CAIIB / General" aria-hidden="true"></i><span> JAIIB / CAIIB / General </span></a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "PFNonRepayable" || ViewContext.RouteData.Values["Action"].ToString() == "PFRepayableLoans" ? "active" : "")">
+                        <a href="#"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="PF Loans" aria-hidden="true"></i><span> PF Loans</span><span class="fa fa-angle-right" style="float: right;"></span></a>
+                        <ul>
+                            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "PFNonRepayable" ? "active" : "")"><a href="@Url.Action("PFNonRepayable", "Authorization")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="NonRepayable" aria-hidden="true"></i><span> PF Non-Repayable Loans</span></a></li>
+                            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "PFRepayableLoans" ? "active" : "")"><a href="@Url.Action("PFRepayable", "Authorization")"><i class="fa fa-exchange" data-toggle="tooltip" data-placement="right" title="Repayable Loans" aria-hidden="true"></i><span>PF Re-Payable Loans</span> </a></li>
+                        </ul>
+                    </li>
+                    @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "PFAuthorisation" ? "active" : "")"><a href="@Url.Action("PFAuthorisation", "Authorization")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="PF Authorisation" aria-hidden="true"></i><span> PF Authorisation</span> </a></li>*@
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Encashment" ? "active" : "")"><a target="_blank"  href="@Url.Action("AdminPLApply/PayrollEncash", null, new { area = string.Empty, controller = "PLE_Type" }, Request.Url.Scheme)"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="Encashment" aria-hidden="true"></i><span> Encashment </span></a></li>
+                </ul>
+            </div>
+
+
+        </div>
+    </div>
+}
+else if (ViewBag.SectionName == "Process")
+{
+    <div class="main_heading left-menu">
+        <div class="leftmenu-container">
+
+            <h1>
+                <a href="#" class="sidebar-icon"> <span class="fa fa-th-list"></span> </a> <a href="#">
+                    <span id="leftmenu-title">Payroll Process</span>
+                </a>
+            </h1>
+
+            <div class="leftmenu">
+                <ul id="leftmenu">
+
+
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "PFInterestMonthwise" ? "active" : "")"><a href="@Url.Action("PFInterestMonthwise", "Process")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="PF Interest Calculation" aria-hidden="true"></i> <span> PF Interest Calculation </span></a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "CalculatePFforRetirement" ? "active" : "")"><a href="@Url.Action("CalculatePFforRetirement", "Process")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="PF Interest Calculation" aria-hidden="true"></i> <span> PF Interest Rate for Year Wise </span></a></li>
+
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "MonthEnd" ? "active" : "")"><a href="@Url.Action("MonthEnd", "Process")"><i class="fa fa-exchange" data-toggle="tooltip" data-placement="right" title="Month End" aria-hidden="true"></i> <span>Services </span> </a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "PayslipUI" ? "active" : "")"><a href="@Url.Action("PayslipUI", "Process")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="Payslip" aria-hidden="true"></i> <span> Payslip </span></a></li>
+
+
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "TaxProcess" ? "active" : "")"><a href="@Url.Action("TaxProcess", "Process")"><i class="fa fa-exchange" data-toggle="tooltip" data-placement="right" title="Tax Options" aria-hidden="true"></i> <span> Tax Options  </span> </a></li>
+
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "TDSProcess" ? "active" : "")"><a href="@Url.Action("TDSProcess", "Process")"><i class="fa fa-exchange" data-toggle="tooltip" data-placement="right" title="TDS Process" aria-hidden="true"></i> <span> TDS Process  </span> </a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "TDSUpdate" ? "active" : "")"><a href="@Url.Action("TDSUpdate", "Process")"><i class="fa fa-exchange" data-toggle="tooltip" data-placement="right" title="TDS Update" aria-hidden="true"></i> <span> TDS Update  </span> </a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "EncashmentProcess" ? "active" : "")"><a href="@Url.Action("EncashmentProcess", "Process")"><i class="fa fa-lock" data-toggle="tooltip" data-placement="right" title="Encashment" aria-hidden="true"></i> <span> Encashment  </span></a></li>
+                    @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "GratuityProcess" ? "active" : "")"><a href="@Url.Action("GratuityProcess", "Process")"><i class="fa fa-exchange" data-toggle="tooltip" data-placement="right" title="Gratuity Process" aria-hidden="true"></i> <span> Gratuity Process  </span> </a></li>*@
+                    @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "UpdateColumns" ? "active" : "")"><a href="@Url.Action("UpdateColumns", "AsyncPOC")"><i class="fa fa-pencil-square-o" data-toggle="tooltip" data-placement="right" title="Test-UpdateColumns" aria-hidden="true"></i> <span>Test- UpdateColumns </span></a></li>*@
+                    @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "AllowanceProcess" ? "active" : "")"><a href="@Url.Action("AllowanceProcess", "Process")"><i class="fa fa-pencil-square-o" data-toggle="tooltip" data-placement="right" title="Test-UpdateColumns" aria-hidden="true"></i> <span>Allowance Process </span></a></li>*@
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="main_heading left-menu" style="margin-top:10px;">
+        <div class="leftmenu-container">
+
+            <h1>
+                <a href="#" class="sidebar-icon"> <span class="fa fa-th-list"></span> </a><a href="#">
+                    <span id="leftmenu-title">HRMS Process</span>
+                </a>
+            </h1>
+
+            <div class="leftmenu">
+                <ul id="leftmenu">
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "PostIncrements" ? "active" : "")"><a href="@Url.Action("PostIncrements", "HRMSProcess")"><i class="fa fa-lock" data-toggle="tooltip" data-placement="right" title="Post Increments" aria-hidden="true"></i> <span>Post Increments </span> </a></li>
+                    @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "SingleEmployee" || ViewContext.RouteData.Values["Action"].ToString() == "AllEmployees" ? "active" : "")">
+                        <a href="#"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="PF contribution card " aria-hidden="true"></i><span> PF contribution card </span><span class="fa fa-angle-right" style="float: right;"></span></a>
+                        <ul>
+                            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "SingleEmployee" ? "active" : "")"><a href="@Url.Action("SingleEmployee", "HRMSProcess")"><i class="fa fa-pencil-square-o" data-toggle="tooltip" data-placement="right" title="Single Employee"></i> Single Employee </a></li>
+                            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "AllEmployees" ? "active" : "")"><a href="@Url.Action("AllEmployees", "HRMSProcess")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="All Employees"></i> All Employees</a></li>
+                        </ul>
+                    </li>*@
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "PFRepayableProcess" || ViewContext.RouteData.Values["Action"].ToString() == "PFNonRepayableProcess" ? "active" : "")">
+                        <a href="#"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="PF Security" aria-hidden="true"></i><span> PF Security</span><span class="fa fa-angle-right" style="float: right;"></span></a>
+                        <ul>
+                            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "PFNonRepayableProcess" ? "active" : "")"><a href="@Url.Action("PFNonRepayableProcess", "Process")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="PFNonRepayable" aria-hidden="true"></i><span> PF Non-Repayable Loans</span></a></li>
+                            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "PFRepayableProcess" ? "active" : "")"><a href="@Url.Action("PFRepayableProcess", "Process")"><i class="fa fa-exchange" data-toggle="tooltip" data-placement="right" title="PF Repayable Loans" aria-hidden="true"></i><span> PF Re-Payable Loans</span> </a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+
+
+        </div>
+    </div>
+}
+else if (ViewBag.SectionName == "Reports")
+{
+    <div class="main_heading left-menu">
+        <div class="leftmenu-container">
+
+            <h1>
+                <a href="#" class="sidebar-icon"> <span class="fa fa-th-list"></span> </a> <a href="#">
+                    <span id="leftmenu-title">Payroll Reports</span>
+                </a>
+            </h1>
+
+            <div class="leftmenu">
+                <ul id="leftmenu">
+                    @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "PayslipPdfReport" ? "active" : "")"><a href="@Url.Action("PayslipPdfReport", "PrAllReports")"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="Payslip Reports" aria-hidden="true"></i> <span>Payslip Reports</span></a></li>*@
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "PayslipReport" ? "active" : "")"><a href="@Url.Action("PayslipReport", "PrAllReports")"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="Payslip Reports" aria-hidden="true"></i> <span>Payslip</span></a></li>
+                    @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "NetSalaryReport" ? "active" : "")"><a href="@Url.Action("NetSalaryReport", "PrAllReports")"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="Net Salary Reports" aria-hidden="true"></i> <span>Payslip Negative Salary</span></a></li>*@
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "From5AReport" ? "active" : "")"><a href="@Url.Action("From5AReport", "PrAllReports")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="Form 5A Report" aria-hidden="true"></i><span> Form 5A</span></a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "MonthDetailsReport" ? "active" : "")"><a href="@Url.Action("MonthDetailsReport", "PrAllReports")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="Form 5A Report" aria-hidden="true"></i><span> Month Details Report</span></a></li>
+                    @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "OldTableReportPOC" ? "active" : "")"><a href="@Url.Action("OldTableReportPOC", "PrAllReports")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="Old Table Report POC" aria-hidden="true"></i><span> Old Table Report POC</span></a></li>
+        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "OldTableReportPOCForFromDateToDate" ? "active" : "")"><a href="@Url.Action("OldTableReportPOCForFromDateToDate", "PrAllReports")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="Old Table Report POC ForFromDateToDate" aria-hidden="true"></i><span> Old Table Report POC For From Date To Date</span></a></li>*@
+
+                    @* <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "LICReport" ? "active" : "")"><a href="@Url.Action("LICReport", "PrAllGroupFooter")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title=" LIC / HFC Report" aria-hidden="true"></i><span> *LIC / HFC</span></a></li>*@
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "LICReport" ? "active" : "")"><a href="@Url.Action("LICReport", "PrAllReports")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title=" LIC / HFC Report" aria-hidden="true"></i><span> LIC / HFC</span></a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "EmpLoanReport" ? "active" : "")"><a href="@Url.Action("EmpLoanReport", "PrAllGroupFooter")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="Loan Report" aria-hidden="true"></i><span> Loan Installments </span></a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "LoanScheduleReport" ? "active" : "")"><a href="@Url.Action("LoanScheduleReport", "PrAllGroupFooter")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="Loan Schedule Report" aria-hidden="true"></i><span> Loans & Schedule</span></a></li>
+                    @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "" ? "active" : "")"><a href="#"><i class="fa fa-pencil-square-o" data-toggle="tooltip" data-placement="right" title="PF monthly" aria-hidden="true"></i> <span> PF monthly </span></a></li>*@
+                    @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "" ? "active" : "")"><a href="#"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="MIS on Transactions" aria-hidden="true"></i><span> MIS on Transactions  </span></a></li>*@
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "TDSReport" ? "active" : "")"><a href="@Url.Action("TDSReport", "PrAllGroupFooter")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="TDS Report " aria-hidden="true"></i><span> TDS</span></a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Form16B" ? "active" : "")"><a href="@Url.Action("Form16B", "PrAllGroupFooter")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="Form 16 general " aria-hidden="true"></i><span> Form 16 (General) </span></a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "AllowanceReport" ? "active" : "")"><a href="@Url.Action("AllowanceReport", "PrAllGroupFooter")"><i class="fa fa-exchange" data-toggle="tooltip" data-placement="right" title="Allowance Report" aria-hidden="true"></i><span> Allowance </span></a></li>
+                    @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "" ? "active" : "")"><a href="#"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="Gratuity Report" aria-hidden="true"></i><span> Gratuity</span></a></li>*@
+
+
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Form12BAReport" ? "active" : "")"><a href="@Url.Action("Form12BAReport", "PrAllGroupFooter")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="Form 5A Report" aria-hidden="true"></i><span> Form 12BA </span></a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "YearlyPay" ? "active" : "")"><a href="@Url.Action("YearlyPay", "PrAllGroupFooter")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="Yearly Pay Report" aria-hidden="true"></i><span> Yearly Pay Report </span></a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Form16Report" ? "active" : "")"><a href="@Url.Action("Form16Report", "PrAllReports")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="Form 16 Report" aria-hidden="true"></i><span> Form 16 Report </span></a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Form3A" ? "active" : "")"><a href="@Url.Action("Form3A", "PrAllGroupFooter")"><i class="fa fa-exchange" data-toggle="tooltip" data-placement="right" title="Form 3A Report" aria-hidden="true"></i><span> Form 3A Report </span></a></li>
+                    @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Form7Report" ? "active" : "")"><a href="@Url.Action("Form7Report", "PrAllReports")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="Form 7 Report" aria-hidden="true"></i><span> Form 7 Report </span></a></li>*@
+
+
+
+
+                    @*@{
+
+        var str = "?hideReportMenuPartialView=hide";
+
+        }*@
+
+
+                </ul>
+            </div>
+
+
+        </div>
+    </div>
+    <div class="main_heading left-menu" style="margin-top:10px;">
+        <div class="leftmenu-container">
+
+            <h1>
+                <a href="#" class="sidebar-icon"> <span class="fa fa-th-list"></span> </a><a href="#">
+                    <span id="leftmenu-title">HRMS Reports</span>
+                </a>
+            </h1>
+
+            <div class="leftmenu">
+                <ul id="leftmenu">
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "IncrementReport" ? "active" : "")"><a href="@Url.Action("IncrementReport", "PrAllReports")"><i class="fa fa-user" data-toggle="tooltip" data-placement="right" title="Increment Report" aria-hidden="true"></i><span> Increment</span></a></li>
+                    <li><a target="_blank" href="@Url.Action("EmpPromotions", null, new { area = string.Empty, controller = "AllReports" }, Request.Url.Scheme)"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="Promotion List" aria-hidden="true"></i> <span> Promotion </span></a></li>
+                    @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "PromotionReport" ? "active" : "")"><a href="@Url.Action("PromotionReport", "PrAllReports")"><i class="fa fa-user" data-toggle="tooltip" data-placement="right" title="Promotion Report" aria-hidden="true"></i><span> *Promotion</span></a></li>*@
+                    <li><a target="_blank" href="@Url.Action("Retirement", null, new { area = string.Empty, controller = "AllReports" }, Request.Url.Scheme)"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="Retirement List" aria-hidden="true"></i> <span>Retirement </span></a></li>
+                    <li><a target="_blank" href="@Url.Action("Index", null, new { area = string.Empty, controller = "AllReports" }, Request.Url.Scheme)"><i class="fa fa-lock" data-toggle="tooltip" data-placement="right" title="Branch List" aria-hidden="true"></i> <span> Staff List </span></a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "IncrementDateChangeReport" ? "active" : "")"><a href="@Url.Action("IncrementDateChangeReport", "PrAllReports")"><i class="fa fa-lock" data-toggle="tooltip" data-placement="right" title="All Deductions"></i><span> Increment Date Change </span></a></li>
+                    @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "RetirementReport" ? "active" : "")"><a href="@Url.Action("RetirementReport", "Reports")"><i class="fa fa-lock" data-toggle="tooltip" data-placement="right" title="Retirement Report" aria-hidden="true"></i><span> Retirement Report</span></a></li>*@
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "TSheetReport" ? "active" : "")"><a href="@Url.Action("TSheetReport", "PrAllGroupFooter")"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="T Sheet" aria-hidden="true"></i><span> T Sheet </span></a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "TSumReport" ? "active" : "")"><a href="@Url.Action("TSumReport", "PrAllGroupFooter")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="T Sum" aria-hidden="true"></i><span> T Sum</span></a></li>
+   
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "SalBrReport" ? "active" : "")"><a href="@Url.Action("SalBrReport", "PrAllGroupFooter")"><i class="fa fa-lock" data-toggle="tooltip" data-placement="right" title="Salary bill of branch" aria-hidden="true"></i><span> Salary bill of branch</span></a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "JAIIB_CAIIB_Report" ? "active" : "")"><a href="@Url.Action("JAIIB_CAIIB_Report", "PrAllReports")"><i class="fa fa-lock" data-toggle="tooltip" data-placement="right" title="JAIIB CAIIB Report" aria-hidden="true"></i><span> JAIIB / CAIIB </span></a></li>
+
+                    @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "All Allowance" ? "active" : "")"><a href="@Url.Action("Index", "PrAllGroupingReports")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="All Allowance" aria-hidden="true"></i><span> All Allowance</span></a></li>*@
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "AllAllowanceEmpwise" || ViewContext.RouteData.Values["Action"].ToString() == "AllAllowanceWise" ? "active" : "")">
+                        <a href="#"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="All Allowance" aria-hidden="true"></i><span> All Allowance</span><span class="fa fa-angle-right" style="float: right;"></span></a>
+                        <ul>
+                            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "AllAllowanceEmpwise" ? "active" : "")"><a href="@Url.Action("AllAllowanceEmpwise", "PrAllGroupFooter")"><i class="fa fa-lock" data-toggle="tooltip" data-placement="right" title="All Allowance Emp Wise"></i><span> All Allowance Emp Wise</span></a></li>
+                            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "AllAllowanceWise" ? "active" : "")"><a href="@Url.Action("AllAllowanceWise", "PrAllGroupFooter")"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title=" All Allowance Wise"></i><span> All Allowance Wise</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "AllDeduction" ? "active" : "")"><a href="@Url.Action("AllDeduction", "PrAllGroupFooter")"><i class="fa fa-lock" data-toggle="tooltip" data-placement="right" title="All Deductions"></i><span> All Deductions </span></a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "AllLoanReport" ? "active" : "")"><a href="@Url.Action("AllLoanReport", "PrAllGroupFooter")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title=" All Loans" aria-hidden="true"></i><span> All Loans </span></a></li>
+                    @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "" ? "active" : "")"><a href="#"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="Loans Report" aria-hidden="true"></i><span> * Loans Report</span> </a></li>*@
+                    @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "" || ViewContext.RouteData.Values["Action"].ToString() == "" ? "active" : "")">
+            <a href="#"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="@*Interface" aria-hidden="true"></i><span> Interface</span><span class="fa fa-angle-right" style="float: right;"></span></a>
+            <ul>
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "" ? "active" : "")"><a href="#"><i class="fa fa-lock" data-toggle="tooltip" data-placement="right" title="General Vouchers"></i><span> General Vouchers</span></a></li>
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "" ? "active" : "")"><a href="#"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="Vouchers"></i><span> Vouchers</span></a></li>
+            </ul>
+        </li>*@
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "" || ViewContext.RouteData.Values["Action"].ToString() == "" ? "active" : "")">
+                        <a href="#"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="PF Reports" aria-hidden="true"></i><span> PF Reports</span><span class="fa fa-angle-right" style="float: right;"></span></a>
+                        <ul>
+                            @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "" ? "active" : "")"><a href="@Url.Action("PFInterestCalculations", "PrAllGroupFooter")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="PF Interest calculations" aria-hidden="true"></i><span> *PF Interest calculations</span></a></li>*@
+                            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Pfcontributioncard" ? "active" : "")"><a href="@Url.Action("Pfcontributioncard", "PrAllGroupFooter")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="PF contribution card" aria-hidden="true"></i><span> PF contribution card</span></a></li>
+
+                            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "PFContributionEffMonth" ? "active" : "")"><a href="@Url.Action("PFContributionEffMonth", "PrAllGroupFooter")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="Employee contribution Month Ledger" aria-hidden="true"></i><span> Employee contribution Month Ledger</span></a></li>
+                            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "PfFund" ? "active" : "")"><a href="@Url.Action("PfFund", "PrAllGroupFooter")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="PF contribution card" aria-hidden="true"></i><span> PF Fund</span></a></li>
+                            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "PfFinalSettlement" ? "active" : "")"><a href="@Url.Action("PfFinalSettlement", "PrAllGroupFooter")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="PF Final Settlement" aria-hidden="true"></i><span> PF Final Settlement</span></a></li>
+                            @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "" ? "active" : "")"><a href="#"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="All interest Due" aria-hidden="true"></i><span> *All interest Due</span></a></li>
+        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "" ? "active" : "")"><a href="#"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="Investment Interest register" aria-hidden="true"></i><span> *Investment Interest register</span></a></li>
+        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "" ? "active" : "")"><a href="#"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="Investment wise interest statement" aria-hidden="true"></i><span> *Investment wise interest statement</span></a></li>
+        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "" ? "active" : "")"><a href="#"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="Interest Receivable Register" aria-hidden="true"></i><span> *Interest Receivable Register</span></a></li>*@
+
+                            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Form7Report" ? "active" : "")"><a href="@Url.Action("Form7Report", "PrAllReports")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="Form 7 Report" aria-hidden="true"></i><span> Form :7(PS) </span></a></li>
+
+                            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Form8" ? "active" : "")"><a href="@Url.Action("Form8", "PrAllGroupFooter")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="Pension Annual Report(Form :8)" aria-hidden="true"></i><span> Pension Annual Report(Form :8)</span></a></li>
+                            @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "" || ViewContext.RouteData.Values["Action"].ToString() == "" ? "active" : "")">
+            <a href="#"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="Loan Type Breakup" aria-hidden="true"></i><span> Loan Type Breakup</span><span class="fa fa-angle-right" style="float: right;"></span></a>
+            <ul>
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "PfNonRepayableLoanBreakUp" ? "active" : "")"><a href="@Url.Action("PfNonRepayableReportloanbreakup", "PrAllGroupFooter")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="PF Non-Repayable Report" aria-hidden="true"></i><span> PF Non-Repayable Loans(Loan BreakUp)</span></a></li>
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "PfRepayableReport" ? "active" : "")"><a href="@Url.Action("PfRepayableReport", "PrAllGroupFooter")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="PFRepayable Report" aria-hidden="true"></i><span> PF Re-Payable Loans(Loan BreakUp)</span></a></li>
+            </ul>
+        </li>*@
+                            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "" || ViewContext.RouteData.Values["Action"].ToString() == "" ? "active" : "")">
+                                <a href="#"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="Loan Type Breakup" aria-hidden="true"></i><span>PF Loans (Consolidated Report)</span><span class="fa fa-angle-right" style="float: right;"></span></a>
+                                <ul>
+                                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "PfNonRepayableLoanBreakUp" ? "active" : "")"><a href="@Url.Action("PfNonRepayableReportloanbreakup", "PrAllGroupFooter")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="PF Non-Repayable Report" aria-hidden="true"></i><span> NR Withdrawals</span></a></li>
+                                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "PfRepayableReport" ? "active" : "")"><a href="@Url.Action("PfRepayableReport", "PrAllGroupFooter")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="PFRepayable Report" aria-hidden="true"></i><span> Refundable Advances</span></a></li>
+                                </ul>
+                            </li>
+                            @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "" || ViewContext.RouteData.Values["Action"].ToString() == "" ? "active" : "")">
+            <a href="#"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="PF Loans(with sanction date)" aria-hidden="true"></i><span> PF Loans(with sanction date)</span><span class="fa fa-angle-right" style="float: right;"></span></a>
+            <ul>
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "PFNonRepayableReport" ? "active" : "")"><a href="@Url.Action("PfNonRepayableReport", "PrAllGroupFooter")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="PF Non-Repayable Report" aria-hidden="true"></i><span> PF Non-Repayable Loans</span></a></li>
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "PfRepayableSanctionReport" ? "active" : "")"><a href="@Url.Action("PfRepayableSanctionReport", "PrAllGroupFooter")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="PF Repayable Report" aria-hidden="true"></i><span> PF Re-Payable Loans</span></a></li>
+            </ul>
+        </li>*@
+                            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "" || ViewContext.RouteData.Values["Action"].ToString() == "" ? "active" : "")">
+                                <a href="#"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="PF Loans(with sanction date)" aria-hidden="true"></i><span>PF Loans (Purpose-wise Report)</span><span class="fa fa-angle-right" style="float: right;"></span></a>
+                                <ul>
+                                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "PFNonRepayableReport" ? "active" : "")"><a href="@Url.Action("PfNonRepayableReport", "PrAllGroupFooter")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="PF Non-Repayable Report" aria-hidden="true"></i><span> NR Withdrawals</span></a></li>
+                                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "PfRepayableSanctionReport" ? "active" : "")"><a href="@Url.Action("PfRepayableSanctionReport", "PrAllGroupFooter")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="PF Repayable Report" aria-hidden="true"></i><span>Refundable Advances</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "" || ViewContext.RouteData.Values["Action"].ToString() == "" ? "active" : "")">
+                                @*<a href="#"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="PF Loans(with Effective date)" aria-hidden="true"></i><span> PF Loans(with Effective date)</span><span class="fa fa-angle-right" style="float: right;"></span></a>
+                <ul>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "PfNonRepayableEffdateReport" ? "active" : "")"><a href="@Url.Action("PfNonRepayableEffdateReport", "PrAllGroupFooter")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="PF Non Repayable Report" aria-hidden="true"></i><span> PF Non-Repayable Loans</span></a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "PfRepayableEffectiveReport" ? "active" : "")"><a href="@Url.Action("PfRepayableEffectiveReport", "PrAllGroupFooter")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="PFRepayable Report" aria-hidden="true"></i><span> PF Re-Payable Loans</span></a></li>
+                </ul>
+            </li>*@
+                            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "" || ViewContext.RouteData.Values["Action"].ToString() == "" ? "active" : "")">
+                                <a href="#"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="PF Loans(with Effective date)" aria-hidden="true"></i><span> PF Loans (Date-wise)</span><span class="fa fa-angle-right" style="float: right;"></span></a>
+                                <ul>
+                                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "PfNonRepayableEffdateReport" ? "active" : "")"><a href="@Url.Action("PfNonRepayableEffdateReport", "PrAllGroupFooter")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="PF Non Repayable Report" aria-hidden="true"></i><span> NR Withdrawals</span></a></li>
+                                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "PfRepayableEffectiveReport" ? "active" : "")"><a href="@Url.Action("PfRepayableEffectiveReport", "PrAllGroupFooter")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="PFRepayable Report" aria-hidden="true"></i><span>Refundable Advances</span></a></li>
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "SingleRateLoanOutStanding" || ViewContext.RouteData.Values["Action"].ToString() == "MultiRate" ? "active" : "")">
+                        @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "" || ViewContext.RouteData.Values["Action"].ToString() == "" ? "active" : "")">*@
+                        <a href="#"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="Pending Loans" aria-hidden="true"></i><span> Pending Loans</span><span class="fa fa-angle-right" style="float: right;"></span></a>
+                        <ul>
+
+                            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "SingleRateLoanOutStanding" ? "active" : "")"><a href="@Url.Action("SingleRateLoanOutStanding", "PrAllGroupFooter")"><i class="fa fa-lock" data-toggle="tooltip" data-placement="right" title="SIngle Rate"></i><span> Single Rate</span></a></li>
+                            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "MultiRate" ? "active" : "")"><a href="@Url.Action("MultiRate", "PrAllGroupFooter")"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="Multi Rate"></i><span> Multi Rate</span></a></li>
+                        </ul>
+                    </li>
+                    @*Vocher*@
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "GeneralVochers" || ViewContext.RouteData.Values["Action"].ToString() == "InterfaceVochers" ? "active" : "")">
+                        <a href="#"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="Pending Loans" aria-hidden="true"></i><span> Interface</span><span class="fa fa-angle-right" style="float: right;"></span></a>
+                        <ul>
+                            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "GeneralVochers" ? "active" : "")"><a href="@Url.Action("GeneralVochers", "PrAllGroupFooter")"><i class="fa fa-lock" data-toggle="tooltip" data-placement="right" title="General Vochers"></i><span> General Vochers</span></a></li>
+                            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "InterfaceVochers" ? "active" : "")"><a href="@Url.Action("InterfaceVochers", "PrAllGroupFooter")"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="Interface Vochers"></i><span> Interface Vochers</span></a></li>
+                        </ul>
+                    </li>
+
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "MembersLeavingService" || ViewContext.RouteData.Values["Action"].ToString() == "" ? "active" : "")">
+                        @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "" || ViewContext.RouteData.Values["Action"].ToString() == "" ? "active" : "")">*@
+                        <a href="#"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="Pension Scheme" aria-hidden="true"></i><span> Pension Scheme</span><span class="fa fa-angle-right" style="float: right;"></span></a>
+                        <ul>
+                            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "MembersLeavingService" ? "active" : "")"><a href="@Url.Action("MembersLeavingService", "PrAllReports")"><i class="fa fa-pencil-square-o" data-toggle="tooltip" data-placement="right" title="Leaving Service(form no : 5)" aria-hidden="true"></i><span> Leaving Service(form no : 5) </span></a></li>
+                            @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "" ? "active" : "")"><a href="#"><i class="fa fa-pencil-square-o" data-toggle="tooltip" data-placement="right" title="Entitled for membership (form no : 4)" aria-hidden="true"></i><span> *Entitled for membership (form no : 4) </span></a></li>*@
+                        </ul>
+                    </li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "EncashSummary" || ViewContext.RouteData.Values["Action"].ToString() == "EncashmentRegisterReports" ? "active" : "")">
+                        @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "" || ViewContext.RouteData.Values["Action"].ToString() == "" ? "active" : "")">*@
+                        <a href="#"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="Encashment" aria-hidden="true"></i><span> Encashment</span><span class="fa fa-angle-right" style="float: right;"></span></a>
+                        <ul>
+                            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "EncashSummary" ? "active" : "")"><a href="@Url.Action("EncashSummary", "PrAllGroupFooter")"><i class="fa fa-lock" data-toggle="tooltip" data-placement="right" title="Summary"></i><span> Summary</span></a></li>
+                            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "EncashmentRegisterReports" ? "active" : "")"><a href="@Url.Action("EncashmentRegisterReports", "PrAllGroupFooter")"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="Register"></i><span> Register</span></a></li>
+                        </ul>
+                    </li>
+                    @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "" ? "active" : "")"><a href="#"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="Future fund planing" aria-hidden="true"></i><span> Future fund planing </span></a></li>*@
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "LoanProjection" ? "active" : "")"><a href="@Url.Action("LoanProjection", "PrAllGroupFooter")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="" aria-hidden="true" data-original-title="Loan Projection"></i><span> Loan Projection </span></a></li>
+
+
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "EmployeesLoanLedger" ? "active" : "")"><a href="@Url.Action("EmployeesLoanLedger", "PrAllGroupFooter")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="" aria-hidden="true" data-original-title="Loan Details"></i><span> Loan Ledger </span></a></li>
+                    @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "" ? "active" : "")"><a href="#"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="Vochers" aria-hidden="true"></i><span> Vochers </span></a></li>*@
+                    @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "" ? "active" : "")"><a href="#"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="Branches staff list" aria-hidden="true"></i><span> Branches staff list </span></a></li>*@
+                    @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "" ? "active" : "")"><a href="#"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="staff salary excelsheet" aria-hidden="true"></i><span> staff salary excelsheet</span></a></li>*@
+                    @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "" || ViewContext.RouteData.Values["Action"].ToString() == "" ? "active" : "")">
+            <a href="#"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="Pay revision reports" aria-hidden="true"></i><span> Pay revision reports</span><span class="fa fa-angle-right" style="float: right;"></span></a>
+            <ul>
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "" ? "active" : "")"><a href="#"><i class="fa fa-lock" data-toggle="tooltip" data-placement="right" title="Pay Revision Report"></i><span> Pay Revision</span></a></li>
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "" ? "active" : "")"><a href="#"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="Allowance Report"></i><span> Allowance </span></a></li>
+            </ul>
+        </li>*@
+                    @*<li><a href="@Url.Action("Retirement", null, new { area = string.Empty, controller = "AllReports" }, Request.Url.Scheme)"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="Retirement List" aria-hidden="true"></i> <span>Retirement List </span></a></li>*@
+
+
+
+                </ul>
+            </div>
+
+
+        </div>
+    </div>
+}
+else if (ViewBag.SectionName == "Customization")
+{
+    <div class="main_heading left-menu">
+        <div class="leftmenu-container">
+
+            <h1>
+                <a href="#" class="sidebar-icon"> <span class="fa fa-th-list"></span> </a> <a href="#">
+                    <span id="leftmenu-title"> Customization</span>
+                </a>
+            </h1>
+
+            <div class="leftmenu">
+                <ul id="leftmenu">
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Loan_Master" ? "active" : "")"><a href="@Url.Action("Loan_Master", "Customization", new { area = "Payroll" })"><i class="fa fa-pencil-square-o" data-toggle="tooltip" data-placement="right" title="Master" aria-hidden="true"></i> <span> Loan Structure</span> </a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Payslip" ? "active" : "")"><a href="@Url.Action("Payslip", "Customization", new { area = "Payroll" })"><i class="fa fa-pencil-square-o" data-toggle="tooltip" data-placement="right" title="Payslip Structure" aria-hidden="true"></i> <span> Payslip Structure</span> </a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Encashment" ? "active" : "")"><a href="@Url.Action("Encashment", "Customization", new { area = "Payroll" })"><i class="fa fa-pencil-square-o" data-toggle="tooltip" data-placement="right" title="Encashment Structure" aria-hidden="true"></i> <span> Encashment Structure</span> </a></li>
+                    <li id="mis" class="@(ViewContext.RouteData.Values["Action"].ToString() == "MIS_Transaction" ? "active" : "")"><a href="@Url.Action("MIS_Transaction", "Customization", new { area = "Payroll" })"><i class="fa fa-pencil-square-o" data-toggle="tooltip" data-placement="right" title="Encashment Structure" aria-hidden="true"></i> <span> MIS on Transactions </span> </a></li>
+                </ul>
+            </div>
+
+
+        </div>
+    </div>
+
+}
+
+else if (ViewBag.SectionName == "POC")
+{
+    <div class="main_heading left-menu">
+        <div class="leftmenu-container">
+
+            <h1>
+                <a href="#" class="sidebar-icon"> <span class="fa fa-th-list"></span> </a> <a href="#">
+                    <span id="leftmenu-title">POC</span>
+                </a>
+            </h1>
+
+            <div class="leftmenu">
+                <ul id="leftmenu">
+
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "POC1" ? "active" : "")"><a href="@Url.Action("PocMessageTop", "POC")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="POC1" aria-hidden="true"></i><span>Poc Message Top</span></a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "POC2" ? "active" : "")"><a href="@Url.Action("GroupByPOC", "POC")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title=" POC2" aria-hidden="true"></i><span>POC GroupByPOC</span></a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "POC3" ? "active" : "")"><a href="@Url.Action("GrpByAllowencePOC", "POC")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="POC3" aria-hidden="true"></i><span>POC GrpByAllowencePOC</span></a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "POC3" ? "active" : "")"><a href="@Url.Action("GridwithChartPdf", "POC")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="POC3" aria-hidden="true"></i><span>POC Grid Chart Pdf</span></a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "POC3" ? "active" : "")"><a href="@Url.Action("GridHeadersIssue", "POC")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="POC3" aria-hidden="true"></i><span>Grid Headers Issue</span></a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "partialview" ? "active" : "")"><a href="@Url.Action("partialview", "POC")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="POC3" aria-hidden="true"></i><span>POC partialview</span></a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "POCLICReport" ? "active" : "")"><a href="@Url.Action("POCLICReport", "POC")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="POC3" aria-hidden="true"></i><span>POC-LICReport</span></a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "EncashmentRegisterReport" ? "active" : "")"><a href="@Url.Action("EncashmentRegisterReport", "POC")"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="Register"></i><span>Encash Register</span></a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "EncashmentRegisterReport" ? "active" : "")"><a href="@Url.Action("Index", "PocNew")"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="Register"></i><span>Group Footer PDF 1</span></a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "EncashmentRegisterReport" ? "active" : "")"><a href="@Url.Action("Index2", "PocNew")"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="Register"></i><span>Group Footer PDF 2</span></a></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+}
+
+

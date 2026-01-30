@@ -1,0 +1,1083 @@
+﻿
+@{
+    ViewBag.Title = "AdjustmentsLoans";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+    var siteUrl = System.Configuration.ConfigurationManager.AppSettings["websiteUrl"];
+}
+
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="leftmenu-container">
+                <div class="sidebar-menu">
+                    @{Html.RenderPartial("_PVPayrollMenu");}
+                </div>
+                <div class="sidebar-content">
+                    <div class="main_heading heading_main">
+                        <h1>Loan Adjustment<span class="year-end">@ViewBag.Env_Fm_Fy</span></h1>
+                        @*@{ Html.RenderPartial("_pvEmployeeSearch"); }*@
+                        <input type="hidden" id="hdnEmpCode" />
+                        <div class="col-md-12">
+                            <div class="emp-serch">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Emp Code:</label>
+                                        <div class="col-sm-8">
+                                            <div class="navbar-form" role="search">
+                                                <div class="input-group">
+                                                    <input type="number" id="txt_empcodesearch" class="form-control" placeholder="Search">
+                                                    <div class="input-group-btn">
+                                                        <button class="btn btn-default search_btn" title="Search for Employee" type="button" id="btn_searchempcodenew"><i class="glyphicon glyphicon-search"></i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <label id="lblEmpName_new" class="control-label emp_name"></label>
+
+                                            <label id="lblDesig_new" class="control-label"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label dept_label">Department / Branch:</label>
+                                        <div class="col-sm-8">
+                                            <label id="lblDeptBranch_new" class="control-label"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">DOJ:</label>
+                                            <div class="col-sm-9">
+                                                <label id="lblDOJ_new" class="control-label"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">DOC:</label>
+                                            <div class="col-sm-9">
+                                                <label id="lblDOC_new" class="control-label"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">DOR:</label>
+                                            <div class="col-sm-9">
+                                                <label id="lblDOR_new" class="control-label"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="empSearchModal_new" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Search & select employee</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="table-responsive">
+                                            <table id="jdtEmpSearch1440_new" class="display fixed_header" style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Code</th>
+                                                        <th>Employee Name</th>
+                                                        <th>Designation</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal" title="Close the window">Cancel</button>
+                                        <button type="button" class="btn btn-primary" id="btnEmpSearchModalOK_loan" title="Submit the data">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt_10" id="lndisableorenable">
+                            <div>
+                                <p class="address" style="font-size:15px;color:green;text-align:center">For current Month payroll has been already processed, Inorder to enter the adjustments, please revert the payroll</p>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="mt_10">
+                            <div class="col-md-6">
+                                <div class="inner_heading">
+                                    <h1>Loans Sanctioned</h1>
+                                    <table id="gridLoansanction" class="display" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Id</th>
+                                                <th>Name</th>
+                                                <th>Amount(<i class="fa fa-rupee"></i>)</th>
+                                                <th>Sanc Date</th>
+                                                <th>Ins Start Date</th>
+                                                <th width="30px;">Emp Code</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="inner_heading">
+                                    <h1>Loan Details</h1>
+                                    <table id="gridLoandetails" class="display" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Id</th>
+                                                <th>Amount(<i class="fa fa-rupee"></i>)</th>
+                                                <th>Date Of Disb</th>
+                                                <th>Rate of Int</th>
+                                                <th>Int Accured</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-md-4" id="w">
+                            <div class="loan_adj loan_adj_table">
+                                <table id="gridWithoutinterest" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+
+                                            <th>
+                                                Without Interest
+                                            </th>
+                                            <th>Amount(<i class="fa fa-rupee"></i>)</th>
+                                        </tr>
+
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Amount:</td>
+                                            <td><input type="text" class="form-control"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Interest Amount:</td>
+                                            <td><input type="text" class="form-control"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Recovered Amount:</td>
+                                            <td><input type="text" class="form-control"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Principle Amount:</td>
+                                            <td><input type="text" class="form-control"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Interest Recovered:</td>
+                                            <td><input type="text" class="form-control"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Installments:</td>
+                                            <td><input type="text" class="form-control"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Principal Installment Amount:</td>
+                                            <td><input type="text" class="form-control"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Interest Installment Amount:</td>
+                                            <td><input type="text" class="form-control"></td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="loan_adj_border">
+                                <div class="border_box">
+                                    <input type="radio" id="Payment1" name="Payment" value="Full Clearing">
+                                    <label for="Payment1"><span><span></span></span>Full Clearing &nbsp;&nbsp;</label>
+                                    <input type="radio" id="Payment2" name="Payment" value="Part Payment">
+                                    <label for="Payment2"><span><span></span></span>Part Payment</label>
+
+                                    @*Full Clearing :    @Html.RadioButton("Payment", "Full Clearing")
+                                        Installment Clearing :   @Html.RadioButton("Payment", "Installment Clearing")*@
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="border_box">
+                                    <input type="radio" id="Cash1" name="Cash" value="Cash Payment">
+                                    <label for="Cash1"><span><span></span></span>Cash Payment</label>
+                                    <input type="radio" id="Cash2" name="Cash" value="Others">
+                                    <label for="Cash2"><span><span></span></span>Others</label>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="form-horizontal">
+                                    <div class="mt_10" id="cashpaidon">
+                                        <label class="col-sm-6 control-label">Cash Paid On:</label>
+                                        <div class="col-sm-6 input-group date" id="pdate">
+                                            <input type="text" class="form-control" id="txtdate">
+                                            <span id="txtdate2" class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 mt_10" id="amttobepaid">
+                                        <div class="form-group">
+                                            <label class="col-sm-6 control-label">Amount to be paid:</label>
+                                            <div class="col-sm-6">
+                                                <input type="number" class="form-control" id="txtAmountPaid" name="txtAmountPaid" onkeyup="totalamount();">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="loan_adj loan_adj_table">
+                                <table id="gridOutstanding" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Out Standing
+                                            </th>
+                                            <th>Amount (<i class="fa fa-rupee"></i>)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Loan Amount:</td>
+                                            <td><input type="text" class="form-control"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Interest Amount:</td>
+                                            <td><input type="text" class="form-control"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>This Month Interest:</td>
+                                            <td><input type="text" class="form-control"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Total Amount:</td>
+                                            <td><input type="text" class="form-control"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mt_10">
+                            <div class="pull-right">
+                                <button id="btnCancel" class="btn btn-default" title="Clear the data">Cancel</button>
+                                <button id="btnsubmit" class="btn btn-primary" type="button" title="Submit details"> Submit </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var oldidx=0;
+    var id;
+    var idx;
+
+    $(document).ready(function () {
+         
+        $('#btnsubmit').attr('disabled', true);
+        var table = $('#gridLoansanction').DataTable();
+        $(".txtdate").datepicker({
+            forceParse: false
+        });
+        var dat=acivemonth = "@ViewBag.Fm_AdjustLoanDatePicker";
+        var acivemonth = [];
+        acivemonth.push(dat);
+        var datepic = acivemonth[0];
+        $('#pdate').datepicker('setDate', new Date(dat));
+        $('#txtdate').val('');
+
+        $('#gridLoansanction tbody').on('click', 'tr', function () {
+             
+            if ($(this).hasClass('selected')) {
+                idx = table.row('.selected').index();
+                if (oldidx == idx) {
+                    return false;
+                }
+                else if (idx == idx) {
+                    return false;
+                }
+                //$(this).removeClass('selected');
+                CommonApiGET('/Payroll/Transaction/GetWithoutinterestdata?Id=' + 0, function (respData) {
+                    fillWithInterestDeductionData(respData);
+                });
+                CommonApiGET('/Payroll/Transaction/GetChildLoanDetailsofemp?Id=' + 0, function (respData) {
+                    fillChildLoansData(respData);
+
+                });
+              clearfields();
+            }
+            else {
+                 
+                $('tbody tr').removeClass('selected')
+             //table.$('tr.selected').removeClass('selected');
+               //$("#" + idx).removeClass('selected');
+              // $(this).removeClass('selected');
+
+                $(this).addClass('selected');
+                table = $('#gridLoansanction').DataTable();
+                 idx = table.row('.selected').index();
+                if (table.rows(idx) != undefined && table.rows(idx).data() != undefined) {
+                    var rowsel = table.rows(idx).data()[0];
+                     id = rowsel.id;
+                    //set emp data
+                    oldidx = idx;
+                    //CommonApiGET('/Payroll/Transaction/GetWithoutinterestdata?Id=' + id, function (respData) {
+                    //    fillWithInterestDeductionData(respData);
+                    //});
+                    CommonApiGET('/Payroll/Transaction/GetChildLoanDetailsofemp?Id=' + id, function (respData) {
+                        fillChildLoansData(respData);
+                    });
+
+                    clearfields();
+                }
+            }
+        });
+
+        var tableloan = $('#gridLoandetails').DataTable();
+
+        $('#gridLoandetails tbody').on('click', 'tr', function () {
+             
+            if ($(this).hasClass('selected')) {
+                if (oldidx == idx) {
+                    return false;
+                }
+                else if (idx == idx) {
+                    return false;
+                }
+               // $(this).removeClass('selected');
+                CommonApiGET('/Payroll/Transaction/GetWithoutinterestdata?Id=' + 0, function (respData) {
+                    fillWithInterestDeductionData(respData);
+                });
+                clearfields();
+            }
+            else {
+                 
+               // $('tbody tr').removeClass('selected')
+                tableloan.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+                tableloan = $('#gridLoandetails').DataTable();
+                idx = tableloan.row('.selected').index();
+                if (tableloan.rows(idx) != undefined && tableloan.rows(idx).data() != undefined) {
+                    var rowsel = tableloan.rows(idx).data()[0];
+                    id = rowsel.id;
+                    oldidx = idx;
+                    //set emp data
+                    CommonApiGET('/Payroll/Transaction/GetWithoutinterestdata?Id=' + id, function (respData) {
+                        fillWithInterestDeductionData(respData);
+
+                    });
+                 clearfields();
+
+                }
+            }
+        });
+
+        $('#gridLoansanction').DataTable({
+            "destroy": true,
+            "paging": false,
+            "sort": false,
+            "searching": false,
+            "columns": [
+                { "data": "id", "visible": false },
+                { "data": "loan_description"},
+                { "data": "emp_code", "visible": false   },
+                { "data": "total_amount", "visible": false },
+                { "data": "sanction_date", "visible": false },
+                { "data": "installment_start_date", "visible": false }
+            ],
+            "language": {
+              "emptyTable": "No data available"
+            },
+
+        });
+
+
+        $('#gridLoandetails').DataTable({
+            "destroy": true,
+            "paging": false,
+            "sort": false,
+            "searching": false,
+            "columns": [
+                { "data": "id", "visible": false },
+                { "data": "date_disburse"},
+                { "data": "loan_amount", "visible": false },
+                { "data": "interest_rate", "visible": false },
+                { "data": "interest_accured", "visible": false }
+            ],
+            "language": {
+                "emptyTable": "No data available"
+            },
+
+        });
+
+        CommonApiGET('/Payroll/Transaction/GetWithoutinterestdata?Id=' + 0, function (respDataW) {
+             
+            fillWithInterestDeductionData(respDataW);
+        });
+
+    });
+
+
+    var sanctiondate;
+  //  var tableChildLoan;
+    function fillLoansanctionData(respData) {
+        var AdjLoan = [];
+        var dataObj = JSON.parse(respData);
+        AdjLoan.push(dataObj.AdjLoanDetails);
+        var LoanData = AdjLoan[0];
+        $('#gridLoansanction').DataTable({
+            "destroy": true,
+            "paging": false,
+            "sort": false,
+            "searching": false,
+            data: LoanData,
+
+            "columns": [
+                { "data": "id", "visible": false },
+                { "data": "loan_description" },
+                { "data": "total_amount" },
+                {
+                    "data": "sanction_date",
+                    "render": function (data) {
+                        var date = new Date(data);
+                        var month = date.getMonth() + 1;
+                        var day = date.getDate();
+                        //sanctiondate = (day > 9 ? day : "0" + day) + "-" + (month > 9 ? month : "0" + month) + "-" + date.getFullYear();
+                        return (day > 9 ? day : "0" + day) + "-" + (month > 9 ? month : "0" + month) + "-" +  date.getFullYear();
+                    }
+                },
+                {
+                    "data": "installment_start_date",
+                     "render": function (data) {
+                        var date = new Date(data);
+                         var month = date.getMonth() + 1;
+                         var day = date.getDate();
+                         sanctiondate = (day > 9 ? day : "0" + day) + "-" + (month > 9 ? month : "0" + month) + "-" + date.getFullYear();
+                         return (day > 9 ? day : "0" + day) + "-" + (month > 9 ? month : "0" + month) + "-" +  date.getFullYear();
+                    }
+                },
+                { "data": "emp_code" },
+            ],
+            "order": [[0, 'asc']]
+        });
+
+        AutoLoansSanctionedgridFirstrow();
+    }
+
+    //comparing payment date less than sanction date or not
+    $("#txtdate").change(function () {
+         
+        var fm = $("#txtdate").val();
+        var data = $('#gridLoansanction').DataTable().row('.selected').data()
+        var date1 = data.installment_start_date;
+        var fm2 = date1;
+        if (fm2 == undefined) {
+            showGlobalModal('E#Warning #Please Enter Employee Code And Search');
+            $("#txtdate").val('');
+        }
+        else {
+             
+            var paydate = fm.split('-');
+            var yyyy = parseInt(paydate[2]);
+            var mm = parseInt(paydate[1]);
+            var dd = parseInt(paydate[0]);
+
+            var startdate = fm2.split('-');
+            var yyyy2 = parseInt(startdate[2]);
+            var mm2 = parseInt(startdate[1]);
+            var dd2 = parseInt(startdate[0]);
+            // checking
+            if (mm == mm2 && yyyy == yyyy2 && dd < dd2) {
+                showGlobalModal('E#Warning #Please Select Payment date Greater than Installment Start date');
+                $("#txtdate").val('');
+            }
+            else if (mm > mm2 && yyyy < yyyy2  ) {
+                showGlobalModal('E#Warning #Please Select Payment date Greater than  Installment Start date');
+                $("#txtdate").val('');
+            }
+            else if (mm < mm2 && yyyy == yyyy2) {
+                showGlobalModal('E#Warning #Please Select Payment date Greater than  Installment Start date');
+                $("#txtdate").val('');
+            }
+            //else if (fm == fm2) {
+            //    showGlobalModal('E#Warning #Please Select Payment date Greater than Sanction date');
+            //    $("#txtdate").val('');
+            //}
+            else if (yyyy < yyyy2) {
+                showGlobalModal('E#Warning #Please Select Payment date Greater than  Installment Start date');
+                $("#txtdate").val('');
+            }
+            totalamount();
+        }
+
+    });
+
+    //select first row in LoansDetails tables
+    function AutoLoadSecondgridFirstrow() {
+       var  tableChildLoan = $('#gridLoandetails').DataTable();
+
+        if (tableChildLoan.data().count() >= 1) {
+
+            tableChildLoan.$('tr:first').click();
+
+            // $('#gridLoansanction tbody tr:eq(0)').click();
+            //tableChildLoan.row(':eq(0)', { page: 'current' }).click;
+            //tableChildLoan.ajax.reload(function (json) {
+            //    $('#ProductList tbody tr:eq(0)').click();
+            //});
+            // $('#gridLoansanction tbody').rows().data()[0].click;
+            //var idx = tableChildLoan.row('.selected').index();
+            //if (table.rows(idx) != undefined && table.rows(idx).data() != undefined) {
+            //    var rowsel = table.rows(idx).data()[0];
+            //    var id = rowsel.id;
+            //    //set emp data
+            //    CommonApiGET('/Payroll/Transaction/GetWithoutinterestdata?Id=' + id, function (respData) {
+            //        fillWithInterestDeductionData(respData);
+            //    });
+        }
+    }
+
+    //select first row in LoansSanctioned tables
+    function AutoLoansSanctionedgridFirstrow() {
+         
+        var tableChildLoan;
+        var tableMainLoan = $('#gridLoansanction').DataTable();
+
+        if (tableMainLoan.data().count() >= 1) {
+
+            //tableMainLoan.$('tr:first').click();
+
+            $('#gridLoansanction tbody tr:eq(0)').click();
+            tableChildLoan.row(':eq(0)', { page: 'current' }).click;
+            tableChildLoan.ajax.reload(function (json) {
+                $('#ProductList tbody tr:eq(0)').click();
+            });
+            $('#gridLoansanction tbody').rows().data()[0].click;
+            var idx = tableChildLoan.row('.selected').index();
+            if (table.rows(idx) != undefined && table.rows(idx).data() != undefined) {
+                var rowsel = table.rows(idx).data()[0];
+                var id = rowsel.id;
+                //set emp data
+                CommonApiGET('/Payroll/Transaction/GetWithoutinterestdata?Id=' + id, function (respData) {
+                    fillWithInterestDeductionData(respData);
+                });
+            }
+        }
+        else {
+             
+        setTimeout(function () { window.location.reload(); }, 10);
+
+        }
+    }
+
+    var _interestrate
+    function fillChildLoansData(respData) {
+         
+        var AdjChildLoan = [];
+        var dataObj = JSON.parse(respData);
+        AdjChildLoan.push(dataObj.AdjChildLoanDetails);
+        var ChildLoanData = AdjChildLoan[0];
+        if (ChildLoanData.length > 0) {
+            _interestrate = ChildLoanData[0].interest_rate;
+            $('#gridLoandetails').DataTable({
+                "destroy": true,
+                "paging": false,
+                "sort": false,
+                "searching": false,
+                data: ChildLoanData,
+
+                "columns": [
+                    { "data": "id", "visible": false },
+
+                    { "data": "loan_amount" },
+                    {
+                        "data": "date_disburse",
+                        "render": function (data) {
+                            var date = new Date(data);
+                            var month = date.getMonth() + 1;
+                            var day = date.getDate();
+                            return (day > 9 ? day : "0" + day) + "-" + (month > 9 ? month : "0" + month) + "-" + date.getFullYear();
+                        }
+                    },
+                    { "data": "interest_rate" },
+                    { "data": "interest_accured" },
+                ],
+                "order": [[0, 'asc']]
+            });
+            AutoLoadSecondgridFirstrow();
+        }
+
+
+    }
+
+
+    function fillWithInterestDeductionData(respData) {
+
+        var wi = [];
+        var de = [];
+        var dataObj = JSON.parse(respData);
+        wi.push(dataObj.lstWithoutInterest);
+        de.push(dataObj.lstdeduction);
+
+        var wiData = wi[0];
+        var deData = de[0];
+
+        orgErlist = wiData;
+        orgDdlist = deData;
+        $('#gridWithoutinterest').DataTable({
+
+            "destroy": true,
+            "paging": false,
+            "sort": false,
+            "searching": false,
+            "info": false,
+            "bFilter": false,
+            data: wiData,
+
+            "columns": [
+
+                { "data": "display" },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data) {
+
+                        if (data.dbcolumn == "id" || data.dbcolumn == "emp_adv_loans_mid") {
+                            return getHiddenField(data.dbcolumn, data.value);
+
+                        }
+                        else {
+                            return getColumnReadOnlywithWhiteshade(data.dbcolumn, data.value);
+                        }
+
+                    }
+                }
+            ],
+            "order": [[1, 'asc']]
+        });
+
+        $('#gridOutstanding').DataTable({
+            "destroy": true,
+            "paging": false,
+            "sort": false,
+            "searching": false,
+            "info": false,
+            "bFilter": false,
+            data: deData,
+            "columns": [
+                { "data": "display" },
+                {
+
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data) {
+                        if (data.dbcolumn == "cal_os_amount" || data.dbcolumn == "interest2" ) {
+                            return getHiddenField(data.dbcolumn, data.value);
+
+                        }
+                        else {
+                            return getColumnReadOnlywithWhiteshade(data.dbcolumn, data.value);
+                        }
+                    }
+                }
+            ],
+            "order": [[0, 'asc']]
+        });
+        var LoanDet = $('#gridLoandetails').DataTable();
+
+        if (LoanDet.rows('.selected').any()) {
+            totalamount();
+        }
+
+        }
+
+    $('#btnEmpSearchModalOK_loan').click(function () {
+        //
+        var table = $('#jdtEmpSearch1440_new').DataTable();
+        var idx = table.row('.selected').index();
+        if (table.rows(idx) != undefined && table.rows(idx).data() != undefined) {
+            var rowsel = table.rows(idx).data()[0];
+            console.log(rowsel);
+            //set emp data
+            setSingleEmployee1440new(rowsel);
+
+            //close modal
+            $('#empSearchModal_new').modal('toggle');
+        }
+    });
+    function setSingleEmployee1440Empty() {
+        //** set values
+        $("#txt_empcodesearch").val("");
+        $("#lblEmpName_new").text("");
+        $("#lblDeptBranch_new").text("");
+        $("#lblDesig_new").text("");
+        $("#lblDOJ_new").text("");
+        $("#lblDOC_new").text("");
+        $("#lblDOR_new").text("");
+
+    }
+    $(document).ready(function () {
+         
+        
+       var enableordisbale = '@ViewBag.HourEndRevertEnableDisable';
+        if (enableordisbale == 'Disable') {
+
+            $("#txt_empcodesearch").val("");
+            $("#txt_empcodesearch").prop("disabled", true);
+            //document.getElementById('txt_empcodesearch').disabled = true;
+            $("#lblEmpName_new").text("");
+            $("#lblEmpName_new").prop("disabled", true);
+            $("#lblDeptBranch_new").text("");
+            $("#lblDeptBranch_new").prop("disabled", true);
+            $("#lblDesig_new").text("");
+            $("#lblDesig_new").prop("disabled", true);
+            $("#lblDOJ_new").text("");
+            $("#lblDOJ_new").prop("disabled", true);
+            $("#lblDOC_new").text("");
+            $("#lblDOC_new").prop("disabled", true);
+            $("#lblDOR_new").text("");
+            $("#lblDOR_new").prop("disabled", true);
+            $("#lndisableorenable").prop("visible", true);
+            //document.getElementById('btn_searchempcodenew').disabled = true;
+            //$("#btn_searchempcodenew").prop("disabled", true);
+            $('#btn_searchempcodenew').attr('disabled', true);
+            $("#gridLoansanction").prop("disabled", true);
+            $("#gridLoandetails").prop("disabled", true);
+            $("#gridWithoutinterest").prop("disabled", true);
+            $("#gridOutstanding").prop("disabled", true);
+
+            $("#txtdate").prop("disabled", true);
+            $("#txtdate2").prop("disabled", true);
+            $("#txtAmountPaid").prop("disabled", true);
+
+            $('#btnsubmit').attr('disabled', true);
+            $('#btnCancel').attr('disabled', true);
+        }
+        else if (enableordisbale == 'Enable') {
+            $("#txt_empcodesearch").val("");
+            $("#txt_empcodesearch").prop("disabled", false);
+            //document.getElementById('txt_empcodesearch').disabled = true;
+            $("#lblEmpName_new").text("");
+            $("#lblEmpName_new").prop("disabled", false);
+            $("#lblDeptBranch_new").text("");
+            $("#lblDeptBranch_new").prop("disabled", false);
+            $("#lblDesig_new").text("");
+            $("#lblDesig_new").prop("disabled", false);
+            $("#lblDOJ_new").text("");
+            $("#lblDOJ_new").prop("disabled", false);
+            $("#lblDOC_new").text("");
+            $("#lblDOC_new").prop("disabled", false);
+            $("#lblDOR_new").text("");
+            $("#lblDOR_new").prop("disabled", false);
+            //$("#lndisableorenable").prop("visible", false);
+            document.getElementById("lndisableorenable").style.display = "none";
+            //document.getElementById('btn_searchempcodenew').disabled = true;
+            //$("#btn_searchempcodenew").prop("disabled", true);
+            $('#btn_searchempcodenew').attr('disabled', false);
+            $("#gridLoansanction").prop("disabled", false);
+            $("#gridLoandetails").prop("disabled", false);
+            $("#gridWithoutinterest").prop("disabled", false);
+            $("#gridOutstanding").prop("disabled", false);
+
+            $("#txtdate").prop("disabled", false);
+            $("#txtdate2").prop("disabled", false);
+            $("#txtAmountPaid").prop("disabled", false);
+
+            //$('#btnsubmit').attr('disabled', false);
+            $('#btnCancel').attr('disabled', false);
+        }
+    });
+    
+    function pvEmpCommonSearch1440new() {
+        if ($("#txt_empcodesearch").val() == "") {
+            toasterOptions();
+            toastr.error('Employee Id cannot be empty', 'Required');
+        }
+        else {
+             
+            CommonApiGET('/Payroll/Transaction/SearchEmployee?EmpCode=' + $("#txt_empcodesearch").val(), function (respData) {
+                 
+                if (respData.length == 0) {
+                    toasterOptions();
+                    //toastr.error('No user with Name / Code: ' + $("#txt_empcodesearch").val(), 'No user');
+                    toastr.error('Employee not Found');
+                    setSingleEmployee1440Empty();
+
+                }
+                else if (respData[0].EDRetire == "") {
+
+                    toasterOptions();
+                    //toastr.error('User Retired with Name / Code: ' + $("#txt_empcodesearch").val(), 'Retired user');
+                    toastr.error('Employee is retired');
+                    setSingleEmployee1440Empty();
+                }
+                else if (respData.length == 1) {
+                    setSingleEmployee1440new(respData[0]);
+                } else {
+                    //
+                    //open modal
+                    $("#empSearchModal_new").modal();
+                    //fill users data
+                    $('#jdtEmpSearch1440_new').DataTable({
+                        "bFilter": true,
+                        "destroy": true,
+                        "paging": false,
+                        "info": false,
+                        "language": {
+                            "search": "Filter records:"
+                        },
+                        data: respData,
+
+                        "columns": [
+                            { "data": "ECode" },
+                            { "data": "EName" },
+                            { "data": "EDesignation" }
+                        ],
+                        "order": [[0, 'asc']]
+                    });
+                }
+            });
+        }
+    }
+    function setSingleEmployee1440new(respData) {
+
+         
+        //** set values
+        $("#txt_empcodesearch").val(respData.ECode);
+        $("#lblEmpName_new").text(respData.EName);
+        $("#lblDeptBranch_new").text(respData.EBranch);
+        $("#lblDesig_new").text(respData.EDesignation);
+        $("#lblDOJ_new").text(respData.EDoj);
+        $("#lblDOC_new").text(respData.EDoc);
+        $("#lblDOR_new").text(respData.EDRetire);
+        //$("#txt_selectedoption").text(respData.EselOpt);
+        $("#lbl_selectedoption").text(respData.EselOpt);
+
+
+        //call parent page method
+        getDataAfterEmpSearch1440(respData.ECode);
+    }
+    $("#btn_searchempcodenew").click(function (e) {
+         
+        pvEmpCommonSearch1440new();
+        return false;
+    });
+    function getDataAfterEmpSearch1440(empcode) {
+
+        $("#btnsubmit").attr("disabled", false);
+        clearfields();
+        $('#hdnEmpCode').val(empcode);
+        CommonApiGET('/Payroll/Transaction/GetAdjustmentsLoans?EmpId=' + empcode, function (respData) {
+            fillLoansanctionData(respData);
+        });
+
+        //CommonApiGET('/Payroll/Transaction/GetWithoutinterestdata?Id=' + 0, function (respData) {
+        //    fillWithInterestDeductionData(respData);
+        //});
+        CommonApiGET('/Payroll/Transaction/GetChildLoanDetailsofemp?Id=' + 0, function (respData) {
+            fillChildLoansData(respData);
+        });
+
+    }
+    var InterestAccured;
+    //this month interest & os amount calculation when full payment radio button selected.
+    $('#Payment1').click(function () {
+         
+            var LoanDet = $('#gridLoandetails').DataTable();
+            if (LoanDet.rows('.selected').any()) {
+                //var outstandingamount = parseInt($("[name='cal_os_amount']").val());
+                //var noofdays = new Date().getDate();
+                //InterestAccured = Math.ceil(((outstandingamount * _interestrate) / (100 * 365)) * noofdays);
+                $("[name='os_this_month_interest']").val(0);
+                totalamount();
+            }
+        //}
+    });
+
+    //making this month interest zero when clicking part payment radio button.
+    $('#Payment2').click(function () {
+         
+        var LoanDet = $('#gridLoandetails').DataTable();
+        if (LoanDet.rows('.selected').any()) {
+            $("[name='os_this_month_interest']").val(0);
+            totalamount();
+        }
+    });
+
+    function clearfields() {
+        $('#txtdate').val('');
+        $('#txtAmountPaid').val('');
+        $("#Payment1").prop("checked", false);
+        $("#Payment2").prop("checked", false);
+        $("#Cash1").prop("checked", false);
+        $("#Cash2").prop("checked", false);
+
+    }
+    var outstandingamount;
+    var interestamount;
+    var InterestAccuredBeforeppay;
+    function totalamount() {
+         
+        //$("[name='os_principal_amount']").val() = 0;
+        //$("[name='os_interest_amount']").val() = 0;
+        var LoanDet = $('#gridLoandetails').DataTable();
+
+        if (LoanDet.rows('.selected').any()) {
+            var amounttobepaid = 0;
+            if ($("#txtAmountPaid").val() != undefined && $("#txtAmountPaid").val() != '') {
+                amounttobepaid = parseInt($("#txtAmountPaid").val());
+            }
+            outstandingamount = parseInt($("[name='cal_os_amount']").val());
+            interestamount = parseInt($("[name='interest2']").val());
+            var os_this_month_interest = parseInt($("[name='os_this_month_interest']").val());
+            if (outstandingamount == 0) {
+                $("[name='os_interest_amount']").val(interestamount - amounttobepaid);
+
+            }
+            var noofdays = $("#txtdate").val();
+            if (noofdays != "" && $('#Payment1').prop("checked") == true) {
+                 
+                var days = noofdays.split('-');
+                var secondDate = new Date(days[2], days[1], days[0]);
+                var firstDay = new Date(secondDate.getFullYear(), secondDate.getMonth(), 1);
+                const oneDay = 24 * 60 * 60 * 1000;
+                const diffDays = Math.round(Math.abs((firstDay - secondDate) / oneDay));
+                const ppdays = diffDays;
+                InterestAccured = Math.round(((outstandingamount * _interestrate) / (100 * 365)) * ppdays);
+                interestamount = interestamount;
+               // $("[name='os_interest_amount']").val(interestamount);
+                $("[name='os_this_month_interest']").val(InterestAccured);
+                $("[name='os_total_amount']").val(parseInt($("[name='os_principal_amount']").val()) + parseInt($("[name='os_interest_amount']").val()) + parseInt($("[name='os_this_month_interest']").val()));
+                //$("[name='txtAmountPaid']").val(parseInt($("[name='os_principal_amount']").val()) + parseInt($("[name='os_interest_amount']").val()) + parseInt($("[name='os_this_month_interest']").val()));
+
+            }
+
+            if (amounttobepaid >= outstandingamount) {
+                // 
+                $("[name='os_principal_amount']").val(0);
+                var os_this_month_interest = parseInt($("[name='os_this_month_interest']").val());
+                    $("[name='os_interest_amount']").val(interestamount - (amounttobepaid - (outstandingamount + os_this_month_interest)));
+                    if ($("[name='os_interest_amount']").val() == 0) {
+                        $("[name='os_this_month_interest']").val(0);
+                    }
+                    
+                } else {
+                    $("[name='os_principal_amount']").val(outstandingamount - amounttobepaid);
+                    $("[name='os_interest_amount']").val(interestamount);
+                }
+
+
+            $("[name='os_total_amount']").val(parseInt($("[name='os_principal_amount']").val()) + parseInt($("[name='os_interest_amount']").val()) + parseInt($("[name='os_this_month_interest']").val()));
+            //$("[name='txtAmountPaid']").val(parseInt($("[name='os_principal_amount']").val()) + parseInt($("[name='os_interest_amount']").val()) + parseInt($("[name='os_this_month_interest']").val()));
+        }
+
+        else {
+            showGlobalModal('E#Warning #Please Select Loan Details Then Enter Amount');
+            $('#txtAmountPaid').val('');
+        }
+        var noofdays = $("#txtdate").val();
+        if (noofdays != "" && $('#Payment2').prop("checked") == true) {
+             
+            var days = noofdays.split('-');
+            var secondDate = new Date(days[2], days[1], days[0]);
+            var firstDay = new Date(secondDate.getFullYear(), secondDate.getMonth(), 1);
+            const oneDay = 24 * 60 * 60 * 1000;
+            const diffDays = Math.round(Math.abs((firstDay - secondDate) / oneDay));
+            const ppdays = diffDays + 1;
+            InterestAccuredBeforeppay = Math.ceil(((outstandingamount * _interestrate) / (100 * 365)) * ppdays);
+            interestamount = interestamount + InterestAccuredBeforeppay;
+            $("[name='os_interest_amount']").val(interestamount);
+           // $("[name='os_this_month_interest']").val(InterestAccuredBeforeppay);
+            $("[name='os_total_amount']").val(parseInt($("[name='os_principal_amount']").val()) + parseInt($("[name='os_interest_amount']").val()) + parseInt($("[name='os_this_month_interest']").val()));
+        }
+
+
+    }
+
+    function selectRow() {
+        var grid = $("#jqGrid");
+        var rowKey = grid.jqGrid('getGridParam', "selrow");
+
+        jQuery('#jqGrid').jqGrid('setSelection', rowKey);
+    }
+
+    $('#btnsubmit').click(function () {
+
+        var total = outstandingamount + interestamount + InterestAccured;
+        var total2 = outstandingamount + interestamount ;
+        var n = $("input[name='Payment']:checked").val();
+        if ($("input[name='Payment']:checked").val() == undefined) {
+            showGlobalModal('E#Warning #Please Select Payment Type');
+        }
+        else if ($("input[name='Cash']:checked").val() == undefined) {
+            showGlobalModal('E#Warning #Please Select Payment Mode');
+        }
+        else if ($('#txtdate').val() == "") {
+            showGlobalModal('E#Warning #Please Select Date');
+        }
+        else if ($('#txtAmountPaid').val() == "") {
+            showGlobalModal('E#Warning #Please Enter Amount to be Paid');
+        }
+        else if ($("input[name='Payment']:checked").val() == 'Full Clearing' && $('#txtAmountPaid').val() != total) {
+            showGlobalModal('E#Warning #Please Enter Paid Amount Equals to Total Amount');
+        }
+        else if ($("input[name='Payment']:checked").val() == 'Part Payment' && $('#txtAmountPaid').val() == total2) {
+            showGlobalModal('E#Warning #Please Enter Paid Amount Less Than Total Amount');
+        }
+        else if ($("[name='os_total_amount']").val() < 0) {
+            showGlobalModal('E#Warning #Please Enter Amount Less Than Total OS Amount');
+        }
+        else {
+            var updWithoutinterest = $('#gridWithoutinterest').DataTable().$('input, select').serialize();
+            var updOutstanding = $('#gridOutstanding').DataTable().$('input, select').serialize();
+            var updEnteredData = $("input[name='Payment']:checked").val() + "," + $("input[name='Cash']:checked").val() + "," + $("#txtdate").val() + "," + $("#txtAmountPaid").val();
+
+            var dataToSend = JSON.stringify({
+                'EntityId': $("#hdnEmpCode").val(),
+                'StringData': updWithoutinterest,
+                'StringData2': updOutstanding,
+                'StringData3': updEnteredData
+            });
+
+            CommonApiPOST('/Payroll/Transaction/saveAdjLoanData', dataToSend, function (isSuccess) {
+                if (isSuccess) {
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+        }
+        return false;
+    });
+
+    $("#btnCancel").click(function () {
+        var tableChildLoan = $('#gridLoandetails').DataTable();
+        var Maintable = $('#gridLoansanction').DataTable();
+        if (tableChildLoan.data().count() >0 || Maintable.data().count() >0) {
+            clearfields();
+        }
+        else {
+            window.location.reload();
+        }
+
+    });
+
+</script>

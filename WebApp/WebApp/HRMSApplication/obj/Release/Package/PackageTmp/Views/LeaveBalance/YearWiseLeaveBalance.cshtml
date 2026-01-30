@@ -1,0 +1,359 @@
+﻿@model Entities.Leaves_CarryForward
+@{
+    ViewBag.RolePages = TempData["RolePages"];
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var rolepages = TempData["RolePages"].ToString();
+}
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-heading">
+            @{
+                <ul class="nav nav-tabs">
+                    @if (rolepages.Contains("LVMLV"))
+                    {
+                        <li class="active"><a href=@Url.Action("LeaveRequest", "LeaveApply")>Leave Apply</a></li>
+                    }
+                    @if (rolepages.Contains("LVELB"))
+                    {
+                        <li><a href=@Url.Action("LeaveBalance", "LeaveBalance")>Emp Leave Balance</a></li>
+                    }
+                    @if (rolepages.Contains("LVLAP"))
+                    {
+                        <li><a href=@Url.Action("LeaveApproval", "LeaveApproval")>Leave Approvals</a></li>
+                        //<li><a href=@Url.Action("Leaveforemployee", "LeaveApply")>LeaveForEmployee</a></li>
+                    }
+                    @if (rolepages.Contains("LFPMain"))
+                    {
+                        <li><a href=@Url.Action("Leaveforemployee", "LeaveApply")>LeaveForEmployee</a></li>
+                    }
+                    @if (rolepages.Contains("LVMLA"))
+                    {
+                        <li><a href=@Url.Action("myleaveapproval", "Reports")>My Leave Approvals</a></li>
+                    }
+                </ul>
+            }
+        </div>
+    </div>
+</div>
+<div class="page_st">
+    <div class="page">
+
+        <div class="col-md-12 col-sm-12">
+
+            <div class="main_heading">
+                <h1>Year Wise Leave Balance</h1>
+                @*<div class="col-md-12">
+                        <table id="myTextArea" class="workdiary table table-bordered" style="width: 35%;"></table>
+                    </div>*@
+                <div class="col-sm-12">
+
+                    <div id="grid">
+
+                    </div>
+                    <div style='margin-top: 20px;'>
+                        <div style='float: left;'>
+                            @*<input type="button" class="btn btn-info" value="Export to Excel" id='excelExport' />*@
+                            <input type="button" class="btn btn-info" value="Export to Excel" id='exceltoExport' />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@{
+
+    var message = TempData["AlertMessage"] ?? string.Empty;
+
+}
+
+<script type="text/javascript">
+ var message = '@message';
+
+if(message) alert(message);
+
+</script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        Get1();
+        // prepare the data
+        var source =
+        {
+            datatype: "json",
+            datafields: [
+
+                { name: 'Id', type: 'int' },
+                { name: 'LeaveType', type: 'string' },
+                { name: 'Year', type: 'int' },
+                { name: 'LeaveBalance', type: 'int' },
+                { name: 'Debits', type: 'int' },
+                { name: 'CreditLeaves', type: 'int' },
+                { name: 'CarryForwardFLeaves', type: 'int' },
+                { name: 'EmpId', type: 'string' },
+                { name: 'EmpName', type: 'string' },
+                { name: 'Designation', type: 'string' },
+                { name: 'BrDept', type: 'string' },
+            ],
+            async: false,
+            url: '/LeaveBalance/YearWiseLeaveBalanceViews',
+            data: {
+                featureClass: "P",
+                style: "full",
+                maxRows: 2,
+                username: "jqwidgets"
+            }
+        };
+        var dataAdapter = new $.jqx.dataAdapter(source,
+            {
+                formatData: function (data) {
+                    data.EmpId = $("#searchField").val();
+                    return data;
+                }
+            }
+        );
+        var editrowindex = -1;
+        var delrowindex = -1;
+        // initialize jqxGrid
+        $("#grid").jqxGrid(
+            {
+                width: '100%',
+                source: dataAdapter,
+                theme: otherTheme,
+                autoheight: true,
+                sortable: true,
+                pageable: true,
+                columnsResize: true,
+                altRows: true,
+                filterable: true,
+                autoshowfiltericon: true,
+                ready: function () {
+                    $("#grid").jqxGrid('localizestrings', localizationObject);
+                },
+                updatefilterconditions: function (type, defaultconditions) {
+                    switch (type) {
+                        case 'stringfilter':
+                            return stringcomparisonoperators;
+                        case 'numericfilter':
+                            return numericcomparisonoperators;
+                        case 'datefilter':
+                            return datecomparisonoperators;
+                        case 'booleanfilter':
+                            return booleancomparisonoperators;
+                    }
+                },
+                updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                    filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                    var index1 = 0;
+                    var index2 = 0;
+                    if (columnfilter != null) {
+                        var filter1 = columnfilter.getfilterat(0);
+                        var filter2 = columnfilter.getfilterat(1);
+                        if (filter1) {
+                            index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                            var value1 = filter1.filtervalue;
+                            filterinputfield1.val(value1);
+                        }
+                        if (filter2) {
+                            index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                            var value2 = filter2.filtervalue;
+                            filterinputfield2.val(value2);
+                        }
+                    }
+                    filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                    filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                },
+                columns: [
+
+                    {
+                        text: "EmpId", datafield: "EmpId", width: 127, align: 'center',
+                        cellsrenderer: function (row, column, value) {
+                            return "<div style='margin:4px;text-align: center;'>" + (value) + "</div>";
+                        }
+                    },
+                    {
+                        text: "EmployeeName", datafield: "EmpName", width: 150, align: 'center',
+                        cellsrenderer: function (row, column, value) {
+                            return "<div style='margin:4px;text-align: center;'>" + (value) + "</div>";
+                        }
+                    },
+                    {
+                        text: "Designation", datafield: "Designation", width: 127, align: 'center',
+                        cellsrenderer: function (row, column, value) {
+                            return "<div style='margin:4px;text-align: center;'>" + (value) + "</div>";
+                        }
+                    },
+
+                    {
+                        text: "Department/Branch", datafield: "BrDept", width: 127, align: 'center',
+                        cellsrenderer: function (row, column, value) {
+                            return "<div style='margin:4px;text-align: center;'>" + (value) + "</div>";
+                        }
+                    },
+
+                    {
+                        text: "Year", datafield: "Year", width: 127, align: 'center',
+                        cellsrenderer: function (row, column, value) {
+                            return "<div style='margin:4px;text-align: center;'>" + (value) + "</div>";
+                        }
+                    },
+
+                    {
+                        text: "Leave Type", datafield: "LeaveType", editable: false, width: 190, align: 'center',
+                        cellsrenderer: function (row, column, value) {
+                            return "<div style='margin:4px;text-align: center;'>" + (value) + "</div>";
+                        }
+                    },
+                    {
+                        text: 'CarryForward', editable: false, datafield: 'CarryForwardFLeaves', align: 'center', width: 190,
+                        cellsrenderer: function (row, column, value) {
+                            return "<div style='margin:4px;text-align: center;'>" + (value) + "</div>";
+                        }
+                    },
+                    {
+                        text: 'Leave Credit', editable: false, datafield: 'CreditLeaves', align: 'center', width: 190,
+                        cellsrenderer: function (row, column, value) {
+                            return "<div style='margin:4px;text-align: center;'>" + (value) + "</div>";
+                        }
+                    },
+                    {
+                        text: 'Leave Debit', editable: false, datafield: 'Debits', align: 'center', width: 190,
+                        cellsrenderer: function (row, column, value) {
+                            return "<div style='margin:4px;text-align: center;'>" + (value) + "</div>";
+                        }
+                    },
+                    {
+                        text: 'Leave Balance', editable: false, datafield: 'LeaveBalance', align: 'center', width: 190,
+                        cellsrenderer: function (row, column, value) {
+                            return "<div style='margin:4px;text-align: center;'>" + (value) + "</div>";
+                        }
+                    },
+
+                ], columngroups:
+                    [
+                        { text: 'Action', align: 'center', name: 'Actions', width: 160 },
+
+                    ],
+            });
+        $("#exceltoExport").jqxButton();
+        $("#excelExport").click(function () {
+            $("#grid").jqxGrid('exportdata', 'xls', 'EmpYearWiseLeaveBalance');
+        });
+    });
+</script>
+
+<script>
+    document.getElementById("a4").className = "active";
+</script>
+<script type="text/javascript">
+
+    function Get1() {
+
+        $.ajax({
+            type: 'GET',
+            url: 'YearViewBalances',
+            dataType: 'Json',
+            success: function (response) {
+                if (response != null) {
+                    var text = "<tr><td>EmployeeId:" + " " + " " + response.lEmployeeId
+                        + "</td></tr> <tr><td> EmployeeName:" + " " + " " + response.lEmployeeName
+                        + "</td></tr> <tr><td> Designation:" + " " + " "
+                        + response.ldesig + "</td></tr><tr><td> Branch/Dept:" + " " + " " + response.ldeptbranch + "</td></tr>";
+
+                    document.getElementById("myTextArea").innerHTML = text;
+                }
+
+            },
+        });
+
+    }
+
+
+</script>
+
+
+
+<!-- Include XLSX library (local) -->
+<script src="~/Assets/libs/excel/cdn_excel_0.17.js"></script>
+<!-- Include FileSaver library (local) -->
+<script src="~/Assets/libs/excel/cdn_excel_filesaver_v_2.0.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Add click event handler to the download Excel button
+        $("#exceltoExport").click(function () {
+            var filteredData = $("#grid").jqxGrid('getrows') || [];
+
+            var processedData = [];
+            for (var i = 0; i < filteredData.length; i++) {
+                var item = filteredData[i] || {};
+                var row = {};
+                row.EmpId = item.EmpId || '';
+                row.EmpName = item.EmpName || '';
+                row.BrDept = item.BrDept || '';
+                row.Designation = item.Designation || '';
+                row.LeaveType = item.LeaveType || '';
+                row.Year = item.Year || '';
+                row.LeaveBalance = item.LeaveBalance || '';
+                row.Debits = item.Debits || '';
+                row.CreditLeaves = item.CreditLeaves || '';
+                row.CarryForwardFLeaves = item.CarryForwardFLeaves || '';
+                processedData.push(row);
+            }
+
+            var wb = XLSX.utils.book_new();
+            var ws;
+            if (processedData.length > 0) {
+                ws = XLSX.utils.json_to_sheet(processedData);
+            } else {
+                try {
+                    var cols = $("#grid").jqxGrid('columns');
+                    var recs = cols ? cols.records || [] : [];
+                    var headers = [];
+                    for (var c = 0; c < recs.length; c++) {
+                        if (recs[c] && recs[c].text && recs[c].datafield !== '') { headers.push(recs[c].text); }
+                    }
+                    ws = XLSX.utils.aoa_to_sheet([headers]);
+                } catch (e) { ws = XLSX.utils.aoa_to_sheet([[]]); }
+            }
+
+            XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+            var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+            var blob = new Blob([s2ab(wbout)], { type: 'application/octet-stream' });
+            saveAs(blob, 'EmpYearWiseLeaveBalance.xlsx');
+            return false;
+        });
+    });
+
+    // Function to parse date string to Date (kept for parity if future dates added)
+    function parseDate(dateString) {
+        if (!dateString) { return null; }
+        var match = /\/Date\((\d+)\)\//.exec(dateString);
+        if (match && match[1]) {
+            var ts = parseInt(match[1], 10);
+            if (!isNaN(ts)) { return new Date(ts); }
+        }
+        var dt2 = new Date(dateString);
+        if (!isNaN(dt2.getTime())) { return dt2; }
+        return null;
+    }
+
+    function formatDate(date) {
+        if (!date || isNaN(date.getTime())) return '';
+        var d = date.getDate();
+        var m = date.getMonth() + 1;
+        var y = date.getFullYear();
+        var dd = d < 10 ? ('0' + d) : ('' + d);
+        var mm = m < 10 ? ('0' + m) : ('' + m);
+        return dd + '/' + mm + '/' + y;
+    }
+
+    // Function to convert string to ArrayBuffer
+    function s2ab(s) {
+        var buf = new ArrayBuffer(s.length);
+        var view = new Uint8Array(buf);
+        for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+        return buf;
+    }
+</script>

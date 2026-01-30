@@ -1,0 +1,133 @@
+-----sp for single sub loans
+ 
+create PROCEDURE sp_insert_two_sub_Loans @emp_code int ,@loan_code varchar(20),  @total_amount int , @total_installment int  , @remaining_installment int , @principal_installment int ,@interest_installment int ,
+@completed_installment int, 
+@sanction_date date , @installment_start_date date ,@installment_end_date date ,@method nvarchar(50),@interest_rate float, @installment_amount float ,@interest_installment_amount float, @total_recovered_amount float,@vender_name varchar(30), @fm date,@fy int
+AS
+
+declare @transidnew int; 
+--generating new trans id
+exec gen_new_transaction 793, 'G JAGADISH', 'Payroll_Web', '1.0.0', 'N/A'; 
+
+--selecting new trans id
+set @transidnew = (select last_num from new_num where table_name = 'transaction_tbl'); 
+declare @idnew0 int; 
+--generating new number for pr_emp_adv_loans table
+exec get_new_num 'pr_emp_adv_loans'; 
+--selecting last id for pr_emp_adv_loans table
+
+set @idnew0=(select  last_num from new_num where table_name = 'pr_emp_adv_loans');
+
+declare @emp_id int;
+set @emp_id=(select id from employees where EmpId=@emp_code);
+
+declare @d_id int;
+set @d_id=(select d.id from Designations d inner join Employees e on d.id=e.CurrentDesignation where e.EmpId=@emp_code);
+
+
+update pr_emp_adv_loans_child set active=0 where emp_adv_loans_mid=(select id from pr_emp_adv_loans where emp_code=@emp_code and active=1 and 
+loan_type_mid=(select l.loan_type_mid from pr_emp_adv_loans l inner join pr_loan_master m on l.loan_type_mid=m.id 
+where l.emp_code=@emp_code and m.loan_id=@loan_code and l.active=1));
+
+update pr_emp_adv_loans set active=0 where emp_code=@emp_code and active=1 and loan_type_mid= 
+(select l.loan_type_mid from pr_emp_adv_loans l inner join pr_loan_master m on l.loan_type_mid=m.id where l.emp_code=@emp_code 
+and m.loan_id=@loan_code and l.active=1);
+
+Insert into pr_emp_adv_loans(id, emp_id, emp_code, designation, loan_type_mid, total_amount, total_installment,remaining_installment,
+principal_installment, interest_installment, completed_installment, sanction_date, installment_start_date,installment_end_date,method, 
+interest_rate, installment_amount,interest_installment_amount, total_recovered_amount, code_master, active, trans_id,fm,fy) 
+values(@idnew0,
+@emp_id,@emp_code,
+@d_id,
+(select id from pr_loan_master where loan_id=@loan_code and active=1),
+@total_amount,@total_installment,@remaining_installment,@principal_installment,@interest_installment,@completed_installment,@sanction_date,@installment_start_date,
+@installment_end_date,@method,@interest_rate,@installment_amount,@interest_installment_amount,@total_recovered_amount,
+(select id from All_Masters where Name=@vender_name and Active=1),1,@transidnew,@fm,@fy);
+
+insert into transaction_touch([operation],[entity_name],[entity_oid],[key1],[trans_id]) 
+values('I', 'pr_emp_adv_loans',@idnew0,'', @transidnew); 
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE PROCEDURE sp_insert_two_sub_Loans_priority1 @emp_code int, @loan_code varchar(20) ,@date_disburse date, @loan_amount int , @interest_rate float,
+@interest_accured float, @principal_amount_recovered int,
+@interest_amount_recovered float, @total_amount_recovered float,
+ @principal_start_date date ,@principal_end_date date ,@interest_start_date date,@interest_end_date date ,
+ @total_principal_installments int ,@total_interest_installments int, @os_principal_amount int, @os_interest_amount float
+AS
+declare @transidnew int; 
+set @transidnew = (select last_num from new_num where table_name = 'transaction_tbl'); 
+declare @idnew0 int; 
+exec get_new_num 'pr_emp_adv_loans_child'; 
+set @idnew0=(select  last_num from new_num where table_name = 'pr_emp_adv_loans_child');
+declare @emp_id int;
+set @emp_id=(select id from employees where EmpId=@emp_code);
+declare @d_id int;
+set @d_id=(select d.id from Designations d inner join Employees e on d.id=e.CurrentDesignation where e.EmpId=@emp_code);
+
+declare @loan_id int ;
+set @loan_id=(select id from pr_emp_adv_loans where emp_code=@emp_code and active=1 and 
+loan_type_mid=(select l.loan_type_mid from pr_emp_adv_loans l inner join pr_loan_master m on l.loan_type_mid=m.id 
+where l.emp_code=@emp_code and m.loan_id=@loan_code and l.active=1));
+
+Insert into pr_emp_adv_loans_child(id,emp_adv_loans_mid,slno,date_disburse,loan_amount,interest_rate,interest_accured,
+principal_amount_recovered,interest_amount_recovered,total_amount_recovered,priority,principal_start_date,principal_end_date,
+interest_start_date,interest_end_date,total_principal_installments,total_interest_installments,os_principal_amount,
+os_interest_amount,os_this_month_interest,os_total_amount,principal_recovered_flag,interest_recovered_flag,active,trans_id) 
+values(@idnew0,
+@loan_id, 1 ,@date_disburse,@loan_amount,@interest_rate, @interest_accured , @principal_amount_recovered , @interest_amount_recovered ,@total_amount_recovered , 1 ,
+@principal_start_date,@principal_end_date,@interest_start_date,@interest_end_date,@total_principal_installments,@total_interest_installments ,
+@os_principal_amount,@os_interest_amount  ,0 ,@os_principal_amount,0,0,1,@transidnew);
+insert into transaction_touch([operation],[entity_name],[entity_oid],[key1],[trans_id]) 
+values('I', 'pr_emp_adv_loans_child',@idnew0,'', @transidnew); 
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE PROCEDURE sp_insert_two_sub_Loans_priority2 @emp_code int, @loan_code varchar(20) ,@date_disburse date, @loan_amount int , @interest_rate float,
+@interest_accured float, @principal_amount_recovered int,
+@interest_amount_recovered float, @total_amount_recovered float,
+ @principal_start_date date ,@principal_end_date date ,@interest_start_date date,@interest_end_date date ,
+ @total_principal_installments int ,@total_interest_installments int, @os_principal_amount int, @os_interest_amount float
+AS
+declare @transidnew int; 
+set @transidnew = (select last_num from new_num where table_name = 'transaction_tbl'); 
+declare @idnew0 int; 
+exec get_new_num 'pr_emp_adv_loans_child'; 
+set @idnew0=(select  last_num from new_num where table_name = 'pr_emp_adv_loans_child');
+declare @emp_id int;
+set @emp_id=(select id from employees where EmpId=@emp_code);
+declare @d_id int;
+set @d_id=(select d.id from Designations d inner join Employees e on d.id=e.CurrentDesignation where e.EmpId=@emp_code);
+
+declare @loan_id int ;
+set @loan_id=(select id from pr_emp_adv_loans where emp_code=@emp_code and active=1 and 
+loan_type_mid=(select l.loan_type_mid from pr_emp_adv_loans l inner join pr_loan_master m on l.loan_type_mid=m.id 
+where l.emp_code=@emp_code and m.loan_id=@loan_code and l.active=1));
+
+Insert into pr_emp_adv_loans_child(id,emp_adv_loans_mid,slno,date_disburse,loan_amount,interest_rate,interest_accured,
+principal_amount_recovered,interest_amount_recovered,total_amount_recovered,priority,principal_start_date,principal_end_date,
+interest_start_date,interest_end_date,total_principal_installments,total_interest_installments,os_principal_amount,
+os_interest_amount,os_this_month_interest,os_total_amount,principal_recovered_flag,interest_recovered_flag,active,trans_id) 
+values(@idnew0,
+@loan_id, 2 ,@date_disburse,@loan_amount,@interest_rate, @interest_accured , @principal_amount_recovered , @interest_amount_recovered ,@total_amount_recovered , 2 ,
+@principal_start_date,@principal_end_date,@interest_start_date,@interest_end_date,@total_principal_installments,@total_interest_installments ,
+@os_principal_amount,@os_interest_amount  ,0 ,@os_principal_amount,0,0,1,@transidnew);
+insert into transaction_touch([operation],[entity_name],[entity_oid],[key1],[trans_id]) 
+values('I', 'pr_emp_adv_loans_child',@idnew0,'', @transidnew); 
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+exec sp_insert_two_sub_Loans 452,'HL2A', 2000000, 10, 6,10,0,4,'2019-10-01', '2019-11-01', '2020-09-01','Interest to be Recovered at End',11.5, 5000,5632,20000,'APCOB ED.LOAN MNR Branch','2019-10-01',2020
+exec sp_insert_two_sub_Loans_priority1 452,'HL2A', '2019-10-01', 1500000,11.5,2653,20000,2653,22653,'2019-11-01','2020-09-01','2020-09-01','2020-09-01',192,48,30000,2500
+exec sp_insert_two_sub_Loans_priority2 452,'HL2A', '2019-10-01', 500000,11.5,2653,20000,2653,22653,'2019-11-01','2020-09-01','2020-09-01','2020-09-01',192,48,30000,2500
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+Note: interest start date=TEXT(EDATE(TEXT((EDATE(AH2,J2)),"yyyy-mm-dd"),1),"yyyy-mm-dd")
+interest end date= TEXT(EDATE(TEXT(EDATE(TEXT((EDATE(AH2,J2)),"yyyy-mm-dd"),1),"yyyy-mm-dd"),4), "yyyy-mm--dd");
+
+if loan start date not availabale then take loan sanction date : TEXT(IF(U156<>"NULL",DATE(LEFT(U156,4),RIGHT(U156,2),1),G156),"yyyy-mm-dd")
+
+
+if loan start date not availabale(Null or empty) then take loan sanction date =TEXT(        IF(  ISBLANK(U141),     G141,  IF(U141<>"NULL",DATE(LEFT(U141,4),RIGHT(U141,2),1),G141)    ), "yyyy-mm-dd"                 )

@@ -1,0 +1,416 @@
+﻿@model Entities.HolidayList
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var rolepages = TempData["RolePages"].ToString();
+    ViewBag.RolePages = TempData["RolePages"];
+}
+@using (Html.BeginForm("Create", "HolidayLists", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="container">
+        <div class="panel with-nav-tabs panel-primary">
+
+            <div class="panel-heading">
+               @{
+                <ul class="nav nav-tabs">
+                    @if (rolepages.Contains("MABAN"))
+                    {
+                        <li><a href="@Url.Action("Create", "Banks")" data-toggle="tab" id="1">Bank</a></li>}
+                    @if (rolepages.Contains("MABRA"))
+                    {
+                        <li><a href=@Url.Action("Create", "Branches")>Branch</a></li>}
+
+                    @if (rolepages.Contains("MADEP"))
+                    {
+                        <li><a href=@Url.Action("Create", "Departments")>Department</a></li>}
+                    @if (rolepages.Contains("MADES"))
+                    {
+                        <li><a href=@Url.Action("Create", "Designations")>Designation</a></li>}
+                    @if (rolepages.Contains("MAROL"))
+                    {
+                        <li><a href=@Url.Action("Create", "Roles")>Role</a></li>}
+                    @if (rolepages.Contains("MALTY"))
+                    {
+                        <li><a href=@Url.Action("Create", "LeaveTypes")>LeaveType</a></li>}
+                    @if (rolepages.Contains("MAHLI"))
+                    {
+                        <li class="active"><a href=@Url.Action("Create", "HolidayLists")>HolidayList</a></li>}
+                    @if (rolepages.Contains("MACDL"))
+                    {
+                        <li><a href=@Url.Action("CreditDebitleaves", "MyLeaves")>Credit / Debit leaves</a></li>}
+                    @if (rolepages.Contains("MABCY"))
+                    {
+                        <li><a href=@Url.Action("Createbranchcount", "Branches")>Branch Category</a></li>}
+                    @if (rolepages.Contains("MAODY"))
+                    {
+                        <li><a href=@Url.Action("OtherdutyCreate", "LeaveTypes")>Other Duty</a></li>}
+                    @if (rolepages.Contains("MABPD"))
+                    {
+                        <li><a href=@Url.Action("Create", "BlockPeriod")>BlockPeriod</a></li>}
+                    @if (rolepages.Contains("MANES"))
+                    {
+                        <li><a href=@Url.Action("Create", "News")>News</a></li>}
+                </ul>
+            }   
+            </div>
+            <div class="panel-body">
+                <div class="tab-content">
+                    <div class="tab-pane fade in active" id="holidaylist">
+                        <div class="page_st">
+                            <div class="page">
+                                <div class="col-md-12 col-sm-12">
+                                        
+                                        <div>
+                                            @using (Html.BeginForm("Create", "HolidayLists", FormMethod.Post))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                <div class="col-md-12 col-sm-12">
+                                                    <div class="main_heading">
+                                                        <h1>Holiday Creation</h1>
+                                                        <div class="form-horizontal col-md-offset-3 col-md-6 col-sm-6">
+                                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-4 control-label">Occasion:<span class="mandatory">*</span></label>
+                                                                    <div class="col-sm-8">
+                                                                        @Html.TextBoxFor(model => model.Occasion, new { @class = "form-control", @id = "Occas" })
+                                                                        @Html.ValidationMessageFor(model => model.Occasion, "", new { @class = "text-danger" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-4 control-label">Date:<span class="mandatory">*</span></label>
+                                                                    <div class="col-sm-8">
+                                                                        <div class="input-group date" id="Date">
+                                                                            @*@Html.TextBoxFor(model => model.Date, new { @class = "form-control" }) <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>*@
+                                                                            @Html.TextBoxFor(m => m.Date, "{0:dd/MM/yyyy}", new { @class = "form-control", @id = "dat", onchange = "return holidate();", onkeypress = "return nokeyword(event)" })<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+
+                                                                            @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="pull-right">
+                                                                    <button type="reset" class="btn btn-default">Cancel</button>
+                                                                    <input type="submit" value="Create" Onclick="return holiday();" class="btn btn-primary" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                 
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="main_heading">
+                                                        <h1>Holiday List</h1>
+                                                        <div class="col-md-12">
+                                                            <div class="table-responsive">
+                                                                <div id="grid"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+@{
+    var message = TempData["AlertMessage"] ?? string.Empty;
+}
+<script type="text/javascript">
+ var message = '@message';
+
+if(message) alert(message);
+
+</script>
+
+
+    <script type="text/javascript">
+       
+
+    $(document).ready(function () {
+        // prepare the data for BankView
+        var theme = otherTheme;
+        // prepare the data
+        var url = "../HolidayLists/HolidayViews";
+        var source =
+            {
+                type: "Get",
+                datatype: "json",
+                datafields: [
+                   
+                  
+            { name: 'Id', type: 'int' },
+        { name: 'Occasion', type: 'string' },
+        { name: 'Date', type: 'date' },
+        { name: 'UpdateDate,', type: 'DateTime' },
+        { name: 'UpdatedBy', type: 'int' },
+        { name: 'UpdateDate', type: 'DateTime' },
+        { name: 'DeleteAt', type: 'DateTime' },
+        ],
+                async: false,
+                url: url,
+                data: {
+                    featureClass: "P",
+                    style: "full",
+                    username: "jqwidgets"
+                }
+            };
+        var dataAdapter = new $.jqx.dataAdapter(source,
+            {
+                formatData: function (data) {
+                    data.ProductName = $("#searchField").val();
+                    return data;
+                }
+            }
+        );
+        // initialize jqxGrid
+        var editrowindex = -1;
+        var delrowindex = -1;
+        $("#grid").jqxGrid(
+            {
+                width: '99.5%',
+                source: dataAdapter,
+                theme: otherTheme,// for theme refernce go to Layout.cshtml
+                autoheight: true,
+                sortable: true,
+                pageable: true,
+                columnsResize: true,
+                altRows: true,
+                filterable: true,
+                autoshowfiltericon: true,
+
+                ready: function () {
+                    $("#grid").jqxGrid('localizestrings', localizationObject);
+                },
+                updatefilterconditions: function (type, defaultconditions) {
+                    switch (type) {
+                        case 'stringfilter':
+                            return stringcomparisonoperators;
+                        case 'numericfilter':
+                            return numericcomparisonoperators;
+                        case 'datefilter':
+                            return datecomparisonoperators;
+                        case 'booleanfilter':
+                            return booleancomparisonoperators;
+                    }
+                },
+                updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                    filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                    var index1 = 0;
+                    var index2 = 0;
+                    if (columnfilter != null) {
+                        var filter1 = columnfilter.getfilterat(0);
+                        var filter2 = columnfilter.getfilterat(1);
+                        if (filter1) {
+                            index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                            var value1 = filter1.filtervalue;
+                            filterinputfield1.val(value1);
+                        }
+                        if (filter2) {
+                            index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                            var value2 = filter2.filtervalue;
+                            filterinputfield2.val(value2);
+                        }
+                    }
+                    filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                    filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                },
+                columns: [
+                    { text: "Occasion", datafield: "Occasion", editable: false, width: 450 },
+                        { text: "Date", datafield: "Date", editable: false, width: 470, cellsformat: 'dd/MM/yyyy' },
+                    {
+                        text: 'Edit', datafield: 'Edit', sortable: false, filterable: false, columngroup: 'Actions', columntype: 'button', width: 60, cellsrenderer: function () {
+
+                             return "Edit";
+                         }, buttonclick: function (row) {
+                             editrowindex = row;
+                             var paginginformation = $('#grid').jqxGrid('getpaginginformation');
+                             var id = $("#grid").jqxGrid('getcellvalue', row, "Id");
+                             window.location = '/HolidayLists/Edit/?id=' + id + '&page=' + paginginformation.pagenum;
+                         }
+                     },
+                    {
+                        text: 'Delete', datafield: 'Delete', columngroup: 'Actions', sortable: false, filterable: false, columntype: 'button', name: 'delete', width: 60, cellsrenderer: function () {
+                            return "Delete";
+                        },
+                        buttonclick: function (row) {
+                            var res = confirm("Do You Want to Delete");
+                            if (res) {
+                                delrowindex = row;
+                                var id = $("#grid").jqxGrid('getcellvalue', row, "Id");
+
+                                var paginginformation = $('#grid').jqxGrid('getpaginginformation');
+                                window.location = '/HolidayLists/Delete/?id=' + id + '&page=' + paginginformation.pagenum;
+                            }
+                            else
+                                return res;
+                        }
+                    }
+                ],
+                columngroups:
+          [
+            { text: 'Action', align: 'center', name: 'Actions', width: 120 },
+          ],
+           });
+        });
+
+    </script>
+
+<script>
+    function holidate() {
+        var x = location.hostname;
+        var url = window.location.href
+        var arr = url.split("/");
+        var textBoxValue = document.getElementById("dat").value;
+        
+       // var result = "https://" + arr[2] + "/" + "HolidayLists/checkholiday?Date=" + textBoxValue;
+        var result = "" + arr[0] +  "//" + arr[2] +  "/"+ "HolidayLists/checkholiday?Date=" + textBoxValue;
+        $.ajax({
+            type: "GET",
+            url: result,
+
+            dataType: "json",
+            success: function (data) {
+
+                if (data.message == "use") {
+
+                }
+                if (data.message == "used") {
+
+                    document.getElementById("dat").value = "";
+
+                    alert("This Date already Exist!");
+                }
+
+            },
+            error: function () {
+
+            }
+        });
+    }
+</script>
+
+<script>
+    document.getElementById("a2").className = "active";
+
+</script>
+
+<style>
+    .activeClass {
+        background: #ffdb99;
+    }
+
+    .secondClass {
+        /*background: #FF9999;*/
+        color: red;
+    }
+</style>
+
+<script type='text/javascript'>
+    $(function getholidays() {
+        var active_dates = [];
+    $.ajax({
+        type: "GET",
+        async: false,
+        url: "/LeaveApply/GetDates",
+        dataType: "Json",
+        success: function (data) {
+            datesArray = data;
+            for (i = 0; i < datesArray.length; i++) {
+                var result = datesArray[i].replace("-", "/");
+                var result1 = result.replace("-", "/");
+                var strArray = result1.split("/");
+                var cdate = strArray[0] + "/" + parseInt(strArray[1]) + "/" + strArray[2]
+                active_dates.push(cdate);
+
+                if(i==datesArray.length-1)
+                {
+                    //loadcal(active_dates);
+                }
+            }
+
+        }
+    });
+    $('#Date').datepicker({
+        format: "dd/mm/yyyy",
+        autoclose: true,
+        todayHighlight: true,
+        beforeShowDay: function nonWorkingDays(date) {
+            var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
+            var week = 0 | date.getDate() / 7 //get the week
+            var dd = date.getDate();
+            var month = date.getMonth();
+            if (dd < 10) {
+                dd = '0' + dd
+            }
+
+            if (month < 10) {
+                month = '0' + month
+            }
+            var sunweek = date.getDay();
+            var year = date.getFullYear();
+
+            if (dd == 14 && day == 6) {
+                return {
+                    classes: 'secondClass'
+                };
+            }
+            if (dd == 28 && day == 6) {
+                return {
+                    classes: 'secondClass'
+                };
+            }
+                //check if it's second week or fourth week
+            else if (week == 1 || week == 3) {
+                if (dd == 7 && day == 6 || dd == 21 && day == 6) {
+                    //check for satruday                 
+
+                }
+                else {
+                    if (day == 6) {
+                        return {
+                            classes: 'secondClass'
+                        };
+                    }
+                }
+
+            }
+            //check for sunday
+            if (day == 0) {
+                return {
+                    classes: 'secondClass'
+                };
+
+            }
+            //check for holidays
+            var d = date;
+            var curr_date = d.getDate();
+            var curr_month = d.getMonth() + 1; //Months are zero based
+            if (curr_date < 10) {
+                curr_date = '0' + curr_date
+            }
+            var curr_year = d.getFullYear();
+            var formattedDate = curr_date + "/" + curr_month + "/" + curr_year
+
+            if ($.inArray(formattedDate, active_dates) != -1) {
+                return {
+                    classes: 'activeClass'
+                };
+            }
+            return [true];
+        }
+    });
+  });
+</script>

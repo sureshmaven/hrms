@@ -1,0 +1,764 @@
+﻿@model Entities.Employees
+@{
+    ViewBag.RolePages = TempData["RolePages"];
+    var rolepages = TempData["RolePages"].ToString();
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var message = TempData["AlertMessage"] ?? string.Empty;
+    var messageFail = TempData["AlertMessageFail"] ?? string.Empty;
+}
+<script type="text/javascript">
+    var message = '@message';
+    var messageFail = '@messageFail';
+    if (message) alert(message);
+    if (messageFail) alert(messageFail);
+
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        Get1();
+    });
+    function Get1() {
+        var options = {};
+        options.url = "ChangeAuthority/Authority1555",
+            options.type = "GET";
+        options.data = { "criteria": $("#companyName").val() };
+        options.dataType = "json";
+        options.success = function (data) {
+            $("#companyList").empty();
+            for (var i = 0; i < data.length; i++) {
+                $("#companyList").append("<option value='" +
+                    data[i].EmpId + "' label='" +
+                    data[i].Name + "'></option>");
+            }
+        };
+        $.ajax(options);
+    }
+    function btnsearch(Id, Type) {
+
+        var lempid = Id;
+        $.ajax({
+            type: "GET",
+            url: "ChangeAuthority/Authority111?prefix=" + lempid,
+            dataType: "Json",
+            success: function (response) {
+                if (response != null) {
+                   
+                    if (response.Status == "false") {
+                    }
+                    else if (response.Status == "Notfound") {
+                        alert("EmpCode doesnot exists");
+                        $("#companyName").val("");
+
+                        $("#myempTextArea").html("");
+                       
+                    }
+                    else if (response.Status == "AlreadyRetired") {
+                        alert("This Employee is Retired");
+                        $("#companyName").val("");
+
+                        $("#myempTextArea").html("");
+                     
+                    }	
+                    else {
+                        var text =
+                            "<tr><td>" + " " + " " + response.lEmployeeName + "</td><td>" + " " + " " + response.ldesig +
+                            "</td><td>" + " " + " " + response.ldeptbranch + "</td></tr>";
+                        document.getElementById("myempTextArea").innerHTML = text;
+                    }
+                }
+                else {
+                }
+            },
+        });
+    }
+    $(function () {
+        $('#companyName').on("change", function () {
+
+            //var country = $('#countryDropDownList').val();
+            //$("#btnSearch").click(function () {
+            var lresult = empidsearch();
+            if (lresult) {
+                var lempid = $("#companyName").val();
+                var Type = "companyName";
+                btnsearch(lempid, Type);
+            }
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        Get11();
+    });
+    function Get11() {
+        var options = {};
+        options.url = "ChangeAuthority/Authority1555",
+            options.type = "GET";
+        options.data = { "criteria": $("#companyName1").val() };
+        options.dataType = "json";
+        options.success = function (data) {
+            $("#companyList1").empty();
+            for (var i = 0; i < data.length; i++) {
+                $("#companyList1").append("<option value='" +
+                    data[i].EmpId + "' label='" +
+                    data[i].Name + "'></option>");
+            }
+        };
+        $.ajax(options);
+    }
+    function btnsearch1(Id, Type) {
+
+        var lempid = Id;
+        $.ajax({
+            type: "GET",
+            url: "ChangeAuthority/Authority111?prefix=" + lempid,
+            dataType: "Json",
+            success: function (response) {
+                if (response != null) {
+
+                    if (response.Status == "false") {
+                    }
+                    else if (response.Status == "Notfound") {
+                        alert("EmpCode doesnot exists");
+                        $("#companyName1").val("");
+
+                        $("#myempTextArea1").html("");
+
+                    }
+                    else if (response.Status == "AlreadyRetired") {
+                        alert("This Employee is Retired");
+                        $("#companyName1").val("");
+
+                        $("#myempTextArea1").html("");
+                       
+                    }	
+                    else {
+                        var text =
+                            "<tr><td>" + " " + " " + response.lEmployeeName + "</td><td>" + " " + " " + response.ldesig +
+                            "</td><td>" + " " + " " + response.ldeptbranch + "</td></tr>";
+                        document.getElementById("myempTextArea1").innerHTML = text;
+                    }
+                }
+                else {
+                }
+            },
+        });
+    }
+    $(function () {
+        $('#companyName1').on("change", function () {
+            //var country = $('#countryDropDownList').val();
+            //$("#btnSearch").click(function () {
+            var lresult = empidsearch();
+            if (lresult) {
+                var lempid = $("#companyName1").val();
+                var Type = "companyName1";
+                btnsearch1(lempid, Type);
+            }
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        Get22();
+    });
+    function Get22() {
+        var options = {};
+        options.url = "ChangeAuthority/Authority1555",
+            options.type = "GET";
+        options.data = { "criteria": $("#companyName2").val() };
+        options.dataType = "json";
+        options.success = function (data) {
+            $("#companyList2").empty();
+            for (var i = 0; i < data.length; i++) {
+                $("#companyList2").append("<option value='" +
+                    data[i].EmpId + "' label='" +
+                    data[i].Name + "'></option>");
+            }
+        };
+        $.ajax(options);
+    }
+    function btnsearch2(Id, Type) {
+
+        var lempid = Id;
+        $.ajax({
+            type: "GET",
+            url: "ChangeAuthority/Authority111?prefix=" + lempid,
+            dataType: "Json",
+            success: function (response) {
+                if (response != null) {
+
+                    if (response.Status == "false") {
+                    }
+                    else if (response.Status == "Notfound") {
+                        alert("EmpCode doesnot exists");
+                        $("#companyName2").val("");
+
+                        $("#myempTextArea2").html("");
+
+                    }
+                    else if (response.Status == "AlreadyRetired") {
+                        alert("This Employee is Retired");
+                        $("#companyName2").val("");
+
+                        $("#myempTextArea2").html("");
+                        
+                    }	
+                    else {
+                        var text =
+                            "<tr><td>" + " " + " " + response.lEmployeeName + "</td><td>" + " " + " " + response.ldesig +
+                            "</td><td>" + " " + " " + response.ldeptbranch + "</td></tr>";
+                        document.getElementById("myempTextArea2").innerHTML = text;
+                    }
+                }
+                else {
+                }
+            },
+        });
+    }
+    $(function () {
+        $('#companyName2').on("change", function () {
+            //var country = $('#countryDropDownList').val();
+            //$("#btnSearch").click(function () {
+            var lresult = empidsearch();
+            if (lresult) {
+                var lempid = $("#companyName2").val();
+                var Type = "companyName2";
+                btnsearch2(lempid, Type);
+            }
+        });
+    });
+</script>
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-heading">
+            @{
+            <ul class="nav nav-tabs">
+                @if (rolepages.Contains("ADERG"))
+                {
+                    <li><a href=@Url.Action("InsertEmployees", "Register")>Employee Registration</a></li>
+                }
+                @if (rolepages.Contains("ADTPO"))
+                {
+                    <li><a href="@Url.Action("Index","Transfer")">Transfer/Promotions</a></li>
+                }
+                @if (rolepages.Contains("ADCAU"))
+                {
+                    <li class="active"><a href="@Url.Action("Index","ChangeAuthority")">Change Authority</a></li>
+                }
+                @if (rolepages.Contains("ADCPR"))
+                {
+                    <li><a href="@Url.Action("Index","ChangeProfile")">Change Profile</a></li>
+                }
+
+                @if (rolepages.Contains("ADLTCA"))
+                {
+                    <li><a href=@Url.Action("AdminLTCApply", "LeaveTravel")>Apply LTC </a></li>
+                }
+
+                @if (rolepages.Contains("ADPLA"))
+                {
+                    <li><a href=@Url.Action("AdminPLApply", "PLE_Type")>Apply PL Encashment</a></li>
+                }
+                @if (rolepages.Contains("ADWDA"))
+                {
+                    <li><a href=@Url.Action("WorkApprovalAdmin", "WorkDiary")> Delete Work Dairy</a></li>
+                }
+                @if (rolepages.Contains("ADUSRO"))
+                {
+                    <li><a href=@Url.Action("UserRolesView", "AllReports")>User Roles</a></li>
+                }
+                @if (rolepages.Contains("ADCBRMG"))
+                {
+                    <li><a href=@Url.Action("ChangeBranchManager", "ChangeBranchManager")>Change Branch Manager</a></li>
+                }
+                @if (rolepages.Contains("TsheetMain"))
+                {
+                    <li><a href=@Url.Action("Timesheetrequestform", "TimeSheet")>TimeSheet Manual Form</a></li>
+                }
+                @if (rolepages.Contains("TsheetApp"))
+                {
+                    <li><a href=@Url.Action("TSApprovalView", "TimeSheet")>TimeSheet Manual Approvals</a></li>
+                }
+            </ul>
+            }
+        </div>
+    </div>
+</div>
+@using (Html.BeginForm("ChangeAuthority", "ChangeAuthority", FormMethod.Post))
+{
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="container">
+        <div class="page_st">
+            <div class="page">
+                <div class="col-md-12 col-sm-12">
+                    <div class="main_heading">
+                        <h1>Change Authority</h1>
+                        <div class="form-horizontal form-horizontal2">
+                            <div class="page_start">
+                                <div class="main_radio_btn">
+                                </div>
+                                <div class="clearfix"></div>
+                                <br />
+
+                                <div class="col-md-12">
+                                    <div class="form-horizontal">
+                                        <div class="main_heading">
+                                            <h1>Controlling / Sanctioning Authority</h1>
+                                           
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label label_left">Employee Id:<span class="mandatory">*</span></label>
+                                                        <div class="col-sm-8">
+                                                            <input id="companyName" name="EmpId" class="form-control" list="companyList" maxlength="8"  onkeypress = "return isNumber(event)"  />
+                                                            <datalist id="companyList"></datalist>
+                                                           
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <div class="col-sm-7">
+                                                            <button type="button" id="btnSearch"  class="btn btn-sm btn-primary">Search</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            
+                                            <div class="col-md-12">
+                                                
+                                                        <table id="myempTextArea" class="table table-bordered" style="width:50%;"></table>
+                                                    
+                                                <div id="gridControlling"></div>
+                                            </div>
+                                        </div>
+
+                                        <br />
+                                        <div class="main_heading">
+                                            <h1>Update Controlling / Sanctioning Authority</h1>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <br /><br />
+                                                    <div class="col-md-8">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label label_left">Controlling EmployeeId:<span class="mandatory">*</span></label>
+                                                            <div class="col-sm-8">
+                                                                <input id="companyName1" name="fffff" class="form-control" list="companyList1" maxlength="8"  onkeypress="return isNumber(event)" />
+                                                                <datalist id="companyList1"></datalist>
+                                                               
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <div class="col-sm-7">
+                                                                <button type="button" id="btnApprovals" onclick="return controlvalid();" class="btn btn-sm btn-primary leaveapprove">Update</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <br /><br />
+                                                    <div class="col-md-8">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label label_left"> Sanctioning EmployeeId:<span class="mandatory">*</span></label>
+                                                            <div class="col-sm-8">
+                                                                <input id="companyName2" name="fffff" class="form-control" list="companyList2" maxlength="8"  onkeypress="return isNumber(event)" />
+                                                                <datalist id="companyList2"></datalist>
+                                                               
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <div class="col-sm-7">
+                                                                <button type="button" id="btnApprovals2" onclick="return sanctionvalid();" class="btn btn-sm btn-primary leaveapprove">Update</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="col-md-12">
+
+                                                        <table id="myempTextArea1" class="table table-bordered"></table>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="col-md-12">
+                                                        <table id="myempTextArea2" class="table table-bordered"></table>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+    <script type="text/javascript">
+        var screenTheme = 'darkblue';
+        var popupTheme = 'highcontrast';
+        var otherTheme = 'arctic';
+
+        var localizationObject = {
+            filterstringcomparisonoperators: ['contains', 'does not contain'],  /* filter String Comparison Operators    */
+            filternumericcomparisonoperators: ['less than', 'greater than'],    /* filter Numeric Comparison Operators  */
+            filterdatecomparisonoperators: ['less than', 'greater than'],       /* filter Date comparison operators.  */
+            filterbooleancomparisonoperators: ['equal', 'not equal']            /* filter bool comparison operators.*/
+        };
+        var stringcomparisonoperators = ['CONTAINS', 'DOES_NOT_CONTAIN'];
+        var numericcomparisonoperators = ['LESS_THAN', 'GREATER_THAN'];
+        var datecomparisonoperators = ['LESS_THAN', 'GREATER_THAN'];
+        var booleancomparisonoperators = ['EQUAL', 'NOT_EQUAL'];
+      
+        $(function () {
+
+            $("#btnSearch").click(function () {  
+        
+                var employee = $("#companyName").val();
+                var controlid = $('#companyName1').val();
+                var sanctionid = $('#companyName2').val();
+
+                if (employee == "") {
+                  //  window.alert("please enter EmployeeId.");
+                    showGlobalModal("I#Required#please enter EmployeeId.");
+                    window.focus("#companyName");
+                    return false;
+                }
+                
+
+               ajaxSpinnerShow();
+                var employeecode = $("#companyName").val();
+                if (employeecode == "")
+                {
+                    return false;
+                }
+                // prepare the data
+                var source =
+                    {
+                        type: "Post",
+                        datatype: "json",
+                        datafields: [
+                            { name: 'available', type: 'bool' },
+                            { name: 'EmpId', type: 'string' },
+                            { name: 'EmployeeName', type: 'string' },
+                            { name: 'Deptbranch', type: 'int' },
+                            { name: 'Name', type: 'int' },
+                            { name: 'ControllingAuthority', type: 'string' },
+                            { name: 'SanctioningAuthority', type: 'string' },
+
+                        ],
+                        async: false,
+                        url: "/ChangeAuthority/GetAllEmployee?companyName=" + employeecode,
+                        data: {
+                            featureClass: "P",
+                            style: "full",
+                            username: "jqwidgets",
+                            EmployeeCode: employeecode
+
+                        },
+                        loadComplete: function () {
+                            ajaxSpinnerHide();
+                        }
+                    };
+                var dataAdapter = new $.jqx.dataAdapter(source,
+                    {
+                        formatData: function (data) {
+                            data.ProductName = $("#searchField").val();
+                           
+                            return data;
+                        }
+                    }
+                );
+                // initialize jqxGrid
+                var editrowindex = -1;
+                var delrowindex = -1;
+                $("#gridControlling").jqxGrid(
+                    {
+                        width: '99%',
+                        source: dataAdapter,
+                        theme: otherTheme,// for theme refernce go to Layout.cshtml
+                        autoheight: true,
+                        sortable: true,
+                        pageable: true,
+                        columnsResize: true,
+                        altRows: true,
+                        filterable: true,
+                        autoshowfiltericon: true,
+
+                        ready: function () {
+                            $("#gridControlling").jqxGrid('localizestrings', localizationObject);
+                        },
+                        selectionmode: 'checkbox',
+                        altrows: true,
+                        updatefilterconditions: function (type, defaultconditions) {
+                            switch (type) {
+                                case 'stringfilter':
+                                    return stringcomparisonoperators;
+                                case 'numericfilter':
+                                    return numericcomparisonoperators;
+                                case 'datefilter':
+                                    return datecomparisonoperators;
+                                case 'booleanfilter':
+                                    return booleancomparisonoperators;
+                            }
+                        },
+                        updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                            filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                            var index1 = 0;
+                            var index2 = 0;
+                            if (columnfilter != null) {
+                                var filter1 = columnfilter.getfilterat(0);
+                                var filter2 = columnfilter.getfilterat(1);
+                                if (filter1) {
+                                    index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                                    var value1 = filter1.filtervalue;
+                                    filterinputfield1.val(value1);
+                                }
+                                if (filter2) {
+                                    index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                                    var value2 = filter2.filtervalue;
+                                    filterinputfield2.val(value2);
+                                }
+                            }
+                            filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                            filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                        },
+                        columns: [
+                            //  { text: 'Action', datafield: 'available', exportable: false,selectionmode:'checkbox',altrows : true, sortable: false, width: 50 },
+                            { text: "Emp Code", datafield: "EmpId", editable: false, width: 80 },
+                            { text: "Employee Name", datafield: "EmployeeName", editable: false, width: 175 },
+                            { text: "Department/Branch", datafield: "Deptbranch", editable: false, width: 200 },
+                            { text: "Designation ", datafield: "Name", editable: false, width: 200 },
+                            { text: "Controlling Authority", datafield: "ControllingAuthority", editable: false, width: 175 },
+                            { text: "Sanctioning Authority", datafield: "SanctioningAuthority", editable: false, width: 175 },
+                        ],
+                        columngroups:
+                            [
+                                { text: 'Action', align: 'center', name: 'Actions', width: 160 },
+                            ],
+
+
+                    });
+            });
+        });
+        $("#btnApprovals").click(function () {
+            var employee = $('#companyName').val();
+            var controlid = $('#companyName1').val();
+            if (employee == "" && controlid == "") {
+                //window.alert("please enter EmployeeId..");
+                showGlobalModal("I#Required#please enter EmployeeId.");
+                window.focus("#companyName");
+                return false;
+            }
+            if (employee != "" && controlid == "") {
+                window.alert("please enter Controlling EmployeeId");
+                window.focus("#companyName1");
+                return false;
+            }
+            var rows = $("#gridControlling").jqxGrid('selectedrowindexes');
+            var row = $("#gridControlling").jqxGrid('getrowdata', rows[m]);
+            var myArray = new Array();
+            var ids = '';
+            for (var m = 0; m < rows.length; m++) {
+                myArray[myArray.length] = rows;
+                var row = $("#gridControlling").jqxGrid('getrowdata', rows[m]);
+                ids = ids + row.EmpId + ',';
+            }
+            var lval = document.getElementById("companyName").value;
+
+            var lval1 = document.getElementById("companyName1").value;
+
+            if (rows == '' || rows == null) {
+                alert("Please select checkbox");
+                return false;
+                //window.location.reload();
+            }
+
+            else {
+                $('.leaveapprove').attr("disabled", true);
+                $.ajax({
+                    type: "Post",
+                    url: "/ChangeAuthority/UpdateAuthority?EmployeeCodey=" + ids + "&control=" + lval + "&sanction=" + lval1,
+                    dataType: "Json",
+                    success: function (response) {
+                    //    if (response != null) {
+                          
+                    //        window.location.reload();
+                    //        document.getElementById("companyName").value = "";
+                    //        document.getElementById("companyName1").value = "";
+                    //        document.getElementById("companyName2").value = "";
+                    //    }
+                    //    else {
+
+
+                    //    }
+                    //},
+                        if (response.status === "success") {
+                            // Reload the page
+                            location.reload();
+                            document.getElementById("companyName").value = "";
+                         document.getElementById("companyName1").value = "";
+                           document.getElementById("companyName2").value = "";
+                        } else {
+                            alert('An error occurred.');
+                        }
+                    },
+                    error: function () {
+                        alert('Failed to update authority.');
+                    }
+                });
+
+            }
+
+
+        });
+
+
+
+        $("#btnApprovals2").click(function () {
+            
+             var rows = $("#gridControlling").jqxGrid('selectedrowindexes');
+            var lval1 = document.getElementById("companyName2").value;
+            var employee = $('#companyName').val();
+            var sanctionid = $('#companyName2').val();
+            if (employee == "" && sanctionid == "") {
+                //window.alert("please enter EmployeeId");
+                showGlobalModal("I#Required#please enter EmployeeId.");
+                window.focus("#companyName");
+                return false;
+            }
+            if (employee != "" && sanctionid == "") {
+                // window.alert("please enter Sanctioning EmployeeId");
+                window.alert("please enter Sanctioning EmployeeId");
+                window.focus("#companyName1");
+                return false;
+            }
+
+           
+            var row = $("#gridControlling").jqxGrid('getrowdata', rows[m]);
+            var myArray = new Array();
+            var ids = '';
+            for (var m = 0; m < rows.length; m++) {
+                myArray[myArray.length] = rows;
+                var row = $("#gridControlling").jqxGrid('getrowdata', rows[m]);
+                ids = ids + row.EmpId + ',';
+            }
+            var lval = document.getElementById("companyName").value;
+
+            var lval1 = document.getElementById("companyName2").value;
+
+            if (rows == '' || rows == null) {
+                alert("Please select checkbox");
+                return false;
+                //window.location.reload();
+            }
+
+            else {
+                $('.leaveapprove').attr("disabled", true);
+                $.ajax({
+                    type: "Post",
+                    url: "/ChangeAuthority/UpdateAuthority2?EmployeeCodey=" + ids + "&control=" + lval + "&sanction=" + lval1,
+                    dataType: "Json",
+                    success: function (response) {
+                        if (response != null) {
+                            window.location.reload();
+                            document.getElementById("companyName").value = "";
+                            document.getElementById("companyName2").value = "";
+                            document.getElementById("companyName1").value = "";
+                        }
+                        else {
+
+
+                        }
+                    },
+                });
+
+            }
+        });
+    </script>
+<script>
+    document.getElementById("a1").className = "active";
+</script>
+<script>
+    //function validation() {
+    //    var employee = $("#companyName").val();
+    //    var controlid = $('#companyName1').val();
+    //    var sanctionid = $('#companyName2').val();
+
+    //    if (employee == "") {
+    //        window.alert("please enter EmployeeId.");
+    //        window.focus("#companyName");
+    //        return false;
+    //    }
+    //    else {
+    //        return true;
+    //    }
+    //}
+    function controlvalid() {       
+        //var employee = $('#companyName').val();
+        //var controlid = $('#companyName1').val();
+
+        //if (employee == "" && controlid != "") {
+        //    var lempid = $("#companyName1").val();
+        //    var Type = "companyName";
+        //    btnsearch1(lempid, Type);          
+        //}
+        //else if (employee != "" && controlid == "") {
+        //    window.alert("Please Enter Controlling EmployeeId");
+        //    window.focus("#companyName1");
+        //}
+        //else if (employee == "") {
+        //    window.alert("Please Enter EmployeeId..");
+        //    window.focus("#companyName");
+        //}
+        //else if (controlid == "") {
+        //    window.alert("Please Enter Controlling EmployeeId");
+        //    window.focus("#companyName1");
+        //}
+        //else {
+        //    return true;
+        //}
+    }
+    function sanctionvalid() {    
+        var rows = $("#gridControlling").jqxGrid('selectedrowindexes');
+        var lval1 = document.getElementById("companyName2").value;
+        var employee = $('#companyName').val();
+        var sanctionid = $('#companyName2').val();
+        if (employee == "" && sanctionid != "") {
+            var lempid = $("#companyName2").val();
+            var Type = "companyName";
+            btnsearch2(lempid, Type);           
+        }
+        else if (employee != "" && sanctionid == "") {
+            window.alert("Please Enter Sanctioning EmployeeId");
+            window.focus("#companyName2");
+        }
+        else if (employee == "") {
+            window.alert("Please Enter EmployeeId..");
+            window.focus("#companyName");
+        }
+        else if (sanctionid == "") {
+            window.alert("Please Enter Sanctioning EmployeeId");
+            window.focus("#companyName2");
+        }
+        else {
+            return true;
+        }
+    }
+</script>
+

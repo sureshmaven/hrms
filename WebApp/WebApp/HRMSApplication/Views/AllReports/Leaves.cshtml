@@ -1,0 +1,1195 @@
+﻿@{
+    Layout = "~/Views/Shared/_ReportsLayout.cshtml";
+    var rolepages = TempData["RolePages"].ToString();
+    ViewBag.RolePages = TempData["RolePages"];
+    var reportTitle = ViewBag.ReportTitle;
+    var ReportPdfSize = ViewBag.PdfSize;
+    var ReportpageSize = ViewBag.pageSize;
+    var PdfExportColumns = ViewBag.ExportColumns;
+    var dataUrl = ViewBag.DataUrl;
+    var reportFilters = ViewBag.ReportFilters;
+    var searchBtn = ViewBag.SearchBtn;
+    var dataUrl1 = ViewBag.DataUrl1;
+}
+<style>
+    .mul_drop button.btn.dropdown-toggle.btn-default {
+        background: #fff;
+        color: #000;
+        border: 1px solid #ddd;
+        box-shadow: none;
+    }
+
+    .bootstrap-select.btn-group .dropdown-toggle .caret {
+        position: absolute;
+        top: 50%;
+        right: 12px;
+        margin-top: -2px;
+        vertical-align: middle;
+    }
+
+    .dropdown-menu.show {
+        height: 350px !important;
+    }
+</style>
+<link href="~/Assets/css/report-style.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+
+
+@{
+    var message = TempData["status"] ?? string.Empty;
+}
+
+<script type="text/javascript">
+      var message = '@message';
+    if (message) alert(message);
+</script>
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade in active">
+                    <div class="page_st">
+                        <div class="page">
+                            <div class="col-md-12 col-sm-12 ">
+                                <div class="main_heading">
+                                    <h1>Report List </h1>
+                                    <div>
+                                        @{Html.RenderPartial("_PartialViewForMenu");}
+                                    </div>
+                                </div>
+                                <div class="main_heading">
+                                    <h1>@reportTitle</h1>
+                                    <br />
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="col-md-3">
+                                                <button type="button" id="Todaybtn" class="btn btn-primary btn-sm " style="background-color: rgb(230, 167, 78);">Today Leaves</button>
+                                                <button type="button" id="ALLbtn" class="active btn btn-primary btn-sm" style="background-color: rgb(6, 114, 19);">All Leaves</button>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="TodayOd">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+
+                                                    @*<div class="col-md-3 col-xs-12 control-label label_padding">
+                                                        <div class="form-group">
+                                                            @Html.RadioButton("Status1", "branch", new { id = "lApplied1", @checked = true, onclick = "appliedrequest1(this.value)" })
+                                                            <label class="label_class" for="lApplied1">  Branches </label>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4 col-xs-12">
+                                                        <div class="form-group">
+                                                            @Html.RadioButton("Status1", "department", new { id = "lRequest1", onclick = "appliedrequest1(this.value)" })
+                                                            <label class="label_class" for="lRequest1">Departments </label>
+                                                        </div>
+                                                    </div>*@
+
+                                                    @*<label class="col-sm-6 control-label label_left">Department/Branches:</label>*@
+
+
+                                                    <div id="Allbranch" class="mul_drop">
+                                                        <div class="col-md-3">
+                                                            <div class="col-md-5">
+                                                                <label class="label_class" for="drpbranch">Branches:</label>
+                                                            </div>
+                                                            <div class="col-md-7">
+                                                                <select id="drpbranch" class="form-control">
+                                                                    <option value="">Select</option>
+                                                                    @{
+                                                                        var branchList = ViewBag.DdlOneDatabranch;
+                                                                        if (branchList != null)
+                                                                        {
+                                                                            foreach (var opt in branchList)
+                                                                            {
+                                                                                <option value="@opt.Id">@opt.Name</option>
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4 ">
+                                                            <div class="col-md-5">
+                                                                <label class="label_class" for="drpbr1">Departments:</label>
+                                                            </div>
+                                                            <div class="col-md-7">
+                                                                <select id="drpbr1" class="form-control">
+                                                                    <option value="">Select</option>
+                                                                    @{
+                                                                        var deptList = ViewBag.DdlOneDatadepartment;
+                                                                        if (deptList != null)
+                                                                        {
+                                                                            foreach (var opt in deptList)
+                                                                            {
+                                                                                <option value="@opt.Id">@opt.Name</option>
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3 ">
+                                                            <div class="col-md-6 p0">
+                                                                <label class="label_class" for="allempcode">Employee Code:</label>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <input type="text" id="allempcode" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-1">
+
+                                                            <button class="btn btn-primary btn-sm btn-block" id="leavesSearch">Search</button>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <div class="col-md-4">
+
+                                                <div>
+                                                    <div id="radio1" style="display: none;">
+                                                        <div class="col-md-12">
+                                                            <div class="col-md-6 col-xs-12 control-label label_padding label_left">
+                                                                <div class="form-group">
+                                                                    @Html.RadioButton("Status", "Applied", new { id = "lApplied", @checked = true, onclick = "appliedrequest(this.value)" })
+                                                                    <label class="label_class" for="lApplied">   Applied Date </label>
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 col-xs-12">
+                                                                <div class="form-group">
+                                                                    @Html.RadioButton("Status", "Request", new { id = "lRequest", onclick = "appliedrequest(this.value)" })
+                                                                    <label class="label_class" for="lRequest"> Leave Date </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <input type="hidden" name="Status1" id="leaveapplied" value="Applied" />
+                                                </div>
+                                            </div>
+
+
+                                            <div id="radio2" style="display: none;">
+                                                <div class="col-md-4 col-sm-4 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-5 control-label label_padding label_left" id="fdate">Applied From Date:</label>
+                                                        <div class="input-group date col-sm-7">
+                                                            <input type="text" id="fromdate" class="form-control" onchange="return Dateevent1();"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-4 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-5 control-label label_padding" id="edate">Applied To Date:</label>
+                                                        <div class="input-group date col-sm-7">
+                                                            <input type="text" id="todate" class="form-control" onchange="return Dateevent2();"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                                <div class="col-md-4 col-sm-4 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Leave Type:</label>
+                                                        <label class="col-sm-6 control-label label_left"></label>
+                                                        <div class="col-sm-6">
+
+                                                            @Html.DropDownList("LeaveType", new[] {
+                                                            new SelectListItem() {Text = "ALLTypes",Value = "ALLTypes"},
+                                                            // new SelectListItem() {Text = "All",Value = "11" },
+                                                            new SelectListItem() {Text = "Casual Leave",Value = "CL"},
+                                                            new SelectListItem() {Text = "Compensatory Off",Value = "C-OFF"},
+                                                            new SelectListItem() {Text = "Extraordinary Leave",Value = "EOL"},
+                                                            new SelectListItem() {Text = "Loss of Pay",Value = "LOP"},
+                                                            new SelectListItem() {Text = "Week-Off",Value = "W-Off"},
+                                                            new SelectListItem() {Text = "Maternity Leave",Value = "MTL" },
+                                                            new SelectListItem() {Text = "Medical/Sick Leave",Value = "ML" },
+                                                            new SelectListItem() {Text = "Paternity Leave",Value = "PTL" },
+                                                            new SelectListItem() {Text = "Privilege Leave",Value = "PL" },
+                                                            new SelectListItem() {Text = "Special Casual Leave",Value = "SCL" },
+                                                            new SelectListItem() {Text = "LTC",Value = "LTC" },
+                                                            new SelectListItem() {Text = "Compensatory Week Off",Value = "CW-OFF" },
+                                                            new SelectListItem() {Text = "PLEncash",Value = "PLE" },
+
+                                                            }, "Select", new { @class = "form-control" })
+
+                                                            @*@Html.DropDownList("LeaveTypes", ViewBag.DdlOneData as SelectList, "Select", new { @class = "form-control" })*@
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="col-md-4 col-sm-3 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-5 control-label label_left status_padding">Status:</label>
+                                                        <div class="col-sm-7">
+                                                            @Html.DropDownList("LeaveStatus", new[] {
+                                                            new SelectListItem() {Text = "ALL",Value = "ALL"},
+                                                            new SelectListItem() {Text = "Pending",Value = "Pending"},
+                                                            new SelectListItem() {Text = "Credit",Value = "Credit"},
+                                                            new SelectListItem() {Text = "Debit",Value = "Debit"},
+                                                            new SelectListItem() {Text = "Forwarded",Value = "Forwarded"},
+                                                            new SelectListItem() {Text = "Approved",Value = "Approved" },
+                                                            new SelectListItem() {Text = "Denied",Value = "Denied" },
+                                                            new SelectListItem() {Text = "PartialCancelled",Value = "PartialCancelled" },
+                                                            new SelectListItem() {Text = "Cancelled",Value = "Cancelled" },
+
+                                                            }, "Select", new { @class = "form-control" })
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-1">
+                                                    <button type="button" id="btnSearch" class="btn btn-primary btn-sm pull-right">Search</button>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="col-md-12" id="TodayOd">
+                                                <div class="table-responsive">
+                                                    <table id="grid" class="display reports-grids" cellspacing="0" width="100%">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>S NO</th>
+                                                                <th>Emp Code</th>
+                                                                <th>Emp Name</th>
+                                                                <th>Designation</th>
+                                                                <th>Applied Date</th>
+                                                                <th>Applied Time</th>
+                                                                <th>Department/Branch</th>
+                                                                <th>Start Date</th>
+                                                                <th>End Date</th>
+                                                                <th>Leave Type</th>
+                                                                <th>Leave Day</th>
+                                                                <th>Status</th>
+                                                                <th>Date-Time</th>
+                                                                @*<th>Subject</th>*@
+                                                                <th>Reason</th>
+                                                                <th>Cancelled By</th>
+                                                                <th>Cancelled Date and Time</th>
+                                                                <th>Reason For Cancellation</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                    </table>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-md-12" id="AllOd" style="display:none;">
+                                                <div class="table-responsive">
+                                                    <table id="gridallLeaves" class="display reports-grids" cellspacing="0" width="100%">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>S NO</th>
+                                                                <th>Emp Code</th>
+                                                                <th>Emp Name</th>
+                                                                <th>Designation</th>
+                                                                <th>Applied Date</th>
+                                                                <th>Applied Time</th>
+                                                                <th>Department/Branch</th>
+                                                                <th>Start Date</th>
+                                                                <th>End Date</th>
+                                                                <th>Leave Type</th>
+                                                                <th>Leave Day</th>
+                                                                <th>Status</th>
+                                                                <th>Date-Time</th>
+                                                                @*<th>Subject</th>*@
+                                                                <th>Reason</th>
+                                                                <th>Cancelled By</th>
+                                                                <th>Cancelled Date and Time</th>
+                                                                <th>Reason For Cancellation</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                    </table>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <script>
+
+    $("#ALLbtn").click(function () {
+
+         var serviceurl = '@dataUrl';
+        var property = document.getElementById("Todaybtn");
+        property.style.backgroundColor = "#067213";
+        var property = document.getElementById("ALLbtn");
+        property.style.backgroundColor = "#e6a74e";
+        $("#radio1").show();
+        $("#radio2").show();
+        $("#TodayOd").hide();
+        $("#AllOd").show();
+        $('#gridallLeaves').dataTable().api().ajax.url(serviceurl).load();
+        $("#excelExport1").hide();
+        $("#excelExport").hide();
+        $("#pdftoday").hide();
+        $("#pdfall1").show();
+        $("#excelExporttoday").hide();
+        $("#leavesSearch").hide();
+        $("#excelExportall").show();
+        $("#drpbranch").show();
+        $("#drpbr1").show();
+        document.getElementById("fromdate").value = "";
+        document.getElementById("todate").value = "";
+        document.getElementById("LeaveType").value = "";
+        document.getElementById("LeaveStatus").value = "";
+        $('.selectpicker').selectpicker('deselectAll');
+        document.getElementById("drpbranch").value = "";
+        document.getElementById("drpbr1").value = "";
+        document.getElementById("allempcode").value = "";
+    });
+
+    $("#Todaybtn").click(function () {
+
+        var property = document.getElementById("Todaybtn");
+        property.style.backgroundColor = "#e6a74e"
+        var property = document.getElementById("ALLbtn");
+        property.style.backgroundColor = "#067213";
+        $("#radio1").hide();
+        $("#radio2").hide();
+        $("#AllOd").hide();
+        $("#TodayOd").show();
+        $("#excelExport1").hide();
+        $("#excelExport").hide();
+        $("#pdftoday").show();
+        $("#pdfall1").hide();
+        $("#excelExporttoday").show();
+        $("#excelExportall").hide();
+        $("#leavesSearch").show();
+        $("#drpbr1").show();
+    });
+
+
+        </script>
+
+        <script>
+    $(document).ready(function () {
+
+
+        $("#drpbr1").show();
+        var reportMsgTop = 'Today Leaves';
+
+        var fnMessageTop = function () {
+            return (reportMsgTop == '' ? '' : 'Filters : ' + reportMsgTop);
+        };
+
+        $.noConflict();
+        var serviceurl = "/AllReports/LeavesListToday?branch=-1&empid=-2";
+        // serviceurl = serviceurl.replace('&amp;', '&');
+        // Debug: Check if required libraries are loaded
+        console.log("jQuery version:", $.fn.jquery);
+        console.log("DataTables available:", typeof $.fn.dataTable !== 'undefined');
+        console.log("PDFMake available:", typeof pdfMake !== 'undefined');
+        console.log("JSZip available:", typeof JSZip !== 'undefined');
+        
+        var dataTable = $('#grid').dataTable({
+            scrollX: true,
+            scrollCollapse: true,
+            "ajax": {
+                "url": serviceurl,
+                "type": "GET",
+                "datatype": "json",
+                "dataSrc": "",
+                "error": function(xhr, error, thrown) {
+                    console.log("Data loading error:", error);
+                }
+            },
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'excelHtml5',
+                    text: '<i class="fa fa-file-excel-o dt-export-icon-excel"></i>',
+                    titleAttr: 'Excel',
+                    title: 'TGCAB - @reportTitle',
+                    messageTop: fnMessageTop,
+                    exportOptions: {@Html.Raw(PdfExportColumns)},
+                    className: 'dt-export-btn',
+                    color:'red'
+                },
+                {
+                    extend: 'pdfHtml5',
+                    text: '<i class="fa fa-file-pdf-o dt-export-icon-pdf"></i>',
+                    className: 'dt-export-btn',
+                    titleAttr: 'Pdf',
+                    orientation: '@ReportPdfSize',
+                    pageSize: '@ReportpageSize',
+                    exportOptions: {@Html.Raw(PdfExportColumns)},
+                    title: 'TGCAB - @reportTitle',
+                    messageTop: fnMessageTop,
+                    action: function (e, dt, button, config) {
+                        console.log("PDF export button clicked");
+                        console.log("Table data rows:", dt.rows().count());
+                        if (dt.rows().count() === 0) {
+                            alert("No data available to export. Please ensure data is loaded in the table.");
+                            return false;
+                        }
+                        $.fn.dataTable.ext.buttons.pdfHtml5.action.call(this, e, dt, button, config);
+                    },
+                    customize: function (doc) {
+                        try {
+                            console.log("PDF customization started");
+                            doc.styles.tableHeader.alignment = 'left';
+                            doc.content.splice(1, 0, {
+                                margin: [0, -50, 0, 10],
+                                alignment: 'left',
+                                image: 'data:image/jpeg;base64,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'
+                            });
+
+                            doc.content[0].text = doc.content[0].text.trim();
+                            doc.styles.title = {
+                                fontSize: '20',
+                                alignment: 'center'
+                            };
+                            doc.styles.message = {
+                                fontSize: '9',
+                                alignment: 'center'
+                            };
+                            doc['footer'] = (function (page, pages) {
+                                return {
+                                    columns: [
+                                        'By: @ViewBag.LoginUserName , @ViewBag.LoginBranchName .',
+                                        {
+                                            alignment: 'right',
+                                            text: [
+                                                new Date().toLocaleDateString("en-IN", { day: "2-digit", month: "2-digit", year: "numeric", hour: '2-digit', minute: '2-digit' }),
+                                                '    Page ', { text: page.toString() }, ' of ', { text: pages.toString() }
+                                            ]
+                                        }
+                                    ],
+                                    fontSize: '9',
+                                    margin: [40, 10]
+                                }
+                            });
+                            console.log("PDF customization completed successfully");
+                        } catch (e) {
+                            console.error("PDF customization error:", e);
+                        }
+                    }
+                }
+            ],
+            "columns": [
+               { data: "Id" },
+              { data: "EmpId" },
+              { data: "EmpName" },
+              { data: "Designation" },
+              { data: "AppliedDate" },
+              { data: "AppliedTime" },
+              { data: "BrDept" },
+              { data: "StartDate" },
+              { data: "EndDate" },
+              { data: "LeaveType" },
+              { data: "LeaveDays" },
+              //{data: "status"},
+
+                      {
+                          data: null, render: function (data, type, LeaveStatus, row) {
+
+                              if (LeaveStatus.status == 'Pending') {
+                                  return "<h4 style = 'color:#ff8533; font-size:14px;' >Pending</h4>"
+                              }
+                              else if (LeaveStatus.status == 'PartialCancelled') {
+                                  return "<h4 style = 'color:#ff4444; font-size:14px;' >PartialCancelled</h4>"
+                              }
+                              else if (LeaveStatus.status == 'Cancelled') {
+                                  return "<h4 style = 'color:#ff4444; font-size:14px;' >Cancelled</h4>"
+                              }
+                              else if (LeaveStatus.status == 'Approved') {
+                                  return "<h4 style = 'color:#00C851; font-size:14px;' >Approved</h4>"
+                              }
+                              else if (LeaveStatus.status == 'Credit') {
+                                  return "<h4 style = 'color:#EC33FF; font-size:14px;' >Credit</h4>"
+                              }
+                              else if (LeaveStatus.status == 'CreditCancelled') {
+                                  return "<h4 style = 'color:#EC33FF; font-size:14px;' >Credit</h4>"
+                              }
+                              else if (LeaveStatus.status == 'Denied') {
+                                  return "<h4 style = 'color:#8B008B; font-size:14px;' >Denied</h4>"
+                              }
+                              else if (LeaveStatus.status == 'Forwarded') {
+                                  return "<h4 style = 'color:#33b5e5; font-size:14px;' >Forwarded</h4>"
+                              }
+                              else if (LeaveStatus.status == 'Debit') {
+                                  return "<h4 style = 'color:#b366ff; font-size:14px;' >Debit</h4>"
+                              }
+                              else if (LeaveStatus.status == 'DebitCancelled') {
+                                  return "<h4 style = 'color:#b366ff; font-size:14px;' >Debit</h4>"
+                              }
+                              else {
+
+                              }
+                          }
+                      },
+
+                { data: "AppliedTime", visible: false },
+                //{data: "Subject"},
+                { data: "Reason" },
+                { data: "UpdatedBy" },
+                { data: "UpdatedDate" },
+                { data: "CancelReason" },
+                  {
+                      data: null, render: function (data, type, LeaveStatus, row) {
+
+                          if (data.Reason.indexOf('LTC') > -1 || data.Reason.indexOf('PL E') > -1) {
+
+                              return "";
+                          }
+                          else {
+                          if (LeaveStatus.status == 'Pending') {
+                              return "<a style= 'color:blue;' href='@ViewBag.websiteUrl/MyLeaves/CancelLeave?LeaveId=" + LeaveStatus.LeaveId + "'><button>Cancel</button></a>";
+                          }
+                          else if (LeaveStatus.status == 'PartialCancelled') {
+                              return "<h4 style = 'color:#ff4444; font-size:14px;' >Cancelled</h4>"
+                          }
+                          else if (LeaveStatus.status == 'Cancelled') {
+                              return "<h4 style = 'color:#ff4444; font-size:14px;' >Cancelled</h4>"
+                          }
+                          else if (LeaveStatus.status == 'Approved') {
+                              //return "<h4 style = 'color:#00C851; font-size:14px;' >Approved</h4>"
+                              return "<a style= 'color:blue;' href='@ViewBag.websiteUrl/MyLeaves/CancelLeave?LeaveId=" + LeaveStatus.LeaveId + "'><button>Cancel</button></a>";
+                          }
+                          else if (LeaveStatus.status == 'Credit') {
+                              //return "<h4 style = 'color:#ff4444; font-size:14px;' >Credit</h4>"
+							  return "<a style= 'color:blue;' href='@ViewBag.websiteUrl/MyLeaves/CancelLeave?LeaveId=" + LeaveStatus.LeaveId + "  &LeaveStatus=" + LeaveStatus.status + "'><button>Cancel</button></a>";
+                          }
+                          else if (LeaveStatus.status == 'CreditCancelled') {
+                                return "<h4 style = 'color:#ff4444; font-size:14px;' >Credit</h4>"
+
+                          }
+                          else if (LeaveStatus.status == 'Denied') {
+                              return "<h4 style = 'color:#ff4444; font-size:14px;' >Cancelled</h4>"
+                          }
+
+                          else if (LeaveStatus.status == 'Debit') {
+                              //return "<h4 style = 'color:#ff4444; font-size:14px;' >Debit</h4>"
+							  return "<a style= 'color:blue;' href='@ViewBag.websiteUrl/MyLeaves/CancelLeave?LeaveId=" + LeaveStatus.LeaveId + "  &LeaveStatus=" + LeaveStatus.status + "'><button>Cancel</button></a>";
+                          }
+                          else if (LeaveStatus.status == 'DebitCancelled') {
+                              return "<h4 style = 'color:#ff4444; font-size:14px;' >Debit</h4>"
+                          }
+                          else if (LeaveStatus.status == 'Forwarded') {
+                              //return "<h4 style = 'color:#33b5e5; font-size:14px;' >Forwarded</h4>"
+                              return "<a style= 'color:blue;' href='@ViewBag.websiteUrl/MyLeaves/CancelLeave?LeaveId=" + LeaveStatus.LeaveId + "'><button>Cancel</button></a>";
+                          }
+                          else {
+
+                          }
+                      }
+                  }
+              }
+            ]
+
+        });
+    });
+        </script>
+
+
+        <script type="text/javascript">
+    var reportMsgTop = 'All Leaves';
+
+    var fnMessageTop = function () {
+        return (reportMsgTop == '' ? '' : 'Filters : ' + reportMsgTop);
+    };
+
+    var serviceurl = '@dataUrl';
+    serviceurl = serviceurl.replace('&amp;', '&');
+    
+    // Debug: Check if required libraries are loaded for All Leaves
+    console.log("All Leaves - jQuery version:", $.fn.jquery);
+    console.log("All Leaves - DataTables available:", typeof $.fn.dataTable !== 'undefined');
+    console.log("All Leaves - PDFMake available:", typeof pdfMake !== 'undefined');
+    console.log("All Leaves - JSZip available:", typeof JSZip !== 'undefined');
+
+    var dataTable = $('#gridallLeaves').dataTable({
+
+        scrollX: true,
+        scrollCollapse: true,
+        "ajax": {
+            "url": serviceurl,
+            "type": "GET",
+            "datatype": "json",
+            "dataSrc": "",
+            "error": function(xhr, error, thrown) {
+                console.log("Data loading error:", error);
+            }
+        },
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'excelHtml5',
+                text: '<i class="fa fa-file-excel-o dt-export-icon-excel"></i>',
+                titleAttr: 'Excel',
+                title: 'TGCAB - @reportTitle',
+                messageTop: fnMessageTop,
+                exportOptions: {@Html.Raw(PdfExportColumns)},
+                className: 'dt-export-btn',
+                color:'red'
+            },
+            {
+                extend: 'pdfHtml5',
+                text: '<i class="fa fa-file-pdf-o dt-export-icon-pdf"></i>',
+                className: 'dt-export-btn',
+                titleAttr: 'Pdf',
+                orientation: '@ReportPdfSize',
+                pageSize: '@ReportpageSize',
+                exportOptions: {@Html.Raw(PdfExportColumns)},
+                title: 'TGCAB - @reportTitle',
+                messageTop: fnMessageTop,
+                action: function (e, dt, button, config) {
+                    console.log("All Leaves PDF export button clicked");
+                    console.log("All Leaves Table data rows:", dt.rows().count());
+                    if (dt.rows().count() === 0) {
+                        alert("No data available to export. Please ensure data is loaded in the table.");
+                        return false;
+                    }
+                    $.fn.dataTable.ext.buttons.pdfHtml5.action.call(this, e, dt, button, config);
+                },
+                customize: function (doc) {
+                    try {
+                        console.log("All Leaves PDF customization started");
+                        doc.styles.tableHeader.alignment = 'left';
+                        doc.content.splice(1, 0, {
+                            margin: [0, -50, 0, 10],
+                            alignment: 'left',
+                            image: 'data:image/jpeg;base64,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'
+                        });
+
+                        doc.content[0].text = doc.content[0].text.trim();
+                        doc.styles.title = {
+                            fontSize: '20',
+                            alignment: 'center'
+                        };
+                        doc.styles.message = {
+                            fontSize: '9',
+                            alignment: 'center'
+                        };
+                        doc['footer'] = (function (page, pages) {
+                            return {
+                                columns: [
+                                    'By: @ViewBag.LoginUserName , @ViewBag.LoginBranchName .',
+                                    {
+                                        alignment: 'right',
+                                        text: [
+                                            new Date().toLocaleDateString("en-IN", { day: "2-digit", month: "2-digit", year: "numeric", hour: '2-digit', minute: '2-digit' }),
+                                            '    Page ', { text: page.toString() }, ' of ', { text: pages.toString() }
+                                        ]
+                                    }
+                                ],
+                                fontSize: '9',
+                                margin: [40, 10]
+                            }
+                        });
+                        console.log("All Leaves PDF customization completed successfully");
+                    } catch (e) {
+                        console.error("All Leaves PDF customization error:", e);
+                    }
+                }
+            }
+        ],
+
+         "columns": [
+             { data: "Id" },
+              {data: "EmpId"},
+              { data: "EmpName" },
+              { data: "Designation" },
+              { data: "AppliedDate" },
+              {data: "AppliedTime"},
+              { data: "BrDept" },
+              {data: "StartDate"},
+              {data: "EndDate"},
+             { data: "LeaveType" },
+             { data: "LeaveDays" },
+             //{ data: "status" },
+                      {
+                          data: null, render: function (data, type, LeaveStatus, row) {
+
+                              if (LeaveStatus.status == 'Pending') {
+                                  return "<h4 style = 'color:#ff8533; font-size:14px;' >Pending</h4>"
+                              }
+                              else if (LeaveStatus.status == 'PartialCancelled') {
+                                  return "<h4 style = 'color:#ff4444; font-size:14px;' >PartialCancelled</h4>"
+                              }
+                              else if (LeaveStatus.status == 'Cancelled') {
+                                  return "<h4 style = 'color:#ff4444; font-size:14px;' >Cancelled</h4>"
+                              }
+                              else if (LeaveStatus.status == 'Approved') {
+                                  return "<h4 style = 'color:#00C851; font-size:14px;' >Approved</h4>"
+                              }
+                              else if (LeaveStatus.status == 'Credit') {
+                                  return "<h4 style = 'color:#EC33FF; font-size:14px;' >Credit</h4>"
+                              }
+                              else if (LeaveStatus.status == 'CreditCancelled') {
+                                  return "<h4 style = 'color:#EC33FF; font-size:14px;' >Credit</h4>"
+                              }
+                              else if (LeaveStatus.status == 'Denied') {
+                                  return "<h4 style = 'color:#8B008B; font-size:14px;' >Denied</h4>"
+                              }
+                              else if (LeaveStatus.status == 'Forwarded') {
+                                  return "<h4 style = 'color:#33b5e5; font-size:14px;' >Forwarded</h4>"
+                              }
+                              else if (LeaveStatus.status == 'Debit') {
+                                  return "<h4 style = 'color:#b366ff; font-size:14px;' >Debit</h4>"
+                              }
+                              else if (LeaveStatus.status == 'DebitCancelled') {
+                                  return "<h4 style = 'color:#b366ff; font-size:14px;' >Debit</h4>"
+                              }
+                              else {
+
+                              }
+                          }
+                      },
+
+              { data: "AppliedTime", visible: false },
+             //{ data: "Subject" },
+             { data: "Reason" },
+             { data: "UpdatedBy" },
+             { data: "UpdatedDate" },
+             { data: "CancelReason" },
+              {
+                  data: null, render: function (data, type, LeaveStatus, row) {
+
+
+                      if (data.Reason.indexOf('LTC') > -1 || data.Reason.indexOf('PL E') > -1) {
+                          if (LeaveStatus.status == 'DebitCancelled') {
+                              return "<h4 style = 'color:#ff4444; font-size:14px;' >Cancelled</h4>"
+                          }
+                          else {
+                              return "<a style= 'color:blue;' href='@ViewBag.websiteUrl/MyLeaves/CancelLeave?LeaveId=" + LeaveStatus.LeaveId + "  &LeaveStatus=" + LeaveStatus.status + "'><button>Cancel</button></a>";
+                          }
+
+                      }
+                      else {
+                          if (LeaveStatus.status == 'CreditCancelled') {
+                              return "<h4 style = 'color:#ff4444; font-size:14px;' >Cancelled</h4>"
+                          }
+                          else {
+                              if (LeaveStatus.status == 'DebitCancelled') {
+                                  return "<h4 style = 'color:#ff4444; font-size:14px;' >Cancelled</h4>"
+                              }
+                              else {
+                                  if (LeaveStatus.status == 'Pending') {
+
+                                      return "<a style= 'color:blue;' href='@ViewBag.websiteUrl/MyLeaves/CancelLeave?LeaveId=" + LeaveStatus.LeaveId + "'><button>Cancel</button></a>";
+                                  }
+                                  else if (LeaveStatus.status == 'PartialCancelled') {
+                                      return "<h4 style = 'color:#ff4444; font-size:14px;' >Cancelled</h4>"
+                                  }
+                                  else if (LeaveStatus.status == 'Cancelled') {
+                                      return "<h4 style = 'color:#ff4444; font-size:14px;' >Cancelled</h4>"
+                                  }
+                                  else if (LeaveStatus.status == 'Approved') {
+                                      //return "<h4 style = 'color:#00C851; font-size:14px;' >Approved</h4>"
+                                      return "<a style= 'color:blue;' href='@ViewBag.websiteUrl/MyLeaves/CancelLeave?LeaveId=" + LeaveStatus.LeaveId + "'><button>Cancel</button></a>";
+                                  }
+                                  else if (LeaveStatus.status == 'Credit') {
+                                      //return "<h4 style = 'color:#ff4444; font-size:14px;' >Credit</h4>"
+                                      return "<a style= 'color:blue;' href='@ViewBag.websiteUrl/MyLeaves/CancelLeave?LeaveId=" + LeaveStatus.LeaveId + "  &LeaveStatus=" + LeaveStatus.status + "'><button>Cancel</button></a>";
+                                  }
+                                  else if (LeaveStatus.status == 'CreditCancelled') {
+                                      return "<h4 style = 'color:#ff4444; font-size:14px;' >Credit</h4>"
+                                  }
+                                  else if (LeaveStatus.status == 'Denied') {
+                                      return "<h4 style = 'color:#ff4444; font-size:14px;' >Cancelled</h4>"
+                                  }
+                                  else if (LeaveStatus.status == 'Forwarded') {
+                                      //return "<h4 style = 'color:#33b5e5; font-size:14px;' >Forwarded</h4>"
+                                      return "<a style= 'color:blue;' href='@ViewBag.websiteUrl/MyLeaves/CancelLeave?LeaveId=" + LeaveStatus.LeaveId + "'><button>Cancel</button></a>";
+                                  }
+                                  else if (LeaveStatus.status == 'Debit') {
+                                      //return "<h4 style = 'color:#ff4444; font-size:14px;' >Debit</h4>"
+                                      return "<a style= 'color:blue;' href='@ViewBag.websiteUrl/MyLeaves/CancelLeave?LeaveId=" + LeaveStatus.LeaveId + "  &LeaveStatus=" + LeaveStatus.status + "'><button>Cancel</button></a>";
+                                  }
+                                  else if (LeaveStatus.status == 'DebitCancelled') {
+                                      return "<h4 style = 'color:#ff4444; font-size:14px;' >Debit</h4>"
+                                  }
+                                  else {
+
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+        ]
+    });
+
+
+
+  //  });
+
+
+    $("#btnSearch").click(function () {
+
+        var fromDate = $("#fromdate").val();
+        var toDate = $("#todate").val();
+        //var branch;
+
+        //    var branch = $("#drpbranch").val();
+        //var branch1 = $("#drpbr1").val();
+        //if (branch != null && branch1 != null) {
+        //    branch = $.merge(branch, branch1)
+        //}
+        //else if (branch != null && branch1 == null) {
+        //    branch = branch;
+        //}
+        //else if (branch == null && branch1 != null) {
+        //    branch = branch1;
+        //}
+        var empcode = $("#allempcode").val();
+        if (fromDate == "" && toDate == "") {
+            alert("PLease select FromDate and ToDate");
+            return false;
+        }
+        else if (fromDate == "") {
+            alert("PLease select FromDate");
+            return false;
+        }
+        else if (toDate == "") {
+            alert("PLease select ToDate");
+            return false;
+        }
+        //else if (branch == "") {
+        //    alert("PLease select Branch/Department");
+        //    return false;
+        //}
+        //else if (empcode == "") {
+        //    alert("PLease select Employee Code");
+        //    return false;
+        //}
+        var branch = $("#drpbranch").val();
+        var dept = $("#drpbr1").val();
+        ajaxSpinnerShow();
+        var darray = document.getElementById('fromdate').value.split(" ");
+        var darraye = document.getElementById('todate').value.split(" ");
+        var Joindate = darray[0];
+
+        var Retdate = darraye[0];
+        var date = moment(Joindate, "DD.MM.YYYY");
+
+        var currentDate1 = moment(Retdate, "DD.MM.YYYY");
+        var duration = moment.duration(date.diff(currentDate1));
+
+
+        if (duration > 0) {
+            alert("Please ensure that To Date is greater than or equal to From Date.");
+            return false;
+        }
+
+        var mainUrl = '@dataUrl';
+
+
+
+
+        if (document.getElementById("lApplied").checked) {
+            var datetype = $("#lApplied").val();
+        } else {
+            var datetype = $("#lRequest").val();
+        }
+        var datetype1;
+        //if (document.getElementById("lApplied1").checked) {
+        //    var datetype1 = $("#lApplied1").val();
+        //} else {
+        //    var datetype1 = $("#lRequest1").val();
+        //}
+        ajaxSpinnerShow();
+
+        var LeaveType = $("#LeaveType").val();
+        var LeaveStatus = $("#LeaveStatus").val();
+
+
+        var ajaxurl = mainUrl.replace('-1', fromDate);
+        ajaxurl = ajaxurl.replace('-2', toDate);
+        ajaxurl = ajaxurl.replace('-3', datetype);
+        ajaxurl = ajaxurl.replace('-4', LeaveType);
+        ajaxurl = ajaxurl.replace('-5', LeaveStatus);
+        ajaxurl = ajaxurl.replace('-6', branch);
+        ajaxurl = ajaxurl.replace('-7', empcode);
+        ajaxurl = ajaxurl.replace('-8', datetype1);
+        ajaxurl = ajaxurl.replace('-9', dept);
+
+        ajaxurl = ajaxurl.replace('&amp;', '&');
+        ajaxurl = ajaxurl.replace('&amp;', '&');
+        ajaxurl = ajaxurl.replace('&amp;', '&');
+        ajaxurl = ajaxurl.replace('&amp;', '&');
+        ajaxurl = ajaxurl.replace('&amp;', '&');
+        ajaxurl = ajaxurl.replace('&amp;', '&');
+        ajaxurl = ajaxurl.replace('&amp;', '&');
+        ajaxurl = ajaxurl.replace('&amp;', '&');
+        reportMsgTop = fromDate + ' - ' + toDate + ' - ' + LeaveType + ' - ' + LeaveStatus;
+       // $('#gridallLeaves').dataTable().api().ajax.url(ajaxurl).load();
+
+        $('#gridallLeaves').DataTable().ajax.url(ajaxurl).load(function () {
+            ajaxSpinnerHide();
+        });
+
+
+    });
+
+        </script>
+
+
+        <script type='text/javascript'>
+            $(function getholidays() {
+                var active_dates = [];
+                $.ajax({
+                    type: "GET",
+                    async: false,
+                    url: "/LeaveApply/GetDates",
+                    dataType: "Json",
+                    success: function (data) {
+                        datesArray = data;
+                        for (i = 0; i < datesArray.length; i++) {
+                            var result = datesArray[i].replace("-", "/");
+                            var result1 = result.replace("-", "/");
+                            var strArray = result1.split("/");
+                            var cdate = strArray[0] + "/" + parseInt(strArray[1]) + "/" + strArray[2]
+                            active_dates.push(cdate);
+
+                            if (i == datesArray.length - 1) {
+                                //loadcal(active_dates);
+                            }
+                        }
+
+                    }
+                });
+                $('.input-group.date').datepicker({
+                    format: "dd/mm/yyyy",
+                    autoclose: true,
+                    todayHighlight: true,
+                    beforeShowDay: function nonWorkingDays(date) {
+                        var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
+                        var week = 0 | date.getDate() / 7 //get the week
+                        var dd = date.getDate();
+                        var month = date.getMonth();
+                        if (dd < 10) {
+                            dd = '0' + dd
+                        }
+
+                        if (month < 10) {
+                            month = '0' + month
+                        }
+                        var sunweek = date.getDay();
+                        var year = date.getFullYear();
+
+                        if (dd == 14 && day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                        if (dd == 28 && day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                        //check if it's second week or fourth week
+                        else if (week == 1 || week == 3) {
+                            if (dd == 7 && day == 6 || dd == 21 && day == 6) {
+                                //check for satruday
+
+                            }
+                            else {
+                                if (day == 6) {
+                                    return {
+                                        classes: 'secondClass'
+                                    };
+                                }
+                            }
+
+                        }
+                        //check for sunday
+                        if (day == 0) {
+                            return {
+                                classes: 'secondClass'
+                            };
+
+                        }
+                        //check for holidays
+                        var d = date;
+                        var curr_date = d.getDate();
+                        var curr_month = d.getMonth() + 1; //Months are zero based
+                        if (curr_date < 10) {
+                            curr_date = '0' + curr_date
+                        }
+                        var curr_year = d.getFullYear();
+                        var formattedDate = curr_date + "/" + curr_month + "/" + curr_year
+
+                        if ($.inArray(formattedDate, active_dates) != -1) {
+                            return {
+                                classes: 'activeClass'
+                            };
+                        }
+                        return [true];
+                    }
+                });
+            });
+        </script>
+
+        <script>
+    function appliedrequest(val) {
+         var serviceurl = '@dataUrl';
+        if (document.getElementById("lRequest").checked == true)
+        {
+            $('#fdate').text("From Date:");
+            $('#edate').text("To Date:");
+            document.getElementById("fromdate").value = "";
+            document.getElementById("todate").value = "";
+            document.getElementById("LeaveType").value = "";
+            document.getElementById("LeaveStatus").value = "";
+            $('#gridallLeaves').dataTable().api().ajax.url(serviceurl).load();
+        }
+        else
+        {
+            $('#fdate').text("Applied From Date:");
+            $('#edate').text("Applied To Date:");
+            document.getElementById("fromdate").value = "";
+            document.getElementById("todate").value = "";
+            document.getElementById("LeaveType").value = "";
+            document.getElementById("LeaveStatus").value = "";
+            $('#gridallLeaves').dataTable().api().ajax.url(serviceurl).load();
+        }
+    }
+
+
+    function appliedrequest1(val) {
+
+         var serviceurl = '@dataUrl';
+        if (document.getElementById("lApplied1").checked == true)
+        {
+
+            // $("#excelExportall").show();
+            $("#drpbr1").show();
+            $("#drpbranch").show();
+            document.getElementById("fromdate").value = "";
+            document.getElementById("todate").value = "";
+            document.getElementById("LeaveType").value = "";
+            document.getElementById("LeaveStatus").value = "";
+            document.getElementById("allempcode").value = "";
+            //('#grid').dataTable().api().ajax.url(serviceurl).load();
+            $('#grid').dataTable().clear();
+        }
+        else
+        {
+
+            //$("#excelExportall").show();
+            $("#drpbranch").hide();
+            $("#drpbr1").show();
+            document.getElementById("fromdate").value = "";
+            document.getElementById("todate").value = "";
+            document.getElementById("LeaveType").value = "";
+            document.getElementById("LeaveStatus").value = "";
+            document.getElementById("allempcode").value = "";
+            $('#grid').dataTable().api().ajax.url(serviceurl).load();
+        }
+    }
+
+    $('#lApplied1').change(function () {
+        document.getElementById("drpbranch").value = "";
+        document.getElementById("drpbr1").value = "";
+        $('#grid').dataTable().api().ajax.url(serviceurl).load();
+        $('#gridallLeaves').dataTable().api().ajax.url(serviceurl).load();
+    });
+    $('#lRequest1').change(function () {
+        document.getElementById("drpbranch").value = "";
+        $('#grid').dataTable().api().ajax.url(serviceurl).load();
+        $('#gridallLeaves').dataTable().api().ajax.url(serviceurl).load();
+    });
+        </script>
+
+        <script>
+    function Dateevent2() {
+        var StartDate = document.getElementById('fromdate').value;
+        var EndDate = document.getElementById('todate').value;
+        var eDate = moment(EndDate, "DD.MM.YYYY");
+        var sDate = moment(StartDate, "DD.MM.YYYY");
+        if (StartDate != '' && EndDate != '' && sDate > eDate) {
+            alert("Please Ensure that To Date is greater than or equal to From Date.");
+            document.getElementById("todate").focus();
+            document.getElementById("todate").value = '';
+            return false;
+        }
+        else {
+            return true;
+        }
+
+    }
+
+    function Dateevent1() {
+        var StartDate = document.getElementById('fromdate').value;
+        var EndDate = document.getElementById('todate').value;
+        var eDate = moment(EndDate, "DD.MM.YYYY");
+        var sDate = moment(StartDate, "DD.MM.YYYY");
+        if (StartDate != '' && EndDate != '' && sDate > eDate) {
+            alert("Please Ensure that From Date is less than or equal to To Date.");
+            document.getElementById("fromdate").focus();
+            document.getElementById("fromdate").value = '';
+            return false;
+        }
+        else {
+            return true;
+        }
+
+    }
+
+
+     $("#leavesSearch").click(function () {
+
+
+        var mainUrl = '@dataUrl1';
+         //var branch = $("#drpbranch").val();
+         //if (document.getElementById("lApplied1").checked == true) {
+        //
+         //    var branch = $("#drpbranch").val();
+         //}
+         //else {
+         //    var branch = $("#drpbr1").val();
+         //}
+
+         //if (document.getElementById("lApplied1").checked) {
+         //    var datetype1 = $("#lApplied1").val();
+         //} else {
+         //    var datetype1 = $("#lRequest1").val();
+         //}
+        // alert(branch);
+         var datetype1;
+         var branch = $("#drpbranch").val();
+         var dept = $("#drpbr1").val();
+        var empcode = $("#allempcode").val();
+        var ajaxurl = mainUrl.replace('-1', branch);
+         ajaxurl = ajaxurl.replace('-2', empcode);
+         ajaxurl = ajaxurl.replace('-3', datetype1);
+         ajaxurl = ajaxurl.replace('-4', dept);
+         ajaxurl = ajaxurl.replace('&amp;', '&');
+         ajaxurl = ajaxurl.replace('&amp;', '&');
+         ajaxurl = ajaxurl.replace('&amp;', '&');
+        $('#grid').DataTable().ajax.url(ajaxurl).load(function () {
+            ajaxSpinnerHide();
+        });
+
+    });
+        </script>
+        <script>
+            document.getElementById("a6").className = "active";
+        </script>
+

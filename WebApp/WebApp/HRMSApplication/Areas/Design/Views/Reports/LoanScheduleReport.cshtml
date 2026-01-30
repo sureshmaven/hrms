@@ -1,0 +1,141 @@
+﻿@{
+    ViewBag.Title = "LoanScheduleReport";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <h1>Loan Schedule Report</h1>
+                    <div class="col-md-4">
+                        <div class="inner_heading">
+                            <h1>Month Name</h1>
+                            <div class="table-responsive month_name_tbl mb_10">
+                                <table id="month_name" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Month Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>OCT - 2010</td>
+                                        </tr>
+                                        <tr>
+                                            <td>SEP - 2010</td>
+                                        </tr>
+                                        <tr>
+                                            <td>AUG - 2010</td>
+                                        </tr>
+                                        <tr>
+                                            <td>JUL - 2010</td>
+                                        </tr>
+                                        <tr>
+                                            <td>JUN - 2010</td>
+                                        </tr>
+                                        <tr>
+                                            <td>MAY - 2010</td>
+                                        </tr>
+                                        <tr>
+                                            <td>APR - 2010</td>
+                                        </tr>
+                                        <tr>
+                                            <td>MAR - 2010</td>
+                                        </tr>
+                                        <tr>
+                                            <td>FEB - 2010</td>
+                                        </tr>
+                                        <tr>
+                                            <td>JAN - 2010</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="mt_10">
+                            <div class="inner_heading">
+                                <h1>Wise</h1>
+                                <input id="allemp" type="radio" name="allemp" value="5"><label for="allemp"><span><span></span></span>Loan Wise</label>
+                                <div class="clearfix"></div>
+                                <input id="allemp" type="radio" name="allemp" value="5"><label for="allemp"><span><span></span></span>Schedule Wise</label>
+                            </div>
+                        </div>
+                        <div class="mt_10">
+                            <div class="inner_heading">
+                                <h1>Employees</h1>
+                                <input id="allemp" type="radio" name="allemp" value="5"><label for="allemp"><span><span></span></span>All Employees</label>
+                            </div>
+                        </div>
+                        <div class="mt_10">
+                            <div class="inner_heading">
+                                <h1>Report Destination</h1>
+                                <input id="file" type="radio" name="file" value="1"><label for="file"><span><span></span></span>File</label>
+                                <div class="clearfix"></div>
+                                <input id="print" type="radio" name="file" value="2"><label for="print"><span><span></span></span>Print</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="inner_heading">
+                            <h1>Format Name</h1>
+                            <div class="table-responsive">
+                                <table id="lic_report" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:10%">
+                                                <input id="selectallrow" type="checkbox" name="selectall" value="1"><label for="selectall"><span></span></label>
+                                            </th>
+                                            <th>Loan Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><input id="select1" type="checkbox" name="select1" value="1"><label for="select1"><span></span></label></td>
+                                            <td>CD Loan</td>
+                                        </tr>
+                                        <tr>
+                                            <td><input id="select1" type="checkbox" name="select1" value="1"><label for="select1"><span></span></label></td>
+                                            <td>Education Loan</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="pull-right">
+                            <button type="reset" class="btn btn-default cancel">Close</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#lic_report').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('#month_name').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+        });
+    });
+</script>

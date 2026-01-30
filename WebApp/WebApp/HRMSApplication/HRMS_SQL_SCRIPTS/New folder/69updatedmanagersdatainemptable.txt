@@ -1,0 +1,16 @@
+update employees set 
+ControllingAuthority=(select id from employees where EmpId=147),
+ControllingBranch=(select Id from Branches where Name='HeadOffice'),
+ControllingDesignation=(select CurrentDesignation from Employees where EmpId=147),
+Branch_Value1=(select Id from Branches where Name='HeadOffice'),
+Branch_Value_2=1
+where 
+EmpId in(147,121,176,265,286,331,338,340,356,358,361,363,364,365,376,377,452,457,478,480,373,337,6190,1998,5809,5882,5794,6177,6209,287,357,5780,6184,262,5920,485,6191,359,320,322,339);
+update employees set 
+ControllingAuthority=(select id from employees where EmpId=147),
+ControllingBranch=(select Id from Branches where Name='HeadOffice'),
+ControllingDesignation=(select CurrentDesignation from Employees where EmpId=147),
+Branch_Value1=(select Id from Branches where Name='HeadOffice'),
+Branch_Value_2=1
+where 
+EmpId in (204,266,279,371,381,460,374,383,368,463);

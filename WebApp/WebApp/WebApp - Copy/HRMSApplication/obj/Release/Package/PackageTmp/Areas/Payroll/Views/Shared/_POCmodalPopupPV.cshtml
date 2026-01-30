@@ -1,0 +1,423 @@
+﻿<div id="reportsearch" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+    <div class="panel-body">
+        <div class="reports_search">
+            <div class="col-md-12">
+                <div class="report_search_emp">
+                    <div class="col-md-3" id="EmpAll">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">
+                                 Employee:
+                            </label>
+
+                            <div class="col-md-8">
+                                <input id="rdbEmpAll" type="radio" name="wise" value="All" checked><label for="rdbEmpAll"><span><span></span></span>All</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-9" id="EmpCode">
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">
+                                <input id="rdbEmpAll1empsearch" type="radio" name="wise" value=""><label for="rdbEmpAll1empsearch"><span><span></span></span>Emp Code:</label>
+                            </label>
+                            <div class="col-sm-7">
+                                <div class="navbar-form" role="search">
+                                    <div class="input-group">
+                                        <input type="text" id="txtEmployeeSearchBox1450" name="txtsearchemp" class="form-control" placeholder="Search">
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-default search_btn" title="Search for Employee" type="button" id="pvBtnSearchEmpCodeWithChkModalPopup1450"><i class="glyphicon glyphicon-search"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3" id="LoanWise">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">
+                                Loan Wise:
+                            </label>
+
+                            <div class="col-md-8">
+                                <input id="rdbLoanWise" type="radio" name="wise" value="All"><label for="rdbEmpAll"><span><span></span></span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-9" id="ScheduleWise">
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">
+                                <input id="rdbScheduleWise" type="radio" name="wise" value="rdbEmpAll1"><label for="rdbEmpAll"><span><span></span></span>Schedule Wise:</label>
+                            </label>
+                            <div class="col-sm-7">
+                                <div class="navbar-form" role="search">
+                                    <div class="input-group">
+                                        <input type="text" id="txtAllEmpSearchforLoansAndSchedules1" name="txtloansSchedules1" class="form-control" placeholder="Search">
+                                        <input type="text" id="txtAllEmpSearchforLoansAndSchedules2" name="txtloansSchedules2" class="form-control" placeholder="Search">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+@*// emp modal*@
+<div id="empSearchModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Search & select employee</h4>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table id="jdtEmpSearch1440" class="display fixed_header" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Code</th>
+                                <th>Employee Name</th>
+                                @*<th>Designation</th>*@
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" title="Close the window">Cancel</button>
+                <button type="button" class="btn btn-primary" id="btnEmpSearchModalOK" title="Submit the data">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*Loan wise*@
+<div class="modal fade" id="adv_loans_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow:auto">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">All Loans</h4>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive mb_10" style="overflow-y: scroll; max-height:50%;  margin-top: 50px; margin-bottom:50px;">
+                    <table id="gridLoantype" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>id</th>
+                                <th></th>
+                                <th>Select Loan Type</th>
+                               
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="btnLoanTypeModalOK">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*Schedule wise*@
+<div class="modal fade" id="adv_Schedule_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow:auto">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">All Loans</h4>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive mb_10" style="overflow-y: scroll; max-height:50%;  margin-top: 50px; margin-bottom:50px;">
+                    <table id="gridScheduletype" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>id</th>
+                                <th></th>
+                                <th>Select Schedule Name</th>
+                                @*<th>Interest Rate</th>*@
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="btnScheduleTypeModalOK">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var txtids = [];
+    var empids = [];
+
+    $("#btnEmpSearchModalOK").click(function () {
+        empids = [];
+        $("#rdbEmpAll1empsearch").prop("checked", true);
+        $("input:checkbox[name=checkbox]:checked").each(function () {
+            empids.push($(this).val());
+        });
+        $('input[name=txtsearchemp]').val(empids);
+        $('#empSearchModal').modal('toggle'); //or  $('#IDModal').modal('hide');
+        return false;
+    });
+
+
+    $("input[id='rdbEmpAll1empsearch']").click(function () {
+        $("#rptGrid").find("tr:gt('')").remove();
+        document.getElementById("txtEmployeeSearchBox1450").disabled = false;
+        document.getElementById("pvBtnSearchEmpCodeWithChkModalPopup1450").disabled = false;
+        document.getElementById("rdbEmpAll1empsearch").checked = true;
+    });
+
+    $("input[id='rdbEmpAll']").click(function () {
+        $("#rptGrid").find("tr:gt('')").remove();
+        document.getElementById("txtEmployeeSearchBox1450").disabled = true;
+        document.getElementById("pvBtnSearchEmpCodeWithChkModalPopup1450").disabled = true;
+        $("#rdbEmpAll").prop("checked", true);
+        //$('input[name=txtsearchemp]').val('');
+        $("#rdbEmpAll1empsearch").prop("checked", false);
+    });
+
+
+
+    $('#txtEmployeeSearchBox1450').keypress(function (event) {
+
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+            rdbEmpAll1empsearch();
+            return false;
+        }
+    });
+
+    $("#pvBtnSearchEmpCodeWithChkModalPopup1450").click(function () {
+
+        rdbEmpAll1empsearch();
+        var ids = $("#txtEmployeeSearchBox1450").val();
+        var txtdata = ids.split(',');
+        txtids.push(txtdata);
+        return false;
+    });
+
+
+
+
+    function rdbEmpAll1empsearch() {
+
+
+        CommonApiGET('/Payroll/Common/SearchEmployeeWithChkIDs?EmpCode=' + $("#txtEmployeeSearchBox1450").val(), function (respData) {
+
+            if (respData.length == 0) {
+                toasterOptions();
+                toastr.error('No user with Name / Code: ' + $("#txtEmployeeSearchBox1450").val(), 'No user');
+                setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+            }
+            //else if (respData.length == 1) {
+            //    setSingleEmployee1440(respData[0]);
+            //}
+            else if (respData.length > 0) {
+                //
+                //open modal
+                $("#empSearchModal").modal();
+                //fill users data
+                $('#jdtEmpSearch1440').DataTable({
+                    "bFilter": true,
+                    "destroy": true,
+                    "paging": false,
+                    "info": false,
+
+                    data: respData,
+
+                    "columns": [
+                        {
+                            "mData": null,
+                            "bSortable": false,
+                            "mRender": function (data, type, full) {
+
+                                var array = $('#txtEmployeeSearchBox1450').val().split(",");
+                                $.each(array, function (i) {
+                                    $("input[value='" + array[i] + "']").prop('checked', true);
+                                });
+
+                                return '<input id="checkbox1" type="checkbox" name="checkbox" value="' + data.ECode + '" ><label for="checkbox1"><span></span></label>';
+                            }
+                        },
+                        { "data": "ECode" },
+                        { "data": "EName" },
+
+                    ],
+                    "order": [[0, 'asc']]
+                });
+            }
+        });
+
+    }
+
+</script>
+
+@*loans/schedules*@
+<script>
+    $('#txtAllEmpSearchforLoansAndSchedules1').hide();
+    var loanids = [];
+    var scheduleids = [];
+    $("input[id='rdbLoanWise']").click(function () {
+         
+        scheduleids = [];
+        document.getElementById("txtAllEmpSearchforLoansAndSchedules2").value = "";
+        $('#txtAllEmpSearchforLoansAndSchedules1').show();
+        $('#txtAllEmpSearchforLoansAndSchedules2').hide();
+        fillLoantypeDetails();
+        // return false();
+    });
+
+    $("input[id='rdbScheduleWise']").click(function () {
+         
+        loanids = [];
+        document.getElementById("txtAllEmpSearchforLoansAndSchedules1").value = "";
+        $('#txtAllEmpSearchforLoansAndSchedules1').hide();
+        $('#txtAllEmpSearchforLoansAndSchedules2').show();
+        // document.getElementById("txtAllEmpSearchforLoansAndSchedules").value = "";
+        fillScheduletypeDetails();
+        return false;
+    });
+
+    $("#btnLoanTypeModalOK").click(function () {
+         
+        scheduleids = [];
+        loanids = [];
+        // $("#rdbLoanWise").prop("checked", true);
+        $("input:checkbox[name=checkbox]:checked").each(function () {
+            loanids.push($(this).val());
+        });
+        $('input[name=txtloansSchedules1]').val(loanids);
+        $('#adv_loans_modal').modal('toggle'); //or  $('#IDModal').modal('hide');
+        return false;
+    });
+
+    $("#btnScheduleTypeModalOK").click(function () {
+         
+        loanids = [];
+        scheduleids = [];
+        //('input:checkbox').removeAttr('checked');
+        $("input:checkbox[name=checkbox1]:checked").each(function () {
+            scheduleids.push($(this).val());
+        });
+        $('input[name=txtloansSchedules2]').val(scheduleids);
+        $('#adv_Schedule_modal').modal('toggle'); //or  $('#IDModal').modal('hide');
+        return false;
+    });
+
+    function fillLoantypeDetails() {
+         
+        CommonApiGET('/Payroll/Masters/Getloansmasterdetails?LoanId=' + $("#txtAllEmpSearchforLoansAndSchedules1").val(), function (respData) {
+             
+            var lt = [];
+            var dataObj = JSON.parse(respData);
+            lt.push(dataObj.LTDetails);
+            var ltData = lt[0];
+            orgLTlist = ltData;
+
+            if (respData.length == 0) {
+                toasterOptions();
+                toastr.error('No user with Name / Code: ' + $("#txtAllEmpSearchforLoansAndSchedules1").val(), 'No user');
+                setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+            }
+
+            else if (respData.length > 0) {
+                $("#adv_loans_modal").modal();
+                $('#gridLoantype').DataTable({
+                    "bFilter": true,
+                    "destroy": true,
+                    "paging": false,
+                    "info": false,
+
+                    data: ltData,
+
+                    "columns": [
+                        {
+                            "mData": null,
+                            "bSortable": false,
+                            "mRender": function (data, type, full) {
+                                var array = $('#txtAllEmpSearchforLoansAndSchedules1').val().split(",");
+                                $.each(array, function (i) {
+                                    $("input[value='" + array[i] + "']").prop('checked', true);
+                                });
+
+                                return '<input id="checkbox1" type="checkbox" name="checkbox" value="' + data.id + '" ><label for="checkbox1"><span></span></label>';
+                            }
+                        },
+                        { "data": "id", "visible": false },
+                        { "data": "loan_description" },
+
+                    ],
+
+                    "order": [[0, 'asc']]
+                });
+            }
+        });
+
+    }
+
+    function fillScheduletypeDetails() {
+         
+        CommonApiGET('/Payroll/Common/SearchEmployeeWithScheduleNames?LoanId=' + $("#txtAllEmpSearchforLoansAndSchedules2").val(), function (respData) {
+             
+            var lt = [];
+            var dataObj = JSON.parse(respData);
+            lt.push(dataObj.LTDetails);
+            var ltData = lt[0];
+            orgLTlist = ltData;
+
+            if (respData.length == 0) {
+                toasterOptions();
+                toastr.error('No user with Name / Code: ' + $("#txtAllEmpSearchforLoansAndSchedules2").val(), 'No user');
+                setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+            }
+
+            else if (respData.length > 0) {
+                $("#adv_Schedule_modal").modal();
+                $('#gridScheduletype').DataTable({
+                    "bFilter": true,
+                    "destroy": true,
+                    "paging": false,
+                    "info": false,
+
+                    data: ltData,
+
+                    "columns": [
+                        {
+                            "mData": null,
+                            "bSortable": false,
+                            "mRender": function (data, type, full) {
+
+                                //var array = $('#txtAllEmpSearchforLoansAndSchedules').val().split(",");
+                                //$.each(array, function (i) {
+                                //    $("input[value='" + array[i] + "']").prop('checked', true);
+                                //});
+
+                                return '<input id="checkbox1" type="checkbox" name="checkbox1" value="' + data.Id + '" ><label for="checkbox1"><span></span></label>';
+                            }
+                        },
+                        { "data": "Id", "visible": false },
+                        { "data": "Name" },
+
+                    ],
+                    "order": [[0, 'asc']]
+                });
+            }
+        });
+
+    }
+
+</script>

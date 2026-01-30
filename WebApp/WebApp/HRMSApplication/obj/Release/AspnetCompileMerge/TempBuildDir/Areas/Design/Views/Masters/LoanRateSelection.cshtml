@@ -1,0 +1,84 @@
+﻿
+@{
+    ViewBag.Title = "LoanRateSelection";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <h1>Loans Rate Selection <span class="year-end">TSCAB 01-04-2019 - 31-04-2020</span></h1>
+                    <div class="emp-serch">
+                        <div class="col-md-12">
+                            <div class="col-md-7">
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label">Employee Id:</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-sm-1 col-xs-12"><button type="button" class="btn btn-primary btn-sm pull-right">Search</button></div>
+                            <div class="col-md-7">
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label">Employee Name :</label>
+                                    <div class="col-sm-6">
+                                        <label class="control-label">JAGADISH GUJIRALA</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="col-md-12">
+                        <table id="loan_selection" class="display" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Loan Name</th>
+                                    <th>Interest Rate</th>
+                                    <th>M Rate</th>
+                                 </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Housing AddLoan-2D 11%</td>
+                                    <td>9.50</td>
+                                    <td>0.00</td>
+                                </tr>
+                                <tr>
+                                    <td>Housing Loan Main[5%]</td>
+                                    <td>6.00</td>
+                                    <td>0.00</td>
+                                </tr>
+                                <tr>
+                                    <td>Housing Loan Main[5%]</td>
+                                    <td>9.50</td>
+                                    <td>0.00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-12 mt_10">
+                        <div class="pull-right">
+                            <button type="reset" class="btn btn-default cancel">Close</button>
+                            <button type="submit" class="btn btn-primary">Search</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#loan_selection').DataTable();
+    });
+</script>
+
+

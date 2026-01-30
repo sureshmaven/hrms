@@ -1,0 +1,16 @@
+delete from Tx_History;
+delete from leaveinfo;
+delete from leaves;
+delete from empleavebalance;
+delete from deliverydate_ptl;
+delete from employeehistory;
+delete from employees;
+delete from leavetypes;
+delete from holidaylist;
+delete from Branch_Designation_Mapping;
+delete from designations;
+delete from departments;
+delete from workingdays;
+delete from roles;
+delete from branches;
+delete from banks;

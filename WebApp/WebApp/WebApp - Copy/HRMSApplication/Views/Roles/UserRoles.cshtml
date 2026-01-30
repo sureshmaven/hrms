@@ -1,0 +1,965 @@
+﻿
+@{
+    /**/
+    Layout = "~/Views/Shared/_ReportsLayout.cshtml";
+    ViewBag.RolePages = TempData["RolePages"];
+    var rolepages = TempData["RolePages"].ToString();
+    var dataUrl = ViewBag.DataUrl;
+}
+
+<link href="~/Assets/css/report-style.css" rel="stylesheet" />
+
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-heading">
+
+
+            @{
+            <ul class="nav nav-tabs">
+                @if (rolepages.Contains("ADERG"))
+                {
+                    <li><a href=@Url.Action("InsertEmployees", "Register")>Employee Registration</a></li>
+                }
+                @if (rolepages.Contains("ADTPO"))
+                {
+                    <li><a href="@Url.Action("Index","Transfer")">Transfer/Promotions</a></li>
+                }
+                @if (rolepages.Contains("ADCAU"))
+                {
+                    <li><a href="@Url.Action("Index","ChangeAuthority")">Change Authority</a></li>
+                }
+                @if (rolepages.Contains("ADCPR"))
+                {
+                    <li><a href="@Url.Action("Index","ChangeProfile")">Change Profile</a></li>
+                }
+
+                @if (rolepages.Contains("ADLTCA"))
+                {
+                    <li><a href=@Url.Action("AdminLTCApply", "LeaveTravel")>Apply LTC </a></li>
+                }
+                @if (rolepages.Contains("ADPLA"))
+                {
+                    <li><a href=@Url.Action("AdminPLApply", "PLE_Type")>Apply PL Encashment</a></li>
+                }
+                @if (rolepages.Contains("ADWDA"))
+                {
+                    <li><a href=@Url.Action("WorkApprovalAdmin", "WorkDiary")> Delete Work Dairy</a></li>
+                }
+                @if (rolepages.Contains("ADUSRO"))
+                {
+                    @*<li class="active"><a href=@Url.Action("Userrole", "Roles")>User Roles</a></li>*@
+                    <li class="active"><a href=@Url.Action("UserRolesView", "AllReports")>User Roles</a></li>
+                }
+                @if (rolepages.Contains("ADCBRMG"))
+                {
+                    <li><a href=@Url.Action("ChangeBranchManager", "ChangeBranchManager")>Change Branch Manager</a></li>
+                }
+                @if (rolepages.Contains("TsheetMain"))
+                {
+                    <li><a href=@Url.Action("Timesheetrequestform", "TimeSheet")>TimeSheet Manual Form</a></li>
+                }
+                @if (rolepages.Contains("TsheetApp"))
+                {
+                    <li><a href=@Url.Action("TSApprovalView", "TimeSheet")>TimeSheet Manual Approvals</a></li>
+                }
+            </ul>
+            }
+
+
+        </div>
+
+        @*Static Table data html*@
+        @*<div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="role">
+                    <div class="page_st">
+                        <div class="page">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="main_heading">
+                                    <h1>User Roles</h1>
+                                    <div class="col-md-12">
+                                        <table class="roles-table" dir="ltr" style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+                                            <tbody>
+                                                <tr class="roles-heding" style="height: 26px;">
+                                                    <th style="height: 26px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Pages&quot;}"><span style="color: #fff;">Pages</span></th>
+                                                    <th style="height: 26px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Sub pages&quot;}"><span style="color: #fff;">Sub pages</span></th>
+                                                    <th style="height: 26px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Super Admin&quot;}"><span style="color: #fff;">Super Admin</span></th>
+                                                    <th style="height: 26px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;HRD Admin Payments&quot;}"><span style="color: #fff;">HRD Admin Payments</span></th>
+                                                    <th style="height: 26px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;HRD Admin Policy&quot;}"><span style="color: #fff;">HRD Admin Policy</span></th>
+                                                    <th style="height: 26px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Executive&quot;}"><span style="color: #fff;">Executive</span></th>
+                                                    <th style="height: 26px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Manager&quot;}"><span style="color: #fff;">Manager</span></th>
+                                                    <th style="height: 26px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Employee&quot;}"><span style="color: #fff;">Employee</span></th>
+                                                </tr>
+                                                <tr style="height: 26px;">
+                                                    <th style="height: 26px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Dash Board&quot;}"><span style="color: #000000;">Dash Board</span></th>
+                                                    <th style="height: 26px; width: 101px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 26px; width: 118px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 26px; width: 155px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 26px; width: 154px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 26px; width: 156px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 26px; width: 154px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 26px; width: 156px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Birthdays&quot;}"><span style="color: #000000;">Birthdays</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;News&quot;}"><span style="color: #000000;">News</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Retirements&quot;}"><span style="color: #000000;">Retirements</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Leaves&quot;}"><span style="color: #000000;">Leaves</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <th style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;My Profile&quot;}"><span style="color: #000000;">My Profile</span></th>
+                                                    <th style="height: 13px; width: 101px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></th>
+                                                    <th style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></th>
+                                                    <th style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></th>
+                                                    <th style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></th>
+                                                    <th style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></th>
+                                                    <th style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></th>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <th style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Leaves&quot;}"><span style="color: #000000;">Leaves</span></th>
+                                                    <th style="height: 13px; width: 101px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 155px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 154px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 156px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 154px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 156px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Leave Apply&quot;}"><span style="color: #000000;">Leave Apply</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Emp Leave Balance&quot;}"><span style="color: #000000;">Emp Leave Balance</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 39px;">
+                                                    <td style="height: 39px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 39px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Leave Approvals&quot;}"><span style="color: #000000;">Leave Approvals</span></td>
+                                                    <td style="height: 39px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 39px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes (If he/she assigned as CA &amp; SA)&quot;}"><span style="color: #000000;">Yes (If he/she assigned as CA or SA or both)</span></td>
+                                                    <td style="height: 39px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes (If he/she assigned as CA &amp; SA)&quot;}"><span style="color: #000000;">Yes (If he/she assigned as CA or SA or both)</span></td>
+                                                    <td style="height: 39px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes (If he/she assigned as CA &amp; SA)&quot;}"><span style="color: #000000;">Yes (If he/she assigned as CA or SA or both)</span></td>
+                                                    <td style="height: 39px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes (If he/she assigned as CA &amp; SA)&quot;}"><span style="color: #000000;">Yes (If he/she assigned as CA or SA or both)</span></td>
+                                                    <td style="height: 39px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes (If he/she assigned as CA &amp; SA)&quot;}"><span style="color: #000000;">Yes (If he/she assigned as CA or SA or both)</span></td>
+                                                </tr>
+                                                <tr style="height: 39px;">
+                                                    <td style="height: 39px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 39px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;My Leave Approvals&quot;}"><span style="color: #000000;">My Leave Approvals</span></td>
+                                                    <td style="height: 39px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 39px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes (If he/she assigned as CA &amp; SA)&quot;}"><span style="color: #000000;">Yes (If he/she assigned as CA or SA or both)</span></td>
+                                                    <td style="height: 39px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes (If he/she assigned as CA &amp; SA)&quot;}"><span style="color: #000000;">Yes (If he/she assigned as CA or SA or both)</span></td>
+                                                    <td style="height: 39px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes (If he/she assigned as CA &amp; SA)&quot;}"><span style="color: #000000;">Yes (If he/she assigned as CA or SA or both)</span></td>
+                                                    <td style="height: 39px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes (If he/she assigned as CA &amp; SA)&quot;}"><span style="color: #000000;">Yes (If he/she assigned as CA or SA or both)</span></td>
+                                                    <td style="height: 39px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes (If he/she assigned as CA &amp; SA)&quot;}"><span style="color: #000000;">Yes (If he/she assigned as CA or SA or both)</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <th style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;OD&quot;}"><span style="color: #000000;">OD</span></th>
+                                                    <th style="height: 13px; width: 101px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 155px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 154px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 156px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 154px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 156px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                </tr>
+                                                <tr style="height: 26px;">
+                                                    <td style="height: 26px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 26px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;OD Apply&quot;}"><span style="color: #000000;">OD Apply</span></td>
+                                                    <td style="height: 26px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 26px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 26px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 26px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 26px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 26px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                </tr>
+                                                <tr style="height: 39px;">
+                                                    <td style="height: 39px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 39px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;OD Approvals&quot;}"><span style="color: #000000;">OD Approvals</span></td>
+                                                    <td style="height: 39px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 39px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes (If he/she assigned as CA &amp; SA)&quot;}"><span style="color: #000000;">Yes (If he/she assigned as CA or SA or both)</span></td>
+                                                    <td style="height: 39px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes (If he/she assigned as CA &amp; SA)&quot;}"><span style="color: #000000;">Yes (If he/she assigned as CA or SA or both)</span></td>
+                                                    <td style="height: 39px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes (If he/she assigned as CA &amp; SA)&quot;}"><span style="color: #000000;">Yes (If he/she assigned as CA or SA or both)</span></td>
+                                                    <td style="height: 39px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes (If he/she assigned as CA &amp; SA)&quot;}"><span style="color: #000000;">Yes (If he/she assigned as CA or SA or both)</span></td>
+                                                    <td style="height: 39px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes (If he/she assigned as CA &amp; SA)&quot;}"><span style="color: #000000;">Yes (If he/she assigned as CA or SA or both)</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <th style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;LTC&quot;}"><span style="color: #000000;">LTC</span></th>
+                                                    <th style="height: 13px; width: 101px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 155px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 154px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 156px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 154px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 156px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;LTC Apply&quot;}"><span style="color: #000000;">LTC Apply</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                </tr>
+                                                <tr style="height: 39px;">
+                                                    <td style="height: 39px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 39px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;LTC Approvals&quot;}"><span style="color: #000000;">LTC Approvals</span></td>
+                                                    <td style="height: 39px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 39px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes (If he/she assigned as CA &amp; SA)&quot;}"><span style="color: #000000;">Yes (If he/she assigned as CA or SA or both)</span></td>
+                                                    <td style="height: 39px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes (If he/she assigned as CA &amp; SA)&quot;}"><span style="color: #000000;">Yes (If he/she assigned as CA or SA or both)</span></td>
+                                                    <td style="height: 39px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes (If he/she assigned as CA &amp; SA)&quot;}"><span style="color: #000000;">Yes (If he/she assigned as CA or SA or both)</span></td>
+                                                    <td style="height: 39px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes (If he/she assigned as CA &amp; SA)&quot;}"><span style="color: #000000;">Yes (If he/she assigned as CA or SA or both)</span></td>
+                                                    <td style="height: 39px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes (If he/she assigned as CA &amp; SA)&quot;}"><span style="color: #000000;">Yes (If he/she assigned as CA or SA or both)</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <th style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;PL&quot;}"><span style="color: #000000;">PL</span></th>
+                                                    <th style="height: 13px; width: 101px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 155px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 154px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 156px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 154px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 156px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;PL Apply&quot;}"><span style="color: #000000;">PL Apply</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                </tr>
+                                                <tr style="height: 39px;">
+                                                    <td style="height: 39px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 39px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;PL Approvals&quot;}"><span style="color: #000000;">PL Approvals</span></td>
+                                                    <td style="height: 39px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 39px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes (If he/she assigned as CA &amp; SA)&quot;}"><span style="color: #000000;">Yes (If he/she assigned as CA or SA or both)</span></td>
+                                                    <td style="height: 39px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes (If he/she assigned as CA &amp; SA)&quot;}"><span style="color: #000000;">Yes (If he/she assigned as CA or SA or both)</span></td>
+                                                    <td style="height: 39px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes (If he/she assigned as CA &amp; SA)&quot;}"><span style="color: #000000;">Yes (If he/she assigned as CA or SA or both)</span></td>
+                                                    <td style="height: 39px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes (If he/she assigned as CA &amp; SA)&quot;}"><span style="color: #000000;">Yes (If he/she assigned as CA or SA or both)</span></td>
+                                                    <td style="height: 39px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes (If he/she assigned as CA &amp; SA)&quot;}"><span style="color: #000000;">Yes (If he/she assigned as CA or SA or both)</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <th style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Policies&quot;}"><span style="color: #000000;">Policies</span></th>
+                                                    <th style="height: 13px; width: 101px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></th>
+                                                    <th style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></th>
+                                                    <th style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></th>
+                                                    <th style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></th>
+                                                    <th style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></th>
+                                                    <th style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></th>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <th style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Admin&quot;}"><span style="color: #000000;">Admin</span></th>
+                                                    <th style="height: 13px; width: 101px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 155px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 154px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 156px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 154px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 156px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Employee Registration&quot;}"><span style="color: #000000;">Employee Registration</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Transfer/Promotions&quot;}"><span style="color: #000000;">Transfer/Promotions</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Change Authority&quot;}"><span style="color: #000000;">Change Authority</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Change Profile&quot;}"><span style="color: #000000;">Change Profile</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Change Profile&quot;}"><span style="color: #000000;">User Roles</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <th style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Master&quot;}"><span style="color: #000000;">Master</span></th>
+                                                    <th style="height: 13px; width: 101px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 155px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 154px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 156px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 154px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 156px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Bank&quot;}"><span style="color: #000000;">Bank</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Branch&quot;}"><span style="color: #000000;">Branch</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Department&quot;}"><span style="color: #000000;">Department</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Designation&quot;}"><span style="color: #000000;">Designation</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Role&quot;}"><span style="color: #000000;">Role</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Leave Type&quot;}"><span style="color: #000000;">Leave Type</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Holiday List&quot;}"><span style="color: #000000;">Holiday List</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Credit/Debit Leaves&quot;}"><span style="color: #000000;">Credit/Debit Leaves</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Branch Category&quot;}"><span style="color: #000000;">Branch Category</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Other Duty&quot;}"><span style="color: #000000;">Other Duty</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Block Period&quot;}"><span style="color: #000000;">Block Period</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;News&quot;}"><span style="color: #000000;">News</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 26px;">
+                                                    <th style="height: 26px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Work Diary&quot;}"><span style="color: #000000;">Work Diary</span></th>
+                                                    <th style="height: 26px; width: 101px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 26px; width: 118px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 26px; width: 155px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 26px; width: 154px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 26px; width: 156px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 26px; width: 154px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 26px; width: 156px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Work Diary Apply&quot;}"><span style="color: #000000;">Work Diary Apply</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                </tr>
+                                                <tr style="height: 26px;">
+                                                    <td style="height: 26px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 26px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Work Approval&quot;}"><span style="color: #000000;">Work Approval</span></td>
+                                                    <td style="height: 26px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 26px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes (If he/she assigned as CA)&quot;}"><span style="color: #000000;">Yes (If he/she assigned as CA)</span></td>
+                                                    <td style="height: 26px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes (If he/she assigned as CA)&quot;}"><span style="color: #000000;">Yes (If he/she assigned as CA)</span></td>
+                                                    <td style="height: 26px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes (If he/she assigned as CA)&quot;}"><span style="color: #000000;">Yes (If he/she assigned as CA)</span></td>
+                                                    <td style="height: 26px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes (If he/she assigned as CA)&quot;}"><span style="color: #000000;">Yes (If he/she assigned as CA)</span></td>
+                                                    <td style="height: 26px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes (If he/she assigned as CA)&quot;}"><span style="color: #000000;">Yes (If he/she assigned as CA)</span></td>
+                                                </tr>
+                                                <tr style="height: 26px;">
+                                                    <td style="height: 26px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 26px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Sanctioning History&quot;}"><span style="color: #000000;">Sanctioning History</span></td>
+                                                    <td style="height: 26px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 26px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes (If he/she assigned as SA)&quot;}"><span style="color: #000000;">Yes (If he/she assigned as SA)</span></td>
+                                                    <td style="height: 26px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes (If he/she assigned as SA)&quot;}"><span style="color: #000000;">Yes (If he/she assigned as SA)</span></td>
+                                                    <td style="height: 26px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes (If he/she assigned as SA)&quot;}"><span style="color: #000000;">Yes (If he/she assigned as SA)</span></td>
+                                                    <td style="height: 26px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes (If he/she assigned as SA)&quot;}"><span style="color: #000000;">Yes (If he/she assigned as SA)</span></td>
+                                                    <td style="height: 26px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes (If he/she assigned as SA)&quot;}"><span style="color: #000000;">Yes (If he/she assigned as SA)</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <th style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Reports&quot;}"><span style="color: #000000;">Reports</span></th>
+                                                    <th style="height: 13px; width: 101px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 155px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 154px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 156px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 154px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                    <th style="height: 13px; width: 156px;"><span style="color: #000000;">&nbsp;</span></th>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Branches&quot;}"><span style="color: #000000;">Branches</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Branch Contacts&quot;}"><span style="color: #000000;">Branch Contacts</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Cadre&quot;}"><span style="color: #000000;">Cadre</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Category&quot;}"><span style="color: #000000;">Category</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;DOB&quot;}"><span style="color: #000000;">DOB</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Employees&quot;}"><span style="color: #000000;">Employees</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Future Applied Leaves&quot;}"><span style="color: #000000;">Future Applied Leaves</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Head Office&quot;}"><span style="color: #000000;">Head Office</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Head Office Attenders&quot;}"><span style="color: #000000;">Head Office Attenders</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Key Officials&quot;}"><span style="color: #000000;">Key Officials</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;LTC&quot;}"><span style="color: #000000;">LTC</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Leaves&quot;}"><span style="color: #000000;">Leaves</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Long Leaves&quot;}"><span style="color: #000000;">Long Leaves</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Leaves Forwarded/Approved&quot;}"><span style="color: #000000;">Leaves Forwarded/Approved</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Late Applied Leaves&quot;}"><span style="color: #000000;">Late Applied Leaves</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Leaves Cancelled&quot;}"><span style="color: #000000;">Leaves Cancelled</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Month Wise CL/ML/PL&quot;}"><span style="color: #000000;">Month Wise CL/ML/PL</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Month Wise Leaves&quot;}"><span style="color: #000000;">Month Wise Leaves</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Month Wise OD&quot;}"><span style="color: #000000;">Month Wise OD</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 26px;">
+                                                    <td style="height: 26px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 26px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Month Wise Temporary Transfer&quot;}"><span style="color: #000000;">Month Wise Temporary Transfer</span></td>
+                                                    <td style="height: 26px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 26px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 26px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 26px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 26px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 26px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;OD&quot;}"><span style="color: #000000;">OD</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Permanent Transfers&quot;}"><span style="color: #000000;">Permanent Transfers</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Promotion&quot;}"><span style="color: #000000;">Promotion</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;PL&quot;}"><span style="color: #000000;">PL</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Retirements&quot;}"><span style="color: #000000;">Retirements</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Seniority&quot;}"><span style="color: #000000;">Seniority</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Staff Master&quot;}"><span style="color: #000000;">Staff Master</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;TX History&quot;}"><span style="color: #000000;">TX History</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Temporary Transfers&quot;}"><span style="color: #000000;">Temporary Transfers</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Top Management&quot;}"><span style="color: #000000;">Top Management</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Work Diary&quot;}"><span style="color: #000000;">Work Diary</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">Yes (For DGM,MD,GM)</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                                <tr style="height: 13px;">
+                                                    <td style="height: 13px; width: 118px;"><span style="color: #000000;">&nbsp;</span></td>
+                                                    <td style="height: 13px; width: 101px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Year Wise Leave Balance&quot;}"><span style="color: #000000;">Year Wise Leave Balance</span></td>
+                                                    <td style="height: 13px; width: 118px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 155px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Yes&quot;}"><span style="color: #000000;">Yes</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 154px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                    <td style="height: 13px; width: 156px;" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;No&quot;}"><span style="color: #000000;">No</span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+        @*Static Table data html end *@
+
+        @*Dynamic Table data html*@
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="bank">
+                    <div class="page_st">
+                        <div class="page">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="main_heading">
+                                    <h1>User Roles</h1>
+
+                                    <div class="col-md-12">
+                                        <div class="col-md-12" id="AllEmp">
+                                            <div class="table-responsive gird_userroles">
+                                                <table id="grid" class="display reports-grids" cellspacing="0" width="100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>SNo</th>
+                                                            <th>S.No</th>
+                                                            <th>Pages</th>
+                                                            <th>Sub pages</th>
+                                                            <th>Super Admin</th>
+                                                            <th>HRD Admin Payments</th>
+                                                            <th>HRD Admin Policy</th>
+                                                            <th>Executive</th>
+                                                            <th>Manager</th>
+                                                            <th>Employee</th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    </div>
+
+
+@{
+
+  var message = TempData["AlertMessage"] ?? string.Empty;
+
+}
+
+<script>
+    document.getElementById("a1").className = "active";
+
+</script>
+
+
+<script>
+
+    $(document).ready(function () {
+    var serviceurl = '@dataUrl';
+        $.noConflict();
+
+        var dataTable = $('#grid').dataTable({
+            "paging": false,
+            "ordering": false,
+        "ajax": {
+            "url": serviceurl,
+            "type": "GET",
+            "datatype": "json",
+            "dataSrc": ""
+        },
+            dom: 'Bfrtip',
+            buttons: [
+            ],
+        "columns": [
+            { data: "Id", visible:false },
+            { data: "SNo" },
+            { data: "Pages" },
+            { data: "SubPages" },
+            { data: "SuperAdmin" },
+            { data: "HRDAdminPayments" },
+            { data: "HRDAdminPolicy" },
+            { data: "Executive" }, 
+            { data: "Manager" }, 
+            { data: "Employee" }]
+        });
+   });
+
+</script>

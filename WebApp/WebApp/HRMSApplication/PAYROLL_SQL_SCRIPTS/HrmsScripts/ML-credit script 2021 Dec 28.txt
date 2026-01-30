@@ -1,0 +1,560 @@
+
+--MEDICAL LEAVES CREDIT TO 42 EMPLOYEES
+
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year])  values(	(select id from Employees where empid=175),2,	90	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=175) and LeaveTypeId=2 and year=2021),'Additional medicals leaves credited',
+(select ShortName from Employees where empid=175),
+(select Department from Employees where empid=175),
+(select Branch from Employees where empid=175),
+(select CurrentDesignation from Employees where empid=175),'Credit',
+(select branch_value1 from employees where empid=175),
+(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=175) and LeaveTypeId=2 and year=2021) ),2021);
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year])  values(	(select id from Employees where empid=184),2,	90	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=184) and LeaveTypeId=2 and year=2021),'Additional medicals leaves credited',
+(select ShortName from Employees where empid=184),
+(select Department from Employees where empid=184),
+(select Branch from Employees where empid=184),
+(select CurrentDesignation from Employees where empid=184),'Credit',
+(select branch_value1 from employees where empid=184),
+(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=184) and LeaveTypeId=2 and year=2021) ),2021);
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year])  values(	(select id from Employees where empid=233),2,	90	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=233) and LeaveTypeId=2 and year=2021),'Additional medicals leaves credited',
+(select ShortName from Employees where empid=233),
+(select Department from Employees where empid=233),
+(select Branch from Employees where empid=233),
+(select CurrentDesignation from Employees where empid=233),'Credit',
+(select branch_value1 from employees where empid=233),
+(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=233) and LeaveTypeId=2 and year=2021) ),2021);
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year])  values(	(select id from Employees where empid=250),2,	90	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=250) and LeaveTypeId=2 and year=2021),'Additional medicals leaves credited',
+(select ShortName from Employees where empid=250),
+(select Department from Employees where empid=250),
+(select Branch from Employees where empid=250),
+(select CurrentDesignation from Employees where empid=250),'Credit',
+(select branch_value1 from employees where empid=250),
+(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=250) and LeaveTypeId=2 and year=2021) ),2021);
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year])  values(	(select id from Employees where empid=266),2,	90	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=266) and LeaveTypeId=2 and year=2021),'Additional medicals leaves credited',
+(select ShortName from Employees where empid=266),
+(select Department from Employees where empid=266),
+(select Branch from Employees where empid=266),
+(select CurrentDesignation from Employees where empid=266),'Credit',
+(select branch_value1 from employees where empid=266),
+(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=266) and LeaveTypeId=2 and year=2021) ),2021);
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year])  values(	(select id from Employees where empid=271),2,	90	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=271) and LeaveTypeId=2 and year=2021),'Additional medicals leaves credited',
+(select ShortName from Employees where empid=271),
+(select Department from Employees where empid=271),
+(select Branch from Employees where empid=271),
+(select CurrentDesignation from Employees where empid=271),'Credit',
+(select branch_value1 from employees where empid=271),
+(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=271) and LeaveTypeId=2 and year=2021) ),2021);
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year])  values(	(select id from Employees where empid=288),2,	90	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=288) and LeaveTypeId=2 and year=2021),'Additional medicals leaves credited',
+(select ShortName from Employees where empid=288),
+(select Department from Employees where empid=288),
+(select Branch from Employees where empid=288),
+(select CurrentDesignation from Employees where empid=288),'Credit',
+(select branch_value1 from employees where empid=288),
+(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=288) and LeaveTypeId=2 and year=2021) ),2021);
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year])  values(	(select id from Employees where empid=301),2,	90	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=301) and LeaveTypeId=2 and year=2021),'Additional medicals leaves credited',
+(select ShortName from Employees where empid=301),
+(select Department from Employees where empid=301),
+(select Branch from Employees where empid=301),
+(select CurrentDesignation from Employees where empid=301),'Credit',
+(select branch_value1 from employees where empid=301),
+(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=301) and LeaveTypeId=2 and year=2021) ),2021);
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year])  values(	(select id from Employees where empid=303),2,	90	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=303) and LeaveTypeId=2 and year=2021),'Additional medicals leaves credited',
+(select ShortName from Employees where empid=303),
+(select Department from Employees where empid=303),
+(select Branch from Employees where empid=303),
+(select CurrentDesignation from Employees where empid=303),'Credit',
+(select branch_value1 from employees where empid=303),
+(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=303) and LeaveTypeId=2 and year=2021) ),2021);
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year])  values(	(select id from Employees where empid=304),2,	90	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=304) and LeaveTypeId=2 and year=2021),'Additional medicals leaves credited',
+(select ShortName from Employees where empid=304),
+(select Department from Employees where empid=304),
+(select Branch from Employees where empid=304),
+(select CurrentDesignation from Employees where empid=304),'Credit',
+(select branch_value1 from employees where empid=304),
+(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=304) and LeaveTypeId=2 and year=2021) ),2021);
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year])  values(	(select id from Employees where empid=308),2,	90	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=308) and LeaveTypeId=2 and year=2021),'Additional medicals leaves credited',
+(select ShortName from Employees where empid=308),
+(select Department from Employees where empid=308),
+(select Branch from Employees where empid=308),
+(select CurrentDesignation from Employees where empid=308),'Credit',
+(select branch_value1 from employees where empid=308),
+(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=308) and LeaveTypeId=2 and year=2021) ),2021);
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year])  values(	(select id from Employees where empid=319),2,	90	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=319) and LeaveTypeId=2 and year=2021),'Additional medicals leaves credited',
+(select ShortName from Employees where empid=319),
+(select Department from Employees where empid=319),
+(select Branch from Employees where empid=319),
+(select CurrentDesignation from Employees where empid=319),'Credit',
+(select branch_value1 from employees where empid=319),
+(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=319) and LeaveTypeId=2 and year=2021) ),2021);
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year])  values(	(select id from Employees where empid=331),2,	90	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=331) and LeaveTypeId=2 and year=2021),'Additional medicals leaves credited',
+(select ShortName from Employees where empid=331),
+(select Department from Employees where empid=331),
+(select Branch from Employees where empid=331),
+(select CurrentDesignation from Employees where empid=331),'Credit',
+(select branch_value1 from employees where empid=331),
+(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=331) and LeaveTypeId=2 and year=2021) ),2021);
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year])  values(	(select id from Employees where empid=358),2,	90	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=358) and LeaveTypeId=2 and year=2021),'Additional medicals leaves credited',
+(select ShortName from Employees where empid=358),
+(select Department from Employees where empid=358),
+(select Branch from Employees where empid=358),
+(select CurrentDesignation from Employees where empid=358),'Credit',
+(select branch_value1 from employees where empid=358),
+(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=358) and LeaveTypeId=2 and year=2021) ),2021);
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year])  values(	(select id from Employees where empid=359),2,	90	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=359) and LeaveTypeId=2 and year=2021),'Additional medicals leaves credited',
+(select ShortName from Employees where empid=359),
+(select Department from Employees where empid=359),
+(select Branch from Employees where empid=359),
+(select CurrentDesignation from Employees where empid=359),'Credit',
+(select branch_value1 from employees where empid=359),
+(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=359) and LeaveTypeId=2 and year=2021) ),2021);
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year])  values(	(select id from Employees where empid=361),2,	90	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=361) and LeaveTypeId=2 and year=2021),'Additional medicals leaves credited',
+(select ShortName from Employees where empid=361),
+(select Department from Employees where empid=361),
+(select Branch from Employees where empid=361),
+(select CurrentDesignation from Employees where empid=361),'Credit',
+(select branch_value1 from employees where empid=361),
+(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=361) and LeaveTypeId=2 and year=2021) ),2021);
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year])  values(	(select id from Employees where empid=363),2,	90	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=363) and LeaveTypeId=2 and year=2021),'Additional medicals leaves credited',
+(select ShortName from Employees where empid=363),
+(select Department from Employees where empid=363),
+(select Branch from Employees where empid=363),
+(select CurrentDesignation from Employees where empid=363),'Credit',
+(select branch_value1 from employees where empid=363),
+(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=363) and LeaveTypeId=2 and year=2021) ),2021);
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year])  values(	(select id from Employees where empid=365),2,	90	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=365) and LeaveTypeId=2 and year=2021),'Additional medicals leaves credited',
+(select ShortName from Employees where empid=365),
+(select Department from Employees where empid=365),
+(select Branch from Employees where empid=365),
+(select CurrentDesignation from Employees where empid=365),'Credit',
+(select branch_value1 from employees where empid=365),
+(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=365) and LeaveTypeId=2 and year=2021) ),2021);
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year])  values(	(select id from Employees where empid=371),2,	90	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=371) and LeaveTypeId=2 and year=2021),'Additional medicals leaves credited',
+(select ShortName from Employees where empid=371),
+(select Department from Employees where empid=371),
+(select Branch from Employees where empid=371),
+(select CurrentDesignation from Employees where empid=371),'Credit',
+(select branch_value1 from employees where empid=371),
+(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=371) and LeaveTypeId=2 and year=2021) ),2021);
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year])  values(	(select id from Employees where empid=373),2,	90	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=373) and LeaveTypeId=2 and year=2021),'Additional medicals leaves credited',
+(select ShortName from Employees where empid=373),
+(select Department from Employees where empid=373),
+(select Branch from Employees where empid=373),
+(select CurrentDesignation from Employees where empid=373),'Credit',
+(select branch_value1 from employees where empid=373),
+(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=373) and LeaveTypeId=2 and year=2021) ),2021);
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year])  values(	(select id from Employees where empid=374),2,	90	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=374) and LeaveTypeId=2 and year=2021),'Additional medicals leaves credited',
+(select ShortName from Employees where empid=374),
+(select Department from Employees where empid=374),
+(select Branch from Employees where empid=374),
+(select CurrentDesignation from Employees where empid=374),'Credit',
+(select branch_value1 from employees where empid=374),
+(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=374) and LeaveTypeId=2 and year=2021) ),2021);
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year])  values(	(select id from Employees where empid=377),2,	90	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=377) and LeaveTypeId=2 and year=2021),'Additional medicals leaves credited',
+(select ShortName from Employees where empid=377),
+(select Department from Employees where empid=377),
+(select Branch from Employees where empid=377),
+(select CurrentDesignation from Employees where empid=377),'Credit',
+(select branch_value1 from employees where empid=377),
+(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=377) and LeaveTypeId=2 and year=2021) ),2021);
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year])  values(	(select id from Employees where empid=5660),2,	90	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5660) and LeaveTypeId=2 and year=2021),'Additional medicals leaves credited',
+(select ShortName from Employees where empid=5660),
+(select Department from Employees where empid=5660),
+(select Branch from Employees where empid=5660),
+(select CurrentDesignation from Employees where empid=5660),'Credit',
+(select branch_value1 from employees where empid=5660),
+(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5660) and LeaveTypeId=2 and year=2021) ),2021);
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year])  values(	(select id from Employees where empid=5738),2,	90	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5738) and LeaveTypeId=2 and year=2021),'Additional medicals leaves credited',
+(select ShortName from Employees where empid=5738),
+(select Department from Employees where empid=5738),
+(select Branch from Employees where empid=5738),
+(select CurrentDesignation from Employees where empid=5738),'Credit',
+(select branch_value1 from employees where empid=5738),
+(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5738) and LeaveTypeId=2 and year=2021) ),2021);
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year])  values(	(select id from Employees where empid=5757),2,	90	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5757) and LeaveTypeId=2 and year=2021),'Additional medicals leaves credited',
+(select ShortName from Employees where empid=5757),
+(select Department from Employees where empid=5757),
+(select Branch from Employees where empid=5757),
+(select CurrentDesignation from Employees where empid=5757),'Credit',
+(select branch_value1 from employees where empid=5757),
+(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5757) and LeaveTypeId=2 and year=2021) ),2021);
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year])  values(	(select id from Employees where empid=5768),2,	90	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5768) and LeaveTypeId=2 and year=2021),'Additional medicals leaves credited',
+(select ShortName from Employees where empid=5768),
+(select Department from Employees where empid=5768),
+(select Branch from Employees where empid=5768),
+(select CurrentDesignation from Employees where empid=5768),'Credit',
+(select branch_value1 from employees where empid=5768),
+(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5768) and LeaveTypeId=2 and year=2021) ),2021);
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year])  values(	(select id from Employees where empid=5770),2,	90	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5770) and LeaveTypeId=2 and year=2021),'Additional medicals leaves credited',
+(select ShortName from Employees where empid=5770),
+(select Department from Employees where empid=5770),
+(select Branch from Employees where empid=5770),
+(select CurrentDesignation from Employees where empid=5770),'Credit',
+(select branch_value1 from employees where empid=5770),
+(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5770) and LeaveTypeId=2 and year=2021) ),2021);
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year])  values(	(select id from Employees where empid=5782),2,	90	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5782) and LeaveTypeId=2 and year=2021),'Additional medicals leaves credited',
+(select ShortName from Employees where empid=5782),
+(select Department from Employees where empid=5782),
+(select Branch from Employees where empid=5782),
+(select CurrentDesignation from Employees where empid=5782),'Credit',
+(select branch_value1 from employees where empid=5782),
+(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5782) and LeaveTypeId=2 and year=2021) ),2021);
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year])  values(	(select id from Employees where empid=5794),2,	90	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5794) and LeaveTypeId=2 and year=2021),'Additional medicals leaves credited',
+(select ShortName from Employees where empid=5794),
+(select Department from Employees where empid=5794),
+(select Branch from Employees where empid=5794),
+(select CurrentDesignation from Employees where empid=5794),'Credit',
+(select branch_value1 from employees where empid=5794),
+(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5794) and LeaveTypeId=2 and year=2021) ),2021);
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year])  values(	(select id from Employees where empid=5796),2,	90	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5796) and LeaveTypeId=2 and year=2021),'Additional medicals leaves credited',
+(select ShortName from Employees where empid=5796),
+(select Department from Employees where empid=5796),
+(select Branch from Employees where empid=5796),
+(select CurrentDesignation from Employees where empid=5796),'Credit',
+(select branch_value1 from employees where empid=5796),
+(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5796) and LeaveTypeId=2 and year=2021) ),2021);
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year])  values(	(select id from Employees where empid=5802),2,	90	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5802) and LeaveTypeId=2 and year=2021),'Additional medicals leaves credited',
+(select ShortName from Employees where empid=5802),
+(select Department from Employees where empid=5802),
+(select Branch from Employees where empid=5802),
+(select CurrentDesignation from Employees where empid=5802),'Credit',
+(select branch_value1 from employees where empid=5802),
+(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5802) and LeaveTypeId=2 and year=2021) ),2021);
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year])  values(	(select id from Employees where empid=5862),2,	90	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5862) and LeaveTypeId=2 and year=2021),'Additional medicals leaves credited',
+(select ShortName from Employees where empid=5862),
+(select Department from Employees where empid=5862),
+(select Branch from Employees where empid=5862),
+(select CurrentDesignation from Employees where empid=5862),'Credit',
+(select branch_value1 from employees where empid=5862),
+(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5862) and LeaveTypeId=2 and year=2021) ),2021);
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year])  values(	(select id from Employees where empid=5866),2,	90	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5866) and LeaveTypeId=2 and year=2021),'Additional medicals leaves credited',
+(select ShortName from Employees where empid=5866),
+(select Department from Employees where empid=5866),
+(select Branch from Employees where empid=5866),
+(select CurrentDesignation from Employees where empid=5866),'Credit',
+(select branch_value1 from employees where empid=5866),
+(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5866) and LeaveTypeId=2 and year=2021) ),2021);
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year])  values(	(select id from Employees where empid=5869),2,	90	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5869) and LeaveTypeId=2 and year=2021),'Additional medicals leaves credited',
+(select ShortName from Employees where empid=5869),
+(select Department from Employees where empid=5869),
+(select Branch from Employees where empid=5869),
+(select CurrentDesignation from Employees where empid=5869),'Credit',
+(select branch_value1 from employees where empid=5869),
+(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5869) and LeaveTypeId=2 and year=2021) ),2021);
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year])  values(	(select id from Employees where empid=5882),2,	90	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5882) and LeaveTypeId=2 and year=2021),'Additional medicals leaves credited',
+(select ShortName from Employees where empid=5882),
+(select Department from Employees where empid=5882),
+(select Branch from Employees where empid=5882),
+(select CurrentDesignation from Employees where empid=5882),'Credit',
+(select branch_value1 from employees where empid=5882),
+(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5882) and LeaveTypeId=2 and year=2021) ),2021);
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year])  values(	(select id from Employees where empid=5884),2,	90	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5884) and LeaveTypeId=2 and year=2021),'Additional medicals leaves credited',
+(select ShortName from Employees where empid=5884),
+(select Department from Employees where empid=5884),
+(select Branch from Employees where empid=5884),
+(select CurrentDesignation from Employees where empid=5884),'Credit',
+(select branch_value1 from employees where empid=5884),
+(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5884) and LeaveTypeId=2 and year=2021) ),2021);
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year])  values(	(select id from Employees where empid=5888),2,	90	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5888) and LeaveTypeId=2 and year=2021),'Additional medicals leaves credited',
+(select ShortName from Employees where empid=5888),
+(select Department from Employees where empid=5888),
+(select Branch from Employees where empid=5888),
+(select CurrentDesignation from Employees where empid=5888),'Credit',
+(select branch_value1 from employees where empid=5888),
+(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5888) and LeaveTypeId=2 and year=2021) ),2021);
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year])  values(	(select id from Employees where empid=5889),2,	90	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5889) and LeaveTypeId=2 and year=2021),'Additional medicals leaves credited',
+(select ShortName from Employees where empid=5889),
+(select Department from Employees where empid=5889),
+(select Branch from Employees where empid=5889),
+(select CurrentDesignation from Employees where empid=5889),'Credit',
+(select branch_value1 from employees where empid=5889),
+(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5889) and LeaveTypeId=2 and year=2021) ),2021);
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year])  values(	(select id from Employees where empid=5908),2,	90	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5908) and LeaveTypeId=2 and year=2021),'Additional medicals leaves credited',
+(select ShortName from Employees where empid=5908),
+(select Department from Employees where empid=5908),
+(select Branch from Employees where empid=5908),
+(select CurrentDesignation from Employees where empid=5908),'Credit',
+(select branch_value1 from employees where empid=5908),
+(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5908) and LeaveTypeId=2 and year=2021) ),2021);
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year])  values(	(select id from Employees where empid=5909),2,	90	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5909) and LeaveTypeId=2 and year=2021),'Additional medicals leaves credited',
+(select ShortName from Employees where empid=5909),
+(select Department from Employees where empid=5909),
+(select Branch from Employees where empid=5909),
+(select CurrentDesignation from Employees where empid=5909),'Credit',
+(select branch_value1 from employees where empid=5909),
+(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5909) and LeaveTypeId=2 and year=2021) ),2021);
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year])  values(	(select id from Employees where empid=5910),2,	90	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5910) and LeaveTypeId=2 and year=2021),'Additional medicals leaves credited',
+(select ShortName from Employees where empid=5910),
+(select Department from Employees where empid=5910),
+(select Branch from Employees where empid=5910),
+(select CurrentDesignation from Employees where empid=5910),'Credit',
+(select branch_value1 from employees where empid=5910),
+(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5910) and LeaveTypeId=2 and year=2021) ),2021);
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year])  values(	(select id from Employees where empid=6132),2,	90	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=6132) and LeaveTypeId=2 and year=2021),'Additional medicals leaves credited',
+(select ShortName from Employees where empid=6132),
+(select Department from Employees where empid=6132),
+(select Branch from Employees where empid=6132),
+(select CurrentDesignation from Employees where empid=6132),'Credit',
+(select branch_value1 from employees where empid=6132),
+(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=6132) and LeaveTypeId=2 and year=2021) ),2021);
+
+
+
+
+
+--------Update script for Medical Leave
+
+
+
+update EmpLeaveBalance set LeaveBalance=(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=175 and LeaveTypeId=2) and year=2021)) where LeaveTypeId=2 and empid=(select id from employees where empid=175) and year=2021;
+
+update EmpLeaveBalance set LeaveBalance=(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=184 and LeaveTypeId=2) and year=2021)) where LeaveTypeId=2 and empid=(select id from employees where empid=184) and year=2021;
+
+update EmpLeaveBalance set LeaveBalance=(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=233 and LeaveTypeId=2) and year=2021)) where LeaveTypeId=2 and empid=(select id from employees where empid=233) and year=2021;
+
+update EmpLeaveBalance set LeaveBalance=(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=250 and LeaveTypeId=2) and year=2021)) where LeaveTypeId=2 and empid=(select id from employees where empid=250) and year=2021;
+
+update EmpLeaveBalance set LeaveBalance=(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=266 and LeaveTypeId=2) and year=2021)) where LeaveTypeId=2 and empid=(select id from employees where empid=266) and year=2021;
+
+update EmpLeaveBalance set LeaveBalance=(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=271 and LeaveTypeId=2) and year=2021)) where LeaveTypeId=2 and empid=(select id from employees where empid=271) and year=2021;
+
+update EmpLeaveBalance set LeaveBalance=(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=288 and LeaveTypeId=2) and year=2021)) where LeaveTypeId=2 and empid=(select id from employees where empid=288) and year=2021;
+
+update EmpLeaveBalance set LeaveBalance=(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=301 and LeaveTypeId=2) and year=2021)) where LeaveTypeId=2 and empid=(select id from employees where empid=301) and year=2021;
+
+update EmpLeaveBalance set LeaveBalance=(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=303 and LeaveTypeId=2) and year=2021)) where LeaveTypeId=2 and empid=(select id from employees where empid=303) and year=2021;
+
+update EmpLeaveBalance set LeaveBalance=(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=304 and LeaveTypeId=2) and year=2021)) where LeaveTypeId=2 and empid=(select id from employees where empid=304) and year=2021;
+
+update EmpLeaveBalance set LeaveBalance=(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=308 and LeaveTypeId=2) and year=2021)) where LeaveTypeId=2 and empid=(select id from employees where empid=308) and year=2021;
+
+update EmpLeaveBalance set LeaveBalance=(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=319 and LeaveTypeId=2) and year=2021)) where LeaveTypeId=2 and empid=(select id from employees where empid=319) and year=2021;
+
+update EmpLeaveBalance set LeaveBalance=(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=331 and LeaveTypeId=2) and year=2021)) where LeaveTypeId=2 and empid=(select id from employees where empid=331) and year=2021;
+
+update EmpLeaveBalance set LeaveBalance=(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=358 and LeaveTypeId=2) and year=2021)) where LeaveTypeId=2 and empid=(select id from employees where empid=358) and year=2021;
+
+update EmpLeaveBalance set LeaveBalance=(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=359 and LeaveTypeId=2) and year=2021)) where LeaveTypeId=2 and empid=(select id from employees where empid=359) and year=2021;
+
+update EmpLeaveBalance set LeaveBalance=(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=361 and LeaveTypeId=2) and year=2021)) where LeaveTypeId=2 and empid=(select id from employees where empid=361) and year=2021;
+
+update EmpLeaveBalance set LeaveBalance=(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=363 and LeaveTypeId=2) and year=2021)) where LeaveTypeId=2 and empid=(select id from employees where empid=363) and year=2021;
+
+update EmpLeaveBalance set LeaveBalance=(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=365 and LeaveTypeId=2) and year=2021)) where LeaveTypeId=2 and empid=(select id from employees where empid=365) and year=2021;
+
+update EmpLeaveBalance set LeaveBalance=(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=371 and LeaveTypeId=2) and year=2021)) where LeaveTypeId=2 and empid=(select id from employees where empid=371) and year=2021;
+
+update EmpLeaveBalance set LeaveBalance=(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=373 and LeaveTypeId=2) and year=2021)) where LeaveTypeId=2 and empid=(select id from employees where empid=373) and year=2021;
+
+update EmpLeaveBalance set LeaveBalance=(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=374 and LeaveTypeId=2) and year=2021)) where LeaveTypeId=2 and empid=(select id from employees where empid=374) and year=2021;
+
+update EmpLeaveBalance set LeaveBalance=(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=377 and LeaveTypeId=2) and year=2021)) where LeaveTypeId=2 and empid=(select id from employees where empid=377) and year=2021;
+
+update EmpLeaveBalance set LeaveBalance=(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5660 and LeaveTypeId=2) and year=2021)) where LeaveTypeId=2 and empid=(select id from employees where empid=5660) and year=2021;
+
+update EmpLeaveBalance set LeaveBalance=(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5738 and LeaveTypeId=2) and year=2021)) where LeaveTypeId=2 and empid=(select id from employees where empid=5738) and year=2021;
+
+update EmpLeaveBalance set LeaveBalance=(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5757 and LeaveTypeId=2) and year=2021)) where LeaveTypeId=2 and empid=(select id from employees where empid=5757) and year=2021;
+
+update EmpLeaveBalance set LeaveBalance=(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5768 and LeaveTypeId=2) and year=2021)) where LeaveTypeId=2 and empid=(select id from employees where empid=5768) and year=2021;
+
+update EmpLeaveBalance set LeaveBalance=(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5770 and LeaveTypeId=2) and year=2021)) where LeaveTypeId=2 and empid=(select id from employees where empid=5770) and year=2021;
+
+update EmpLeaveBalance set LeaveBalance=(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5782 and LeaveTypeId=2) and year=2021)) where LeaveTypeId=2 and empid=(select id from employees where empid=5782) and year=2021;
+
+update EmpLeaveBalance set LeaveBalance=(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5794 and LeaveTypeId=2) and year=2021)) where LeaveTypeId=2 and empid=(select id from employees where empid=5794) and year=2021;
+
+update EmpLeaveBalance set LeaveBalance=(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5796 and LeaveTypeId=2) and year=2021)) where LeaveTypeId=2 and empid=(select id from employees where empid=5796) and year=2021;
+
+update EmpLeaveBalance set LeaveBalance=(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5802 and LeaveTypeId=2) and year=2021)) where LeaveTypeId=2 and empid=(select id from employees where empid=5802) and year=2021;
+
+update EmpLeaveBalance set LeaveBalance=(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5862 and LeaveTypeId=2) and year=2021)) where LeaveTypeId=2 and empid=(select id from employees where empid=5862) and year=2021;
+
+update EmpLeaveBalance set LeaveBalance=(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5866 and LeaveTypeId=2) and year=2021)) where LeaveTypeId=2 and empid=(select id from employees where empid=5866) and year=2021;
+
+update EmpLeaveBalance set LeaveBalance=(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5869 and LeaveTypeId=2) and year=2021)) where LeaveTypeId=2 and empid=(select id from employees where empid=5869) and year=2021;
+
+update EmpLeaveBalance set LeaveBalance=(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5882 and LeaveTypeId=2) and year=2021)) where LeaveTypeId=2 and empid=(select id from employees where empid=5882) and year=2021;
+
+update EmpLeaveBalance set LeaveBalance=(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5884 and LeaveTypeId=2) and year=2021)) where LeaveTypeId=2 and empid=(select id from employees where empid=5884) and year=2021;
+
+update EmpLeaveBalance set LeaveBalance=(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5888 and LeaveTypeId=2) and year=2021)) where LeaveTypeId=2 and empid=(select id from employees where empid=5888) and year=2021;
+
+update EmpLeaveBalance set LeaveBalance=(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5889 and LeaveTypeId=2) and year=2021)) where LeaveTypeId=2 and empid=(select id from employees where empid=5889) and year=2021;
+
+update EmpLeaveBalance set LeaveBalance=(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5908 and LeaveTypeId=2) and year=2021)) where LeaveTypeId=2 and empid=(select id from employees where empid=5908) and year=2021;
+
+update EmpLeaveBalance set LeaveBalance=(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5909 and LeaveTypeId=2) and year=2021)) where LeaveTypeId=2 and empid=(select id from employees where empid=5909) and year=2021;
+
+update EmpLeaveBalance set LeaveBalance=(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5910 and LeaveTypeId=2) and year=2021)) where LeaveTypeId=2 and empid=(select id from employees where empid=5910) and year=2021;
+
+update EmpLeaveBalance set LeaveBalance=(90	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=6132 and LeaveTypeId=2) and year=2021)) where LeaveTypeId=2 and empid=(select id from employees where empid=6132) and year=2021;
+
+
+

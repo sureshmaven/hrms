@@ -1,0 +1,592 @@
+﻿@model Entities.Leaves
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var rolepages = TempData["RolePages"].ToString();
+    ViewBag.RolePages = TempData["RolePages"];
+    var reportTitle = ViewBag.ReportTitle;
+    var ReportPdfSize = ViewBag.PdfSize;
+    var ReportpageSize = ViewBag.pageSize;
+    var PdfExportColumns = ViewBag.ExportColumns;
+    var dataUrl = ViewBag.DataUrl;
+    var reportFilters = ViewBag.ReportFilters;
+    var reportFiltersTwo = ViewBag.ReportFiltersTwo;
+    var reportFiltersThree = ViewBag.ReportFiltersThree;
+    var searchBtn = ViewBag.SearchBtn;
+}
+@{
+    var message = TempData["AlertMessage"] ?? string.Empty;
+}
+
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade in active">
+                    <div class="page_st">
+                        <div class="page">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="main_heading">
+                                    <h1>Report List </h1>
+                                    <div class="report-list">
+                                        @{
+                                            <ul>
+                                                @if (rolepages.Contains("RPBRA"))
+                                                {
+                                                    <li class='@(reportTitle == "Branches List" ? "active" : "")'><a href=@Url.Action("Index", "AllReports")>Branches</a></li>}
+                                                @if (rolepages.Contains("RPBRC"))
+                                                {
+                                                    <li class='@(reportTitle == "Branches Contacts List" ? "active" : "")'><a href=@Url.Action("BranchContacts", "AllReports")>Branch Contacts</a></li>}
+                                                @if (rolepages.Contains("RPCDR"))
+                                                {
+                                                    @*<li><a href=@Url.Action("CadreReport", "Reports")>Cadre</a></li>*@
+                                                    <li class='@(reportTitle == "Cadre List" ? "active" : "")'><a href=@Url.Action("CadreList", "AllReports")>Cadre</a></li>
+                                                }
+                                                @if (rolepages.Contains("RPCAT"))
+                                                {
+                                                    <li><a href=@Url.Action("CategoryReport", "Reports")>Category</a></li>}
+                                                @if (rolepages.Contains("RPDOB"))
+                                                {
+                                                    <li class='@(reportTitle == "DOB List" ? "active" : "")'><a href=@Url.Action("EmpDob", "AllReports")>DOB</a></li>}
+                                                @if (rolepages.Contains("RPEMP"))
+
+                                                {
+                                                    <li><a href=@Url.Action("EmployeeList", "Register")>Employees</a></li>}
+                                                @if (rolepages.Contains("RPEAL"))
+                                                {
+                                                    <li><a href=@Url.Action("FutureLeave", "Reports")>Future Applied Leaves</a></li>}
+                                                @if (rolepages.Contains("RPHOF"))
+                                                {
+                                                    <li><a href=@Url.Action("DepartmentReport", "Reports")>Head Office</a></li>}
+                                                @if (rolepages.Contains("RPHOA"))
+                                                {
+                                                    <li class='@(reportTitle == "Head Office Attender List" ? "active" : "")'><a href=@Url.Action("HeadOfcAttenders", "AllReports")>Head Office Attenders</a></li>}
+                                                @if (rolepages.Contains("RPKOF"))
+                                                {
+                                                    <li class='@(reportTitle == "Work Profile Of Key Officials" ? "active" : "")'><a href=@Url.Action("KeyOfficials", "AllReports")>Key Officials</a></li>}
+                                                @if (rolepages.Contains("RPLTC"))
+                                                {
+                                                    <li><a href=@Url.Action("LTCview", "Reports")>LTC</a></li>}
+                                                @if (rolepages.Contains("RPLEV"))
+                                                {
+                                                    <li><a href=@Url.Action("LeaveSearch", "MyLeaves")>Leaves</a></li>}
+                                                @if (rolepages.Contains("RPLLE"))
+                                                {
+                                                    <li><a href=@Url.Action("LeaveDays", "Reports")>Long Leaves</a></li>}
+                                                @if (rolepages.Contains("RPLFA"))
+                                                {
+                                                    <li class='@(reportTitle == "Leave Approval List" ? "active" : "")'><a href=@Url.Action("LeavesCarryForward", "AllReports")>Leaves Forwarded/Approved</a></li>}
+                                                @if (rolepages.Contains("RPLAL"))
+                                                {
+                                                    <li><a href=@Url.Action("LateLeave", "Reports")>Late Applied Leaves</a></li>}
+                                                @if (rolepages.Contains("RPLCD"))
+                                                {
+                                                    <li><a href=@Url.Action("Cancelleavereport", "Reports")>Leaves Cancelled</a></li>}
+                                                @if (rolepages.Contains("RPCMP"))
+                                                {
+                                                    <li><a href=@Url.Action("MonthwiseCl", "Reports")>Month Wise CL/ML/PL</a></li>}
+                                                @if (rolepages.Contains("RPMWL"))
+                                                {
+                                                    <li class='@(reportTitle == "Month Wise Leaves" ? "active" : "")'><a href=@Url.Action("MonthWiseLeaves", "AllReports")>Month Wise Leaves</a></li>}
+                                                @if (rolepages.Contains("RPMWO"))
+                                                {
+                                                    <li class='@(reportTitle == "Month Wise OD" ? "active" : "")'><a href=@Url.Action("MonthWiseOD", "AllReports")>Month Wise OD</a></li>}
+                                                @if (rolepages.Contains("RPMTT"))
+                                                {
+                                                    <li class='@(reportTitle == "Month Wise Temporary Transfer" ? "active" : "")'><a href=@Url.Action("MonthWiseTemporaryTransfer", "AllReports")>Month Wise Temporary Transfer</a></li>}
+                                                @if (rolepages.Contains("RPODD"))
+                                                {
+                                                    <li><a href=@Url.Action("History", "Duty")>OD</a></li>}
+                                                @if (rolepages.Contains("RPPTS"))
+                                                {
+                                                    <li><a href=@Url.Action("Perm", "Reports")>Permanent Transfers</a></li>}
+                                                @if (rolepages.Contains("RPPRO"))
+                                                {
+                                                    <li class='@(reportTitle == "Transfer List" ? "active" : "")'><a href=@Url.Action("EmpPromotions", "AllReports")>Promotion</a></li>}
+                                                @if (rolepages.Contains("RPSPL"))
+                                                {
+                                                    <li><a href=@Url.Action("Plreport", "Reports")>PL</a></li>}
+                                                @if (rolepages.Contains("RPRET"))
+                                                {
+                                                    <li><a href=@Url.Action("RetirementReport", "Reports")>Retirements</a></li>}
+                                                @if (rolepages.Contains("RPSEN"))
+                                                {
+                                                    <li class='@(reportTitle == "Seniorty List" ? "active" : "")'><a href=@Url.Action("Seniorty", "AllReports")>Seniority</a></li>}
+                                                @if (rolepages.Contains("RPSMA"))
+                                                {
+                                                    <li class='@(reportTitle == "StaffMaster List" ? "active" : "")'><a href=@Url.Action("StaffMaster", "AllReports")>Staff Master</a></li>}
+                                                @if (rolepages.Contains("RPTXH"))
+                                                {
+                                                    <li class='@(reportTitle == "Transaction History" ? "active" : "")'><a href=@Url.Action("TxHistory", "AllReports")>TX History</a></li>}
+                                                @if (rolepages.Contains("RPTTS"))
+                                                {
+                                                    <li><a href=@Url.Action("Temp", "Reports")>Temporary Transfers</a></li>}
+                                                @if (rolepages.Contains("RPTMT"))
+                                                {
+                                                    <li class='@(reportTitle == "Top ManagementList List" ? "active" : "")'><a href=@Url.Action("Topmanagement", "AllReports")>TopManagement</a></li>}
+                                                @if (rolepages.Contains("RPWDY"))
+                                                {
+                                                    <li class='@(reportTitle == "Work Diary" ? "active" : "")'><a href=@Url.Action("WorkDiary", "AllReports")>WorkDiary </a></li>}
+                                                @if (rolepages.Contains("RPYLB"))
+                                                {
+                                                    @*<li><a href=@Url.Action("YearWiseLeaveBalanceReport", "Reports")>YearWiseLeaveBalance</a></li>*@
+                                                    <li class='@(reportTitle == "Year Wise Leave Balance" ? "active" : "")'><a href=@Url.Action("LeavesCreditDebit", "AllReports")>YearWiseLeaveBalance</a></li>}
+
+                                            </ul>
+                                        }
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                                <div class="main_heading">
+                                    <h1>Month Wise Leaves</h1>
+
+                                    <div class="branch_search form-horizontal">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label label_left">Month:<span class="mandatory">*</span></label>
+                                                <div class="col-sm-8">
+                                                    @Html.DropDownList("Month", new[] {
+                                                                                                                                            new SelectListItem() {Text = "January",Value = "1"},
+                                                                                                                                            new SelectListItem() {Text = "February",Value = "2" },
+                                                                                                                                            new SelectListItem() {Text = "March",Value = "3" },
+                                                                                                                                            new SelectListItem() {Text = "April",Value = "4" },
+                                                                                                                                            new SelectListItem() {Text = "May",Value = "5" },
+                                                                                                                                            new SelectListItem() {Text = "June",Value = "6" },
+                                                                                                                                            new SelectListItem() {Text = "July",Value = "7" },
+                                                                                                                                            new SelectListItem() {Text = "August",Value = "8" },
+                                                                                                                                            new SelectListItem() {Text = "September",Value = "9" },
+                                                                                                                                            new SelectListItem() {Text = "October",Value = "10" },
+                                                                                                                                            new SelectListItem() {Text = "November",Value = "11" },
+                                                                                                                                            new SelectListItem() {Text = "December",Value = "12" },
+                                                                                                                                            }, "Select Month", new { @class = "form-control" })
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <button type="button" onclick="return dob();" id="btnGet" class="btn btn-primary btn-sm pull-right">Search</button>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div id="grid">
+                                        </div>
+                                    </div>
+                                    <br /><br /><br /><br />
+                                    <br /><br /><br /><br />
+                                    <div style='margin-top: 20px; '>
+                                        <div id="div1" style='float: left; margin: 10px 0 0 16px;'>
+                                            <input type="button" value="Export to Excel" id='excelExport' />
+                                        </div>
+                                        <div style='margin-top: 20px; '>
+                                            <div id="div1" style='float: left; margin: 10px 0 0 16px;'>
+                                                <input type="button" class="jqx-rc-all jqx-button jqx-widget jqx-fill-state-normal" value="Download PDF" id='pdfempleaves' onclick='downloadPDF();' />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var message = '@message';
+    if (message) alert(message);
+</script>
+<script type="text/javascript">
+            var screenTheme = 'darkblue';
+            var popupTheme = 'highcontrast';
+            var otherTheme = 'arctic';
+
+            var localizationObject = {
+                filterstringcomparisonoperators: ['contains', 'does not contain'],  /* filter String Comparison Operators    */
+                filternumericcomparisonoperators: ['less than', 'greater than'],    /* filter Numeric Comparison Operators  */
+                filterdatecomparisonoperators: ['less than', 'greater than'],       /* filter Date comparison operators.  */
+                filterbooleancomparisonoperators: ['equal', 'not equal']            /* filter bool comparison operators.*/
+            };
+            var stringcomparisonoperators = ['CONTAINS', 'DOES_NOT_CONTAIN'];
+            var numericcomparisonoperators = ['LESS_THAN', 'GREATER_THAN'];
+            var datecomparisonoperators = ['LESS_THAN', 'GREATER_THAN'];
+            var booleancomparisonoperators = ['EQUAL', 'NOT_EQUAL'];
+            $(document).ready(function () {
+                // prepare the data
+                var source =
+                    {
+                        datatype: "json",
+                        datafields: [
+                            { name: 'Id', type: 'int' },
+                            { name: 'SNO', type: 'int' },
+                            { name: 'EmpId', type: 'string' },
+                            { name: 'ShortName', type: 'string' },
+                            { name: 'designation', type: 'string' },
+                            { name: 'UpdatedDate', type: 'date' },
+                            { name: 'AppliedTime', type: 'string' },
+                            { name: 'ApprovedTime', type: 'string' },
+                            { name: 'Deptbranch', type: 'string' },
+                            { name: 'StartDate', type: 'string' },
+                            { name: 'EndDate', type: 'string' },
+                            { name: 'diffdays', type: 'double' },
+                            { name: 'Code', type: 'string' },
+                            { name: 'Status', type: 'string' },
+                            { name: 'Subject', type: 'string' },
+                            { name: 'Reason', type: 'string' },
+                            { name: 'Action', type: 'string' },
+                        ],
+                        async: false,
+                        url: '/Reports/MonthWiseLeaveView',
+                        data: {
+                            featureClass: "P",
+                            style: "full",
+                            maxRows: 2,
+                            username: "jqwidgets"
+                        }
+                    };
+                var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties, rowdata) {
+                    if (value == "Pending") {
+                        return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #FFA500;">' + value + '</span>';
+                    }
+                    else if (value == "Forwarded") {
+                        return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #33b5e5;">' + value + '</span>';
+                    }
+                    else if (value == "Denied") {
+                        return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #8B008B;">' + value + '</span>';
+                    }
+                    else if (value == "Approved") {
+                        return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #00C851;">' + value + '</span>';
+                    }
+                    else {
+                        return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #ff4444;">' + value + '</span>';
+                    }
+                }
+                var dataAdapter = new $.jqx.dataAdapter(source,
+                    {
+                        formatData: function (data) {
+
+                            data.EmpId = $("#searchField").val();
+
+                            return data;
+                        }
+                    }
+                );
+
+                var editrowindex = -1;
+                var delrowindex = -1;
+                // initialize jqxGrid
+                $("#grid").jqxGrid(
+                    {
+                        width: '100%',
+                        source: dataAdapter,
+                        theme: otherTheme,
+                        autoheight: true,
+                        sortable: true,
+                        pageable: true,
+                        columnsResize: true,
+                        altRows: true,
+                        filterable: true,
+                        autoshowfiltericon: true,
+                        ready: function () {
+                            $("#grid").jqxGrid('localizestrings', localizationObject);
+                        },
+                        updatefilterconditions: function (type, defaultconditions) {
+                            switch (type) {
+                                case 'stringfilter':
+                                    return stringcomparisonoperators;
+                                case 'numericfilter':
+                                    return numericcomparisonoperators;
+                                case 'datefilter':
+                                    return datecomparisonoperators;
+                                case 'booleanfilter':
+                                    return booleancomparisonoperators;
+                            }
+                        },
+                        updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                            filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                            var index1 = 0;
+                            var index2 = 0;
+                            if (columnfilter != null) {
+                                var filter1 = columnfilter.getfilterat(0);
+                                var filter2 = columnfilter.getfilterat(1);
+                                if (filter1) {
+                                    index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                                    var value1 = filter1.filtervalue;
+                                    filterinputfield1.val(value1);
+                                }
+                                if (filter2) {
+                                    index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                                    var value2 = filter2.filtervalue;
+                                    filterinputfield2.val(value2);
+                                }
+                            }
+                            filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                            filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                        },
+                        columns: [
+                            {
+                                text: 'SNO', sortable: false, filterable: false, editable: false,
+                                groupable: false, draggable: false, resizable: false,exportable : false,
+                                datafield: '', columntype: 'number', width: 50,
+                                cellsrenderer: function (row, column, value) {
+                                    return "<div style='margin:4px;'>" + (value + 1) + "</div>";
+                                }
+                            },
+                            { text: "Emp Code", datafield: "EmpId", editable: false, width: 80 },
+                            { text: "Employee Name", datafield: "ShortName", editable: false, width: 170 },
+                            { text: "Department/Branch", datafield: "Deptbranch", width: 160, editable: false },
+                            { text: "Designation", datafield: "designation", editable: false, width: 115 },
+                            { text: "Applied Date", datafield: "UpdatedDate", editable: false, width: 90, cellsformat: 'dd/MM/yyyy' },
+                            { text: "Applied Time", datafield: "AppliedTime", editable: false, width: 110 },
+                            { text: "Start Date", datafield: "StartDate", editable: false, width: 88, cellsformat: 'dd/MM/yyyy' },
+                            { text: "End Date", datafield: "EndDate", editable: false, width: 88, cellsformat: 'dd/MM/yyyy' },
+                            { text: "LeaveDays", datafield: "diffdays", editable: false, width: 90 },
+                            { text: "Subject", datafield: "Subject", editable: false, width: 200 },
+                            { text: "Reason", datafield: "Reason", editable: false, width: 200 },
+                            { text: "Leave Type", datafield: "Code", editable: false, width: 80 },
+                            { text: "Status", datafield: "Status", cellsrenderer: cellsrenderer, width: 80 },
+
+                        ], columngroups:
+                        [
+                            { text: 'Action', align: 'center', name: 'Actions', width: 160 },
+                        ],
+
+                        showtoolbar: true,
+                        rendertoolbar: function (toolbar) {
+                            var me = this;
+                            var container = $("<div style='margin: 5px;'></div>");
+                            var span = $("<span style='float: left; margin-top: 5px; margin-right: 4px;'>Search: </span>");
+                            var input = $("<input class='jqx-input jqx-widget-content jqx-rc-all' id='searchField' type='text' style='height: 23px; float: left; width: 223px;' />");
+                            //toolbar.append(container);
+                            //container.append(span);
+                            //container.append(input);
+                            if (otherTheme != "") {
+                                input.addClass('jqx-widget-content-' + otherTheme);
+                                input.addClass('jqx-rc-all-' + otherTheme);
+                            }
+                            var oldVal = "";
+                            input.on('keydown', function () {
+                                if (input.val().length >= 2) {
+                                    if (me.timer) {
+                                        clearTimeout(me.timer);
+                                    }
+                                    if (oldVal != input.val()) {
+                                        me.timer = setTimeout(function () {
+                                            $("#grid").jqxGrid('updatebounddata');
+                                        }, 1000);
+                                        oldVal = input.val();
+                                    }
+                                }
+                                else {
+                                    $("#grid").jqxGrid('updatebounddata');
+                                }
+                            });
+                        }
+
+                    });
+
+                $("#excelExport").jqxButton();
+
+                $("#excelExport").click(function () {
+                    $("#grid").jqxGrid('exportdata', 'xls', 'MonthWiseLeave');
+                });
+
+            });
+</script>
+<script type="text/javascript">
+            /*------ Button click script---------*/
+
+            $("#btnGet").click(function () {
+                var startdate = $("#SDate1").val();
+                var enddate = $("#EDate1").val();
+                var leavetype = $("#leaveid1").val();
+                var lstatus = $("#leaveapplied").val();
+                var status = $("#Status").val();
+                var branch = $("#Month").val();
+                // prepare the data
+                var source =
+                    {
+                        type: "Post",
+                        datatype: "json",
+                        datafields: [
+                            { name: 'Id', type: 'int' },
+                            { name: 'SNO', type: 'int' },
+                            { name: 'EmpId', type: 'string' },
+                            { name: 'ShortName', type: 'string' },
+                            { name: 'designation', type: 'string' },
+                            { name: 'UpdatedDate', type: 'date' },
+                            { name: 'AppliedTime', type: 'string' },
+                            { name: 'ApprovedTime', type: 'string' },
+                            { name: 'Deptbranch', type: 'string' },
+                            { name: 'StartDate', type: 'string' },
+                            { name: 'EndDate', type: 'string' },
+                            { name: 'diffdays', type: 'double' },
+                            { name: 'Code', type: 'string' },
+                            { name: 'Status', type: 'string' },
+                            { name: 'Subject', type: 'string' },
+                            { name: 'Reason', type: 'string' },
+                            { name: 'Action', type: 'string' },
+                        ],
+                        async: false,
+                        url: "/Reports/MonthWiseLeaveViews?branch=" + branch,
+                        data: {
+                            featureClass: "P",
+                            style: "full",
+                            username: "jqwidgets",
+                            SDate: startdate,
+                            EDate: enddate,
+                            leaveid: leavetype,
+                            lApplied: lstatus,
+                            Status: status,
+
+
+                        }
+                    };
+                var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties, rowdata) {
+                    if (value == "Pending") {
+                        return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #FFA500;">' + value + '</span>';
+                    }
+                    else if (value == "Forwarded") {
+                        return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #33b5e5;">' + value + '</span>';
+                    }
+                    else if (value == "Approved") {
+                        return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #00C851;">' + value + '</span>';
+                    }
+                    else if (value == "Denied") {
+                        return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #8B008B;">' + value + '</span>';
+                    }
+                    else {
+                        return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #ff4444;">' + value + '</span>';
+                    }
+                }
+                var dataAdapter = new $.jqx.dataAdapter(source,
+                    {
+                        formatData: function (data) {
+                            data.ProductName = $("#searchField").val();
+                            return data;
+                        }
+                    }
+                );
+                // initialize jqxGrid
+                var editrowindex = -1;
+                var delrowindex = -1;
+                $("#grid").jqxGrid(
+                    {
+                        width: '99%',
+                        source: dataAdapter,
+                        theme: otherTheme,// for theme refernce go to Layout.cshtml
+                        autoheight: true,
+                        sortable: true,
+                        pageable: true,
+                        pagesize: 10,
+                        columnsResize: true,
+                        altRows: true,
+                        filterable: true,
+                        autoshowfiltericon: true,
+
+                        ready: function () {
+                            $("#grid").jqxGrid('localizestrings', localizationObject);
+                        },
+                        updatefilterconditions: function (type, defaultconditions) {
+                            switch (type) {
+                                case 'stringfilter':
+                                    return stringcomparisonoperators;
+                                case 'numericfilter':
+                                    return numericcomparisonoperators;
+                                case 'datefilter':
+                                    return datecomparisonoperators;
+                                case 'booleanfilter':
+                                    return booleancomparisonoperators;
+                            }
+                        },
+                        updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                            filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                            var index1 = 0;
+                            var index2 = 0;
+                            if (columnfilter != null) {
+                                var filter1 = columnfilter.getfilterat(0);
+                                var filter2 = columnfilter.getfilterat(1);
+                                if (filter1) {
+                                    index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                                    var value1 = filter1.filtervalue;
+                                    filterinputfield1.val(value1);
+                                }
+                                if (filter2) {
+                                    index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                                    var value2 = filter2.filtervalue;
+                                    filterinputfield2.val(value2);
+                                }
+                            }
+                            filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                            filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                        },
+                        columns: [
+                            {
+                                text: 'SNO', sortable: false, filterable: false, editable: false,
+                                groupable: false, draggable: false, exportable: false, resizable: false,
+                                datafield: '', columntype: 'number', width: 35,
+                                cellsrenderer: function (row, column, value) {
+                                    return "<div style='margin:4px;'>" + (value + 1) + "</div>";
+                                }
+                            },
+                            { text: "Emp Code", datafield: "EmpId", editable: false, width: 80 },
+                            { text: "Employee Name", datafield: "ShortName", editable: false, width: 170 },
+                            { text: "Department/Branch", datafield: "Deptbranch", width: 160 },
+                            { text: "Designation", datafield: "designation", editable: false, width: 115 },
+                            { text: "Applied Date", datafield: "UpdatedDate", editable: false, width: 90, cellsformat: 'dd/MM/yyyy' },
+                            { text: "Applied Time", datafield: "AppliedTime", editable: false, width: 110 },
+                            { text: "Start Date", datafield: "StartDate", editable: false, width: 88, cellsformat: 'dd/MM/yyyy' },
+                            { text: "End Date", datafield: "EndDate", editable: false, width: 88, cellsformat: 'dd/MM/yyyy' },
+                            { text: "LeaveDays", datafield: "diffdays", editable: false, width: 90 },
+                            { text: "Subject", datafield: "Subject", editable: false, width: 200 },
+                            { text: "Reason", datafield: "Reason", editable: false, width: 200 },
+                            { text: "Leave Type", datafield: "Code", editable: false, width: 80 },
+                            { text: "Status", datafield: "Status", cellsrenderer: cellsrenderer, width: 80, editable: false },
+                        ],
+                        columngroups:
+                        [
+                            { text: 'Action', align: 'center', name: 'Actions', width: 160 },
+                        ],
+
+                    });
+                $("#excelExport").jqxButton();
+                $("#excelExport").click(function () {
+                    $("#grid").jqxGrid('exportdata', 'xls', 'MonthWiseLeave');
+                });
+            });
+</script>
+<script>
+        document.getElementById("a6").className = "active";
+</script>
+<script type="text/javascript">
+    function downloadPDF() {
+        var selectedMonth = $("#Month").val();
+        
+        // If no month is selected, use current month as default
+        if (!selectedMonth || selectedMonth === "") {
+            selectedMonth = new Date().getMonth() + 1; // JavaScript months are 0-based
+        }
+        
+        // Set the session variable by calling the controller method
+        $.ajax({
+            type: "POST",
+            url: "/Reports/MonthWiseLeaveViews",
+            data: { branch: selectedMonth },
+            success: function() {
+                // After setting the session, redirect to PDF download
+                window.location = "@Url.Action("MonthwiseLeavePDF", "Reports")";
+            },
+            error: function() {
+                // If AJAX fails, still try to download PDF (it will use current month as default)
+                window.location = "@Url.Action("MonthwiseLeavePDF", "Reports")";
+            }
+        });
+    }
+</script>
+<script type="text/javascript">
+        $(document).ready(function () {
+            $("#grid1").show();
+            var property = document.getElementById("Todaybtn");
+            property.style.backgroundColor = "#e6a74e"
+        });
+</script>

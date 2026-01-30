@@ -1,0 +1,252 @@
+--Apply CL to Name : THOKALA SOWMYA, Empid  : 6474 on 03-03-2021 and 26-03-2021
+--Reason : "Automatic Casual leaves Accruals"
+
+---- For Leaves Credit/Debit
+
+declare @Empid int;
+declare @Leavetypeid int;
+declare @Numberofleaves_to_Credit int;
+declare @Numberofleaves_to_Debit int;
+declare @UpdatedBy_EmployeeId int;
+declare @Previous_LeaveBalance int;
+declare @Comments varchar(20);
+declare @Type varchar(20);
+declare @TotalBalance int;
+
+set @Empid=6474;
+set @Leavetypeid=1;
+set @Numberofleaves_to_Credit=2;
+set @Numberofleaves_to_Debit=0;
+set @UpdatedBy_EmployeeId=123456;
+set @Previous_LeaveBalance=((select leavebalance from EmpLeaveBalance where empid =(select id from employees 
+where empid=@Empid) and leavetypeid=@LeaveTypeId and year=2021)-2);
+set @Comments='Leaves Credited';
+set @Type='Credit'
+set @TotalBalance=((select leavebalance from EmpLeaveBalance where empid =(select id from employees 
+where empid= @Empid) and leavetypeid=@Leavetypeid and year=2021)+2);
+
+
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=@Empid),
+@Leavetypeid,@Numberofleaves_to_Credit,
+@Numberofleaves_to_Debit,@UpdatedBy_EmployeeId,
+GETDATE(),@Previous_LeaveBalance,@Comments,
+(select ShortName from Employees where empid=@empid),
+(select Department from Employees where empid=@empid),
+(select Branch from Employees where empid=@empid),
+(select CurrentDesignation from Employees where empid=@empid),@Type,
+(select branch_value1 from employees where empid=@empid),@TotalBalance,2021)
+
+
+------- To update Leavebalances
+
+declare @Empid int;
+declare @LeaveTypeId int;
+declare @LeaveBalance int;
+
+set @Empid=6474;
+set @LeaveTypeId=1;
+set @Leavebalance=((select leavebalance from EmpLeaveBalance where empid =(select id from employees 
+where empid=@Empid) and leavetypeid=@LeaveTypeId and year=2021)+2);
+
+update EmpLeaveBalance set LeaveBalance=@Leavebalance where LeaveTypeId=@LeaveTypeId and empid=
+(select id from employees where empid=@Empid) and year=2021;
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+--Apply CL to Name : MUTYALA SADHANA , Empid  : 6475  on 03-03-2021 and 26-03-2021
+--Reason : "Automatic Casual leaves Accruals"
+
+---- For Leaves Credit/Debit
+
+declare @Empid int;
+declare @Leavetypeid int;
+declare @Numberofleaves_to_Credit int;
+declare @Numberofleaves_to_Debit int;
+declare @UpdatedBy_EmployeeId int;
+declare @Previous_LeaveBalance int;
+declare @Comments varchar(20);
+declare @Type varchar(20);
+declare @TotalBalance int;
+
+set @Empid=6475;
+set @Leavetypeid=1;
+set @Numberofleaves_to_Credit=2;
+set @Numberofleaves_to_Debit=0;
+set @UpdatedBy_EmployeeId=123456;
+set @Previous_LeaveBalance=((select leavebalance from EmpLeaveBalance where empid =(select id from employees 
+where empid=@Empid) and leavetypeid=@LeaveTypeId and year=2021)-2);
+set @Comments='Leaves Credited';
+set @Type='Credit'
+set @TotalBalance=((select leavebalance from EmpLeaveBalance where empid =(select id from employees 
+where empid= @Empid) and leavetypeid=@Leavetypeid and year=2021)+2);
+
+
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=@Empid),
+@Leavetypeid,@Numberofleaves_to_Credit,
+@Numberofleaves_to_Debit,@UpdatedBy_EmployeeId,
+GETDATE(),@Previous_LeaveBalance,@Comments,
+(select ShortName from Employees where empid=@empid),
+(select Department from Employees where empid=@empid),
+(select Branch from Employees where empid=@empid),
+(select CurrentDesignation from Employees where empid=@empid),@Type,
+(select branch_value1 from employees where empid=@empid),@TotalBalance,2021)
+
+
+------- To update Leavebalances
+
+declare @Empid int;
+declare @LeaveTypeId int;
+declare @LeaveBalance int;
+
+set @Empid=6475;
+set @LeaveTypeId=1;
+set @Leavebalance=((select leavebalance from EmpLeaveBalance where empid =(select id from employees 
+where empid=@Empid) and leavetypeid=@LeaveTypeId and year=2021)+2);
+
+update EmpLeaveBalance set LeaveBalance=@Leavebalance where LeaveTypeId=@LeaveTypeId and empid=
+(select id from employees where empid=@Empid) and year=2021;
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+--Apply CL to Name : RATHNAM KARTHIK, Empid  : 6476 on 29-03-2021
+--Reason : "Automatic Casual leaves Accruals"
+
+---- For Leaves Credit/Debit
+
+declare @Empid int;
+declare @Leavetypeid int;
+declare @Numberofleaves_to_Credit int;
+declare @Numberofleaves_to_Debit int;
+declare @UpdatedBy_EmployeeId int;
+declare @Previous_LeaveBalance int;
+declare @Comments varchar(20);
+declare @Type varchar(20);
+declare @TotalBalance int;
+
+set @Empid=6476;
+set @Leavetypeid=1;
+set @Numberofleaves_to_Credit=1;
+set @Numberofleaves_to_Debit=0;
+set @UpdatedBy_EmployeeId=123456;
+set @Previous_LeaveBalance=((select leavebalance from EmpLeaveBalance where empid =(select id from employees 
+where empid=@Empid) and leavetypeid=@LeaveTypeId and year=2021)-1);
+set @Comments='Leaves Credited';
+set @Type='Credit'
+set @TotalBalance=((select leavebalance from EmpLeaveBalance where empid =(select id from employees 
+where empid= @Empid) and leavetypeid=@Leavetypeid and year=2021)+1);
+
+
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=@Empid),
+@Leavetypeid,@Numberofleaves_to_Credit,
+@Numberofleaves_to_Debit,@UpdatedBy_EmployeeId,
+GETDATE(),@Previous_LeaveBalance,@Comments,
+(select ShortName from Employees where empid=@empid),
+(select Department from Employees where empid=@empid),
+(select Branch from Employees where empid=@empid),
+(select CurrentDesignation from Employees where empid=@empid),@Type,
+(select branch_value1 from employees where empid=@empid),@TotalBalance,2021)
+
+
+------- To update Leavebalances
+
+declare @Empid int;
+declare @LeaveTypeId int;
+declare @LeaveBalance int;
+
+set @Empid=6476;
+set @LeaveTypeId=1;
+set @Leavebalance=((select leavebalance from EmpLeaveBalance where empid =(select id from employees 
+where empid=@Empid) and leavetypeid=@LeaveTypeId and year=2021)+1);
+
+update EmpLeaveBalance set LeaveBalance=@Leavebalance where LeaveTypeId=@LeaveTypeId and empid=
+(select id from employees where empid=@Empid) and year=2021;
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+--Apply CL to Name : THOLIKONDA	MAHENDER, Empid  : 6477 on 29-03-2021
+--Reason : "Automatic Casual leaves Accruals"
+
+---- For Leaves Credit/Debit
+
+declare @Empid int;
+declare @Leavetypeid int;
+declare @Numberofleaves_to_Credit int;
+declare @Numberofleaves_to_Debit int;
+declare @UpdatedBy_EmployeeId int;
+declare @Previous_LeaveBalance int;
+declare @Comments varchar(20);
+declare @Type varchar(20);
+declare @TotalBalance int;
+
+set @Empid=6477;
+set @Leavetypeid=1;
+set @Numberofleaves_to_Credit=1;
+set @Numberofleaves_to_Debit=0;
+set @UpdatedBy_EmployeeId=123456;
+set @Previous_LeaveBalance=((select leavebalance from EmpLeaveBalance where empid =(select id from employees 
+where empid=@Empid) and leavetypeid=@LeaveTypeId and year=2021)-1);
+set @Comments='Leaves Credited';
+set @Type='Credit'
+set @TotalBalance=((select leavebalance from EmpLeaveBalance where empid =(select id from employees 
+where empid= @Empid) and leavetypeid=@Leavetypeid and year=2021)+1);
+
+
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=@Empid),
+@Leavetypeid,@Numberofleaves_to_Credit,
+@Numberofleaves_to_Debit,@UpdatedBy_EmployeeId,
+GETDATE(),@Previous_LeaveBalance,@Comments,
+(select ShortName from Employees where empid=@empid),
+(select Department from Employees where empid=@empid),
+(select Branch from Employees where empid=@empid),
+(select CurrentDesignation from Employees where empid=@empid),@Type,
+(select branch_value1 from employees where empid=@empid),@TotalBalance,2021)
+
+
+------- To update Leavebalances
+
+declare @Empid int;
+declare @LeaveTypeId int;
+declare @LeaveBalance int;
+
+set @Empid=6477;
+set @LeaveTypeId=1;
+set @Leavebalance=((select leavebalance from EmpLeaveBalance where empid =(select id from employees 
+where empid=@Empid) and leavetypeid=@LeaveTypeId and year=2021)+1);
+
+update EmpLeaveBalance set LeaveBalance=@Leavebalance where LeaveTypeId=@LeaveTypeId and empid=
+(select id from employees where empid=@Empid) and year=2021;
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+

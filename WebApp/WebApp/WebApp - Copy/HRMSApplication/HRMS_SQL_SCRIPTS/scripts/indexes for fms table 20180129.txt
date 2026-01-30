@@ -1,0 +1,28 @@
+-- Table:tbl_Dealer_Invoice_Header
+CREATE INDEX idx_tbl_Dealer_Invoice_Header_DlP_DealerID
+ON tbl_Dealer_Invoice_Header  (DlP_DealerID);
+CREATE INDEX idx_tbl_Dealer_Invoice_Header_DlO_OrderID
+ON tbl_Dealer_Invoice_Header  (DlO_OrderID);
+CREATE INDEX idx_tbl_Dealer_Invoice_Header_DlI_Invoice_No
+ON tbl_Dealer_Invoice_Header(DlI_Invoice_No);
+
+-- Table:tbl_DealerProfile
+CREATE INDEX idx_tbl_DealerProfile_Dlp_DealerID
+ON tbl_DealerProfile(Dlp_DealerID);
+
+--Table:tbl_Dealer_Order_Header
+CREATE INDEX idx_tbl_Dealer_Order_Header_DlO_OrderID
+ON tbl_Dealer_Order_Header(DlO_OrderID);
+CREATE INDEX idx_tbl_Dealer_Order_Header_Stt_StateID
+ON tbl_Dealer_Order_Header(Stt_StateID);
+
+--Table:tbl_Dealer_BOL_Header
+CREATE INDEX idx_tbl_Dealer_BOL_Headerr_Trm_TerminalID
+ON tbl_Dealer_BOL_Header(Trm_TerminalID);
+CREATE INDEX idx_tbl_Dealer_BOL_Headerr_DeliveredSupplierID
+ON tbl_Dealer_BOL_Header(DeliveredSupplierID);
+
+
+
+
+

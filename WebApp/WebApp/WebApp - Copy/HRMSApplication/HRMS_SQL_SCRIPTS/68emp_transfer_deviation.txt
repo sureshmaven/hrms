@@ -1,0 +1,115 @@
+
+
+--Drop table Employee_transfer_temp_branch; Create table Employee_transfer_temp_branch (empid int);
+--Drop table Employee_transfer_temp_department; Create table Employee_transfer_temp_department (empid int);
+--Drop table Employee_transfer_temp_designation; Create table Employee_transfer_temp_designation (empid int);
+--GO
+--exec sp_emptransfer_deviation;
+Create procedure sp_emptransfer_deviation 
+as
+begin
+declare @oldbranch int;
+declare @olddepartment int;
+declare @olddesignation int;
+declare @newbranch int;
+declare @newdepartment int;
+declare @newdesignation int;
+declare @effective datetime;
+declare @updatedate datetime;
+declare @date datetime;
+declare @empid int;
+
+Select distinct empid into empidstemp from employee_transfer
+while exists (select * from empidstemp)
+begin
+set @empid=(select top 1 empid from empidstemp)
+print @empid;
+select top 1 id,empid,NewBranch,NewDepartment,NewDesignation,EffectiveFrom,UpdatedDate into effectupdatedate from employee_transfer where empid=@empid order by id desc
+set @effective=(select EffectiveFrom from effectupdatedate)
+set @updatedate=(select UpdatedDate from effectupdatedate)
+print @effective;
+print @updatedate;
+if(@effective is not null)
+begin
+
+select top 1 NewBranch,NewDepartment,NewDesignation into Emptrans_temp1 from employee_transfer where EffectiveFrom=@effective and EmpId=@empid order by id desc;
+select empid,Branch,Department,CurrentDesignation into Emp_temp1 from employees where id=@empid;
+
+set @oldbranch = (select Branch from Emp_temp1)
+set @olddepartment = (select Department from Emp_temp1)
+set @olddesignation = (select CurrentDesignation from Emp_temp1)
+set @newbranch = (select NewBranch from Emptrans_temp1)
+set @newdepartment = (select NewDepartment from Emptrans_temp1)
+set @newdesignation = (select NewDesignation from Emptrans_temp1)
+
+print 'Effective date';
+print 'old branch:' +cast(@oldbranch as varchar) ;
+print 'old department: '+cast(@olddepartment as varchar) ;
+print 'old designation: '+cast(@olddesignation as varchar) ;
+print 'new branch: '+cast(@newbranch as varchar) ;
+print 'new department: '+cast(@newdepartment as varchar) ;
+print 'new designation: '+cast(@newdesignation as varchar) ;
+
+if(@oldbranch!=@newbranch)
+begin
+Insert into Employee_transfer_temp_branch (empid)values(@empid);
+end
+if(@olddepartment!=@newdepartment)
+begin
+Insert into Employee_transfer_temp_department (empid)values(@empid);
+end
+if(@olddesignation!=@newdesignation)
+begin
+Insert into Employee_transfer_temp_designation (empid)values(@empid);
+end
+
+drop table Emp_temp1;
+drop table Emptrans_temp1;
+end
+else if (@updatedate is not null)
+begin
+
+select top 1 NewBranch,NewDepartment,NewDesignation into Emptrans_temp from employee_transfer where UpdatedDate=@updatedate and EmpId=@empid order by id desc;
+select * from Emptrans_temp;
+select empid,Branch,Department,CurrentDesignation into Emp_temp from employees where id=@empid;
+select * from Emp_temp;
+
+set @oldbranch = (select Branch from Emp_temp)
+set @olddepartment = (select Department from Emp_temp)
+set @olddesignation = (select CurrentDesignation from Emp_temp)
+set @newbranch = (select NewBranch from Emptrans_temp)
+set @newdepartment = (select NewDepartment from Emptrans_temp)
+set @newdesignation = (select NewDesignation from Emptrans_temp)
+print 'Updated date';
+print 'old branch:' +cast(@oldbranch as varchar) ;
+print 'old department: '+cast(@olddepartment as varchar) ;
+print 'old designation: '+cast(@olddesignation as varchar) ;
+print 'new branch: '+cast(@newbranch as varchar) ;
+print 'new department: '+cast(@newdepartment as varchar) ;
+print 'new designation: '+cast(@newdesignation as varchar) ;
+
+if(@oldbranch!=@newbranch)
+begin
+Insert into Employee_transfer_temp_branch (empid)values(@empid);
+end
+if(@olddepartment!=@newdepartment)
+begin
+Insert into Employee_transfer_temp_department (empid)values(@empid);
+end
+if(@olddesignation!=@newdesignation)
+begin
+Insert into Employee_transfer_temp_designation (empid)values(@empid);
+end
+drop table Emp_temp;
+drop table Emptrans_temp;
+end
+
+
+drop table effectupdatedate;
+delete from empidstemp where empid=@empid;
+end
+drop table empidstemp;
+end
+--select * from Employee_transfer_temp_branch
+--select * from Employee_transfer_temp_department
+--select * from Employee_transfer_temp_designation

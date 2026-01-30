@@ -1,0 +1,342 @@
+/* missing values update */
+
+
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where emp_code=361 and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =361 and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code = 361  and fm='2020-10-01') where emp_code=361 and fm='2020-10-01' 	
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where emp_code=365 and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =365 and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code = 365  and fm='2020-10-01') where emp_code=365 and fm='2020-10-01' 	
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where emp_code=371 and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =371 and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code = 371  and fm='2020-10-01') where emp_code=371 and fm='2020-10-01' 	
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where emp_code=429 and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =429 and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code = 429  and fm='2020-10-01') where emp_code=429 and fm='2020-10-01' 	
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where emp_code=436 and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =436 and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code = 436  and fm='2020-10-01') where emp_code=436 and fm='2020-10-01' 	
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where emp_code=474 and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =474 and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code = 474  and fm='2020-10-01') where emp_code=474 and fm='2020-10-01' 	
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where emp_code=476 and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =476 and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code = 476  and fm='2020-10-01') where emp_code=476 and fm='2020-10-01' 	
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where emp_code=480 and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =480 and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code = 480  and fm='2020-10-01') where emp_code=480 and fm='2020-10-01' 	
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where emp_code=526 and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =526 and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code = 526  and fm='2020-10-01') where emp_code=526 and fm='2020-10-01' 	
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where emp_code=534 and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =534 and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code = 534  and fm='2020-10-01') where emp_code=534 and fm='2020-10-01' 	
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where emp_code=545 and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =545 and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code = 545  and fm='2020-10-01') where emp_code=545 and fm='2020-10-01' 	
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where emp_code=547 and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =547 and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code = 547  and fm='2020-10-01') where emp_code=547 and fm='2020-10-01' 	
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where emp_code=548 and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =548 and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code = 548  and fm='2020-10-01') where emp_code=548 and fm='2020-10-01' 	
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where emp_code=554 and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =554 and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code = 554  and fm='2020-10-01') where emp_code=554 and fm='2020-10-01' 	
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where emp_code=555 and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =555 and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code = 555  and fm='2020-10-01') where emp_code=555 and fm='2020-10-01' 	
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where emp_code=557 and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =557 and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code = 557  and fm='2020-10-01') where emp_code=557 and fm='2020-10-01' 	
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where emp_code=560 and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =560 and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code = 560  and fm='2020-10-01') where emp_code=560 and fm='2020-10-01' 	
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where emp_code=562 and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =562 and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =562  and fm='2020-10-01') where emp_code=562 and fm='2020-10-01' 	
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where emp_code=563 and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =563 and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code = 563  and fm='2020-10-01') where emp_code=563 and fm='2020-10-01' 	
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where emp_code=564 and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =564 and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code = 564  and fm='2020-10-01') where emp_code=564 and fm='2020-10-01' 	
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where emp_code=565 and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =565 and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code = 565  and fm='2020-10-01') where emp_code=565 and fm='2020-10-01' 	
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where emp_code=566 and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =566 and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code = 566  and fm='2020-10-01') where emp_code=566 and fm='2020-10-01' 	
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where emp_code=574 and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =574 and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code = 574  and fm='2020-10-01') where emp_code=574 and fm='2020-10-01' 	
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where emp_code=575 and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =575 and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code = 575  and fm='2020-10-01') where emp_code=575 and fm='2020-10-01' 	
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where emp_code=580 and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =580 and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code = 580  and fm='2020-10-01') where emp_code=580 and fm='2020-10-01' 	
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where emp_code=708 and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =708 and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =708  and fm='2020-10-01') where emp_code=708 and fm='2020-10-01' 	
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where emp_code=721  and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =721 and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code = 721  and fm='2020-10-01') where emp_code=721 and fm='2020-10-01' 	
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where emp_code=733 and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =733 and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code = 733  and fm='2020-10-01') where emp_code= 733 and fm='2020-10-01' 	
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where emp_code=744 and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =744 and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code = 744  and fm='2020-10-01') where emp_code=744 and fm='2020-10-01' 	
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where emp_code=777 and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =777 and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code = 777  and fm='2020-10-01') where emp_code=777 and fm='2020-10-01' 	
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where emp_code=783 and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =783 and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code = 783  and fm='2020-10-01') where emp_code=783 and fm='2020-10-01' 	
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where emp_code=785 and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =785 and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code = 785  and fm='2020-10-01') where emp_code=785 and fm='2020-10-01' 	
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where emp_code=788 and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =788 and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code = 788  and fm='2020-10-01') where emp_code=788 and fm='2020-10-01' 	
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where emp_code=789 and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =789 and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =789  and fm='2020-10-01') where emp_code=789 and fm='2020-10-01' 	
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where emp_code=800 and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =800 and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code = 800  and fm='2020-10-01') where emp_code=800 and fm='2020-10-01' 	
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where emp_code=817 and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =817 and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code = 817  and fm='2020-10-01') where emp_code=817 and fm='2020-10-01' 	
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where emp_code=822 and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =822 and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code = 822  and fm='2020-10-01') where emp_code=822 and fm='2020-10-01' 	
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where emp_code=833 and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =833 and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =833  and fm='2020-10-01') where emp_code=833 and fm='2020-10-01' 	
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where emp_code=853 and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =853 and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code = 853  and fm='2020-10-01') where emp_code=853 and fm='2020-10-01' 	
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where emp_code=856 and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =856 and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code = 856  and fm='2020-10-01') where emp_code=856 and fm='2020-10-01' 	
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where emp_code=866 and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =866 and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code = 866  and fm='2020-10-01') where emp_code=866 and fm='2020-10-01' 	
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where emp_code=898 and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code =898 and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and emp_code = 898  and fm='2020-10-01') where emp_code=898 and fm='2020-10-01' 	
+	
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where 	emp_code=	912	and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code =	912	and fm='2020-10-01'))
+,pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	912	and fm='2020-10-01')
+where emp_code=912	and fm='2020-10-01' 
+
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where 	emp_code=	914	and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip 
+where (er_basic+er_da)<=15000 and	emp_code =	914	and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  
+from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	914	and fm='2020-10-01')where	emp_code=	914	and fm='2020-10-01' 
+
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where 	emp_code=	942	and fm='2020-10-01' )-(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip 
+where (er_basic+er_da)<=15000 and	emp_code =	942	and fm='2020-10-01')),pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  
+from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	942	and fm='2020-10-01')where	emp_code=	942	and fm='2020-10-01' 
+
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where 	emp_code=	943	and fm='2020-10-01' )-
+(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code =	943	and fm='2020-10-01'))
+,pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	943	and fm='2020-10-01')
+where	emp_code=	943	and fm='2020-10-01' 
+
+update  pr_ob_share set bank_share= ((select own_share from pr_ob_share where 	emp_code=	944	and fm='2020-10-01' )-
+(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip 
+where (er_basic+er_da)<=15000 and	emp_code =	944	and fm='2020-10-01')) 
+,pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  
+from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	944	and fm='2020-10-01')
+where	emp_code=	944	and fm='2020-10-01' 
+update  pr_ob_share set bank_share= 
+((select own_share from pr_ob_share where 	emp_code=	945	and fm='2020-10-01' )-
+(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip 
+where (er_basic+er_da)<=15000 and	emp_code =	945	and fm='2020-10-01'))
+,pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  
+from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	945	and fm='2020-10-01')
+where	emp_code=	945	and fm='2020-10-01' 
+update  pr_ob_share set bank_share= 
+((select own_share from pr_ob_share where 	emp_code=	946	and fm='2020-10-01' )-
+(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip 
+where (er_basic+er_da)<=15000 and	emp_code =	946	and fm='2020-10-01'))
+,pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  
+from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	946	and fm='2020-10-01')
+where	emp_code=	946	and fm='2020-10-01' 
+update  pr_ob_share set bank_share= 
+((select own_share from pr_ob_share where 	emp_code=	955	and fm='2020-10-01' )-
+(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip 
+where (er_basic+er_da)<=15000 and	emp_code =	955	and fm='2020-10-01'))
+,pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  
+from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	955	and fm='2020-10-01')
+where	emp_code=	955	and fm='2020-10-01' 
+update  pr_ob_share set bank_share= 
+((select own_share from pr_ob_share where 	emp_code=	956	and fm='2020-10-01' )-
+(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip 
+where (er_basic+er_da)<=15000 and	emp_code =	956	and fm='2020-10-01'))
+,pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  
+from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	956	and fm='2020-10-01')
+where	emp_code=	956	and fm='2020-10-01' 
+update  pr_ob_share set bank_share= 
+((select own_share from pr_ob_share where 	emp_code=	957	and fm='2020-10-01' )-
+(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip 
+where (er_basic+er_da)<=15000 and	emp_code =	957	and fm='2020-10-01'))
+,pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  
+from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	957	and fm='2020-10-01')
+where	emp_code=	957	and fm='2020-10-01' 
+update  pr_ob_share set bank_share= 
+((select own_share from pr_ob_share where 	emp_code=	963	and fm='2020-10-01' )-
+(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip 
+where (er_basic+er_da)<=15000 and	emp_code =	963	and fm='2020-10-01'))
+,pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  
+from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	963	and fm='2020-10-01')
+where	emp_code=	963	and fm='2020-10-01' 
+update  pr_ob_share set bank_share= 
+((select own_share from pr_ob_share where 	emp_code=	966	and fm='2020-10-01' )-
+(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip 
+where (er_basic+er_da)<=15000 and	emp_code =	966	and fm='2020-10-01'))
+,pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  
+from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	966	and fm='2020-10-01')
+where	emp_code=	966	and fm='2020-10-01' 
+update  pr_ob_share set bank_share= 
+((select own_share from pr_ob_share where 	emp_code=	973	and fm='2020-10-01' )-
+(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip 
+where (er_basic+er_da)<=15000 and	emp_code =	973	and fm='2020-10-01'))
+,pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  
+from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	973	and fm='2020-10-01')
+where	emp_code=	973	and fm='2020-10-01' 
+update  pr_ob_share set bank_share= 
+((select own_share from pr_ob_share where 	emp_code=	987	and fm='2020-10-01' )-
+(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip 
+where (er_basic+er_da)<=15000 and	emp_code =	987	and fm='2020-10-01'))
+,pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  
+from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	987	and fm='2020-10-01')
+where	emp_code=	987	and fm='2020-10-01' 
+update  pr_ob_share set bank_share= 
+((select own_share from pr_ob_share where 	emp_code=	994	and fm='2020-10-01' )-
+(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip 
+where (er_basic+er_da)<=15000 and	emp_code =	994	and fm='2020-10-01'))
+,pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  
+from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	994	and fm='2020-10-01')
+where	emp_code=	994	and fm='2020-10-01' 
+update  pr_ob_share set bank_share= 
+((select own_share from pr_ob_share where 	emp_code=	6199	and fm='2020-10-01' )-
+(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip 
+where (er_basic+er_da)<=15000 and	emp_code =	6199	and fm='2020-10-01'))
+,pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  
+from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	6199	and fm='2020-10-01')
+where	emp_code=	6199	and fm='2020-10-01' 
+update  pr_ob_share set bank_share= 
+((select own_share from pr_ob_share where 	emp_code=	6302	and fm='2020-10-01' )-
+(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip 
+where (er_basic+er_da)<=15000 and	emp_code =	6302	and fm='2020-10-01'))
+,pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  
+from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	6302	and fm='2020-10-01')
+where	emp_code=	6302	and fm='2020-10-01' 
+update  pr_ob_share set bank_share= 
+((select own_share from pr_ob_share where 	emp_code=	6310	and fm='2020-10-01' )-
+(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip 
+where (er_basic+er_da)<=15000 and	emp_code =	6310	and fm='2020-10-01'))
+,pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  
+from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	6310	and fm='2020-10-01')
+where	emp_code=	6310	and fm='2020-10-01' 
+update  pr_ob_share set bank_share= 
+((select own_share from pr_ob_share where 	emp_code=	6314	and fm='2020-10-01' )-
+(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip 
+where (er_basic+er_da)<=15000 and	emp_code =	6314	and fm='2020-10-01'))
+,pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  
+from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	6314	and fm='2020-10-01')
+where	emp_code=	6314	and fm='2020-10-01' 
+update  pr_ob_share set bank_share= 
+((select own_share from pr_ob_share where 	emp_code=	6317	and fm='2020-10-01' )-
+(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip 
+where (er_basic+er_da)<=15000 and	emp_code =	6317	and fm='2020-10-01'))
+,pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  
+from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	6317	and fm='2020-10-01')
+where	emp_code=	6317	and fm='2020-10-01' 
+update  pr_ob_share set bank_share= 
+((select own_share from pr_ob_share where 	emp_code=	6325	and fm='2020-10-01' )-
+(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip 
+where (er_basic+er_da)<=15000 and	emp_code =	6325	and fm='2020-10-01'))
+,pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  
+from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	6325	and fm='2020-10-01')
+where	emp_code=	6325	and fm='2020-10-01' 
+update  pr_ob_share set bank_share= 
+((select own_share from pr_ob_share where 	emp_code=	6328	and fm='2020-10-01' )-
+(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip 
+where (er_basic+er_da)<=15000 and	emp_code =	6328	and fm='2020-10-01'))
+,pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  
+from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	6328	and fm='2020-10-01')
+where	emp_code=	6328	and fm='2020-10-01' 
+update  pr_ob_share set bank_share= 
+((select own_share from pr_ob_share where 	emp_code=	6332	and fm='2020-10-01' )-
+(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip 
+where (er_basic+er_da)<=15000 and	emp_code =	6332	and fm='2020-10-01'))
+,pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  
+from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	6332	and fm='2020-10-01')
+where	emp_code=	6332	and fm='2020-10-01' 
+update  pr_ob_share set bank_share= 
+((select own_share from pr_ob_share where 	emp_code=	6336	and fm='2020-10-01' )-
+(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip 
+where (er_basic+er_da)<=15000 and	emp_code =	6336	and fm='2020-10-01'))
+,pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  
+from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	6336	and fm='2020-10-01')
+where	emp_code=	6336	and fm='2020-10-01' 
+update  pr_ob_share set bank_share= 
+((select own_share from pr_ob_share where 	emp_code=	6341	and fm='2020-10-01' )-
+(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip 
+where (er_basic+er_da)<=15000 and	emp_code =	6341	and fm='2020-10-01'))
+,pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  
+from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	6341	and fm='2020-10-01')
+where	emp_code=	6341	and fm='2020-10-01' 
+update  pr_ob_share set bank_share= 
+((select own_share from pr_ob_share where 	emp_code=	6342	and fm='2020-10-01' )-
+(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip 
+where (er_basic+er_da)<=15000 and	emp_code =	6342	and fm='2020-10-01'))
+,pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  
+from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	6342	and fm='2020-10-01')
+where	emp_code=	6342	and fm='2020-10-01' 
+update  pr_ob_share set bank_share= 
+((select own_share from pr_ob_share where 	emp_code=	6349	and fm='2020-10-01' )-
+(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip 
+where (er_basic+er_da)<=15000 and	emp_code =	6349	and fm='2020-10-01'))
+,pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  
+from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	6349	and fm='2020-10-01')
+where	emp_code=	6349	and fm='2020-10-01' 
+update  pr_ob_share set bank_share= 
+((select own_share from pr_ob_share where 	emp_code=	6355	and fm='2020-10-01' )-
+(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip 
+where (er_basic+er_da)<=15000 and	emp_code =	6355	and fm='2020-10-01'))
+,pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  
+from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	6355	and fm='2020-10-01')
+where	emp_code=	6355	and fm='2020-10-01' 
+update  pr_ob_share set bank_share= 
+((select own_share from pr_ob_share where 	emp_code=	6391	and fm='2020-10-01' )-
+(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip 
+where (er_basic+er_da)<=15000 and	emp_code =	6391	and fm='2020-10-01'))
+,pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  
+from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	6391	and fm='2020-10-01')
+where	emp_code=	6391	and fm='2020-10-01' 
+update  pr_ob_share set bank_share= 
+((select own_share from pr_ob_share where 	emp_code=	6409	and fm='2020-10-01' )-
+(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip 
+where (er_basic+er_da)<=15000 and	emp_code =	6409	and fm='2020-10-01'))
+,pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  
+from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	6409	and fm='2020-10-01')
+where	emp_code=	6409	and fm='2020-10-01' 
+update  pr_ob_share set bank_share= 
+((select own_share from pr_ob_share where 	emp_code=	6410	and fm='2020-10-01' )-
+(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip 
+where (er_basic+er_da)<=15000 and	emp_code =	6410	and fm='2020-10-01'))
+,pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  
+from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	6410	and fm='2020-10-01')
+where	emp_code=	6410	and fm='2020-10-01' 
+update  pr_ob_share set bank_share= 
+((select own_share from pr_ob_share where 	emp_code=	6414	and fm='2020-10-01' )-
+(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip 
+where (er_basic+er_da)<=15000 and	emp_code =	6414	and fm='2020-10-01'))
+,pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  
+from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	6414	and fm='2020-10-01')
+where	emp_code=	6414	and fm='2020-10-01' 
+update  pr_ob_share set bank_share= 
+((select own_share from pr_ob_share where 	emp_code=	6418	and fm='2020-10-01' )-
+(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip 
+where (er_basic+er_da)<=15000 and	emp_code =	6418	and fm='2020-10-01'))
+,pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  
+from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	6418	and fm='2020-10-01')
+where	emp_code=	6418	and fm='2020-10-01' 
+update  pr_ob_share set bank_share= 
+((select own_share from pr_ob_share where 	emp_code=	6429	and fm='2020-10-01' )-
+(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip 
+where (er_basic+er_da)<=15000 and	emp_code =	6429	and fm='2020-10-01'))
+,pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  
+from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	6429	and fm='2020-10-01')
+where	emp_code=	6429	and fm='2020-10-01' 
+update  pr_ob_share set bank_share= 
+((select own_share from pr_ob_share where 	emp_code=	6430	and fm='2020-10-01' )-
+(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip 
+where (er_basic+er_da)<=15000 and	emp_code =	6430	and fm='2020-10-01'))
+,pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  
+from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	6430	and fm='2020-10-01')
+where	emp_code=	6430	and fm='2020-10-01' 
+update  pr_ob_share set bank_share= 
+((select own_share from pr_ob_share where 	emp_code=	6440	and fm='2020-10-01' )-
+(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip 
+where (er_basic+er_da)<=15000 and	emp_code =	6440	and fm='2020-10-01'))
+,pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  
+from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	6440	and fm='2020-10-01')
+where	emp_code=	6440	and fm='2020-10-01' 
+update  pr_ob_share set bank_share= 
+((select own_share from pr_ob_share where 	emp_code=	6441	and fm='2020-10-01' )-
+(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip 
+where (er_basic+er_da)<=15000 and	emp_code =	6441	and fm='2020-10-01'))
+,pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  
+from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	6441	and fm='2020-10-01')
+where	emp_code=	6441	and fm='2020-10-01' 
+update  pr_ob_share set bank_share= 
+((select own_share from pr_ob_share where 	emp_code=	6451	and fm='2020-10-01' )-
+(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip 
+where (er_basic+er_da)<=15000 and	emp_code =	6451	and fm='2020-10-01'))
+,pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  
+from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	6451	and fm='2020-10-01')
+where	emp_code=	6451	and fm='2020-10-01' 
+update  pr_ob_share set bank_share= 
+((select own_share from pr_ob_share where 	emp_code=	6458	and fm='2020-10-01' )-
+(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip 
+where (er_basic+er_da)<=15000 and	emp_code =	6458	and fm='2020-10-01'))
+,pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  
+from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	6458	and fm='2020-10-01')
+where	emp_code=	6458	and fm='2020-10-01' 
+update  pr_ob_share set bank_share= 
+((select own_share from pr_ob_share where 	emp_code=	6459	and fm='2020-10-01' )-
+(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip 
+where (er_basic+er_da)<=15000 and	emp_code =	6459	and fm='2020-10-01'))
+,pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  
+from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	6459	and fm='2020-10-01')
+where	emp_code=	6459	and fm='2020-10-01' 
+update  pr_ob_share set bank_share= 
+((select own_share from pr_ob_share where 	emp_code=	6462	and fm='2020-10-01' )-
+(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip 
+where (er_basic+er_da)<=15000 and	emp_code =	6462	and fm='2020-10-01'))
+,pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  
+from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	6462	and fm='2020-10-01')
+where	emp_code=	6462	and fm='2020-10-01' 
+update  pr_ob_share set bank_share= 
+((select own_share from pr_ob_share where 	emp_code=	6464	and fm='2020-10-01' )-
+(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip 
+where (er_basic+er_da)<=15000 and	emp_code =	6464	and fm='2020-10-01'))
+,pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  
+from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	6464	and fm='2020-10-01')
+where	emp_code=	6464	and fm='2020-10-01' 
+update  pr_ob_share set bank_share= 
+((select own_share from pr_ob_share where 	emp_code=	6465	and fm='2020-10-01' )-
+(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip 
+where (er_basic+er_da)<=15000 and	emp_code =	6465	and fm='2020-10-01'))
+,pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  
+from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	6465	and fm='2020-10-01')
+where	emp_code=	6465	and fm='2020-10-01' 
+update  pr_ob_share set bank_share= 
+((select own_share from pr_ob_share where 	emp_code=	6466	and fm='2020-10-01' )-
+(select ((er_basic+er_da)*8.33/100) as basicda  from pr_emp_payslip 
+where (er_basic+er_da)<=15000 and	emp_code =	6466	and fm='2020-10-01'))
+,pension_open=(select ((er_basic+er_da)*8.33/100) as basicda  
+from pr_emp_payslip where (er_basic+er_da)<=15000 and	emp_code=	6466	and fm='2020-10-01')
+where	emp_code=	6466	and fm='2020-10-01' 

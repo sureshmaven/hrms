@@ -1,0 +1,345 @@
+﻿@model Entities.Leaves_CarryForward
+@{
+    ViewBag.RolePages = TempData["RolePages"];
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var rolepages = TempData["RolePages"].ToString();
+}
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-heading">
+            @{
+                <ul class="nav nav-tabs">
+                    @if (rolepages.Contains("LVMLV"))
+                    {
+                        <li class="active"><a href=@Url.Action("LeaveRequest", "LeaveApply")>Leave Apply</a></li>
+}
+                    @if (rolepages.Contains("LVELB"))
+                    {
+                        <li><a href=@Url.Action("LeaveBalance", "LeaveBalance")>Emp Leave Balance</a></li>
+}
+                    @if (rolepages.Contains("LVLAP"))
+                    {
+                        <li><a href=@Url.Action("LeaveApproval", "LeaveApproval")>Leave Approvals</a></li>
+                        //<li><a href=@Url.Action("Leaveforemployee", "LeaveApply")>LeaveForEmployee</a></li>
+                    }
+                    @if (rolepages.Contains("LFPMain"))
+                    {
+                        <li><a href=@Url.Action("Leaveforemployee", "LeaveApply")>LeaveForEmployee</a></li>
+                    }
+                    @if (rolepages.Contains("LVMLA"))
+                    {
+                        <li><a href=@Url.Action("myleaveapproval", "Reports")>My Leave Approvals</a></li>
+}
+                </ul>
+            }
+        </div>
+    </div>
+</div>
+<div class="page_st">
+    <div class="page">
+
+        <div class="col-md-12 col-sm-12">
+
+            <div class="main_heading">
+                <h1>Year Wise Leave Balance</h1>
+                @*<div class="col-md-12">
+                        <table id="myTextArea" class="workdiary table table-bordered" style="width: 35%;"></table>
+                    </div>*@
+                <div class="col-sm-12">
+
+                    <div id="grid">
+
+                    </div>
+                    <div style='margin-top: 20px;'>
+                        <div style='float: left;'>
+                            @*<input type="button" class="btn btn-info" value="Export to Excel" id='excelExport' />*@
+                            <input type="button" class="btn btn-info" value="Export to Excel" id='exceltoExport' />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@{
+
+    var message = TempData["AlertMessage"] ?? string.Empty;
+
+}
+
+<script type="text/javascript">
+ var message = '@message';
+
+if(message) alert(message);
+
+</script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        Get1();
+        // prepare the data
+        var source =
+        {
+            datatype: "json",
+            datafields: [
+
+                { name: 'Id', type: 'int' },
+                { name: 'LeaveType', type: 'string' },
+                { name: 'Year', type: 'int' },
+                { name: 'LeaveBalance', type: 'int' },
+                { name: 'Debits', type: 'int' },
+                { name: 'CreditLeaves', type: 'int' },
+                { name: 'CarryForwardFLeaves', type: 'int' },
+                { name: 'EmpId', type: 'string' },
+                { name: 'EmpName', type: 'string' },
+                { name: 'Designation', type: 'string' },
+                { name: 'BrDept', type: 'string' },
+            ],
+            async: false,
+            url: '/LeaveBalance/YearWiseLeaveBalanceViews',
+            data: {
+                featureClass: "P",
+                style: "full",
+                maxRows: 2,
+                username: "jqwidgets"
+            }
+        };
+        var dataAdapter = new $.jqx.dataAdapter(source,
+            {
+                formatData: function (data) {
+                    data.EmpId = $("#searchField").val();
+                    return data;
+                }
+            }
+        );
+        var editrowindex = -1;
+        var delrowindex = -1;
+        // initialize jqxGrid
+        $("#grid").jqxGrid(
+            {
+                width: '100%',
+                source: dataAdapter,
+                theme: otherTheme,
+                autoheight: true,
+                sortable: true,
+                pageable: true,
+                columnsResize: true,
+                altRows: true,
+                filterable: true,
+                autoshowfiltericon: true,
+                ready: function () {
+                    $("#grid").jqxGrid('localizestrings', localizationObject);
+                },
+                updatefilterconditions: function (type, defaultconditions) {
+                    switch (type) {
+                        case 'stringfilter':
+                            return stringcomparisonoperators;
+                        case 'numericfilter':
+                            return numericcomparisonoperators;
+                        case 'datefilter':
+                            return datecomparisonoperators;
+                        case 'booleanfilter':
+                            return booleancomparisonoperators;
+                    }
+                },
+                updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                    filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                    var index1 = 0;
+                    var index2 = 0;
+                    if (columnfilter != null) {
+                        var filter1 = columnfilter.getfilterat(0);
+                        var filter2 = columnfilter.getfilterat(1);
+                        if (filter1) {
+                            index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                            var value1 = filter1.filtervalue;
+                            filterinputfield1.val(value1);
+                        }
+                        if (filter2) {
+                            index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                            var value2 = filter2.filtervalue;
+                            filterinputfield2.val(value2);
+                        }
+                    }
+                    filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                    filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                },
+                columns: [
+
+                    {
+                        text: "EmpId", datafield: "EmpId", width: 127, align: 'center',
+                        cellsrenderer: function (row, column, value) {
+                            return "<div style='margin:4px;text-align: center;'>" + (value) + "</div>";
+                        }
+                    },
+                    {
+                        text: "EmployeeName", datafield: "EmpName", width: 150, align: 'center',
+                        cellsrenderer: function (row, column, value) {
+                            return "<div style='margin:4px;text-align: center;'>" + (value) + "</div>";
+                        }
+                    },
+                    {
+                        text: "Designation", datafield: "Designation", width: 127, align: 'center',
+                        cellsrenderer: function (row, column, value) {
+                            return "<div style='margin:4px;text-align: center;'>" + (value) + "</div>";
+                        }
+                    },
+
+                    {
+                        text: "Department/Branch", datafield: "BrDept", width: 127, align: 'center',
+                        cellsrenderer: function (row, column, value) {
+                            return "<div style='margin:4px;text-align: center;'>" + (value) + "</div>";
+                        }
+                    },
+
+                    {
+                        text: "Year", datafield: "Year", width: 127, align: 'center',
+                        cellsrenderer: function (row, column, value) {
+                            return "<div style='margin:4px;text-align: center;'>" + (value) + "</div>";
+                        }
+                    },
+
+                    {
+                        text: "Leave Type", datafield: "LeaveType", editable: false, width: 190, align: 'center',
+                        cellsrenderer: function (row, column, value) {
+                            return "<div style='margin:4px;text-align: center;'>" + (value) + "</div>";
+                        }
+                    },
+                    {
+                        text: 'CarryForward', editable: false, datafield: 'CarryForwardFLeaves', align: 'center', width: 190,
+                        cellsrenderer: function (row, column, value) {
+                            return "<div style='margin:4px;text-align: center;'>" + (value) + "</div>";
+                        }
+                    },
+                    {
+                        text: 'Leave Credit', editable: false, datafield: 'CreditLeaves', align: 'center', width: 190,
+                        cellsrenderer: function (row, column, value) {
+                            return "<div style='margin:4px;text-align: center;'>" + (value) + "</div>";
+                        }
+                    },
+                    {
+                        text: 'Leave Debit', editable: false, datafield: 'Debits', align: 'center', width: 190,
+                        cellsrenderer: function (row, column, value) {
+                            return "<div style='margin:4px;text-align: center;'>" + (value) + "</div>";
+                        }
+                    },
+                    {
+                        text: 'Leave Balance', editable: false, datafield: 'LeaveBalance', align: 'center', width: 190,
+                        cellsrenderer: function (row, column, value) {
+                            return "<div style='margin:4px;text-align: center;'>" + (value) + "</div>";
+                        }
+                    },
+
+                ], columngroups:
+                    [
+                        { text: 'Action', align: 'center', name: 'Actions', width: 160 },
+
+                    ],
+            });
+        $("#exceltoExport").jqxButton();
+        $("#excelExport").click(function () {
+            $("#grid").jqxGrid('exportdata', 'xls', 'EmpYearWiseLeaveBalance');
+        });
+    });
+</script>
+
+<script>
+    document.getElementById("a4").className = "active";
+</script>
+<script type="text/javascript">
+
+    function Get1() {
+
+        $.ajax({
+            type: 'GET',
+            url: 'YearViewBalances',
+            dataType: 'Json',
+            success: function (response) {
+                if (response != null) {
+                    var text = "<tr><td>EmployeeId:" + " " + " " + response.lEmployeeId
+                        + "</td></tr> <tr><td> EmployeeName:" + " " + " " + response.lEmployeeName
+                        + "</td></tr> <tr><td> Designation:" + " " + " "
+                        + response.ldesig + "</td></tr><tr><td> Branch/Dept:" + " " + " " + response.ldeptbranch + "</td></tr>";
+
+                    document.getElementById("myTextArea").innerHTML = text;
+                }
+
+            },
+        });
+
+    }
+
+
+</script>
+
+
+
+<!-- Include XLSX library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+<!-- Include FileSaver library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Add click event handler to the download Excel button
+        $("#exceltoExport").click(function () {
+            // Get filtered data from the grid
+            var filteredData = $("#grid").jqxGrid('getrows');
+
+            // Process the data to convert dates to human-readable format
+            const processedData = filteredData.map(item => ({
+                ...item,
+                IssueDate: item.IssueDate ? formatDate(parseDate(item.IssueDate)) : '',
+                Duedate: item.Duedate ? formatDate(parseDate(item.Duedate)) : '',
+                Leaveapplieddate: item.Leaveapplieddate ? formatDate(parseDate(item.Leaveapplieddate)) : '',
+                Responsedate: item.Responsedate ? formatDate(parseDate(item.Responsedate)) : ''
+            }));
+
+            // Create a workbook and worksheet
+            var wb = XLSX.utils.book_new();
+            var ws = XLSX.utils.json_to_sheet(processedData);
+
+            // Add worksheet to workbook
+            XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+            // Convert workbook to binary data
+            var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+
+            // Create a Blob object from the binary data
+            var blob = new Blob([s2ab(wbout)], { type: 'application/octet-stream' });
+
+            // Trigger download
+            saveAs(blob, 'EmpYearWiseLeaveBalance.xlsx');
+
+            return false;
+        });
+    });
+
+    // Function to parse date string from /Date(timestamp)/ format to Date object
+    function parseDate(dateString) {
+        // Check for /Date(xxxxxxx)/ format
+        const match = /\/Date\((\d+)\)\//.exec(dateString);
+        if (match) {
+            return new Date(parseInt(match[1], 10));
+        }
+        // Check for ISO string format
+        return new Date(dateString);
+    }
+
+    // Function to format Date object to DD/MM/YYYY format
+    function formatDate(date) {
+        if (!date || isNaN(date.getTime())) return '';
+        var day = String(date.getDate()).padStart(2, '0');
+        var month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+        var year = date.getFullYear();
+        return `${day}/${month}/${year}`; // Format: DD/MM/YYYY
+    }
+
+    // Function to convert string to ArrayBuffer
+    function s2ab(s) {
+        var buf = new ArrayBuffer(s.length);
+        var view = new Uint8Array(buf);
+        for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+        return buf;
+    }
+</script>

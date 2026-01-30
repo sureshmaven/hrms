@@ -1,0 +1,62 @@
+
+----------> Description of the Dimensions Tables
+
+1. dim_emp contains below columns 
+dim_eid	Empid,	FirstName,	LastName,	DoJ,	RetirementDate,	Designation_id,	Department_id,	Branch_id,	Shift_id,	Is_NPS
+
+2. dim_branch contains below columns
+dim_bid,	Name,	BranchCode
+
+3. dim_designation contains below columns
+dim_desid,	Code,	Name
+
+4. dim_department contains below columns 
+dim_depid,	Code,	Name
+
+5. dim_deduction_types  contains below columns 
+dim_deductid,	Name,	Type
+
+6. dim_earning_types  contains below columns 
+dim_earnid,	Name,	Type
+
+7. dim_time  contains below columns 
+dim_tid,	Year,	Quarter,	Month,	Week,	Day
+
+----------> Description of the Fact Tables
+
+Emp_fact : Contains payslip information apart from deductions and allowances monthwise.
+
+Pf_fact : Contains OB_Share information for Regular, Adhoc and Encashment monthwise.
+
+LoansFact : Contains Loans information monthwise.
+
+TdsFact : Contains TDS information apart from deductions and allowances.
+
+AllowanceFact : Contains all Allowance information for payslip and tds monthwise.
+
+DeductionFact : Contains all Deduction information for payslip and tds monthwise. 
+
+----------> Description for the Scripts
+
+4.Tscab_Payroll_DWH_Emp_Fact : Script contains Creation of table, insertions Payslip data for Regular, Adhoc and Encashment 
+from '2019-04-01' to till date. Payslip data included with Employees data.
+
+5.Tscab_Payroll_DWH_Loans_Fact : Script Contains Creation of table, insertions Loans data from '2019-04-01' to till date. 
+It contains only Loans data.
+
+6.Tscab_Payroll_DWH_PF_Fact : Script Contains Creation of table, insertions PF data for Regular, Adhoc and Encashment  
+from '2019-04-01' to till date. It contains only PF data.
+
+7.Tscab_Payroll_DWH_Tds_Fact : Script contains Creation of table, insertions TDS data.
+
+8.Allowance_Fact_UpdateQueries : Script contains Updations statements on AllowanceFact table columns where value is NULL for Payslip and TDS.
+
+9.Deduction_Fact_UpdateQueries : Script contains Updations statements on DeductionFact table columns where value is NULL for Payslip and TDS.
+
+10.IndexsOnfacttablecolumns : Script contains Indexes columns related to MIS Report.
+
+2.Tscab_Payroll_DWH_Allowance_Fact : Script contains Creation of table, insertions Allowance data for Payslip and TDS.
+
+3.Tscab_Payroll_DWH_Deduction_Fact : Script contains Creation of table, insertions Deduction data for Payslip and TDS.
+
+1.DimensionTablesCreation : Script contains Creation of Dimension tables columns specified above.

@@ -1,0 +1,448 @@
+﻿@model HRMSApplication.Models.DashBoard
+@{
+    ViewBag.RolePages = TempData["RolePages"];
+    var message = TempData["AlertMessage"] ?? string.Empty;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var empId = ViewBag.empid;
+	var count = TempData["count"].ToString();
+}
+
+<script type="text/javascript">
+    var message = '@message';
+    if (message) alert(message);
+
+</script>
+<style>
+    .modal-backdrop {
+        position: relative;
+    }
+
+    .modal-header {
+        padding: 5px 15px 5px 15px !important;
+    }
+
+    .modal-title {
+        text-transform: capitalize !important;
+    }
+
+    .modal-content1 {
+        margin: auto;
+        padding: 0px;
+        border: 1px solid rgb(136, 136, 136);
+        width: 40%;
+        z-index: 99999999999;
+        left: 25%;
+        background: rgb(219, 238, 247);
+    }
+    a.my-class {
+        color: black;
+    }
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/css/bootstrap-select.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/js/bootstrap-select.min.js"></script>
+
+<div class="container">
+    <div class="panel-heading">
+
+    </div>
+    <div class="page_st">
+        <div class="page">
+            <div class="col-md-12 col-sm-12">
+                <div class="main_heading">
+                    <h1>Dashboard</h1>
+                    <div class="col-md-3">
+                        <div class="main_heading">
+                            <h1>Birthdays</h1>
+                            <div class="dashboard_new">
+                                <div class="holder">
+                                    <ul id="ticker01">
+                                        <li>
+                                            <div class="well">
+                                                <div class="media">
+                                                    @{
+                                                        var r = 0;
+                                                        var m = 1;
+                                                        var n = 2;
+                                                        var o = 3;
+                                                        var p = 4; //added by chaitanya on 12 / 05 / 2020
+                                                    }
+                                                    <div class="media-body">
+                                                        <h4 class="media-heading"><h3>Happy Birthday</h3><p>Birthdays of this month</p></h4>
+
+                                                        @for (var i = 0; i < Model.Birthdays.Count; i++)
+                                                        {
+                                                            <div class="media">
+
+                                                                <a class="pull-left" href="#">
+                                                                    <img class="media-object" src="~/uploads/@Model.Birthdays[i][r]" />
+                                                                </a>
+                                                                <div class="media-body">
+                                                                    <h4 class="media-heading"><h3>@Model.Birthdays[i][m]</h3><p>@Model.Birthdays[i][n]</p></h4>
+
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="main_heading">
+                            <h1>News</h1>
+                            <div class="dashboard_new">
+                                <div class="holder">
+                                    <ul id="ticker01">
+                                        <li>
+                                            <div class="well">
+                                                <div class="media">
+                                                    <div class="media-body">
+                                                        <h3 class="media-heading">News</h3>
+
+                                                        @for (var j = 0; j < Model.News.Count; j++)
+                                                        {
+                                                            <div class="media">
+
+                                                                <a class="pull-left" href="#">
+                                                                    <img class="media-object" src="~/Images/news.jpg">
+                                                                </a>
+                                                                <div class="media-body">
+                                                                    <h4 class="media-heading">
+                                                                        <h3>@Model.News[j][r]</h3><p>@Model.News[j][m]</p>
+
+                                                                    </h4>
+
+                                                                </div>
+                                                            </div>
+                                                            if (Model.News.Count == 1)
+                                                            {
+                                                                <div class="media" style="height:210px;visibility:hidden;">
+
+                                                                    <a class="pull-left" href="#">
+
+                                                                    </a>
+                                                                    <div class="media-body">
+                                                                        <h4 class="media-heading"><h3></h3><p></p></h4>
+                                                                    </div>
+                                                                </div>
+
+                                                            }
+
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="main_heading">
+                            <h1>Retirement</h1>
+                            <div class="dashboard_new">
+                                <div class="holder">
+                                    <ul id="ticker01">
+                                        <li>
+                                            <div class="well">
+                                                <div class="media">
+                                                    <div class="media-body">
+                                                        <h4 class="media-heading"><h3>Happy Retirement</h3><p>Retirements of this month</p></h4>
+
+                                                        @for (var l = 0; l < Model.Retirements.Count; l++)
+                                                        {
+                                                            <div class="media">
+
+                                                                <a class="pull-left" href="#">
+                                                                    <img class="media-object" src="~/uploads/@Model.Retirements[l][r]" />
+                                                                </a>
+                                                                <div class="media-body">
+                                                                    <h4 class="media-heading"><h3>@Model.Retirements[l][m]</h3><p>@Model.Retirements[l][n]</p></h4>
+                                                                </div>
+                                                            </div>
+                                                            if (Model.Retirements.Count == 1)
+                                                            {
+                                                                <div class="media" style="height:210px;visibility:hidden;">
+
+                                                                    <a class="pull-left" href="#">
+
+                                                                    </a>
+                                                                    <div class="media-body">
+                                                                        <h4 class="media-heading"><h3></h3><p></p></h4>
+                                                                    </div>
+                                                                </div>
+
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="main_heading">
+                            <h1>Leaves</h1>
+                            <div class="dashboard_new">
+                                <div class="holder">
+                                    <ul id="ticker01">
+                                        <li>
+                                            <div class="well">
+                                                <div class="media">
+                                                    <div class="media-body">
+                                                        <h4 class="media-heading"><h3>Leaves For Today</h3></h4>
+
+                                                        @for (var k = 0; k < Model.Leaves.Count; k++)
+                                                        {
+
+
+                                                            <div class="media">
+
+                                                                <a class="pull-left" href="#">
+                                                                    <img class="media-object" src="~/uploads/@Model.Leaves[k][r]" />
+                                                                </a>
+                                                                <div class="media-body">
+                                                                    <h4 class="media-heading"><h3>@Model.Leaves[k][m]</h3><p style="font-size:11px;">From @Model.Leaves[k][n]</p><p style="font-size:11px;">To&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; @Model.Leaves[k][o]</p><p style="font-size:11px;"> <span style="color: black;"> @Model.Leaves[k][p]</span></p></h4>
+                                                                </div>
+                                                            </div>
+                                                            if (Model.Leaves.Count <= 1 || Model.Leaves.Count == 0)
+                                                            {
+                                                                <div class="media" style="height:210px;visibility:hidden;">
+
+                                                                    <a class="pull-left" href="#">
+
+                                                                    </a>
+                                                                    <div class="media-body">
+                                                                        <h4 class="media-heading"><h3></h3><p></p></h4>
+                                                                    </div>
+                                                                </div>
+
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @{
+                        if (empId == "381")
+                        {
+                            <div id="myModal" class="modal" style="z-index: 9999999999;">
+
+                                <!-- Modal content -->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="submit" id="btnclosepop" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        <h4 class="modal-title">Employee Transfer Deviation Count</h4>
+                                    </div>
+
+                                    <table id="myTextArea" style="margin: 25px auto;width: 92%;"></table>
+                                    @*<table id="Reasontbl" style="margin: 25px auto;width: 92%;">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <label class="control-label">Cancel/Deny Reason: </label>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <textarea class="form-control" rows="4" id="ReasonCodepop" name="Reason" value=""></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>*@
+                                </div>
+
+                            </div>
+                        }
+
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@{
+    if (empId == @ViewBag.empid)
+    {
+        <div id="homepopup" class="modal fade" role="dialog">
+            <div class="modal-dialog_home">
+
+                <!-- Modal content-->
+                <div class="modal-content1">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Memos</h4>
+                    </div>
+                    <div class="modal-body">
+                        
+                        <p style="color:black">
+                            You have @count pending memo's, <span><a style="font-weight:bold;color:red;" href="@Url.Action("MemoReport", "Memo", new {@style="color:black" })">click here</a></span> to view memos
+                        </p>
+                    </div>
+                    <script>
+                     
+                            if (@count != 0) {
+
+                                        $(document).ready(function () {
+                                            $("#homepopup").modal('show');
+                                           
+                                        });
+                                        }
+                                    
+                                    else {
+
+                                    $(document).ready(function() {
+                                        $("#homepopup").modal('hide');
+                                        
+                                    });
+
+                                    }
+                       
+                        
+                    </script>
+                   
+                </div>
+
+            </div>
+        </div>
+    }
+}
+<script>
+    document.getElementById("a9").className = "active";
+</script>
+<script>
+    // Get the modal
+    //var modal = document.getElementById('myModal');
+
+
+    @*$(document).ready(function () {
+        debugger;
+        if (@ViewBag.empid == "381") {
+           
+        }
+    });*@
+
+    if (@ViewBag.empid == "381") {
+        $(window).on('load', function () {
+            debugger; $.ajax({
+                url: "/DashBoard/employeetemptransfer",
+                Type: 'Get',
+                dataType: 'json',
+                success: function (response) {
+                    debugger;
+                    if (response != null) {
+                        debugger;
+                        //if (!rows[row].available) {
+
+                        //    modal.style.display = "block";
+                        //}
+
+                        var text =
+                            "<tr><td> Employee Designation Deviation:</td><td>" + " " + " " + response[0].cntOfEmployee
+                            + "</td></tr><tr><td> Employee Branch Deviation:</td><td>" + " " + " " + response[1].cntOfEmployee + "</td></tr>"
+                            + "</td></tr><tr><td> Employee Department Deviation:</td><td>" + " " + " " + response[2].cntOfEmployee + "</td></tr>";
+
+                        document.getElementById("myTextArea").innerHTML = text;
+
+
+                    }
+                    if (response[0].cntOfEmployee == "0" && response.length >1) { }
+                    else {
+                        $('#myModal').modal('show');
+                    }
+                },
+            });
+            
+        });
+    }
+</script>
+
+
+<style>
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+    .modal-content {
+        margin: auto;
+        padding: 0px;
+        border: 1px solid rgb(136, 136, 136);
+        width: 50%;
+        z-index: 99999999999;
+        left: 25%;
+        background: rgb(219, 238, 247);
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+    .modal-header {
+        min-height: 16.42857143px;
+        padding: 13px;
+        border-bottom: 1px solid rgb(221, 221, 221);
+        background: rgba(60, 141, 188, 0.4);
+    }
+
+        .modal-header h4 {
+            font-size: 18px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgb(255, 255, 255);
+        }
+
+    #myTextArea td {
+        border: 1px solid #c2c2c2;
+        padding: 6px 80px 6px 18px;
+        text-align: left;
+    }
+
+    .modal-header .close {
+        margin-top: -2px;
+        color: rgb(0, 0, 0);
+        opacity: 4;
+        /* background: rgb(0, 0, 0); */
+    }
+</style>

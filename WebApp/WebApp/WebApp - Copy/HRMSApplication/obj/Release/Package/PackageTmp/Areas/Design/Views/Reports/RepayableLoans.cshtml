@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewBag.Title = "RepayableLoans";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <h1>Loan Type Break Up-Repayable Loans</h1>
+                    <div class="col-md-4">
+                        <div class="inner_heading">
+                            <h1>Select Loan</h1>
+                            <div class="col-md-12 mt_10">
+
+                                <table id="annual_increment_left" class="table table-bordered">
+                                    <tbody>
+                                        <tr><td> <input id="checkbox1" type="checkbox" name="checkbox" value="1"><label for="checkbox1"><span></span>Domestic</label></td></tr>
+                                        <tr><td> <input id="checkbox1" type="checkbox" name="checkbox" value="2"><label for="checkbox1"><span></span>Higher Education</</label></td></tr>
+                                        <tr><td> <input id="checkbox1" type="checkbox" name="checkbox" value="3"><label for="checkbox1"><span></span>Housing</label></td></tr>
+                                        <tr><td> <input id="checkbox1" type="checkbox" name="checkbox" value="4"><label for="checkbox1"><span></span>Medical</label></td></tr>
+                                        <tr><td> <input id="checkbox1" type="checkbox" name="checkbox" value="5"><label for="checkbox1"><span></span>Others</label></td></tr>
+                                        <tr><td> <input id="checkbox1" type="checkbox" name="checkbox" value="6"><label for="checkbox1"><span></span>Personal</label></td></tr>
+                                    </tbody>
+                                </table>
+                                <input id="checkbox1" type="checkbox" name="checkbox" value="2"><label for="checkbox1"><span></span>Select All</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="inner_heading">
+                            <h1>Employees</h1>
+                            <input id="file" type="radio" name="file" value="1"><label for="regularemployee"><span><span></span></span>ST Employees</label>
+                            <div class="clearfix"></div>
+                            <input id="file" type="radio" name="file" value="1"><label for="supplementaryemployee"><span><span></span></span>LT Employees</label>
+                            <div class="clearfix"></div>
+                            <input id="file" type="radio" name="file" value="1"><label for="supplementaryemployee"><span><span></span></span>BOTH [ST & LT]</label>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="pull-right">
+                            <button type="reset" class="btn btn-default cancel">Close</button>
+                            <button type="submit" class="btn btn-primary">OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#annual_increment_left').DataTable();
+    });
+</script>

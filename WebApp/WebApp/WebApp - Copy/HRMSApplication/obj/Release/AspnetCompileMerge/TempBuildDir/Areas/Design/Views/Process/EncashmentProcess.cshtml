@@ -1,0 +1,95 @@
+﻿
+@{
+    ViewBag.Title = "EncashmentProcess";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <h1>Encashment Process</h1>
+                    <div class="col-md-4 mt_10">
+                        <div class="inner_heading">
+                            <h1>Options</h1>
+                            <div class="col-md-7">
+                                <label>
+                                    <input id="radio1" type="radio" name="radio" value="1" checked="checked"><label for="radio1"><span><span></span></span>All Employees</label>
+                                </label>
+                            </div>
+                            <div class="col-md-7">
+                                <label>
+                                    <input id="radio1" type="radio" name="radio" value="1" checked="checked"><label for="radio1"><span><span></span></span>Selected Employees</label>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8 mt_10">
+                        <div class="inner_heading">
+                            <h1>Employees</h1>
+                            <div class="table-responsive">
+                                <table id="payslip_process" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Names</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <label>
+                                                    <input id="checkbox1" type="checkbox" name="checkbox" value="1"><label for="checkbox1"><span></span>5789 M. Swarthi</label>
+                                                </label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label>
+                                                    <input id="checkbox1" type="checkbox" name="checkbox" value="1" ><label for="checkbox1"><span></span>5892 M. Naidu</label>
+                                                </label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label>
+                                                    <input id="checkbox1" type="checkbox" name="checkbox" value="1" checked="checked"><label for="checkbox1"><span></span>9856 K. Rao</label>
+                                                </label>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row mt_10">
+                            <div class="col-md-3">
+                                <label>
+                                    <input id="checkbox1" type="checkbox" name="checkbox" value="1" checked="checked"><label for="checkbox1"><span></span>Select All</label>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="pull-right">
+                            <button type="reset" class="btn btn-default cancel">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Process</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#payslip_process').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+        });
+    });
+</script>

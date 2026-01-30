@@ -1,0 +1,742 @@
+//General
+INSERT INTO pr_emp_general(emp_id, fy, fm,emp_code,sex,martial_status,zone,designation,designation_category,region_for_p_tax,p_tax_region,address,per_address,per_phoneno,native_place,division,pf_no,uan_no,email_id,identify_mark1,identify_mark2,blood_group,religion,cur_reservation,join_reservation,pan_no,branch_code,pay_bank,account_code,bank_accno,customer_id,phy_handicapped,house_provided,emp_age,designation_no,stl_temp,fest_adv,artr_emp,aadhaar_no,
+dob,exp,active,trans_id)  values ((select id from employees where empid = "&B3&") ,2019,'2019-09-01',"&B3&",(select Gender from Employees where EmpId= "&B3&"),(select MartialStatus from Employees where EmpId= "&B3&"),'HYDERABAD',(select d.Name from  Employees e join Designations d on e.CurrentDesignation = d.Id where e.EmpId= "&B3&"),'"&AV3&"','HYDERABAD','HYDERABAD','"&S3&"','"&V3&"','"&AL3&"','"&AM3&"','"&M3&"','"&N3&"','"&O3&"','"&AE3&"','"&AN3&"','"&AO3&"',(select BloodGroup from Employees where EmpId= "&B3&"),'"&AQ3&"','"&AR3&"','"&AS3&"','"&CY3&"','"&EI3&"','"&DI3&"','"&ED3&"','"&DX3&"','"&EC3&"',"&DK3&","&DL3&","&DL3&","&EK3&",'"&EL3&"','"&EM3&"','"&EW3&"','"&GB3&"',(select dob from Employees where EmpId= "&B3&"),'"&R3&"',1,1000);
+...................................*****************************************..........................
+
+//BIOLOGICAL
+
+="INSERT INTO pr_emp_biological_field (emp_code,emp_id,fy,fm,[f/h_relation],active,trans_id) values("&A3& ",(select id from employees where empid = "&A3&"),
+2019,'2019-07-01','"&DC3& "',1,1000)"
+
+--------new
+
+="INSERT INTO pr_emp_biological_field (emp_code,emp_id,fy,fm,[f/h_relation],active,trans_id,revision_of_date_change) values("&A3& ",(select id from employees where empid = "&A3&"),
+2019,'2019-07-01','"&DC3& "',1,1000,(SELECT CONCAT('2019-', (select format(DOJ,'MM-dd'))) as doj from Employees where EmpId="&A3&"))"
+
+..........................................***********************.....................................
+
+// Pay Fields
+
+//1.Basic
+
+="Insert into pr_emp_pay_field ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_earn_field_master where type='pay_fields' and name='Basic'),'Pay_fields', "&D3&",1, 1000))"
+
+//2. Special Increment
+
+="Insert into pr_emp_pay_field ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_earn_field_master where type='pay_fields' and name='Special Increment'),'Pay_fields', "&DZ3&",1,1000))"
+
+//3. Stagnation Increments
+
+="Insert into pr_emp_pay_field ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_earn_field_master where type='pay_fields' and name='Stagnation Increments'),'Pay_fields', "&DA3&",1,1000))"
+
+// 4. Annual Increment
+="Insert into pr_emp_pay_field ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_earn_field_master where type='pay_fields' and name='Annual Increment'),'Pay_fields', 0,1,1000))"
+
+//5. CAIIB Increment	
+="Insert into pr_emp_pay_field ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_earn_field_master where type='pay_fields' and name='CAIIB Increment'),'Pay_fields',0,1,1000))"
+
+//6. JAIIB Increment
+="Insert into pr_emp_pay_field ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_earn_field_master where type='pay_fields' and name='JAIIB Increment'),'Pay_fields',0,1,1000))"
+
+//7.Employee Tds
+
+="Insert into pr_emp_pay_field ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_earn_field_master where type='pay_fields' and name='Employee Tds'),'Pay_fields', "&AA3&",1,1000))"
+
+// 8 . LIC Premium
+
+="Insert into pr_emp_pay_field ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_earn_field_master where type='pay_fields' and name='LIC Premium'),'Pay_fields', "&AB3&",1,1000))"
+
+// 9 . Loss of Pay
+="Insert into pr_emp_pay_field ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_earn_field_master where type='pay_fields' and name='Loss of Pay'),'Pay_fields', 0,1,1000))"
+// 10 . Special Pay
+
+="Insert into pr_emp_pay_field ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_earn_field_master where type='pay_fields' and name='Special Pay'),'Pay_fields', "&AV3&",1,1000))"
+
+// 11. System Administrator Allowance 
+
+="Insert into pr_emp_pay_field ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_earn_field_master where type='pay_fields' and name='System Administrator Allowance'),'Pay_fields', "&AX3&",1,1000))"
+
+// 12. Teaching Allowance
+
+="Insert into pr_emp_pay_field ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_earn_field_master where type='pay_fields' and name='Teaching Allowance'),'Pay_fields', "&BJ3&",1,1000))"
+
+//13. Washing Allowance
+
+="Insert into pr_emp_pay_field ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_earn_field_master where type='pay_fields' and name='Washing Allowance'),'Pay_fields', "&EA3&",1,1000))"
+
+//14. Interm Relief
+
+="Insert into pr_emp_pay_field ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_earn_field_master where type='pay_fields' and name='Interm Relief'),'Pay_fields', "&FT3&",1,1000))"
+
+//15. Fixed Allowance
+
+="Insert into pr_emp_pay_field ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_earn_field_master where type='pay_fields' and name='Fixed Allowance'),'Pay_fields', "&FU3&",1,1000))"
+
+//16. Telangana Increment
+
+="Insert into pr_emp_pay_field ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_earn_field_master where type='pay_fields' and name='Telangana Increment'),'Pay_fields', "&FW3&",1,1000))"
+.................................................**************************.............................
+
+// Allowances
+
+//1. Physically Handicapped
+="Insert into pr_emp_allowances_gen ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPA' and name='Physically Handicapped'),'EMPA', "&AW3&",1,1000))"
+
+// 2. Deputation Allowance //AY
+
+="Insert into pr_emp_allowances_gen ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPA' and name='Deputation Allowance'),'EMPA', "&AY3&",1,1000))"
+
+//3.Fixed Personal Allowance
+
+="Insert into pr_emp_allowances_gen ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPA' and name='Fixed Personal Allowance'),'EMPA', "&AZ3&",1,1000))"
+
+//4. FPA-HRA Allowance
+
+="Insert into pr_emp_allowances_gen ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPA' and name='FPA-HRA Allowance'),'EMPA', "&BA3&",1,1000))"
+
+//5. Interim Allowance
+
+="Insert into pr_emp_allowances_gen ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPA' and name='Interim Allowance'),'EMPA', "&BB3&",1,1000))"
+
+//6. FPIIP
+
+="Insert into pr_emp_allowances_gen ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPA' and name='FPIIP'),'EMPA', "&BC3&",1,1000))"
+
+// 7. Medical Allowance
+="Insert into pr_emp_allowances_gen ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPA' and name='Medical Allowance'),'EMPA', "&BD3&",1,1000))"
+
+//8. NPSG Allowance
+
+="Insert into pr_emp_allowances_gen ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPA' and name='NPSG Allowance'),'EMPA', "&BE3&",1,1000))"
+
+// 9. Officiating Allowance
+
+="Insert into pr_emp_allowances_gen ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPA' and name='Officiating Allowance'),'EMPA', "&BF3&",1,1000))"
+
+//10. Personal Pay
+
+="Insert into pr_emp_allowances_gen ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPA' and name='Personal Pay'),'EMPA', "&BG3&",1,1000))"
+
+//11. Personal Qual Allowance
+
+="Insert into pr_emp_allowances_gen ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPA' and name='Personal Qual Allowance'),'EMPA', "&BH3&",1,1000))"
+
+//12. Res. Attenders Allowance
+
+="Insert into pr_emp_allowances_gen ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPA' and name='Res. Attenders Allowance'),'EMPA', "&BI3&",1,1000))"
+
+// 13. FP Incentive Recovery
+
+="Insert into pr_emp_allowances_gen ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPA' and name='FP Incentive Recovery'),'EMPA', "&CU3&",1,1000))"
+
+//14. Br Manager Allowance
+
+="Insert into pr_emp_allowances_gen ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPA' and name='Br Manager Allowance'),'EMPA', "&DY3&",1,1000))"
+
+//15. Petrol & Paper
+
+="Insert into pr_emp_allowances_gen ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPA' and name='Petrol & Paper'),'EMPA', 0,1,1000))"
+
+//16. Petrol & Paper 1
+
+="Insert into pr_emp_allowances_gen ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPA' and name='Petrol & Paper 1'),'EMPA', 0,1,1000))"
+
+//16. Children Education Allowance
+
+="Insert into pr_emp_allowances_gen ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPA' and name='Children Education Allowance'),'EMPA', 0,1,1000))"
+
+//17. Fest. Advance
+="Insert into pr_emp_allowances_gen ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPA' and name='Fest. Advance'),'EMPA', "&EV3&",1,1000))"
+
+//18. LT PF Loan
+
+="Insert into pr_emp_allowances_gen ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPA' and name='LT PF Loan'),'EMPA', "&FD3&",1,1000))"
+
+// 19. INCENTIVE
+
+="Insert into pr_emp_allowances_gen ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPA' and name='INCENTIVE'),'EMPA', "&FE3&",1,1000))"
+
+//20.INCENTIVE DIFF
+
+="Insert into pr_emp_allowances_gen ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPA' and name='INCENTIVE DIFF'),'EMPA', "&FF3&",1,1000))"
+
+// 21. LTC ENCASHMENT
+
+="Insert into pr_emp_allowances_gen ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPA' and name='LTC ENCASHMENT'),'EMPA', "&FR3&",1,1000))"
+
+....................................................**********************************************........................................
+
+//Special Allowance
+
+//1.SPL Care Taker
+="Insert into pr_emp_allowances_spl ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPSA' and name='SPL Care Taker'),'EMPSA', "&BK3&",1,1000))"
+
+//2.SPL Cashier
+="Insert into pr_emp_allowances_spl ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPSA' and name='SPL Cashier'),'EMPSA', "&BL3&",1,1000))"
+
+//3. SPL Driver
+="Insert into pr_emp_allowances_spl ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPSA' and name='SPL Driver'),'EMPSA', "&BM3&",1,1000))"
+
+//4. SPL Jamedar
+="Insert into pr_emp_allowances_spl ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPSA' and name='SPL Jamedar'),'EMPSA', "&BN3&",1,1000))"
+
+// 5.SPL Key
+="Insert into pr_emp_allowances_spl ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPSA' and name='SPL Key'),'EMPSA', "&BO3&",1,1000))"
+
+// 6. SPL Lift Operator
+
+="Insert into pr_emp_allowances_spl ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPSA' and name='SPL Lift Operator'),'EMPSA', "&BP3&",1,1000))"
+
+//7. SPL Non Promotional
+
+="Insert into pr_emp_allowances_spl ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPSA' and name='SPL Non Promotional'),'EMPSA', "&BQ3&",1,1000))"
+
+//8. SPL Split Duty -Award staff
+="Insert into pr_emp_allowances_spl ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPSA' and name='SPL Split Duty -Award staff'),'EMPSA', "&BR3&",1,1000))"
+
+// 9. SPL Typist
+
+="Insert into pr_emp_allowances_spl ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPSA' and name='SPL Typist'),'EMPSA', "&BS3&",1,1000))"
+
+// 10. SPL Watchman
+
+="Insert into pr_emp_allowances_spl ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPSA' and name='SPL Watchman'),'EMPSA', "&BT3&",1,1000))"
+
+//11. SPL Stenographer
+
+="Insert into pr_emp_allowances_spl ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPSA' and name='SPL Stenographer'),'EMPSA', "&BU3&",1,1000))"
+
+//12.SPL Bill Collector
+
+="Insert into pr_emp_allowances_spl ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPSA' and name='SPL Bill Collector'),'EMPSA', "&BV3&",1,1000))"
+
+//13. SPL Despatch
+
+="Insert into pr_emp_allowances_spl ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPSA' and name='SPL Despatch'),'EMPSA', "&BW3&",1,1000))"
+
+//14. SPL Electrician
+
+="Insert into pr_emp_allowances_spl ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPSA' and name='SPL Electrician'),'EMPSA', "&BX3&",1,1000))"
+
+//15. SPL Dafter
+
+="Insert into pr_emp_allowances_spl ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPSA' and name='SPL Dafter'),'EMPSA', "&BY3&",1,1000))"
+
+//16. SPL Cash Cabin
+
+="Insert into pr_emp_allowances_spl ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPSA' and name='SPL Cash Cabin'),'EMPSA', "&BZ3&",1,1000))"
+
+//17. SPL Telephone Operator
+
+="Insert into pr_emp_allowances_spl ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPSA' and name='SPL Telephone Operator'),'EMPSA', "&CA3&",1,1000))"
+
+
+//18. SPL Library
+
+="Insert into pr_emp_allowances_spl ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPSA' and name='SPL Library'),'EMPSA', "&CB3&",1,1000))"
+
+//19. SPL Incentive
+
+="Insert into pr_emp_allowances_spl ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPSA' and name='SPL Incentive'),'EMPSA', "&CC3&",1,1000))"
+
+//20.SPL Arrear Incentive
+
+="Insert into pr_emp_allowances_spl ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPSA' and name='SPL Arrear Incentive'),'EMPSA', "&CD3&",1,1000))"
+
+//21. SPL Conveyance
+
+="Insert into pr_emp_allowances_spl ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPSA' and name='SPL Conveyance'),'EMPSA', "&CE3&",1,1000))"
+
+//22.SPL Split Duty - Managers
+
+="Insert into pr_emp_allowances_spl ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPSA' and name='SPL Split Duty - Managers'),'EMPSA', "&CF3&",1,1000))"
+
+//23. SPL Duplicating/xerox machine
+
+="Insert into pr_emp_allowances_spl ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPSA' and name='SPL Duplicating/xerox machine'),'EMPSA', "&CG3&",1,1000))"
+
+//24. SPL Record room asst allowance
+
+="Insert into pr_emp_allowances_spl ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPSA' and name='SPL Record room asst allowance'),'EMPSA', "&CH3&",1,1000))"
+
+//25. SPL Record room sub staff all
+
+="Insert into pr_emp_allowances_spl ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPSA' and name='SPL Record room sub staff all'),'EMPSA', "&CI3&",1,1000))"
+
+//26. SPL Receptionist allowance
+
+="Insert into pr_emp_allowances_spl ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPSA' and name='SPL Receptionist allowance'),'EMPSA', "&CJ3&",1,1000))"
+
+//27. SPL Spl.Alw.ACSTI
+
+="Insert into pr_emp_allowances_spl ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPSA' and name='SPL Spl.Alw.ACSTI'),'EMPSA', "&CK3&",1,1000))"
+
+//28. SPL Personal Pay
+
+="Insert into pr_emp_allowances_spl ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPSA' and name='SPL Personal Pay'),'EMPSA', "&AV3&",1,1000))"
+
+//29. FACULTY ALLOWANCE
+
+="Insert into pr_emp_allowances_spl ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPSA' and name='FACULTY ALLOWANCE'),'EMPSA', "&GB3&",1,1000))"
+
+//30.SHIFT DUTY ALLOWANCE
+
+="Insert into pr_emp_allowances_spl ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_allowance_field_master where type='EMPSA' and name='SHIFT DUTY ALLOWANCE'),'EMPSA', 0,1,1000))"
+
+..................................******************************************................................................
+
+//DEDUCTIONS
+
+//1. APCOB-HFC-LT
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='APCOB-HFC-LT'),'EPD', "&DV3&",1,1000))"
+
+//2. APCOB-HFC-HO
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='APCOB-HFC-HO'),'EPD', "&DU3&",1,1000))"
+
+//3. VIJAYA Coop Society Deduction
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='VIJAYA Coop Society Deduction'),'EPD', "&CL3&",1,1000))"
+
+//4.VISAKHA Coop Society Deduction
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='VISAKHA Coop Society Deduction'),'EPD', "&CM3&",1,1000))"
+
+//5. GSLI
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='GSLI'),'EPD', "&CN3&",1,1000))"
+
+//6. Officers Assn Fund
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='Officers Assn Fund'),'EPD', "&CO3&",1,1000))"
+
+//6. Cadre Officers Assn Fund
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='Cadre Officers Assn Fund'),'EPD', "&CP3&",1,1000))"
+
+//7.Club Subscription
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='Club Subscription'),'EPD', "&CQ3&",1,1000))"
+
+//8.Union Club Subscription
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='Union Club Subscription'),'EPD', "&CR3&",1,1000))"
+
+// 9.SC/ST Assn LT Subscription
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='SC/ST Assn LT Subscription'),'EPD', "&CS3&",1,1000))"
+
+// 10.SC/ST Assn ST Subscription
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='SC/ST Assn ST Subscription'),'EPD', "&CT3&",1,1000))"
+
+//11.LT Staff Benefit Fund
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='LT Staff Benefit Fund'),'EPD', "&CV3&",1,1000))"
+
+//12. VPF Deduction 
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='VPF Deduction'),'EPD', "&CW3&",1,1000))"
+
+//13. VPF Percentage 
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='VPF Percentage'),'EPD', "&DG3&",1,1000))"
+
+//14.LIC - PENSION
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='LIC - PENSION'),'EPD', "&DL3&",1,1000))"
+
+//15. JEEVAN SURAKSHA
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='JEEVAN SURAKSHA'),'EPD', "&DM3&",1,1000))"
+
+//16.HDFC
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='HDFC'),'EPD', "&DN3&",1,1000))"
+
+//17.CCA - AP
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='CCA - AP'),'EPD', "&DO3&",1,1000))"
+
+
+//18.CCS - HYD
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='CCS - HYD'),'EPD', "&DP3&",1,1000))"
+
+//19.AB-HLF(HYD)
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='AB-HLF(HYD)'),'EPD', "&DQ3&",1,1000))"
+
+//20. APCCADB - EMP CCS
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='APCCADB - EMP CCS'),'EPD', "&DR3&",1,1000))"
+
+//21. APCOB-ED.LOAN-HNR.BR
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='APCOB-ED.LOAN-HNR.BR'),'EPD', "&DS3&",1,1000))"
+
+//22.APCOB-ED.LOAN-HO
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='APCOB-ED.LOAN-HO'),'EPD', "&DT3&",1,1000))"
+
+//23.APSCB-LT-Emp Assn
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='APSCB-LT-Emp Assn'),'EPD', "&DV3&",1,1000))"
+
+//24. DR-CCS-VIZAG
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='DR-CCS-VIZAG'),'EPD', "&EO3&",1,1000))"
+
+// 25. PRN-JR CVL JUDGE, VIZAG
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='PRN-JR CVL JUDGE, VIZAG'),'EPD', "&EP3&",1,1000))"
+
+//26.1 ADDL JR CVL JUDGE, TANUKU
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='1 ADDL JR CVL JUDGE, TANUKU'),'EPD', "&EQ3&",1,1000))"
+
+//27. KADAPA DCCB
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='KADAPA DCCB'),'EPD', "&ER3&",1,1000))"
+
+//28 . JR CVL JUDGE, SULLURPET
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='JR CVL JUDGE, SULLURPET'),'EPD', "&ES3&",1,1000))"
+
+//29. KML COOP BANK, VIZAG
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='KML COOP BANK, VIZAG'),'EPD', "&ET3&",1,1000))"
+
+//30. ESTT-EXCESS HRA REC
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='ESTT-EXCESS HRA REC'),'EPD', "&EU3&",1,1000))"
+
+//31. FESTIVAL ADVANCE
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='FESTIVAL ADVANCE'),'EPD', "&EV3&",1,1000))"
+
+//32. ANDHRA BANK, RAMANTHPUR
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='ANDHRA BANK, RAMANTHPUR'),'EPD', 0,1,1000))"
+
+//33. SR.CIVIL JUDGE, KADAPA
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='SR.CIVIL JUDGE, KADAPA'),'EPD', "&FA3&",1,1000))"
+
+//34. MEDICAL ADVANCE RECOVERY
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='MEDICAL ADVANCE RECOVERY'),'EPD', "&FB3&",1,1000))"
+
+//35. XIX JR.CVL JUDGE, C C COURT, HYDERABAD
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='XIX JR.CVL JUDGE, C C COURT, HYDERABAD'),'EPD', "&FC3&",1,1000))"
+
+//36. BANKS EMP ASSN TELANGANA
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='BANKS EMP ASSN TELANGANA'),'EPD', "&FG3&",1,1000))"
+
+//37. LIC MACHILIPATNAM
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='LIC MACHILIPATNAM'),'EPD', "&FH3&",1,1000))"
+
+//38. VEHICLE LOAN MACHILIPATNAM
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='VEHICLE LOAN MACHILIPATNAM'),'EPD', "&FI3&",1,1000))"
+
+//39. FESTIVAL ADVANCE MEDAK
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='FESTIVAL ADVANCE MEDAK'),'EPD', "&FK3&",1,1000))"
+
+//40. FEST ADV MEDAK
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='FEST ADV MEDAK'),'EPD', "&FJ3&",1,1000))"
+
+//41. XI JR.CVL JUDGE, C C COURT, SEC
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='XI JR.CVL JUDGE, C C COURT, SEC'),'EPD', "&FL3&",1,1000))"
+
+//42. FESTIVAL ADVANCE ELURU
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='FESTIVAL ADVANCE ELURU'),'EPD', "&FM3&",1,1000))"
+
+//43. TELANGANA EMP UNION
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='TELANGANA EMP UNION'),'EPD', "&FN3&",1,1000))"
+
+//44. DCCB DEDUCTION
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='DCCB DEDUCTION'),'EPD', "&FO3&",1,1000))"
+
+//45. COURT DEDUCTION
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='COURT DEDUCTION'),'EPD', "&FP3&",1,1000))"
+
+//46. LIFE INSURANCE
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='LIFE INSURANCE'),'EPD', "&FQ3&",1,1000))"
+
+//47. TELANGANA OFFICERS ASSN
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='TELANGANA OFFICERS ASSN'),'EPD', "&FS3&",1,1000))"
+
+//48. TSCAB OFFICERS ASSN
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='TSCAB OFFICERS ASSN'),'EPD', "&FX3&",1,1000))"
+
+//49.MISC. DEDUCTION
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='MISC. DEDUCTION'),'EPD', "&FY3&",1,1000))"
+
+//50. PERSONAL LOAN
+
+="Insert into pr_emp_deductions ([emp_id],[emp_code],[fy],[fm],[m_id],[m_type],
+[amount],[active],[trans_id]) values ((select id from employees where empid = "&A3&"),"&A3&",2019,'2019-07-01',
+(select id from pr_deduction_field_master where type='EPD' and name='PERSONAL LOAN'),'EPD', "&GE3&",1,1000))"
+
+------------------------------------------************************************----------------------------------------------
+
+// LIC DATA
+
+="INSERT INTO pr_emp_lic_details ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = "&B3&"),"&B3&",'"&D3&"',"&E3&",' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)"
+
+
+// HFC DATA
+
+
+="INSERT INTO pr_emp_hfc_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = "&B3&"),"&B3&",'"&D3&"',"&E3&",' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)"
+
+

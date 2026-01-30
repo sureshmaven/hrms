@@ -1,0 +1,119 @@
+ALTER TABLE Timesheet_Request_Form ADD exittime varchar(100);
+ALTER TABLE Timesheet_Request_Form ADD entrytime varchar(100); 
+
+CREATE table calender (mydate date);
+
+declare @startdate as date = '2015-01-01'
+WHILE(@startdate!=DATEADD(D, 0, DATEDIFF(D, 0, '2050-12-31')))
+begin
+insert into calender VALUES(@startdate)
+set @startdate=dateadd(day,1,@startdate)
+end
+
+update PLE_Type set CurrentYear= LTRIM(RTRIM(CurrentYear))
+
+alter table Employees add photo varchar(5);
+update employees set photo='No';
+
+insert into designations values('AM','Assistant Manager','Assistant Manager',123456,getdate());
+create table DCCB_employees (Id int identity(1,1),
+empid int,shortname nvarchar(max),DCCB_district nvarchar(max),designation nvarchar(max));
+create table DCCB_Districts (Id int IDENTITY(1,1),District_code nvarchar(max),District_Name nvarchar(max));
+insert into DCCB_Districts Values ('ADI','Adilabad');
+insert into DCCB_Districts Values ('MAHA','Mahabubnagar');
+insert into DCCB_Districts Values ('MED','Medak');
+insert into DCCB_Districts Values ('KAR','Karimnagar');
+insert into DCCB_Districts Values ('KHA','Khammam');
+insert into DCCB_Districts Values ('NAL','Nalgonda');
+insert into DCCB_Districts Values ('NIZ','Nizamabad');
+insert into DCCB_Districts Values ('WAR','Warangal');
+
+insert into DCCB_Employees Values (7007	,'B Amarender Reddy' , (select id from DCCB_Districts where District_Name 
+='Nalgonda') , (select id from designations where name 
+='Assistant Manager'));
+insert into DCCB_Employees Values (7018	,'N Harika' , (select id from DCCB_Districts where District_Name='Adilabad') , (select id from designations where name 
+='Manager'));
+insert into DCCB_Employees Values (7020	,'S Prasuna' , (select id from DCCB_Districts where District_Name='Karimnagar') , (select id from designations where name 
+='Manager'));
+insert into DCCB_Employees Values (7022	,'S Aruna' , (select id from DCCB_Districts where District_Name='Mahabubnagar') , (select id from designations where name 
+='Assistant Manager'));
+insert into DCCB_Employees Values (7026	,'Sunanda Bhargavi K' , (select id from DCCB_Districts where District_Name='Khammam') , (select id from designations where name 
+='Staff Assistant'));
+insert into DCCB_Employees Values (7027	,'B Pallavi' , (select id from DCCB_Districts where District_Name='Adilabad') , (select id from designations where name 
+='Manager'));
+insert into DCCB_Employees Values (7028	,'V Sathyavathi' , (select id from DCCB_Districts where District_Name='Nalgonda') , (select id from designations where name 
+='Assistant Manager'));
+insert into DCCB_Employees Values (7030	,'K Swathi' , (select id from DCCB_Districts where District_Name='Adilabad') , (select id from designations where name 
+='Assistant Manager'));
+insert into DCCB_Employees Values (7031	,'B V Gouthami' , (select id from DCCB_Districts where District_Name='Nalgonda') , (select id from designations where name 
+='Assistant Manager'));
+insert into DCCB_Employees Values (7034	,'G Sravani' , (select id from DCCB_Districts where District_Name='Mahabubnagar') , (select id from designations where name 
+='Staff Assistant'));
+insert into DCCB_Employees Values (7035	,'T Anusha' , (select id from DCCB_Districts where District_Name='Medak') , (select id from designations where name 
+='Assistant Manager'));
+insert into DCCB_Employees Values (7036	,'G Maheshwari' , (select id from DCCB_Districts where District_Name='Karimnagar') , (select id from designations where name 
+='Assistant Manager'));
+insert into DCCB_Employees Values (7037	,'Ch Chaithanya' , (select id from DCCB_Districts where District_Name='Karimnagar') , (select id from designations where name 
+='Assistant Manager'));
+insert into DCCB_Employees Values (7039	,'N Uday Kumar' , (select id from DCCB_Districts where District_Name='Adilabad') , (select id from designations where name 
+='Staff Assistant'));
+insert into DCCB_Employees Values (7040	,'G Sripal Reddy' , (select id from DCCB_Districts where District_Name='Nizamabad') , (select id from designations where name 
+='Assistant Manager'));
+insert into DCCB_Employees Values (7041	,'K Sowjanya' , (select id from DCCB_Districts where District_Name='Adilabad') , (select id from designations where name 
+='Staff Assistant'));
+insert into DCCB_Employees Values (7042	,'K Himabindu' , (select id from DCCB_Districts where District_Name='Nizamabad') , (select id from designations where name 
+='Staff Assistant'));
+insert into DCCB_Employees Values (7043	,'M Sereesha' , (select id from DCCB_Districts where District_Name='Nalgonda') , (select id from designations where name 
+='Assistant Manager'));
+insert into DCCB_Employees Values (7044	,'N Shankar' , (select id from DCCB_Districts where District_Name='Karimnagar') , (select id from designations where name 
+='Staff Assistant'));
+insert into DCCB_Employees Values (7045	,'M C Meghana' , (select id from DCCB_Districts where District_Name='Nizamabad') , (select id from designations where name 
+='Staff Assistant'));
+insert into DCCB_Employees Values (7046	,'Boppana Arun' , (select id from DCCB_Districts where District_Name='Nalgonda') , (select id from designations where name 
+='Staff Assistant'));
+insert into DCCB_Employees Values (7047	,'J Rajendraprasad' , (select id from DCCB_Districts where District_Name='Warangal') , (select id from designations where name 
+='Staff Assistant'));
+insert into DCCB_Employees Values (7049	,'Rakesh reddy' , (select id from DCCB_Districts where District_Name='Warangal') , (select id from designations where name 
+='Staff Assistant'));
+insert into DCCB_Employees Values (7024	,'K Bharathi' ,  (select id from DCCB_Districts where District_Name='Mahabubnagar') , (select id from designations where name 
+='Manager'));
+
+
+insert into timesheet_run_status (yr,mn,device_id,branch_id,branch_name,D1,D2,D3,D4,D5,D6,D7,D8,D9,D10,D11,D12,D13,D14,D15,D16,D17,D18,D19,D20,D21,D22,D23,D24,D25,D26,D27,D28,D29,D30,D31) values (2020,07,'DB66ACB6A7362328',22,'MALKAJGIRI2',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1);
+insert into timesheet_run_status (yr,mn,device_id,branch_id,branch_name,D1,D2,D3,D4,D5,D6,D7,D8,D9,D10,D11,D12,D13,D14,D15,D16,D17,D18,D19,D20,D21,D22,D23,D24,D25,D26,D27,D28,D29,D30,D31) values (2020,08,'DB66ACB6A7362328',22,'MALKAJGIRI2',1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
+insert into timesheet_run_status (yr,mn,device_id,branch_id,branch_name,D1,D2,D3,D4,D5,D6,D7,D8,D9,D10,D11,D12,D13,D14,D15,D16,D17,D18,D19,D20,D21,D22,D23,D24,D25,D26,D27,D28,D29,D30) values (2020,09,'DB66ACB6A7362328',22,'MALKAJGIRI2',1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0);
+insert into timesheet_run_status (yr,mn,device_id,branch_id,branch_name,D1,D2,D3,D4,D5,D6,D7,D8,D9,D10,D11,D12,D13,D14,D15,D16,D17,D18,D19,D20,D21,D22,D23,D24,D25,D26,D27,D28,D29,D30,D31) values (2020,10,'DB66ACB6A7362328',22,'MALKAJGIRI2',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+insert into Branch_Device (Device_Id,BranchId,BranchName,UpdatedDate,UpdatedBy) values ('DB66ACB6A7362328',22,'MALKAJGIRI2',getDate(),123456);
+
+ALTER TABLE timesheet_Emp_Month ADD D1_meridian varchar(10);
+ALTER TABLE timesheet_Emp_Month ADD D2_meridian varchar(10);
+ALTER TABLE timesheet_Emp_Month ADD D3_meridian varchar(10);
+ALTER TABLE timesheet_Emp_Month ADD D4_meridian varchar(10);
+ALTER TABLE timesheet_Emp_Month ADD D5_meridian varchar(10);
+ALTER TABLE timesheet_Emp_Month ADD D6_meridian varchar(10);
+ALTER TABLE timesheet_Emp_Month ADD D7_meridian varchar(10);
+ALTER TABLE timesheet_Emp_Month ADD D8_meridian varchar(10);
+ALTER TABLE timesheet_Emp_Month ADD D9_meridian varchar(10);
+ALTER TABLE timesheet_Emp_Month ADD D10_meridian varchar(10);
+ALTER TABLE timesheet_Emp_Month ADD D11_meridian varchar(10);
+ALTER TABLE timesheet_Emp_Month ADD D12_meridian varchar(10);
+ALTER TABLE timesheet_Emp_Month ADD D13_meridian varchar(10);
+ALTER TABLE timesheet_Emp_Month ADD D14_meridian varchar(10);
+ALTER TABLE timesheet_Emp_Month ADD D15_meridian varchar(10);
+ALTER TABLE timesheet_Emp_Month ADD D16_meridian varchar(10);
+ALTER TABLE timesheet_Emp_Month ADD D17_meridian varchar(10);
+ALTER TABLE timesheet_Emp_Month ADD D18_meridian varchar(10);
+ALTER TABLE timesheet_Emp_Month ADD D19_meridian varchar(10);
+ALTER TABLE timesheet_Emp_Month ADD D20_meridian varchar(10);
+ALTER TABLE timesheet_Emp_Month ADD D21_meridian varchar(10);
+ALTER TABLE timesheet_Emp_Month ADD D22_meridian varchar(10);
+ALTER TABLE timesheet_Emp_Month ADD D23_meridian varchar(10);
+ALTER TABLE timesheet_Emp_Month ADD D24_meridian varchar(10);
+ALTER TABLE timesheet_Emp_Month ADD D25_meridian varchar(10);
+ALTER TABLE timesheet_Emp_Month ADD D26_meridian varchar(10);
+ALTER TABLE timesheet_Emp_Month ADD D27_meridian varchar(10);
+ALTER TABLE timesheet_Emp_Month ADD D28_meridian varchar(10);
+ALTER TABLE timesheet_Emp_Month ADD D29_meridian varchar(10);
+ALTER TABLE timesheet_Emp_Month ADD D30_meridian varchar(10);
+ALTER TABLE timesheet_Emp_Month ADD D31_meridian varchar(10);
+

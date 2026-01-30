@@ -1,0 +1,179 @@
+--LoansFact
+--DROP Table LoansFact
+CREATE TABLE [dbo].[LoansFact](
+	[emp_code] [int] NULL,
+	[dim_tid_ref_loans] int FOREIGN KEY REFERENCES dim_time (dim_tid),
+	[designation] [int] NULL,
+	[adjust_fm] [date] NULL,
+	[loan_type_mid] [int] NULL,
+	[adv_total_amount] [bigint] NULL,
+	[adv_total_installment] [int] NULL,
+	[adv_principal_installment] [int] NULL,
+	[adv_interest_installment] [int] NULL,
+	[adv_completed_installment] [int] NULL,
+	[adv_remaining_installment] [int] NULL,
+	[adv_sanction_date] [date] NULL,
+	[adv_installment_start_date] [date] NULL,
+	[adv_installment_end_date] [date] NULL,
+	[adv_method] [nvarchar](50) NOT NULL,
+	[adv_interest_rate] [float] NULL,
+	[adv_installment_amount] [float] NULL,
+	[adv_interest_installment_amount] [float] NULL,
+	[adv_total_recovered_amount] [float] NULL,
+	[adv_fm] [date] NULL,
+	[adv_active] [int] NULL,
+
+	[child_loan_amount] [int] NULL,
+	[child_interest_rate] [float] NULL,
+	[child_interest_accured] [float] NULL,
+	[child_principal_amount_recovered] [float] NULL,
+	[child_interest_amount_recovered] [float] NULL,
+	[child_total_amount_recovered] [float] NULL,
+	[child_priority] [int] NULL,
+	[child_principal_start_date] [date] NULL,
+	[child_principal_end_date] [date] NULL,
+	[child_interest_start_date] [date] NULL,
+	[interest_end_date] [date] NULL,
+	[total_principal_installments] [int] NULL,
+	[total_interest_installments] [int] NULL,
+	[os_principal_amount] [float] NULL,
+	[child_os_interest_amount] [float] NULL,
+	[child_os_this_month_interest] [float] NULL,
+	[child_os_total_amount] [float] NULL,
+
+	[adjust_emp_adv_loans_mid] [int] NOT NULL,
+	[adjust_emp_adv_loans_child_mid] [int] NOT NULL,
+	[adjust_principal_open_amount] [float] NULL,
+	[adjust_principal_paid_amount] [float] NULL,
+	[adjust_principal_balance_amount] [float] NULL,
+	[adjust_interest_accured] [float] NULL,
+	[adjuct_interest_open_amount] [float] NULL,
+	[adjust_interest_paid_amount] [float] NULL,
+	[adjust_interest_balance_amount] [float] NULL,
+	[adjust_installments_paid] [int] NULL,
+	[adjust_installments_amount] [float] NULL,
+	[adjust_installments_paid_date] [date] NULL,
+	[adjust_payment_type] [nvarchar](20) NULL,
+	[adjust_payment_mode] [nvarchar](20) NULL,
+	[adjust_cash_paid_on] [date] NULL,
+	[adjust_covered_installments] [int] NULL,
+	[adjust_amount_paid] [float] NULL
+) ON [PRIMARY]
+
+--Insertion records into LoansFact
+INSERT INTO [dbo].[LoansFact]
+           ([emp_code]
+           ,[dim_tid_ref_loans]
+           ,[designation]
+           ,[adjust_fm]
+           ,[loan_type_mid]
+           ,[adv_total_amount]
+           ,[adv_total_installment]
+           ,[adv_principal_installment]
+           ,[adv_interest_installment]
+           ,[adv_completed_installment]
+           ,[adv_remaining_installment]
+           ,[adv_sanction_date]
+           ,[adv_installment_start_date]
+           ,[adv_installment_end_date]
+           ,[adv_method]
+           ,[adv_interest_rate]
+           ,[adv_installment_amount]
+           ,[adv_interest_installment_amount]
+           ,[adv_total_recovered_amount]
+           ,[adv_fm]
+		   ,[adv_active]
+           ,[child_loan_amount]
+           ,[child_interest_rate]
+           ,[child_interest_accured]
+           ,[child_principal_amount_recovered]
+           ,[child_interest_amount_recovered]
+           ,[child_total_amount_recovered]
+           ,[child_priority]
+           ,[child_principal_start_date]
+           ,[child_principal_end_date]
+           ,[child_interest_start_date]
+           ,[interest_end_date]
+           ,[total_principal_installments]
+           ,[total_interest_installments]
+           ,[os_principal_amount]
+           ,[child_os_interest_amount]
+           ,[child_os_this_month_interest]
+           ,[child_os_total_amount]
+           ,[adjust_emp_adv_loans_mid]
+           ,[adjust_emp_adv_loans_child_mid]
+           ,[adjust_principal_open_amount]
+           ,[adjust_principal_paid_amount]
+           ,[adjust_principal_balance_amount]
+           ,[adjust_interest_accured]
+           ,[adjuct_interest_open_amount]
+           ,[adjust_interest_paid_amount]
+           ,[adjust_interest_balance_amount]
+           ,[adjust_installments_paid]
+           ,[adjust_installments_amount]
+           ,[adjust_installments_paid_date]
+           ,[adjust_payment_type]
+           ,[adjust_payment_mode]
+           ,[adjust_cash_paid_on]
+           ,[adjust_covered_installments]
+           ,[adjust_amount_paid])
+     SELECT
+           loansadv.emp_code
+           ,245
+           ,loansadv.designation
+           ,loanadjust.fm
+           ,loansadv.loan_type_mid
+           ,loansadv.total_amount
+           ,loansadv.total_installment
+           ,loansadv.principal_installment
+           ,loansadv.interest_installment
+           ,loansadv.completed_installment
+           ,loansadv.remaining_installment
+           ,loansadv.sanction_date 
+           ,loansadv.installment_start_date
+           ,loansadv.installment_end_date
+           ,loansadv.method
+           ,loansadv.interest_rate
+           ,loansadv.installment_amount 
+           ,loansadv.interest_installment_amount 
+           ,loansadv.total_recovered_amount 
+           ,loansadv.fm
+		   ,loansadv.active
+           ,loanchild.loan_amount
+           ,loanchild.interest_rate 
+           ,loanchild.interest_accured 
+           ,loanchild.principal_amount_recovered 
+           ,loanchild.interest_amount_recovered 
+           ,loanchild.total_amount_recovered 
+           ,loanchild.priority
+           ,loanchild.principal_start_date
+           ,loanchild.principal_end_date
+           ,loanchild.interest_start_date
+           ,loanchild.interest_end_date
+           ,loanchild.total_principal_installments
+           ,loanchild.total_interest_installments
+           ,loanchild.os_principal_amount 
+           ,loanchild.os_interest_amount 
+           ,loanchild.os_this_month_interest 
+           ,loanchild.os_total_amount 
+           ,loanadjust.emp_adv_loans_mid
+           ,loanadjust.emp_adv_loans_child_mid
+           ,loanadjust.principal_open_amount 
+           ,loanadjust.principal_paid_amount 
+           ,loanadjust.principal_balance_amount 
+           ,loanadjust.interest_accured 
+           ,loanadjust.interest_open_amount 
+           ,loanadjust.interest_paid_amount 
+           ,loanadjust.interest_balance_amount 
+           ,loanadjust.installments_paid
+           ,loanadjust.installments_amount 
+           ,loanadjust.installments_paid_date
+           ,loanadjust.payment_type
+           ,loanadjust.payment_mode
+           ,loanadjust.cash_paid_on
+           ,loanadjust.covered_installments
+           ,loanadjust.amount_paid 
+
+		   from pr_emp_adv_loans loansadv 
+join pr_emp_adv_loans_child loanchild on loansadv.id=loanchild.emp_adv_loans_mid 
+join pr_emp_adv_loans_adjustments loanadjust on loanchild.id=loanadjust.emp_adv_loans_child_mid  where loanadjust.fm between '2019-04-01' and '2020-12-01';

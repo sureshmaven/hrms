@@ -1,0 +1,83 @@
+﻿@{
+    ViewBag.Title = "GratuityProcess";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <h1>Gratuity Process</h1>
+                    <div class="col-md-12 mt_10">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>
+                                    <input id="radio1" type="radio" name="radio" value="1"><label for="radio1"><span><span></span></span>Selected Employees</label>
+                                </label>
+                            </div>
+                            <div class="col-md-3">
+                                <label>
+                                    <input id="checkbox1" type="checkbox" name="checkbox" value="1"><label for="checkbox1"><span></span>Select All</label>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="mt_10">
+                            <div class="table-responsive">
+                                <table id="gratuity_p" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Emp Id</th>
+                                            <th>Emp Name</th>
+                                            <th>DOJ</th>
+                                            <th>DOR</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <input id="checkbox1" type="checkbox" name="checkbox" value="2"><label for="checkbox1"><span></span>125</label>
+                                            </td>
+                                            <td>B.Alekhya</td>
+                                            <td>27-10-2015</td>
+                                            <td>31-05-2051</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input id="checkbox1" type="checkbox" name="checkbox" value="3"><label for="checkbox1"><span></span>125</label>
+                                            </td>
+                                            <td>P.Jayakar</td>
+                                            <td>25-05-2016</td>
+                                            <td>30-06-2051</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input id="checkbox1" type="checkbox" name="checkbox" value="3"><label for="checkbox1"><span></span>125</label>
+                                            </td>
+                                            <td>B.Bharat Gandhi</td>
+                                            <td>11-01-2016</td>
+                                            <td>31-08-2045</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="mt_10">
+                            <div class="pull-right">
+                                <button type="submit" class="btn btn-primary">Process</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#gratuity_p').DataTable();
+    });
+</script>

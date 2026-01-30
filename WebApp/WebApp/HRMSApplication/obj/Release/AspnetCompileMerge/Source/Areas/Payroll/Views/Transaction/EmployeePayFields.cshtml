@@ -1,0 +1,175 @@
+﻿@model PayrollModels.Transactions.EmployeePayFieldModel
+@{
+    ViewBag.Title = "Emp. Payfields";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+    var siteUrl = System.Configuration.ConfigurationManager.AppSettings["websiteUrl"];
+}
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+			<div class="leftmenu-container">
+            <div class="sidebar-menu">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="sidebar-content">
+                <div class="main_heading heading_main">
+                    <h1>Employee Pay Fields</h1>
+                    @{ Html.RenderPartial("_pvEmployeeSearch"); }
+                    <input type="hidden" id="hdnEmpCode" />
+                    <div class="clearfix"></div>
+                    <div class="mt_10">
+                        <div class="col-md-6">
+                            <table id="gridEF" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th style="width:45%">Earning Fields</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <table id="gridDF" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th style="width:45%">Deduction Fields</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="pull-right">
+                            <button id="btnCancel" class="btn btn-default">Cancel</button>
+                            <button id="btnsubmit" class="btn btn-primary" type="button"> Submit </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			</div>
+        </div>
+    </div>
+</div>
+<script>
+    var orgErlist;
+    var orgDdlist;
+    $(document).ready(function () {
+        $("#btnsubmit").attr("disabled", true);
+        //on page load
+        $('#gridEF').DataTable({
+            "paging": false,
+            "sort": false,
+            "searching": false,
+            "language": {
+                "emptyTable": "No data available. Please enter employee code and search"
+            }
+        });
+
+        $('#gridDF').DataTable({
+            "paging": false,
+            "sort": false,
+            "searching": false,
+            "language": {
+                "emptyTable": "No data available. Please enter employee code and search"
+            }
+        });
+    });
+
+    $("#btnCancel").click(function () {
+        
+        var empid = $("#hdnEmpCode").val();
+        if (empid == "") {
+            window.location.reload();
+        }
+        else {
+            getDataAfterEmpSearch1440(empid);
+        }
+    });
+
+    $('#btnsubmit').click(function () {
+
+        var updErList = $('#gridEF').DataTable().$('input, select').serialize();
+        var updDfList = $('#gridDF').DataTable().$('input, select').serialize();
+
+        var ModifiedErList = getModifiedDataFromJDT(updErList, orgErlist);
+        var ModifiedDfList = getModifiedDataFromJDT(updDfList, orgDdlist);
+        // 
+        var dataToSend = JSON.stringify({
+            'EntityId': $("#hdnEmpCode").val(),
+            'StringData': ModifiedErList,
+            'StringData2': ModifiedDfList
+        });
+
+        CommonApiPOST('/Payroll/Transaction/saveDataEPF', dataToSend, function (isSuccess) {
+            if (isSuccess) {
+                //window.location.reload();
+                setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+            } else { }
+        });
+
+        return false;
+    });
+
+    function fillEpfDt(respData) {
+        var df = [];
+        var ef = [];
+        var dataObj = JSON.parse(respData);
+        df.push(dataObj.DfDetails);
+        ef.push(dataObj.EfDetails);
+        //// 
+        var dfData = df[0];
+        var efData = ef[0];
+
+        orgErlist = efData;
+        orgDdlist = dfData;
+        //// 
+        $('#gridEF').DataTable({
+            "destroy": true,
+            "paging": false,
+            "sort": false,
+            "searching": false,
+            data: efData,
+
+            "columns": [
+                { "data": "Name" },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data) {
+                        return getColumnNumber(data.Id, data.Value);
+                    }
+                }
+            ],
+            "order": [[0, 'asc']]
+        });
+
+        $('#gridDF').DataTable({
+            "destroy": true,
+            "paging": false,
+            "sort": false,
+            "searching": false,
+            data: dfData,
+            "columns": [
+                { "data": "Name" },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data) {
+                        return getColumnNumber(data.Id, data.Value);
+                    }
+                }
+            ],
+            "order": [[0, 'asc']]
+        });
+    }
+
+    function getDataAfterEmpSearch1440(empcode) {
+        $("#btnsubmit").attr("disabled", false);
+        $('#hdnEmpCode').val(empcode);
+        CommonApiGET('/Payroll/Transaction/GetEmpPayFieldsDetails?EmpId=' + empcode, function (respData) {
+            fillEpfDt(respData);
+            
+        });
+    }
+</script>

@@ -1,0 +1,1 @@
+exec sp_dm_allowance '202010'

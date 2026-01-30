@@ -1,0 +1,179 @@
+--1. M Srinivas, Code 308 - 32
+--2. T Narsing, Code 5796 - 31
+--3. S Shanker, Code 422 - 20 
+
+
+------- To update Leavebalances
+
+declare @Empid int;
+declare @LeaveTypeId int;
+declare @LeaveBalance int;
+
+set @Empid=308;
+set @LeaveTypeId=13;
+set @Leavebalance=((select leavebalance from EmpLeaveBalance where empid =(select id from employees 
+where empid=@Empid) and leavetypeid=@LeaveTypeId and year=2020)+32);
+
+update EmpLeaveBalance set LeaveBalance=@Leavebalance where LeaveTypeId=@LeaveTypeId and empid=
+(select id from employees where empid=@Empid) and year=2020;
+
+
+---- For Leaves Credit/Debit
+
+declare @Empid int;
+declare @Leavetypeid int;
+declare @Numberofleaves_to_Credit int;
+declare @Numberofleaves_to_Debit int;
+declare @UpdatedBy_EmployeeId int;
+declare @Previous_LeaveBalance int;
+declare @Comments varchar(20);
+declare @Type varchar(20);
+declare @TotalBalance int;
+
+set @Empid=308;
+set @Leavetypeid=13;
+set @Numberofleaves_to_Credit=32;
+set @Numberofleaves_to_Debit=0;
+set @UpdatedBy_EmployeeId=123456;
+set @Previous_LeaveBalance=((select leavebalance from EmpLeaveBalance where empid =(select id from employees 
+where empid=@Empid) and leavetypeid=@LeaveTypeId and year=2020)-32);
+set @Comments='Leaves Credited';
+set @Type='Credit'
+set @TotalBalance=((select leavebalance from EmpLeaveBalance where empid =(select id from employees 
+where empid= @Empid) and leavetypeid=@Leavetypeid and year=2020)+32);
+
+
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=@Empid),
+@Leavetypeid,@Numberofleaves_to_Credit,
+@Numberofleaves_to_Debit,@UpdatedBy_EmployeeId,
+GETDATE(),@Previous_LeaveBalance,@Comments,
+(select ShortName from Employees where empid=@empid),
+(select Department from Employees where empid=@empid),
+(select Branch from Employees where empid=@empid),
+(select CurrentDesignation from Employees where empid=@empid),@Type,
+(select branch_value1 from employees where empid=@empid),@TotalBalance,2020)
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+
+------- To update Leavebalances
+
+declare @Empid int;
+declare @LeaveTypeId int;
+declare @LeaveBalance int;
+
+set @Empid=5796;
+set @LeaveTypeId=13;
+set @Leavebalance=((select leavebalance from EmpLeaveBalance where empid =(select id from employees 
+where empid=@Empid) and leavetypeid=@LeaveTypeId and year=2020)+31);
+
+update EmpLeaveBalance set LeaveBalance=@Leavebalance where LeaveTypeId=@LeaveTypeId and empid=
+(select id from employees where empid=@Empid) and year=2020;
+
+
+---- For Leaves Credit/Debit
+
+declare @Empid int;
+declare @Leavetypeid int;
+declare @Numberofleaves_to_Credit int;
+declare @Numberofleaves_to_Debit int;
+declare @UpdatedBy_EmployeeId int;
+declare @Previous_LeaveBalance int;
+declare @Comments varchar(20);
+declare @Type varchar(20);
+declare @TotalBalance int;
+
+set @Empid=5796;
+set @Leavetypeid=13;
+set @Numberofleaves_to_Credit=31;
+set @Numberofleaves_to_Debit=0;
+set @UpdatedBy_EmployeeId=123456;
+set @Previous_LeaveBalance=((select leavebalance from EmpLeaveBalance where empid =(select id from employees 
+where empid=@Empid) and leavetypeid=@LeaveTypeId and year=2020)-31);
+set @Comments='Leaves Credited';
+set @Type='Credit'
+set @TotalBalance=((select leavebalance from EmpLeaveBalance where empid =(select id from employees 
+where empid= @Empid) and leavetypeid=@Leavetypeid and year=2020)+31);
+
+
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=@Empid),
+@Leavetypeid,@Numberofleaves_to_Credit,
+@Numberofleaves_to_Debit,@UpdatedBy_EmployeeId,
+GETDATE(),@Previous_LeaveBalance,@Comments,
+(select ShortName from Employees where empid=@empid),
+(select Department from Employees where empid=@empid),
+(select Branch from Employees where empid=@empid),
+(select CurrentDesignation from Employees where empid=@empid),@Type,
+(select branch_value1 from employees where empid=@empid),@TotalBalance,2020)
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+------- To update Leavebalances
+
+declare @Empid int;
+declare @LeaveTypeId int;
+declare @LeaveBalance int;
+
+set @Empid=422;
+set @LeaveTypeId=13;
+set @Leavebalance=((select leavebalance from EmpLeaveBalance where empid =(select id from employees 
+where empid=@Empid) and leavetypeid=@LeaveTypeId and year=2020)+20);
+
+update EmpLeaveBalance set LeaveBalance=@Leavebalance where LeaveTypeId=@LeaveTypeId and empid=
+(select id from employees where empid=@Empid) and year=2020;
+
+
+---- For Leaves Credit/Debit
+
+declare @Empid int;
+declare @Leavetypeid int;
+declare @Numberofleaves_to_Credit int;
+declare @Numberofleaves_to_Debit int;
+declare @UpdatedBy_EmployeeId int;
+declare @Previous_LeaveBalance int;
+declare @Comments varchar(20);
+declare @Type varchar(20);
+declare @TotalBalance int;
+
+set @Empid=422;
+set @Leavetypeid=13;
+set @Numberofleaves_to_Credit=20;
+set @Numberofleaves_to_Debit=0;
+set @UpdatedBy_EmployeeId=123456;
+set @Previous_LeaveBalance=((select leavebalance from EmpLeaveBalance where empid =(select id from employees 
+where empid=@Empid) and leavetypeid=@LeaveTypeId and year=2020)-20);
+set @Comments='Leaves Credited';
+set @Type='Credit'
+set @TotalBalance=((select leavebalance from EmpLeaveBalance where empid =(select id from employees 
+where empid= @Empid) and leavetypeid=@Leavetypeid and year=2020)+20);
+
+
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=@Empid),
+@Leavetypeid,@Numberofleaves_to_Credit,
+@Numberofleaves_to_Debit,@UpdatedBy_EmployeeId,
+GETDATE(),@Previous_LeaveBalance,@Comments,
+(select ShortName from Employees where empid=@empid),
+(select Department from Employees where empid=@empid),
+(select Branch from Employees where empid=@empid),
+(select CurrentDesignation from Employees where empid=@empid),@Type,
+(select branch_value1 from employees where empid=@empid),@TotalBalance,2020)
+

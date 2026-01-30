@@ -1,0 +1,966 @@
+CREATE TRIGGER [dbo].[BanksTRIGGERinserts]
+ON [dbo].[Banks]
+for insert
+AS
+BEGIN
+
+declare @Tx_id int;
+declare @Tx_type varchar(200);
+declare @Tx_subtype varchar(200);
+declare @Tx_by varchar(200);
+declare @Tx_on varchar(200);
+declare @Tx_date varchar(200);
+declare @Notes varchar(200);
+declare @Comments varchar(250);
+
+    SELECT @Tx_by = INSERTED.[UpdatedBy], @Tx_on=inserted.Name, @Tx_date=inserted.UpdatedDate,@Tx_id=inserted.Id
+    FROM INSERTED
+INSERT INTO Tx_History
+    VALUES(@Tx_id,'BANK','BANK_INSERTED',@Tx_by,@Tx_on,GETDATE(),'','');
+End
+
+GO
+
+CREATE TRIGGER [dbo].[BanksTRIGGERupdate]
+ON [dbo].[Banks]
+for update
+AS
+BEGIN
+
+declare @Tx_id int;
+declare @Tx_type varchar(200);
+declare @Tx_subtype varchar(200);
+declare @Tx_by varchar(200);
+declare @Tx_on varchar(200);
+declare @Tx_date datetime;
+declare @Notes varchar(200);
+declare @Comments varchar(250);
+
+    SELECT @Tx_by = INSERTED.[UpdatedBy], @Tx_on=inserted.Name, @Tx_date=inserted.UpdatedDate,@Tx_id=inserted.Id
+
+    FROM INSERTED
+
+    INSERT INTO Tx_History
+    VALUES(@Tx_id,'BANK','BANK_UPDATED',@Tx_by,@Tx_on,GETDATE(),'','')
+END
+GO
+
+CREATE TRIGGER [dbo].[Bankstriggerdelete]
+       ON [dbo].[Banks]
+AFTER DELETE
+AS
+BEGIN
+
+declare @Tx_id int;
+declare @Tx_type varchar(200);
+declare @Tx_subtype varchar(200);
+declare @Tx_by varchar(200);
+declare @Tx_on varchar(200);
+declare @Tx_date datetime;
+declare @Notes varchar(200);
+declare @Comments varchar(250);
+
+ 
+       SELECT @Tx_by = deleted.[UpdatedBy], @Tx_on=deleted.Name, @Tx_date=deleted.UpdatedDate,@Tx_id=deleted.id
+    FROM deleted
+
+ 
+       INSERT INTO Tx_History
+    VALUES(@Tx_id,'BANK','BANK_DELETED',@Tx_by,@Tx_on,GETDATE(),'','');
+
+END
+
+GO
+
+CREATE TRIGGER [dbo].[BranchesTRIGGERinserts]
+ON [dbo].[Branches]
+for insert
+AS
+BEGIN
+
+declare @Tx_id int;
+declare @Tx_type varchar(200);
+declare @Tx_subtype varchar(200);
+declare @Tx_by varchar(200);
+declare @Tx_on varchar(200);
+declare @Tx_date varchar(200);
+declare @Notes varchar(200);
+declare @Comments varchar(250);
+
+    SELECT @Tx_by = INSERTED.[UpdatedBy], @Tx_on=inserted.Name, @Tx_date=inserted.UpdatedDate,@Tx_id=inserted.Id
+    FROM INSERTED
+INSERT INTO Tx_History
+VALUES(@Tx_id,'BRANCH','BRANCH_INSERTED',@Tx_by,@Tx_on,GETDATE(),'','');
+End
+GO
+
+CREATE TRIGGER [dbo].[BranchesTRIGGERupdate]
+ON [dbo].[Branches]
+for update
+AS
+BEGIN
+
+declare @Tx_id int;
+declare @Tx_type varchar(200);
+declare @Tx_subtype varchar(200);
+declare @Tx_by varchar(200);
+declare @Tx_on varchar(200);
+declare @Tx_date datetime;
+declare @Notes varchar(200);
+declare @Comments varchar(250);
+
+    SELECT @Tx_by = INSERTED.[UpdatedBy], @Tx_on=inserted.Name, @Tx_date=inserted.UpdatedDate,@Tx_id=inserted.Id
+
+    FROM INSERTED
+
+    INSERT INTO Tx_History
+    VALUES(@Tx_id,'BRANCH','BRANCH_UPDATED',@Tx_by,@Tx_on,GETDATE(),'','')
+END
+GO
+
+CREATE TRIGGER [dbo].[Branchestriggerdelete]
+       ON [dbo].[Branches]
+AFTER DELETE
+AS
+BEGIN
+
+declare @Tx_id int;
+declare @Tx_type varchar(200);
+declare @Tx_subtype varchar(200);
+declare @Tx_by varchar(200);
+declare @Tx_on varchar(200);
+declare @Tx_date datetime;
+declare @Notes varchar(200);
+declare @Comments varchar(250);
+
+ 
+       SELECT @Tx_by = deleted.[UpdatedBy], @Tx_on=deleted.ID, @Tx_date=deleted.UpdatedDate,@Tx_id=deleted.id
+    FROM deleted
+
+ 
+       INSERT INTO Tx_History
+    VALUES(@Tx_id,'BRANCH','BRANCH_DELETED',@Tx_by,@Tx_on,GETDATE(),'','');
+
+END
+
+GO
+
+
+CREATE TRIGGER [dbo].[DepartmentTRIGGERinserts]
+ON [dbo].[Departments]
+for insert
+AS
+BEGIN
+
+declare @Tx_id int;
+declare @Tx_type varchar(200);
+declare @Tx_subtype varchar(200);
+declare @Tx_by varchar(200);
+declare @Tx_on varchar(200);
+declare @Tx_date varchar(200);
+declare @Notes varchar(200);
+declare @Comments varchar(250);
+
+    SELECT @Tx_by = INSERTED.[UpdatedBy], @Tx_on=inserted.Name, @Tx_date=inserted.UpdatedDate,@Tx_id=inserted.Id
+    FROM INSERTED
+INSERT INTO Tx_History
+    VALUES(@Tx_id,'DEPARTMENT','DEPARTMENT_INSERTED',@Tx_by,@Tx_on,GETDATE(),'','');
+End
+GO
+
+CREATE TRIGGER [dbo].[DepartmentTRIGGERupdate]
+ON [dbo].[Departments]
+for update
+AS
+BEGIN
+
+declare @Tx_id int;
+declare @Tx_type varchar(200);
+declare @Tx_subtype varchar(200);
+declare @Tx_by varchar(200);
+declare @Tx_on varchar(200);
+declare @Tx_date datetime;
+declare @Notes varchar(200);
+declare @Comments varchar(250);
+
+    SELECT @Tx_by = INSERTED.[UpdatedBy], @Tx_on=inserted.Name, @Tx_date=inserted.UpdatedDate,@Tx_id=inserted.Id
+    FROM INSERTED
+
+    INSERT INTO Tx_History
+    VALUES(@Tx_id,'DEPARTMENT','DEPARTMENT_UPDATED',@Tx_by,@Tx_on,GETDATE(),'','')
+END
+GO
+
+CREATE TRIGGER [dbo].[Departmenttriggerdelete]
+       ON [dbo].[Departments]
+AFTER DELETE
+AS
+BEGIN
+
+declare @Tx_id int;
+declare @Tx_type varchar(200);
+declare @Tx_subtype varchar(200);
+declare @Tx_by varchar(200);
+declare @Tx_on varchar(200);
+declare @Tx_date datetime;
+declare @Notes varchar(200);
+declare @Comments varchar(250);
+
+ 
+       SELECT @Tx_by = deleted.[UpdatedBy], @Tx_on=deleted.Name, @Tx_date=deleted.UpdatedDate,@Tx_id=deleted.id
+    FROM deleted
+
+ 
+       INSERT INTO Tx_History
+    VALUES(@Tx_id,'DEPARTMENT','DEPARTMENT_DELETED',@Tx_by,@Tx_on,GETDATE(),'','');
+
+END
+GO
+
+
+CREATE TRIGGER [dbo].[DesignationTRIGGERinserts]
+ON [dbo].[Designations]
+for insert
+AS
+BEGIN
+
+declare @Tx_id int;
+declare @Tx_type varchar(200);
+declare @Tx_subtype varchar(200);
+declare @Tx_by varchar(200);
+declare @Tx_on varchar(200);
+declare @Tx_date varchar(200);
+declare @Notes varchar(200);
+declare @Comments varchar(250);
+
+    SELECT @Tx_by = INSERTED.[UpdatedBy], @Tx_on=inserted.Name, @Tx_date=inserted.UpdatedDate,@Tx_id=inserted.Id
+    FROM INSERTED
+INSERT INTO Tx_History
+    VALUES(@Tx_id,'DESIGNATION','DESIGNATION_INSERTED',@Tx_by,@Tx_on,GETDATE(),'','');
+End
+GO
+
+
+CREATE TRIGGER [dbo].[DesignationTRIGGERupdate]
+ON [dbo].[Designations]
+for update
+AS
+BEGIN
+
+declare @Tx_id int;
+declare @Tx_type varchar(200);
+declare @Tx_subtype varchar(200);
+declare @Tx_by varchar(200);
+declare @Tx_on varchar(200);
+declare @Tx_date datetime;
+declare @Notes varchar(200);
+declare @Comments varchar(250);
+
+    SELECT @Tx_by = INSERTED.[UpdatedBy], @Tx_on=inserted.Name, @Tx_date=inserted.UpdatedDate,@Tx_id=inserted.Id
+
+    FROM INSERTED
+
+    INSERT INTO Tx_History
+    VALUES(@Tx_id,'DESIGNATION','DESIGNATION_UPDATED',@Tx_by,@Tx_on,GETDATE(),'','')
+END
+GO
+
+CREATE TRIGGER [dbo].[Designationtriggerdelete]
+       ON [dbo].[Designations]
+AFTER DELETE
+AS
+BEGIN
+
+declare @Tx_id int;
+declare @Tx_type varchar(200);
+declare @Tx_subtype varchar(200);
+declare @Tx_by varchar(200);
+declare @Tx_on varchar(200);
+declare @Tx_date datetime;
+declare @Notes varchar(200);
+declare @Comments varchar(250);
+
+ 
+       SELECT @Tx_by = deleted.[UpdatedBy], @Tx_on=deleted.Name, @Tx_date=deleted.UpdatedDate,@Tx_id=deleted.id
+    FROM deleted
+
+ 
+       INSERT INTO Tx_History
+    VALUES(@Tx_id,'DESIGNATION','DESIGNATION_DELETED',@Tx_by,@Tx_on,GETDATE(),'','');
+
+END
+GO
+
+
+CREATE TRIGGER [dbo].[rolesTRIGGERinserts]
+ON [dbo].[Roles]
+for insert
+AS
+BEGIN
+
+declare @Tx_id int;
+declare @Tx_type varchar(200);
+declare @Tx_subtype varchar(200);
+declare @Tx_by varchar(200);
+declare @Tx_on varchar(200);
+declare @Tx_date varchar(200);
+declare @Notes varchar(200);
+declare @Comments varchar(250);
+
+    SELECT @Tx_by = INSERTED.[UpdatedBy], @Tx_on=inserted.Name, @Tx_date=inserted.UpdatedDate,@Tx_id=inserted.Id
+    FROM INSERTED
+INSERT INTO Tx_History
+    VALUES(@Tx_id,'ROLE','ROLE_INSERTED',@Tx_by,@Tx_on,GETDATE(),'','');
+End
+GO
+
+CREATE TRIGGER [dbo].[rolesTRIGGERupdate]
+ON [dbo].[Roles]
+for update
+AS
+BEGIN
+
+declare @Tx_id int;
+declare @Tx_type varchar(200);
+declare @Tx_subtype varchar(200);
+declare @Tx_by varchar(200);
+declare @Tx_on varchar(200);
+declare @Tx_date datetime;
+declare @Notes varchar(200);
+declare @Comments varchar(250);
+
+    SELECT @Tx_by = INSERTED.[UpdatedBy], @Tx_on=inserted.Name, @Tx_date=inserted.UpdatedDate,@Tx_id=inserted.Id
+
+    FROM INSERTED
+
+    INSERT INTO Tx_History
+    VALUES(@Tx_id,'ROLE','ROLE_UPDATED',@Tx_by,@Tx_on,GETDATE(),'','')
+END
+GO
+
+CREATE TRIGGER [dbo].[rolestriggerdelete]
+       ON [dbo].[Roles]
+AFTER DELETE
+AS
+BEGIN
+
+declare @Tx_id int;
+declare @Tx_type varchar(200);
+declare @Tx_subtype varchar(200);
+declare @Tx_by varchar(200);
+declare @Tx_on varchar(200);
+declare @Tx_date datetime;
+declare @Notes varchar(200);
+declare @Comments varchar(250);
+
+ 
+       SELECT @Tx_by = deleted.[UpdatedBy], @Tx_on=deleted.Name, @Tx_date=deleted.UpdatedDate,@Tx_id=deleted.id
+    FROM deleted
+
+ 
+       INSERT INTO Tx_History
+    VALUES(@Tx_id,'ROLE','ROLE_DELETED',@Tx_by,@Tx_on,GETDATE(),'','');
+
+END
+GO
+
+
+
+Create TRIGGER [dbo].[LeaveTypesTRIGGERinsert]
+ON [dbo].[LeaveTypes]
+for insert
+AS
+BEGIN
+
+declare @Tx_id int;
+declare @Tx_type varchar(200);
+declare @Tx_subtype varchar(200);
+declare @Tx_by varchar(200);
+declare @Tx_on varchar(200);
+declare @Tx_date datetime;
+declare @Notes varchar(200);
+declare @Comments varchar(250);
+
+    SELECT @Tx_by = INSERTED.[UpdatedBy], @Tx_on=INSERTED.[Type], @Tx_date=inserted.UpdatedDate,@Tx_id=inserted.Id
+
+    FROM INSERTED
+
+    INSERT INTO Tx_History
+    VALUES(@Tx_id,'LEAVETYPES','LEAVETYPE_INSERTED',@Tx_by,@Tx_on,GETDATE(),'','')
+END
+GO
+
+CREATE TRIGGER [dbo].[LeaveTypesTRIGGERupdate]
+ON [dbo].[LeaveTypes]
+for update
+AS
+BEGIN
+
+declare @Tx_id int;
+declare @Tx_type varchar(200);
+declare @Tx_subtype varchar(200);
+declare @Tx_by varchar(200);
+declare @Tx_on varchar(200);
+declare @Tx_date datetime;
+declare @Notes varchar(200);
+declare @Comments varchar(250);
+
+    SELECT @Tx_by = INSERTED.[UpdatedBy], @Tx_on=inserted.Type, @Tx_date=inserted.UpdatedDate
+    FROM INSERTED
+
+    INSERT INTO Tx_History
+    VALUES(@Tx_id,'LEAVETYPES','LEAVETYPES_UPDATED',@Tx_by,@Tx_on,GETDATE(),'','')
+END
+GO
+
+
+CREATE TRIGGER [dbo].[LeaveTypestriggerdelete]
+       ON [dbo].[LeaveTypes]
+AFTER DELETE
+AS
+BEGIN
+
+declare @Tx_id int;
+declare @Tx_type varchar(200);
+declare @Tx_subtype varchar(200);
+declare @Tx_by varchar(200);
+declare @Tx_on varchar(200);
+declare @Tx_date datetime;
+declare @Notes varchar(200);
+declare @Comments varchar(250);
+
+ 
+       SELECT @Tx_by = deleted.[UpdatedBy], @Tx_on=deleted.Type, @Tx_date=deleted.UpdatedDate,@Tx_id=deleted.id
+    FROM deleted
+
+ 
+       INSERT INTO Tx_History
+    VALUES(@Tx_on,'LEAVETYPES','LEAVETYPES_DELETED',@Tx_by,@Tx_on,GETDATE(),'','');
+
+END
+GO
+
+
+CREATE TRIGGER [dbo].[HolidayListTRIGGERinserts]
+ON [dbo].[HolidayList]
+for insert
+AS
+BEGIN
+
+declare @Tx_id int;
+declare @Tx_type varchar(200);
+declare @Tx_subtype varchar(200);
+declare @Tx_by varchar(200);
+declare @Tx_on varchar(200);
+declare @Tx_date varchar(200);
+declare @Notes varchar(200);
+declare @Comments varchar(250);
+
+    SELECT @Tx_by = INSERTED.[UpdatedBy], @Tx_on=inserted.Occasion,@Tx_id=inserted.Id
+    FROM INSERTED
+INSERT INTO Tx_History
+    VALUES(@Tx_id,'HOLIDAYLIST','HOLIDAYLIST_INSERTED',@Tx_by,@Tx_on,GETDATE(),'','');
+End
+GO
+
+CREATE TRIGGER [dbo].[HolidayListTRIGGERupdate]
+ON [dbo].[HolidayList]
+for update
+AS
+BEGIN
+
+declare @Tx_id int;
+declare @Tx_type varchar(200);
+declare @Tx_subtype varchar(200);
+declare @Tx_by varchar(200);
+declare @Tx_on varchar(200);
+declare @Tx_date datetime;
+declare @Notes varchar(200);
+declare @Comments varchar(250);
+
+    SELECT @Tx_by = INSERTED.[UpdatedBy], @Tx_on=Occasion,@Tx_id=inserted.Id
+
+    FROM INSERTED
+
+    INSERT INTO Tx_History
+    VALUES(@Tx_id,'HOLIDAYLIST','HOLIDAYLIST_UPDATED',@Tx_by,@Tx_on,GETDATE(),'','')
+END
+
+GO
+
+CREATE TRIGGER [dbo].[HolidayListtriggerdelete]
+       ON [dbo].[HolidayList]
+AFTER DELETE
+AS
+BEGIN
+
+declare @Tx_id int;
+declare @Tx_type varchar(200);
+declare @Tx_subtype varchar(200);
+declare @Tx_by varchar(200);
+declare @Tx_on varchar(200);
+declare @Tx_date datetime;
+declare @Notes varchar(200);
+declare @Comments varchar(250);
+
+ 
+       SELECT @Tx_by = deleted.[UpdatedBy], @Tx_on=deleted.Occasion,@Tx_id=deleted.id
+    FROM deleted
+
+ 
+       INSERT INTO Tx_History
+    VALUES(@Tx_id,'HOLIDAYLIST','HOLIDAYLIST_DELETED',@Tx_by,@Tx_on,GETDATE(),'','');
+
+END
+GO
+
+Create TRIGGER [dbo].[Leavescdtriggers]
+ON [dbo].[Leaves_CreditDebit]
+for insert
+AS
+BEGIN
+
+declare @Tx_id int;
+declare @Tx_type varchar(200);
+declare @Tx_subtype varchar(200);
+declare @Tx_by varchar(200);
+declare @Tx_on varchar(200);
+declare @Tx_date varchar(200);
+declare @Notes varchar(200);
+declare @Comments varchar(250);
+
+    SELECT @Tx_by = INSERTED.[UpdatedBy],@Tx_on=(select EmpId from Employees where Id= INSERTED.EmpId), @Tx_date=inserted.UpdatedDate,@Tx_id=inserted.Id, @Tx_subtype=inserted.[Type]
+    FROM INSERTED
+INSERT INTO Tx_History
+    VALUES(@Tx_id,'LEAVE',@Tx_subtype,@Tx_by,@Tx_on,GETDATE(),'','');
+End
+GO
+
+CREATE TRIGGER [dbo].[BranchCountTRIGGERinserts]
+ON [dbo].[BranchStaffCount]
+for insert
+AS
+BEGIN
+
+declare @Tx_id int;
+declare @Tx_type varchar(200);
+declare @Tx_subtype varchar(200);
+declare @Tx_by varchar(200);
+declare @Tx_on varchar(200);
+declare @Tx_date varchar(200);
+declare @Notes varchar(200);
+declare @Comments varchar(250);
+
+    SELECT @Tx_by = INSERTED.[UpdatedBy], @Tx_on=(select Name from Branches where Id= INSERTED.BranchId), @Tx_date=inserted.UpdatedDate,@Tx_id=inserted.Id
+    FROM INSERTED
+INSERT INTO Tx_History
+VALUES(@Tx_id,'BRANCHCATEGORY','BR_CATEGORY_INSERTED',@Tx_by,@Tx_on,GETDATE(),'','');
+End
+GO
+
+CREATE TRIGGER [dbo].[BranchCountTRIGGERupdate]
+ON [dbo].[BranchStaffCount]
+for update
+AS
+BEGIN
+
+declare @Tx_id int;
+declare @Tx_type varchar(200);
+declare @Tx_subtype varchar(200);
+declare @Tx_by varchar(200);
+declare @Tx_on varchar(200);
+declare @Tx_date varchar(200);
+declare @Notes varchar(200);
+declare @Comments varchar(250);
+
+    SELECT @Tx_by = INSERTED.[UpdatedBy], @Tx_on=(select Name from Branches where Id= INSERTED.BranchId), @Tx_date=inserted.UpdatedDate,@Tx_id=inserted.Id
+    FROM INSERTED
+INSERT INTO Tx_History
+VALUES(@Tx_id,'BRANCHCATEGORY','BR_CATEGORY_UPDATED',@Tx_by,@Tx_on,GETDATE(),'','');
+End
+GO
+
+CREATE TRIGGER [dbo].[BranchCounttriggerdelete]
+       ON [dbo].[BranchStaffCount]
+AFTER DELETE
+AS
+BEGIN
+
+declare @Tx_id int;
+declare @Tx_type varchar(200);
+declare @Tx_subtype varchar(200);
+declare @Tx_by varchar(200);
+declare @Tx_on varchar(200);
+declare @Tx_date datetime;
+declare @Notes varchar(200);
+declare @Comments varchar(250);
+
+ 
+       SELECT @Tx_by = deleted.[UpdatedBy], @Tx_on=(select Name from Branches where Id= deleted.BranchId), @Tx_date=deleted.UpdatedDate,@Tx_id=deleted.id
+    FROM deleted
+
+ 
+       INSERT INTO Tx_History
+    VALUES(@Tx_id,'BRANCHCATEGORY','BR_CATEGORY_DELETED',@Tx_by,@Tx_on,GETDATE(),'','');
+
+END
+
+GO
+
+CREATE TRIGGER [dbo].[OdmasterTRIGGERinserts]
+ON [dbo].[OD_Master]
+for insert
+AS
+BEGIN
+
+declare @Tx_id int;
+declare @Tx_type varchar(200);
+declare @Tx_subtype varchar(200);
+declare @Tx_by varchar(200);
+declare @Tx_on varchar(200);
+declare @Tx_date varchar(200);
+declare @Notes varchar(200);
+declare @Comments varchar(250);
+
+    SELECT @Tx_by = INSERTED.[UpdatedBy], @Tx_on=inserted.ODType, @Tx_date=inserted.UpdatedDate,@Tx_id=inserted.Id
+    FROM INSERTED
+INSERT INTO Tx_History
+    VALUES(@Tx_id,'OD','OD_INSERTED',@Tx_by,@Tx_on,GETDATE(),'','');
+End
+GO
+
+CREATE TRIGGER [dbo].[OdmasterTRIGGERupdate]
+ON [dbo].[OD_Master]
+for update
+AS
+BEGIN
+
+declare @Tx_id int;
+declare @Tx_type varchar(200);
+declare @Tx_subtype varchar(200);
+declare @Tx_by varchar(200);
+declare @Tx_on varchar(200);
+declare @Tx_date datetime;
+declare @Notes varchar(200);
+declare @Comments varchar(250);
+
+    SELECT @Tx_by = INSERTED.[UpdatedBy], @Tx_on=ODType, @Tx_date=inserted.UpdatedDate,@Tx_id=inserted.Id
+
+    FROM INSERTED
+
+    INSERT INTO Tx_History
+    VALUES(@Tx_id,'OD','OD_UPDATED',@Tx_by,@Tx_on,GETDATE(),'','')
+END
+
+GO
+
+CREATE TRIGGER [dbo].[Odmastertriggerdelete]
+       ON [dbo].[OD_Master]
+AFTER DELETE
+AS
+BEGIN
+
+declare @Tx_id int;
+declare @Tx_type varchar(200);
+declare @Tx_subtype varchar(200);
+declare @Tx_by varchar(200);
+declare @Tx_on varchar(200);
+declare @Tx_date datetime;
+declare @Notes varchar(200);
+declare @Comments varchar(250);
+
+ 
+       SELECT @Tx_by = deleted.[UpdatedBy], @Tx_on=deleted.ODType, @Tx_date=deleted.UpdatedDate,@Tx_id=deleted.id
+    FROM deleted
+
+ 
+       INSERT INTO Tx_History
+    VALUES(@Tx_id,'OD','OD_DELETED',@Tx_by,@Tx_on,GETDATE(),'','');
+
+END
+
+
+GO
+
+
+CREATE TRIGGER [dbo].[EmployeesTRIGGERinserts]
+ON [dbo].[Employees]
+for insert
+AS
+BEGIN
+
+declare @Tx_id int;
+declare @Tx_type varchar(200);
+declare @Tx_subtype varchar(200);
+declare @Tx_by varchar(200);
+declare @Tx_on varchar(200);
+declare @Tx_date varchar(200);
+declare @Notes varchar(200);
+declare @Comments varchar(250);
+
+    SELECT @Tx_by = INSERTED.[UpdatedBy], @Tx_on=inserted.EmpId, @Tx_date=inserted.UpdatedDate,@Tx_id=inserted.Id
+    FROM INSERTED
+INSERT INTO Tx_History
+    VALUES(@Tx_id,'EMPLOYEE','EMPLOYEE_INSERTED',@Tx_by,@Tx_on,GETDATE(),'','');
+End
+
+GO
+
+
+CREATE TRIGGER [dbo].[EmployeesTRIGGERupdate]
+ON [dbo].[Employees]
+for update
+AS
+BEGIN
+
+declare @Tx_id int;
+declare @Tx_type varchar(200);
+declare @Tx_subtype varchar(200);
+declare @Tx_by varchar(200);
+declare @Tx_on varchar(200);
+declare @Tx_date datetime;
+declare @Notes varchar(200);
+declare @Comments varchar(250);
+
+    SELECT @Tx_by = INSERTED.[UpdatedBy], @Tx_on=inserted.EmpId, @Tx_date=inserted.UpdatedDate,@Tx_id=inserted.Id
+
+    FROM INSERTED
+
+    INSERT INTO Tx_History
+    VALUES(@Tx_id,'EMPLOYEE','EMPLOYEE_UPDATED',@Tx_by,@Tx_on,GETDATE(),'','')
+END
+GO
+
+CREATE TRIGGER [dbo].[Employeestriggerdelete]
+       ON [dbo].[Employees]
+AFTER DELETE
+AS
+BEGIN
+
+declare @Tx_id int;
+declare @Tx_type varchar(200);
+declare @Tx_subtype varchar(200);
+declare @Tx_by varchar(200);
+declare @Tx_on varchar(200);
+declare @Tx_date datetime;
+declare @Notes varchar(200);
+declare @Comments varchar(250);
+
+ 
+       SELECT @Tx_by = deleted.[UpdatedBy], @Tx_on=deleted.EmpId, @Tx_date=deleted.UpdatedDate,@Tx_id=deleted.id
+    FROM deleted
+
+ 
+       INSERT INTO Tx_History
+    VALUES(@Tx_id,'EMPLOYEE','EMPLOYEE_DELETED',@Tx_by,@Tx_on,GETDATE(),'','');
+
+END
+GO
+
+
+Create TRIGGER [dbo].[LeavesTRIGGERinserts]
+ON [dbo].[Leaves]
+for insert
+AS
+BEGIN
+
+declare @Tx_id int;
+declare @Tx_type varchar(200);
+declare @Tx_subtype varchar(200);
+declare @Tx_by varchar(200);
+declare @Tx_on varchar(200);
+declare @Tx_date varchar(200);
+declare @Notes varchar(200);
+declare @Comments varchar(250);
+
+    SELECT @Tx_by = INSERTED.[UpdatedBy], @Tx_on=inserted.UpdatedBy, @Tx_date=inserted.UpdatedDate,@Tx_id=inserted.Id
+    FROM INSERTED
+INSERT INTO Tx_History
+    VALUES(@Tx_id,'LEAVE','LEAVE_INSERTED',@Tx_by,@Tx_on,GETDATE(),'','');
+End
+GO
+
+CREATE TRIGGER [dbo].[LeavesTRIGGERupdate]
+ON [dbo].[Leaves]
+for update
+AS
+BEGIN
+
+declare @Tx_id int;
+declare @Tx_type varchar(200);
+declare @Tx_subtype varchar(200);
+declare @Tx_by varchar(200);
+declare @Tx_on varchar(200);
+declare @Tx_date datetime;
+declare @Notes varchar(200);
+declare @Comments varchar(250);
+
+    SELECT @Tx_by = INSERTED.[UpdatedBy], @Tx_on=(select EmpId from Employees where Id= INSERTED.EmpId), @Tx_date=inserted.UpdatedDate,@Tx_id=inserted.Id,@Tx_subtype=inserted.[Status]
+    FROM INSERTED
+
+    INSERT INTO Tx_History
+    VALUES(@Tx_id,'LEAVE',@Tx_subtype,@Tx_by,@Tx_on,GETDATE(),'','')
+END
+GO
+
+CREATE TRIGGER [dbo].[Leavestriggerdelete]
+       ON [dbo].[Leaves]
+AFTER DELETE
+AS
+BEGIN
+
+declare @Tx_id int;
+declare @Tx_type varchar(200);
+declare @Tx_subtype varchar(200);
+declare @Tx_by varchar(200);
+declare @Tx_on varchar(200);
+declare @Tx_date datetime;
+declare @Notes varchar(200);
+declare @Comments varchar(250);
+
+ 
+       SELECT @Tx_by = deleted.[UpdatedBy], @Tx_on=deleted.ID, @Tx_date=deleted.UpdatedDate,@Tx_id=deleted.id
+    FROM deleted
+
+ 
+       INSERT INTO Tx_History
+    VALUES(@Tx_id,'LEAVE','LEAVE_DELETED',@Tx_by,@Tx_on,GETDATE(),'','');
+
+END
+
+GO
+
+CREATE TRIGGER [dbo].[ODTRIGGERinserts]
+ON [dbo].[OD_OtherDuty]
+for insert
+AS
+BEGIN
+
+declare @Tx_id int;
+declare @Tx_type varchar(200);
+declare @Tx_subtype varchar(200);
+declare @Tx_by varchar(200);
+declare @Tx_on varchar(200);
+declare @Tx_date varchar(200);
+declare @Notes varchar(200);
+declare @Comments varchar(250);
+
+    SELECT @Tx_by = INSERTED.[UpdatedBy], @Tx_on=inserted.UpdatedBy, @Tx_date=inserted.UpdatedDate,@Tx_id=inserted.Id
+    FROM INSERTED
+INSERT INTO Tx_History
+    VALUES(@Tx_id,'OD','OD_APPLIED',@Tx_by,@Tx_on,GETDATE(),'','');
+End
+GO
+
+
+Create TRIGGER [dbo].[ODTRIGGERupdate]
+ON [dbo].[OD_OtherDuty]
+for update
+AS
+BEGIN
+
+declare @Tx_id int;
+declare @Tx_type varchar(200);
+declare @Tx_subtype varchar(200);
+declare @Tx_by varchar(200);
+declare @Tx_on varchar(200);
+declare @Tx_date datetime;
+declare @Notes varchar(200);
+declare @Comments varchar(250);
+
+    SELECT @Tx_by = INSERTED.[UpdatedBy], @Tx_on=(select EmpId from Employees where Id= INSERTED.EmpId), @Tx_date=inserted.UpdatedDate,@Tx_id=inserted.Id,@Tx_subtype=inserted.[Status]
+    FROM INSERTED
+
+    INSERT INTO Tx_History
+    VALUES(@Tx_id,'OD', @Tx_subtype,@Tx_by,@Tx_on,GETDATE(),'','')
+END
+
+GO
+
+
+
+CREATE TRIGGER [dbo].[Employee_TransferTRIGGERinserts]
+ON [dbo].[Employee_Transfer]
+for insert
+AS
+BEGIN
+
+declare @Tx_id int;
+declare @Tx_type varchar(200);
+declare @Tx_subtype varchar(200);
+declare @Tx_by varchar(200);
+declare @Tx_on varchar(200);
+declare @Tx_date varchar(200);
+declare @Notes varchar(200);
+declare @Comments varchar(250);
+
+    SELECT  @Tx_by=inserted.UpdatedBy,@Tx_on=(select EmpId from Employees where Id= INSERTED.EmpId),@Tx_id=inserted.Id,@Tx_subtype=inserted.Type
+    FROM INSERTED
+INSERT INTO Tx_History
+    VALUES(@Tx_id,'EMPLOYEE',@Tx_subtype,@Tx_by,@Tx_on,GETDATE(),'','');
+End
+GO
+
+CREATE TRIGGER [dbo].[Employee_TransferTRIGGERinserts]
+ON [dbo].[Employee_Transfer]
+for insert
+AS
+BEGIN
+
+declare @Tx_id int;
+declare @Tx_type varchar(200);
+declare @Tx_subtype varchar(200);
+declare @Tx_by varchar(200);
+declare @Tx_on varchar(200);
+declare @Tx_date varchar(200);
+declare @Notes varchar(200);
+declare @Comments varchar(250);
+
+    SELECT  @Tx_by=inserted.UpdatedBy,@Tx_on=(select EmpId from Employees where Id= INSERTED.EmpId),@Tx_id=inserted.Id,@Tx_subtype=inserted.Type
+    FROM INSERTED
+INSERT INTO Tx_History
+    VALUES(@Tx_id,'EMPLOYEE',@Tx_subtype,@Tx_by,@Tx_on,GETDATE(),'','');
+End
+GO
+
+
+ALTER view [dbo].[view_employee_DOB_RetirementDateMonthWise]
+as
+select top 10000 CAST(ROW_NUMBER() over(order by department) AS INT) Id,case when empid=686 then 'Dr. N MURALIDHAR'
+else
+concat(substring(e.FirstName,1,1),' ',e.Lastname)
+end as EmpName,e.EmpId,
+dp.name as DeptName,e.DOB AS DOB_MonthWise,e.DOJ,e.RetirementDate as RetirementDate_MonthWise,d.Code,b.Name as BranchName
+,case 
+ when currentdesignation=(select id from designations where name='Managing Director') then 2
+ when currentdesignation=(select id from designations where name='Chief General Manager') then 3
+ when currentdesignation=(select id from designations where name='General Manager') then 4
+ when currentdesignation=(select id from designations where name='Deputy General Manager') then 5
+when currentdesignation=(select id from designations where name='Assistant General Manager') then 6
+when currentdesignation=(select id from designations where name='Senior Manager') then 7
+when currentdesignation=(select id from designations where name='Manager Scale-1') then 8
+when currentdesignation=(select id from designations where name='Staff Assistant' )then 10
+when currentdesignation=(select id from designations where name='Attender') then 16
+when currentdesignation=(select id from designations where name='Attender Cum Watchman') then 16
+when currentdesignation=(select id from designations where name='Attender/J.C') then 16
+when currentdesignation=(select id from designations where name='Civil Engg Supervisor') then 13
+when currentdesignation=(select id from designations where name='Driver') then 18
+when currentdesignation=(select id from designations where name='IDO/Manager') then 9
+when currentdesignation=(select id from designations where name='JR Staff Assistant') then 11
+when currentdesignation=(select id from designations where name='Junior Clerk') then 15
+when currentdesignation=(select id from designations where name='Staff Assistant Cum Assistant Cashier') then 11
+when currentdesignation=(select id from designations where name='Stenographer') then 14
+when currentdesignation=(select id from designations where name='Telephone Operator Cum Receptionist') then 17
+when currentdesignation=(select id from designations where name='Typist') then 14
+when currentdesignation=(select id from designations where name='Watchman') then 19
+when currentdesignation=(select id from designations where name='Subordinate Staff(Substaff)') then 12
+when currentdesignation=(select id from designations where name='President') then 1
+when currentdesignation=(select id from designations where name='TBD') then 20
+when currentdesignation=(select id from designations where name='Manager') then 9
+when currentdesignation=(select id from designations where name='Manager Tech') then 9
+end as designations
+from employees  e join  Designations d on e.CurrentDesignation=d.Id join Branches b on e.Branch=b.Id join Departments dp on e.Department=dp.id
+order by  month(e.dob),day(e.dob),month(RetirementDate),designations desc
+
+
+alter table Employee_Transfer add UpdatedBy varchar(200) null,UpdatedDate datetime null;

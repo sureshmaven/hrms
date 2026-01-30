@@ -1,0 +1,94 @@
+update pr_month_attendance set active=0 where fm!='2020-12-01';
+
+update pr_month_attendance set working_days=31 where fm='2020-12-01'
+update pr_month_attendance set lop_days=0 where fm='2020-12-01'
+
+update pr_month_attendance set lop_days=2 where fm='2020-12-01' and emp_code=6452
+update pr_month_attendance set lop_days=5 where fm='2020-12-01' and emp_code=319
+update pr_month_attendance set lop_days=2 where fm='2020-12-01' and emp_code=490
+update pr_month_attendance set lop_days=4 where fm='2020-12-01' and emp_code=6346
+update pr_month_attendance set lop_days=14 where fm='2020-12-01' and emp_code=6453
+update pr_month_attendance set lop_days=1 where fm='2020-12-01' and emp_code=6466
+update pr_month_attendance set lop_days=12 where fm='2020-12-01' and emp_code=887
+
+update pr_month_attendance set working_days=(working_days-lop_days) where fm='2020-12-01'
+
+
+-----------------------------------------------------
+
+update pr_month_details set da_slabs=8.91,da_percent=81.9 where fm='2020-12-01' and active=1;
+
+---------------------------------------
+
+update pr_emp_allowances_gen set active=0 where emp_code= 420 and m_id=14
+update pr_emp_allowances_gen set active=0 where emp_code= 478 and m_id=14
+update pr_emp_allowances_gen set active=0 where emp_code= 556 and m_id=14
+update pr_emp_allowances_gen set active=0 where emp_code= 574 and m_id=14
+update pr_emp_allowances_gen set active=0 where emp_code= 911 and m_id=14
+update pr_emp_allowances_gen set active=0 where emp_code= 935 and m_id=14
+update pr_emp_allowances_gen set active=0 where emp_code= 970 and m_id=14
+update pr_emp_allowances_gen set active=0 where emp_code= 971 and m_id=14
+update pr_emp_allowances_gen set active=0 where emp_code= 981 and m_id=14
+update pr_emp_allowances_gen set active=0 where emp_code= 6334 and m_id=14
+update pr_emp_allowances_gen set active=0 where emp_code= 570 and m_id=14
+
+update pr_emp_allowances_spl set active=0 where emp_code= 970 and m_id= 24
+update pr_emp_allowances_spl set active=0 where emp_code= 425 and m_id= 24
+update pr_emp_allowances_spl set active=0 where emp_code= 521 and m_id= 24
+update pr_emp_allowances_spl set active=0 where emp_code= 538 and m_id= 24
+update pr_emp_allowances_spl set active=0 where emp_code= 993 and m_id= 24
+update pr_emp_allowances_spl set active=0 where emp_code= 996 and m_id= 24
+update pr_emp_allowances_spl set active=0 where emp_code= 6316 and m_id= 24
+update pr_emp_allowances_spl set active=0 where emp_code= 6326 and m_id= 24
+update pr_emp_allowances_spl set active=0 where emp_code= 6378 and m_id= 24
+update pr_emp_allowances_spl set active=0 where emp_code= 6415 and m_id= 24
+update pr_emp_allowances_spl set active=0 where emp_code= 6442 and m_id= 24
+update pr_emp_allowances_spl set active=0 where emp_code= 6458 and m_id= 24
+update pr_emp_allowances_spl set active=0 where emp_code= 6463 and m_id= 24
+update pr_emp_allowances_spl set active=0 where emp_code= 6356 and m_id= 24
+update pr_emp_allowances_spl set active=0 where emp_code= 6364 and m_id= 24
+
+update pr_emp_branch_allowances set active=0 where emp_code=905 and fm='2020-11-01';
+update pr_emp_allowances_gen set active=0 where emp_code=905 and m_id=14
+
+update pr_emp_allowances_spl set active=0 where emp_code in(549,570,845,865,901,903,921,957,963,5660,6304,6328) and m_id=27
+
+update pr_month_attendance set lop_days=0, working_days=31  where fm='2020-12-01' and emp_code=887 and active=1
+
+
+update Employees set RetirementDate='2050-08-31 00:00:00.000' where empid=6467;
+update Employees set RetirementDate='2053-02-28 00:00:00.000' where EmpId=6474;
+update Employees set RetirementDate='2054-02-28 00:00:00.000' where EmpId=6475;
+update Employees set RetirementDate='2051-08-31 00:00:00.000' where EmpId=6476;
+
+
+update pr_emp_pay_field set amount=	8857	where emp_code=	6431	and m_id=11  and fm='2020-12-01';
+update pr_emp_pay_field set amount=	13075	where emp_code=	6469	and m_id=11  and fm='2020-12-01';
+update pr_emp_pay_field set amount=	13075	where emp_code=	6470	and m_id=11  and fm='2020-12-01';
+update pr_emp_pay_field set amount=	13075	where emp_code=	6471	and m_id=11  and fm='2020-12-01';
+update pr_emp_pay_field set amount=	13075	where emp_code=	6472	and m_id=11  and fm='2020-12-01';
+update pr_emp_pay_field set amount=	13075	where emp_code=	6473	and m_id=11  and fm='2020-12-01';
+update pr_emp_pay_field set amount=	13075	where emp_code=	6474	and m_id=11  and fm='2020-12-01';
+update pr_emp_pay_field set amount=	13075	where emp_code=	6475	and m_id=11  and fm='2020-12-01';
+update pr_emp_pay_field set amount=	13075	where emp_code=	6476	and m_id=11  and fm='2020-12-01';
+update pr_emp_pay_field set amount=	13075	where emp_code=	6477	and m_id=11  and fm='2020-12-01';
+
+update pr_emp_allowances_gen set active=0 where emp_code= 970 and m_id=14;
+update pr_emp_branch_allowances set to_date='2020-12-08'  where emp_code=6194 and fm='2020-12-01';
+
+
+update pr_emp_pay_field set amount=1308 where fm='2020-12-01' and m_id=24 and emp_code in( 6469,6470,6471,6472,6473,6477,6474,6475,6476)
+
+update pr_emp_pay_field set amount=886 where fm='2020-12-01' and m_id=24 and emp_code in( 6431)
+
+update pr_emp_pay_field set amount=5145 where emp_code=5796 and m_id=13 and fm='2020-12-01'
+update pr_emp_pay_field set amount=5145 where emp_code=5889 and m_id=13 and fm='2020-12-01'
+
+
+--------------------------------
+--Notes
+--6362 is not coming in search to enter the increment
+--6367 - not suppose to have increment for decemeber both in goodwill and mavensoft. clean it in mavensoft (goodwill not having this anyhave)
+
+
+

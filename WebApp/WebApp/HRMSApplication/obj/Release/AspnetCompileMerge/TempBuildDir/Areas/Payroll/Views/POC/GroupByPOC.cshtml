@@ -1,0 +1,260 @@
+﻿@{
+
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+    var reportTitle = ViewBag.ReportTitle;
+    ViewBag.Title = reportTitle + " Report";
+    var dataUrl = ViewBag.DataUrl;
+    var ExportColumns = ViewBag.ExportColumns;
+    var PdfOrientation = ViewBag.PdfOrientation;
+    var PdfColumnsWidths = ViewBag.PdfColumnsWidths;
+}
+
+<div class="page">
+    <div class="form-horizontal">
+        <div class="page_start">
+            <div class="leftmenu-container">
+                <div class="sidebar-menu">
+                    @{Html.RenderPartial("_PVPayrollMenu");}
+                </div>
+                <div class="sidebar-content">
+                    <div class="main_heading heading_main">
+                        <h1>@ViewBag.ReportTitle Report</h1>
+                        <div class="col-md-12">
+                            <div class="fancy-collapse-panel">
+                                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading" role="tab" id="headingOne">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#reportsearch" aria-expanded="true" aria-controls="reportsearch">
+                                                    Report Filter
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="reportsearch" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                            <div class="panel-body">
+                                                <div class="reports_search">
+                                                    <div class="rep_down_fields">
+                                                        @{
+                                                            <div id="reportsearch" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                                                <div class="panel-body">
+                                                                    <div class="reports_search">
+                                                                        <div class="col-md-12">
+                                                                            <div class="rep_down_fields">
+                                                                                <div class="row">
+                                                                                    <div class="col-md-12">
+                                                                                        <div class="pull-right">
+                                                                                            <button class="btn btn-primary" id="btnT4AllEmpSearchOneMultiSelOneMonthpic">Search</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="table-responsive ">
+                                <table id="rptGrpGrid" class="display reports-grids" style="width:100%"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var reportMsgTop = '';
+    var fnMessageTop = function () {
+        return (reportMsgTop == '' ? '' : 'Filters : ' + reportMsgTop);
+    };
+
+    $(document).ready(function () {
+        setTimeout(pageInitLoad(), 2000);
+    });
+
+    function pageInitLoad() {
+        var groupColumn = 0;
+        var serviceurl = '@dataUrl';
+        var pdfNoOfCols = '@ViewBag.PdfNoOfCols';
+        var pdfGrpColHeaderLabels = '@ViewBag.PdfGrpColHeaderLabels';
+        var arrPdfGrpColHeaderLabels = pdfGrpColHeaderLabels.split(',');
+
+        serviceurl = serviceurl.replace('&amp;', '&');
+
+        $('#rptGrpGrid').DataTable({
+            scrollX: true,
+            scrollCollapse: true,
+            "language": {
+                "search": "Filter records:"
+            },
+            //"destroy" : true,
+            "ajax": {
+                "url": serviceurl,
+                "type": "GET",
+                "datatype": "json",
+                "dataSrc": ""
+            },
+            "columnDefs": [
+               { "visible": false, "targets": groupColumn }
+            ],
+            dom: 'Bfrtip',
+           buttons: [
+                {
+                    extend: 'excelHtml5',
+                    text: '<i class="fa fa-file-excel-o dt-export-icon-excel"></i>',
+                    titleAttr: 'Excel',
+                    title: 'TSCAB - @reportTitle',
+                    messageTop: fnMessageTop,
+                    exportOptions: {@ExportColumns},
+                    className: 'dt-export-btn',
+                    color:'red'
+                },
+                {
+                    extend: 'pdfHtml5',
+                    text: '<i class="fa fa-file-pdf-o dt-export-icon-pdf"></i>',
+                    className: 'dt-export-btn',
+                    titleAttr: 'Pdf',
+                    title: 'TSCAB - @reportTitle',
+                    exportOptions: {@ExportColumns},
+                    messageTop: fnMessageTop,
+                    customize: function (doc) {
+                        doc.styles.tableHeader.alignment = 'left';
+                        doc.content.splice(1, 0, {
+                            margin: [0, -50, 0, 10],
+                            alignment: 'left',
+                            image: 'data:image/jpeg;base64,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'
+                        });
+                        doc.content.splice(2, 0, {
+                            margin: [10, 10, 10, 10],
+                            alignment: 'center',
+                            image: 'data:image/png;base64,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'
+                        });
+                        var lastColX = null;
+                        var lastColY = null;
+                        var bod = [];
+                        var oldOffice = '';
+                        var docIdx = reportMsgTop != '' ? 4 : 3;
+                       //  
+
+                        doc.content[docIdx].table.body.forEach(function (line, i) {
+                            if (lastColX != line[0].text && line[0].text != '' && oldOffice != line[0].text) {
+
+                                if (i != 0)
+                                {
+                                    var arr = line[0].text.split(',');
+
+                                    var arrBodyPush = [];
+                                    for (p = 0; p < arrPdfGrpColHeaderLabels.length; p++) {
+                                        arrBodyPush.push(
+                                            { text: (arrPdfGrpColHeaderLabels[p]== '' ? '': arrPdfGrpColHeaderLabels[p] + arr[p]), style: 'tableHeader' }
+                                        );
+                                    }
+                                    bod.push(arrBodyPush);
+                                    //bod.push([
+                                    //    { text: 'Code: '+arr[0], style: 'tableHeader' },
+                                    //    { text: arr[1], style: 'tableHeader' },
+                                    //    { text: 'Designation: '+arr[2], style: 'tableHeader' },
+                                    //    { text: arr[3], style: 'tableHeader' },
+                                    //    { text: '*', style: 'tableHeader'},
+                                    //    { text:  '**', style: 'tableHeader'}
+                                    //]);
+
+                                }
+                                oldOffice = line[0].text;
+                            }
+                            //Add line with data except grouped data
+                            if (i < doc.content[docIdx].table.body.length)
+                            {
+                                var arrBodyPushData = [];
+                                for (q = 1; q <= pdfNoOfCols; q++) {
+                                    arrBodyPushData.push(
+                                        { text: line[q].text, style: 'defaultStyle' }
+                                    );
+                                }
+                                bod.push(arrBodyPushData);
+                                //bod.push([
+                                //    { text: line[1].text, style: 'defaultStyle' },
+                                //    { text: line[2].text, style: 'defaultStyle' },
+                                //    { text: line[3].text, style: 'defaultStyle' },
+                                //    { text: line[4].text, style: 'defaultStyle' },
+                                //    { text: line[5].text, style: 'defaultStyle' },
+                                //    { text: line[6].text, style: 'defaultStyle' }
+                                //]
+                                //);
+                            }
+                        });
+
+                        doc.content[0].text = doc.content[0].text.trim();
+                        doc.content[docIdx].table.widths = [@PdfColumnsWidths];
+                        doc.content[docIdx].table.body = bod;
+                        doc.content[docIdx].layout = 'lightHorizontalLines';
+
+                        doc.styles.title = {
+                            fontSize: '20',
+                            alignment: 'center'
+                        };
+                        doc.styles.message = {
+                            fontSize: '9',
+                            alignment: 'center'
+                        };
+
+                        doc['footer'] = (function (page, pages) {
+                            return {
+                                columns: [
+                                    'By: @ViewBag.LoginUserName , @ViewBag.LoginBranchName .',
+                                    {
+                                        alignment: 'right',
+                                        text: [
+                                            new Date().toLocaleDateString("en-IN", { day: "2-digit", month: "2-digit", year: "numeric", hour: '2-digit', minute: '2-digit' }),
+                                            '    Page ', { text: page.toString() }, ' of ', { text: pages.toString() }
+                                        ]
+                                    }
+                                ],
+                                fontSize: '9',
+                                margin: [40, 10]
+                            }
+                        });
+                    }
+                }
+            ],
+            "columns": @Html.Raw(ViewBag.ReportColumns),
+            "order": [[groupColumn, 'asc']],
+            "displayLength": 25,
+            "rowCallback": function (row, data, index) {
+                console.log('row callback:', data);
+            },
+            "drawCallback": function (settings) {
+                console.log('draw callback:');
+
+                var api = this.api();
+                var rows = api.rows({ page: 'current' }).nodes();
+                var last = null;
+
+                api.column(groupColumn, { page: 'current' }).data().each(function (group, i) {
+                    if (last !== group) {
+                        $(rows).eq(i).before(
+                            '<tr class="group" style="background-color:#C8EAFB"><td colspan="32"><b>' + group + '</b></td></tr>'
+                        );
+                        last = group;
+                    }
+
+                })
+            }
+
+        });
+    }
+
+    $("#btnT4AllEmpSearchOneMultiSelOneMonthpic").click(function () {
+   });
+</script>

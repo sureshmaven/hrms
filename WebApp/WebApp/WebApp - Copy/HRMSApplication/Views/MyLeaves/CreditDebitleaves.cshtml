@@ -1,0 +1,655 @@
+﻿@model Entities.leaves_CreditDebit
+
+@{
+    var rolepages = TempData["RolePages"].ToString();
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.RolePages = TempData["RolePages"];
+}
+
+
+@{
+    var message = TempData["Status"] ?? string.Empty;
+}
+
+<script type="text/javascript">
+    var message = '@message';
+    if (message) alert(message);
+
+</script>
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-heading">
+            @{
+                <ul class="nav nav-tabs">
+                    @if (rolepages.Contains("MABAN"))
+                    {
+                        <li><a href="@Url.Action("Create", "Banks")" >Bank</a></li>}
+                    @if (rolepages.Contains("MABRA"))
+                    {
+                        <li><a href=@Url.Action("Create", "Branches")>Branch</a></li>}
+
+                    @if (rolepages.Contains("MADEP"))
+                    {
+                        <li><a href=@Url.Action("Create", "Departments")>Department</a></li>}
+                    @if (rolepages.Contains("MADES"))
+                    {
+                        <li><a href=@Url.Action("Create", "Designations")>Designation</a></li>}
+                    @if (rolepages.Contains("MAROL"))
+                    {
+                        <li><a href=@Url.Action("Create", "Roles")>Role</a></li>}
+                    @if (rolepages.Contains("MALTY"))
+                    {
+                        <li><a href=@Url.Action("Create", "LeaveTypes")>LeaveType</a></li>}
+                    @if (rolepages.Contains("MAHLI"))
+                    {
+                        <li><a href=@Url.Action("Create", "HolidayLists")>HolidayList</a></li>}
+                    @if (rolepages.Contains("MACDL"))
+                    {
+                        <li class="active"><a href=@Url.Action("CreditDebitleaves", "MyLeaves")>Credit / Debit leaves</a></li>}
+                    @if (rolepages.Contains("MABCY"))
+                    {
+                        <li><a href=@Url.Action("Createbranchcount", "Branches")>Branch Category</a></li>}
+                    @if (rolepages.Contains("MAODY"))
+                    {
+                        <li><a href=@Url.Action("OtherdutyCreate", "LeaveTypes")>Other Duty</a></li>}
+                    @if (rolepages.Contains("MABPD"))
+                    {
+                        <li><a href=@Url.Action("Create", "BlockPeriod")>BlockPeriod</a></li>}
+                    @if (rolepages.Contains("MANES"))
+                    {
+                        <li><a href=@Url.Action("Create", "News")>News</a></li>}
+                </ul>
+            }
+        </div>
+        <script type="text/javascript" language="JavaScript">
+            function radioWithText(d) {
+                document.getElementById('one').style.display = "none";
+                document.getElementById('two').style.display = "none";
+                document.getElementById(d).style.display = 'inline';
+            }
+        </script>
+
+        <div class="page_st">
+            <div class="page">
+                <div class="col-md-12 col-sm-12">
+                    <div class="master_credit_page">
+                      
+
+                        @using (Html.BeginForm("CreditDebit", "MyLeaves", FormMethod.Post, new { name = "creditdebit" }))
+                        {
+
+                                @Html.AntiForgeryToken()
+                            <div class="main_heading">
+                                <h1>Credit / Debit Leaves</h1>
+                                <div class="leaves_radiobtn">
+                                    <div class="form-horizontal">
+                                        <div class="col-md-4 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                @*<label class="col-sm-4 control-label"></label>*@
+                                                <div class="col-sm-8">
+                                                    @Html.RadioButtonFor(model => model.type, "Credit", new { id = "C", onclick = "return pp()", @checked = "checked" })<label for="C" class="label_class">Credit</label>
+
+                                                    @Html.RadioButtonFor(model => model.type, "Debit", new { id = "D", onclick = "return pfp()" })<label for="D" class="label_class">Debit</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-horizontal col-md-12 col-sm-12 col-xs-12">
+
+                                    @*<div class="col-md-4 col-sm-6 col-xs-12">
+                                        <label class="col-sm-4 control-label">Branch:<span class="mandatory">*</span></label>
+                                        <div class="col-sm-8">
+                                            @Html.RadioButtonFor(model => model.Head_Branch_Value, "42", new { id = "head", @checked = "checked", onclick = "return pp()" })
+                                            <label class="label_class" for="head">  HeadOffice </label>
+
+                                            @Html.RadioButtonFor(model => model.Head_Branch_Value, "43", new { id = "bran", onclick = "return pfp()" })
+                                            <label class="label_class" for="bran" style="margin:0px;">  Branch </label>
+                                        </div>
+                                    </div>
+
+                                    <div id="depthide" class="col-md-4 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">Department:<span class="mandatory">*</span> </label>
+                                            <div class="col-sm-8">
+                                                @Html.DropDownListFor(model => model.Department, (SelectList)ViewBag.Departments, "Select Department", new { @class = "form-control", @id = "depart", @onchange = "HFillBranches()" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="branchide" class="col-md-4 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">Branch:<span class="mandatory">*</span> </label>
+                                            <div class="col-sm-8">
+                                                @Html.DropDownListFor(model => model.Branch, (SelectList)ViewBag.Branches, "Select Branches", new { @class = "form-control", @id = "branch", @onchange = "BFillDesignation()" })
+                                                                               
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">Designation:<span class="mandatory">*</span> </label>
+                                            <div class="col-sm-8">
+                                                @Html.DropDownListFor(model => model.CurrentDesignation, (SelectList)ViewBag.Designations, "Select Designation", new { @class = "form-control", @id = "desig", @onchange = "HFillDesignation()" })
+                                            </div>
+                                        </div>
+                                    </div>*@
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <label class="col-sm-5 control-label">EmpId:<span class="mandatory">*</span></label>
+                                        @*<div class="col-sm-7">
+                                            <input type="text" id="txtEmpId" class="form-control" onchange="return empsearch();">
+
+                                        </div>*@
+                                        <div class="col-sm-7">
+                                            @Html.TextAreaFor(model => model.EmpId, new { @class = "form-control", @id = "txtEmpId" ,@onchange="return empsearch()",rows="1" ,@onkeydown = "if(event.key==='.'){event.preventDefault();}" })
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Employee Name:<span class="mandatory">*</span> </label>
+                                            <div class="col-sm-7">
+                                                @*@Html.DropDownListFor(model => model.EmpId, (SelectList)ViewBag.EmpNames, "Select Employee", new { @class = "form-control", @id = "mag", @onchange = "HFillleavetype()", @disabled = "disabled" })*@
+                                                @Html.TextBoxFor(model => model.EmpId, new { @class = "form-control", @id = "mag", @disabled = "disabled" })
+                                                @Html.HiddenFor(model=>model.EmpId)
+                                              
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">Leave Type:<span class="mandatory">*</span> </label>
+                                            <div class="col-sm-8">
+                                                @Html.DropDownListFor(model => model.LeaveTypeId, (SelectList)ViewBag.LeaveTypes1, "Select LeaveType", new { @class = "form-control", @id = "type" })
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="Cdays" class="col-md-3 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 p0 control-label">Credit Leave:<span class="mandatory">*</span> </label>
+                                            <div class="col-sm-7">
+                                                @Html.TextBoxFor(model => model.CreditLeave, new { @class = "form-control", @id = "creditday", maxlength = "3", onkeypress = "return isNumber(event)" })
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="Ddays" class="col-md-3 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Debit Leave:<span class="mandatory">*</span> </label>
+                                            <div class="col-sm-7">
+                                                @Html.TextBoxFor(model => model.DebitLeave, new { @class = "form-control", @id = "debitday", maxlength = "3", onkeypress = "return isNumber(event)" })
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Comments:<span class="mandatory">*</span> </label>
+                                            <div class="col-sm-7">
+                                                @Html.TextAreaFor(model => model.Comments, new { @class = "form-control", @id = "cbcomments" })
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="pull-right">
+                                        <button onclick="resetForm()" type="button" id="reset" class="btn btn-default">Cancel</button>
+                                        <button type="submit" value="Submit" onclick="return Credit();" class="btn btn-primary subleave">Submit</button>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <br />
+                            </div>
+                                                      
+                                <div class="main_heading">
+                                    <h1>Credit / Debit Leaves History</h1>
+                                    <div class="col-md-12">
+                                        <div id="grid"></div>
+                                        <div style='margin-top: 20px;'>
+                                            <div id="div1" style='float: left; margin: 10px 0 0 16px;'>
+                                                <input type="button" class="jqx-rc-all jqx-button jqx-widget jqx-fill-state-normal" value="Export to Excel" id='exporttoexcel' onclick='window.location = "@Url.Action("ExportToExcelCreditDebit", "MyLeaves")";' />
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var resetForm = function () { $('input,select,textarea').not($("#searchField")).val(''); }
+
+
+        var screenTheme = 'darkblue';
+        var popupTheme = 'highcontrast';
+        var otherTheme = 'arctic';
+
+        var localizationObject = {
+            filterstringcomparisonoperators: ['contains', 'does not contain'],  /* filter String Comparison Operators    */
+            filternumericcomparisonoperators: ['less than', 'greater than'],    /* filter Numeric Comparison Operators  */
+            filterdatecomparisonoperators: ['less than', 'greater than'],       /* filter Date comparison operators.  */
+            filterbooleancomparisonoperators: ['equal', 'not equal']            /* filter bool comparison operators.*/
+        };
+        var stringcomparisonoperators = ['CONTAINS', 'DOES_NOT_CONTAIN'];
+        var numericcomparisonoperators = ['LESS_THAN', 'GREATER_THAN'];
+        var datecomparisonoperators = ['LESS_THAN', 'GREATER_THAN'];
+        var booleancomparisonoperators = ['EQUAL', 'NOT_EQUAL'];
+        $(document).ready(function () {
+
+            // prepare the data
+            var source =
+                {
+                    datatype: "json",
+
+                    datafields: [
+                        { name: 'Id', type: 'int' },
+                        { name: 'EmpId', type: 'int' },
+                        { name: 'ShortName', type: 'string' },
+                        { name: 'designation', type: 'int' },
+                        { name: 'Deptbranch', type: 'int' },
+                        { name: 'DebitLeave', type: 'int' },
+                        { name: 'CreditLeave', type: 'int' },
+                        { name: 'TotalLeaveBalance', type: 'int' },
+                        { name: 'LeaveBalance', type: 'int' },
+                        { name: 'Type', type: 'int' },
+                        { name: 'Comments', type: 'string' },
+                        { name: 'UpdatedDate', type: 'datetime' },
+
+                    ],
+                    async: false,
+                    url: 'CreditDebitViews',
+                    data: {
+                        featureClass: "P",
+                        style: "full",
+                        maxRows: 2,
+                        username: "jqwidgets"
+                    }
+                };
+
+            var dataAdapter = new $.jqx.dataAdapter(source,
+                {
+                    formatData: function (data) {
+
+                        data.EmpId = $("#searchField").val();
+
+                        return data;
+                    }
+                }
+            );
+            var editrowindex = -1;
+            var delrowindex = -1;
+            // initialize jqxGrid
+
+
+            $("#grid").jqxGrid(
+                {
+                    width: '100%',
+                    source: dataAdapter,
+                    theme: otherTheme,
+                    autoheight: true,
+                    sortable: true,
+                    pageable: true,
+                    columnsResize: true,
+                    altRows: true,
+                    filterable: true,
+                    autoshowfiltericon: true,
+                    ready: function () {
+                        $("#grid").jqxGrid('localizestrings', localizationObject);
+                    },
+                    updatefilterconditions: function (type, defaultconditions) {
+                        switch (type) {
+                            case 'stringfilter':
+                                return stringcomparisonoperators;
+                            case 'numericfilter':
+                                return numericcomparisonoperators;
+                            case 'datefilter':
+                                return datecomparisonoperators;
+                            case 'booleanfilter':
+                                return booleancomparisonoperators;
+                        }
+                    },
+                    updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                        filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                        var index1 = 0;
+                        var index2 = 0;
+                        if (columnfilter != null) {
+                            var filter1 = columnfilter.getfilterat(0);
+                            var filter2 = columnfilter.getfilterat(1);
+                            if (filter1) {
+                                index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                                var value1 = filter1.filtervalue;
+                                filterinputfield1.val(value1);
+                            }
+                            if (filter2) {
+                                index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                                var value2 = filter2.filtervalue;
+                                filterinputfield2.val(value2);
+                            }
+                        }
+                        filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                        filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                    },
+                    columns: [
+                        { text: "Emp Code", datafield: "EmpId", editable: false, width: 90 },
+                        { text: "Emp Name", datafield: "ShortName", editable: false, width: 120 },
+                        { text: "Designation", datafield: "designation", editable: false, width: 120 },
+                        { text: "Department/Branch", datafield: "Deptbranch", editable: false, width: 150 },
+                        { text: "Leave Type", datafield: "Type", editable: false, width: 130 },
+                        { text: "PreviousBalance", datafield: "LeaveBalance", editable: false, width: 128 },
+                        { text: "Debit Leave", datafield: "DebitLeave", columngroup: 'Credit/Debit Leaves', editable: false, width: 100 },
+                        { text: "Credit Leave", datafield: "CreditLeave", columngroup: 'Credit/Debit Leaves', editable: false, width: 100 },
+                        { text: "CurrentBalance", datafield: "TotalLeaveBalance", editable: false, width: 120 },
+                        { text: "Comments", datafield: "Comments", editable: false, width: 140 },
+
+
+
+
+                    ], columngroups:
+                        [
+                            { text: 'Action', align: 'center', name: 'Actions', width: 160 },
+                            { text: 'Credit/Debit Leaves', align: 'center', name: 'Credit/Debit Leaves', width: 120 },
+
+                        ],
+
+                    showtoolbar: true,
+                    rendertoolbar: function (toolbar) {
+                        var me = this;
+                        var container = $("<div style='margin: 5px;'></div>");
+                        var span = $("<span style='float: left; margin-top: 5px; margin-right: 4px;'>EmpCode/Branch/Dept/Name Search: </span>");
+                        var input = $("<input class='jqx-input jqx-widget-content jqx-rc-all' id='searchField' type='text' style='height: 23px; float: left; width: 223px;' />");
+                        toolbar.append(container);
+                        container.append(span);
+                        container.append(input);
+                        if (otherTheme != "") {
+                            input.addClass('jqx-widget-content-' + otherTheme);
+                            input.addClass('jqx-rc-all-' + otherTheme);
+                        }
+                        var oldVal = "";
+                        input.on('keydown', function () {
+                            if (input.val().length >= 2) {
+                                if (me.timer) {
+                                    clearTimeout(me.timer);
+                                }
+                                if (oldVal != input.val()) {
+                                    me.timer = setTimeout(function () {
+                                        $("#grid").jqxGrid('updatebounddata');
+                                    }, 1000);
+                                    oldVal = input.val();
+                                }
+                            }
+                            else {
+                                $("#grid").jqxGrid('updatebounddata');
+                            }
+                        });
+                    }
+
+                });
+
+            $("#excelExport1").jqxButton();
+
+
+            $("#excelExport1").click(function () {
+                $("#grid").jqxGrid('exportdata', 'xls', 'EmployeeList');
+            });
+        });
+
+
+</script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="~/HRMS Scripts/Register.js"></script>
+<script>
+
+    function empsearch() {
+       // alert("hi");
+        
+        var lempid = $("#txtEmpId").val();
+        if (lempid != "") {
+            
+            $.ajax({
+                type: "GET",
+                url: "/MyLeaves/empsearch?empid=" + lempid,
+                dataType: "Json",
+                data: { State: lempid },
+           
+                success: function (empid) {
+                    if (empid == null) {
+                        alert("No Employee Found ");
+                        $("#txtEmpId").val(""); 
+                        $("#mag").val("");
+                    }
+                   
+                    $("#mag").html(""); // clear before appending new list
+                    //$("#mag").append(
+                    //    $('<option></option>').val('0').html('Select Employee'));
+                    //$.each(empid, function (i, mag) {
+                    //    $("#mag").append(
+                    //        $('<option></option>').val(mag.Value).html("hello"));
+
+                    //    $('<option></option>',{value : value.ID,text : value.NAME})
+                    //});
+                    $.each(empid, function (key, value) {
+                       
+                        //alert(value);
+
+                        if (key == "lEmployeeName") {
+                              $("#mag").val(value);
+                            //  $('#mag').append
+                            //('<option value=' + value + '>' + value + '</option>');
+                        }
+                                             
+                    });
+                }
+            });
+        }
+        else {
+            return false;
+        }
+    }
+    
+    function HFillBranches() {
+
+        var stateId = $('#depart').val();
+
+        $.ajax({
+            url: '/MyLeaves/HLoadByBranchId',
+            type: "GET",
+            dataType: "JSON",
+            data: { State: stateId },
+            success: function (stateData) {
+
+                $("#desig").html(""); // clear before appending new list
+                $("#desig").append(
+                    $('<option></option>').val('0').html('Select Designation'));
+                $.each(stateData, function (i, desig) {
+                    $("#desig").append(
+                        $('<option></option>').val(desig.Value).html(desig.Text));
+                });
+                //$("#mag ").html(""); // clear before appending new list
+                //$("#mag ").append(
+                //    $('<option></option>').val('0').html('Select Employee'));
+                //$.each(stateData, function (i, mag) {
+                //    $("#mag ").append(
+                //        $('<option></option>').val(mag.Value).html(mag.Text));
+                //});
+            }
+        });
+    }
+    function BFillDesignation() {
+
+        var stateId = $('#branch').val();
+
+        $.ajax({
+            url: '/MyLeaves/BLoadByBranchId',
+            type: "GET",
+            dataType: "JSON",
+            data: { State: stateId },
+            success: function (stateData) {
+
+                $("#desig").html(""); // clear before appending new list
+                $("#desig").append(
+                    $('<option></option>').val('0').html('Select Designation'));
+                $.each(stateData, function (i, desig) {
+                    $("#desig").append(
+                        $('<option></option>').val(desig.Value).html(desig.Text));
+                });
+                //$("#mag").html(""); // clear before appending new list
+                //$("#mag").append(
+                //    $('<option></option>').val('0').html('Select Employee'));
+                //$.each(stateData, function (i, mag) {
+                //    $("#mag").append(
+                //        $('<option></option>').val(mag.Value).html(mag.Text));
+                //});
+            }
+        });
+    }
+
+    function HFillDesignation() {
+        var stateId = $('#depart').val();
+        var stateID1 = $('#desig ').val();
+        var stateID2 = $('#branch').val();
+        $.ajax({
+            url: '/MyLeaves/HLoadByDesignationId',
+            type: "GET",
+            dataType: "JSON",
+            data: { State: stateId, dept: stateID1, branc: stateID2 },
+            success: function (stateData) {
+                $("#mag").html(""); // clear before appending new list
+                $("#mag").append(
+                    $('<option></option>').val('0').html('Select Employee'));
+                $.each(stateData, function (i, mag) {
+                    $("#mag").append(
+                        $('<option></option>').val(mag.Value).html(mag.Text));
+                });
+            }
+        });
+    }
+    
+
+    function HFillleavetype() {
+
+        var stateId = $('#depart').val();
+        var stateID1 = $('#desig ').val();
+        var stateID2 = $('#branch').val();
+        var stateID3 = $('#mag ').val();
+        $.ajax({
+            url: '/MyLeaves/HLoadByLeaveId',
+            type: "GET",
+            dataType: "JSON",
+            data: { State: stateId, dept: stateID1, branc: stateID2, emp: stateID3 },
+            success: function (stateData) {
+                $("#type").html(""); // clear before appending new list
+                $("#type").append(
+                    $('<option></option>').val('0').html('Select LeaveType'));
+                $.each(stateData, function (i, mag) {
+                    $("#type").append(
+                        $('<option></option>').val(mag.Value).html(mag.Text));
+                });
+            }
+        });
+    }
+    function pp() {
+       
+        $('#branch').val('');
+        //$("#depart")[0].selectedIndex = 0;
+        //$('#desig')[0].selectedIndex = 0;
+        $('#mag')[0].selectedIndex = 0;
+        $('#type')[0].selectedIndex = 0;
+        $('#creditday').val('');
+        $('#debitday').val('');
+        $('#cbcomments').val('');
+
+    }
+    function pfp() {
+       
+        $('#branch').val('');
+        //$("#depart")[0].selectedIndex = 0;
+        //$('#desig')[0].selectedIndex = 0;
+        $('#mag')[0].selectedIndex = 0;
+        $('#type')[0].selectedIndex = 0;
+        $('#creditday').val('');
+        $('#debitday').val('');
+        $('#cbcomments').val('');
+    }
+</script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('input[name=Head_Branch_Value]:first').attr('checked', true);
+
+        if ($("#head").is(":checked")) {
+            document.getElementById('branchide').style.display = 'none';
+            document.getElementById('depthide').style.display = 'block';
+
+        }
+    });
+
+    $("input[name='Head_Branch_Value']").click(function () {
+        if ($("#head").is(":checked")) {
+            document.getElementById('branchide').style.display = 'none';
+            document.getElementById('depthide').style.display = 'block';
+
+        }
+        else if ($("#bran").is(":checked")) {
+
+            document.getElementById('depthide').style.display = 'none';
+            document.getElementById('branchide').style.display = 'block';
+        }
+    });
+
+</script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('input[name=type]:first').attr('checked', true);
+
+        if ($("#C").is(":checked")) {
+            document.getElementById('Ddays').style.display = 'none';
+            document.getElementById('Cdays').style.display = 'block';
+
+        }
+    });
+
+    $("input[name='type']").click(function () {
+         
+        if ($("#C").is(":checked")) {
+             
+            document.getElementById('Ddays').style.display = 'none';
+            document.getElementById('Cdays').style.display = 'block';
+            $("debitday").val('');
+            debitday
+        }
+        else if ($("#D").is(":checked")) {
+             
+            document.getElementById('Cdays').style.display = 'none';
+            document.getElementById('Ddays').style.display = 'block';
+            $("creditday").val('');
+        }
+    });
+
+</script>
+
+<script>
+    document.getElementById("a2").className = "active";
+
+</script>
+
+
+
+
+
+
+
+
+

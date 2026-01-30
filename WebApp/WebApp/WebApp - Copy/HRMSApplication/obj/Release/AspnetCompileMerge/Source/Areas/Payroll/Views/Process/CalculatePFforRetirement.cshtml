@@ -1,0 +1,331 @@
+﻿@{
+    ViewBag.Title = "CalculatePFforRetirement";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+    var inst_rates = ViewBag.interest;
+    var fy = ViewBag.fy;
+}
+<div class="page">
+    <div class="form-horizontal">
+        <div class="page_start">
+            <div class="leftmenu-container">
+                <div class="sidebar-menu">
+                    @{Html.RenderPartial("_PVPayrollMenu");}
+                </div>
+                <div class="sidebar-content">
+                    <div class="main_heading heading_main">
+                        <h1>Calculate PF for Retirement <span class="year-end">@ViewBag.Env_Fm_Fy</span></h1>
+                        <div class="emp-serch">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Emp Code:</label>
+                                    <div class="col-sm-8">
+                                        <div class="navbar-form" role="search">
+                                            <div class="input-group">
+                                                @*   <input type="number" id="txt_empcodesearch" class="form-control" placeholder="Search"  onkeypress="if(this.value.length==06) return false;">*@
+                                                <input type="number" class="form-control" placeholder="Search" id="empid" onchange="data()" onkeypress="if(this.value.length==06) return false;">
+                                                <div class="input-group-btn">
+                                                    <button class="btn btn-default search_btn" title="Search for Employee" type="button" id="btn_searchempcodenew"><i class="glyphicon glyphicon-search"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <label id="lblEmpName_new" class="control-label emp_name"></label>
+
+                                        <label id="lblDesig_new" class="control-label"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label dept_label">Department / Branch:</label>
+                                    <div class="col-sm-8">
+                                        <label id="lblDeptBranch_new" class="control-label"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">DOJ:</label>
+                                        <div class="col-sm-9">
+                                            <label id="lblDOJ_new" class="control-label"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">DOC:</label>
+                                        <div class="col-sm-9">
+                                            <label id="lblDOC_new" class="control-label"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">DOR:</label>
+                                        <div class="col-sm-9">
+                                            <label id="lblDOR_new" class="control-label"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div id="reportsearch" class="process_pay">
+                                <div class="main_data">
+                                    <div class="row">
+                                        <div class="col-md-9">
+
+                                            <br />
+                                            <div class="form-group" id="Retirement_Date">
+                                                <label class="col-sm-4 control-label">Retirement Date:</label>
+                                                <div class="input-group date col-sm-4" id="Ret_Date">
+                                                    <input type="text" name="Statusdate1" id="Relivingdate" class="form-control" required />
+                                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group" id="Retirement_Date">
+                                                <label class="col-sm-4 control-label">PF Caluculation Date:</label>
+                                                <div class="input-group date col-sm-4" id="Ret_Date">
+                                                    <input type="text" name="Statusdate1" id="pfcaldate" class="form-control" required />
+                                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-8 control-label" id="inst_rate" value="@ViewBag.interest">Previous Year PF Interest Rate : <span style="color: red;"> @inst_rates % </span> for year <span style="color: red;"> @fy </span></label>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mt_10">
+                                        <div class="pull-right">
+                                            <button type="submit" id="btnSubmit" class="btn btn-primary" title="Submit details">Calculate PF</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="clearfix"></div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+      var inst_rate = "";
+    $(document).ready(function () {
+        //debugger;
+        //inst_rate = '@inst_rates';
+        //alert(mond);
+        //inst_rate = $('#inst_rate').val(inst_rate);
+
+    });
+    var today = new Date();
+    var lastDate = new Date(today.getFullYear(), today.getMonth(0) + 1, 0);
+    //$('#Ret_Date').datepicker({
+    //    format: "dd/mm/yyyy",
+    //    autoclose: true,
+    //    todayHighlight: true,
+    //    startDate: '-1m',
+    //    endDate: lastDate
+    //});
+
+    function data() {
+        //debugger;
+        pvEmpCommonSearch1440new()
+        var emp_id = $('#empid').val();
+        var inputVal = document.getElementById("empid").value;
+        var emp_code = $('#empid').val();
+        //alert(emp_id);
+        CommonApiGET('/Payroll/Process/Retirement?empid=' + emp_id, function (respData) {
+            //debugger;
+            var retirement_date = respData[0].RetirementDate;
+            var RetirementDate = $('#Relivingdate').val(retirement_date);
+            var d = new Date();
+
+            var month = d.getMonth() + 1;
+            var day = d.getDate();
+
+            var output = (('' + day).length < 2 ? '0' : '') + day + '-' +
+                (('' + month).length < 2 ? '0' : '') + month + '-' +
+                d.getFullYear();
+            RetirementDate = $('#pfcaldate').val(output);
+
+            //var inst_rate = $('#inst_rate').val(instrate);
+        });
+    }
+
+
+    $('#btnSubmit').click(function () {
+        debugger;
+        var emp_code = $('#empid').val();
+        var pfcaldate = $('#pfcaldate').val(); //pf calculate date
+        var RelivingDate = $('#Relivingdate').val(); // relieving date
+        var inst_rates = '@inst_rates';
+        //alert(mond);
+        //inst_rate = $('#inst_rate').val(inst_rate)
+        var pfcalDate = document.getElementById('pfcaldate').value;
+        var RelievDate = document.getElementById('Relivingdate').value;
+        var ReleiveingDate = moment(RelievDate, "DD.MM.YYYY");
+        var PfcaltionDate = moment(pfcalDate, "DD.MM.YYYY");
+        if (PfcaltionDate >= ReleiveingDate) {
+
+            if (emp_code != "" && pfcaldate != "" && RelivingDate != "" && inst_rates != "") {
+                //debugger;
+                var dataToSend = JSON.stringify({
+
+                    'EmpId': emp_code,
+                    'RelivingDate': RelivingDate,
+                    'pfcaldate': pfcaldate,
+                    'inst_rates': inst_rates
+
+                });
+                if (dataToSend.length > 0) {
+                    debugger;
+                    CommonApiPOST("/Payroll/Process/insertRetirementDate", dataToSend, function (isSuccess) {
+                        //debugger;
+                        if (isSuccess) {
+                            setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                        } else { }
+                    });
+                }
+            }
+            else {
+                showGlobalModal('E#Save Error#Please Select Enter valid details ');
+            }
+        }
+        else
+        {
+            showGlobalModal('W#Save Error#Please Select PF Calculation Date Greater than the Retirement Date...! ');
+        }
+    });
+</script>
+<script>
+    function pvEmpCommonSearch1440new() {
+        if ($("#empid").val() == "") {
+            toasterOptions();
+            toastr.error('Employee Id cannot be empty', 'Required');
+        }
+        else {
+            //
+            CommonApiGET('/Payroll/Process/SearchEmployeeforRetmt?EmpCode=' + $("#empid").val(), function (respData) {
+                debugger;
+                if (respData.length == 0) {
+                    toasterOptions();
+                    //toastr.error('No user with Name / Code: ' + $("#txt_empcodesearch").val(), 'No user');
+                    toastr.error('Employee not Found');
+                    setSingleEmployee1440Empty();
+
+                }
+                else if (respData[0].EDRetire == "") {
+
+                    toasterOptions();
+                    //toastr.error('User Retired with Name / Code: ' + $("#txt_empcodesearch").val(), 'Retired user');
+                    toastr.error('Employee is retired');
+                    setSingleEmployee1440Empty();
+                }
+                else if (respData.length == 1) {
+                    setSingleEmployee1440new(respData[0]);
+                }
+                //else {
+                //    //
+                //    //open modal
+                //    $("#empSearchModal_new").modal();
+                //    //fill users data
+                //    $('#jdtEmpSearch1440_new').DataTable({
+                //        "bFilter": true,
+                //        "destroy": true,
+                //        "paging": false,
+                //        "info": false,
+                //        "language": {
+                //            "search": "Filter records:"
+                //        },
+                //        data: respData,
+
+                //        "columns": [
+                //            { "data": "ECode" },
+                //            { "data": "EName" },
+                //            { "data": "EDesignation" }
+                //        ],
+                //        "order": [[0, 'asc']]
+                //    });
+                //}
+            });
+        }
+    }
+    function toasterOptions() {
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": 'toast-bottom-right',
+            "preventDuplicates": true,
+            "onclick": null,
+            "showDuration": "100",
+            "hideDuration": "1000",
+            "timeOut": "2500",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "show",
+            "hideMethod": "hide"
+        };
+    }
+    $('#empid').keypress(function (event) {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+            pvEmpCommonSearch1440new();
+            return false;
+        }
+    });
+
+    $("#btn_searchempcodenew").click(function (e) {
+        debugger;
+        pvEmpCommonSearch1440new();
+        return false;
+    });
+
+    function setSingleEmployee1440new(respData) {
+        debugger;
+        //** set values
+        $("#empid").val(respData.ECode);
+        $("#lblEmpName_new").text(respData.EName);
+        $("#lblDeptBranch_new").text(respData.EBranch);
+        $("#lblDesig_new").text(respData.EDesignation);
+        $("#lblDOJ_new").text(respData.EDoj);
+        $("#lblDOC_new").text(respData.EDoc);
+        $("#lblDOR_new").text(respData.EDRetire);
+        //$("#txt_selectedoption").text(respData.EselOpt);
+
+
+        //call parent page method
+        getDataAfterEmpSearch1440(respData.ECode);
+    }
+    function setSingleEmployee1440Empty() {
+        //** set values
+        $("#empid").val("");
+        $("#lblEmpName_new").text("");
+        $("#lblDeptBranch_new").text("");
+        $("#lblDesig_new").text("");
+        $("#lblDOJ_new").text("");
+        $("#lblDOC_new").text("");
+        $("#lblDOR_new").text("");
+
+    }
+
+
+</script>

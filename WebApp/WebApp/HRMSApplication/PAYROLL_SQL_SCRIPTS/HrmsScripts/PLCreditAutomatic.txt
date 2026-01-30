@@ -1,0 +1,24 @@
+
+alter procedure [dbo].[PLAutomatic](
+ @empid varchar(50),
+ @creditLeave int,
+ @comment varchar(250))
+
+as
+begin
+INSERT INTO [dbo].[Leaves_CreditDebit] ([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+values((select id from Employees where empid=@empid),3,@creditLeave	,0,123456,GETDATE(),(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=@empid) and LeaveTypeId=3 and year=2022),@comment,
+(select ShortName from Employees where empid=@empid),
+(select Department from Employees where empid=@empid),
+(select Branch from Employees where empid=@empid),
+(select CurrentDesignation from Employees where empid=@empid),'Credit',
+(select branch_value1 from employees where empid=@empid),
+(@creditLeave  +(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=@empid) and LeaveTypeId=3 and year=2022)),2022);
+
+
+update EmpLeaveBalance set LeaveBalance=(@creditLeave	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=@empid  and LeaveTypeId=3) and year=2022)) where LeaveTypeId=3 and empid=(select id from employees where empid=@empid) and year=2022;
+
+end

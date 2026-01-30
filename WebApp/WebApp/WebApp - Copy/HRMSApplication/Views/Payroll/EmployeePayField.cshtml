@@ -1,0 +1,542 @@
+﻿@model Entities.PayfieldModel
+
+@{
+    /**/
+
+    /**/
+
+    /**/
+
+
+
+    ViewBag.Title = "EmployeePayField";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var rolepages = TempData["RolePages"].ToString();
+    ViewBag.RolePages = TempData["RolePages"];
+
+}
+
+@{
+    var message = TempData["AlertMessage"] ?? string.Empty;
+}
+
+<script type="text/javascript">
+    var message = '@message';
+    if (message) alert(message);
+</script>
+
+
+<style>
+    .activeClass {
+        background: #ffdb99;
+    }
+
+    .secondClass {
+        /*background: #FF9999;*/
+        color: red;
+    }
+</style>
+
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-heading">
+            @{
+                <ul class="nav nav-tabs">
+                    @if (rolepages.Contains("PRMain"))
+                    {
+                        <li class="active"><a href=@Url.Action("AddPAyMonthDetails", "Payroll")>PAYROLL</a></li>
+
+                        <li><a href=@Url.Action("AddPAyMonthDetails", "Payroll")>AddPayMonth</a></li>
+                        <li class="active">  <a href=@Url.Action("EmployeePayField", "Payroll")>Employee Pay Field</a></li>
+                        <li><a href="@Url.Action("AttendenceMonthly", "Payroll")">AttendenceMonthly</a></li>
+
+
+                    }
+                </ul>
+            }
+        </div>
+
+
+        @using (Html.BeginForm("AddPayfields", "Payroll", FormMethod.Post))
+        {
+            <div class="container">
+                <div class="page_st">
+                    <div class="page">
+                        <div class="form-horizontal form-horizontal2">
+                            <div class="page_start">
+                                @{
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="main_heading">
+                                            <h1>Employee Pay Field</h1>
+                                            <div class="form-horizontal col-md-12 col-sm-12 col-xs-12">
+                                                <div class="col-md-12 col-sm-12">
+                                                    <div class="form-horizontal">
+                                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Employee ID: <span class="mandatory">*</span></label>
+                                                                <div class="col-sm-7">
+                                                                    @Html.TextBoxFor(m => m.payfield.EmpId, new { @class = "form-control", @id = "EmpID" })
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Employee Name:</label>
+                                                                <div class="col-sm-7">
+
+                                                                    <input type="text" value="@ViewBag.Ename" class="form-control" readonly="readonly" />
+                                                                    @*@Html.TextBox(null, (string)ViewBag.Ename)*@
+                                                                    @*@Html.Label(null, (string)@ViewBag.EName)*@
+                                                                    @*<label class="col-sm-5 control-label" value=@ViewBag.EName> :</label>*@
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-12">
+                                                <table class="table table-bordered relation" id="addedRows" style="width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th width="250">Earning Fields</th>
+                                                            <th>Amount</th>
+                                                            <th>Deduction Fields</th>
+                                                            <th>Amount</th>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <div id="dvregular">
+                                                                    <input type="text" class="form-control" id="wname" name="Payfieldname[]" value="" />
+                                                                </div>
+                                                            </td>
+
+                                                            <td>
+                                                                <div id="divEFAmount">
+                                                                    <input type="text" class="form-control" id="EFAmount" name="Amount[]" style="width:99% !important" value="" />
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div id="DFType">
+                                                                    <input type="text" class="form-control" id="DF" name="DFPayfieldname[]" value="" />
+                                                                </div>
+                                                            </td>
+
+                                                            <td>
+                                                                <div id="divDFAmount">
+                                                                    <input type="text" class="form-control" id="DFAmount" name="DFAmount[]" style="width:99% !important" value="" />
+                                                                </div>
+                                                            </td>
+
+
+                                                        </tr>
+
+                                                    </thead>
+
+                                                </table>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <table class="table table-bordered relation" id="addedRows2" style="width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th width="250">Earning Fields</th>
+                                                            <th>Amount</th>
+                                                            <th>Deduction Fields</th>
+                                                            <th>Amount</th>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <div id="dvregular">
+                                                                    <input type="text" class="form-control" id="wname" name="Payfieldname[]" value="" />
+                                                                </div>
+                                                            </td>
+
+                                                            <td>
+
+                                                                <div id="divEFAmount">
+                                                                    <input type="text" class="form-control" id="EFAmount" name="Amount[]" style="width:99% !important" value="" />
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div id="DFType">
+                                                                    <input type="text" class="form-control" id="DF" name="DFPayfieldname[]" value="" />
+                                                                </div>
+                                                            </td>
+
+                                                            <td>
+                                                                <div id="divDFAmount">
+                                                                    <input type="text" class="form-control" id="DFAmount" name="DFAmount[]" style="width:99% !important" value="" />
+                                                                </div>
+                                                            </td>
+
+
+                                                        </tr>
+
+                                                    </thead>
+
+                                                </table>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <div class=" pull-right">
+                                                    <input type="button" onclick="fucntiom()" id="Help" formaction="EmployeePayFieldEmpId" value="Help" class="btn btn-default Cancel" />
+                                                    <input type="button" id="Search" value="Search" class="btn btn-default Cancel" />
+                                                    <input type="submit" id="Save" value="Submit" class="btn btn-primary" />
+                                                    <input type="button" id="Cancel" value="Cancel" class="btn btn-primary" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+@*<script>
+
+        $("#Search").click(function () {
+            $.ajax({
+                url: '/Payroll/EmployeePayFieldEmpId',
+                type: 'POST',
+                async: false,
+                dataType: 'text',
+                processData: false,
+                data: {
+                    input: JSON.stringify(IVRInstant.data),
+                    Id: $("#EmpID").val()
+                },
+                success: function (data) { }
+            });
+        });
+
+    </script>*@
+<script src="~/Assets/libs/jquery/jquery-3.3.1.js"></script>
+<script src="~/Assets/libs/jquery/jquery.dataTables.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#Search").click(function (e) {
+            if ($("#EmpID").val() == "")
+                alert("Employee Id cannot be empty");
+
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: "/Payroll/EmpIdSearchForName",
+                    contentType: "application/json; charset=utf-8",
+                    data: '{"Id":"' + $("#EmpID").val() + '"}',
+                    dataType: "html",
+                    success: function (result, status, xhr) {
+                        $("#EmpID").html(result);
+
+                    },
+                    error: function (xhr, status, error) {
+                        $("#EmpID").html("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+                    }
+                });
+            }
+            return false;
+        });
+    });
+</script>
+
+
+
+@*<script>
+        $(document).ready(function () {
+            $("#Save").click(function (e) {
+                $.ajax({
+                    type: "POST",
+                    url: "/Payroll/AddPayfields",
+                    contentType: "application/json; charset=utf-8",
+                    data: '{"Id":"' + $("#EmpID").val() + '"}',
+                    dataType: "html",
+                    success: function (data) {
+                        alert(data);
+                    }
+                });
+
+            });
+        });
+    </script>*@
+
+
+
+@*<script>
+        $(document).ready(function () {
+
+            $("#addedRows").dataTable(
+                {
+                    "ajax": {
+                        "url": "/Payroll/EditNew",
+                        "type": "GET",
+                        "datatype": "json"
+                    },
+                    "columns": [
+                        { "data": "Payfieldname" }
+                    ]
+
+                });
+
+        });
+    </script>*@
+@*<script>
+            var rowCount = 1;
+            function addMoreRows() {
+                var x = document.getElementsByName("workname[]");
+                rowCount = x.length;
+                var recRow = '<tr id="rowCount' + rowCount + '"><td><div id="dvregular' + rowCount + '">@{var worklist = @ViewBag.worklist;}<input type="text" class="form-control" id="wname' + rowCount + '" name="workname[]" value=""/>@{foreach (var item in worklist) {}}</div> <div id="dvother' + rowCount + '" style="display:none"><input class="form-control" type="text" id="wdes" name="Amount[]"/> </div></td><td><textarea class="form-control" id="wdes" name="workdes[]" style="width:100% !important" value=""></textarea></td><td><input type="button" class="btn btn-info" value="Remove" onclick="removeRow(' + rowCount + ');" /></td></tr>';
+                jQuery('#addedRows').append(recRow);
+            }
+            function removeRow(removeNum) {
+                jQuery('#rowCount' + removeNum).remove();
+            }
+            function restform() {
+                $('#wname').val('Please Select');
+                $('#wdes').val('');
+                $('#workdate').val('');
+                var x = document.getElementsByName("workname[]");
+                rowCount = x.length;
+                for (var i = 1; i < rowCount; i++) {
+                    jQuery('#rowCount' + i).remove();
+                }
+            }
+
+    </script>*@
+@*<script>
+        $(document).ready(function () {
+            //Call EmpDetails jsonResult Method
+            $.ajax({
+                type: "GET",
+                url: "/Payroll/EFpayfields",
+                contentType: "application/json; charset=utf-8",
+                dataType: "Json",
+                function(json) {
+                    var tr;
+                    //Append each row to html table
+                    for (var i = 0; i < json.length; i++) {
+                        tr = $('<tr/>');
+                        tr.append("<td>" + json[i].Payfieldname + "</td>");
+
+                        $('table').append(tr);
+                    }
+                });
+        });
+    </script>*@
+<script>
+        $(document).ready(function () {
+                    $.ajax({
+                        type: "GET",
+                        url: "/Payroll/EFpayfields",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "Json",
+                        success: function (response) {
+                                                                        console.log(response);
+                                                                        mainres = response;
+
+                                                                        if (response.length != 0) {
+
+                                                                            document.getElementById("addedRows").innerHTML = '';
+                                                                            var recRow = '';
+
+
+                                                                            var recRow = '<tr><th>Earning Fields</th><th>Amount</th><th>Deduction Fields</th><th>Amount</th><tr>';
+                                                                            for (var i = 0; i < response.length; i++) {
+
+                                                                                if (i > 0) {
+
+                                                                                    @*recRow += '<tr id="rowCount' + i + '"><td><div><div id="dvregular">@{var worklist1 = @ViewBag.worklist;}<input type="text" class="form-control" id="wname' + i + '" name="Payfieldname[]" value=""/>@{foreach (var item in worklist1) { } }</div> <div id="dvother' + i + '" style="display:none"><input class="form-control" type="text" id="wdes" /> </div></td><td><input type="text" class="form-control" id="wdes" name="Amount[]" style="width:100% !important"/></td><td><div><div id="DFType">@{var DFPay = @ViewBag.DFPay;}<input type="text" class="form-control" id="DF' + i + '" name="DFPayfieldname[]" value=""/>@{foreach (var item in DFPay) { } }</div> <div id="dvother' + i + '" style="display:none"><input class="form-control" type="text" id="DFAmount" /> </div></td><td><input type="text" class="form-control" id="DFAmount" name="DFAmount[]" style="width:100% !important"/></td></tr>';*@
+                                                                                      @*recRow += '<tr id="rowCount' + i + '"><td><div><div id="dvregular">@{var worklist1 = @ViewBag.worklist == null ? "" : ViewBag.worklist;}<input type="text" class="form-control" id="wname' + i + '" name="Payfieldname[]" value=""/>@{foreach (var item in worklist1) { } }</div> <div id="dvother' + i + '" style="display:none"><input class="form-control" type="text" id="wdes" /> </div></td><td><input type="text" class="form-control" id="wdes" name="Amount[]" style="width:100% !important"/></td><td><div><div id="DFType">@{var DFPay = @ViewBag.DFPay == null ? "" : ViewBag.DFPay;}<input type="text" class="form-control" id="DF' + i + '" name="DFPayfieldname[]" value=""/>@{foreach (var item in DFPay) { } }</div> <div id="dvother' + i + '" style="display:none"><input class="form-control" type="text" id="DFAmount" /> </div></td><td><input type="text" class="form-control" id="DFAmount" name="DFAmount[]" style="width:100% !important"/></td></tr>';*@
+                                                                                    @*recRow +='<tr id="rowCount' + i + '"><td><div><div id="dvregular">@{var worklist1 = @ViewBag.worklist == null ? "" : ViewBag.worklist;}<input type="text" class="form-control" id="wname' + i + '" name="Payfieldname[]" value=""/>@{foreach (var item in worklist1) { } }</div><div id="dvother">@{var worklistEA = @ViewBag.EFAmount== null ? "" : ViewBag.EFAmount;}<input class="form-control" type="text" id="wdes'+ i +'" name="Amount[] value=""/>@{foreach (var item in worklistEA) { } } </div></td><td><div><div id="DFType">@{var DFPay = @ViewBag.DFPay == null ? "" : ViewBag.DFPay;}<input type="text" class="form-control" id="DF' + i + '" name="DFPayfieldname[]" value=""/>@{foreach (var item in DFPay) { } }</div><div id="dvother">@{var worklistDA = @ViewBag.DFAmount== null ? "" : ViewBag.DFAmount;}<input class="form-control" type="text" id="wdes'+ i +'" name="Amount[] value=""/>@{foreach (var item in worklistDA) { } } </div></td></tr>';*@
+                                                                                    recRow += '<tr id="rowCount' + i + '"><td><div><div id="dvregular">@{var worklist1 = @ViewBag.worklist;}<input type="text" class="form-control" id="wname' + i + '" name="Payfieldname[]" value=""/>@{foreach (var item in worklist1) { } }</div> <div id="divEFAmount' + i + '" style="display:none"><input class="form-control" type="text" id="EFAmount" /> </div></td><td><div><div id="divEFAmount">@{var worklist11 = @ViewBag.EFAmount == null ? "" : ViewBag.EFAmount;}<input type="text" class="form-control" id="EFAmount' + i + '" name="Amount[]" value=""/>@{foreach (var item in worklist11) { } }</div> <div id="divDFAmount' + i + '" style="display:none"><input class="form-control" type="text" id="wdes2" /> </div></td><td><div><div id="DFType">@{var DFPay11 = @ViewBag.DFPay;}<input type="text" class="form-control" id="DF' + i + '" name="DFPayfieldname[]" value=""/>@{foreach (var item in DFPay11) { } }</div> <div id="Dfdvother' + i + '" style="display:none"><input class="form-control" type="text" id="DFAmount" /> </div></td><td><div><div id="divDFAmount">@{var DFPay12 = @ViewBag.DFAmount == null ? "" : ViewBag.DFAmount;}<input type="text" class="form-control" id="DFAmount' + i + '" name="DFAmount[]" value=""/>@{foreach (var item in DFPay12) { } }</div> <div id="divDFAmount' + i + '" style="display:none"><input class="form-control" type="text" id="DFAmount" /> </div></td></tr>';
+
+                                                                                }
+                                                                                else {
+                                                                                    recRow += '<tr id="rowCount' + i + '"><td><div><div id="dvregular">@{var worklist2 = @ViewBag.worklist;}<input type="text" class="form-control" id="wname' + i + '" name="Payfieldname[]" value=""/>@{foreach (var item in worklist2) { } }</div> <div id="divEFAmount' + i + '" style="display:none"><input class="form-control" type="text" id="EFAmount" /> </div></td><td><div><div id="divEFAmount">@{var worklist22 = @ViewBag.EFAmount == null ? "" : ViewBag.EFAmount;}<input type="text" class="form-control" id="EFAmount' + i + '" name="Amount[]" value=""/>@{foreach (var item in worklist22) { } }</div> <div id="divDFAmount' + i + '" style="display:none"><input class="form-control" type="text" id="wdes2" /> </div></td><td><div><div id="DFType">@{var DFPay22 = @ViewBag.DFPay;}<input type="text" class="form-control" id="DF' + i + '" name="DFPayfieldname[]" value=""/>@{foreach (var item in DFPay22) { } }</div> <div id="Dfdvother' + i + '" style="display:none"><input class="form-control" type="text" id="DFAmount" /> </div></td><td><div><div id="divDFAmount">@{var DFPay21 = @ViewBag.DFAmount == null ? "" : ViewBag.DFAmount;}<input type="text" class="form-control" id="DFAmount' + i + '" name="DFAmount[]" value=""/>@{foreach (var item in DFPay21) { } }</div> <div id="divDFAmount' + i + '" style="display:none"><input class="form-control" type="text" id="DFAmount" /> </div></td></tr>';
+
+                                                                                    @*recRow += '<tr id="rowCount' + i + '"><td><div><div id="dvregular">@{var worklist2 = @ViewBag.worklist == null ? "" : ViewBag.worklist;}<input type="text" class="form-control" id="wname' + i + '" name="Payfieldname[]" value=""/>@{foreach (var item in worklist2) { } }</div> <div id="dvother' + i + '" style="display:none"><input class="form-control" type="text" id="wdes" /> </div></td><td><input type="text" class="form-control" id="wdes" name="Amount[]" style="width:100% !important"/></td><td><div><div id="DFType">@{var DFPay2 = @ViewBag.DFPay == null ? "" : ViewBag.DFPay;}<input type="text" class="form-control" id="DF' + i + '" name="DFPayfieldname[]" value=""/>@{foreach (var item in DFPay2) { } }</div> <div id="dvother' + i + '" style="display:none"><input class="form-control" type="text" id="DFAmount" /> </div></td><td><input type="text" class="form-control" id="DFAmount" name="DFAmount[]" style="width:100% !important"/></td></tr>';*@
+                                                                                }
+                                                                            }
+
+                                                                            jQuery('#addedRows').append(recRow);
+                                                                            for (var i = 0; i < mainres.length; i++) {
+                                                                                console.log(mainres[i].Payfieldname);
+                                                                                $("#wname" + i).val(mainres[i].Payfieldname);
+
+
+                                                                            }
+
+                                                                            // document.getElementById("draftstatuss").style.display = 'none';
+
+                                                                        }
+                                                                        else {
+                                                                            jQuery('#addedRows').remove(recRow);
+                                                                        }
+                                                                       
+
+                                                                    }
+                    });
+
+                return false;
+
+        });
+</script>
+<script>
+    $("#Cancel").click(function () {
+
+        $('#DFAmount').val('');
+        $('#EFAmount').val('');
+       
+    })
+</script>
+
+<script>
+    $(document).ready(function () {
+        if ($("#EmpID").val() != "") {
+            $.ajax({
+                type: "GET",
+                url: "/Payroll/EFAmount?Id=" + $("#EmpID").val(),
+
+                contentType: "application/json; charset=utf-8",
+                dataType: "Json",
+                success: function (response) {
+                    console.log(response);
+                    mainres = response;
+                     
+                    if (response.length != 0) {
+
+                        document.getElementById("addedRows").innerHTML = '';
+                        var recRow = '';
+
+
+                        jQuery('#addedRows').append(recRow);
+                        for (var i = 0; i < mainres.length; i++) {
+                            console.log(mainres[i].Amount);
+                            $("#EFAmount" + i).val(mainres[i].Amount);
+                        }
+
+                        // document.getElementById("draftstatuss").style.display = 'none';
+
+                    }
+                    else {
+                        jQuery('#addedRows').remove(recRow);
+                    }
+
+
+                }
+            });
+
+            return false;
+        }
+    });
+
+</script>
+
+<script>
+        $(document).ready(function () {
+                    $.ajax({
+                        type: "GET",
+                        url: "/Payroll/DFpayfields",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "Json",
+                        success: function (response) {
+                                                                        console.log(response);
+                                                                        mainres = response;
+
+                                                                        if (response.length != 0) {
+
+                                                                            document.getElementById("addedRows2").innerHTML = '';
+                                                                            var recRow = '';
+
+
+                                                                            @*var recRow = '<tr><th>DEduction Fields3</th><th>Amount</th><tr>';
+                                                                            for (var i = 0; i < response.length; i++) {
+
+                                                                               if (i > 0) {
+
+                                                                                   recRow += '<tr id="rowCount' + i + '"><td><div><div id="DFType">@{var DFPay1 = @ViewBag.DFPay;}<input type="text" class="form-control" id="DF' + i + '" name="Payfieldname[]" value=""/>@{foreach (var item in DFPay1) { } }</div> <div id="dvother' + i + '" style="display:none"><input class="form-control" type="text" id="DFAmount" /> </div></td><td><input type="text" class="form-control" id="DFAmount" name="Amount[]" style="width:100% !important"/></td></tr>';
+                                                                                }
+                                                                                else {
+
+
+                                                                                    recRow += '<tr id="rowCount' + i + '"><td><div><div id="DFType">@{var DFPay21 = @ViewBag.DFPay;}<input type="text" class="form-control" id="DF' + i + '" name="Payfieldname[]" value=""/>@{foreach (var item in DFPay21) { } }</div> <div id="dvother' + i + '" style="display:none"><input class="form-control" type="text" id="DFAmount" /> </div></td><td><input type="text" class="form-control" id="DFAmount" name="Amount[]" style="width:100% !important"/></td></tr>';
+                                                                               }
+                                                                            }*@
+
+                                                                            jQuery('#addedRows').append(recRow);
+                                                                            for (var i = 0; i < mainres.length; i++) {
+                                                                                console.log(mainres[i].Payfieldname);
+                                                                                $("#DF" + i).val(mainres[i].Payfieldname);
+                                                                               
+                                                                            }
+
+                                                                            // document.getElementById("draftstatuss").style.display = 'none';
+
+                                                                        }
+                                                                        else {
+                                                                            jQuery('#addedRows').remove(recRow);
+                                                                        }
+
+
+                                                                    }
+                    });
+
+                return false;
+
+        });
+</script>
+
+
+
+
+<script>
+    $(document).ready(function () {
+        if ($("#EmpID").val() != "") {
+            $.ajax({
+                type: "GET",
+                url: "/Payroll/DFAmount?Id=" + $("#EmpID").val(),
+
+                contentType: "application/json; charset=utf-8",
+                dataType: "Json",
+                success: function (response) {
+                    console.log(response);
+                    mainres = response;
+                     
+                    if (response.length != 0) {
+
+                        document.getElementById("addedRows").innerHTML = '';
+                        var recRow = '';
+
+
+                        jQuery('#addedRows').append(recRow);
+                        for (var i = 0; i < mainres.length; i++) {
+                            console.log(mainres[i].Amount);
+                            $("#DFAmount" + i).val(mainres[i].Amount);
+                        }
+
+                        // document.getElementById("draftstatuss").style.display = 'none';
+
+                    }
+                    else {
+                        jQuery('#addedRows').remove(recRow);
+                    }
+
+
+                }
+            });
+
+            return false;
+        }
+    });
+
+</script>
+

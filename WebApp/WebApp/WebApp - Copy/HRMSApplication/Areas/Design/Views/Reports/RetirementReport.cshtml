@@ -1,0 +1,146 @@
+﻿@{
+    ViewBag.Title = "RetirementReport";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedheader/3.1.5/css/fixedHeader.dataTables.min.css" />
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <h1>Retirement Details MonthWise</h1>
+                    <div class="col-md-4 mt_10">
+                        <div class="inner_heading">
+                            <h1>Months</h1>
+                            <div class="table-responsive">
+                                <table id="month_name" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Select Month </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>MAR-2019</td>
+                                        </tr>
+                                        <tr>
+                                            <td>APR-2019</td>
+                                        </tr>
+                                        <tr>
+                                            <td>MAY-2019</td>
+                                        </tr>
+                                        <tr>
+                                            <td>JUN-2019</td>
+                                        </tr>
+                                        <tr>
+                                            <td>JUL-2019</td>
+                                        </tr>
+                                        <tr>
+                                            <td>AUG-2019</td>
+                                        </tr>
+                                        <tr>
+                                            <td>SEP-2019</td>
+                                        </tr>
+                                        <tr>
+                                            <td>OCT-2019</td>
+                                        </tr>
+                                        <tr>
+                                            <td>NOV-2019</td>
+                                        </tr>
+                                        <tr>
+                                            <td>DEC-2019</td>
+                                        </tr>
+                                        <tr>
+                                            <td>JAN-2018</td>
+                                        </tr>
+                                        <tr>
+                                            <td>FEB-2018</td>
+                                        </tr>
+                                        <tr>
+                                            <td>MAR-2018</td>
+                                        </tr>
+                                        <tr>
+                                            <td>APR-2018</td>
+                                        </tr>
+                                        <tr>
+                                            <td>MAY-2018</td>
+                                        </tr>
+                                        <tr>
+                                            <td>JUN-2018</td>
+                                        </tr>
+                                        <tr>
+                                            <td>JUL-2018</td>
+                                        </tr>
+                                        <tr>
+                                            <td>AUG-2018</td>
+                                        </tr>
+                                        <tr>
+                                            <td>SEP-2018</td>
+                                        </tr>
+                                        <tr>
+                                            <td>OCT-2018</td>
+                                        </tr>
+                                        <tr>
+                                            <td>DEC-2018</td>
+                                        </tr>
+                                        <tr>
+                                            <td>MAY-2017</td>
+                                        </tr>
+                                        <tr>
+                                            <td>JUN-2017</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-7 col-md-offset-1 mt_10">
+                        <div class="inner_heading">
+                            <h1>Options</h1>
+                            <div>
+                                <input id="radio1" type="radio" name="radio" value="1" checked="checked"><label for="radio1"><span><span></span></span>All Employees</label>
+                            </div>
+
+                        </div>
+
+                        <div class="inner_heading mt_10">
+                            <h1>Report Destination</h1>
+                            <div>
+                                <input id="radio4" type="radio" name="radio" value="4" checked="checked"><label for="radio4"><span><span></span></span>Screen</label>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-12 mt_10">
+                        <div class="pull-right">
+                            <button type="reset" class="btn btn-default cancel">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#month_name').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+            fixedHeader: {
+                header: true,
+                footer: false
+            }
+        });
+    });
+</script>
+

@@ -1,0 +1,23 @@
+create procedure [dbo].[Coffautomatic](
+
+
+@empid varchar(50),
+@LeaveTypeId int)
+
+as
+begin
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+ values(	(select id from Employees where empid=@empid),@LeaveTypeId,24,0,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=@empid) and LeaveTypeId=@LeaveTypeId and year=2021),
+' C Offs credited for Aug & Oct-21',---Reason
+(select ShortName from Employees where empid=@empid),
+(select Department from Employees where empid=@empid),
+(select Branch from Employees where empid=@empid),
+(select CurrentDesignation from Employees where empid=@empid),'Credit',
+(select branch_value1 from employees where empid=@empid),
+(24	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=@empid) and LeaveTypeId=@LeaveTypeId and year=2021)),2021);
+
+end

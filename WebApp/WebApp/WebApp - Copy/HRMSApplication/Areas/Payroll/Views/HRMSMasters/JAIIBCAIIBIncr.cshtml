@@ -1,0 +1,325 @@
+﻿@{
+    var fm = ViewBag.fm;
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="leftmenu-container">
+            <div class="sidebar-menu">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="sidebar-content">
+                <div class="main_heading heading_main">
+                    <h1>JAIIB/CAIIB Increments<span class="year-end">@ViewBag.Env_Fm_Fy</span></h1>
+                    @{ Html.RenderPartial("_pvEmployeeSearch");}
+                    <input type="hidden" id="hdnEmpCode" />
+                    <div class="col-md-12">
+                        <div class="inner_heading mt_10">
+                            <h1> Increment/Incentive Details</h1>
+                            <div class="form-horizontal">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Basic Pay Before Inc:</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" class="form-control" id="basicpaybeforeinc" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Increment/Incentive:</label>
+                                        <div class="col-sm-7">
+                                            <select class="form-control" id="JIIBCIIBIncrementtype" onchange="ddtypechanges()">
+                                                <option value="JAIIB" selected>JAIIB</option>
+                                                <option value="CAIIB">CAIIB</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">No.of Increment:</label>
+                                        <div class="col-sm-7">
+                                            <input type="number" class="form-control vldclass" id="noofIncrements">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Increment Amount:</label>
+                                        <div class="col-sm-7">
+                                            <input type="number" class="form-control vldclass" id="incrementamount">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Increment Date:</label>
+                                        <div class="col-sm-7 input-group date" id="incrementdate1">
+                                            <input type="text" class="form-control vldclass" id="incrementdate">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">Increment W.E.F Date:</label>
+                                        <div class="col-sm-7 input-group date" id="incrementWEFdate1">
+                                            <input type="text" class="form-control vldclass" id="incrementWEFdate" onchange="return Dateevent1();">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="pull-right">
+                                <button type="reset" id="btnCancel" class="btn btn-default calcel" title="Clear the data">Cancel</button>
+                                <button type="submit" onclick="showGlobalModal(msg);" id="btnSubmit" class="btn btn-primary" title="Submit details">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var orgJCIList;
+    var orgBPBList;
+    var incrementtype;
+    //document load
+    $(document).ready(function () {
+        $('#btnSubmit').attr('disabled', false);
+    });
+
+    //search based on empcode
+    function getDataAfterEmpSearch1440(empcode) {
+        // 
+        $("#btnSubmit").attr("disabled", false);
+        $('#hdnEmpCode').val(empcode);
+        var jcitype = $('#JIIBCIIBIncrementtype').val('JAIIB');
+        clearfields();
+        CommonApiGET('/Payroll/HRMSMasters/GetJAIIBCAIIBDetails?EmpId=' + empcode, function (respData) {
+
+            fillJIIBCIIBTrans(respData);
+
+        });
+    }
+
+    //fill the datatables
+    function fillJIIBCIIBTrans(respData) {
+       
+        var jci = [];
+        var bpb = [];
+        var dataObj = JSON.parse(respData);
+        jci.push(dataObj.JCIDetails);
+        bpb.push(dataObj.BPBDetails);
+        //// 
+        var jciData = jci[0];
+        var bpbData = bpb[0];
+        orgJCIList = jciData;
+        orgBPBList = bpbData;
+
+        if (orgBPBList[0] != null) {
+            $('#basicpaybeforeinc').val(orgBPBList[0].amount);
+        }
+
+        if (orgJCIList[0] != null)
+        {
+            var JCIdropdown = orgJCIList[0].incr_incen_type;
+            $("#JIIBCIIBIncrementtype").val(JCIdropdown);
+            $('#noofIncrements').val(orgJCIList[0].no_of_inc);
+            $('#incrementamount').val(orgJCIList[0].Incrementamt);
+            $('#incrementdate').val(orgJCIList[0].incrementdate);
+            $('#incrementWEFdate').val(orgJCIList[0].incr_WEF_date);
+            var condition = orgJCIList[0].authorisation;
+            if (condition == true) {
+               $('#btnSubmit').attr('disabled', true);
+            }
+            else {
+               $('#btnSubmit').attr('disabled', false);
+            }
+        }
+        else {
+            $('#btnSubmit').attr('disabled', false);
+        }
+
+        if ($('#hdnEmpCode').val() != null) {
+            $('#pvTxtEmpCode1440').val($('#hdnEmpCode').val());
+        }
+
+
+        //// 
+
+    }
+
+    //insert/update
+    $('#btnSubmit').click(function () {
+         
+        if ($("#hdnEmpCode").val() == '') {
+            showGlobalModal("I#Warning!# Please Enter Employee Code and Search");
+        }
+        else if ($('#noofIncrements').val() == '') {
+            showGlobalModal("I#Warning!# Please Enter Number Of Increments");
+        }
+        else if ($('#incrementamount').val() == '') {
+            showGlobalModal("I#Warning!# Please Enter Increments Amount");
+        }
+        else if ($('#incrementdate').val() == '') {
+        showGlobalModal("I#Warning!# Please Select Increment Date");
+        } 
+        else if ($('#incrementWEFdate').val() == '') {
+        showGlobalModal("I#Warning!# Please Select Increment W E F Date");
+
+            }
+        else {
+            if ($("#hdnEmpCode").val() == "") {
+                alert("Employee Id cannot be empty");
+            }
+            else {
+                var updJCIdate = $('#JIIBCIIBIncrementtype').val() + "&" + $('#noofIncrements').val() + "&" + $('#incrementamount').val() + "&" + $('#incrementdate').val() + "&" + $('#incrementWEFdate').val() + "&" + $('#basicpaybeforeinc').val();;
+
+                var dataToSend = JSON.stringify({
+                    'EntityId': $("#hdnEmpCode").val(),
+                    'StringData': updJCIdate,
+                });
+            }
+            // 
+            CommonApiPOST('/Payroll/HRMSMasters/SaveDataJAIIBCAIIBDetails', dataToSend, function (isSuccess) {
+                if (isSuccess) {
+                    //window.location.reload();
+
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+            return true;
+        }
+        return false;
+    });
+
+    //cancel
+    $("#btnCancel").click(function () {
+        var empid = $("#hdnEmpCode").val();
+        if (empid == "") {
+            window.location.reload();
+        }
+        else {
+            ddtypechanges()
+        }
+    });
+
+    //search data based on type
+    function ddtypechanges() {
+        // 
+        incrementtype = document.getElementById("JIIBCIIBIncrementtype").value;
+        
+        if ($('#hdnEmpCode').val() != null) {
+            clearfields();
+            empcode = $('#hdnEmpCode').val();
+            CommonApiGET('/Payroll/HRMSMasters/GetJAIIBCAIIBDetails?EmpId=' + empcode + "&type=" + incrementtype, function (respData) {
+                if (respData != null) {
+                    fillJIIBCIIBTrans(respData);
+                }
+                else {
+                    $('#JIIBCIIBIncrementtype').val("JAIIB");
+                    $('#btnSubmit').attr('disabled', false);
+                }
+            });
+        }
+    }
+
+    //to clear the fields
+    function clearfields() {
+        $('#basicpaybeforeinc').val('');
+        $('#noofIncrements').val('');
+        $('#incrementamount').val('');
+        $('#incrementdate').val('');
+        $('#incrementWEFdate').val('');
+    }
+
+    //select date for incrementdate
+    function Dateevent3() {
+        var StartDate = document.getElementById('incrementdate').value;
+        var EndDate = document.getElementById('incrementWEFdate').value;
+        var eDate = moment(EndDate, "DD.MM.YYYY");
+        var sDate = moment(StartDate, "DD.MM.YYYY");
+        if (StartDate != '' && EndDate != '' && sDate > eDate) {
+            showGlobalModal("I#Error#Please ensure that increment W.E.F date is greater than or equal to incrementdate.");
+            document.getElementById('incrementdate').value = '';
+            document.getElementById("incrementdate").focus();
+            return false;
+
+        }
+
+        else {
+
+
+            return true;
+        }
+    }
+
+    //select for incrementWEFdate
+    function Dateevent1() {
+        // 
+        var Joindate = document.getElementById("incrementdate").value;
+        var Retdate = document.getElementById("incrementWEFdate").value;
+        var date = moment(Joindate, "DD.MM.YYYY");
+        var eDate = moment(Joindate, "DD.MM.YYYY");
+        var sDate = moment(Retdate, "DD.MM.YYYY");
+        var currentDate1 = moment(Retdate, "DD.MM.YYYY");
+        var duration = moment.duration(date.diff(currentDate1));
+
+        var diff = moment.duration(sDate.diff(eDate, 'days'));
+
+
+        if (duration > 0) {
+
+            showGlobalModal("I#Error#Please ensure that increment W.E.F date is greater than or equal to incrementdate");
+            //alert("Please ensure that incrementWEFdate is greater than or equal to incrementdate.");
+            document.getElementById('incrementWEFdate').value = '';
+            document.getElementById("incrementWEFdate").focus();
+            return false;
+
+        }
+
+        else {
+
+            return true;
+
+        }
+    }
+
+
+       var day = '@fm'; //{fm : "01-02-12"};
+    var MonthNameyear;
+ 
+    dteSplit = day.split('-');
+    days = dteSplit[0];
+    month = dteSplit[1];
+    year = dteSplit[2];
+   // year = year.substring(0, 4);
+    MonthNameyear = days + "-" + month + "-" + year;
+    $(function () {
+        // 
+        var dateyear = new Date(MonthNameyear)
+        $('#incrementdate1').datepicker();
+        $('#incrementdate1').datepicker('setDate', dateyear);
+        $('#incrementWEFdate1').datepicker();
+        $('#incrementWEFdate1').datepicker('setDate', dateyear);
+    });
+    
+   
+   
+</script>
+<script src="~/Areas/Payroll/Assets/libs/jquery/moment.js"></script>
+
+
+
+
+

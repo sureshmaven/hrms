@@ -1,0 +1,289 @@
+﻿@model PayrollModels.Transactions.AddPaymonthModal
+@{
+    ViewBag.Title = "MonthDetails";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+@{
+    var msg = TempData["AlertMessage"] ?? string.Empty;
+}
+<script type="text/javascript">
+   
+    var msg = '@msg';
+
+   // showGlobalModal(msg);
+    //if (message) alert(message);
+
+</script>
+<div class="page">
+    <div class="page_start">
+        <div class="leftmenu-container">
+            <div class="sidebar-menu">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="sidebar-content">
+                <div class="main_heading heading_main">
+                    <h1>Month Details <span class="year-end">@ViewBag.Env_Fm_Fy</span></h1>
+                    <div class="leave_cont_start">
+                        @*@using (Html.BeginForm("AddPAyMonthDetailsPost", "Transaction", FormMethod.Post))
+                        {*@
+                            @Html.AntiForgeryToken()
+                            <div class="col-md-12 col-sm-12">
+                                <div class="inner_heading">
+                                    <div class="form-horizontal col-md-12">
+                                        <div class="row">
+                                        
+                                            <div class="col-md-6">
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-5 control-label">Month Name:</label>
+                                                        @*<div class="col-sm-7 input-group date" id="monthyear">*@
+                                                        @*for monyhpicker*@
+                                                        <div class="col-sm-7">
+                                                            @*<input type="text" class="form-control" placeholder="Select-Month" id="monthname" readonly="readonly">*@
+                                                            @Html.EditorFor(model => model.FM, new { htmlAttributes = new { @class = "form-control", @id = "monthname", @readonly = true } })
+                                                            @*<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-5 control-label">Week Holidays:</label>
+                                                        <div class="col-sm-7">
+                                                            @Html.EditorFor(model => model.Weekholidays, new { htmlAttributes = new { @class = "form-control", @id = "WHdays", @step = "0.001", onkeydown = "javascript: return event.keyCode == 69 ? false : true" } })
+                                                            @*@Html.ValidationMessageFor(model => model.Weekholidays, "", new { @class = "text-danger" })*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-5 control-label">Paid Holidays:</label>
+                                                        <div class="col-sm-7">
+                                                            @Html.EditorFor(model => model.Paidholidays, new { htmlAttributes = new { @class = "form-control", @id = "PhDays", @step = "0.001", onkeydown = "javascript: return event.keyCode == 69 ? false : true" } })
+                                                            @*@Html.ValidationMessageFor(model => model.Paidholidays, "", new { @class = "text-danger" })*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-5 control-label">Total Days:</label>
+                                                        <div class="col-sm-7">
+                                                            <input type="text" id="txttotaldays"  class="form-control" readonly />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="paid_holi">
+                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-5 control-label">Payment Date:</label>
+                                                            <div class="input-group date col-sm-7" id="paydate">
+                                                                @Html.EditorFor(model => model.Paymentdate, new { htmlAttributes = new { @class = "form-control", @id = "pdate", onkeypress = "return nokeyword(event)" } })
+                                                                @Html.ValidationMessageFor(model => model.Paymentdate, "", new { @class = "text-danger" })
+                                                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                                <div class="month-boder">
+                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-5 control-label">DA Slabs:</label>
+                                                            <div class="col-sm-7">
+                                                                @Html.EditorFor(model => model.DAslabs, new { htmlAttributes = new { @class = "form-control", @id = "DaSlabs", @step = "0.0001", onkeydown = "javascript: return event.keyCode == 69 ? false : true" } })
+                                                                @Html.ValidationMessageFor(model => model.DAslabs, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-5 control-label">DA Points:</label>
+                                                            <div class="col-sm-7">
+                                                                @Html.EditorFor(model => model.DApoints, new { htmlAttributes = new { @class = "form-control", @id = "DaPoints", @type = "number", @step = "0.0001", onkeydown = "javascript: return event.keyCode == 69 ? false : true", @readonly = true } })
+                                                                @Html.ValidationMessageFor(model => model.DApoints, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-5 control-label">DA Percent:</label>
+                                                            <div class="col-sm-7">
+                                                                @Html.EditorFor(model => model.DApercent, new { htmlAttributes = new { @class = "form-control", @id = "DaPercent", @type = "number", @step = "0.0001", onkeydown = "javascript: return event.keyCode == 69 ? false : true" } })
+                                                                @Html.ValidationMessageFor(model => model.DApercent, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                                <div class="mt_10">
+                                                    <div class="pull-right">
+                                                        <button type="button" id="btnCancel" class="btn btn-default" title="Clear the data">Cancel</button>
+                                                        <button type="submit" id="Save" value="Submit" class="btn btn-primary" onclick="monthdata();" title="Submit details"> Submit</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @*}*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $('#monthyear').datepicker({
+        minViewMode: 1,
+        autoclose: true,
+        format: 'M-yyyy',
+        startDate: '+0m',
+        endDate: '+0m'
+    });
+</script>
+<script>
+    $('#paydate').datepicker({
+        format: 'dd-mm-yyyy',
+        //  startDate: '0d',
+        //todayHighlight: true
+        // useCurrent: false
+    }).on('change',function() {
+        $('.datepicker').hide();
+    });
+    
+    //$("#paydate").datepicker({ minDate: StartDate, maxDate: EndDate, defaultDate: StartDate });
+</script>
+<script>
+    var month = moment().format("MMM-YYYY");
+    function updateMonth(respData) {
+        $("#monthname").on("change", function () {
+       
+            var selected = $(this).val();
+            var month = moment(selected).format("YYYY/MM");
+            CommonApiGET('/Payroll/Transaction/Getselectedmonthdata?selected=' + month, function (respData) {
+                if (respData.monthdetails.length > 0) {
+                    fillselectedmonthdata(respData);
+                    updateMonth(respData)
+                    $("#current").show();
+                }
+                else {
+
+                    $("#current").hide();
+                }
+
+            });
+        });
+    }
+</script>
+
+
+<script>
+    var monthdet = [];
+    var orgprlist;
+    var orgactivemonth;
+    var updDElist;
+    var cancelOrg;
+    $(document).ready(function () {
+        //
+        var month = moment().format("YYYY/MM");
+
+        CommonApiGET('/Payroll/Transaction/GetMonthdetailsData?month=' + month, function (respData) {
+            //
+            if (respData.monthdetails.length > 0) {
+
+                fillmonthdata(respData);
+                cancelOrg = respData;
+         
+            }
+            else {
+
+            
+            }
+
+        });
+    });
+
+
+    function monthdata() {
+        
+         updDElist = $('#WHdays').val() + "&" + $('#PhDays').val() + "&" + $("#pdate").val() + "&" + $('#DaSlabs').val() + "&" + $('#DaPoints').val() + "&" + $("#DaPercent").val();
+       
+        var dataToSend = JSON.stringify({
+            'Monthdata': updDElist
+        });
+        
+      
+        CommonApiPOST("/Payroll/Transaction/AddPAyMonthDetailsPost", dataToSend, function (isSuccess) {
+           
+            if (isSuccess) {
+               
+                setTimeout(function () { window.location.reload(); clearfields(); }, g_pagereload_seconds);
+             }
+        });
+    };
+
+    function fillmonthdata(respData) {
+      
+        monthdet.push(respData.monthdetails);
+        var monthdata = monthdet[0];
+        orgprlist = monthdata;
+
+        //$('#monthname').val(orgprlist[0].fm);
+        $('#WHdays').val(orgprlist[0].week_holidays);
+        $('#PhDays').val(orgprlist[0].paid_holidays);
+        $('#pdate').val(orgprlist[0].payment_date);
+        $('#DaSlabs').val(orgprlist[0].da_slabs);
+        $('#DaPoints').val(orgprlist[0].da_points);
+        $('#DaPercent').val(orgprlist[0].da_percent);
+        $('#DaSlabs').val(orgprlist[0].da_slabs);
+        $('#txttotaldays').val(orgprlist[0].month_days);
+        
+
+        var acivemonth = [];
+        acivemonth.push(respData.activemonth);
+        var amonthdta = acivemonth[0];
+        orgactivemonth = amonthdta;
+        $('#monthname').val(orgactivemonth);
+
+        var acivemonth1 = [];
+        acivemonth1.push(respData.activemonth1);
+        var datepic = acivemonth1[0];
+        $('#monthname').val(orgactivemonth);
+        $('#paydate').datepicker('setDate', new Date(datepic));
+        $('#pdate').val(orgprlist[0].payment_date);
+
+    }
+
+
+
+
+
+    $("#btnCancel").click(function () {
+        fillmonthdata(cancelOrg);
+    });
+
+
+
+    $("#DaPoints").on("change paste keyup", function () {
+
+        var daslabs = $('#DaSlabs').val();
+        var dapoints = $('#DaPoints').val();
+        var res = daslabs * dapoints;
+        res = parseFloat(Number(res).toFixed(2));
+        $('#DaPercent').val(res);
+    });
+
+    $("#DaSlabs").on("change paste keyup", function () {
+
+        var daslabs = $('#DaSlabs').val();
+        var dapoints = $('#DaPoints').val();
+        var res = daslabs * dapoints;
+        res = parseFloat(Number(res).toFixed(2));
+        $('#DaPercent').val(res);
+    });
+</script>
+

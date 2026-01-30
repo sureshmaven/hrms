@@ -1,0 +1,457 @@
+﻿
+@{
+    ViewBag.Title = "Allowance";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+<style>
+    #gridNeW thead tr th:nth-child(1),
+    tbody tr td:nth-child(1) {
+        width:210px;
+    }
+    #gridNeW thead tr th:nth-child(1),
+    tbody tr td:nth-child(2) {
+        width: 321px;
+    }
+</style>
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                <div class="main_heading left-menu">
+                    @{Html.RenderPartial("_PVPayrollMenu");}
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading heading_main">
+                    <h1>Allowance Master  <span class="year-end">@ViewBag.Env_Fm_Fy</span></h1>
+
+                    <div class="col-md-12">
+                        <div class="pull-right">
+                            <button id="addRow" class="btn btn-default mr_0" title="Clear the data"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                        </div>
+                    </div>
+                        <div class="col-md-12 mt_5">
+                            <div class="table-responsive">
+                                <table id="AllowanceMaster" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Short Name</th>
+                                            <th>Description</th>
+                                            <th>Amount(<i class="fa fa-rupee"></i>)</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                                <table id="gridNeW" class="display" style="width:100%">
+                                    <thead style="display:none;">
+                                        <tr>
+                                            <th>Subscriber ID</th>
+                                            <th>Install Location</th>
+                                            <th>Subscriber Name</th>
+                                            <th>some data</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt_10">
+                            <div class="pull-right">
+                                <button id="cancelData" class="btn btn-default" title="Clear the data">Cancel</button>
+                                <button id="updateAllowanceData" class="btn btn-primary" type="button" title="Submit details">Submit</button>
+                            </div>
+                         </div>
+                       </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+
+<script>
+    var incIndex = 0;
+    var arrDelete = [];
+    $(document).ready(function () {
+        $('#gridNeW').show();
+        var orgData;
+        CommonApiGET('/Payroll/Masters/getAllowanceDetails', function (respData) {
+            orgData = respData;
+            fillDataTablesOld(respData);
+        });
+
+        function fillDataTablesOld(respData) {
+
+            $('#AllowanceMaster').DataTable({
+                destroy: true,
+                "paging": false,
+                "ordering": false,
+                "info": false,
+                "bFilter": false,
+                data: respData,
+                "columns": [
+                    { "data": "Name" },
+                    { "data": "Description" },
+                    {
+                        "mData": null,
+                        "bSortable": false,
+                        "mRender": function (data, type, full) {
+                            var ele = getColumnNumber(data.Id, data.Value);
+
+                            return ele;
+                        }
+                    },
+                ],
+                "order": [[1, 'asc']]
+            });
+        }
+
+        $("#cancelData").click(function () {
+
+            incIndex = 0;
+
+            $('#gridNeW').empty();
+            var table = $('#gridNeW').DataTable();
+            table.clear();
+            //
+            // var test = table.data().count();
+
+
+
+            // window.location.reload();
+            fillDataTablesOld(orgData);
+            //incIndex = 0;
+            //var table = $('#gridNeW').DataTable();
+            //var updateData = decodeURIComponent(table.$('input, select').serializeAndEncode());;
+            //var arrUpdate = updateData.split("*");
+            //var arrSampleObJ = [];
+            //var arrResult = [];
+            //arrUpdate.forEach(function (element) {
+            //    if (element != "") {
+            //        var objEf = {}; //"NeW1=over+time&NeW1=123"
+            //        var strRow = element.split("&");
+            //        var id = strRow[0].split("=");
+            //        objEf.Id = id[0];
+            //        objEf.Name = id[1];
+            //        var value = strRow[1].split("=");
+            //        objEf.Value = value[1];
+            //        if (isNaN(id[0])) {
+            //            objEf.Action = "Delete";
+            //        } else {
+            //            objEf.Action = "Add";
+            //        }
+            //        arrSampleObJ.push(objEf);
+            //    }
+            //});
+            //arrSampleObJ.filter(function (obj) {
+            //    if (obj.Value != "" || obj.Name != "") {
+            //        arrResult.push(obj.Value);
+            //    }
+
+            //})
+
+            //if (arrResult.length > 0) {
+            //    fillDataTables(orgNew);
+            //} else {
+            //    $('#gridNeW').hide();
+            //}
+            ////fillDataTables(orgNew);
+            //fillDataTablesOld(orgData);
+        });
+
+        $('#updateAllowanceData').click(function () {
+            var table = $('#AllowanceMaster').DataTable();
+            var updateData = table.$('input, select').serialize();
+            var arrerresult = [];
+            var arrer = updateData.split('&');
+            arrer.map(function (x) {
+                var arrkeys = x.split('=');
+                orgData.map(function (o) {
+                    //
+                    if (o.Id == arrkeys[0] && o.Value != arrkeys[1]) {
+                        arrerresult.push(x);
+                    }
+                });
+            });
+            var arrEf = [];
+            arrerresult.forEach(function (element) {
+                if (element != "") {
+                    var objEf = {};
+                    var strEf = element.split("=");
+                    objEf.Id = strEf[0];
+                    objEf.Amount = strEf[1];
+                    arrEf.push(objEf);
+                }
+            });
+
+
+            // var table = $('#gridNeW').DataTable();
+            //$('#gridNeW').DataTable().clear().draw();
+
+            var table = $('#gridNeW').DataTable();
+            var updateDataNew = decodeURIComponent(table.$('input, select').serializeAndEncode());;
+            var arrUpdate = updateDataNew.split("*");
+            var arrSampleObJ = [];
+            if (arrUpdate != "") {
+                arrUpdate.forEach(function (element) {
+                    if (element != "") {
+                        var objEf = {}; //"NeW1=over+time&NeW1=123"
+                        var strRow = element.split("&");
+                        var id = strRow[0].split("=");
+                        objEf.Id = id[0];
+                        objEf.Name = id[1];
+                        var dec = strRow[1].split("=");
+                        objEf.Description = dec[1];
+                        var value = strRow[2].split("=");
+                        objEf.Value = value[1];
+
+                        if (isNaN(id[0])) {
+                            objEf.Action = "New";
+                        } else {
+                            objEf.Action = "Update";
+                        }
+
+                        if (table.data().count() > 0) {
+                            if (objEf.Name == "" && objEf.Value == "" && objEf.Description == "") {
+                                console.log("row is empty");
+                            }
+                            else if (objEf.Name == "") {
+                                showGlobalModal("I#Required#Please Enter Name");
+                                //alert("Please Select Name");
+                                e.preventDefault();
+                            }
+                            else if (objEf.Description == "") {
+                                showGlobalModal("I#Required#Please Enter Description");
+                                // alert("Please Select Description");
+                                e.preventDefault();
+                            }
+                            else if (objEf.Value == "") {
+                                showGlobalModal("I#Required#Please Enter Amount");
+                                //alert("Please Select Amount");
+                                e.preventDefault();
+                            }
+                            else {
+                                if (objEf.Name != ""
+                                    || objEf.Value != "") {
+                                    objEf = objEf;
+                                }
+
+                                else {
+                                    objEf = {};
+                                }
+
+                                if (Object.keys(objEf).length > 0) {
+                                    if (objEf.Name != "") {
+                                        arrSampleObJ.push(objEf);
+                                    } else {
+                                        showGlobalModal("I#Required Field#Please Enter Earning Field Name.");
+                                        return false;
+                                    }
+                                }
+
+                            }
+                        }
+
+                    }
+                });
+            }
+            else {
+                table.destroy();
+            }
+
+            var dataToSend = JSON.stringify({
+                'EntityId': $("#hdnEmpCode").val(),
+                objallowancemasterdata: arrEf,
+                objallowancemasterdatanew: arrSampleObJ
+            });
+            arrDelete.map(function (obj) {
+                arrSampleObJ.push(obj);
+            });
+            CommonApiPOST('/Payroll/Masters/updateAllowance', dataToSend, function (isSuccess) {
+                if (isSuccess) {
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+
+        });
+
+    });
+    $('#addRow').click(function () {
+        addRow();
+    });
+
+    function addRow() {
+
+        $('#gridNeW').show();
+        incIndex++;
+
+        if (incIndex == 1) {
+            var incId = "NeW" + incIndex;
+            var addNewEf = [{
+                "Id": incId,
+                "Name": "",
+                "Description": "",
+                "Value": "",
+                "Action": "Delete"
+            }];
+            orgNew = addNewEf;
+            fillDataTables(addNewEf);
+        } else {
+
+            var table = $('#gridNeW').DataTable();
+            var updateData = decodeURIComponent(table.$('input, select').serializeAndEncode());;
+            var arrUpdate = updateData.split("*");
+            var arrSampleObJ = [];
+            arrUpdate.forEach(function (element) {
+
+                if (element != "") {
+
+                    var objEf = {}; //"NeW1=over+time&NeW1=123"
+                    var strRow = element.split("&");
+                    var id = strRow[0].split("=");
+                    objEf.Id = id[0];
+                    objEf.Name = id[1];
+                    var des = strRow[1].split("=");
+                    objEf.Description = des[1];
+                    var value = strRow[2].split("=");
+                    objEf.Value = value[1];
+                    if (isNaN(id[0])) {
+                        objEf.Action = "Delete";
+                    } else {
+                        objEf.Action = "Add";
+                    }
+                    arrSampleObJ.push(objEf);
+                }
+            });
+
+            modifiedData = arrSampleObJ;
+            var incId = "NeW" + incIndex;
+            var row = {
+                "Id": incId,
+                "Name": "",
+                "Description": "",
+                "Value": "",
+                "Action": "Delete"
+            };
+            modifiedData.push(row);
+            fillDataTables(modifiedData);
+        }
+    }
+    function fillDataTables(respData) {
+
+        $('#gridNeW').DataTable({
+            destroy: true,
+            "paging": false,
+            "sort": false,
+            "searching": false,
+            data: respData,
+            "columns": [
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data) {
+                        return getColumnTextbox("*" + data.Id, data.Name);
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data) {
+                        return getColumnTextbox("Description", data.Description);
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data) {
+                        return getColumnNumber("Value", data.Value);
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return getColumnButton(data.Id, data.Action);
+                    }
+                },
+            ],
+            "order": [[0, 'asc']]
+        });
+    }
+    function deleteRow(id) {
+        
+        incIndex--;
+        var table = $('#gridNeW').DataTable();
+        var updateData = decodeURIComponent(table.$('input, select').serializeAndEncode());;
+        var arrUpdate = updateData.split("*");
+        var arrSampleObJ = [];
+        arrUpdate.forEach(function (element) {
+            if (element != "") {
+                var objEf = {}; //"NeW1=over+time&NeW1=123"
+                var strRow = element.split("&");
+                var id = strRow[0].split("=");
+                objEf.Id = id[0];
+                objEf.Name = id[1];
+                var dec = strRow[1].split("=");
+                objEf.Description = dec[1];
+                var value = strRow[2].split("=");
+                objEf.Value = value[1];
+                if (isNaN(id[0])) {
+                    objEf.Action = "Delete";
+                } else {
+                    objEf.Action = "Add";
+                }
+                arrSampleObJ.push(objEf);
+            }
+        });
+
+        modifiedData = arrSampleObJ;
+
+        modifiedData = modifiedData.filter(function (obj) {
+            return obj.Id !== id;
+        });
+
+        fillDataTables(modifiedData);
+        if (modifiedData.length == 0) {
+            $('#gridNeW').hide();
+        }
+    }
+    function deleteEntireRow(id) {
+        incIndex--;
+        var table = $('#gridNeW').DataTable();
+        var updateData = decodeURIComponent(table.$('input, select').serializeAndEncode());;
+        var arrUpdate = updateData.split("*");
+        var arrSampleObJ = [];
+        arrUpdate.forEach(function (element) {
+            if (element != "") {
+                var objEf = {}; //"NeW1=over+time&NeW1=123"
+                var strRow = element.split("&");
+                var id = strRow[0].split("=");
+                objEf.Id = id[0];
+                objEf.Name = id[1];
+                var dec = strRow[1].split("=");
+                objEf.Description = dec[1];
+                var value = strRow[2].split("=");
+                objEf.Value = value[1];
+                if (isNaN(id[0])) {
+                    objEf.Action = "Delete";
+                } else {
+                    objEf.Action = "Add";
+                }
+                arrSampleObJ.push(objEf);
+            }
+        });
+
+        modifiedData = arrSampleObJ;
+        modifiedData = modifiedData.filter(function (obj) {
+
+            if (obj.Id != "null" && id != "null") {
+                if (obj.Id == id) {
+                    obj.Action = "Deleted";
+                    arrDelete.push(obj);
+                } else {
+                    return obj.Id !== id;
+                }
+            }
+        });
+
+        fillDataTables(modifiedData);
+    }
+</script>

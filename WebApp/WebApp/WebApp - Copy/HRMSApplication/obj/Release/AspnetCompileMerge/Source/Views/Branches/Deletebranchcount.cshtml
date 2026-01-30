@@ -1,0 +1,65 @@
+﻿@model Entities.BranchStaffCount
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.RolePages = TempData["RolePages"];
+}
+<h2>Deletebranchcount</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>BranchStaffCount</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Branchid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Branchid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Category)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Staffcount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Staffcount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AmountRange)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AmountRange)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UpdatedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UpdatedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UpdatedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UpdatedDate)
+        </dd>
+
+    </dl>
+
+
+</div>

@@ -1,0 +1,403 @@
+﻿@{
+    ViewBag.Title = "PromotionAuthorisation";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="leftmenu-container">
+                <div class="sidebar-menu">
+                    @{Html.RenderPartial("_PVPayrollMenu");}
+                </div>
+                <div class="sidebar-content">
+                    <div class="main_heading heading_main">
+                        <h1>Promotion/Appointment Details<span class="year-end">@ViewBag.Env_Fm_Fy</span></h1>
+                        @{ Html.RenderPartial("_pvEmployeeSearch"); }
+                        <input type="hidden" id="hdnEmpCode" />
+                        <div class="clearfix"></div>
+                       <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div id="current" class="inner_heading">
+                                <h1>Employee Details</h1>
+                                <div class="form-horizontal">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Promotion Date:</label>
+                                            <div class="col-sm-7">
+                                                <input type="text" id="prdate" readonly="readonly" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Increment  Date:</label>
+                                            <div class="col-sm-7">
+                                                <input type="text" id="indate" readonly="readonly" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Category:</label>
+                                            <div class="col-sm-7">
+                                                <input type="text" id="cate" readonly="readonly" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Designation:</label>
+                                            <div class="col-sm-7">
+                                                <input type="text" id="desig" readonly="readonly" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Basic Pay:</label>
+                                            <div class="col-sm-7">
+                                                <input type="text" id="bpay" readonly="readonly" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @*<button type="button" id="updatePromotionData" class="btn btn-primary">Edit</button>*@
+                        </div>
+                        <div id="griddata">
+                            <div class="inner_heading">
+                                <h1>Promotion  Details</h1>
+                                <div class="table-responsive">
+                                    <table id="gridPR1" class="display" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Value</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                       </div>
+                        <div class="col-md-12 mt_10">
+                            <div class="pull-right">
+                                <button id="btnCancel" class="btn btn-default calcel">Cancel</button>
+                                @*<button type="button" class="btn btn-primary">New</button>*@
+                                <button class="btn btn-primary" id="btnsubmit" onclick="showGlobalModal(msg);" type="button"> Authorize </button>
+                                @*<button onclick="showGlobalModal('E#Save Error#No leave balance. Please contact admin team.');">click</button>*@
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var orgprlist;
+    var orgprlist1;
+    var orgpr2list;
+    var orgData;
+    var arrcities = [];
+    var arrcategories = [];
+    var newpr = [];
+    var auth = [];
+    $(document).ready(function () {
+        $("#current").hide();
+
+        //  $("#updatePromotionData").hide();
+        $("#btnsubmit").attr("disabled", true);
+        // $("#updatePromotionData").attr("disabled", true);
+        var empid = 0;
+
+        CommonApiGET('/Payroll/Authorization/GetEmpPRFieldsDetails?EmpId=' + empid, function (respData) {
+            //
+            fillEpfDt(respData);
+        });
+
+        //on page load
+        $('#gridPR1').DataTable({
+            "paging": false,
+            "sort": false,
+            "searching": false,
+            "language": {
+                "emptyTable": "No data available. Please enter employee code and search"
+            }
+        });
+
+
+
+    });
+
+    $("#btnCancel").click(function () {
+        var empid = $("#hdnEmpCode").val();
+        if (empid == "") {
+            window.location.reload();
+        }
+        else {
+            getDataAfterEmpSearch1440(empid);
+        }
+    });
+
+    $('#btnsubmit').click(function () {
+        if ($("#hdnEmpCode").val() == "")
+            alert("Employee Id cannot be empty");
+        else {
+            var table = $('#gridPR1').DataTable();
+            var updprList = decodeURIComponent(table.$('input, select').serializeAndEncode());
+
+
+
+
+            //  var ModifiedprList = getModifiedDataFromJDT(updprList, orgprlist);
+            arrerresultBio = updprList.split('&');
+            var arrBio = [];
+            arrerresultBio.forEach(function (element) {
+                var objEf = {};
+                var strEf = element.split("=");
+                objEf.Id = strEf[0];
+                objEf.Value = strEf[1];
+                arrBio.push(objEf);
+
+            });
+
+            var dataToSend = JSON.stringify({
+                'EntityId': $("#hdnEmpCode").val(),
+                'object1': arrBio,
+
+            });
+
+            CommonApiPOST('/Payroll/Authorization/saveDataPR', dataToSend, function (isSuccess) {
+                if (isSuccess) {
+                    //window.location.reload();
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+        }
+        return false;
+    });
+
+    function editFun() {
+        $('#gridPR1').DataTable({
+            "destroy": true,
+            "paging": false,
+            "sort": false,
+            "searching": false,
+            data: newpr,
+
+            "columns": [
+
+                { "data": "display" },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data) {
+                        if (data.display == "New Inc Due Date :" || data.display == "New Promotion Date:") {
+                            ele = getColumnDateReadOnly(data.Id, data.Value);
+                        }
+                        else if (data.display == "New Category :") {
+                            if (arrcategories.length > 0) {
+                                var ele = getColumnReadOnly(data.Id, data.Value, arrcategories);
+                            }
+                            else {
+                                var arrcity = ['Select', 'President', 'MD', 'CGM', 'GM', 'AGM', 'Sr Mgr', 'SA', 'MgrScl-1', 'Attender', 'Attender-Watchman', 'Attender/J.C', 'Civil Engg Supervisor', 'Driver', 'IDO/Manager', 'JR-SA', 'SA-Assistant Cashier', 'Junior Clerk', 'Stenographer', 'TeleOperator-Receptionist', 'Typist', 'Watchman', 'Substaff'];
+
+                                var ele = getColumnReadOnly(data.Id, data.Value, arrcities);
+                            }
+                        }
+                        else if (data.display == "Seniority Order:") {
+                            var ele = getColumnReadOnly(data.Id, data.Value);
+                        }
+                        else if (data.display == 'New Designation:') {
+
+                            if (arrcities.length > 0) {
+                                var ele = getColumnReadOnly(data.Id, data.Value, arrcities);
+                            } else {
+                                var arrcity = ['Select', 'President', 'MD', 'CGM', 'GM', 'AGM', 'Sr Mgr', 'SA', 'MgrScl-1', 'Attender', 'Attender-Watchman', 'Attender/J.C', 'Civil Engg Supervisor', 'Driver', 'IDO/Manager', 'JR-SA', 'SA-Assistant Cashier', 'Junior Clerk', 'Stenographer', 'TeleOperator-Receptionist', 'Typist', 'Watchman', 'Substaff'];
+
+                                var ele = getColumnReadOnly(data.Id, data.Value, arrcities);
+                            }
+
+                        }
+
+
+                        else {
+                            var ele = getColumnReadOnly(data.Id, data.Value);
+                        }
+
+
+                        return ele;
+                    }
+                }
+            ],
+            "order": [[0, 'asc']]
+        });
+    }
+
+    function fillEpfDt(respData) {
+         
+
+        var pref = [];
+        var pref1 = [];
+        var auth = [];
+        var ldtypes = [];
+        var m3 = "";
+        var categ = [];
+        var catdata;
+
+        var dataObj = JSON.parse(respData);
+
+        pref.push(dataObj.proDetails);
+        newpr = pref[0];
+        pref1.push(dataObj.proDetails1)
+        auth.push(dataObj.Currauth);
+        ldtypes.push(dataObj.desig);
+        categ.push(dataObj.catg);
+        auth.push(dataObj.Currauth);
+        catdata = categ[0];
+        var ldesigdata = ldtypes[0];
+        var arr = Object.values(ldesigdata);
+
+        var arrcatg = catdata;
+        ldtypes[0].designations.forEach(function (ele) {
+
+            arrcities.push(ele.code);
+        });
+
+        categ[0].categories.forEach(function (ele) {
+
+            arrcategories.push(ele.category);
+        });
+        ////
+
+        var prefData = auth[0];
+        var prefData1 = pref1[0];
+        if (prefData[0].row_type == "N" || prefData[0].row_type == "" || prefData[0].row_type == null) {
+            $("#current").hide();
+            //  $("#updatePromotionData").hide();
+        }
+        else {
+            $("#current").show();
+            // $("#updatePromotionData").show();
+        }
+
+        orgprlist = prefData;
+
+        orgprlist1 = prefData1
+        var length = orgprlist1.length;
+        var count = 0;
+        orgprlist1.map(function (obj) {
+            if (obj.Value == "") {
+                count++;
+            }
+        })
+        if (count == length) {
+            $("#btnsubmit").attr("disabled", true);
+        }
+
+
+        auth.forEach(function (element) {
+
+            element.forEach(function (ele) {
+                if (ele.Id == "promotion_date") {
+                    m3 = ele.Value;
+                }
+                if (ele.Id == "incre_due_date") {
+                    m4 = ele.Value;
+                }
+                if (ele.Id == "category") {
+                    m5 = ele.Value;
+                }
+                if (ele.Id == "desig") {
+                    m6 = ele.Value;
+
+                }
+                if (ele.Id == "basic_pay_fixed") {
+                    m7 = ele.Value;
+                }
+            });
+
+        })
+        //var m3 = pref[0];
+        // m6 = m6.replace(/[_\-%+*6$#!~]+/g, "  ")
+        document.getElementById("prdate").value = m3;
+        document.getElementById("indate").value = m4;
+        document.getElementById("cate").value = m5;
+        document.getElementById("desig").value = m6;
+        document.getElementById("bpay").value = m7;
+        if (prefData[0].row_type == "N") {
+            $("#current").hide();
+        }
+
+        ////
+        $('#gridPR1').DataTable({
+            "destroy": true,
+            "paging": false,
+            "sort": false,
+            "searching": false,
+            data: orgprlist1,
+
+            "columns": [
+
+                { "data": "display" },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data) {
+                        if (data.display == "New Inc Due Date :" || data.display == "New Promotion Date:") {
+                            ele = getColumnReadOnly(data.Id, data.Value);
+                        }
+                        else if (data.display == "New Category :" || data.display == "Senoirity Order:") {
+                            if (arrcategories.length > 0) {
+                                var ele = getColumnReadOnly(data.Id, data.Value, arrcategories);
+                            }
+                            else {
+                                var arrcity = ['Select', 'President', 'MD', 'CGM', 'GM', 'AGM', 'Sr Mgr', 'SA', 'MgrScl-1', 'Attender', 'Attender-Watchman', 'Attender/J.C', 'Civil Engg Supervisor', 'Driver', 'IDO/Manager', 'JR-SA', 'SA-Assistant Cashier', 'Junior Clerk', 'Stenographer', 'TeleOperator-Receptionist', 'Typist', 'Watchman', 'Substaff'];
+
+                                var ele = getColumnReadOnly(data.Id, data.Value, arrcities);
+                            }
+                        }
+                        else if (data.display == 'New Designation:') {
+
+                            if (arrcities.length > 0) {
+                                var ele = getColumnReadOnly(data.Id, data.Value, arrcities);
+                            } else {
+                                var arrcity = ['Select', 'President', 'MD', 'CGM', 'GM', 'AGM', 'Sr Mgr', 'SA', 'MgrScl-1', 'Attender', 'Attender-Watchman', 'Attender/J.C', 'Civil Engg Supervisor', 'Driver', 'IDO/Manager', 'JR-SA', 'SA-Assistant Cashier', 'Junior Clerk', 'Stenographer', 'TeleOperator-Receptionist', 'Typist', 'Watchman', 'Substaff'];
+
+                                var ele = getColumnReadOnly(data.Id, data.Value, arrcities);
+                            }
+
+                        }
+
+
+                        else {
+                            var ele = getColumnReadOnly(data.Id, data.Value);
+                        }
+
+
+                        return ele;
+                    }
+                }
+            ],
+            "order": [[0, 'asc']]
+        });
+
+
+    }
+
+    function getDataAfterEmpSearch1440(empcode) {
+        $("#btnsubmit").attr("disabled", false);
+        //   $("#updatePromotionData").attr("disabled", false);
+        $('#hdnEmpCode').val(empcode);
+        CommonApiGET('/Payroll/Authorization/GetEmpPRFieldsDetails?EmpId=' + empcode, function (respData) {
+
+            fillEpfDt(respData);
+
+            editFun();
+        });
+    };
+
+
+</script>

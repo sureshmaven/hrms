@@ -1,0 +1,287 @@
+﻿
+@{
+
+    ViewBag.Title = "MonthEnd";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+<div class="page">
+    <div class="page_start">
+        <div class="leftmenu-container">
+            <div class="sidebar-menu">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="sidebar-content">
+                <div class="main_heading heading_main">
+                    <h1>Start Process <span class="year-end">@ViewBag.Env_Fm_Fy</span></h1>
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="monthend-box">
+                                <p>Hour End Process </p>
+                                <button type="submit" id="Hourend" value="Submit" class="btn btn-primary" data-toggle="modal" data-target="#hourend_model_popup"> Hour End Process </button>
+                            </div>
+                        </div>
+                        @*<div class="col-md-6">
+                            <div class="monthend-box">
+                                <p>Day End Process (Temporary)</p>
+                                <button type="submit" id="btndayendprocess" value="Submit" class="btn btn-primary" data-toggle="modal" data-target="#dayend_model_popup"> Day End Process (Temporary)</button>
+                            </div>
+                        </div>*@
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="monthend-box">
+                                <p>Month End Process </p>
+                                <button type="submit" id="Save" value="Submit" class="btn btn-primary" data-toggle="modal" data-target="#monthend_model_popup">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Month End Process &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                            </div>
+                        </div>
+                        @*<div class="col-md-6">
+                            <div class="monthend-box">
+                                <p>PF Contribution Card Process</p>
+                                <button type="submit" id="pfconcard" value="Submit" class="btn btn-primary" data-toggle="modal" data-target="#pfconcard_model_popup"> PF Contribution Card Process </button>
+                            </div>
+                        </div>*@
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="monthend-box">
+                                <p>Year End Process</p>
+                                <button type="submit" id="YesrEndProcess" value="Submit" class="btn btn-primary" data-toggle="modal" data-target="#Yearend_model_popup"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Year End Process &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="dayend_model_popup" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Confirmation!</h4>
+            </div>
+            <div class="modal-body">
+                Are You Sure, Want to Process?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="DayEndProcess()">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="monthend_model_popup" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Confirmation!</h4>
+            </div>
+            <div class="modal-body">
+                Are You Sure, Want to Process?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="getDataAfterProcess()">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="hourend_model_popup" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Confirmation!</h4>
+            </div>
+            <div class="modal-body">
+                Are You Sure, Want to Process?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="HourEndProcess()">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*// Year End Process*@
+<div class="modal fade" id="Yearend_model_popup" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Confirmation!</h4>
+            </div>
+            <div class="modal-body">
+                Are You Sure, Want to Process?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="YesrEndProcess()">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*// pf contribution card process*@
+<div class="modal fade" id="pfconcard_model_popup" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel"><b>Confirmation!</b></h4>
+            </div>
+            <div class="modal-body">
+                Are You Sure, Want to Process?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="pfconcardProcess()">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*for OTP*@
+@*<div class="modal fade" id="monthend_model_popup" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Confirmation!</h4>
+                </div>
+                <div class="modal-body">
+                    <label class="control-label"> Enter Password</label><input type="text" id="PWD" class = "form-control" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="getDataAfterProcess()">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+
+<script type="text/javascript" src="~/Areas/Payroll/Assets/scripts/Common.js"></script>
+<script>
+
+    //function getDataAfterProcess(empcode) {
+    //   // debugger;
+    //    var password = $("#PWD").val();
+    //    var dataToSend = JSON.stringify({
+    //        StringData: password,
+    //    });
+
+    //    CommonApiPOST("/Payroll/Process/Getpassword", dataToSend, function (isSuccess) {
+    //       // debugger;
+    //        alert("hi");
+    //        if (isSuccess) {
+    //            //alert("hi");
+    //            //debugger;
+    //            CommonApiGET('/Payroll/Process/MonthEndProcess', function (respData) {
+    //                //debugger;
+    //                showGlobalModal("I#MonthEnd# Month End Process Completed Successfully. Please Wait For 10min To Login !");
+
+    //                //orgCancelData = respData;
+    //                //fillDataTables(respData);
+    //            });
+    //        }
+    //        else {
+    //            //debugger;
+    //            showGlobalModal("E#MonthEnd# Password is incorrect,Re-Enter Password");
+    //        }
+
+    //    });
+    //    $('#monthend_model_popup').modal('toggle');
+    //}
+
+
+    function getDataAfterProcess(empcode) {
+
+        CommonApiGET('/Payroll/Process/MonthEndProcess', function (respData) {
+            debugger;
+            showGlobalModal("I#MonthEnd# Month End Process Completed Successfully. Please Wait For 10min To Login !");
+
+            //orgCancelData = respData;
+            //fillDataTables(respData);
+        });
+        $('#monthend_model_popup').modal('toggle');
+    }
+    function DayEndProcess(empcode) {
+
+        CommonApiGET('/Payroll/Process/DayEndPorcess', function (respData) {
+
+            showGlobalModal("I#DayEnd#Day End Process Completed Successfully. Please Wait For 10min To Login !");
+            //orgCancelData = respData;
+            //fillDataTables(respData);
+        });
+        $('#dayend_model_popup').modal('toggle');
+    }
+    function DayEndProcess(empcode) {
+
+        CommonApiGET('/Payroll/Process/DayEndPorcess', function (respData) {
+
+            showGlobalModal("I#DayEnd#Day End Process Completed Successfully. Please Wait For 10min To Login !");
+            //orgCancelData = respData;
+            //fillDataTables(respData);
+        });
+        $('#dayend_model_popup').modal('toggle');
+    }
+
+    function HourEndProcess(empcode) {
+
+        CommonApiGET('/Payroll/Process/HourEndPorcess', function (respData) {
+
+            showGlobalModal("I#HourEnd#Hour End Process Completed Successfully. Please Wait For 10min To Login !");
+            //orgCancelData = respData;
+            //fillDataTables(respData);
+        });
+        $('#hourend_model_popup').modal('toggle');
+    }
+
+    @*// pf contribution card process*@
+    function pfconcardProcess(empcode) {
+
+        CommonApiGET('/Payroll/Process/pfconcardPorcess', function (respData) {
+
+            showGlobalModal("I#Pf Contribution Card #Pf Contribution Card Process Completed Successfully...");
+            orgCancelData = respData;
+            fillDataTables(respData);
+        });
+        $('#pfconcard_model_popup').modal('toggle');
+    }
+
+    @*// Year End Process*@
+    function YesrEndProcess(empcode) {
+
+        CommonApiGET('/Payroll/Process/yearendprocess', function (respData) {
+
+            showGlobalModal("I#YearEnd # Year End Process Completed Successfully...");
+            orgCancelData = respData;
+            fillDataTables(respData);
+        });
+        $('#Yearend_model_popup').modal('toggle');
+    }
+
+    function LogoutApplication() {
+        $.ajax
+            ({
+                type: 'POST',
+                url: 'DashBoard/Index',
+                success: function () {
+                    location.reload();
+                }
+            });
+
+    }
+</script>

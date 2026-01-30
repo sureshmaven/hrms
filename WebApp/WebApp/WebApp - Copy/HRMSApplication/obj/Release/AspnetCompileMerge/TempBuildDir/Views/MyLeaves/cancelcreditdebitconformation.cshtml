@@ -1,0 +1,404 @@
+﻿@model HRMSApplication.Models.CancelConfirm
+@{
+    var rolepages = TempData["RolePages"].ToString();
+    ViewBag.RolePages = TempData["RolePages"];
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var message = TempData["status"] ?? string.Empty;
+}
+<script type="text/javascript">
+    var message = '@message';
+    if (message) alert(message);
+</script>
+<script>
+    $(document).ready(function () {
+       $("#1").show();
+        $("#2").hide();
+        $("#full").click(function () {
+            $("#1").show();
+            $("#2").hide();
+        });
+        $("#partial").click(function () {
+            $("#1").hide();
+            $("#2").show();
+        });
+    });
+</script>
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade in active">
+                    <div class="page_st">
+                        <div class="page">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="main_heading">
+                                    <h1>Report List </h1>
+
+                                    <div class="report-list">
+
+                                        @{Html.RenderPartial("_PartialViewForMenu");}
+
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                                <div class="main_heading">
+
+                                    @using (Html.BeginForm("cancelcreditdebitconformations", "MyLeaves", FormMethod.Post, new { name = "LeaveRequest" }))
+                                    {
+
+                                        <br>
+                                        <div class="col-md-12 col-sm-12">
+                                            <div class="main_heading">
+                                                <h1>Cancel Confirmation</h1>
+                                                <br />
+                                                <div class="form-horizontal col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <div class="form-group">
+                                                            <div class="main_radio_btn">
+                                                                <div class="col-md-2">
+                                                                    @Html.RadioButton("canceltype", "Full", new { id = "full", @checked = "checked" })
+                                                                    <label class="label_class" style="margin:0px;" for="full">  Full </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="1">
+                                                    <div class="form-horizontal">
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Employee Id:</label>
+                                                                <div class="col-sm-8">
+
+                                                                    @Html.EditorFor(model => model.EmpId, new { htmlAttributes = new { @class = "form-control", @id = "EmpId", @disabled = "disabled" } })
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Employee Name:</label>
+                                                                <div class="col-sm-8">
+
+                                                                    @Html.EditorFor(model => model.EmpName, new { htmlAttributes = new { @class = "form-control", @id = "EmpName", @disabled = "disabled" } })
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Controlling Authority:</label>
+                                                                <div class="col-sm-8">
+
+                                                                    @Html.EditorFor(model => model.ControllingAuthority, new { htmlAttributes = new { @class = "form-control", @id = "ControllingAuthority", @disabled = "disabled" } })
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Sanctioning Authority:</label>
+                                                                <div class="col-sm-8">
+
+                                                                    @Html.EditorFor(model => model.SanctioningAuthority, new { htmlAttributes = new { @class = "form-control", @id = "SanctioningAuthority", @disabled = "disabled" } })
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Leave Type:<span class="mandatory">*</span></label>
+                                                                <div class="col-sm-8">
+                                                                    @Html.HiddenFor(model => model.LeaveType)
+                                                                    @Html.DropDownListFor(model => model.LeaveType, ViewBag.LeaveTypes1 as SelectList, "Select", new { @class = "form-control", @id = "Type", @disabled = "disabled" })
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Total LeavesApplied:</label>
+                                                                <div class="col-sm-8">
+                                                                    @Html.HiddenFor(model => model.LeaveDays)
+                                                                    @Html.TextBoxFor(model => model.LeaveDays, new { @class = "form-control", @disabled = "disabled" })
+                                                                    @*@Html.HiddenFor(model => model.Status)*@
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Reason for Leave:<span class="mandatory">*</span></label>
+                                                                <div class="col-sm-8">
+                                                                    @Html.HiddenFor(model => model.Reason)
+                                                                    @Html.TextAreaFor(m => m.Reason, new { @class = "form-control", style = "width:100% !important", rows = "3", @id = "reason", @disabled = "disabled" })
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Reason for Cancellation:<span class="mandatory">*</span></label>
+                                                                <div class="col-sm-8">
+                                                                    @Html.TextAreaFor(m => m.fullCancelReason, new { @class = "form-control", style = "width:100% !important", rows = "3", @id = "Reason123" })
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="pull-right">
+                                                                <button type="button" onclick="resetForm()" value="reset" class="btn btn-default">Reset</button>
+                                                                <button type="submit" id="btsubmit" onclick="return leaveapply2();" class="btn btn-primary subleave">Submit</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    <div class="col-md-12">
+                                    </div>
+                                    <br /><br /><br /><br />
+                                    <div style='margin-top: 20px; '>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var message = '@message';
+    if (message) alert(message);
+</script>
+<script>
+    document.getElementById("a6").className = "active";
+</script>
+<script type="text/javascript">
+    $(document).ready(function ()  {
+        var myjoindate1 = document.getElementById("csdate").value;
+        var myjoindate = document.getElementById("cedate").value;
+        var leavetype = document.getElementById("Type").value;
+        var m1 = moment(myjoindate1, "DD.MM.YYYY");
+        var m2 = moment(myjoindate, "DD.MM.YYYY");
+        var duration = moment.duration(m2.diff(m1));
+       var s = Math.floor(duration / 1000);
+      var  m = Math.floor(s / 60);
+      var  s = s % 60;
+      var  h = Math.floor(m / 60);
+     var   m = m % 60;
+     var d = Math.floor(h / 24);
+         document.getElementById("canceldays").value = d + 1;
+        })
+    function sum() {
+     var myjoindate1 = document.getElementById("csdate").value;
+     var myjoindate = document.getElementById("cedate").value;
+     var leavetype = document.getElementById("Type").value;
+        if (myjoindate1 != "" && myjoindate !== "") {
+            var m1 = moment(myjoindate1, "DD.MM.YYYY");
+            var m2 = moment(myjoindate, "DD.MM.YYYY");
+            var duration = moment.duration(m2.diff(m1));
+            var s = Math.floor(duration / 1000);
+            var m = Math.floor(s / 60);
+            var s = s % 60;
+            var h = Math.floor(m / 60);
+            var m = m % 60;
+            var d = Math.floor(h / 24);
+            document.getElementById("canceldays").value = d + 1;
+        }
+        else
+        {
+            document.getElementById("canceldays").value = "";
+        }
+ }
+</script>
+<script>
+    function datescheck() {
+        var x = location.hostname;
+        var url = window.location.href
+        var arr = url.split("/");
+        var sdate = document.getElementById("csdate").value;
+        var edate = document.getElementById("cedate").value;
+        var ltype = document.getElementById("Type").value;
+        var employeecode = document.getElementById("EmpId").value;
+         var result = "" + arr[0] +  "//" + arr[2] +  "/"+ "MyLeaves/Checkleaves?StartDate=" + sdate + "&EndDate=" + edate + "&LeaveType=" + ltype + "&EmpId=" + employeecode;
+        $.ajax({
+            type: "GET",
+            url: result,
+
+            dataType: "json",
+            success: function (data) {
+
+                var input = data.message;
+
+                var fields = input.split('/');
+                var status = fields[0];
+                var dates = fields[1];
+
+                if (status == "false") {
+                    document.getElementById("csdate").value = "";
+                    document.getElementById("cedate").value = "";
+
+
+                    alert(dates);
+
+                }
+                else {
+                }
+                if (status == "countzero") {
+                }
+            },
+            error: function () {
+            }
+        });
+    }
+//Start And End Date Validation
+ function Dateevent1() {
+     var Joindate = document.getElementById("sdate").value;
+     var Retdate = document.getElementById("edate").value;
+     var date = moment(Joindate, "DD.MM.YYYY");
+     var currentDate1 = moment(Retdate, "DD.MM.YYYY");
+     var duration = moment.duration(date.diff(currentDate1));
+     if (duration > 0)
+     {
+         alert("Please ensure that End Date is greater than or equal to Start Date.");
+         document.getElementById("edate").focus();
+         document.getElementById("edate").value = '';
+         return false;
+     }
+     else {
+         if (Joindate != ''&& Retdate != '')
+         {
+             datescheck();
+         }
+         return true;
+     }
+ }
+ function Dateevent3() {
+     var StartDate = document.getElementById('sdate').value;
+     var EndDate = document.getElementById('edate').value;
+     var eDate = moment(EndDate, "DD.MM.YYYY");
+     var sDate = moment(StartDate, "DD.MM.YYYY");
+     if (StartDate != '' && EndDate != '' && sDate > eDate) {
+         alert("Please ensure that End Date is greater than or equal to Start Date.");
+         document.getElementById('sdate').value = '';
+         document.getElementById("sdate").focus();
+         return false;
+     }
+     else
+     {
+         if (StartDate != '' && EndDate != '') {
+             datescheck();
+         }
+         return true;
+     }
+ }
+ function cDateevent1() {
+     var Joindate = document.getElementById("csdate").value;
+     var Retdate = document.getElementById("cedate").value;
+     var date = moment(Joindate, "DD.MM.YYYY");
+     var currentDate1 = moment(Retdate, "DD.MM.YYYY");
+     var duration = moment.duration(date.diff(currentDate1));
+     if (duration > 0) {
+         alert("Please ensure that End Date is greater than or equal to Start Date.");
+         document.getElementById("cedate").focus();
+         document.getElementById("cedate").value = '';
+         return false;
+     }
+     else {
+         if (Joindate != '' && Retdate != '') {
+             datescheck();
+             sum();
+         }
+         sum();
+         return true;
+     }
+ }
+ function cDateevent3() {
+     var StartDate = document.getElementById('csdate').value;
+     var EndDate = document.getElementById('cedate').value;
+     var eDate = moment(EndDate, "DD.MM.YYYY");
+     var sDate = moment(StartDate, "DD.MM.YYYY");
+     if (StartDate != '' && EndDate != '' && sDate > eDate) {
+         alert("Please ensure that End Date is greater than or equal to Start Date.");
+         document.getElementById('csdate').value = '';
+         document.getElementById("csdate").focus();
+         return false;
+     }
+     else {
+         if (StartDate != '' && EndDate != '') {
+             datescheck();
+         }
+         sum();
+         return true;
+     }
+ }
+</script>
+<script>
+    var resetForm = function () {
+        $("#Reason123").val('');
+        $("#REASON1").val('');
+    }
+</script>
+<style>
+    .activeClass {
+        background: #ffdb99;
+    }
+    .secondClass {
+        color: red;
+    }
+</style>
+<script type='text/javascript'>
+    $(function getleavedays() {
+       var active_dates = [];
+    $.ajax({
+        type: "GET",
+        async: false,
+        url: "/MyLeaves/CancelGetDatesBetween",
+        dataType: "Json",
+        success: function (dates) {
+            datesArray = dates;
+            for (i = 0; i < datesArray.length; i++) {
+                var result = datesArray[i].replace("-", "/");
+                var result1 = result.replace("-", "/");
+                var strArray = result1.split("/");
+                var cdate = strArray[0] + "/" + strArray[1] + "/" + strArray[2]
+                active_dates.push(cdate);
+                if(i==datesArray.length-1)
+                {
+                }
+            }
+        }
+    });
+    $('.input-group.date').datepicker({
+        format: "dd-mm-yyyy",
+        autoclose: true,
+            todayHighlight: true,
+            beforeShowDay: function (date) {
+               var d = date;
+               var curr_date = d.getDate();
+               var curr_month = d.getMonth() + 1; //Months are zero based
+                  if (curr_date < 10) {
+                  curr_date = '0' + curr_date
+                  }
+                  if (curr_month < 10) {
+                      curr_month = '0' + curr_month
+                  }
+               var curr_year = d.getFullYear();
+               var formattedDate = curr_date + "/" + curr_month + "/" + curr_year
+               if ($.inArray(formattedDate, active_dates) != -1) {
+                    return {
+                        classes: ' '
+                    };
+                } else {
+                    return false;
+                }
+            }
+    });
+  });
+</script>

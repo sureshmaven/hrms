@@ -1,0 +1,38 @@
+alter table employee_transfer add Transfer_Type varchar(250) null;
+alter table leaves add LeavesYear int  null;
+update leaves set LeavesYear='2018';
+
+create table [dbo].[Leaves_LTC](Id int identity(1,1) primary key not null,EmpId int null,ControllingAuthority int null,
+SanctioningAuthority int null,StartDate datetime null,EndDate datetime null,Subject varchar(250) null,
+Reason varchar(250) null,UpdatedBy int null,UpdatedDate datetime null,Status varchar(250) null);
+
+ALTER TABLE [dbo].[Leaves_LTC]  WITH CHECK ADD  CONSTRAINT [FK_Leaves_LTC_EmpId] FOREIGN KEY([EmpId])
+REFERENCES [dbo].employees ([Id]);
+alter table Leaves_LTC  WITH CHECK add constraint FK_Leaves_LTC_ControllingAuthority FOREIGN KEY (ControllingAuthority) REFERENCES employees(id);
+alter table Leaves_LTC  WITH CHECK add constraint FK_Leaves_LTC_SanctioningAuthority FOREIGN KEY (SanctioningAuthority) REFERENCES employees(id);
+
+
+create table Leaves_CreditDebit(Id int identity(1,1) primary key not null,EmpId int null,LeaveTypeId int null,
+CreditLeave int null,DebitLeave int null,
+UpdatedBy varchar(250) null,UpdatedDate datetime null,LeaveBalance int null,Comments varchar(250) null);
+
+
+ALTER TABLE [dbo].Leaves_CreditDebit  WITH CHECK ADD  CONSTRAINT [FK_Leaves_CreditDebit_EmpId] FOREIGN KEY([EmpId])
+REFERENCES [dbo].employees ([Id]);
+
+ALTER TABLE [dbo].Leaves_CreditDebit  WITH CHECK ADD  CONSTRAINT [FK_Leaves_CreditDebit_LeaveTypeId] FOREIGN KEY(LeaveTypeId)
+REFERENCES [dbo].leaveTypes ([Id]);
+
+
+alter table Leaves_CreditDebit add EmpName varchar(150) null,Department int null,Branch int null,CurrentDesignation int null;
+alter table Leaves_CreditDebit add Type varchar(150) null;
+alter table Leaves_CreditDebit add Head_Branch_Value int null;
+
+ALTER TABLE [dbo].Leaves_CreditDebit  WITH CHECK ADD  CONSTRAINT [FK_Leaves_CreditDebit_Department] FOREIGN KEY(Department)
+REFERENCES [dbo].departments ([Id]);
+
+ALTER TABLE [dbo].Leaves_CreditDebit  WITH CHECK ADD  CONSTRAINT [FK_Leaves_CreditDebit_Branch] FOREIGN KEY(Branch)
+REFERENCES [dbo].branches ([Id]);
+
+ALTER TABLE [dbo].Leaves_CreditDebit  WITH CHECK ADD  CONSTRAINT [FK_Leaves_CreditDebit_CurrentDesignation] FOREIGN KEY(CurrentDesignation)
+REFERENCES [dbo].designations ([Id]);

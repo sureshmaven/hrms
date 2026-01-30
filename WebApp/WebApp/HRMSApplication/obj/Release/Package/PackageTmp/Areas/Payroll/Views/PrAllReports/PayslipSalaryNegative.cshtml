@@ -1,0 +1,465 @@
+﻿
+@{
+    var fm = ViewBag.fm;
+    ViewBag.Title = "PayslipSalaryNegativeReport";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+
+}
+<style>
+    #gridPaySlip i {
+        font-size: 13px;
+    }
+</style>
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="leftmenu-container">
+                <div class="sidebar-menu">
+                    <div class="main_heading left-menu">
+                        @{Html.RenderPartial("_PVPayrollMenu");}
+                    </div>
+                </div>
+                <div class="sidebar-content">
+                    <div class="main_heading heading_main">
+                        <h1>Payslip Negative Salary</h1>
+                        <div class="col-md-12">
+                            <div class="fancy-collapse-panel">
+                                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading" role="tab" id="headingOne">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#reportsearch" aria-expanded="true" aria-controls="reportsearch" class="">
+                                                    Report Filter
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="reportsearch" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                            <div class="panel-body">
+                                                <div class="reports_search mt_10">
+                                                    <div class="col-md-8">
+                                                        @{ Html.RenderPartial("_PvEmployeeSearchwithCheckboxes"); }
+                                                    </div>
+                                                    <div class="col-md-4 mt_10">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label dept_label">@ViewBag.OneMonthPickerLabel1:</label>
+                                                            <div class="col-md-8 date input-group" id="dtOneMonthPickerYear">
+                                                                <input type="text" class="form-control form-control-1 input-sm from fromFudis" placeholder="Select-Month" id="dtOneMonthPicker">
+                                                                <span class="input-group-addon">
+                                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <input type="hidden" id="EmployeeId" />
+                                                <div class="col-md-11">
+                                                    <div class="col-md-8 p0">
+                                                        <div class="col-sm-3 p2">
+                                                            <label class="control-label mt_10">Payslip Type:</label>
+                                                        </div>
+                                                        <div class="col-md-9">
+                                                            <div id="payslipstypes">
+
+                                                                <div class="type-check">
+                                                                    <input id="Regular" type="checkbox" name="Regular" value="Regular">
+                                                                    <label for="Regular"><span><span></span></span>Regular</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                </div>
+                                                                <div class="type-check">
+                                                                    <input id="stopsalary" type="checkbox" name="stopsalary" value="stopsalary">
+                                                                    <label for="stopsalary"><span><span></span></span>Stop Salary</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                </div>
+                                                                <div class="type-check">
+                                                                    <input id="Suspended" type="checkbox" name="Suspended" value="Suspended">
+                                                                    <label for="Suspended"><span><span></span></span>Suspended</label>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4 p0">
+                                                        <div id="payslipstypes">
+                                                            <div class="col-sm-7 p0">
+                                                                <input id="Encashment" type="checkbox" name="Encashment" value="Encashment">
+                                                                <label for="Encashment"><span><span></span></span>Encashment</label>
+                                                            </div>
+                                                            @*<div class="col-sm-2">
+                                                                    <input id="Promotion" type="checkbox" name="Promotion" value="Promotion">
+                                                                    <label for="Promotion"><span><span></span></span>Promotion</label>
+                                                                </div>*@
+                                                            <div class="col-sm-5 p0">
+                                                                <input id="Adhoc" type="checkbox" name="Adhoc" value="Adhoc">
+                                                                <label for="Adhoc"><span><span></span></span>Adhoc</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                                <div class="col-md-1 mt_6 mb_10">
+                                                    <div class="pull-right">
+                                                        <button class="btn btn-primary" id="SearchPayslipRecords">Search</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt_10">
+                            <div class="table-responsive">
+                                <table id="gridPaySlip" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <input name="select" value="1" id="SelectAllcheckBoxes" type="checkbox" onclick="checkboxRowAll()">
+                                                <label for="checkbox1"><span></span></label>
+                                            </th>
+                                            <th>Emp Code</th>
+                                            <th>Emp Name</th>
+                                            <th>Designation</th>
+                                            <th>Total Gross(<i class="fa fa-inr fa-xs" aria-hidden="true"></i>)</th>
+                                            <th>Total Deduction(<i class="fa fa-inr fa-xs" aria-hidden="true"></i>)</th>
+                                            <th>Net Salary(<i class="fa fa-inr fa-xs" aria-hidden="true"></i>)</th>
+                                            <th>Payslip Type</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                            <div class="mt_10">
+                                <input type="hidden" id="EmployeeId" />
+                                <div class="mt_10">
+                                    <div class="pull-right">
+                                        <input type="button" value="Download PDF" class="btn btn-primary" id="GetPdf" />
+                                        @*<input type="button" value="Download PDF" class="btn btn-info" id='excelExport' onclick='window.location ="@Url.Action("CreatePdf", "PayslipPdf"? {id = hdnfld  })";' />*@
+                                         @*<input type="button" value="Send Mail" class="btn btn-primary" id="SendPdf" />*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#gridPaySlip').DataTable();
+    });
+    var arrerresult = [];
+    var emp_code = "";
+    var mnpkrVal1 = "";
+    var pdftypes = [];
+    var val = [];
+    var string = "";
+
+    function getDataAfterEmpSearch1440(empcode) {
+        //
+        arrerresult = [];
+        hdnfld = empcode;
+        $('#EmployeeId').val(hdnfld);
+        CommonApiGET('/Payroll/NegativeNetSalary/SearchEmployee?EmpCode=' + empcode, function (respData) {
+            originalData = respData;
+            //fillDataTables(respData);
+        });
+
+    }
+
+
+
+
+
+    //checkbox Genereal checked or not
+    $("#Regular").click(function () {
+        if ($(this).prop("checked") == true) {
+            //
+            $('#Regular').attr('checked', this.checked);
+            pdftypes.push($('#Regular').val());
+            //$("#Adhoc").attr('disabled', !$("#Adhoc").attr('disabled'));
+            //$("#Encashment").attr('disabled', !$("#Encashment").attr('disabled'));
+            //$("#stopsalary").attr('disabled', !$("#stopsalary").attr('disabled'));
+            //$("#dtOneMonthPicker").attr('disabled', !$("#dtOneMonthPicker").attr('disabled'));
+        }
+        else {
+            //
+            //pdftypes = [];
+            pdftypes = pdftypes.filter(e => e !== 'Regular');
+        }
+    });
+
+    //checkbox Encashment checked or not
+    $("#Encashment").click(function () {
+        if ($(this).prop("checked") == true) {
+            //
+            $('#Encashment').attr('checked', this.checked);
+            pdftypes.push($('#Encashment').val());
+
+            //$("#Adhoc").attr('disabled', !$("#Adhoc").attr('disabled'));
+            //$("#General").attr('disabled', !$("#General").attr('disabled'));
+            //$("#stopsalary").attr('disabled', !$("#stopsalary").attr('disabled'));
+            //$("#dtOneMonthPicker").attr('disabled', !$("#dtOneMonthPicker").attr('disabled'));
+
+        }
+        else {
+            //
+            //pdftypes = [];
+            pdftypes = pdftypes.filter(e => e !== 'Encashment');
+        }
+    });
+
+    //checkbox Adhoc checked or not
+    $("#Adhoc").click(function () {
+        if ($(this).prop("checked") == true) {
+            //
+            $('#Adhoc').attr('checked', this.checked);
+            pdftypes.push($('#Adhoc').val());
+            ////$("#Encashment").attr('disabled', !$("#Encashment").attr('disabled'));
+            ////$("#General").attr('disabled', !$("#General").attr('disabled'));
+            ////$("#stopsalary").attr('disabled', !$("#stopsalary").attr('disabled'));
+
+        }
+        else {
+            //
+            //pdftypes = [];
+            pdftypes = pdftypes.filter(e => e !== 'Adhoc');
+        }
+    });
+
+    //checkbox StopSalary checked or not
+    $("#stopsalary").click(function () {
+        if ($(this).prop("checked") == true) {
+            //
+            $('#stopsalary').attr('checked', this.checked);
+            pdftypes.push($('#stopsalary').val());
+            //$("#Encashment").attr('disabled', !$("#Encashment").attr('disabled'));
+            //$("#General").attr('disabled', !$("#General").attr('disabled'));
+            //$("#Adhoc").attr('disabled', !$("#Adhoc").attr('disabled'));
+            //$("#dtOneMonthPicker").attr('disabled', !$("#dtOneMonthPicker").attr('disabled'));
+        }
+        else {
+            //
+            //pdftypes = [];
+            pdftypes = pdftypes.filter(e => e !== 'stopsalary');
+        }
+    });
+
+
+    //checkbox Suspended checked or not
+    $("#Suspended").click(function () {
+        if ($(this).prop("checked") == true) {
+            //
+            $('#Suspended').attr('checked', this.checked);
+            pdftypes.push($('#Suspended').val());
+            //$("#Encashment").attr('disabled', !$("#Encashment").attr('disabled'));
+            //$("#General").attr('disabled', !$("#General").attr('disabled'));
+            //$("#Adhoc").attr('disabled', !$("#Adhoc").attr('disabled'));
+            //$("#dtOneMonthPicker").attr('disabled', !$("#dtOneMonthPicker").attr('disabled'));
+        }
+        else {
+            //
+            //pdftypes = [];
+            pdftypes = pdftypes.filter(e => e !== 'Suspended');
+        }
+    });
+
+    //searchpaysliprecords_monthwise(emp_code,payslip_type,month-year)
+    $("#SearchPayslipRecords").click(function () {
+        emp_code = $("#txtEmployeeSearchBox1450").val();
+        mnpkrVal1 = $("#dtOneMonthPicker").val();
+        if (emp_code == "") {
+            emp_code = $("input[id='rdbEmpAll']:checked").val();
+        }
+
+        if (pdftypes == 0) {
+            showGlobalModal('E#Warning #Please Select Payslip Type');
+            return false;
+        }
+        if (emp_code == undefined) {
+            showGlobalModal('E#Warning #Please Enter Employee Code');
+            return false;
+        }
+
+
+        var allemp = $("input[id='rdbEmpAll']:checked").val();
+
+        if (allemp == "All") {
+            emp_code = $("input[id='rdbEmpAll']:checked").val();
+        }
+
+        arrerresult = [];
+
+        CommonApiGET('/Payroll/PrAllReports/NetSalaryReportData?empcode=' + emp_code + '&pdftypes=' + pdftypes + '&mnpkrVal1=' + mnpkrVal1 + '', function (respData) {
+            orgData = respData;
+            orgDdlist = respData;
+            cancelOrg = respData;
+            fillDataTables(respData);
+            fillDataTables(respData);
+        });
+
+
+
+
+
+    });
+
+    debugger;
+       var finmonth = '@fm';
+    var fmonth=finmonth.split('-');
+
+    var finmonthyear="'"+fmonth[1] +"-"+fmonth[0]+"'";
+
+    $('#dtOneMonthPickerYear').datepicker({
+        minViewMode: 1,
+        autoclose: true,
+        format: 'MM-yyyy',
+    }).datepicker("setDate", finmonthyear);
+
+    //select month and year
+    //$('#dtOneMonthPickerYear').datepicker({
+    //    minViewMode: 1,
+    //    autoclose: true,
+    //    format: 'MM-yyyy',
+    //}).datepicker("setDate", "+0d");
+
+
+
+</script>
+<script>
+    $("#SelectAllcheckBoxes").click(function () {
+        $('.selectAllRow').not(this).prop('checked', this.checked);
+
+    });
+
+</script>
+<script>
+
+
+    var orgDdlist;
+    var cancelOrg;
+    $(document).ready(function () {
+        var orgData;
+        CommonApiGET('/Payroll/PrAllReports/NetSalaryReportData?empcode=' + emp_code + '&pdftypes=' + pdftypes + '&mnpkrVal1=' + mnpkrVal1 + '', function (respData) {
+            orgData = respData;
+            orgDdlist = respData;
+            cancelOrg = respData;
+            fillDataTables(respData);
+            //fillDataTables(respData);
+        });
+
+    });
+
+    //fill datatable on search
+    function fillDataTables(respData) {
+        $('#gridPaySlip').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": true,
+            "info": false,
+            "bFilter": false,
+            "searching": true,
+            data: respData,
+            "language": {
+                "search": "Filter records:"
+            },
+            "columns": [
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    'mRender': function (data, type, full) {
+                        return '<input type="checkbox" class="selectAllRow" id="' + data.Id + '" onclick="checkboxRow(this.id)" /><label for="' + data.Id + '"><span></span></label>';
+                    }
+                },
+
+                { "data": "emp_code" },
+                { "data": "shortname" },
+                { "data": "Description" },
+                { "data": "gross_amount" },
+                { "data": "deductions_amount" },
+                { "data": "net_amount" },
+                { "data": "spl_type" }
+
+            ],
+            "order": [[1, 'asc']]
+        });
+    }
+
+
+    //row wise checked
+    function checkboxRow(id) {
+
+        document.getElementById("SelectAllcheckBoxes").checked = false;
+        //$('#SelectAllcheckBoxes').checked = false;
+        if ($('#' + id).prop("checked") == true) {
+
+            orgDdlist.map(function (o) {
+                if (o.Id == id) {
+                    arrerresult.push(id);
+                }
+            });
+        } else if ($('#' + id).prop("checked") == false) {
+
+            var index = arrerresult.indexOf(id);
+            arrerresult.splice(index, 1);
+
+        }
+
+        console.log(JSON.stringify(arrerresult));
+    };
+
+    // all checked
+    function checkboxRowAll() {
+
+        arrerresult = [];
+
+        if ($('#SelectAllcheckBoxes').prop("checked") == true) {
+
+            orgDdlist.map(function (o) {
+                arrerresult.push(o.Id);
+            });
+        }
+        else if ($('#SelectAllcheckBoxes').prop("checked") == false) {
+
+            orgDdlist.map(function (o) {
+                arrerresult = [];
+            });
+        }
+
+    };
+
+
+</script>
+<script>
+
+    $('#GetPdf').click(function () {
+
+        if (arrerresult.length > 0)
+        {
+            var psid = arrerresult
+            window.location = '@Url.Action("CreatePdf", "NegativeNetSalary")?EmpCode=' + psid + '&pdftypes=' + pdftypes ;
+            //setTimeout(function () { window.location.reload(); }, 5000);
+        }
+        else
+        {
+            showGlobalModal("E#Required Field#Please Select Employee Code");
+        }
+
+    });
+
+    $('#SendPdf').click(function () {
+        if (arrerresult.length > 0) {
+            var dataToSebd = JSON.stringify({
+                data: arrerresult
+            });
+            CommonApiPOST("/Payroll/NegativeNetSalary/SendePdf", dataToSebd, function (isSuccess) {
+                if (isSuccess) {
+                    //setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+        } else {
+            showGlobalModal("E#Required Field#Please Select Employee Code");
+        }
+
+    });
+</script>
+

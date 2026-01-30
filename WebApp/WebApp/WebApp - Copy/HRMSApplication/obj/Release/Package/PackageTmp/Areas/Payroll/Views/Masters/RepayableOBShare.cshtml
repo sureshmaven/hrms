@@ -1,0 +1,315 @@
+﻿
+
+@{
+    ViewBag.Title = "OBshare";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+<div class="page">
+    <div class="form-horizontal">
+        <div class="page_start">
+            <div class="col-md-2">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <div class="col-md-12">
+                        <div class="form-horizontal">
+
+
+                            <div class="clearfix"></div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">Own share</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">VPF</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">Bank Share</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">1.Fund</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label" id="ownshare"></label>
+
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label" id="vpf"></label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label" id="bankshare"></label>
+
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">2.Interest</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label" id="inst_own"></label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label" id="inst_vpf"></label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label" id="inst_bank"></label>
+
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">A.TOTAL(1+2)</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label" id="own_inst"></label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label" id="vpf_inst">0.00</label>
+
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label" id="bank_inst"></label>
+
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">3.Non Repayable loan availed upto previous year</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label" id="prev_own"></label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label" id="prev_vpf"></label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label" id="prev_bank"></label>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            @*<div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">4.Amount available during year</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">60907.00</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">0.00</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">32508.00</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">5.LIC Due</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">0.00</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">0.00</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">32508.00</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">B.TOTAL(3+4+5)</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">0.00</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">0.00</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">32508.00</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">C.TOTAL</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">0.00</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">0.00</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">0.00</label>
+
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">D.NET(A-(B+C))</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">0.00</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">0.00</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">0.00</label>
+                                </div>
+                            </div>*@
+                        </div>
+                    </div>
+                    <div class="col-md-12 mt_10">
+                        <div class="pull-right">
+                            <button type="submit" onclick="history.go(-1);" class="btn btn-primary">Previous</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+         
+        var params = [];
+        var sPageURL = window.location.search.substring(1);
+
+        var sURLVariables = sPageURL.split('=');
+        if (sURLVariables[1] == "") {
+            alert("please go bank to previous and give emp id");
+        } else {
+            CommonApiGET('/Payroll/Masters/getOBShareData?emp_code=' + sURLVariables[1], function (respData) {
+
+                orgData = respData;
+                fillData(respData);
+                //if (orgData == null) {
+                //    window.location.reload();
+                //}
+                //else {
+                //    fillData(respData);
+                //}
+            });
+        }
+        
+
+
+    });
+
+
+    function fillData(respData) {
+         
+        if (respData.startsWith("E#")) {
+            showGlobalModal("I#Required Field#Data Not Found.");
+            //setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+        } else {
+             
+            var resShare = [];
+            var resInst = [];
+            var resPrev = [];
+
+            var dataObj = JSON.parse(respData);
+            resShare.push(dataObj.share);
+            resInst.push(dataObj.inst);
+             resPrev.push(dataObj.prev);
+            var shareData = resShare[0];
+            var instData = resInst[0];
+            var prevData = resPrev[0]
+
+            var share = shareData[0];
+            var inst = instData[0];
+            var prev = prevData[0];
+           
+            document.getElementById("ownshare").innerHTML = share.fund_own;
+            document.getElementById("bankshare").innerHTML = share.fund_bank;
+            document.getElementById("vpf").innerHTML = share.fund_vpf;
+
+            //2. Interest
+            document.getElementById("inst_own").innerHTML = inst.ist_own;
+            document.getElementById("inst_bank").innerHTML = inst.ist_bank;
+            document.getElementById("inst_vpf").innerHTML = inst.ist_vpf;
+
+           
+            //3. Fund + Interest
+            document.getElementById("own_inst").innerHTML = parseInt(share.fund_own) + parseInt(inst.ist_own);
+            document.getElementById("bank_inst").innerHTML = parseInt(share.fund_bank) + parseInt(inst.ist_bank);
+            document.getElementById("vpf_inst").innerHTML = parseInt(share.fund_vpf) + parseInt(inst.ist_vpf);
+
+            //4. Prev year available
+            document.getElementById("prev_own").innerHTML = prev.prev_own;
+            document.getElementById("prev_vpf").innerHTML = prev.prev_vpf;
+            document.getElementById("prev_bank").innerHTML = prev.prev_bank;
+
+        }
+    }
+   
+</script>

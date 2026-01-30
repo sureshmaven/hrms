@@ -1,0 +1,9 @@
+update pr_emp_payslip set err_ceoallw=0 where spl_type='Adhoc' and fm='2019-12-01'
+
+create table pr_hrms_payslipdetails(
+id int identity(1,1),
+empid int,
+source_name nvarchar(50),
+logintime datetime,
+page_name nvarchar(20)
+);

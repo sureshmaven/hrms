@@ -1,0 +1,462 @@
+﻿@model Entities.view_employee
+@{
+    ViewBag.RolePages = TempData["RolePages"];
+    var rolepages = TempData["RolePages"].ToString();
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+
+    var message = TempData["AlertMessage"] ?? string.Empty;
+
+}
+
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade in active">
+                    <div class="page_st">
+                        <div class="page">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="main_heading">
+                                    <h1>Report List </h1>
+                                    <div class="report-list">
+                                        @{
+                                            <ul>
+                                                @if (rolepages.Contains("RPBRA"))
+                                                {
+                                                    <li><a href=@Url.Action("Index", "AllReports")>Branches</a></li>}
+                                                @if (rolepages.Contains("RPBRC"))
+                                                {
+                                                    <li><a href=@Url.Action("BranchContacts", "AllReports")>Branch Contacts</a></li>}
+                                                @if (rolepages.Contains("RPCDR"))
+                                                {
+                                                    <li><a href=@Url.Action("CadreReport", "Reports" )>Cadre</a></li>}
+                                                @if (rolepages.Contains("RPCAT"))
+                                                {
+                                                    <li><a href=@Url.Action("CategoryReport", "Reports" )>Category</a></li>}
+                                                @if (rolepages.Contains("RPDOB"))
+                                                {
+                                                    <li><a href=@Url.Action("DOBReport", "Reports" )>DOB</a></li>}
+                                                @if (rolepages.Contains("RPEMP"))
+                                                {
+                                                    <li><a href=@Url.Action("EmployeeList", "Register" )>Employees</a></li>}
+                                                @if (rolepages.Contains("RPEAL"))
+                                                {
+                                                    <li><a href=@Url.Action("FutureLeave", "Reports" )>Future Applied Leaves</a></li>}
+                                                @if (rolepages.Contains("RPHOF"))
+                                                {
+                                                    <li><a href=@Url.Action("DepartmentReport", "Reports" )>HeadOffice</a></li>}
+                                                @if (rolepages.Contains("RPHOA"))
+                                                {
+                                                    <li><a href=@Url.Action("AttenderReport", "Reports")>HeadOffice Attenders</a></li>}
+                                                @if (rolepages.Contains("RPKOF"))
+                                                {
+                                                    <li><a href=@Url.Action("TotalExperience", "Reports" )>Key Officials</a></li>}
+                                                @if (rolepages.Contains("RPLTC"))
+                                                {
+                                                    <li><a href=@Url.Action("LTCview", "Reports" )>LTC</a></li>}
+                                                @if (rolepages.Contains("RPLEV"))
+                                                {
+                                                    <li><a href=@Url.Action("LeaveSearch", "MyLeaves" )>Leaves</a></li>}
+                                                @if (rolepages.Contains("RPLLE"))
+                                                {
+                                                    <li><a href=@Url.Action("LeaveDays", "Reports" )>Long Leaves</a></li>}
+                                                @if (rolepages.Contains("RPLFA"))
+                                                {
+                                                    <li><a href=@Url.Action("Report1", "Reports" )>Leaves Forwarded/Approved</a></li>}
+                                                @if (rolepages.Contains("RPLAL"))
+                                                {
+                                                    <li><a href=@Url.Action("LateLeave", "Reports" )>Late Applied Leaves</a></li>}
+                                                @if (rolepages.Contains("RPLCD"))
+                                                {
+                                                    <li><a href=@Url.Action("Cancelleavereport", "Reports" )>Leaves Cancelled</a></li>}
+                                                @if (rolepages.Contains("RPCMP"))
+                                                {
+                                                    <li><a href=@Url.Action("MonthwiseCl", "Reports" )>Month Wise CL/ML/PL</a></li>}
+                                                @if (rolepages.Contains("RPMWL"))
+                                                {
+                                                    <li><a href=@Url.Action("MonthWiseLeave", "Reports" )>Month Wise Leaves</a></li>}
+                                                @if (rolepages.Contains("RPMWO"))
+                                                {
+                                                    <li><a href=@Url.Action("MonthwiseOD", "Reports" )>Month Wise OD</a></li>}
+                                                @if (rolepages.Contains("RPMTT"))
+                                                {
+                                                    <li><a href=@Url.Action("MonthwiseTempTransfer", "Reports" )>Month Wise Temporary Transfer</a></li>}
+                                                @if (rolepages.Contains("RPODD"))
+                                                {
+                                                    <li><a href=@Url.Action("History", "Duty" )>OD</a></li>}
+                                                @if (rolepages.Contains("RPPTS"))
+                                                {
+                                                    <li><a href=@Url.Action("Perm", "Reports" )>Permanent Transfers</a></li>}
+                                                @if (rolepages.Contains("RPPRO"))
+                                                {
+                                                    <li><a href=@Url.Action("TransferReport", "Reports" )>Promotion</a></li>}
+                                                @if (rolepages.Contains("RPSPL"))
+                                                {
+                                                    <li><a href=@Url.Action("Plreport", "Reports" )>PL</a></li>}
+                                                @if (rolepages.Contains("RPRET"))
+                                                {
+                                                    <li><a href=@Url.Action("RetirementReport", "Reports" )>Retirements</a></li>}
+                                                @if (rolepages.Contains("RPSEN"))
+                                                {
+                                                    <li class="active"><a href=@Url.Action("Senioritylist", "Register" )>Seniority</a></li>}
+                                                @if (rolepages.Contains("RPSMA"))
+                                                {
+                                                    <li><a href=@Url.Action("SMReport", "Reports" )>Staff Master</a></li>}
+                                                @if (rolepages.Contains("RPTXH"))
+                                                {
+                                                    <li><a href=@Url.Action("Index", "Tx_History" )>TX History</a></li>}
+                                                @if (rolepages.Contains("RPTTS"))
+                                                {
+                                                    <li><a href=@Url.Action("Temp", "Reports" )>Temporary Transfers</a></li>}
+                                                @if (rolepages.Contains("RPTMT"))
+                                                {
+                                                    <li><a href=@Url.Action("TopmanagementReport", "Reports" )>TopManagement</a></li>}
+                                                @if (rolepages.Contains("RPWDY"))
+                                                {
+                                                    <li><a href=@Url.Action("WorkDiary", "AllReports")>WorkDiary </a></li>}
+                                                @if (rolepages.Contains("RPYLB"))
+                                                {
+                                                    <li><a href=@Url.Action("YearWiseLeaveBalanceReport", "Reports" )>YearWiseLeaveBalance</a></li>}
+                                            </ul>
+                                        }
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                                <div class="main_heading">
+                                    <h1>Seniority List </h1>
+
+                                    <div class="col-md-12">
+                                        <div id="grid">
+
+                                        </div>
+                                    </div>
+                                    <br /><br /><br /><br />
+                                    <div style='margin-top: 20px; '>
+                                        <div id="div1" style='float: left; margin: 10px 0 0 16px;'>
+                                            <input type="button" value="Export to Excel" id='excelExport' />
+
+                                        </div>
+
+                                    </div>                                
+                                    <div style='margin-top: 20px; '>
+                                        <div id="div1" style='float: left; margin: 10px 0 0 16px;'>
+                                            <input type="button" class="jqx-rc-all jqx-button jqx-widget jqx-fill-state-normal" value="Download PDF" id='pdf' onclick='window.location = "@Url.Action("CreatePdfSeniority", "Reports")";' />
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script type="text/javascript">
+    var message = '@message';
+
+    if (message) alert(message);
+
+</script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            // prepare the data
+            var source =
+                {
+                    datatype: "json",
+
+                    datafields: [
+                        { name: 'Id', type: 'int' },
+                        { name: 'EmpId', type: 'string' },
+                        { name: 'EmpName', type: 'string' },
+                        { name: 'name', type: 'string' },
+                        { name: 'BranchName', type: 'string' },
+                         { name: 'DOB', type: 'date' },
+                        { name: 'DOJ', type: 'date' },
+                        { name: 'RetirementDate', type: 'date' },
+
+                    ],
+                    async: false,
+                    url: '/Register/SenioritylistView',
+                    data: {
+                        featureClass: "P",
+                        style: "full",
+                        maxRows: 2,
+                        username: "jqwidgets"
+                    }
+                };
+
+            var dataAdapter = new $.jqx.dataAdapter(source,
+                {
+                    formatData: function (data) {
+
+                        data.EmpId = $("#searchField").val();
+
+                        return data;
+                    }
+                }
+            );
+            var editrowindex = -1;
+            var delrowindex = -1;
+            // initialize jqxGrid
+
+
+            $("#grid").jqxGrid(
+                {
+                    width: '100%',
+                    source: dataAdapter,
+                    theme: otherTheme,
+                    autoheight: true,
+                    sortable: true,
+                    pageable: true,
+                    columnsResize: true,
+                    altRows: true,
+                    filterable: true,
+                    autoshowfiltericon: true,
+                    ready: function () {
+                        $("#grid").jqxGrid('localizestrings', localizationObject);
+                    },
+                    updatefilterconditions: function (type, defaultconditions) {
+                        switch (type) {
+                            case 'stringfilter':
+                                return stringcomparisonoperators;
+                            case 'numericfilter':
+                                return numericcomparisonoperators;
+                            case 'datefilter':
+                                return datecomparisonoperators;
+                            case 'booleanfilter':
+                                return booleancomparisonoperators;
+                        }
+                    },
+                    updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                        filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                        var index1 = 0;
+                        var index2 = 0;
+                        if (columnfilter != null) {
+                            var filter1 = columnfilter.getfilterat(0);
+                            var filter2 = columnfilter.getfilterat(1);
+                            if (filter1) {
+                                index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                                var value1 = filter1.filtervalue;
+                                filterinputfield1.val(value1);
+                            }
+                            if (filter2) {
+                                index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                                var value2 = filter2.filtervalue;
+                                filterinputfield2.val(value2);
+                            }
+                        }
+                        filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                        filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                    },
+                    columns: [
+                             {
+                            text: 'SNO', sortable: false, filterable: false, editable: false, align: 'center',
+                                 groupable: false, draggable: false, resizable: false, exportable: false,
+                                 datafield: '', columntype: 'number', width: 50,
+                                 cellsrenderer: function (row, column, value) {
+                                     return "<div style='margin:4px;text-align: center;'>" + (value + 1) + "</div>";
+                                 }
+                             },
+                        { text: "Emp Code", datafield: "EmpId", width: 90, editable: false },
+                        { text: "Name", datafield: "EmpName", width: 190, editable: false },
+                        { text: "Designation", datafield: "name", width: 246, editable: false },
+                        { text: "Branch/Dept", datafield: "BranchName", width: 180, editable: false },
+                          { text: "DOB", datafield: "DOB", width: 100, cellsformat: 'dd/MM/yyyy', editable: false },
+                        { text: "DOJ", datafield: "DOJ", width: 100, cellsformat: 'dd/MM/yyyy', editable: false },
+                        { text: "RetirementDate", datafield: "RetirementDate", width: 120, cellsformat: 'dd/MM/yyyy', editable: false },
+                    ], columngroups:
+              [
+                { text: 'Action', align: 'center', name: 'Actions', width: 160 },
+              ],
+
+                    showtoolbar: true,
+                    rendertoolbar: function (toolbar) {
+                        var me = this;
+                        var container = $("<div style='margin: 5px;'></div>");
+                        var span = $("<span style='float: left; margin-top: 5px; margin-right: 4px;'>EnpCode Search: </span>");
+                        var input = $("<input class='jqx-input jqx-widget-content jqx-rc-all' id='searchField' type='text' style='height: 23px; float: left; width: 223px;' />");
+                        toolbar.append(container);
+                        container.append(span);
+                        container.append(input);
+                        if (otherTheme != "") {
+                            input.addClass('jqx-widget-content-' + otherTheme);
+                            input.addClass('jqx-rc-all-' + otherTheme);
+                        }
+                        var oldVal = "";
+                        input.on('keydown', function () {
+                            if (input.val().length >= 2) {
+                                if (me.timer) {
+                                    clearTimeout(me.timer);
+                                }
+                                if (oldVal != input.val()) {
+                                    me.timer = setTimeout(function () {
+                                        $("#grid").jqxGrid('updatebounddata');
+                                    }, 1000);
+                                    oldVal = input.val();
+                                }
+                            }
+                            else {
+                                $("#grid").jqxGrid('updatebounddata');
+                            }
+                        });
+                    }
+
+                });
+
+            $("#excelExport").jqxButton();
+
+
+            $("#excelExport").click(function () {
+                $("#grid").jqxGrid('exportdata', 'xls', 'Seniority List ');
+            });
+
+        });
+
+    </script>
+
+
+    <script type="text/javascript">
+        /*---------------view button click event ------------*/
+        $(function () {
+            $("#searchbtn").click(function () {
+
+                var branch = $("#name").val();
+
+                // prepare the data
+                var source =
+                    {
+                        type: "Post",
+                        datatype: "json",
+                        datafields: [
+                        { name: 'Id', type: 'int' },
+                        { name: 'EmpId', type: 'string' },
+                        { name: 'EmpName', type: 'string' },
+                        { name: 'name', type: 'string' },
+                        { name: 'BranchName', type: 'string' },
+                         { name: 'DOB', type: 'date' },
+                        { name: 'DOJ', type: 'date' },
+                        { name: 'RetirementDate', type: 'date' },
+
+                        ],
+                        async: false,
+                        url: "/Register/SenioritylistViews?branch=" + branch,
+                        data: {
+                            featureClass: "P",
+                            style: "full",
+                            username: "jqwidgets",
+                            Branch: branch,
+
+                        }
+                    };
+
+
+                var dataAdapter = new $.jqx.dataAdapter(source,
+                    {
+                        formatData: function (data) {
+                            data.ProductName = $("#EmpId").val();
+                            return data;
+                        }
+                    }
+                );
+
+
+
+                // initialize jqxGrid
+                var editrowindex = -1;
+                var delrowindex = -1;
+                $("#grid").jqxGrid(
+                    {
+                        width: '99%',
+                        source: dataAdapter,
+                        theme: otherTheme,// for theme refernce go to Layout.cshtml
+                        autoheight: true,
+                        sortable: true,
+                        pageable: true,
+                        columnsResize: true,
+                        altRows: true,
+                        filterable: true,
+                        autoshowfiltericon: true,
+
+                        ready: function () {
+                            $("#grid").jqxGrid('localizestrings', localizationObject);
+                        },
+                        updatefilterconditions: function (type, defaultconditions) {
+                            switch (type) {
+                                case 'stringfilter':
+                                    return stringcomparisonoperators;
+                                case 'numericfilter':
+                                    return numericcomparisonoperators;
+                                case 'datefilter':
+                                    return datecomparisonoperators;
+                                case 'booleanfilter':
+                                    return booleancomparisonoperators;
+                            }
+                        },
+                        updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                            filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                            var index1 = 0;
+                            var index2 = 0;
+                            if (columnfilter != null) {
+                                var filter1 = columnfilter.getfilterat(0);
+                                var filter2 = columnfilter.getfilterat(1);
+                                if (filter1) {
+                                    index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                                    var value1 = filter1.filtervalue;
+                                    filterinputfield1.val(value1);
+                                }
+                                if (filter2) {
+                                    index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                                    var value2 = filter2.filtervalue;
+                                    filterinputfield2.val(value2);
+                                }
+                            }
+                            filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                            filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                        },
+                        columns: [
+                                 {
+                                     text: 'SNO', sortable: false, filterable: false, editable: false,
+                                     groupable: false, draggable: false, resizable: false, exportable : false,
+                                     datafield: '', columntype: 'number', width: 50,
+                                     cellsrenderer: function (row, column, value) {
+                                         return "<div style='margin:4px;'>" + (value + 1) + "</div>";
+                                     }
+                                 },
+                         { text: "Emp Code", datafield: "EmpId", width: 117, editable: false },
+                        { text: "Name", datafield: "EmpName", width: 250, editable: false },
+                        { text: "Designation", datafield: "name", width: 190, editable: false },
+                        { text: "Branch/Dept", datafield: "BranchName", width: 200, editable: false },
+                          { text: "DOB", datafield: "DOB", width: 100, cellsformat: 'dd/MM/yyyy', editable: false },
+                        { text: "DOJ", datafield: "DOJ", width: 100, cellsformat: 'dd/MM/yyyy', editable: false },
+                        { text: "RetirementDate", datafield: "RetirementDate", width: 100, cellsformat: 'dd/MM/yyyy', editable: false },
+                        ],
+
+                    });
+            });
+            $("#excelExport").jqxButton();
+
+
+            $("#excelExport").click(function () {
+                $("#grid").jqxGrid('exportdata', 'xls', 'Seniority List ');
+            });
+
+        });
+    </script>
+
+
+
+<script>
+    document.getElementById("a6").className = "active";
+
+</script>
+

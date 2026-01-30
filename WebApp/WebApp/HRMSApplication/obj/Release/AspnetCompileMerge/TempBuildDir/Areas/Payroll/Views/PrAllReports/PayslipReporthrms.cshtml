@@ -1,0 +1,494 @@
+﻿@using HRMSApplication.Helpers;
+@{
+    var fm = ViewBag.fm;
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+    var rolepages = TempData["RolePages"].ToString();
+    ViewBag.RolePages = TempData["RolePages"];
+    var reportTitle = ViewBag.ReportTitle;
+    ViewBag.Title = reportTitle + " Report";
+    var dataUrl = ViewBag.DataUrl;
+    var ExportColumns = ViewBag.ExportColumns;
+    var PdfOrientation = ViewBag.PdfOrientation;
+    var PdfColumnsWidths = ViewBag.PdfColumnsWidths;
+
+}
+<link href="~/Assets/css/style.css" rel="stylesheet" />
+<style>
+    .nav-tabs > li > a {
+            color: #fff;
+    }
+   .panel-primary {
+    border-color: #337ab7;
+    margin-top: 14px;
+}
+    #menuheader {
+        display: none;
+    }
+    table.dataTable thead th, table.dataTable thead td {
+        padding: 7px 35px;
+        border-bottom: 1px solid #111;
+    }
+    #gridPaySlip i{
+        font-size: 13px;
+    }
+    .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+        background: rgba(251,180,76,0.9) !important;
+        border-radius: 14px;
+    }
+    .navbar-nav li > a:before, .navbar-nav li > a:after {
+        display: none !important;
+    }
+    .header-grid-left img:before {
+        display:none;
+    }
+    .header-grid-left strong {
+        float: right;
+        margin: 0 10px 0 5px;
+    }
+    .header-grid-left ul li {
+        float: left;
+        font-size: 12px;
+        margin: 2px 5px 0px 22px !important;
+        line-height: 12px;
+    }
+    .header-grid-left img {
+        border-radius: 50%;
+        width: 20%;
+        margin: -4px 8px 0 0;
+    }
+</style>
+@{
+    string rolepages1 = ViewBag.RolePages;
+}
+<div id="menuheader1" class="header">
+    <div class="container">
+        <div class="logo-nav">
+            <div class="logo-nav-left col-md-2 col-sm-2 col-xs-12">
+                @{
+
+                            <a href="@Url.Action("Index", "DashBoard")"><img src="~/Assets/images/logo.png" /></a>
+                        
+                            
+                    
+                }
+            </div>
+            <div class="logo-nav-left1 col-md-10 col-sm-10">
+                <div class="row">
+                    <div class="header-grid">
+                        <div class="header-grid-left">
+                            <ul>
+                                <li class="prhide"><i class="glyphicon glyphicon-file" aria-hidden="true"></i><a href="@Url.Action("Policies", "Home")">Policies</a></li>
+                                @*<li><i class="glyphicon glyphicon-file" aria-hidden="true"></i><a href="@Url.Action("Terms", "Home")">Terms of Use</a></li>*@
+                                <li class="prhide"><i class="glyphicon glyphicon-earphone" aria-hidden="true"></i><a href="@Url.Action("Help", "Home")">Help</a></li>
+                                @{
+                                    var lActiveEmployee = Session.GetDataFromSession<string>("EmpFullName");
+                                    var lActiveImage = Session.GetDataFromSession<string>("ActiveImage");
+                                    if (lActiveImage != "" || lActiveImage != null)
+                                    {
+                                        <li><img style="width:30px; height:30px;" src="~/uploads/@lActiveImage" />Welcome! <strong> @lActiveEmployee </strong></li>
+                                    }
+                                    else
+                                    {
+                                        <li><img style="width:30px; height:30px;" src="~/uploads/m.png" />Welcome! <strong> @lActiveEmployee </strong></li>
+                                    }
+                                }
+                                <li><i class="glyphicon glyphicon-log-in" aria-hidden="true"></i><a href="@Url.Action("Logout", "Home" )" class="login">Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <nav class="navbar navbar-default">
+
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse" data-target="#bs-megadropdown-tabs">Menu <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+                        </div>
+                        <div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
+                            <ul class="nav navbar-nav">
+                                @{
+
+                                    if (rolepages != null)
+                                    {
+
+                                        if (rolepages.Contains("DBMain"))
+                                        {
+                                            <li id="a9"><a href="@Url.Action("Index", "DashBoard")">DashBoard</a></li>}
+                                        if (rolepages.Contains("EDMain"))
+                                        {
+                                            <li id="a9"><a href="@Url.Action("EmployeeDashBoard", "DashBoard")">DashBoard</a></li>}
+                                        if (rolepages.Contains("MPMain"))
+                                        {
+                                            <li id="a3"><a href="@Url.Action("ViewProfile", "Register")">My Profile</a></li>}
+                                        if (rolepages.Contains("LEMain"))
+                                        {
+                                            <li id="a4"><a href="@Url.Action("LeaveRequest","LeaveApply")">Leaves</a></li>}
+                                        if (rolepages.Contains("ODMain"))
+                                        {
+                                            <li id="a7"><a href="@Url.Action("Index","Duty")">OD</a></li>}
+                                        if (rolepages.Contains("LTMain"))
+                                        {
+                                            <li id="a8"><a href="@Url.Action("Index", "LeaveTravel")">LTC</a></li>}
+                                        if (rolepages.Contains("PLMain"))
+                                        {
+                                            <li id="a10"><a href="@Url.Action("Index", "PLE_Type")">PL Encashment</a></li>}
+                                        if (rolepages.Contains("WDMain"))
+                                        {
+                                            <li id="a11"><a href="@Url.Action("Index", "WorkDiary")">WorkDiary</a></li>}
+                                        if (rolepages.Contains("WDAPLMain"))
+                                        {
+                                            <li id="a11"><a href=@Url.Action("WorkApproval", "WorkDiary")>WorkDiary</a></li>}
+                                        if (rolepages.Contains("WDSHYMain"))
+                                        {
+                                            <li id="a11">  <a href=@Url.Action("SanctionWorkApproval", "WorkDiary")>WorkDiary</a></li>}
+                                       @* if (rolepages.Contains("TsheetMain"))
+                                        {
+                                            <li><a href="@Url.Action("Timesheetrequestform", "TimeSheet")">TimeSheet Manual Form</a></li>}*@
+
+                                        if (rolepages.Contains("Payslip"))
+                                        {
+                                            <li class="active"><a href="@Url.Action("PayslipReporthrms", "PrAllReports")">Payroll</a></li>
+
+                                        }
+                                        @*if (rolepages.Contains("PRMain"))
+                {
+                    <li id="at"><a href="@Url.Action("Index", "Payroll")">payroll</a></li>}*@
+                                        @*if (rolepages.Contains("POMain"))
+                {
+                    <li id="a5"><a href="@Url.Action("Policies", "Home")">Policies</a></li>}*@
+                                        if (rolepages.Contains("ADMain"))
+                                        {
+                                            <li id="a1"><a href="@Url.Action("InsertEmployees", "Register")">Admin</a></li>}
+                                        if (rolepages.Contains("MAMain"))
+                                        {
+
+                                            <li id="a2"><a href="@Url.Action("Create","Banks")">Master</a></li>}
+                                        if (rolepages.Contains("MABlock"))
+                                        {
+                                            <li id="a2"><a href="@Url.Action("Create", "BlockPeriod")">Master</a></li>}
+                                        if (rolepages.Contains("MANews"))
+                                        {
+                                            <li id="a2"><a href="@Url.Action("Create", "News")">Master</a></li>}
+
+                                        if (rolepages.Contains("RPMain"))
+                                        {
+                                            <li id="a6"><a href="@Url.Action("Index", "AllReports")">Reports</a></li>}
+
+
+
+                                        @*if (rolepages.Contains("TsheetApp"))
+                {
+                    <li id="at1"><a href=@Url.Action("TSApprovalView", "TimeSheet")>TS Approvals</a></li>}*@
+                                    }
+                                }
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-heading">
+            @{
+                        <ul class="nav nav-tabs">
+                            @if (rolepages.Contains("Payslip"))
+                            {
+                                <li class="active"><a href="@Url.Action("PayslipReporthrms", "PrAllReports")">Payslip</a></li>
+                            }
+                            @if (rolepages.Contains("Payslip"))
+                            {
+                                <li><a href="@Url.Action("Pfcontributioncardhrms", "PrAllGroupFooter")">PF ContributionCard</a></li>
+                            }
+                            @if (rolepages.Contains("Payslip"))
+                            {
+                                <li><a href="@Url.Action("TDSReporthrms", "PrAllReports")">TDS</a></li>
+                            }
+                            @*@if (rolepages.Contains("Payslip"))
+                            {
+                                <li><a href="@Url.Action("SingleRateLoanOutStandinghrms", "PrAllGroupFooter")">Single Rate</a></li>
+                            }*@
+                        </ul>
+            }
+        </div>
+    </div>
+    <div class="page_st">
+
+        <div class="page">
+            <div class="form-horizontal form-horizontal2">
+                <div class="page_start">
+                    <div class="leftmenu-container">
+                        <div class="sidebar-content">
+                            <div class="main_heading heading_main">
+                                <h1>Payslip</h1>
+                                <div class="col-md-12">
+
+
+
+                                    <div class="col-md-4 mt_6">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label dept_label" value="year" id="Year">@ViewBag.T3DdlOneLabel</label>
+                                            <div class="col-sm-7 mul_drop" id="fYear">
+                                                @Html.DropDownList("fY", ViewBag.DdlOneData as SelectList, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <input type="hidden" id="EmployeeId" />
+
+                                    <div class="col-md-1 mt_6 mb_10">
+                                        <div class="pull-right">
+                                            <button class="btn btn-primary" id="SearchPayslipRecords">Search</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table id="gridPaySlip" class="display" style="width:100%; margin-top:0px;">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        <input name="select" value="1" id="SelectAllcheckBoxes" type="checkbox" onclick="checkboxRowAll()">
+                                                        <label for="checkbox1"><span></span></label>
+                                                    </th>
+                                                    <th>Month</th>
+                                                    <th>Designation</th>
+                                                    <th>Total Gross(<i class="fa fa-inr fa-xs" aria-hidden="true"></i>)</th>
+                                                    <th>Total Deduction(<i class="fa fa-inr fa-xs" aria-hidden="true"></i>)</th>
+                                                    <th>Net Salary(<i class="fa fa-inr fa-xs" aria-hidden="true"></i>)</th>
+                                                    <th>Payslip Type</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                    <div class="mt_10">
+                                        <input type="hidden" id="EmployeeId" />
+                                        <div class="mt_10">
+                                            <div class="pull-right">
+                                                <input type="button" value="Download PDF" class="btn btn-primary" id="GetPdf" />
+                                                @*<input type="button" value="Download PDF" class="btn btn-info" id='excelExport' onclick='window.location ="@Url.Action("CreatePdf", "PayslipPdf"? {id = hdnfld  })";' />*@
+                                                @*<input type="button" value="Send Mail" class="btn btn-primary" id="SendPdf" />*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<script>
+    $(document).ready(function () {
+        $('#gridPaySlip').DataTable();
+    });
+    var arrerresult = [];
+    var emp_code = "";
+    var mnpkrVal1 = "";
+    var pdftypes = [];
+    var val = [];
+    var string = "";
+
+    function getDataAfterEmpSearch1440(empcode) {
+        //
+        arrerresult = [];
+        hdnfld = empcode;
+        $('#EmployeeId').val(hdnfld);
+        CommonApiGET('/Payroll/PayslipPdf/SearchEmployee?EmpCode=' + empcode, function (respData) {
+            originalData = respData;
+            //fillDataTables(respData);
+        });
+
+    }
+
+
+    //searchpaysliprecords_monthwise(emp_code,payslip_type,month-year)
+    $("#SearchPayslipRecords").click(function () {
+        
+        mnpkrVal1 = $("#fY option:selected").text();
+        if (mnpkrVal1 != undefined && emp_code != undefined) { //Loans != undefined &&
+            mnpkrVal1 = mnpkrVal1.substring(5, mnpkrVal1.length);
+        }
+        arrerresult = [];
+        CommonApiGET('/Payroll/PrAllReports/PayslipPdfReportReportDatahrms?mnpkrVal1=' + mnpkrVal1 + '', function (respData) {
+            
+            orgData = respData;
+            orgDdlist = respData;
+            cancelOrg = respData;
+            fillDataTables(respData);
+            fillDataTables(respData);
+        });
+
+
+
+
+
+    });
+
+    debugger;
+       var finmonth = '@fm';
+    var fmonth=finmonth.split('-');
+
+    var finmonthyear="'"+fmonth[1] +"-"+fmonth[0]+"'";
+
+    $('#dtOneMonthPickerYear').datepicker({
+        minViewMode: 1,
+        autoclose: true,
+        format: 'MM-yyyy',
+    }).datepicker("setDate", finmonthyear);
+
+    //select month and year
+    //$('#dtOneMonthPickerYear').datepicker({
+    //    minViewMode: 1,
+    //    autoclose: true,
+    //    format: 'MM-yyyy',
+    //}).datepicker("setDate", "+0d");
+
+
+
+</script>
+<script>
+    $("#SelectAllcheckBoxes").click(function () {
+        $('.selectAllRow').not(this).prop('checked', this.checked);
+
+    });
+
+</script>
+<script>
+
+
+    var orgDdlist;
+    var cancelOrg;
+    $(document).ready(function () {
+      
+        var orgData;
+        CommonApiGET('/Payroll/PrAllReports/PayslipPdfReportReportDatahrms?empcode=' + emp_code + '&pdftypes=' + pdftypes + '&mnpkrVal1=' + mnpkrVal1 + '', function (respData) {
+            orgData = respData;
+            orgDdlist = respData;
+            cancelOrg = respData;
+            fillDataTables(respData);
+            //fillDataTables(respData);
+        });
+
+    });
+
+    //fill datatable on search
+    function fillDataTables(respData) {
+        $('#gridPaySlip').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": true,
+            "info": false,
+            "bFilter": false,
+            "searching": true,
+            data: respData,
+            "language": {
+                "search": "Filter records:"
+            },
+            "columns": [
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    'mRender': function (data, type, full) {
+                        return '<input type="checkbox" class="selectAllRow" id="' + data.Id + '" onclick="checkboxRow(this.id)" /><label for="' + data.Id + '"><span></span></label>';
+                    }
+                },
+
+                { "data": "emp_code" },
+                { "data": "Description" },
+                { "data": "gross_amount" },
+                { "data": "deductions_amount" },
+                { "data": "net_amount" },
+                { "data": "spl_type" }
+
+            ],
+            //"order": [[1, 'asc']]
+        });
+    }
+
+
+    //row wise checked
+    function checkboxRow(id) {
+
+        document.getElementById("SelectAllcheckBoxes").checked = false;
+        //$('#SelectAllcheckBoxes').checked = false;
+        if ($('#' + id).prop("checked") == true) {
+
+            orgDdlist.map(function (o) {
+                if (o.Id == id) {
+                    arrerresult.push(id);
+                }
+            });
+        } else if ($('#' + id).prop("checked") == false) {
+
+            var index = arrerresult.indexOf(id);
+            arrerresult.splice(index, 1);
+
+        }
+
+        console.log(JSON.stringify(arrerresult));
+    };
+
+    // all checked
+    function checkboxRowAll() {
+
+        arrerresult = [];
+
+        if ($('#SelectAllcheckBoxes').prop("checked") == true) {
+
+            orgDdlist.map(function (o) {
+                arrerresult.push(o.Id);
+            });
+        }
+        else if ($('#SelectAllcheckBoxes').prop("checked") == false) {
+
+            orgDdlist.map(function (o) {
+                arrerresult = [];
+            });
+        }
+
+    };
+
+
+</script>
+<script>
+
+    $('#GetPdf').click(function () {
+
+        if (arrerresult.length > 0)
+        {
+            var psid = arrerresult
+            window.location = '@Url.Action("CreatePdf", "PayslipPdf")?EmpCode=' + psid + '&pdftypes=' + pdftypes ;
+            //setTimeout(function () { window.location.reload(); }, 5000);
+        }
+        else
+        {
+            showGlobalModal("E#Required Field#Please Select The Checkbox");
+        }
+
+    });
+
+    //$('#SendPdf').click(function () {
+    //    if (arrerresult.length > 0) {
+    //        var dataToSebd = JSON.stringify({
+    //            data: arrerresult
+    //        });
+    //        CommonApiPOST("/Payroll/PayslipPdf/SendePdf", dataToSebd, function (isSuccess) {
+    //            if (isSuccess) {
+    //                //setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+    //            } else { }
+    //        });
+    //    } else {
+    //        showGlobalModal("E#Required Field#Please Select Employee Code");
+    //    }
+
+    //});
+</script>

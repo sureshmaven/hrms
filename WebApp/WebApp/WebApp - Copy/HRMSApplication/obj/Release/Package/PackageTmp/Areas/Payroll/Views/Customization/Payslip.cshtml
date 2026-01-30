@@ -1,0 +1,199 @@
+﻿
+
+@{
+    ViewBag.Title = "Payslip";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="leftmenu-container">
+                <div class="sidebar-menu">
+                    <div class="main_heading left-menu">
+                        @{Html.RenderPartial("_PVPayrollMenu");}
+                    </div>
+                </div>
+                <div class="sidebar-content">
+                    <div class="main_heading">
+                        <h1>Payslip Structure</h1>
+                        @*@{ Html.RenderPartial("_pvEmployeeSearch"); }*@
+                        <input type="hidden" id="hdnEmpCode" />
+                        <div class="col-md-12">
+                            @*<div class="pull-right mb_10">
+                                <button id="addRow" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                            </div>*@
+                            <table id="payslipStructure" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Particular</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            <br />
+                                <div class="pull-right">
+                                    <button id="cancelData" class="btn btn-default">Cancel</button>
+                                    <button type="button" id="updatGridData" class="btn btn-sm btn-primary">Update</button>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var incIndex = 0;
+    var originalData = [];
+    var arrDelete = [];
+    var statusData = [ "Yes","No"];
+    $(document).ready(function (respData) {
+
+        $('#payslipStructure').DataTable({
+            "paging": false,
+            "sort": false,
+            "searching": false,
+
+            "language": {
+                "emptyTable": "No data available. Please enter employee code and search"
+            }
+        });
+
+        CommonApiGET('/Payroll/Customization/GetPayslipStructure', function (respData) {
+             originalData = respData;
+            orgCancelData = respData;
+            fillDataTables(respData);
+        });
+    });
+
+
+
+    function fillDataTables(respData) {
+     
+        var LoanMaster = respData;
+        $('#payslipStructure').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+            data: LoanMaster,
+            "columns": [
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                            return getColumnReadOnly('*' + data.id+','+data.type, data.name);
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                       
+                            if ( data.name == "Basic") {
+                              return getColumnReadOnly(data.id,"Yes");
+                            } else if (data.status == null) {
+                                return getColumnDropdownForEmpMaster(data.id, '', statusData);
+                            } else {
+                                 return getColumnDropdownForEmpMaster(data.id, data.status, statusData);
+                            }
+                        
+                      
+                    }
+                }
+
+            ],
+            "order": [[1, 'asc']]
+        });
+    }
+
+
+    $('#updatGridData').click(function () {
+        debugger;
+        var table = $('#payslipStructure').DataTable();
+        var updateData = decodeURIComponent(table.$('input, select').serializeAndEncode());
+        var arrUpdate = updateData.split("*");
+        var arrSampleObJ = [];
+        arrUpdate.forEach(function (element) {
+            if (element != "") {
+                var objEf = {};
+                var finalObj = {};
+                var strRow = element.split("&");
+                var strType = strRow[0].split("=");
+                var types = strType[0].split(",");
+                objEf.id = types[0];
+                objEf.type = types[1];
+                var strStatus = strRow[1].split("=");
+                objEf.status = strStatus[1];
+
+                    orgCancelData.map(function (element) {
+
+                        if (element.id == objEf.id && element.type == objEf.type && element.status != objEf.status && element.status == null && element.row_type == "N") {
+                            objEf.action = "Insert";
+                            arrSampleObJ.push(objEf);
+
+                        } else if (element.id == objEf.id && element.type == objEf.type && element.status != objEf.status && element.status != null && element.row_type == "U") {
+                             objEf.action = "Update";
+                            arrSampleObJ.push(objEf);
+                        }
+                        //if (element.id == objEf.id && element.loan_description != objEf.loan_description) {
+
+                        //    objEf.loan_description = objEf.loan_description;
+                        //}
+                        //else if (element.id == objEf.id && element.interest_rate != objEf.interest_rate) {
+
+                        //    objEf.interest_rate = objEf.interest_rate;
+                        //}
+                        //else if (element.id == objEf.id
+                        //    && element.loan_description == objEf.loan_description
+                        //    && element.interest_rate == objEf.interest_rate)
+                        //    {
+                        //    objEf = {};
+                        //} else if (
+                        //    objEf.loan_description != ""
+                        //    || objEf.interest_rate != ""
+                        //    ) {
+                        //    objEf = objEf;
+                        //} else {
+                        //    objEf = {};
+                        //}
+                    });
+
+                    //if (Object.keys(objEf).length > 0) {
+                    //    arrSampleObJ.push(objEf);
+                    //}
+
+                }
+
+        });
+
+        //arrDelete.map(function (obj) {
+        //    arrSampleObJ.push(obj);
+        //});
+       
+        var emp_code = $("#hdnEmpCode").val();
+        var dataToSend = JSON.stringify({
+           // EntityId: emp_code,
+            payslip: arrSampleObJ
+        });
+        if (emp_code == 0 && arrSampleObJ.length>0) {
+            CommonApiPOST("/Payroll/Customization/updatePayslipStructure", dataToSend, function (isSuccess) {
+                if (isSuccess) {
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+        }
+    });
+
+
+    $("#cancelData").click(function () {
+
+        fillDataTables(originalData);
+    });
+
+</script>

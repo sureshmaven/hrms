@@ -1,0 +1,90 @@
+﻿
+@{
+    ViewBag.Title = "PF_Contribution";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <h1>PF Contribution And Interest Calculation</h1>
+
+                    <div class="col-md-12 mt_10">
+                        <div class="inner_heading">
+                            <h1>Employee Search</h1>
+                            <div class="col-md-12">
+                                <div class="col-md-6 mt_10">
+                                    <div class="col-md-9">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Employee Id:</label>
+                                            <div class="col-sm-7">
+                                                <input type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 col-sm-3 col-xs-12"><button type="button" class="btn btn-primary btn-sm pull-right">Search</button></div>
+                                </div>
+                                <div class="col-md-6 mt_10">
+                                    <div class="col-md-9">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Employee Name:</label>
+                                            <div class="col-sm-7">
+                                                <input type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 col-sm-3 col-xs-12"><button type="button" class="btn btn-primary btn-sm pull-right">Search</button></div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table id="incrm_stag_auth" class="display" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th rowspan="2">Month</th>
+                                                    <th colspan="3">Contribution</th>
+                                                    <th rowspan="2">Total</th>
+                                                 </tr>
+                                                <tr>
+                                                    <th>Own</th>
+                                                    <th>Bank</th>
+                                                    <th>VPF</th>   
+                                                </tr>
+                                                </thead>
+                                            </table>
+                            
+                         
+                                           
+                                </div>
+                                <div class="col-md-12 mt_10">
+                                    <div class="pull-right">
+                                        <button type="reset" class="btn btn-default calcel">Close</button>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#incrm_stag_auth').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false
+        });
+    });
+</script>
+

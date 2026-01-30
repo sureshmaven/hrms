@@ -1,0 +1,642 @@
+﻿
+@{
+    ViewBag.Title = "MIS_Transaction";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+    var reportTitle = ViewBag.ReportTitle;
+    ViewBag.Title = reportTitle + " Report";
+    var dataUrl = ViewBag.DataUrl;
+    var ExportColumns = ViewBag.ExportColumns;
+    var PdfOrientation = ViewBag.PdfOrientation;
+    var PdfColumnsWidths = ViewBag.PdfColumnsWidths;
+    
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/css/bootstrap-select.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/js/bootstrap-select.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.menu-item > a').click(function (e) {
+            e.preventDefault();
+            $(this).next('.sub-menu').slideToggle();
+        });
+    });
+    var btnContainer = document.getElementById("myDIV");
+    console.log(btnContainer);
+    var lis = btnContainer.getElementsByClassName("list");
+
+    // Loop through the buttons and add the active class to the current/clicked button
+    for (var i = 0; i < lis.length; i++) {
+       
+        lis[i].addEventListener("click", function () {
+            var current = document.getElementsByClassName("active");
+            current[0].className = current[0].className.replace(" active", "");
+            this.className += " active";
+        });
+    }
+</script>
+<style>
+    .reports-grids {
+        width: 100% !important;
+    }
+
+    .rptGrid th {
+        width: 100% !important;
+    }
+
+    .sub-menu {
+        display: none;
+    }
+
+    .nav-tabs {
+        border-bottom: 2px solid #DDD;
+    }
+
+        .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
+            border-width: 0;
+        }
+
+        .nav-tabs > li > a {
+            border: none;
+            color: #ffffff;
+            background: #116b06;
+            padding: 0 0 0px 0px;
+            margin-bottom: 4px;
+        }
+
+            .nav-tabs > li.active > a, .nav-tabs > li > a:hover {
+                border: none;
+                color: #fff !important;
+                background: #f6b659
+            }
+
+            .nav-tabs > li > a::after {
+                content: "";
+                background: #116b06;
+                height: 2px;
+                position: absolute;
+                width: 100%;
+                left: 0px;
+                bottom: -1px;
+                transition: all 250ms ease 0s;
+                transform: scale(0);
+            }
+
+        .nav-tabs > li.active > a::after, .nav-tabs > li:hover > a::after {
+            transform: scale(1);
+        }
+
+    .tab-nav > li > a::after {
+        background: #116b06 none repeat scroll 0% 0%;
+        color: #fff;
+    }
+
+    .tab-pane {
+        padding: 0px 0;
+    }
+
+    .tab-content {
+        padding: 20px
+    }
+
+    .nav-tabs > li {
+        width: 10%;
+        text-align: center;
+    }
+
+    .card {
+        background: #FFF none repeat scroll 0% 0%;
+        box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+        margin-bottom: 30px;
+    }
+
+    .tab-content {
+        background: #fff;
+    }
+
+    .mis-menus ul {
+    }
+
+        .mis-menus ul li {
+            float: left;
+            margin-bottom: 10px;
+        }
+
+            .mis-menus ul li a {
+                padding: 0px 10px 0 10px;
+                border-right: 1px solid #116b06;
+                color: #000;
+            }
+
+                .mis-menus ul li a:hover {
+                    color: #ec910b;
+                }
+</style>
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="leftmenu-container">
+                <div class="sidebar-menu">
+                    <div class="main_heading left-menu">
+                        @{Html.RenderPartial("_PVPayrollMenu");}
+                    </div>
+                </div>
+                <div class="sidebar-content">
+                    <div class="main_heading">
+                        <h1>MIS on Transactions</h1>
+                        <input type="hidden" id="hdnEmpCode" />
+                        <div class="col-md-12">
+                            <div class="inner_heading">
+
+
+                                <div class="mb_80">
+                                    <!-- Nav tabs -->
+                                    <div class="card">
+                                        <ul class="nav nav-tabs" role="tablist">
+                                            @*<li role="presentation" class="active"><a href="#mis1" aria-controls="home" role="tab" data-toggle="tab"><span>Accounts</span></a></li>
+        <li role="presentation"><a href="#mis2" aria-controls="profile" role="tab" data-toggle="tab">  <span>Association</span></a></li>
+        <li role="presentation"><a href="#mis3" aria-controls="messages" role="tab" data-toggle="tab"> <span>COD</span></a></li>
+        <li role="presentation"><a href="#mis4" aria-controls="settings" role="tab" data-toggle="tab"> <span>CCE&CCS</span></a></li>
+        <li role="presentation"><a href="#mis5" aria-controls="settings" role="tab" data-toggle="tab"><span>Earnings</span></a></li>
+        <li role="presentation"><a href="#mis6" aria-controls="settings" role="tab" data-toggle="tab"><span>Employee</span></a></li>
+        <li role="presentation"><a href="#mis7" aria-controls="settings" role="tab" data-toggle="tab"><span>Encashment</span></a></li>
+        <li role="presentation"><a href="#mis8" aria-controls="settings" role="tab" data-toggle="tab"><span>Incentives</span></a></li>
+        <li role="presentation"><a href="#mis9" aria-controls="settings" role="tab" data-toggle="tab"><span>Insurance</span></a></li>
+        <li role="presentation"><a href="#mis10" aria-controls="settings" role="tab" data-toggle="tab"><span>Loan</span></a></li>
+        <li role="presentation"><a href="#mis11" aria-controls="settings" role="tab" data-toggle="tab"><span>Pension</span></a></li>
+        <li role="presentation"><a href="#mis12" aria-controls="settings" role="tab" data-toggle="tab"><span>PF</span></a></li>
+        <li role="presentation"><a href="#mis13" aria-controls="settings" role="tab" data-toggle="tab"><span>Salar</span></a></li>
+        <li role="presentation"><a href="#mis14" aria-controls="settings" role="tab" data-toggle="tab"><span>Tax</span></a></li>*@
+                                            @*<li role="presentation" class="active"><a href="#mis1" aria-controls="home" role="tab" data-toggle="tab"><span>Accounts</span></a></li>
+        <li role="presentation"><a href="#mis2" aria-controls="profile" role="tab" data-toggle="tab">  <span>Association</span></a></li>
+        <li role="presentation"><a href="#mis3" aria-controls="messages" role="tab" data-toggle="tab"> <span>COD</span></a></li>
+        <li role="presentation"><a href="#mis4" aria-controls="settings" role="tab" data-toggle="tab"> <span>CCE&CCS</span></a></li>*@
+                                            <li role="presentation" class="active"><a href="#mis6" aria-controls="settings" role="tab" data-toggle="tab"><span>Employee</span></a></li>
+                                            <li role="presentation" ><a href="#mis5" aria-controls="settings" role="tab" data-toggle="tab"><span>Earnings</span></a></li>
+                                            @*<li role="presentation"><a href="#mis6" aria-controls="settings" role="tab" data-toggle="tab"><span>Employee</span></a></li>*@
+                                            <li role="presentation"><a href="#mis7" aria-controls="settings" role="tab" data-toggle="tab"><span>Gross Amount</span></a></li>
+                                            @*<li role="presentation"><a href="#mis7" aria-controls="settings" role="tab" data-toggle="tab"><span>Encashment</span></a></li>*@
+                                            @*<li role="presentation"><a href="#mis8" aria-controls="settings" role="tab" data-toggle="tab"><span>Incentives</span></a></li>*@
+                                            @*<li role="presentation"><a href="#mis9" aria-controls="settings" role="tab" data-toggle="tab"><span>Insurance</span></a></li>*@
+                                            <li role="presentation"><a href="#mis9" aria-controls="settings" role="tab" data-toggle="tab"><span>Deductions</span></a></li>
+                                            <li role="presentation"><a href="#mis10" aria-controls="settings" role="tab" data-toggle="tab"><span>Loan</span></a></li>
+                                            @*<li role="presentation"><a href="#mis11" aria-controls="settings" role="tab" data-toggle="tab"><span>Pension</span></a></li>*@
+                                            <li role="presentation"><a href="#mis12" aria-controls="settings" role="tab" data-toggle="tab"><span>PF</span></a></li>
+                                            @*<li role="presentation"><a href="#mis13" aria-controls="settings" role="tab" data-toggle="tab"><span>Salar</span></a></li>*@
+                                            @*<li role="presentation"><a href="#mis14" aria-controls="settings" role="tab" data-toggle="tab"><span>Tax</span></a></li>*@
+
+
+                                        </ul>
+
+                                        <!-- Tab panes -->
+                                        <div class="tab-content">
+                                            <div role="tabpanel" class="tab-pane" id="mis1">
+                                                <div class="mis-menus">
+                                                    <ul>
+                                                        <li><a href="#">List1</a></li>
+                                                        <li><a href="#">List2</a></li>
+                                                        <li><a href="#">List3</a></li>
+                                                        <li><a href="#">List4</a></li>
+                                                        <li><a href="#">List5</a></li>
+                                                        <li><a href="#">List6</a></li>
+                                                        <li><a href="#">List7</a></li>
+                                                        <li><a href="#">List8</a></li>
+                                                        <li><a href="#">List9</a></li>
+                                                        <li><a href="#">List10</a></li>
+                                                        <li><a href="#">List11</a></li>
+                                                        <li><a href="#">List12</a></li>
+                                                        <li><a href="#">List13</a></li>
+                                                        <li><a href="#">List14</a></li>
+                                                        <li><a href="#">List5</a></li>
+                                                        <li><a href="#">List6</a></li>
+                                                        <li><a href="#">List7</a></li>
+                                                        <li><a href="#">List8</a></li>
+                                                        <li><a href="#">List9</a></li>
+                                                        <li><a href="#">List10</a></li>
+                                                        <li><a href="#">List11</a></li>
+                                                        <li><a href="#">List12</a></li>
+                                                        <li><a href="#">List13</a></li>
+                                                        <li><a href="#">List14</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane" id="mis2">
+                                                <div class="mis-menus">
+                                                    <ul>
+                                                        <li><a href="#">List1</a></li>
+                                                        <li><a href="#">List2</a></li>
+                                                        <li><a href="#">List3</a></li>
+                                                        <li><a href="#">List4</a></li>
+                                                        <li><a href="#">List5</a></li>
+                                                        <li><a href="#">List6</a></li>
+                                                        <li><a href="#">List7</a></li>
+                                                        <li><a href="#">List8</a></li>
+                                                        <li><a href="#">List9</a></li>
+                                                        <li><a href="#">List10</a></li>
+                                                        <li><a href="#">List11</a></li>
+                                                        <li><a href="#">List12</a></li>
+                                                        <li><a href="#">List13</a></li>
+                                                        <li><a href="#">List14</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane" id="mis3">
+                                                <div class="mis-menus">
+                                                    <ul>
+                                                        <li><a href="#">List1</a></li>
+                                                        <li><a href="#">List2</a></li>
+                                                        <li><a href="#">List3</a></li>
+                                                        <li><a href="#">List4</a></li>
+                                                        <li><a href="#">List5</a></li>
+                                                        <li><a href="#">List6</a></li>
+                                                        <li><a href="#">List7</a></li>
+                                                        <li><a href="#">List8</a></li>
+                                                        <li><a href="#">List9</a></li>
+                                                        <li><a href="#">List10</a></li>
+                                                        <li><a href="#">List11</a></li>
+                                                        <li><a href="#">List12</a></li>
+                                                        <li><a href="#">List13</a></li>
+                                                        <li><a href="#">List14</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane" id="mis4">
+                                                <div class="mis-menus">
+                                                    <ul>
+                                                        <li><a href="#">List1</a></li>
+                                                        <li><a href="#">List2</a></li>
+                                                        <li><a href="#">List3</a></li>
+                                                        <li><a href="#">List4</a></li>
+                                                        <li><a href="#">List5</a></li>
+                                                        <li><a href="#">List6</a></li>
+                                                        <li><a href="#">List7</a></li>
+                                                        <li><a href="#">List8</a></li>
+                                                        <li><a href="#">List9</a></li>
+                                                        <li><a href="#">List10</a></li>
+                                                        <li><a href="#">List11</a></li>
+                                                        <li><a href="#">List12</a></li>
+                                                        <li><a href="#">List13</a></li>
+                                                        <li><a href="#">List14</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane" id="mis5">
+                                                <div class="mis-menus">
+                                                    <ul>
+                                                        <li><a href=@Url.Action("EarningsMIS_report", "Customization")>Earnings</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane active" id="mis6">
+                                                <div class="mis-menus">
+                                                    <ul>
+                                                        <li><a href="#">Employee</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane" id="mis7">
+                                                <div class="mis-menus">
+                                                    <ul>
+                                                        <li><a href="#">Gross Amount</a></li>
+                                                        <li><a href="#">List2</a></li>
+                                                        <li><a href="#">List3</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane" id="mis8">
+                                                <div class="mis-menus">
+                                                    <ul>
+                                                        <li><a href="#">List1</a></li>
+                                                        <li><a href="#">List2</a></li>
+                                                        <li><a href="#">List3</a></li>
+                                                        <li><a href="#">List4</a></li>
+                                                        <li><a href="#">List5</a></li>
+                                                        <li><a href="#">List6</a></li>
+                                                        <li><a href="#">List7</a></li>
+                                                        <li><a href="#">List8</a></li>
+                                                        <li><a href="#">List9</a></li>
+                                                        <li><a href="#">List10</a></li>
+                                                        <li><a href="#">List11</a></li>
+                                                        <li><a href="#">List12</a></li>
+                                                        <li><a href="#">List13</a></li>
+                                                        <li><a href="#">List14</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane" id="mis9">
+                                                <div class="mis-menus">
+                                                    <ul>
+                                                        <li><a href="@Url.Action("TDSdeductMIS_report", "Customization")">TDS Deductions</a></li>
+                                                        <li><a href="@Url.Action("PSdeductMIS_report", "Customization")">Payslip Deductions</a></li>
+                                                        @*<li><a href="#">List3</a></li>
+                                <li><a href="#">List4</a></li>
+                                <li><a href="#">List5</a></li>
+                                <li><a href="#">List6</a></li>
+                                <li><a href="#">List7</a></li>
+                                <li><a href="#">List8</a></li>
+                                <li><a href="#">List9</a></li>
+                                <li><a href="#">List10</a></li>
+                                <li><a href="#">List11</a></li>
+                                <li><a href="#">List12</a></li>
+                                <li><a href="#">List13</a></li>
+                                <li><a href="#">List14</a></li>*@
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane" id="mis10">
+                                                <div class="mis-menus">
+                                                    <ul>
+                                                        <li><a href=@Url.Action("LoansMIS_report", "Customization")>Loan</a></li>
+                                                        @*<li><a href="#">List1</a></li>
+                                <li><a href="#">List2</a></li>
+                                <li><a href="#">List3</a></li>
+                                <li><a href="#">List4</a></li>
+                                <li><a href="#">List5</a></li>
+                                <li><a href="#">List6</a></li>
+                                <li><a href="#">List7</a></li>
+                                <li><a href="#">List8</a></li>
+                                <li><a href="#">List9</a></li>
+                                <li><a href="#">List10</a></li>
+                                <li><a href="#">List11</a></li>
+                                <li><a href="#">List12</a></li>
+                                <li><a href="#">List13</a></li>
+                                <li><a href="#">List14</a></li>*@
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane" id="mis11">
+                                                <div class="mis-menus">
+                                                    <ul>
+                                                        <li><a href="#">List1</a></li>
+                                                        <li><a href="#">List2</a></li>
+                                                        <li><a href="#">List3</a></li>
+                                                        <li><a href="#">List4</a></li>
+                                                        <li><a href="#">List5</a></li>
+                                                        <li><a href="#">List6</a></li>
+                                                        <li><a href="#">List7</a></li>
+                                                        <li><a href="#">List8</a></li>
+                                                        <li><a href="#">List9</a></li>
+                                                        <li><a href="#">List10</a></li>
+                                                        <li><a href="#">List11</a></li>
+                                                        <li><a href="#">List12</a></li>
+                                                        <li><a href="#">List13</a></li>
+                                                        <li><a href="#">List14</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane" id="mis12">
+                                                <div class="mis-menus">
+                                                    <ul>
+                                                        <li><a href=@Url.Action("PFMISreport", "Customization")>PF</a></li>
+                                                        <li><a href=@Url.Action("VPFMIS_report", "Customization")>VPF</a></li>
+                                                        <li><a href=@Url.Action("PFRandP_Report", "Customization")>R & P</a></li>
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane" id="mis13">
+                                                <div class="mis-menus">
+                                                    <ul>
+                                                        <li><a href="#">List1</a></li>
+                                                        <li><a href="#">List2</a></li>
+                                                        <li><a href="#">List3</a></li>
+                                                        <li><a href="#">List4</a></li>
+                                                        <li><a href="#">List5</a></li>
+                                                        <li><a href="#">List6</a></li>
+                                                        <li><a href="#">List7</a></li>
+                                                        <li><a href="#">List8</a></li>
+                                                        <li><a href="#">List9</a></li>
+                                                        <li><a href="#">List10</a></li>
+                                                        <li><a href="#">List11</a></li>
+                                                        <li><a href="#">List12</a></li>
+                                                        <li><a href="#">List13</a></li>
+                                                        <li><a href="#">List14</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane" id="mis14">
+                                                <div class="mis-menus">
+                                                    <ul>
+                                                        <li><a href="#">List1</a></li>
+                                                        <li><a href="#">List2</a></li>
+                                                        <li><a href="#">List3</a></li>
+                                                        <li><a href="#">List4</a></li>
+                                                        <li><a href="#">List5</a></li>
+                                                        <li><a href="#">List6</a></li>
+                                                        <li><a href="#">List7</a></li>
+                                                        <li><a href="#">List8</a></li>
+                                                        <li><a href="#">List9</a></li>
+                                                        <li><a href="#">List10</a></li>
+                                                        <li><a href="#">List11</a></li>
+                                                        <li><a href="#">List12</a></li>
+                                                        <li><a href="#">List13</a></li>
+                                                        <li><a href="#">List14</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane" id="mis15">
+                                                <div class="mis-menus">
+                                                    <ul>
+                                                        <li><a href="#">List1</a></li>
+                                                        <li><a href="#">List2</a></li>
+                                                        <li><a href="#">List3</a></li>
+                                                        <li><a href="#">List4</a></li>
+                                                        <li><a href="#">List5</a></li>
+                                                        <li><a href="#">List6</a></li>
+                                                        <li><a href="#">List7</a></li>
+                                                        <li><a href="#">List8</a></li>
+                                                        <li><a href="#">List9</a></li>
+                                                        <li><a href="#">List10</a></li>
+                                                        <li><a href="#">List11</a></li>
+                                                        <li><a href="#">List12</a></li>
+                                                        <li><a href="#">List13</a></li>
+                                                        <li><a href="#">List14</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane" id="mis16">
+                                                <div class="mis-menus">
+                                                    <ul>
+                                                        <li><a href="#">List1</a></li>
+                                                        <li><a href="#">List2</a></li>
+                                                        <li><a href="#">List3</a></li>
+                                                        <li><a href="#">List4</a></li>
+                                                        <li><a href="#">List5</a></li>
+                                                        <li><a href="#">List6</a></li>
+                                                        <li><a href="#">List7</a></li>
+                                                        <li><a href="#">List8</a></li>
+                                                        <li><a href="#">List9</a></li>
+                                                        <li><a href="#">List10</a></li>
+                                                        <li><a href="#">List11</a></li>
+                                                        <li><a href="#">List12</a></li>
+                                                        <li><a href="#">List13</a></li>
+                                                        <li><a href="#">List14</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane" id="mis17">
+                                                <div class="mis-menus">
+                                                    <ul>
+                                                        <li><a href="#">List1</a></li>
+                                                        <li><a href="#">List2</a></li>
+                                                        <li><a href="#">List3</a></li>
+                                                        <li><a href="#">List4</a></li>
+                                                        <li><a href="#">List5</a></li>
+                                                        <li><a href="#">List6</a></li>
+                                                        <li><a href="#">List7</a></li>
+                                                        <li><a href="#">List8</a></li>
+                                                        <li><a href="#">List9</a></li>
+                                                        <li><a href="#">List10</a></li>
+                                                        <li><a href="#">List11</a></li>
+                                                        <li><a href="#">List12</a></li>
+                                                        <li><a href="#">List13</a></li>
+                                                        <li><a href="#">List14</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            @{
+                                if (ViewBag.ReportFiltersTemplate == "T3-OneMonthPicker")
+                                {
+
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label class="col-sm-6 control-label dept_label">@ViewBag.OneMonthPickerLabel1:</label>
+                                            <div class="col-sm-5 date input-group p0" id="dtOneMonthPickerYear">
+                                                <input type="text" class="form-control form-control-1 input-sm from fromFudis" placeholder="Select-Month" id="dtOneMonthPicker">
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="pull-right">
+                                            <button class="btn btn-primary btn-sm pull-right" id="btnOneMonthPickerSearch">Search</button>
+                                        </div>
+                                    </div>
+
+                                }
+                            }
+                        </div>
+                        <div class="col-md-12">
+                            <div class="table-responsive ">
+                                <table id="rptGrid" class="display reports-grids" style="width:100%"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+ $(document).ready(function () {
+
+        //setTimeout(pageInitLoad(), 2000);
+        $("#txtEmployeeSearchBox1450").attr("disabled", true);
+        $("#idwise1").click(function () {
+            if ($("input[name=wise]:checked").val() == "rdbEmpAll1empsearch") {
+                $("#pvTxtEmpCode1440").attr("disabled", false);
+                count++;
+            }
+        });
+    });
+
+    function pageInitLoad() {
+
+        //
+        //$.noConflict();
+        var serviceurl = '@dataUrl';
+        serviceurl = serviceurl.replace('&amp;', '&');
+
+        $('#rptGrid').DataTable({
+
+        //scrollX: true,
+        //scrollCollapse: true,
+        responsive: true,
+        "language": {
+        "search": "Filter records:"
+        },
+        //"destroy" : true,
+        "ajax": {
+        "url": serviceurl,
+        "type": "GET",
+        "datatype": "json",
+        "dataSrc": ""
+
+        },
+        dom: 'Bfrtip',
+        //"aoColumnDefs": [
+        //    { 'bSortable': false, 'aTargets': [0,1,2,3,4] }
+        //],
+        buttons: [
+        {
+        extend: 'excelHtml5',
+        text: '<i class="fa fa-file-excel-o dt-export-icon-excel"></i>',
+        titleAttr: 'Excel',
+        title: '@reportTitle',
+        messageTop: fnMessageTop,
+        exportOptions: {@ExportColumns},
+        className: 'dt-export-btn',
+        color: 'red'
+        },
+        {
+        extend: 'pdfHtml5',
+        text: '<i class="fa fa-file-pdf-o dt-export-icon-pdf"></i>',
+        className: 'dt-export-btn',
+        titleAttr: 'Pdf',
+        orientation: '@PdfOrientation',
+        exportOptions: {@ExportColumns},
+        title: '@reportTitle',
+        messageTop: fnMessageTop,
+        customize: function (doc) {
+        var docIdx = reportMsgTop != '' ? 3 : 2;
+        doc.styles.tableHeader.alignment = 'left';
+        doc.content.splice(1, 0, {
+        margin: [0, -50, 0, 10],
+        alignment: 'left',
+        image: 'data:image/png;base64,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'
+
+        // image: 'data:image/jpeg;base64,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'
+        });
+
+        doc.content[0].text = doc.content[0].text.trim();
+
+        doc.content[docIdx].table.widths = [@PdfColumnsWidths];
+        doc.styles.title = {
+        fontSize: '20',
+        alignment: 'center'
+        };
+        doc.styles.message = {
+        fontSize: '9',
+        alignment: 'center'
+        };
+
+        doc['footer'] = (function (page, pages) {
+        return {
+        columns: [
+        'By: @ViewBag.LoginUserName , @ViewBag.LoginBranchName .',
+        {
+        alignment: 'right',
+        text: [
+        new Date().toLocaleDateString("en-IN", { day: "2-digit", month: "2-digit", year: "numeric", hour: '2-digit', minute: '2-digit' }),
+        '    Page ', { text: page.toString() }, ' of ', { text: pages.toString() }
+        ]
+        }
+        ],
+        fontSize: '9',
+        margin: [40, 10]
+        }
+        });
+        }
+        }
+        ],
+        @*"columns": @Html.Raw(ViewBag.ReportColumns),*@
+        });
+        };
+</script>

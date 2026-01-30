@@ -1,0 +1,7 @@
+--Pf Fact
+--DROP Table Pf_fact
+
+select a.* into Pf_fact from (
+select 'ob_share' as pf_type ,* from pr_ob_share union 
+select 'ob_share_adhoc' as pf_type,* from pr_ob_share_adhoc  union
+select 'ob_share_encashment' as pf_type,* from pr_ob_share_encashment ) as a ;

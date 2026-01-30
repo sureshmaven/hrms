@@ -1,0 +1,115 @@
+﻿
+@{
+    ViewBag.Title = "AdjustmentReport";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <h1>Adjustment Report<span class="year-end">TGCAB 01-04-2018 - 31-03-2019</span></h1>
+                    <div class="col-md-4">
+                        <div class="inner_heading">
+                            <h1>Months</h1>
+                            <div class="table-responsive month_name_tbl">
+                                <table id="month_name" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Select Month </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>MAR - 2019</td>
+                                        </tr>
+                                        <tr>
+                                            <td>FEB - 2019</td>
+                                        </tr>
+                                        <tr>
+                                            <td>JAN - 2019</td>
+                                        </tr>
+                                        <tr>
+                                            <td>DEC - 2018</td>
+                                        </tr>
+                                        <tr>
+                                            <td>NOV - 2018</td>
+                                        </tr>
+                                        <tr>
+                                            <td>OCT - 2018</td>
+                                        </tr>
+                                        <tr>
+                                            <td>SEP - 2018</td>
+                                        </tr>
+                                        <tr>
+                                            <td>AUG - 2019</td>
+                                        </tr>
+                                        <tr>
+                                            <td>JUL - 2018</td>
+                                        </tr>
+                                        <tr>
+                                            <td>JUN- 2018</td>
+                                        </tr>
+                                        <tr>
+                                            <td>MAY - 2018</td>
+                                        </tr>
+                                        <tr>
+                                            <td>APR - 2018</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="inner_heading">
+                            <h1>Options</h1>
+                            <div>
+                                <input id="radio1" type="radio" name="radio" value="1" checked="checked"><label for="radio1"><span><span></span></span>All Employees</label>
+                            </div>
+                            <div>
+                                <input id="radio2" type="radio" name="radio" value="2"><label for="radio2"><span><span></span></span>Selected Employees</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="inner_heading">
+                            <h1>Report Destination</h1>
+                            <div>
+                                <input id="radio3" type="radio" name="radio" value="3" checked="checked"><label for="radio3"><span><span></span></span>Screen</label>
+                            </div>
+                            <div>
+                                <input id="radio4" type="radio" name="radio" value="4"><label for="radio4"><span><span></span></span>File</label>
+                            </div>
+                            <div>
+                                <input id="radio5" type="radio" name="radio" value="5"><label for="radio5"><span><span></span></span>Print</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mt_10">
+                        <div class="pull-right">
+                            <button type="reset" class="btn btn-default cancel">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#month_name').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+        });
+    });
+</script>
+
+

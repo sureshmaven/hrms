@@ -1,0 +1,1772 @@
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=462),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=462) 
+and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=462),
+(select Department from Employees where empid=462),
+(select Branch from Employees where empid=462),
+(select CurrentDesignation from Employees where empid=462),'Debit',
+(select branch_value1 from employees where empid=462),((select (leavebalance-15) from 
+EmpLeaveBalance where EmpId=(select id from employees where empid=462) 
+and LeaveTypeId=3 and year=2020)),2020);
+
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=354),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=354) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=354),
+(select Department from Employees where empid=354),
+(select Branch from Employees where empid=354),
+(select CurrentDesignation from Employees where empid=354),'Debit',
+(select branch_value1 from employees where empid=354),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=354) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=363),3,	0	,	30	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=363) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2019-20',
+(select ShortName from Employees where empid=363),
+(select Department from Employees where empid=363),
+(select Branch from Employees where empid=363),
+(select CurrentDesignation from Employees where empid=363),'Debit',
+(select branch_value1 from employees where empid=363),((select (leavebalance-30) from EmpLeaveBalance where EmpId=(select id from employees where empid=363) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=485),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=485) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=485),
+(select Department from Employees where empid=485),
+(select Branch from Employees where empid=485),
+(select CurrentDesignation from Employees where empid=485),'Debit',
+(select branch_value1 from employees where empid=485),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=485) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=359),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=359) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=359),
+(select Department from Employees where empid=359),
+(select Branch from Employees where empid=359),
+(select CurrentDesignation from Employees where empid=359),'Debit',
+(select branch_value1 from employees where empid=359),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=359) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=480),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=480) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=480),
+(select Department from Employees where empid=480),
+(select Branch from Employees where empid=480),
+(select CurrentDesignation from Employees where empid=480),'Debit',
+(select branch_value1 from employees where empid=480),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=480) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=5768),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=5768) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=5768),
+(select Department from Employees where empid=5768),
+(select Branch from Employees where empid=5768),
+(select CurrentDesignation from Employees where empid=5768),'Debit',
+(select branch_value1 from employees where empid=5768),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=5768) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=6209),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=6209) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=6209),
+(select Department from Employees where empid=6209),
+(select Branch from Employees where empid=6209),
+(select CurrentDesignation from Employees where empid=6209),'Debit',
+(select branch_value1 from employees where empid=6209),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=6209) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=365),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=365) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=365),
+(select Department from Employees where empid=365),
+(select Branch from Employees where empid=365),
+(select CurrentDesignation from Employees where empid=365),'Debit',
+(select branch_value1 from employees where empid=365),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=365) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=6191),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=6191) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=6191),
+(select Department from Employees where empid=6191),
+(select Branch from Employees where empid=6191),
+(select CurrentDesignation from Employees where empid=6191),'Debit',
+(select branch_value1 from employees where empid=6191),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=6191) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=836),3,	0	,	30	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=836) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2019-2020',
+(select ShortName from Employees where empid=836),
+(select Department from Employees where empid=836),
+(select Branch from Employees where empid=836),
+(select CurrentDesignation from Employees where empid=836),'Debit',
+(select branch_value1 from employees where empid=836),((select (leavebalance-30) from EmpLeaveBalance where EmpId=(select id from employees where empid=836) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=5738),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=5738) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=5738),
+(select Department from Employees where empid=5738),
+(select Branch from Employees where empid=5738),
+(select CurrentDesignation from Employees where empid=5738),'Debit',
+(select branch_value1 from employees where empid=5738),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=5738) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=5150),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=5150) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=5150),
+(select Department from Employees where empid=5150),
+(select Branch from Employees where empid=5150),
+(select CurrentDesignation from Employees where empid=5150),'Debit',
+(select branch_value1 from employees where empid=5150),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=5150) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=560),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=560) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=560),
+(select Department from Employees where empid=560),
+(select Branch from Employees where empid=560),
+(select CurrentDesignation from Employees where empid=560),'Debit',
+(select branch_value1 from employees where empid=560),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=560) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=5660),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=5660) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=5660),
+(select Department from Employees where empid=5660),
+(select Branch from Employees where empid=5660),
+(select CurrentDesignation from Employees where empid=5660),'Debit',
+(select branch_value1 from employees where empid=5660),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=5660) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=554),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=554) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=554),
+(select Department from Employees where empid=554),
+(select Branch from Employees where empid=554),
+(select CurrentDesignation from Employees where empid=554),'Debit',
+(select branch_value1 from employees where empid=554),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=554) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=562),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=562) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=562),
+(select Department from Employees where empid=562),
+(select Branch from Employees where empid=562),
+(select CurrentDesignation from Employees where empid=562),'Debit',
+(select branch_value1 from employees where empid=562),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=562) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=877),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=877) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=877),
+(select Department from Employees where empid=877),
+(select Branch from Employees where empid=877),
+(select CurrentDesignation from Employees where empid=877),'Debit',
+(select branch_value1 from employees where empid=877),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=877) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=920),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=920) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=920),
+(select Department from Employees where empid=920),
+(select Branch from Employees where empid=920),
+(select CurrentDesignation from Employees where empid=920),'Debit',
+(select branch_value1 from employees where empid=920),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=920) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=960),3,	0	,	30	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=960) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2019-2020',
+(select ShortName from Employees where empid=960),
+(select Department from Employees where empid=960),
+(select Branch from Employees where empid=960),
+(select CurrentDesignation from Employees where empid=960),'Debit',
+(select branch_value1 from employees where empid=960),((select (leavebalance-30) from EmpLeaveBalance where EmpId=(select id from employees where empid=960) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=731),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=731) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=731),
+(select Department from Employees where empid=731),
+(select Branch from Employees where empid=731),
+(select CurrentDesignation from Employees where empid=731),'Debit',
+(select branch_value1 from employees where empid=731),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=731) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=438),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=438) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=438),
+(select Department from Employees where empid=438),
+(select Branch from Employees where empid=438),
+(select CurrentDesignation from Employees where empid=438),'Debit',
+(select branch_value1 from employees where empid=438),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=438) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=5757),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=5757) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=5757),
+(select Department from Employees where empid=5757),
+(select Branch from Employees where empid=5757),
+(select CurrentDesignation from Employees where empid=5757),'Debit',
+(select branch_value1 from employees where empid=5757),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=5757) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=709),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=709) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2019',
+(select ShortName from Employees where empid=709),
+(select Department from Employees where empid=709),
+(select Branch from Employees where empid=709),
+(select CurrentDesignation from Employees where empid=709),'Debit',
+(select branch_value1 from employees where empid=709),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=709) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=5910),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=5910) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=5910),
+(select Department from Employees where empid=5910),
+(select Branch from Employees where empid=5910),
+(select CurrentDesignation from Employees where empid=5910),'Debit',
+(select branch_value1 from employees where empid=5910),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=5910) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=884),3,	0	,	30	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=884) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2019-20',
+(select ShortName from Employees where empid=884),
+(select Department from Employees where empid=884),
+(select Branch from Employees where empid=884),
+(select CurrentDesignation from Employees where empid=884),'Debit',
+(select branch_value1 from employees where empid=884),((select (leavebalance-30) from EmpLeaveBalance where EmpId=(select id from employees where empid=884) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=862),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=862) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=862),
+(select Department from Employees where empid=862),
+(select Branch from Employees where empid=862),
+(select CurrentDesignation from Employees where empid=862),'Debit',
+(select branch_value1 from employees where empid=862),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=862) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=805),3,	0	,	30	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=805) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2019-20',
+(select ShortName from Employees where empid=805),
+(select Department from Employees where empid=805),
+(select Branch from Employees where empid=805),
+(select CurrentDesignation from Employees where empid=805),'Debit',
+(select branch_value1 from employees where empid=805),((select (leavebalance-30) from EmpLeaveBalance where EmpId=(select id from employees where empid=805) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=507),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=507) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=507),
+(select Department from Employees where empid=507),
+(select Branch from Employees where empid=507),
+(select CurrentDesignation from Employees where empid=507),'Debit',
+(select branch_value1 from employees where empid=507),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=507) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=932),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=932) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=932),
+(select Department from Employees where empid=932),
+(select Branch from Employees where empid=932),
+(select CurrentDesignation from Employees where empid=932),'Debit',
+(select branch_value1 from employees where empid=932),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=932) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=983),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=983) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=983),
+(select Department from Employees where empid=983),
+(select Branch from Employees where empid=983),
+(select CurrentDesignation from Employees where empid=983),'Debit',
+(select branch_value1 from employees where empid=983),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=983) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=924),3,	0	,	30	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=924) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2019-20',
+(select ShortName from Employees where empid=924),
+(select Department from Employees where empid=924),
+(select Branch from Employees where empid=924),
+(select CurrentDesignation from Employees where empid=924),'Debit',
+(select branch_value1 from employees where empid=924),((select (leavebalance-30) from EmpLeaveBalance where EmpId=(select id from employees where empid=924) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=918),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=918) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=918),
+(select Department from Employees where empid=918),
+(select Branch from Employees where empid=918),
+(select CurrentDesignation from Employees where empid=918),'Debit',
+(select branch_value1 from employees where empid=918),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=918) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=427),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=427) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=427),
+(select Department from Employees where empid=427),
+(select Branch from Employees where empid=427),
+(select CurrentDesignation from Employees where empid=427),'Debit',
+(select branch_value1 from employees where empid=427),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=427) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=702),3,	0	,	30	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=702) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2019-20',
+(select ShortName from Employees where empid=702),
+(select Department from Employees where empid=702),
+(select Branch from Employees where empid=702),
+(select CurrentDesignation from Employees where empid=702),'Debit',
+(select branch_value1 from employees where empid=702),((select (leavebalance-30) from EmpLeaveBalance where EmpId=(select id from employees where empid=702) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=937),3,	0	,	30	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=937) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2019-20',
+(select ShortName from Employees where empid=937),
+(select Department from Employees where empid=937),
+(select Branch from Employees where empid=937),
+(select CurrentDesignation from Employees where empid=937),'Debit',
+(select branch_value1 from employees where empid=937),((select (leavebalance-30) from EmpLeaveBalance where EmpId=(select id from employees where empid=937) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=981),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=981) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=981),
+(select Department from Employees where empid=981),
+(select Branch from Employees where empid=981),
+(select CurrentDesignation from Employees where empid=981),'Debit',
+(select branch_value1 from employees where empid=981),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=981) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=420),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=420) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=420),
+(select Department from Employees where empid=420),
+(select Branch from Employees where empid=420),
+(select CurrentDesignation from Employees where empid=420),'Debit',
+(select branch_value1 from employees where empid=420),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=420) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=804),3,	0	,	30	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=804) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2019-2020',
+(select ShortName from Employees where empid=804),
+(select Department from Employees where empid=804),
+(select Branch from Employees where empid=804),
+(select CurrentDesignation from Employees where empid=804),'Debit',
+(select branch_value1 from employees where empid=804),((select (leavebalance-30) from EmpLeaveBalance where EmpId=(select id from employees where empid=804) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=433),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=433) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=433),
+(select Department from Employees where empid=433),
+(select Branch from Employees where empid=433),
+(select CurrentDesignation from Employees where empid=433),'Debit',
+(select branch_value1 from employees where empid=433),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=433) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=6359),3,	0	,	30	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=6359) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2019-2020',
+(select ShortName from Employees where empid=6359),
+(select Department from Employees where empid=6359),
+(select Branch from Employees where empid=6359),
+(select CurrentDesignation from Employees where empid=6359),'Debit',
+(select branch_value1 from employees where empid=6359),((select (leavebalance-30) from EmpLeaveBalance where EmpId=(select id from employees where empid=6359) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=961),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=961) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=961),
+(select Department from Employees where empid=961),
+(select Branch from Employees where empid=961),
+(select CurrentDesignation from Employees where empid=961),'Debit',
+(select branch_value1 from employees where empid=961),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=961) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=6344),3,	0	,	30	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=6344) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2019-2020',
+(select ShortName from Employees where empid=6344),
+(select Department from Employees where empid=6344),
+(select Branch from Employees where empid=6344),
+(select CurrentDesignation from Employees where empid=6344),'Debit',
+(select branch_value1 from employees where empid=6344),((select (leavebalance-30) from EmpLeaveBalance where EmpId=(select id from employees where empid=6344) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=538),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=538) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=538),
+(select Department from Employees where empid=538),
+(select Branch from Employees where empid=538),
+(select CurrentDesignation from Employees where empid=538),'Debit',
+(select branch_value1 from employees where empid=538),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=538) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=975),3,	0	,	30	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=975) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2019-20',
+(select ShortName from Employees where empid=975),
+(select Department from Employees where empid=975),
+(select Branch from Employees where empid=975),
+(select CurrentDesignation from Employees where empid=975),'Debit',
+(select branch_value1 from employees where empid=975),((select (leavebalance-30) from EmpLeaveBalance where EmpId=(select id from employees where empid=975) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=958),3,	0	,	30	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=958) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2019-20',
+(select ShortName from Employees where empid=958),
+(select Department from Employees where empid=958),
+(select Branch from Employees where empid=958),
+(select CurrentDesignation from Employees where empid=958),'Debit',
+(select branch_value1 from employees where empid=958),((select (leavebalance-30) from EmpLeaveBalance where EmpId=(select id from employees where empid=958) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=5802),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=5802) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=5802),
+(select Department from Employees where empid=5802),
+(select Branch from Employees where empid=5802),
+(select CurrentDesignation from Employees where empid=5802),'Debit',
+(select branch_value1 from employees where empid=5802),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=5802) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=528),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=528) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=528),
+(select Department from Employees where empid=528),
+(select Branch from Employees where empid=528),
+(select CurrentDesignation from Employees where empid=528),'Debit',
+(select branch_value1 from employees where empid=528),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=528) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=5908),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=5908) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=5908),
+(select Department from Employees where empid=5908),
+(select Branch from Employees where empid=5908),
+(select CurrentDesignation from Employees where empid=5908),'Debit',
+(select branch_value1 from employees where empid=5908),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=5908) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=421),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=421) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=421),
+(select Department from Employees where empid=421),
+(select Branch from Employees where empid=421),
+(select CurrentDesignation from Employees where empid=421),'Debit',
+(select branch_value1 from employees where empid=421),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=421) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=445),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=445) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=445),
+(select Department from Employees where empid=445),
+(select Branch from Employees where empid=445),
+(select CurrentDesignation from Employees where empid=445),'Debit',
+(select branch_value1 from employees where empid=445),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=445) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=184),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=184) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=184),
+(select Department from Employees where empid=184),
+(select Branch from Employees where empid=184),
+(select CurrentDesignation from Employees where empid=184),'Debit',
+(select branch_value1 from employees where empid=184),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=184) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=6173),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=6173) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=6173),
+(select Department from Employees where empid=6173),
+(select Branch from Employees where empid=6173),
+(select CurrentDesignation from Employees where empid=6173),'Debit',
+(select branch_value1 from employees where empid=6173),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=6173) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=432),3,	0	,	30	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=432) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2019-20',
+(select ShortName from Employees where empid=432),
+(select Department from Employees where empid=432),
+(select Branch from Employees where empid=432),
+(select CurrentDesignation from Employees where empid=432),'Debit',
+(select branch_value1 from employees where empid=432),((select (leavebalance-30) from EmpLeaveBalance where EmpId=(select id from employees where empid=432) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=5866),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=5866) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=5866),
+(select Department from Employees where empid=5866),
+(select Branch from Employees where empid=5866),
+(select CurrentDesignation from Employees where empid=5866),'Debit',
+(select branch_value1 from employees where empid=5866),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=5866) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=6316),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=6316) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=6316),
+(select Department from Employees where empid=6316),
+(select Branch from Employees where empid=6316),
+(select CurrentDesignation from Employees where empid=6316),'Debit',
+(select branch_value1 from employees where empid=6316),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=6316) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=428),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=428) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=428),
+(select Department from Employees where empid=428),
+(select Branch from Employees where empid=428),
+(select CurrentDesignation from Employees where empid=428),'Debit',
+(select branch_value1 from employees where empid=428),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=428) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=6195),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=6195) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=6195),
+(select Department from Employees where empid=6195),
+(select Branch from Employees where empid=6195),
+(select CurrentDesignation from Employees where empid=6195),'Debit',
+(select branch_value1 from employees where empid=6195),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=6195) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=543),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=543) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=543),
+(select Department from Employees where empid=543),
+(select Branch from Employees where empid=543),
+(select CurrentDesignation from Employees where empid=543),'Debit',
+(select branch_value1 from employees where empid=543),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=543) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=6199),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=6199) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=6199),
+(select Department from Employees where empid=6199),
+(select Branch from Employees where empid=6199),
+(select CurrentDesignation from Employees where empid=6199),'Debit',
+(select branch_value1 from employees where empid=6199),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=6199) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=434),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=434) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=434),
+(select Department from Employees where empid=434),
+(select Branch from Employees where empid=434),
+(select CurrentDesignation from Employees where empid=434),'Debit',
+(select branch_value1 from employees where empid=434),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=434) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=866),3,	0	,	30	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=866) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2019-20',
+(select ShortName from Employees where empid=866),
+(select Department from Employees where empid=866),
+(select Branch from Employees where empid=866),
+(select CurrentDesignation from Employees where empid=866),'Debit',
+(select branch_value1 from employees where empid=866),((select (leavebalance-30) from EmpLeaveBalance where EmpId=(select id from employees where empid=866) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=849),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=849) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=849),
+(select Department from Employees where empid=849),
+(select Branch from Employees where empid=849),
+(select CurrentDesignation from Employees where empid=849),'Debit',
+(select branch_value1 from employees where empid=849),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=849) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=518),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=518) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=518),
+(select Department from Employees where empid=518),
+(select Branch from Employees where empid=518),
+(select CurrentDesignation from Employees where empid=518),'Debit',
+(select branch_value1 from employees where empid=518),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=518) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=968),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=968) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=968),
+(select Department from Employees where empid=968),
+(select Branch from Employees where empid=968),
+(select CurrentDesignation from Employees where empid=968),'Debit',
+(select branch_value1 from employees where empid=968),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=968) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=175),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=175) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=175),
+(select Department from Employees where empid=175),
+(select Branch from Employees where empid=175),
+(select CurrentDesignation from Employees where empid=175),'Debit',
+(select branch_value1 from employees where empid=175),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=175) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=5781),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=5781) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=5781),
+(select Department from Employees where empid=5781),
+(select Branch from Employees where empid=5781),
+(select CurrentDesignation from Employees where empid=5781),'Debit',
+(select branch_value1 from employees where empid=5781),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=5781) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=509),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=509) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=509),
+(select Department from Employees where empid=509),
+(select Branch from Employees where empid=509),
+(select CurrentDesignation from Employees where empid=509),'Debit',
+(select branch_value1 from employees where empid=509),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=509) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=484),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=484) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=484),
+(select Department from Employees where empid=484),
+(select Branch from Employees where empid=484),
+(select CurrentDesignation from Employees where empid=484),'Debit',
+(select branch_value1 from employees where empid=484),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=484) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=440),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=440) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=440),
+(select Department from Employees where empid=440),
+(select Branch from Employees where empid=440),
+(select CurrentDesignation from Employees where empid=440),'Debit',
+(select branch_value1 from employees where empid=440),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=440) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=429),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=429) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=429),
+(select Department from Employees where empid=429),
+(select Branch from Employees where empid=429),
+(select CurrentDesignation from Employees where empid=429),'Debit',
+(select branch_value1 from employees where empid=429),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=429) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=5782),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=5782) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=5782),
+(select Department from Employees where empid=5782),
+(select Branch from Employees where empid=5782),
+(select CurrentDesignation from Employees where empid=5782),'Debit',
+(select branch_value1 from employees where empid=5782),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=5782) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=303),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=303) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=303),
+(select Department from Employees where empid=303),
+(select Branch from Employees where empid=303),
+(select CurrentDesignation from Employees where empid=303),'Debit',
+(select branch_value1 from employees where empid=303),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=303) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=288),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=288) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=288),
+(select Department from Employees where empid=288),
+(select Branch from Employees where empid=288),
+(select CurrentDesignation from Employees where empid=288),'Debit',
+(select branch_value1 from employees where empid=288),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=288) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=511),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=511) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=511),
+(select Department from Employees where empid=511),
+(select Branch from Employees where empid=511),
+(select CurrentDesignation from Employees where empid=511),'Debit',
+(select branch_value1 from employees where empid=511),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=511) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=499),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=499) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=499),
+(select Department from Employees where empid=499),
+(select Branch from Employees where empid=499),
+(select CurrentDesignation from Employees where empid=499),'Debit',
+(select branch_value1 from employees where empid=499),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=499) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=250),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=250) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=250),
+(select Department from Employees where empid=250),
+(select Branch from Employees where empid=250),
+(select CurrentDesignation from Employees where empid=250),'Debit',
+(select branch_value1 from employees where empid=250),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=250) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=831),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=831) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=831),
+(select Department from Employees where empid=831),
+(select Branch from Employees where empid=831),
+(select CurrentDesignation from Employees where empid=831),'Debit',
+(select branch_value1 from employees where empid=831),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=831) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=443),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=443) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=443),
+(select Department from Employees where empid=443),
+(select Branch from Employees where empid=443),
+(select CurrentDesignation from Employees where empid=443),'Debit',
+(select branch_value1 from employees where empid=443),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=443) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=436),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=436) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=436),
+(select Department from Employees where empid=436),
+(select Branch from Employees where empid=436),
+(select CurrentDesignation from Employees where empid=436),'Debit',
+(select branch_value1 from employees where empid=436),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=436) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=5796),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=5796) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=5796),
+(select Department from Employees where empid=5796),
+(select Branch from Employees where empid=5796),
+(select CurrentDesignation from Employees where empid=5796),'Debit',
+(select branch_value1 from employees where empid=5796),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=5796) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=444),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=444) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=444),
+(select Department from Employees where empid=444),
+(select Branch from Employees where empid=444),
+(select CurrentDesignation from Employees where empid=444),'Debit',
+(select branch_value1 from employees where empid=444),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=444) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=5862),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=5862) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=5862),
+(select Department from Employees where empid=5862),
+(select Branch from Employees where empid=5862),
+(select CurrentDesignation from Employees where empid=5862),'Debit',
+(select branch_value1 from employees where empid=5862),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=5862) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=525),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=525) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=525),
+(select Department from Employees where empid=525),
+(select Branch from Employees where empid=525),
+(select CurrentDesignation from Employees where empid=525),'Debit',
+(select branch_value1 from employees where empid=525),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=525) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=5909),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=5909) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=5909),
+(select Department from Employees where empid=5909),
+(select Branch from Employees where empid=5909),
+(select CurrentDesignation from Employees where empid=5909),'Debit',
+(select branch_value1 from employees where empid=5909),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=5909) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=539),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=539) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=539),
+(select Department from Employees where empid=539),
+(select Branch from Employees where empid=539),
+(select CurrentDesignation from Employees where empid=539),'Debit',
+(select branch_value1 from employees where empid=539),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=539) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=308),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=308) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=308),
+(select Department from Employees where empid=308),
+(select Branch from Employees where empid=308),
+(select CurrentDesignation from Employees where empid=308),'Debit',
+(select branch_value1 from employees where empid=308),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=308) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=6193),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=6193) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=6193),
+(select Department from Employees where empid=6193),
+(select Branch from Employees where empid=6193),
+(select CurrentDesignation from Employees where empid=6193),'Debit',
+(select branch_value1 from employees where empid=6193),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=6193) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=536),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=536) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=536),
+(select Department from Employees where empid=536),
+(select Branch from Employees where empid=536),
+(select CurrentDesignation from Employees where empid=536),'Debit',
+(select branch_value1 from employees where empid=536),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=536) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=6196),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=6196) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=6196),
+(select Department from Employees where empid=6196),
+(select Branch from Employees where empid=6196),
+(select CurrentDesignation from Employees where empid=6196),'Debit',
+(select branch_value1 from employees where empid=6196),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=6196) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=535),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=535) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=535),
+(select Department from Employees where empid=535),
+(select Branch from Employees where empid=535),
+(select CurrentDesignation from Employees where empid=535),'Debit',
+(select branch_value1 from employees where empid=535),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=535) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=474),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=474) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=474),
+(select Department from Employees where empid=474),
+(select Branch from Employees where empid=474),
+(select CurrentDesignation from Employees where empid=474),'Debit',
+(select branch_value1 from employees where empid=474),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=474) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=833),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=833) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=833),
+(select Department from Employees where empid=833),
+(select Branch from Employees where empid=833),
+(select CurrentDesignation from Employees where empid=833),'Debit',
+(select branch_value1 from employees where empid=833),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=833) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=5869),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=5869) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=5869),
+(select Department from Employees where empid=5869),
+(select Branch from Employees where empid=5869),
+(select CurrentDesignation from Employees where empid=5869),'Debit',
+(select branch_value1 from employees where empid=5869),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=5869) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=301),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=301) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=301),
+(select Department from Employees where empid=301),
+(select Branch from Employees where empid=301),
+(select CurrentDesignation from Employees where empid=301),'Debit',
+(select branch_value1 from employees where empid=301),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=301) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=5884),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=5884) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=5884),
+(select Department from Employees where empid=5884),
+(select Branch from Employees where empid=5884),
+(select CurrentDesignation from Employees where empid=5884),'Debit',
+(select branch_value1 from employees where empid=5884),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=5884) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=5889),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=5889) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=5889),
+(select Department from Employees where empid=5889),
+(select Branch from Employees where empid=5889),
+(select CurrentDesignation from Employees where empid=5889),'Debit',
+(select branch_value1 from employees where empid=5889),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=5889) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=686),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=686) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=686),
+(select Department from Employees where empid=686),
+(select Branch from Employees where empid=686),
+(select CurrentDesignation from Employees where empid=686),'Debit',
+(select branch_value1 from employees where empid=686),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=686) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=266),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=266) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=266),
+(select Department from Employees where empid=266),
+(select Branch from Employees where empid=266),
+(select CurrentDesignation from Employees where empid=266),'Debit',
+(select branch_value1 from employees where empid=266),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=266) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=460),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=460) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=460),
+(select Department from Employees where empid=460),
+(select Branch from Employees where empid=460),
+(select CurrentDesignation from Employees where empid=460),'Debit',
+(select branch_value1 from employees where empid=460),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=460) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=5794),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=5794) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=5794),
+(select Department from Employees where empid=5794),
+(select Branch from Employees where empid=5794),
+(select CurrentDesignation from Employees where empid=5794),'Debit',
+(select branch_value1 from employees where empid=5794),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=5794) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=822),3,	0	,	30	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=822) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2019-20',
+(select ShortName from Employees where empid=822),
+(select Department from Employees where empid=822),
+(select Branch from Employees where empid=822),
+(select CurrentDesignation from Employees where empid=822),'Debit',
+(select branch_value1 from employees where empid=822),((select (leavebalance-30) from EmpLeaveBalance where EmpId=(select id from employees where empid=822) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=565),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=565) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=565),
+(select Department from Employees where empid=565),
+(select Branch from Employees where empid=565),
+(select CurrentDesignation from Employees where empid=565),'Debit',
+(select branch_value1 from employees where empid=565),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=565) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=563),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=563) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=563),
+(select Department from Employees where empid=563),
+(select Branch from Employees where empid=563),
+(select CurrentDesignation from Employees where empid=563),'Debit',
+(select branch_value1 from employees where empid=563),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=563) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=575),3,	0	,	30	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=575) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2019-20',
+(select ShortName from Employees where empid=575),
+(select Department from Employees where empid=575),
+(select Branch from Employees where empid=575),
+(select CurrentDesignation from Employees where empid=575),'Debit',
+(select branch_value1 from employees where empid=575),((select (leavebalance-30) from EmpLeaveBalance where EmpId=(select id from employees where empid=575) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=590),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=590) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=590),
+(select Department from Employees where empid=590),
+(select Branch from Employees where empid=590),
+(select CurrentDesignation from Employees where empid=590),'Debit',
+(select branch_value1 from employees where empid=590),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=590) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=876),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=876) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=876),
+(select Department from Employees where empid=876),
+(select Branch from Employees where empid=876),
+(select CurrentDesignation from Employees where empid=876),'Debit',
+(select branch_value1 from employees where empid=876),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=876) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=847),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=847) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=847),
+(select Department from Employees where empid=847),
+(select Branch from Employees where empid=847),
+(select CurrentDesignation from Employees where empid=847),'Debit',
+(select branch_value1 from employees where empid=847),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=847) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=985),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=985) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=985),
+(select Department from Employees where empid=985),
+(select Branch from Employees where empid=985),
+(select CurrentDesignation from Employees where empid=985),'Debit',
+(select branch_value1 from employees where empid=985),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=985) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=6332),3,	0	,	30	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=6332) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2019-20',
+(select ShortName from Employees where empid=6332),
+(select Department from Employees where empid=6332),
+(select Branch from Employees where empid=6332),
+(select CurrentDesignation from Employees where empid=6332),'Debit',
+(select branch_value1 from employees where empid=6332),((select (leavebalance-30) from EmpLeaveBalance where EmpId=(select id from employees where empid=6332) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=783),3,	0	,	30	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=783) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2019-20',
+(select ShortName from Employees where empid=783),
+(select Department from Employees where empid=783),
+(select Branch from Employees where empid=783),
+(select CurrentDesignation from Employees where empid=783),'Debit',
+(select branch_value1 from employees where empid=783),((select (leavebalance-30) from EmpLeaveBalance where EmpId=(select id from employees where empid=783) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=985),3,	0	,	30	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=985) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2019-20',
+(select ShortName from Employees where empid=985),
+(select Department from Employees where empid=985),
+(select Branch from Employees where empid=985),
+(select CurrentDesignation from Employees where empid=985),'Debit',
+(select branch_value1 from employees where empid=985),((select (leavebalance-30) from EmpLeaveBalance where EmpId=(select id from employees where empid=985) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=853),3,	0	,	30	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=853) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2019-20',
+(select ShortName from Employees where empid=853),
+(select Department from Employees where empid=853),
+(select Branch from Employees where empid=853),
+(select CurrentDesignation from Employees where empid=853),'Debit',
+(select branch_value1 from employees where empid=853),((select (leavebalance-30) from EmpLeaveBalance where EmpId=(select id from employees where empid=853) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=550),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=550) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=550),
+(select Department from Employees where empid=550),
+(select Branch from Employees where empid=550),
+(select CurrentDesignation from Employees where empid=550),'Debit',
+(select branch_value1 from employees where empid=550),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=550) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=6320),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=6320) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=6320),
+(select Department from Employees where empid=6320),
+(select Branch from Employees where empid=6320),
+(select CurrentDesignation from Employees where empid=6320),'Debit',
+(select branch_value1 from employees where empid=6320),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=6320) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=6327),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=6327) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=6327),
+(select Department from Employees where empid=6327),
+(select Branch from Employees where empid=6327),
+(select CurrentDesignation from Employees where empid=6327),'Debit',
+(select branch_value1 from employees where empid=6327),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=6327) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=906),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=906) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=906),
+(select Department from Employees where empid=906),
+(select Branch from Employees where empid=906),
+(select CurrentDesignation from Employees where empid=906),'Debit',
+(select branch_value1 from employees where empid=906),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=906) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=519),3,	0	,	30	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=519) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2019-20',
+(select ShortName from Employees where empid=519),
+(select Department from Employees where empid=519),
+(select Branch from Employees where empid=519),
+(select CurrentDesignation from Employees where empid=519),'Debit',
+(select branch_value1 from employees where empid=519),((select (leavebalance-30) from EmpLeaveBalance where EmpId=(select id from employees where empid=519) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=521),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=521) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=521),
+(select Department from Employees where empid=521),
+(select Branch from Employees where empid=521),
+(select CurrentDesignation from Employees where empid=521),'Debit',
+(select branch_value1 from employees where empid=521),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=521) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=998),3,	0	,	30	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=998) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=998),
+(select Department from Employees where empid=998),
+(select Branch from Employees where empid=998),
+(select CurrentDesignation from Employees where empid=998),'Debit',
+(select branch_value1 from employees where empid=998),((select (leavebalance-30) from EmpLeaveBalance where EmpId=(select id from employees where empid=998) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=889),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=889) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=889),
+(select Department from Employees where empid=889),
+(select Branch from Employees where empid=889),
+(select CurrentDesignation from Employees where empid=889),'Debit',
+(select branch_value1 from employees where empid=889),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=889) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=490),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=490) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=490),
+(select Department from Employees where empid=490),
+(select Branch from Employees where empid=490),
+(select CurrentDesignation from Employees where empid=490),'Debit',
+(select branch_value1 from employees where empid=490),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=490) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=523),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=523) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=523),
+(select Department from Employees where empid=523),
+(select Branch from Employees where empid=523),
+(select CurrentDesignation from Employees where empid=523),'Debit',
+(select branch_value1 from employees where empid=523),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=523) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=950),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=950) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=950),
+(select Department from Employees where empid=950),
+(select Branch from Employees where empid=950),
+(select CurrentDesignation from Employees where empid=950),'Debit',
+(select branch_value1 from employees where empid=950),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=950) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=422),3,	0	,	30	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=422) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2019-20',
+(select ShortName from Employees where empid=422),
+(select Department from Employees where empid=422),
+(select Branch from Employees where empid=422),
+(select CurrentDesignation from Employees where empid=422),'Debit',
+(select branch_value1 from employees where empid=422),((select (leavebalance-30) from EmpLeaveBalance where EmpId=(select id from employees where empid=422) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=895),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=895) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=895),
+(select Department from Employees where empid=895),
+(select Branch from Employees where empid=895),
+(select CurrentDesignation from Employees where empid=895),'Debit',
+(select branch_value1 from employees where empid=895),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=895) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=514),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=514) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=514),
+(select Department from Employees where empid=514),
+(select Branch from Employees where empid=514),
+(select CurrentDesignation from Employees where empid=514),'Debit',
+(select branch_value1 from employees where empid=514),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=514) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=845),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=845) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=845),
+(select Department from Employees where empid=845),
+(select Branch from Employees where empid=845),
+(select CurrentDesignation from Employees where empid=845),'Debit',
+(select branch_value1 from employees where empid=845),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=845) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=749),3,	0	,	30	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=749) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2019-2020',
+(select ShortName from Employees where empid=749),
+(select Department from Employees where empid=749),
+(select Branch from Employees where empid=749),
+(select CurrentDesignation from Employees where empid=749),'Debit',
+(select branch_value1 from employees where empid=749),((select (leavebalance-30) from EmpLeaveBalance where EmpId=(select id from employees where empid=749) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=545),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=545) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=545),
+(select Department from Employees where empid=545),
+(select Branch from Employees where empid=545),
+(select CurrentDesignation from Employees where empid=545),'Debit',
+(select branch_value1 from employees where empid=545),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=545) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=896),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=896) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=896),
+(select Department from Employees where empid=896),
+(select Branch from Employees where empid=896),
+(select CurrentDesignation from Employees where empid=896),'Debit',
+(select branch_value1 from employees where empid=896),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=896) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=6324),3,	0	,	30	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=6324) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2019-2020',
+(select ShortName from Employees where empid=6324),
+(select Department from Employees where empid=6324),
+(select Branch from Employees where empid=6324),
+(select CurrentDesignation from Employees where empid=6324),'Debit',
+(select branch_value1 from employees where empid=6324),((select (leavebalance-30) from EmpLeaveBalance where EmpId=(select id from employees where empid=6324) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=598),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=598) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=598),
+(select Department from Employees where empid=598),
+(select Branch from Employees where empid=598),
+(select CurrentDesignation from Employees where empid=598),'Debit',
+(select branch_value1 from employees where empid=598),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=598) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=566),3,	0	,	30	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=566) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2019-2020',
+(select ShortName from Employees where empid=566),
+(select Department from Employees where empid=566),
+(select Branch from Employees where empid=566),
+(select CurrentDesignation from Employees where empid=566),'Debit',
+(select branch_value1 from employees where empid=566),((select (leavebalance-30) from EmpLeaveBalance where EmpId=(select id from employees where empid=566) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=790),3,	0	,	15	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=790) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2020',
+(select ShortName from Employees where empid=790),
+(select Department from Employees where empid=790),
+(select Branch from Employees where empid=790),
+(select CurrentDesignation from Employees where empid=790),'Debit',
+(select branch_value1 from employees where empid=790),((select (leavebalance-15) from EmpLeaveBalance where EmpId=(select id from employees where empid=790) 
+and LeaveTypeId=3 and year=2020)),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=928),3,	0	,	30	,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where EmpId=(select id from employees where empid=928) and LeaveTypeId=3 and year=2020),'PL Encashment for the year 2019-2020',
+(select ShortName from Employees where empid=928),
+(select Department from Employees where empid=928),
+(select Branch from Employees where empid=928),
+(select CurrentDesignation from Employees where empid=928),'Debit',
+(select branch_value1 from employees where empid=928),((select (leavebalance-30) from EmpLeaveBalance where EmpId=(select id from employees where empid=928) 
+and LeaveTypeId=3 and year=2020)),2020);

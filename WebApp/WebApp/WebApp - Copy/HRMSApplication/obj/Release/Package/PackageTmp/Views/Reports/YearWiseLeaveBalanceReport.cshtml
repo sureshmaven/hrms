@@ -1,0 +1,354 @@
+﻿@model Entities.V_EmpLeavesCarryForward
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var rolepages = TempData["RolePages"].ToString();
+    ViewBag.RolePages = TempData["RolePages"];
+    var reportTitle = ViewBag.ReportTitle;
+    var ReportPdfSize = ViewBag.PdfSize;
+    var ReportpageSize = ViewBag.pageSize;
+    var PdfExportColumns = ViewBag.ExportColumns;
+    var dataUrl = ViewBag.DataUrl;
+    var reportFilters = ViewBag.ReportFilters;
+    var reportFiltersTwo = ViewBag.ReportFiltersTwo;
+    var reportFiltersThree = ViewBag.ReportFiltersThree;
+    var searchBtn = ViewBag.SearchBtn;
+}
+<div class="page_st">
+    <div class="page">
+        <div class="col-md-12 col-sm-12">
+            <div class="main_heading">
+                <h1>Year Wise Leave Balance</h1>
+                <div class="report-list">
+                    @{
+                        <ul>
+                            @if (rolepages.Contains("RPBRA"))
+                            {
+                                <li class='@(reportTitle == "Branches List" ? "active" : "")'><a href=@Url.Action("Index", "AllReports")>Branches</a></li>}
+                            @if (rolepages.Contains("RPBRC"))
+                            {
+                                <li class='@(reportTitle == "Branches Contacts List" ? "active" : "")'><a href=@Url.Action("BranchContacts", "AllReports")>Branch Contacts</a></li>}
+                            @if (rolepages.Contains("RPCDR"))
+                            {
+                                @*<li><a href=@Url.Action("CadreReport", "Reports")>Cadre</a></li>*@
+                                <li class='@(reportTitle == "Cadre List" ? "active" : "")'><a href=@Url.Action("CadreList", "AllReports")>Cadre</a></li>
+                            }
+                            @if (rolepages.Contains("RPCAT"))
+                            {
+                                <li><a href=@Url.Action("CategoryReport", "Reports")>Category</a></li>}
+                            @if (rolepages.Contains("RPDOB"))
+                            {
+                                <li class='@(reportTitle == "DOB List" ? "active" : "")'><a href=@Url.Action("EmpDob", "AllReports")>DOB</a></li>}
+                            @if (rolepages.Contains("RPEMP"))
+                            {
+                                <li><a href=@Url.Action("EmployeeList", "Register")>Employees</a></li>}
+                            @if (rolepages.Contains("RPEAL"))
+                            {
+                                <li><a href=@Url.Action("FutureLeave", "Reports")>Future Applied Leaves</a></li>}
+                            @if (rolepages.Contains("RPHOF"))
+                            {
+                                <li><a href=@Url.Action("DepartmentReport", "Reports")>Head Office</a></li>}
+                            @if (rolepages.Contains("RPHOA"))
+                            {
+                                <li><a href=@Url.Action("AttenderReport", "Reports")>Head Office Attenders</a></li>}
+                            @if (rolepages.Contains("RPKOF"))
+                            {
+                                <li class='@(reportTitle == "Work Profile Of Key Officials" ? "active" : "")'><a href=@Url.Action("KeyOfficials", "AllReports")>Key Officials</a></li>}
+                            @if (rolepages.Contains("RPLTC"))
+                            {
+                                <li><a href=@Url.Action("LTCview", "Reports")>LTC</a></li>}
+                            @if (rolepages.Contains("RPLEV"))
+                            {
+                                <li><a href=@Url.Action("LeaveSearch", "MyLeaves")>Leaves</a></li>}
+                            @if (rolepages.Contains("RPLLE"))
+                            {
+                                <li><a href=@Url.Action("LeaveDays", "Reports")>Long Leaves</a></li>}
+                            @if (rolepages.Contains("RPLFA"))
+                            {
+                                <li><a href=@Url.Action("Report1", "Reports")>Leaves Forwarded/Approved</a></li>}
+                            @if (rolepages.Contains("RPLAL"))
+                            {
+                                <li><a href=@Url.Action("LateLeave", "Reports")>Late Applied Leaves</a></li>}
+                            @if (rolepages.Contains("RPLCD"))
+                            {
+                                <li><a href=@Url.Action("Cancelleavereport", "Reports")>Leaves Cancelled</a></li>}
+                            @if (rolepages.Contains("RPCMP"))
+                            {
+                                <li><a href=@Url.Action("MonthwiseCl", "Reports")>Month Wise CL/ML/PL</a></li>}
+                            @if (rolepages.Contains("RPMWL"))
+                            {
+                                <li><a href=@Url.Action("MonthWiseLeave", "Reports")>Month Wise Leaves</a></li>}
+                            @if (rolepages.Contains("RPMWO"))
+                            {
+                                <li><a href=@Url.Action("MonthwiseOD", "Reports")>Month Wise OD</a></li>}
+                            @if (rolepages.Contains("RPMTT"))
+                            {
+                                <li><a href=@Url.Action("MonthwiseTempTransfer", "Reports")>Month Wise Temporary Transfer</a></li>}
+                            @if (rolepages.Contains("RPODD"))
+                            {
+                                <li><a href=@Url.Action("History", "Duty")>OD</a></li>}
+                            @if (rolepages.Contains("RPPTS"))
+                            {
+                                <li><a href=@Url.Action("Perm", "Reports")>Permanent Transfers</a></li>}
+                            @if (rolepages.Contains("RPPRO"))
+                            {
+                                <li><a href=@Url.Action("TransferReport", "Reports")>Promotion</a></li>}
+                            @if (rolepages.Contains("RPSPL"))
+                            {
+                                <li><a href=@Url.Action("Plreport", "Reports")>PL</a></li>}
+                            @if (rolepages.Contains("RPRET"))
+                            {
+                                <li><a href=@Url.Action("RetirementReport", "Reports")>Retirements</a></li>}
+                            @if (rolepages.Contains("RPSEN"))
+                            {
+                                <li><a href=@Url.Action("Senioritylist", "Register")>Seniority</a></li>}
+                            @if (rolepages.Contains("RPSMA"))
+                            {
+                                <li><a href=@Url.Action("SMReport", "Reports")>Staff Master</a></li>}
+                            @if (rolepages.Contains("RPTXH"))
+                            {
+                                <li class='@(reportTitle == "Transaction History" ? "active" : "")'><a href=@Url.Action("TxHistory", "AllReports")>TX History</a></li>}
+                            @if (rolepages.Contains("RPTTS"))
+                            {
+                                <li><a href=@Url.Action("Temp", "Reports")>Temporary Transfers</a></li>}
+                            @if (rolepages.Contains("RPTMT"))
+                            {
+                                <li><a href=@Url.Action("TopmanagementReport", "Reports")>TopManagement</a></li>}
+                            @if (rolepages.Contains("RPWDY"))
+                            {
+                                <li class='@(reportTitle == "Employee Work Diary" ? "active" : "")'><a href=@Url.Action("WorkDiary", "AllReports")>WorkDiary </a></li>}
+                            @if (rolepages.Contains("RPYLB"))
+                            {
+                                @*<li><a href=@Url.Action("YearWiseLeaveBalanceReport", "Reports")>YearWiseLeaveBalance</a></li>*@
+                                <li class='@(reportTitle == "Year Wise Leave Balance" ? "active" : "")'><a href=@Url.Action("LeavesCreditDebit", "AllReports")>YearWiseLeaveBalance</a></li>}
+                            
+                        </ul>
+                    }
+                    <div class="clearfix"></div>
+                </div>
+                <div class="col-sm-12">
+                    <p>Note: LC-Leave Credit |  LD-Leave Debit |  LB-Leave Balance | CF-Carry Forward</p>
+                    <br />
+                </div>
+                <div class="col-sm-12">
+                    <div id="grid">
+                    </div>
+                </div>
+                <br /><br /><br /><br />
+                <div style='margin-top: 20px; '>
+                    <div id="div1" style='float: left; margin: 10px 0 0 16px;'>
+                        <input type="button" class="jqx-rc-all jqx-button jqx-widget jqx-fill-state-normal" value="Export to Excel" id='pdf1' onclick='window.location = "@Url.Action("Button1_ClickYear", "Reports")";' />
+                    </div>
+                </div>
+                <div id="div1" style='float: left; margin:  10px 0 0 16px;'>
+                    <input type="button" class="jqx-rc-all jqx-button jqx-widget jqx-fill-state-normal" value="Download PDF" id='pdftoday' onclick='window.location = "@Url.Action("CreatePdfYearwiseReport", "Reports")";' />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <script type="text/javascript">
+            var screenTheme = 'darkblue';
+            var popupTheme = 'highcontrast';
+            var otherTheme = 'arctic';
+
+            var localizationObject = {
+                filterstringcomparisonoperators: ['contains', 'does not contain'],  /* filter String Comparison Operators    */
+                filternumericcomparisonoperators: ['less than', 'greater than'],    /* filter Numeric Comparison Operators  */
+                filterdatecomparisonoperators: ['less than', 'greater than'],       /* filter Date comparison operators.  */
+                filterbooleancomparisonoperators: ['equal', 'not equal']            /* filter bool comparison operators.*/
+            };
+            var stringcomparisonoperators = ['CONTAINS', 'DOES_NOT_CONTAIN'];
+            var numericcomparisonoperators = ['LESS_THAN', 'GREATER_THAN'];
+            var datecomparisonoperators = ['LESS_THAN', 'GREATER_THAN'];
+            var booleancomparisonoperators = ['EQUAL', 'NOT_EQUAL'];
+
+            $(document).ready(function () {
+
+                // prepare the data for BankView
+                var theme = otherTheme;
+                // prepare the data
+                var url = "../Reports/YearWiseLeaveBalanceViews";
+                var source =
+                    {
+                        type: "Get",
+                        datatype: "json",
+                        datafields: [
+                        { name: 'EmpId', type: 'int' },
+                        { name: 'EmployeeName', type: 'string' },
+                        { name: 'Dept', type: 'string' },
+                        { name: 'Designations', type: 'string' },
+                        { name: 'Year', type: 'int' },
+                        { name: 'TotalBalanceCL', type: 'int' },
+                        { name: 'TotalAppliedCL', type: 'int' },
+                        { name: 'RemainingCL', type: 'int' },
+                        { name: 'CLCarryForward', type: 'int' },
+
+                        { name: 'TotalBalanceML', type: 'int' },
+                        { name: 'TotalAppliedML', type: 'int' },
+                        { name: 'RemainingML', type: 'int' },
+                        { name: 'MLCarryForward', type: 'int' },
+
+                        { name: 'TotalBalancePL', type: 'int' },
+                        { name: 'TotalAppliedPL', type: 'int' },
+                        { name: 'RemainingPL', type: 'int' },
+                        { name: 'PLCarryForward', type: 'int' },
+
+                        { name: 'TotalBalanceMTL', type: 'int' },
+                        { name: 'TotalAppliedMTL', type: 'int' },
+                        { name: 'RemainingMTL', type: 'int' },
+                        { name: 'MTLCarryForward', type: 'int' },
+
+                        { name: 'TotalBalancePTL', type: 'int' },
+                        { name: 'TotalAppliedPTL', type: 'int' },
+                        { name: 'RemainingPTL', type: 'int' },
+                        { name: 'PTLCarryForward', type: 'int' },
+
+                        { name: 'TotalBalanceEOL', type: 'int' },
+                        { name: 'TotalAppliedEOL', type: 'int' },
+                        { name: 'RemainingEOL', type: 'int' },
+                        { name: 'EOLCarryForward', type: 'int' },
+
+                        { name: 'TotalBalanceSCL', type: 'int' },
+                        { name: 'TotalAppliedSCL', type: 'int' },
+                        { name: 'RemainingSCL', type: 'int' },
+                        { name: 'SCLCarryForward', type: 'int' },
+                        ],
+                        async: false,
+                        url: url,
+                        data: {
+                            featureClass: "P",
+                            style: "full",
+                            username: "jqwidgets"
+                        }
+                    };
+                var dataAdapter = new $.jqx.dataAdapter(source,
+                    {
+                        formatData: function (data) {
+                            data.ProductName = $("#searchField").val();
+                            return data;
+                        }
+                    }
+                );
+                // initialize jqxGrid
+                var editrowindex = -1;
+                var delrowindex = -1;
+                $("#grid").jqxGrid(
+                    {
+                        width: '99%',
+                        source: dataAdapter,
+                        theme: otherTheme,// for theme refernce go to Layout.cshtml
+                        autoheight: true,
+                        sortable: true,
+                        pageable: true,
+                        columnsResize: true,
+                        altRows: true,
+                        filterable: true,
+                        autoshowfiltericon: true,
+
+                        ready: function () {
+                            $("#grid").jqxGrid('localizestrings', localizationObject);
+                        },
+                        updatefilterconditions: function (type, defaultconditions) {
+                            switch (type) {
+                                case 'stringfilter':
+                                    return stringcomparisonoperators;
+                                case 'numericfilter':
+                                    return numericcomparisonoperators;
+                                case 'datefilter':
+                                    return datecomparisonoperators;
+                                case 'booleanfilter':
+                                    return booleancomparisonoperators;
+                            }
+                        },
+                        updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                            filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                            var index1 = 0;
+                            var index2 = 0;
+                            if (columnfilter != null) {
+                                var filter1 = columnfilter.getfilterat(0);
+                                var filter2 = columnfilter.getfilterat(1);
+                                if (filter1) {
+                                    index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                                    var value1 = filter1.filtervalue;
+                                    filterinputfield1.val(value1);
+                                }
+                                if (filter2) {
+                                    index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                                    var value2 = filter2.filtervalue;
+                                    filterinputfield2.val(value2);
+                                }
+                            }
+                            filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                            filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                        },
+                        columns: [
+                        { text: "EmpCode", datafield: "EmpId", width: 70, editable: false  },
+                        { text: "EmployeeName", datafield: "EmployeeName", width: 127, editable: false  },
+                        { text: "Department/Branch", datafield: "Dept", width: 127, editable: false  },
+                        { text: "Designations", datafield: "Designations", width: 85, editable: false  },
+                        { text: "Year", datafield: "Year", width: 50, editable: false  },
+
+                        { text: 'LC', editable: false, columngroup: 'CL', datafield: 'TotalBalanceCL', cellsformat: 'd', cellsalign: 'center', align: 'center', width: 35 },
+                        { text: 'LD', editable: false, columngroup: 'CL', datafield: 'TotalAppliedCL', cellsformat: 'd', cellsalign: 'center', align: 'center', width: 35 },
+                        { text: 'LB', editable: false, columngroup: 'CL', datafield: 'RemainingCL', cellsformat: 'd', cellsalign: 'center', align: 'center', width: 35 },
+                      //{ text: 'CarryForward', editable: false, columngroup: 'CL', datafield: 'CLCarryForward', cellsformat: 'd', cellsalign: 'center', align: 'center', width: 65 },
+
+                        { text: 'CF', editable: false, columngroup: 'ML', datafield: 'MLCarryForward', cellsformat: 'd', cellsalign: 'center', align: 'center', width: 35 },
+                        { text: 'LC', editable: false, columngroup: 'ML', datafield: 'TotalBalanceML', cellsformat: 'd', cellsalign: 'center', align: 'center', width: 35 },
+                        { text: 'LD', editable: false, columngroup: 'ML', datafield: 'TotalAppliedML', cellsformat: 'd', cellsalign: 'center', align: 'center', width: 35 },
+                        { text: 'LB', editable: false, columngroup: 'ML', datafield: 'RemainingML', cellsformat: 'd', cellsalign: 'center', align: 'center', width: 35 },
+
+
+                        { text: 'CF', editable: false, columngroup: 'PL', datafield: 'PLCarryForward', cellsformat: 'd', cellsalign: 'center', align: 'center', width: 35 },
+                        { text: 'LC', editable: false, columngroup: 'PL', datafield: 'TotalBalancePL', cellsformat: 'd', cellsalign: 'center', align: 'center', width: 35 },
+                        { text: 'LD', editable: false, columngroup: 'PL', datafield: 'TotalAppliedPL', cellsformat: 'd', cellsalign: 'center', align: 'center', width: 35 },
+                        { text: 'LB', editable: false, columngroup: 'PL', datafield: 'RemainingPL', cellsformat: 'd', cellsalign: 'center', align: 'center', width: 35 },
+
+
+                        { text: 'LC', editable: false, columngroup: 'MTL', datafield: 'TotalBalanceMTL', cellsformat: 'd', cellsalign: 'center', align: 'center', width: 35 },
+                        { text: 'LD', editable: false, columngroup: 'MTL', datafield: 'TotalAppliedMTL', cellsformat: 'd', cellsalign: 'center', align: 'center', width: 35 },
+                        { text: 'LB', editable: false, columngroup: 'MTL', datafield: 'RemainingMTL', cellsformat: 'd', cellsalign: 'center', align: 'center', width: 35 },
+                      //{ text: 'CarryForward', editable: false, columngroup: 'MTL', datafield: 'MTLCarryForward', cellsformat: 'd', cellsalign: 'center', align: 'center', width: 65 },
+
+                        { text: 'LC', editable: false, columngroup: 'PTL', datafield: 'TotalBalancePTL', cellsformat: 'd', cellsalign: 'center', align: 'center', width: 35 },
+                        { text: 'LD', editable: false, columngroup: 'PTL', datafield: 'TotalAppliedPTL', cellsformat: 'd', cellsalign: 'center', align: 'center', width: 35 },
+                        { text: 'LB', editable: false, columngroup: 'PTL', datafield: 'RemainingPTL', cellsformat: 'd', cellsalign: 'center', align: 'center', width: 35 },
+                      //{ text: 'CarryForward', editable: false, columngroup: 'PTL', datafield: 'PTLCarryForward', cellsformat: 'd', cellsalign: 'center', align: 'center', width: 65 },
+
+                        { text: 'LC', editable: false, columngroup: 'EOL', datafield: 'TotalBalanceEOL', cellsformat: 'd', cellsalign: 'center', align: 'center', width: 35 },
+                        { text: 'LD', editable: false, columngroup: 'EOL', datafield: 'TotalAppliedEOL', cellsformat: 'd', cellsalign: 'center', align: 'center', width: 35 },
+                        { text: 'LB', editable: false, columngroup: 'EOL', datafield: 'RemainingEOL', cellsformat: 'd', cellsalign: 'center', align: 'center', width: 35 },
+                      //{ text: 'CarryForward', editable: false, columngroup: 'EOL', datafield: 'EOLCarryForward', cellsformat: 'd', cellsalign: 'center', align: 'center', width: 65 },
+
+                        { text: 'LC', editable: false, columngroup: 'SCL', datafield: 'TotalBalanceSCL', cellsformat: 'd', cellsalign: 'center', align: 'center', width: 35 },
+                        { text: 'LD', editable: false, columngroup: 'SCL', datafield: 'TotalAppliedSCL', cellsformat: 'd', cellsalign: 'center', align: 'center', width: 35 },
+                        { text: 'LB', editable: false, columngroup: 'SCL', datafield: 'RemainingSCL', cellsformat: 'd', cellsalign: 'center', align: 'center', width: 35 },
+                        //{ text: 'CarryForward', editable: false, columngroup: 'SCL', datafield: 'SCLCarryForward', cellsformat: 'd', cellsalign: 'center', align: 'center', width: 65 },
+                        ],
+                        columngroups:
+                        [
+                { text: 'Action', align: 'center', name: 'Actions', width: 160 },
+                { text: 'CL', align: 'center', editable: false, name: 'CL' },
+                { text: 'ML', align: 'center', editable: false, name: 'ML' },
+                { text: 'PL', align: 'center', editable: false, name: 'PL' },
+                { text: 'MTL', align: 'center', editable: false, name: 'MTL' },
+                { text: 'PTL', align: 'center', editable: false, name: 'PTL' },
+                { text: 'EOL', align: 'center', editable: false, name: 'EOL' },
+                { text: 'SCL', align: 'center', editable: false, name: 'SCL' },
+                        ],
+
+                    });
+                $("#excelExport").jqxButton();
+
+
+                $("#excelExport").click(function () {
+                    $("#grid").jqxGrid('exportdata', 'xls', 'EmpYearwiseLeaveBalance');
+                });
+            });
+
+    </script>
+
+
+<script>
+    document.getElementById("a6").className = "active";
+</script>

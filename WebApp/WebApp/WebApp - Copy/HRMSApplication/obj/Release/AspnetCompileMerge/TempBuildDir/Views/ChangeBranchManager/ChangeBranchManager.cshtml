@@ -1,0 +1,463 @@
+﻿@model Entities.Employees
+@{
+    ViewBag.RolePages = TempData["RolePages"];
+    var rolepages = TempData["RolePages"].ToString();
+    var reportTitle = ViewBag.ReportTitle;
+    var reportFilters = ViewBag.ReportFilters;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var message = TempData["AlertMessage"] ?? string.Empty;
+}
+
+<script type="text/javascript">
+    var message = '@message';
+    if (message) alert(message);
+
+
+</script>
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-heading">
+
+            @{
+            <ul class="nav nav-tabs">
+                @if (rolepages.Contains("ADERG"))
+                {
+                    <li><a href=@Url.Action("InsertEmployees", "Register")>Employee Registration</a></li>
+                }
+                @if (rolepages.Contains("ADTPO"))
+                {
+                    <li><a href="@Url.Action("Index","Transfer")">Transfer/Promotions</a></li>
+                }
+                @if (rolepages.Contains("ADCAU"))
+                {
+                    <li><a href="@Url.Action("Index","ChangeAuthority")">Change Authority</a></li>
+                }
+                @if (rolepages.Contains("ADCPR"))
+                {
+                    <li><a href="@Url.Action("Index","ChangeProfile")">Change Profile</a></li>
+                }
+                @if (rolepages.Contains("ADLTCA"))
+                {
+                    <li><a href=@Url.Action("AdminLTCApply", "LeaveTravel")>Apply LTC </a></li>
+                }
+
+                @if (rolepages.Contains("ADPLA"))
+                {
+                    <li><a href=@Url.Action("AdminPLApply", "PLE_Type")>Apply PL Encashment</a></li>
+                }
+                @if (rolepages.Contains("ADWDA"))
+                {
+                    <li><a href=@Url.Action("WorkApprovalAdmin", "WorkDiary")> Delete Work Dairy</a></li>
+                }
+                @if (rolepages.Contains("ADUSRO"))
+                {
+                    <li><a href=@Url.Action("UserRolesView", "AllReports")>User Roles</a></li>
+                }
+                @if (rolepages.Contains("ADCBRMG"))
+                {
+                    <li class="active"><a href=@Url.Action("ChangeBranchManager", "ChangeBranchManager")>Change Branch Manager</a></li>
+                }
+                @if (rolepages.Contains("TsheetMain"))
+                {
+                    <li><a href=@Url.Action("Timesheetrequestform", "TimeSheet")>TimeSheet Manual Form</a></li>
+                }
+                @if (rolepages.Contains("TsheetApp"))
+                {
+                    <li><a href=@Url.Action("TSApprovalView", "TimeSheet")>TimeSheet Manual Approvals</a></li>
+                }
+            </ul>
+            }
+
+        </div>
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="reg">
+                    <div class="page_st">
+                        <div class="page">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="main_heading">
+                                    <h1>Change Branch Manager</h1>
+                                    <br />
+
+                                    @if (reportFilters.Contains("branchmanageddlOne"))
+                                    {
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="col-sm-5 control-label">Select Branch:</label>
+                                                <div class="col-sm-7">
+                                                    @*<input id="companyName" name="fffff" list="companyList" class="form-control" maxlength="10" onkeypress="return isNumber(event)">
+                        <datalist id="companyList"></datalist>*@
+                                                    @*@Html.ValidationMessageFor(model => model.EmpId, "", new { @class = "text-danger" })*@
+                                                    @Html.DropDownList("BranchName", ViewBag.DdlOneData as SelectList, "Select", new { @class = "form-control", id = "branchname" })
+                                                    @*@Html.DropDownList("ddlchabranchmngr", ViewBag.ddlchabranchmanager as SelectList, "Select", new { @class = "form-control" })*@
+                                                    @*@Html.DropDownList("Id", ViewBag.DdlOneData as SelectList, "Select", new { @class = "form-control" })*@
+                                                    @*<input type="text" id="txtEmpId" class="form-control" onkeydown="if(event.key==='.'){event.preventDefault();}">*@
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="col-md-5">
+                                                <button class="btn btn-primary btn-sm pull-right" id="btngetbranchid">Get Branch Manager</button>
+                                            </div>
+                                            <br />
+                                            <br />
+                                            <br />
+                                        </div>
+                                        
+                                        <div class="col-md-12" id="getBranchManager">
+                                            @*<div class="col-md-5">*@
+                                                <label class="col-sm-6 control-label">Current Branch Manager:</label>
+                                                <br />
+                                                <br />
+                                            @*</div>*@
+                                            
+                                            <div class="fetch_results" id="Availment">
+                                                <table class="table table-bordered relation" id="addedRows_new" style="width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>EmpID</th>
+                                                            @*<th>BranchName</th>*@
+                                                            <th>EmpName</th>
+                                                            <th>Designation</th>
+                                                            @*<th>Action</th>*@
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="Empid" id="allvalues">
+                                                                @*<input class="form-control" id="empidbranch" style="width:100% !important" type="text" value="" disabled />*@
+                                                                <label class="col-sm-7 control-label" id="empidbranch" style="text-align:right"></label>
+                                                            </td>
+
+                                                            <td class="EmpName">
+                                                                @*<input class="form-control" id="brempname" style="width:100% !important" type="text" value="" disabled />*@
+                                                                <label class="col-sm-7 control-label" id="brempname" style="text-align:right"></label>
+                                                            </td>
+                                                            <td class="Designation">
+                                                                @*<input class="form-control" id="brdesignation" style="width:100% !important" type="text" value="" disabled />*@
+                                                                <label class="col-sm-7 control-label" id="brdesignation" style="text-align:right"></label>
+                                                            </td>
+                                                            
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <br />
+                                            @*<br />*@
+                                        </div>
+                                        
+                                       
+                                        <div class="col-md-4" id="newgetBranchid">
+                                            <div class="form-group">
+                                                <label class="col-sm-6 control-label">Enter New EmpId:</label>
+                                                <div class="col-sm-5">
+                                                    <input class="form-control" id="newempidbranch" style="width:100% !important" type="text" value="" onkeypress="return isNumberKey(event)" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*<div class="col-md-5" id="btnsearchnew">
+                                            <div class="col-md-5">
+                                                <button class="btn btn-primary btn-sm pull-left" id="btnsearchbrman">Search</button>
+                                            </div>
+                                        </div>*@
+                                        <div class="col-md-5" id="btnupdatenew">
+                                            <div class="col-md-5">
+                                                <button class="btn btn-primary btn-sm pull-left" id="btnsearchbrman">Search</button>
+                                                <button class="btn btn-primary btn-sm pull-right" id="btnupdatebrman">Update</button>
+                                            </div>
+                                            <br />
+                                            <br />
+                                            <br />
+                                        </div>
+                                        
+                                        <div class="col-md-12" id="newgetBranchManager">
+                                            @*<div class="col-md-5">*@
+                                            <label class="col-sm-6 control-label" id="lblnewbrmngr">New Branch Manager:</label>
+                                            <label class="col-sm-6 control-label" id="lblcurrbrmngr">Current Branch Manager:</label>
+                                            <br />
+                                            <br />
+                                            @*</div>*@
+                                            <div class="fetch_results" id="Availment_new">
+                                                <table class="table table-bordered relation" id="addedRows_new1" style="width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>EmpID</th>
+                                                            @*<th>BranchName</th>*@
+                                                            <th>EmpName</th>
+                                                            <th id="th_branchname">BranchName</th>
+                                                            <th>Designation</th>
+                                                            @*<th>Action</th>*@
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+
+                                                            <td class="Empid" id="allvalues">
+                                                                @*<input class="form-control" id="empidbranch_new" style="width:100% !important" type="text" value="" disabled />*@
+                                                                <label class="col-sm-7 control-label" id="empidbranch_new" style="text-align:right"></label>
+                                                            </td>
+
+                                                            <td class="EmpName">
+                                                                @*<input class="form-control" id="brempname_new" style="width:100% !important" type="text" value="" disabled />*@
+                                                                <label class="col-sm-7 control-label" id="brempname_new" style="text-align:right"></label>
+                                                            </td>
+                                                            <td class="Empbranchname" id="td_branchname">
+                                                                @*<input class="form-control" id="brempname_new" style="width:100% !important" type="text" value="" disabled />*@
+                                                                <label class="col-sm-7 control-label" id="branchname_new" style="text-align:right"></label>
+                                                            </td>
+                                                            <td class="Designation">
+                                                                @*<input class="form-control" id="brdesignation_new" style="width:100% !important" type="text" value="" disabled />*@
+                                                                <label class="col-sm-7 control-label" id="brdesignation_new" style="text-align:right"></label>
+                                                            </td>
+
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    .activeClass {
+        background: #ffdb99;
+    }
+
+    .secondClass {
+        /*background: #FF9999;*/
+        color: red;
+    }
+</style>
+<script>
+    document.getElementById("a1").className = "active";
+
+</script>
+<script>
+    $(document).ready(function () {
+        $("#getBranchManager").hide();
+        $("#newgetBranchManager").hide();
+        $("#newgetBranchid").hide();
+        $("#btnupdatenew").hide();
+        $("#btnsearchnew").hide();
+        
+        });
+    function isNumberKey(evt) {
+        debugger;
+        var charCode = (evt.which) ? evt.which : evt.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+    $('#btnsearchbrman').click(function () {
+        debugger;
+        var searchempid = document.getElementById("newempidbranch").value;
+        if (searchempid == "") {
+            showGlobalModal("I#Required#Please Enter New EmpId.");
+            $('#newempidbranch').focus();
+            return false;
+        }
+        $.ajax({
+            url: "/ChangeBranchManager/SearchNewEmpiddetails?searchempcode=" + searchempid,
+            dataType: "Json",
+            success: function (response) {
+                var empid_1 = response.lempidsearchAjax;
+                var empname_2 = response.lbrempnamesearchAjax;
+                var empdesig_3 = response.ldesignationsearchAjax;
+                var empbrname_4 = response.lbranchsearchAjax;
+                var empnoemperror = response.lerrnoempid;
+                var emperrorret = response.lerrretemp;
+                var empnoallot = response.lerrornoemp;
+                if (typeof empid_1 != "undefined" && typeof empname_2 != "undefined" && typeof empdesig_3 != "undefined" && typeof empbrname_4 !="undefined" && typeof empnoemperror == "undefined" && typeof emperrorret == "undefined" && typeof empnoallot == "undefined") {
+                    //document.getElementById("brname").value = bname;
+                    //document.getElementById("brname").value = bname;
+                    //document.getElementById("empidbranch").value = response.lempidbranchAjax;
+                    document.getElementById("empidbranch_new").innerHTML = response.lempidsearchAjax;
+                    //document.getElementById("brempname").value = response.lbrempnameAjax;
+                    document.getElementById("brempname_new").innerHTML = response.lbrempnamesearchAjax;
+                    document.getElementById("branchname_new").innerHTML = response.lbranchsearchAjax;
+                    //document.getElementById("brname").value = response.lbranchAjax;
+                    //document.getElementById("brdesignation").value = response.ldesignationAjax;
+                    document.getElementById("brdesignation_new").innerHTML = response.ldesignationsearchAjax;
+                    $("#getBranchManager").show();
+                    $("#newgetBranchid").show();
+                    $("#btnupdatenew").show();
+                    $("#btnsearchnew").show();
+                    $("#newgetBranchManager").show();
+                    $("#td_branchname").show();
+                    $("#th_branchname").show();
+                    $("#lblcurrbrmngr").show();
+                    $("#lblnewbrmngr").hide();
+                    $("#lblcurrbrmngr").show();
+                    document.getElementById("btnupdatebrman").disabled = false;
+                }
+                else if (response.lerrnoempid == "Employee doesn't exists..") {
+                    // alert("Something went wrong");
+                    //showGlobalModal("I#Required#Employee Doesn't Exists");
+                    alert(response.lerrnoempid);
+                    document.getElementById("newempidbranch").value = "";
+                    $("#newgetBranchManager").hide();
+                    document.getElementById("btnupdatebrman").disabled = true;
+                }
+                else if (response.lerrretemp == "Employee already retired..") {
+                    //showGlobalModal("I#Required#Employee Already Retired");
+                    alert(response.lerrretemp);
+                    document.getElementById("newempidbranch").value = "";
+                    $("#newgetBranchManager").hide();
+                    document.getElementById("btnupdatebrman").disabled = true;
+                }
+                else if (response.lerrornoemp != "" && response.lerrornoemp!=null)
+                {
+                    alert(response.lerrornoemp);
+                    $("#newgetBranchManager").hide();
+                    document.getElementById("btnupdatebrman").disabled = false;
+                }
+            },
+        });
+    });
+    $('#btngetbranchid').click(function () {
+        debugger;
+        var bname = $("#branchname").val();
+        $("#newgetBranchManager").hide();
+        $("#newgetBranchid").hide();
+        $("#btnupdatenew").hide();
+        $("#btnsearchnew").hide();
+        document.getElementById("newempidbranch").value = "";
+        if (bname == "") {
+            showGlobalModal("I#Required#Please Select Branch.");
+            $("#getBranchManager").hide();
+            //$("#branchname").focus();
+            return false;
+        }
+
+        $.ajax({
+
+            url: "/ChangeBranchManager/GetBranchManagerData?branch=" + bname,
+            dataType: "Json",
+            success: function (response) {
+
+                if (response.lerrnobranch != "No Record Found" && response != null) {
+                    //document.getElementById("brname").value = bname;
+                    //document.getElementById("brname").value = bname;
+                    //document.getElementById("empidbranch").value = response.lempidbranchAjax;
+                    document.getElementById("empidbranch").innerHTML = response.lempidbranchAjax;
+                    //document.getElementById("brempname").value = response.lbrempnameAjax;
+                    document.getElementById("brempname").innerHTML = response.lbrempnameAjax;
+                    //document.getElementById("brname").value = response.lbranchAjax;
+                    //document.getElementById("brdesignation").value = response.ldesignationAjax;
+                    document.getElementById("brdesignation").innerHTML = response.ldesignationAjax;
+                    $("#getBranchManager").show();
+                    $("#newgetBranchid").show();
+                    $("#btnupdatenew").show();
+                    $("#btnsearchnew").show();
+                    document.getElementById("btnupdatebrman").disabled = true;
+                    
+                }
+                else if (response.lerrnobranch =="No Record Found"){
+                    // alert("Something went wrong");
+                    alert(response.lerrnobranch);
+                    $("#getBranchManager").hide();
+                    $("#newgetBranchid").hide();
+                    $("#btnupdatenew").hide();
+                    $("#btnsearchnew").hide();
+                    document.getElementById("branchname").value = "";
+                    document.getElementById("btnupdatebrman").disabled = true;
+                }
+            },
+        });
+    });
+    $("#btnupdatebrman").click(function () {
+        debugger;
+        var emp_idnew = document.getElementById("newempidbranch").value;
+        var br_namenew = $("#branchname").val();
+        //var br_name = document.getElementById("brname").value;
+        //var br_empnamenew = document.getElementById("brempname_new").value;
+        //var br_id = document.getElementById("brempname_new").value;
+
+        if (emp_idnew == "") {
+            showGlobalModal("I#Required#Please Enter Employee ID.");
+            //$("#branchname").focus();
+            return false;
+        }
+        $.ajax({
+
+            url: "/ChangeBranchManager/UpdatenewbranchManager?empcodenew=" + emp_idnew + "&branchnamenew=" + br_namenew,// + "&branchid=" + br_id,
+            dataType: "Json",
+            success: function (response) {
+
+                if (response.lerrnoempid != "Employee doesn't exists.." && response.lerrretemp != "Employee already retired.." && response != null) {
+                    //document.getElementById("brname").value = bname;
+                    //document.getElementById("brname").value = bname;
+                    document.getElementById("empidbranch_new").innerHTML = response.lempidbranchnewAjax;
+                    document.getElementById("brempname_new").innerHTML = response.lbrempnamenewAjax;
+                    //document.getElementById("brname").value = response.lbranchAjax;
+                    document.getElementById("brdesignation_new").innerHTML = response.ldesignationnewAjax;
+                    //showGlobalModal("I#Required#New Branch Manager Sucessfully Inserted");
+                    alert(response.lsuccessmesAjax);
+                    $("#newgetBranchManager").show();
+                    $("#td_branchname").hide();
+                    $("#th_branchname").hide();
+                    $("#lblcurrbrmngr").hide();
+                    $("#lblnewbrmngr").show();
+                    $("#newgetBranchid").show();
+                    $("#btnupdatenew").show();
+                    $("#btnsearchnew").show();
+                    //document.getElementById("branchname").value = "";
+                    //window.location.reload();
+                }
+                else if (response.lerrnoempid == "Employee doesn't exists..") {
+                    // alert("Something went wrong");
+                    //showGlobalModal("I#Required#Employee Doesn't Exists");
+                    alert(response.lerrnoempid);
+                    document.getElementById("newempidbranch").value = "";
+                    $("#newgetBranchManager").hide();
+                }
+                else if (response.lerrretemp == "Employee already retired..") {
+                    //showGlobalModal("I#Required#Employee Already Retired");
+                    alert(response.lerrretemp);
+                    document.getElementById("newempidbranch").value = "";
+                    $("#newgetBranchManager").hide();
+                }
+            },
+        });
+        @*var emp_id = document.getElementById("empidbranch").value;
+        var br_name = document.getElementById("brname").value;
+
+        window.location = '@Url.Action("UpdatenewbranchManager", "ChangeBranchManager")?empcode=' + emp_id + '&branchname=' + br_name;*@
+    });
+</script>
+@*<script>
+        $(document).ready(function () {
+
+            Get1();
+        });
+        function Get1() {
+
+            var options = {};
+            options.url = "ChangeBranchManager/ChangeBranchManager",
+                options.type = "GET";
+            options.data = { "criteria": $("#companyName").val() };
+            options.dataType = "json";
+            options.success = function (data) {
+                $("#companyList").empty();
+                for (var i = 0; i < data.length; i++) {
+                    $("#companyList").append("<option value='" +
+                        data[i].EmpId + "' label='" +
+                        data[i].Name + "'></option>");
+                }
+            };
+            $.ajax(options);
+        }
+    </script>*@

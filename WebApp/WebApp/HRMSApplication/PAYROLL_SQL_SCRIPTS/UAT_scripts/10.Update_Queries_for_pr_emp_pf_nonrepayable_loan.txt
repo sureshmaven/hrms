@@ -1,0 +1,46 @@
+DECLARE @id INT
+SET @id = 0 
+UPDATE pr_emp_pf_repayable_loan SET @id = id = @id + 1 
+
+DECLARE @id INT
+SET @id = 0 
+UPDATE pr_emp_pf_nonrepayable_loan SET @id = id = @id + 1 
+
+
+UPDATE pr_emp_pf_nonrepayable_loan SET purpose_of_advance='8' WHERE emp_code=175 and purpose_of_advance is null;
+UPDATE pr_emp_pf_nonrepayable_loan SET purpose_of_advance='9' WHERE emp_code=176 and purpose_of_advance is null;
+UPDATE pr_emp_pf_nonrepayable_loan SET purpose_of_advance='9' WHERE emp_code=286 and purpose_of_advance is null;
+UPDATE pr_emp_pf_nonrepayable_loan SET purpose_of_advance='9' WHERE emp_code=293 and purpose_of_advance is null;
+UPDATE pr_emp_pf_nonrepayable_loan SET purpose_of_advance='8' WHERE emp_code=340 and purpose_of_advance is null;
+UPDATE pr_emp_pf_nonrepayable_loan SET purpose_of_advance='8' WHERE emp_code=354 and purpose_of_advance is null;
+UPDATE pr_emp_pf_nonrepayable_loan SET purpose_of_advance='9' WHERE emp_code=434 and total= 400479 and purpose_of_advance is null;
+UPDATE pr_emp_pf_nonrepayable_loan SET purpose_of_advance='8' WHERE emp_code=434 and purpose_of_advance is null;
+UPDATE pr_emp_pf_nonrepayable_loan SET purpose_of_advance='9' WHERE emp_code=438 and purpose_of_advance is null;
+UPDATE pr_emp_pf_nonrepayable_loan SET purpose_of_advance='9' WHERE emp_code=686 and purpose_of_advance is null;
+UPDATE pr_emp_pf_nonrepayable_loan SET purpose_of_advance='8' WHERE emp_code=5150 and total= 1240000 and purpose_of_advance is null;
+UPDATE pr_emp_pf_nonrepayable_loan SET purpose_of_advance='9' WHERE emp_code=5150 and total= 528488 and purpose_of_advance is null;
+UPDATE pr_emp_pf_nonrepayable_loan SET purpose_of_advance='8' WHERE emp_code=5740 and total= 530000 and purpose_of_advance is null;
+UPDATE pr_emp_pf_nonrepayable_loan SET purpose_of_advance='9' WHERE emp_code=5740 and total= 482593 and purpose_of_advance is null;
+UPDATE pr_emp_pf_nonrepayable_loan SET purpose_of_advance='8' WHERE emp_code=5781 and total= 0 and purpose_of_advance is null;
+UPDATE pr_emp_pf_nonrepayable_loan SET purpose_of_advance='9' WHERE emp_code=5781 and total= 245410 and purpose_of_advance is null;
+UPDATE pr_emp_pf_nonrepayable_loan SET purpose_of_advance='8' WHERE emp_code=5824 and total= 900000 and purpose_of_advance is null;
+UPDATE pr_emp_pf_nonrepayable_loan SET purpose_of_advance='9' WHERE emp_code=5824 and total= 338320 and purpose_of_advance is null;
+UPDATE pr_emp_pf_nonrepayable_loan SET purpose_of_advance='8' WHERE emp_code=6198 and total= 440000 and purpose_of_advance is null;
+UPDATE pr_emp_pf_nonrepayable_loan SET purpose_of_advance='9' WHERE emp_code=6198 and total= 249613 and purpose_of_advance is null;
+UPDATE pr_emp_pf_nonrepayable_loan SET purpose_of_advance='9' WHERE emp_code=532 and purpose_of_advance is null;
+UPDATE pr_emp_pf_nonrepayable_loan SET purpose_of_advance='9' WHERE emp_code=6338 and purpose_of_advance is null;
+UPDATE pr_emp_pf_nonrepayable_loan SET purpose_of_advance='9' WHERE emp_code=6373 and purpose_of_advance is null;
+UPDATE pr_emp_pf_nonrepayable_loan SET purpose_of_advance='9' WHERE emp_code=6408 and purpose_of_advance is null;
+UPDATE pr_emp_pf_nonrepayable_loan SET purpose_of_advance='9' WHERE emp_code=6434 and purpose_of_advance is null;
+UPDATE pr_emp_pf_nonrepayable_loan SET purpose_of_advance='9' WHERE emp_code=6449 and purpose_of_advance is null;
+
+
+
+UPDATE pr_emp_pf_repayable_loan SET purpose_of_advance='6' WHERE emp_code=184 and purpose_of_advance is null;
+UPDATE pr_emp_pf_repayable_loan SET purpose_of_advance='2' WHERE emp_code=371 and purpose_of_advance is null; 
+UPDATE pr_emp_pf_repayable_loan SET purpose_of_advance='2' WHERE emp_code=420 and purpose_of_advance is null;
+UPDATE pr_emp_pf_repayable_loan SET purpose_of_advance='4' WHERE emp_code=513 and purpose_of_advance is null;
+UPDATE pr_emp_pf_repayable_loan SET purpose_of_advance='5' WHERE emp_code=6330 and purpose_of_advance is null;
+UPDATE pr_emp_pf_repayable_loan SET purpose_of_advance='4' WHERE emp_code=523 and purpose_of_advance is null;
+UPDATE pr_emp_pf_repayable_loan SET purpose_of_advance='1' WHERE emp_code=462 and id = 19 and purpose_of_advance is null;
+UPDATE pr_emp_pf_repayable_loan SET purpose_of_advance='7' WHERE emp_code=462 and id = 20 and purpose_of_advance is null;

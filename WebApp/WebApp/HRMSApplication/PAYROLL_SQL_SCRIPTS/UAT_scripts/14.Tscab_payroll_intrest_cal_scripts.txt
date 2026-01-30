@@ -1,0 +1,56 @@
+alter table  pr_ob_share add op_bal_inst nvarchar(max);
+alter table  pr_pf_open_bal_year add op_bal_inst_year nvarchar(max);
+alter table  pr_pf_open_bal_year add op_bal_inst_NRloan nvarchar(max);
+
+alter table pr_pf_open_bal_year add RelievingDate nvarchar(max);
+alter table pr_pf_open_bal_year add PFcaldate nvarchar(max);
+alter table pr_pf_open_bal_year add status nvarchar(10);
+
+alter table pr_pf_open_bal_year add op_bal_own_inst nvarchar(max);
+alter table pr_pf_open_bal_year add op_bal_bank_inst nvarchar(max);
+alter table pr_pf_open_bal_year add op_bal_vpf_inst nvarchar(max);
+
+alter table pr_pf_open_bal_year add op_bal_inst_own_year nvarchar(max);
+alter table pr_pf_open_bal_year add op_bal_inst_bank_year nvarchar(max);
+alter table pr_pf_open_bal_year add op_bal_inst_vpf_year nvarchar(max);
+
+
+alter table pr_pf_open_bal_year add op_bal_inst_nrloan_own nvarchar(max);
+alter table pr_pf_open_bal_year add op_bal_inst_nrloan_bank nvarchar(max);
+alter table pr_pf_open_bal_year add op_bal_inst_nrloan_vpf nvarchar(max);
+
+
+
+CREATE TABLE [dbo].[pf_open_bal_mid_year](
+[id] [int] NULL,
+[emp_id] [int] NULL,
+[emp_code] [int] NULL,
+[Fy] [int] NULL,
+[os_open] [numeric](15, 2) NULL,
+[os_open_int] [numeric](15, 2) NULL,
+[bs_open] [numeric](15, 2) NULL,
+[bs_open_int] [numeric](15, 2) NULL,
+[vpf_open] [numeric](15, 2) NULL,
+[vpf_open_int] [numeric](15, 2) NULL,
+[os_cur] [numeric](15, 2) NULL,
+[os_cur_int] [numeric](15, 2) NULL,
+[bs_cur] [numeric](15, 2) NULL,
+[bs_cur_int] [numeric](15, 2) NULL,
+[vpf_cur] [numeric](15, 2) NULL,
+[vpf_cur_int] [numeric](15, 2) NULL,
+[pf_int_rate] [numeric](5, 2) NULL,
+[run_date] [date] NULL,
+[trans_id] [int] NULL,
+[pf_return] [numeric](15, 2) NULL,
+[vpf_return] [numeric](15, 2) NULL,
+[bank_return] [numeric](15, 2) NULL,
+[op_bal_inst] [nvarchar](max) NULL,
+[op_bal_inst_year] [nvarchar](max) NULL,
+[op_bal_inst_NRloan] [nvarchar](max) NULL,
+[RelievingDate] [nvarchar](max) NULL,
+[PFcaldate] [nvarchar](max) NULL
+) ;
+
+-- 16-03-2021
+alter table pr_pf_open_bal_year add inst_Acrued_pf_con nvarchar(max);
+update pr_pf_open_bal_year set inst_Acrued_pf_con ='36131'  where emp_code =340 and fy=2020

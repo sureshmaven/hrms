@@ -1,0 +1,1 @@
+runall.bat >>m.txt

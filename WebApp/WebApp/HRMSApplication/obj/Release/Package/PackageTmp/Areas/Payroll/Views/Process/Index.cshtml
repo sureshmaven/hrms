@@ -1,0 +1,77 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="leftmenu-container">
+                <div class="sidebar-menu">
+
+                @{Html.RenderPartial("_PVPayrollMenu");}
+
+            </div>
+                <div class="sidebar-content">
+                    <div class="main_heading heading_main">
+                        <h1>Payroll Process </h1>
+                        <div class="col-md-12">
+                            <ul class="index-menus">
+                                <li><a href="@Url.Action("PFInterestMonthwise", "Process")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="PF Interest Calculation" aria-hidden="true"></i> <span> PF Interest calculation </span></a> <span> : Calculate the interest based upon the Months</span></li>
+                                <li><a href="@Url.Action("CalculatePFforRetirement", "Process")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="PF Interest Calculation" aria-hidden="true"></i> <span> PF Interest Rate </span></a> <span> : Calculate the pf interest based year</span></li>
+                                <li><a href="@Url.Action("MonthEnd", "Process")"><i class="fa fa-exchange" data-toggle="tooltip" data-placement="right" title="Start Process" aria-hidden="true"></i> <span>Services   </span> </a> <span> :  Hour End Process, Month End Process, Year End Process </span></li>
+                                <li><a href="@Url.Action("PayslipUI", "Process")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="Payslip" aria-hidden="true"></i> <span> Payslip </span></a> <span> : Process The payslip for all the Employees</span></li>
+
+
+                                <li><a href="@Url.Action("TaxProcess", "Process")"><i class="fa fa-exchange" data-toggle="tooltip" data-placement="right" title="Tax Options" aria-hidden="true"></i> <span> Tax Options  </span> </a> <span> : It Gives the tax options for all the Employees</span></li>
+
+                                <li><a href="@Url.Action("TDSProcess", "Process")"><i class="fa fa-exchange" data-toggle="tooltip" data-placement="right" title="TDS Process" aria-hidden="true"></i> <span> TDS Process  </span> </a> <span> : It Calculates and Process the Tax Deducted at the Source(TDS) for all the Employees</span></li>
+                                <li><a href="@Url.Action("TDSUpdate", "Process")"><i class="fa fa-exchange" data-toggle="tooltip" data-placement="right" title="TDS Update" aria-hidden="true"></i> <span> TDS Update  </span> </a> <span> : Update the Tax Deducted at the Source(TDS) for the all the Employees</span></li>
+                                <li><a href="@Url.Action("EncashmentProcess", "Process")"><i class="fa fa-lock" data-toggle="tooltip" data-placement="right" title="Encashment" aria-hidden="true"></i> <span> Encashment  </span></a> <span> : It Process the Encashment for the all the Employees</span></li>
+
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="main_heading heading_main mt_10">
+                        <h1>HRMS Process </h1>
+                        <div class="col-md-12">
+                            <ul class="index-menus">
+                                <li><a href="@Url.Action("PostIncrements", "HRMSProcess")"><i class="fa fa-lock" data-toggle="tooltip" data-placement="right" title="Post Increments" aria-hidden="true"></i> <span>Post Increments </span> </a> <span> : Process The Post Increments for all the Employees</span></li>
+                                @*<li>
+                                    <a href="#"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="PF contribution card " aria-hidden="true"></i><span> PF contribution card </span></a> <span>  : Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's</span>
+                                    <ul class="index-menus2">
+                                        <li><a href="@Url.Action("SingleEmployee", "HRMSProcess")"><i class="fa fa-pencil-square-o" data-toggle="tooltip" data-placement="right" title="Single Employee"></i> Single Employee </a> <span> : Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's</span></li>
+                                        <li><a href="@Url.Action("AllEmployees", "HRMSProcess")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="All Employees"></i> All Employees</a> <span> : Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's</span></li>
+                                    </ul>
+                                </li>*@
+                                <li>
+                                    <a href="#"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="PF Security" aria-hidden="true"></i><span> PF Security</span></a> <span>  : It Contains The Processing of PF Non-Repayable Loans and PF Re-Payable Loans </span>
+                                    <ul class="index-menus2">
+                                        <li><a href="@Url.Action("PFNonRepayableProcess", "Process")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="PFNonRepayable" aria-hidden="true"></i><span> PF Non-Repayable Loans</span></a> <span> : It is Used to Process The Non-Repayable Loans for The Employees</span></li>
+                                        <li><a href="@Url.Action("PFRepayableProcess", "Process")"><i class="fa fa-exchange" data-toggle="tooltip" data-placement="right" title="PF Repayable Loans" aria-hidden="true"></i><span> PF Re-Payable Loans</span> </a> <span> : It is Used to Process The Repayable Loans for The Employees</span></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+				</div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+<script>
+    function getDataAfterProcess(empcode) {
+     
+        CommonApiGET('/Payroll/Process/getAllowanceData', function (respData) {
+            
+            showGlobalModal("I#Required Field#Allowances Processed Successfully.");
+            //orgCancelData = respData;
+            //fillDataTables(respData);
+        });
+    }
+</script>
+

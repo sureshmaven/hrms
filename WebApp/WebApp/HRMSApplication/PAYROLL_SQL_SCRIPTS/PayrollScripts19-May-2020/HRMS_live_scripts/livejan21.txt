@@ -1,0 +1,95 @@
+insert into pr_emp_adv_loans_child(id,emp_adv_loans_mid,slno,date_disburse,loan_amount,interest_rate,interest_accured,principal_amount_recovered,
+interest_amount_recovered,total_amount_recovered,priority,principal_start_date,principal_end_date,interest_start_date,interest_end_date,
+total_principal_installments,total_interest_installments,os_principal_amount,os_interest_amount,os_this_month_interest,os_total_amount,
+principal_recovered_flag,interest_recovered_flag,active,trans_id,loan_sl_no)
+values((select last_num from new_num where table_name='pr_emp_adv_loans_child')+1,
+(select id from pr_emp_adv_loans where emp_code=847	and loan_type_mid=	25),1,
+(select installment_start_date from pr_emp_adv_loans where emp_code=847 and loan_type_mid=25),
+(select total_amount from pr_emp_adv_loans where emp_code=	847	and loan_type_mid=	25),8.0,51742,83360,0,83360,1,
+(select installment_start_date from pr_emp_adv_loans where emp_code=	847	 and loan_type_mid=	25),
+(select installment_end_date from pr_emp_adv_loans where emp_code=	847	and loan_type_mid=25),NULL,NULL,
+(select principal_installment from pr_emp_adv_loans where emp_code=	847	and loan_type_mid=25),
+(select interest_installment from pr_emp_adv_loans where emp_code=847 and loan_type_mid=25),916640,	51742,0,968382,0,0,1,1000,
+(select loan_sl_no from pr_emp_adv_loans where emp_code=	847	and loan_type_mid=	25));
+
+update new_num set last_num=(select max(id) from pr_emp_adv_loans_child) where table_name='pr_emp_adv_loans_child';
+
+insert into pr_emp_adv_loans_child(id,emp_adv_loans_mid,slno,date_disburse,loan_amount,interest_rate,interest_accured,principal_amount_recovered,
+interest_amount_recovered,total_amount_recovered,priority,principal_start_date,principal_end_date,interest_start_date,interest_end_date,
+total_principal_installments,total_interest_installments,os_principal_amount,os_interest_amount,os_this_month_interest,os_total_amount,
+principal_recovered_flag,interest_recovered_flag,active,trans_id,loan_sl_no)
+values((select last_num from new_num where table_name='pr_emp_adv_loans_child')+1,
+(select id from pr_emp_adv_loans where emp_code=785	and loan_type_mid=	7),	1,	
+(select installment_start_date from pr_emp_adv_loans where emp_code=785	and loan_type_mid=7),
+(select total_amount from pr_emp_adv_loans where emp_code=	785	and loan_type_mid=	7),9.50,73554,36890,0,36890,1,
+(select installment_start_date from pr_emp_adv_loans where emp_code=785	and loan_type_mid=	7),
+(select installment_end_date from pr_emp_adv_loans where emp_code=785 and loan_type_mid=	7),NULL,NULL,
+(select principal_installment from pr_emp_adv_loans where emp_code=785 and loan_type_mid=	7),
+(select interest_installment from pr_emp_adv_loans where emp_code=785 and loan_type_mid=	7),963110,73554,0,1036664,0,0,1,1000,
+(select loan_sl_no from pr_emp_adv_loans where emp_code=785	and loan_type_mid=	7));
+
+update new_num set last_num=(select max(id) from pr_emp_adv_loans_child) where table_name='pr_emp_adv_loans_child';
+
+insert into pr_emp_adv_loans_child(id,emp_adv_loans_mid,slno,date_disburse,loan_amount,interest_rate,interest_accured,principal_amount_recovered,
+interest_amount_recovered,total_amount_recovered,priority,principal_start_date,principal_end_date,interest_start_date,interest_end_date,
+total_principal_installments,total_interest_installments,os_principal_amount,os_interest_amount,os_this_month_interest,os_total_amount,
+principal_recovered_flag,interest_recovered_flag,active,trans_id,loan_sl_no)
+values((select last_num from new_num where table_name='pr_emp_adv_loans_child')+1,
+(select id from pr_emp_adv_loans where emp_code=590	and loan_type_mid=7),1,
+(select installment_start_date from pr_emp_adv_loans where emp_code=590	and loan_type_mid=7),
+(select total_amount from pr_emp_adv_loans where emp_code=	590	and loan_type_mid=7),9.50,30462,20840,0,20840,1,
+(select installment_start_date from pr_emp_adv_loans where emp_code=590	 and loan_type_mid=7),
+(select installment_end_date from pr_emp_adv_loans where emp_code=	590	and loan_type_mid=7),NULL,NULL,
+(select principal_installment from pr_emp_adv_loans where emp_code=	590	and loan_type_mid=7),
+(select interest_installment from pr_emp_adv_loans where emp_code=590 and loan_type_mid=7),979160,30462,0,1009622,0,0,1,1000,
+(select loan_sl_no from pr_emp_adv_loans where emp_code=	590	and loan_type_mid=	7));
+
+update new_num set last_num=(select max(id) from pr_emp_adv_loans_child) where table_name='pr_emp_adv_loans_child';
+
+insert into pr_emp_adv_loans_child(id,emp_adv_loans_mid,slno,date_disburse,loan_amount,interest_rate,interest_accured,principal_amount_recovered,
+interest_amount_recovered,total_amount_recovered,priority,principal_start_date,principal_end_date,interest_start_date,interest_end_date,
+total_principal_installments,total_interest_installments,os_principal_amount,os_interest_amount,os_this_month_interest,os_total_amount,
+principal_recovered_flag,interest_recovered_flag,active,trans_id,loan_sl_no)
+values((select last_num from new_num where table_name='pr_emp_adv_loans_child')+1,
+(select id from pr_emp_adv_loans where emp_code=484	and loan_type_mid=25),1,
+(select installment_start_date from pr_emp_adv_loans where emp_code=484	and loan_type_mid=	25),
+(select total_amount from pr_emp_adv_loans where emp_code=	484	and loan_type_mid=	25),8.0,11451,22500,0,22500,1,
+(select installment_start_date from pr_emp_adv_loans where emp_code=484	and loan_type_mid=25),
+(select installment_end_date from pr_emp_adv_loans where emp_code=	484	and loan_type_mid=	25),NULL,NULL,
+(select principal_installment from pr_emp_adv_loans where emp_code=	484	and loan_type_mid=	25),
+(select interest_installment from pr_emp_adv_loans where emp_code=484 and loan_type_mid=	25),177500,11451,0,188951,0,0,1,1000,
+(select loan_sl_no from pr_emp_adv_loans where emp_code=	484	and loan_type_mid=	25));
+
+update new_num set last_num=(select max(id) from pr_emp_adv_loans_child) where table_name='pr_emp_adv_loans_child';
+
+insert into pr_emp_adv_loans_child(id,emp_adv_loans_mid,slno,date_disburse,loan_amount,interest_rate,interest_accured,principal_amount_recovered,
+interest_amount_recovered,total_amount_recovered,priority,principal_start_date,principal_end_date,interest_start_date,interest_end_date,
+total_principal_installments,total_interest_installments,os_principal_amount,os_interest_amount,os_this_month_interest,os_total_amount,
+principal_recovered_flag,interest_recovered_flag,active,trans_id,loan_sl_no)
+values((select last_num from new_num where table_name='pr_emp_adv_loans_child')+1,
+(select id from pr_emp_adv_loans where emp_code=363	and loan_type_mid=24),1,
+(select installment_start_date from pr_emp_adv_loans where emp_code=363	and loan_type_mid=24),
+(select total_amount from pr_emp_adv_loans where emp_code=	363	and loan_type_mid=	24),12.00,6015,28000,0,28000,1,
+(select installment_start_date from pr_emp_adv_loans where emp_code=363	 and loan_type_mid=	24),
+(select installment_end_date from pr_emp_adv_loans where emp_code=363	and loan_type_mid=24),NULL,NULL,
+(select principal_installment from pr_emp_adv_loans where emp_code=363	and loan_type_mid=24),	
+(select interest_installment from pr_emp_adv_loans where emp_code=363 and loan_type_mid=24),27990,6015,0,34005,0,0,1,1000,
+(select loan_sl_no from pr_emp_adv_loans where emp_code=	363	and loan_type_mid=	24));
+
+update new_num set last_num=(select max(id) from pr_emp_adv_loans_child) where table_name='pr_emp_adv_loans_child';
+
+insert into pr_emp_adv_loans_child(id,emp_adv_loans_mid,slno,date_disburse,loan_amount,interest_rate,interest_accured,principal_amount_recovered,
+interest_amount_recovered,total_amount_recovered,priority,principal_start_date,principal_end_date,interest_start_date,interest_end_date,
+total_principal_installments,total_interest_installments,os_principal_amount,os_interest_amount,os_this_month_interest,os_total_amount,
+principal_recovered_flag,interest_recovered_flag,active,trans_id,loan_sl_no)
+values((select last_num from new_num where table_name='pr_emp_adv_loans_child')+1,
+(select id from pr_emp_adv_loans where emp_code=834	and loan_type_mid=	24),1,
+(select installment_start_date from pr_emp_adv_loans where emp_code=834	and loan_type_mid=24),	
+(select total_amount from pr_emp_adv_loans where emp_code=834 and loan_type_mid=	24),8.0,3858,11900,0,11900,1,
+(select installment_start_date from pr_emp_adv_loans where emp_code=	834	 and loan_type_mid=	24),
+(select installment_end_date from pr_emp_adv_loans where emp_code=834 and loan_type_mid=24),NULL,NULL,
+(select principal_installment from pr_emp_adv_loans where emp_code=	834	and loan_type_mid=	24),
+(select interest_installment from pr_emp_adv_loans where emp_code=834 and loan_type_mid=	24),69380,3858,0,73238,0,0,1,1000,
+(select loan_sl_no from pr_emp_adv_loans where emp_code=	834	and loan_type_mid=	24));
+
+update new_num set last_num=(select max(id) from pr_emp_adv_loans_child) where table_name='pr_emp_adv_loans_child';

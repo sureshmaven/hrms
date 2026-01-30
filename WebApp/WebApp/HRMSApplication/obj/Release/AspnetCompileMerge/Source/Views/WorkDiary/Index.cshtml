@@ -1,0 +1,1325 @@
+﻿@model Entities.WorkDiary
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var rolepages = TempData["RolePages"].ToString();
+    ViewBag.RolePages = TempData["RolePages"];
+}
+@{
+    var message = TempData["AlertMessage"] ?? string.Empty;
+}
+
+
+
+<script type="text/javascript">
+    var message = '@message';
+    if (message) alert(message);
+</script>
+<div class="container body-content">
+    <div class="container">
+        <div class="panel with-nav-tabs panel-primary">
+            <div class="panel-heading">
+                @{
+                    <ul class="nav nav-tabs">
+                        @if (rolepages.Contains("WDIAR"))
+                        {
+                            <li class="active"><a href=@Url.Action("Index", "WorkDiary")>Work Dairy Apply</a></li>
+                        }
+                        @if (rolepages.Contains("WDAPL"))
+                        {
+                            <li><a href=@Url.Action("WorkApproval", "WorkDiary")>Work Dairy Approvals</a></li>
+                        }
+                        @if (rolepages.Contains("WDSHY"))
+                        {
+                            <li><a href=@Url.Action("SanctionWorkApproval", "WorkDiary")>Sanctioning History</a></li>
+                        }
+                    </ul>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="page_st">
+        <div class="page">
+            <div class="col-md-12 col-sm-12">
+                <div class="main_heading">
+                    <h1>Work Diary</h1>
+                    @using (Html.BeginForm("Workdiarypost", "WorkDiary", FormMethod.Post))
+                    {
+                        <div class="col-md-12">
+                            <div class="main_heading">
+                                <h1>Apply Work Diary</h1>
+
+                                <div class="form-horizontal">
+                                    @*<div class="col-md-5 col-sm-12 col-xs-12">
+                                            <table id="myTextArea" class="workdiary" style="margin: 0 0 30px 0; width:100%;"></table>
+                                        </div>*@
+
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label label_left">Controlling Authority:<span class="mandatory">*</span></label>
+                                            <div class="col-sm-7">
+                                                <input type="text" value="@ViewBag.Controlling" name="control" class="form-control" readonly="readonly" />
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" value="" id="wdid" name="WDId" />
+                                    <input type="hidden" value="N" id="action" name="ActionType" />
+                                    <input type="hidden" value="@ViewBag.Sancationing" name="sanction" class="form-control" readonly="readonly" />
+                                    <input type="hidden" value="@ViewBag.Controlid" name="controlid" />
+                                    <input type="hidden" value="@ViewBag.Sanctionid" name="sanctionid" />
+
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Work Date: <span class="mandatory">*</span></label>
+                                            <div class="col-sm-7">
+                                                <div class="input-group date">
+                                                    @Html.TextBoxFor(model => model.WDDate, new { @class = "form-control", @id = "workdate", onchange = "return Workdiarydate();", onkeypress = "return nokeyword(event)" })<span id="dateicon" class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                    @Html.HiddenFor(model => model.WDDate)
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <table class="table table-bordered relation" id="addedRows" style="width:100%">
+                                            <tbody>
+                                                <tr>
+
+                                                    @*<th width="250">Work Name</th>*@
+
+                                                    <th>Work Description</th>
+                                                    @*<th colspan="2">Action</th>*@
+
+                                                </tr>
+
+                                                <tr>
+                                                    @*<td>
+                                                       
+                                                        <div id="dvregular">
+
+                                                            <select class="form-control" id="wname" name="workname[]" value="">
+                                                                @{
+                                                                    <option>Please Select</option>
+                                                                    foreach (var item in @ViewBag.worklist)
+                                                                    {
+                                                                        <option>@item.Text</option>
+                                                                    }
+                                                                }
+
+                                                            </select>
+
+                                                        </div>
+                                                    </td>*@
+                                                    <td>
+                                                        <textarea class="form-control" id="wdes" name="workdes[]" onkeyup="return textarea();" style="width:100%!important; height:136px!important;" value=""></textarea>
+                                                    @*<td width="100"><input type="button" class="btn btn-info" value="Add" onclick="addMoreRows()" /></td>*@
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="pull-right">
+                                            <input type="button" value="Cancel" id="reset" onclick="return restform();" class="btn btn-default" style="float: left;margin: 0 4px 0 0;">
+
+                                            <input type="submit" value="Draft" name="draft" onclick="return WDsubmit();" id="draftstatuss" class="btn btn-savedraf" style="float:left;">
+                                            <input type="submit" id="sub" value="Submit" onclick="return WDsubmit();" class="btn btn-primary" style="float: right;margin: 0 0 0 4px;">
+                                            <input type="submit" value="Delete" id="wddelete" name="wddelete" onclick="return Confirm();" class="btn btn-danger" style="display:none;float: right;margin: 0 0 0 4px;">
+                                            @*<span id="draftstatuss">&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" class="radio-inline" name="draft" id="saveas" value="savedraft" />&nbsp;<label for="saveas">Save as Draft</label> </span>*@
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <br />
+                        <div class="col-md-12">
+                            <div class="main_heading">
+                                <h1>Work Diary History</h1>
+                                <div class="form-horizontal">
+                                    <div class="col-md-3 col-sm-3 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label label_left">From Date:</label>
+                                            <div class="input-group date col-sm-7 p0">
+                                                <input type="text" id="Wdate" class="form-control dfltdate" data-date-format="dd/mm/yyyy" onkeypress="return nokeyword(event)"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-3 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label label_left">To Date:</label>
+                                            <div class="input-group date col-sm-8">
+                                                <input type="text" id="Wdateto" class="form-control"  data-date-format="dd/mm/yyyy" onkeypress="return nokeyword(event)"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*<div class="col-md-3 col-sm-3 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">Work Name:</label>
+                                            <div class="col-sm-7">
+
+                                                @Html.DropDownList("leaveid", @ViewBag.worklist1 as SelectList, new { @class = "form-control", @id = "Wname" })
+
+                                            </div>
+                                        </div>
+                                    </div>*@
+                                    <div class="col-md-2 col-sm-3 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label ">Status:</label>
+                                            <div class="col-sm-7 p0">
+                                                @Html.DropDownList("Status", new[] {
+                                                                    new SelectListItem() {Text = "ALL",Value = "ALL"},
+                                                                     new SelectListItem() {Text = "Draft",Value = "Draft"},
+                                                                    new SelectListItem() {Text = "Pending",Value = "Pending"},
+                                                                    //new SelectListItem() {Text = "Forwarded",Value = "Forwarded"},
+                                                                     new SelectListItem() {Text = "Approved",Value = "Approved" },
+
+                                        }, new { @class = "form-control" })
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1 col-sm-1 col-xs-12">
+                                        <button type="button" id="btnApply" class="btn btn-primary btn-sm pull-right">Search</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div id="grid"></div>
+
+
+                                </div>
+                                <div class="col-md-2 m_20">
+
+                                    <input type="button" class="btn btn-info" value="Download PDF" id='pdf' onclick='window.location = "@Url.Action("CreatePdfWorkDairyApply", "WorkDiary")";' />
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+      
+        var myDate = new Date();
+        $('#Wdateto').datepicker();
+        $('#Wdateto').datepicker('setDate', myDate);
+        $('.dfltdate').datepicker();
+        $('.dfltdate').datepicker('setDate', myDate);
+    });
+</script>
+
+<script>
+    var rowCount = 1;
+    function addMoreRows() {
+        var x = document.getElementsByName("workname[]");
+        rowCount = x.length;
+        var recRow = '<tr id="rowCount' + rowCount + '"><td><div id="dvregular' + rowCount + '">@{var worklist = @ViewBag.worklist;}<select class="form-control" id="wname' + rowCount + '" name="workname[]" value="">@{<option>Please Select</option>foreach (var item in worklist) {<option>@item.Text</option>}}</select> </div> <div id="dvother' + rowCount + '" style="display:none"><input class="form-control" type="text" id="others" name="others[]"/> </div></td><td><textarea class="form-control" id="wdes" name="workdes[]" style="width:100% !important" value=""></textarea></td><td><input type="button" class="btn btn-info" value="Remove" onclick="removeRow(' + rowCount + ');" /></td></tr>';
+        jQuery('#addedRows').append(recRow);
+    }
+    function removeRow(removeNum) {
+        jQuery('#rowCount' + removeNum).remove();
+    }
+    function restform() {
+        $('#wname').val('Please Select');
+        $('#wdes').val('');
+        $('#workdate').val('');
+        var x = document.getElementsByName("workname[]");
+        rowCount = x.length;
+        for (var i = 1; i < rowCount; i++) {
+            jQuery('#rowCount' + i).remove();
+        }
+    }
+
+</script>
+
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+      
+        Get1();
+       
+        var source =
+                {
+                    datatype: "json",
+                    datafields: [
+                                    { name: 'Id', type: 'int' },
+                                    { name: 'EmpId', type: 'int' },
+                                    { name: 'ShortName', type: 'string' },
+                                    { name: 'BrDepot', type: 'string' },
+                                    { name: 'Designation', type: 'int' },
+                                    { name: 'WDDate', type: 'date'},
+                                    { name: 'Name', type: 'string' },
+                                    { name: 'UpdatedDate', type: 'date' },
+                                    { name: 'Status', type: 'string' },
+                                    { name: 'Desc', type: 'string' },
+                                    { name: 'Action', type: 'string' },
+                    ],
+                    async: false,
+                    url: '/WorkDiary/allworkdiaries',
+                    data: {
+                        featureClass: "P",
+                        style: "full",
+                        maxRows: 2,
+                        username: "jqwidgets"
+                    }
+                };
+
+        var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties, rowdata) {
+            if (value == "Pending") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #FFA500;">' + value + '</span>';
+            }
+            else if (value == "Forwarded") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #33b5e5;">' + value + '</span>';
+            }
+            else if (value == "Approved") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #00C851;">' + value + '</span>';
+            }
+            else {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #ff4444;">' + value + '</span>';
+            }
+        }
+
+        var dataAdapter = new $.jqx.dataAdapter(source,
+                        {
+                            formatData: function (data) {
+                                data.EmpId = $("#searchField").val();
+                                return data;
+                            }
+                        }
+        );
+        var editrowindex = -1;
+        var delrowindex = -1;
+        $("#grid").jqxGrid(
+                        {
+                            width: '100%',
+                            source: dataAdapter,
+                            theme: otherTheme,
+                            autoheight: true,
+                            sortable: true,
+                            pageable: true,
+                            columnsResize: true,
+                            groupable: true,
+                            altRows: true,
+                            filterable: true,
+                            autoshowfiltericon: true,
+                            ready: function () {
+                                $("#grid").jqxGrid('localizestrings', localizationObject);
+                                $("#grid").jqxGrid('showgroupsheader', false);
+                            },
+                            updatefilterconditions: function (type, defaultconditions) {
+                                switch (type) {
+                                    case 'stringfilter':
+                                        return stringcomparisonoperators;
+                                    case 'numericfilter':
+                                        return numericcomparisonoperators;
+                                    case 'datefilter':
+                                        return datecomparisonoperators;
+                                    case 'booleanfilter':
+                                        return booleancomparisonoperators;
+                                }
+                            },
+                            updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                                                    filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                                var index1 = 0;
+                                var index2 = 0;
+                                if (columnfilter != null) {
+                                    var filter1 = columnfilter.getfilterat(0);
+                                    var filter2 = columnfilter.getfilterat(1);
+                                    if (filter1) {
+                                        index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                                        var value1 = filter1.filtervalue;
+                                        filterinputfield1.val(value1);
+                                    }
+                                    if (filter2) {
+                                        index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                                        var value2 = filter2.filtervalue;
+                                        filterinputfield2.val(value2);
+                                    }
+                                }
+                                filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                                filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                            },
+
+                            columns: [
+                                                { text: "Emp Code", datafield: "EmpId", width: 80, draggable: false, editable: false },
+                                                { text: "Name", datafield: "ShortName", width: 127, draggable: false, editable: false },
+                                                { text: "Branch/Department", datafield: "BrDepot", editable: false, width: 135 },
+                                                { text: 'Designation', editable: false, datafield: 'Designation', align: 'center', width: 90 },
+                                                { text: 'Applied Date', editable: false, datafield: 'UpdatedDate', align: 'center', width: 130, cellsformat: 'dd/MM/yyyy' },
+                                                { text: 'Work Date', editable: false, datafield: 'WDDate', align: 'center', width: 130, cellsformat: 'dd/MM/yyyy', hidden: true },
+                                                //{ text: 'Work Name', editable: false, datafield: 'Name', align: 'center', width: 180 },
+                                                { text: 'Work Description', editable: false, datafield: 'Desc', align: 'center', width: 220 },
+                                                { text: 'Status', editable: false, cellsrenderer: cellsrenderer, datafield: 'Status', align: 'center', width: 100 },
+                                                {
+                                                    text: 'Edit', datafield: 'Edit', sortable: false, filterable: false, align: 'center', columngroup: 'Actions', columntype: 'button', width: 80, cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties) {
+                                                        var rowData = $("#grid").jqxGrid('getrowdata', row);
+                                                        if (rowData.Status == 'Approved') {
+                                                            return "Approved";
+                                                        } else if (rowData.Name == 'Holiday') {
+                                                            return "holiday";
+                                                        }
+                                                        else {
+
+                                                            return "Edit"
+
+                                                        }
+                                                    }, buttonclick: function (row) {
+
+                                                        editrowindex = row;
+                                                        var bidval = $("#grid").jqxGrid('getcellvalue', row, "Status");
+                                                        if (bidval == "Draft") {
+                                                            document.getElementById("draftstatuss").style.display = 'block';
+                                                            // document.getElementById("wddelete").style.display = 'block';
+                                                        }
+                                                        document.getElementById("wddelete").style.display = 'none';
+                                                        document.getElementById('workdate').value;
+                                                        // document.getElementById('workdate').disabled = true;
+                                                        document.getElementById("reset").style.display = 'block';
+                                                        document.getElementById("sub").style.display = 'block';
+
+                                                        $("#workdate").prop("readonly", true);
+
+                                                        $('#workdate').attr('readonly', true);
+                                                        $('#workdate').addClass('input-disabled');
+
+                                                        if (bidval == "Approved") {
+                                                            return "";
+                                                           // alert("WorkDiary already Approved cannot Edit");
+                                                        }
+
+                                                        else {
+                                                            //if (bidval != "Aprroved") {
+                                                            //    document.getElementById("wddelete").style.display = 'block';
+                                                            //}
+                                                            if (bidval != "Draft")
+                                                            {
+                                                                document.getElementById("draftstatuss").style.display = 'none';
+                                                                
+                                                            }
+                                                            
+                                                            $('html, body').animate({
+                                                                scrollTop: $("#addedRows").offset().top
+                                                            });
+                                                            var workdates = document.getElementById("workdate").value;
+                                                            var Actiontypes = document.getElementById("action").value;
+
+                                                            document.getElementById("action").value = "U";
+                                                            var Actiontypes = document.getElementById("action").value;
+
+                                                            document.getElementById("action").innerHTML = Actiontypes;
+                                                            var workid = document.getElementById("wdid").value;
+
+                                                           var paginginformation = $('#grid').jqxGrid('getpaginginformation');
+                                                            var id = $("#grid").jqxGrid('getcellvalue', row, "Id");
+                                                            var mainres;
+                                                            $.ajax({
+                                                                type: "GET",
+                                                                url: "WorkDiary/EditNew?id=" + id,
+                                                                dataType: "Json",
+                                                                success: function (response) {
+                                                                    console.log(response);
+                                                                    mainres = response;
+
+                                                                    if (response.length != 0) {
+
+                                                                        document.getElementById("addedRows").innerHTML = '';
+                                                                        var recRow = '';
+                                                                        var workdates = '';
+
+                                                                        var recRow = '<tr><th>WorkDescription</th><tr>';
+                                                                        for (var i = 0; i < response.length; i++) {
+
+                                                                            if (i > 0) {
+                                                                                recRow += '<tr id="rowCount' + i + '"><td><textarea class="form-control" id="wdes" name="workdes[]" style="width:100% !important">' + response[i].WorkDesc + '</textarea></td></tr>';
+                                                                            }
+                                                                            else {
+                                                                                workdates = response[i].WDDate;
+                                                                                document.getElementById("wdid").value = response[i].WDId;
+                                                                                recRow += '<tr id="rowCount' + i + '"><td><textarea class="form-control" id="wdes" name="workdes[]" style="width:100% !important">' + response[i].WorkDesc + '</textarea></td></tr>';
+                                                                            }
+                                                                        }
+
+                                                                        jQuery('#addedRows').append(recRow);
+                                                                        for (var i = 0; i < mainres.length; i++) {
+                                                                            console.log(mainres[i].WorkName);
+                                                                            $("#wname" + i).val(mainres[i].WorkName);
+                                                                        }
+                                                                        var date = workdates;
+                                                                        var d = new Date(date.split("/").reverse().join("-"));
+                                                                        var dd = d.getDate();
+                                                                        var mm = d.getMonth() + 1;
+                                                                        var yy = d.getFullYear();
+                                                                        var newdate = dd + "/" + mm + "/" + yy;
+                                                                        document.getElementById("workdate").value = newdate;
+                                                                        document.getElementById("workdate").style.display = 'readonly';
+                                                                        // document.getElementById("draftstatuss").style.display = 'none';
+                                                                        document.getElementById('dateicon').style.display = 'block';
+
+                                                                    }
+                                                                    else {
+                                                                        jQuery('#addedRows').remove(recRow);
+                                                                    }
+                                                                    $("#reset").click(function () {
+                                                                        $('#wname0').val('Please Select');
+                                                                        $('#wdes').val('');
+                                                                        $('#workdate').val('');
+                                                                        for (var i = 1; i < response.length; i++) {
+                                                                            jQuery('#rowCount' + i).remove();
+                                                                        }
+                                                                        jQuery('#firstrowtd').remove();
+                                                                    })
+
+                                                                }
+                                                            })
+
+                                                        }
+                                                    }
+                                                },
+                            {
+                            text: 'Delete', datafield: 'Delete', sortable: false, filterable: false, align: 'center', columngroup: 'Actions', columntype: 'button', width: 80, cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties) {
+                                var rowData = $("#grid").jqxGrid('getrowdata', row);
+                                if (rowData.Status == 'Approved') {
+                                    return "Approved";
+                                } else if (rowData.Name == 'Holiday') {
+                                    return "holiday";
+                                }
+                                else {
+
+                                    return "Delete"
+
+                                }
+                                }, buttonclick: function (row) {
+
+                                editrowindex = row;
+                                var bidval = $("#grid").jqxGrid('getcellvalue', row, "Status");
+                                //document.getElementById("draftstatuss").style.display = 'none';
+                                //document.getElementById("sub").style.display = 'none';
+                                //document.getElementById("reset").style.display = 'none';
+                                document.getElementById("workdate").style.display = 'readonly';
+                                if (bidval == "Approved") {
+                                    return "";
+                                    // alert("WorkDiary already Approved cannot Edit");
+                                }
+
+                                else {
+                                   
+                                    if (bidval != "Aprroved") {
+                                        document.getElementById("wddelete").style.display = 'block';
+                                        document.getElementById("draftstatuss").style.display = 'none';
+                                        document.getElementById("reset").style.display = 'none';
+                                        document.getElementById("sub").style.display = 'none';
+                                        document.getElementById('workdate').disabled = true;
+                                        document.getElementById('dateicon').style.display = 'none';
+                                        
+                                    }
+                                    //if (bidval != "Draft")
+                                    //{
+                                    //    document.getElementById("draftstatuss").style.display = 'none';
+                                                                
+                                    //}
+                                    if (bidval == "Draft") {
+                                       
+                                        document.getElementById("wddelete").style.display = 'block';
+                                        document.getElementById("draftstatuss").style.display = 'none';
+                                        document.getElementById("reset").style.display = 'none';
+                                        document.getElementById("sub").style.display = 'none';
+                                        document.getElementById('workdate').disabled = true;
+                                        document.getElementById('dateicon').style.display = 'none';
+                                        
+                                    }
+                                                            
+                                    $('html, body').animate({
+                                        scrollTop: $("#addedRows").offset().top
+                                    });
+                                    var workdates = document.getElementById("workdate").value;
+                                    var Actiontypes = document.getElementById("action").value;
+
+                                    document.getElementById("action").value = "U";
+                                    var Actiontypes = document.getElementById("action").value;
+
+                                    document.getElementById("action").innerHTML = Actiontypes;
+                                    var workid = document.getElementById("wdid").value;
+
+                                    var paginginformation = $('#grid').jqxGrid('getpaginginformation');
+                                    var id = $("#grid").jqxGrid('getcellvalue', row, "Id");
+                                    var mainres;
+                                    $.ajax({
+                                        type: "GET",
+                                        url: "WorkDiary/EditNew?id=" + id,
+                                        dataType: "Json",
+                                        success: function (response) {
+                                            console.log(response);
+                                            mainres = response;
+
+                                            if (response.length != 0) {
+
+                                                document.getElementById("addedRows").innerHTML = '';
+                                                var recRow = '';
+                                                var workdates = '';
+
+                                                var recRow = '<tr><th>WorkDescription</th><tr>';
+                                                for (var i = 0; i < response.length; i++) {
+
+                                                    if (i > 0) {
+                                                        recRow += '<tr id="rowCount' + i + '"><td><textarea class="form-control" id="wdes" readonly="readonly" name="workdes[]" style="width:100% !important">' + response[i].WorkDesc + '</textarea></td></tr>';
+                                                    }
+                                                    else {
+                                                        workdates = response[i].WDDate;
+                                                        document.getElementById("wdid").value = response[i].WDId;
+                                                        recRow += '<tr id="rowCount' + i + '"><td><textarea class="form-control" id="wdes" readonly="readonly" name="workdes[]" style="width:100% !important">' + response[i].WorkDesc + '</textarea></td></tr>';
+                                                    }
+                                                }
+
+                                                jQuery('#addedRows').append(recRow);
+                                                for (var i = 0; i < mainres.length; i++) {
+                                                    console.log(mainres[i].WorkName);
+                                                    $("#wname" + i).val(mainres[i].WorkName);
+                                                }
+                                                var date = workdates;
+                                                var d = new Date(date.split("/").reverse().join("-"));
+                                                var dd = d.getDate();
+                                                var mm = d.getMonth() + 1;
+                                                var yy = d.getFullYear();
+                                                var newdate = dd + "/" + mm + "/" + yy;
+                                                document.getElementById("workdate").value = newdate;
+                                                document.getElementById("workdate").style.display = 'readonly';
+                                                // document.getElementById("draftstatuss").style.display = 'none';
+
+                                            }
+                                            else {
+                                                jQuery('#addedRows').remove(recRow);
+                                            }
+                                            $("#reset").click(function () {
+                                                $('#wname0').val('Please Select');
+                                                $('#wdes').val('');
+                                                $('#workdate').val('');
+                                                for (var i = 1; i < response.length; i++) {
+                                                    jQuery('#rowCount' + i).remove();
+                                                }
+                                                jQuery('#firstrowtd').remove();
+                                            })
+
+                                        }
+                                    })
+
+                                }
+                            }
+    }
+                            ], columngroups:
+                            [
+                                                        { text: 'Action', align: 'center', name: 'Actions', width: 160 },
+                            ],
+                            groups: ['WDDate'],
+
+                        });
+        $("#excelExport").jqxButton();
+        $("#excelExport").click(function () {
+            $("#grid").jqxGrid('exportdata', 'xls', 'EmpYearwiseLeaveBalance');
+        });
+    });
+            $("#btnApply").click(function () {
+
+
+                var Joindate = document.getElementById("Wdate").value;
+                var Retdate = document.getElementById("Wdateto").value;
+                var date = moment(Joindate, "DD.MM.YYYY");
+
+                var currentDate1 = moment(Retdate, "DD.MM.YYYY");
+                var duration = moment.duration(date.diff(currentDate1));
+
+
+                var startdate = $("#Wdate").val();
+                var enddate = $("#Wdateto").val();
+                var name = $("#Wname").val();
+                var Status = $("#Status").val();
+
+
+
+                if (startdate == "") {
+                    alert("PLease Select From Date ");
+                    return false;
+                }
+                else if (enddate == "") {
+                    alert("PLease Select To Date ");
+                    return false;
+                }
+                else if (duration > 0) {
+
+
+                    alert("Please ensure that To Date is greater than or equal to From Date.");
+                    document.getElementById("Wdateto").focus();
+                    document.getElementById("Wdateto").value = '';
+                    return false;
+
+                }
+
+                ajaxSpinnerShow();
+                var data = '[{"date": "1988-05-23T00:00:00.000"}]';
+                // prepare the data
+                var source =
+                    {
+                        type: "Post",
+                        datatype: "json",
+                        datafields: [
+                            { name: 'Id', type: 'int' },
+                            { name: 'EmpId', type: 'string' },
+                            { name: 'Name', type: 'string' },
+                            { name: 'Designation', type: 'string' },
+                            { name: 'BrDepot', type: 'string' },
+                            { name: 'UpdatedDate', type: 'date' },
+                            { name: 'WorkDate', type: 'date'},
+                            //{ name: 'WorkName', type: 'string' },
+                            { name: 'WorkDescription', type: 'string' },
+                            { name: 'Status', type: 'string' },
+                        ],
+                        async: false,
+                    url: "/WorkDiary/Selfworkdairysearch?StartDate=" + startdate + "&EndDate=" + enddate + "&workname=" + name + "&status=" + Status,
+                        data: {
+                            featureClass: "P",
+                            style: "full",
+                            username: "jqwidgets",
+
+
+                        },
+                        loadComplete: function () {
+                            ajaxSpinnerHide();
+                        }
+                    };
+                var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties, rowdata) {
+                    if (value == "Pending") {
+                        return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #FFA500;">' + value + '</span>';
+                    }
+                    else if (value == "Forwarded") {
+                        return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #33b5e5;">' + value + '</span>';
+                    }
+                    else if (value == "Denied") {
+                        return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #8B008B;">' + value + '</span>';
+                    }
+                    else if (value == "Approved") {
+                        return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #00C851;">' + value + '</span>';
+                    }
+                    else {
+                        return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #ff4444;">' + value + '</span>';
+                    }
+                }
+
+                var dataAdapter = new $.jqx.dataAdapter(source,
+                    {
+                        formatData: function (data) {
+                            data.ProductName = $("#searchField").val();
+                            return data;
+                        }
+                    }
+                );
+                // initialize jqxGrid
+                var editrowindex = -1;
+                var delrowindex = -1;
+                $("#grid").jqxGrid(
+                    {
+                        width: '100%',
+                        source: dataAdapter,
+                        theme: otherTheme,// for theme refernce go to Layout.cshtml
+                        autoheight: true,
+                        sortable: true,
+                        pageable: true,
+                        groupable: true,
+                        columnsResize: true,
+                        altRows: true,
+                        filterable: true,
+                        autoshowfiltericon: true,
+
+                        ready: function () {
+                            $("#grid").jqxGrid('localizestrings', localizationObject);
+                            $("#grid").jqxGrid('showgroupsheader', false);
+                        },
+                        updatefilterconditions: function (type, defaultconditions) {
+                            switch (type) {
+                                case 'stringfilter':
+                                    return stringcomparisonoperators;
+                                case 'numericfilter':
+                                    return numericcomparisonoperators;
+                                case 'datefilter':
+                                    return datecomparisonoperators;
+                                case 'booleanfilter':
+                                    return booleancomparisonoperators;
+                            }
+                        },
+                        updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                            filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                            var index1 = 0;
+                            var index2 = 0;
+                            if (columnfilter != null) {
+                                var filter1 = columnfilter.getfilterat(0);
+                                var filter2 = columnfilter.getfilterat(1);
+                                if (filter1) {
+                                    index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                                    var value1 = filter1.filtervalue;
+                                    filterinputfield1.val(value1);
+                                }
+                                if (filter2) {
+                                    index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                                    var value2 = filter2.filtervalue;
+                                    filterinputfield2.val(value2);
+                                }
+                            }
+                            filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                            filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                        },
+                        columns: [
+
+                            { text: "EmpCode", datafield: "EmpId", width: 70, draggable: false, editable: false },
+                            { text: "Name", datafield: "Name", width: 127, draggable: false, editable: false },
+                            { text: "Branch/Department", datafield: "BrDepot", editable: false, width: 135 },
+                            { text: 'Designation', editable: false, datafield: 'Designation', align: 'center', width: 90 },
+                            { text: 'AppliedDate', editable: false, datafield: 'UpdatedDate', align: 'center', width: 130, cellsformat: 'dd/MM/yyyy' },
+                            { text: 'WorkDate', editable: false, datafield: 'WorkDate', align: 'center', width: 100,cellsformat: 'dd/MM/yyyy',hidden: true },
+                            //{ text: 'WorkName', editable: false, datafield: 'WorkName', align: 'center', width: 170 },
+                            { text: 'WorkDescription', editable: false, datafield: 'WorkDescription', align: 'center', width: 350 },
+                            { text: 'Status', editable: false, cellsrenderer: cellsrenderer, datafield: 'Status', align: 'center', width: 80 },
+                            {
+                             text: 'Edit', datafield: 'Edit', sortable: false, filterable: false, align: 'center', columngroup: 'Actions', columntype: 'button', width: 80, cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties) {
+                                 var rowData = $("#grid").jqxGrid('getrowdata', row);
+                                 if (rowData.Status == 'Approved') {
+                                     return "Approved";
+                                 } else if (rowData.WorkName == "Holiday") {
+                                    return "holiday";
+                                 }
+                                 else {
+                                     return "Edit"
+                                 }
+                             }, buttonclick: function (row) {
+
+                                 editrowindex = row;
+                                 var bidval = $("#grid").jqxGrid('getcellvalue', row, "Status");
+                                 if (bidval == "Draft") {
+                                     document.getElementById("draftstatuss").style.display = 'block';
+                                     // document.getElementById("wddelete").style.display = 'block';
+                                 }
+                                 document.getElementById("workdate").attributes.display = 'readonly';
+                                 document.getElementById("wddelete").style.display = 'none';
+
+                                 document.getElementById("reset").style.display = 'block';
+                                 document.getElementById("sub").style.display = 'block';
+                                 if (bidval == "Approved") {
+                                     return "";
+                                 }
+                                 else if (bidval == "holiday") {
+
+                                 }
+                                 else {
+                                     if (bidval == "Draft") {
+                                         document.getElementById("draftstatuss").style.display = 'block';
+                                        // document.getElementById("wddelete").style.display = 'block';
+                                     }
+                                     if (bidval == "Pending") {
+                                         document.getElementById("draftstatuss").style.display = 'none';
+                                        // document.getElementById("wddelete").style.display = 'block';
+                                     }
+                                     $('html, body').animate({
+                                         scrollTop: $("#addedRows").offset().top
+                                     });
+                                     var workdates = document.getElementById("workdate").value;
+                                     var Actiontypes = document.getElementById("action").value;
+
+                                     document.getElementById("action").value = "U";
+                                     var Actiontypes = document.getElementById("action").value;
+
+                                     document.getElementById("action").innerHTML = Actiontypes;
+                                     var workid = document.getElementById("wdid").value;
+
+                                     var paginginformation = $('#grid').jqxGrid('getpaginginformation');
+                                     var id = $("#grid").jqxGrid('getcellvalue', row, "Id");
+                                     var mainres;
+                                     $.ajax({
+                                         type: "GET",
+                                         url: "WorkDiary/EditNew?id=" + id,
+                                         dataType: "Json",
+                                         success: function (response) {
+                                             console.log(response);
+                                             mainres = response;
+
+                                             if (response.length != 0) {
+
+                                                 document.getElementById("addedRows").innerHTML = '';
+                                                 var recRow = '';
+                                                 var workdates = '';
+
+                                                 var recRow = '<tr><th>WorkDescription</th><tr>';
+                                                 if (bidval == "Pending") {
+                                                     document.getElementById("draftstatuss").style.display = 'none';
+                                                 }
+                                                 if (bidval == "Draft") {
+                                                     document.getElementById("draftstatuss").style.display = 'initial';
+                                                 }
+                                                 for (var i = 0; i < response.length; i++) {
+
+                                                     if (i > 0) {
+                                                         recRow += '<tr id="rowCount' + i + '"><td><textarea class="form-control" id="wdes" name="workdes[]" onkeyup="return textarea();" style="width:100% !important">' + response[i].WorkDesc + '</textarea></td></tr>';
+                                                     }
+                                                     else {
+                                                         workdates = response[i].WDDate;
+                                                         document.getElementById("wdid").value = response[i].WDId;
+                                                         recRow += '<tr id="rowCount' + i + '"><td><textarea class="form-control" id="wdes" name="workdes[]" onkeyup="return textarea();" style="width:100% !important">' + response[i].WorkDesc + '</textarea></td></tr>';
+                                                     }
+                                                 }
+
+                                                 jQuery('#addedRows').append(recRow);
+                                                 for (var i = 0; i < mainres.length; i++) {
+                                                     console.log(mainres[i].WorkName);
+                                                     $("#wname" + i).val(mainres[i].WorkName);
+                                                 }
+                                                 var date = workdates;
+                                                 var d = new Date(date.split("/").reverse().join("-"));
+                                                 var dd = d.getDate();
+                                                 var mm = d.getMonth() + 1;
+                                                 var yy = d.getFullYear();
+                                                 var newdate = dd + "/" + mm + "/" + yy;
+                                                 document.getElementById("workdate").value = newdate;
+                                                 document.getElementById("workdate").style.display = 'readonly';
+                                                 if (bidval == "Pending") {
+                                                     document.getElementById("draftstatuss").style.display = 'none';
+                                                 }
+
+                                             }
+                                             else {
+                                                 jQuery('#addedRows').remove(recRow);
+                                             }
+                                             $("#reset").click(function () {
+                                                 $('#wname0').val('Please Select');
+                                                 $('#wdes').val('');
+                                                 $('#workdate').val('');
+                                                 for (var i = 1; i < response.length; i++) {
+                                                     jQuery('#rowCount' + i).remove();
+                                                 }
+                                                 jQuery('#firstrowtd').remove();
+                                             })
+
+                                         }
+                                     })
+
+                                 }
+                             }
+                            }, {
+                                text: 'Delete', datafield: 'Delete', sortable: false, filterable: false, align: 'center', columngroup: 'Actions', columntype: 'button', width: 80, cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties) {
+                                    var rowData = $("#grid").jqxGrid('getrowdata', row);
+                                    if (rowData.Status == 'Approved') {
+                                        return "Approved";
+                                    } else if (rowData.WorkName == "Holiday") {
+                                        return "holiday";
+                                    }
+                                    else {
+                                        return "Delete"
+                                    }
+                                }, buttonclick: function (row) {
+
+                                    editrowindex = row;
+                                    var bidval = $("#grid").jqxGrid('getcellvalue', row, "Status");
+                                     //document.getElementById("wddelete").style.display = 'block';
+                                    //document.getElementById("draftstatuss").style.display = 'none';
+                                    //document.getElementById("sub").style.display = 'none';
+                                    //document.getElementById("reset").style.display = 'none';
+                                    document.getElementById("workdate").style.display = 'readonly';
+                                    if (bidval == "Approved") {
+                                        return "";
+                                    }
+                                    else if (bidval == "holiday") {
+
+                                    }
+                                    else {
+                                        if (bidval == "Draft") {
+                                            document.getElementById("reset").style.display = 'none';
+                                            document.getElementById("sub").style.display = 'none';
+                                            document.getElementById("draftstatuss").style.display = 'none';
+                                            document.getElementById("wddelete").style.display = 'block';
+                                        }
+                                        if (bidval == "Pending") {
+                                              document.getElementById("sub").style.display = 'none';
+                                              document.getElementById("reset").style.display = 'none';
+                                           // document.getElementById("draftstatuss").style.display = 'none';
+                                            document.getElementById("wddelete").style.display = 'block';
+                                        }
+                                        $('html, body').animate({
+                                            scrollTop: $("#addedRows").offset().top
+                                        });
+                                        var workdates = document.getElementById("workdate").value;
+                                        var Actiontypes = document.getElementById("action").value;
+
+                                        document.getElementById("action").value = "U";
+                                        var Actiontypes = document.getElementById("action").value;
+
+                                        document.getElementById("action").innerHTML = Actiontypes;
+                                        var workid = document.getElementById("wdid").value;
+
+                                        var paginginformation = $('#grid').jqxGrid('getpaginginformation');
+                                        var id = $("#grid").jqxGrid('getcellvalue', row, "Id");
+                                        var mainres;
+                                        $.ajax({
+                                            type: "GET",
+                                            url: "WorkDiary/EditNew?id=" + id,
+                                            dataType: "Json",
+                                            success: function (response) {
+                                                console.log(response);
+                                                mainres = response;
+
+                                                if (response.length != 0) {
+
+                                                    document.getElementById("addedRows").innerHTML = '';
+                                                    var recRow = '';
+                                                    var workdates = '';
+
+                                                    var recRow = '<tr><th>WorkDescription</th><tr>';
+                                                    if (bidval == "Pending") {
+                                                        document.getElementById("draftstatuss").style.display = 'none';
+                                                    }
+                                                    if (bidval == "Draft") {
+                                                        //document.getElementById("draftstatuss").style.display = 'initial';
+                                                    }
+                                                    for (var i = 0; i < response.length; i++) {
+
+                                                        if (i > 0) {
+                                                            recRow += '<tr id="rowCount' + i + '"><td><textarea class="form-control" id="wdes" name="workdes[]" readonly="readonly" onkeyup="return textarea();" style="width:100% !important">' + response[i].WorkDesc + '</textarea></td></tr>';
+                                                        }
+                                                        else {
+                                                            workdates = response[i].WDDate;
+                                                            document.getElementById("wdid").value = response[i].WDId;
+                                                            recRow += '<tr id="rowCount' + i + '"><td><textarea class="form-control" id="wdes" name="workdes[]" readonly="readonly" onkeyup="return textarea();" style="width:100% !important">' + response[i].WorkDesc + '</textarea></td></tr>';
+                                                        }
+                                                    }
+
+                                                    jQuery('#addedRows').append(recRow);
+                                                    for (var i = 0; i < mainres.length; i++) {
+                                                        console.log(mainres[i].WorkName);
+                                                        $("#wname" + i).val(mainres[i].WorkName);
+                                                    }
+                                                    var date = workdates;
+                                                    var d = new Date(date.split("/").reverse().join("-"));
+                                                    var dd = d.getDate();
+                                                    var mm = d.getMonth() + 1;
+                                                    var yy = d.getFullYear();
+                                                    var newdate = dd + "/" + mm + "/" + yy;
+                                                    document.getElementById("workdate").value = newdate;
+                                                    document.getElementById("workdate").style.display = 'readonly';
+                                                    if (bidval == "Pending") {
+                                                        document.getElementById("draftstatuss").style.display = 'none';
+                                                    }
+
+                                                }
+                                                else {
+                                                    jQuery('#addedRows').remove(recRow);
+                                                }
+                                                $("#reset").click(function () {
+                                                    $('#wname0').val('Please Select');
+                                                    $('#wdes').val('');
+                                                    $('#workdate').val('');
+                                                    for (var i = 1; i < response.length; i++) {
+                                                        jQuery('#rowCount' + i).remove();
+                                                    }
+                                                    jQuery('#firstrowtd').remove();
+                                                })
+
+                                            }
+                                        })
+
+                                    }
+                                }
+                            }
+                        ], columngroups:
+                        [
+                                                    { text: 'Action', align: 'center', name: 'Actions', width: 160 },
+                            ],
+                        groups: ['WorkDate'],
+                    });
+                ajaxSpinnerHide();
+            });
+
+
+
+</script>
+
+<style>
+    input[value="holiday"] {
+        display: none;
+    }
+</style>
+
+
+
+
+
+<script src="~/Scripts/MaxLength.min.js"></script>
+<script type="text/javascript">
+    function textarea() {
+        //Text area maxlength .
+        var ltextlength = $("#wdes").val();
+        var length = ltextlength.length;
+        if (length + 1 > 5000) {
+            window.alert("You entered 5000 characters, Please enter less than 5000 characters.");
+            var res = ltextlength.substr(0, 5000);
+            document.getElementById("wdes").value = res;
+            $("#wdes").focus();
+        }
+    }
+</script>
+
+<script>
+    $(function () {
+        $("#wname").change(function () {
+            if ($(this).val() == "other") {
+                $("#dvworkinput").show();
+                // $('#delivery').val('');
+
+
+            }
+
+            else {
+                $("#dvworkinput").hide();
+                // $('#delivery').val('');
+            }
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    function Get1() {
+        $.ajax({
+            type: 'GET',
+            url: "WorkDiary/workdetails",
+            dataType: 'Json',
+            success: function (response) {
+                if (response != null) {
+                    document.getElementById("ControllingAuthority").value = response.lControllingAuthorityAjax;
+                    document.getElementById("SanctioningAuthority").value = response.lSanctioningAuthorityAjax;
+                    var text = "<tr><td>EmployeeId:" + " " + " " + response.lEmployeeId
+                        + "</td></tr> <tr><td> EmployeeName:" + " " + " " + response.lEmployeeName
+                        + "</td></tr> <tr><td> Designation:" + " " + " "
+                        + response.ldesig + "</td></tr><tr><td> Branch/Dept:" + " " + " " + response.ldeptbranch + "</td></tr>";
+                    document.getElementById("myTextArea").innerHTML = text;
+                }
+            },
+        });
+
+    }
+
+</script>
+@*<script type='text/javascript'>
+
+
+        $(function () {
+            $('.input-group.date').datepicker({
+                format: 'dd-mm-yyyy',
+                todayHighlight: true,
+                autoclose: true
+            });
+        });
+
+    </script>*@
+<script>
+
+    function Workdiarydate() {
+      debugger;
+        var x = location.hostname;
+        var url = window.location.href
+        var arr = url.split("/");
+        var textBoxValue = document.getElementById("workdate").value;
+      //  var result = "https://" + arr[2] + "/" + "WorkDiary/CheckWorkDiary?Date=" + textBoxValue;
+
+        var result = "" + arr[0] + "//" + arr[2] + "/" + "WorkDiary/CheckWorkDiary?Date=" + textBoxValue;
+
+        var d = new Date();
+        var txtdate = document.getElementById("workdate").value;
+        var curdate =  d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear(); 
+        var date = moment(txtdate, "DD.MM.YYYY");
+
+        var currentDate1 = moment(curdate, "DD.MM.YYYY");
+        var duration = moment.duration(date.diff(currentDate1));
+
+
+        if (duration > 0) {
+
+            alert("Please ensure that Work Date is not greater than Today's Date.");
+            document.getElementById("workdate").focus();
+            document.getElementById("workdate").value = '';
+            return false;
+
+        }
+
+
+        $.ajax({
+            type: "GET",
+            url: result,
+
+            dataType: "json",
+            success: function (data) {
+                var input = data.message;
+                var fields = input.split('/');
+                var status = fields[0];
+                var dates = fields[1];
+                if (status == "countzero") {
+                    /// alert("Leaves are not available");
+                }
+                if (status == "false") {
+                    document.getElementById("workdate").value = "";
+                    alert(dates);
+                }
+
+            },
+            error: function () {
+            }
+        });
+    }
+</script>
+<script>
+
+    document.getElementById("a11").className = "active";
+</script>
+
+<script type='text/javascript' src='https://code.jquery.com/jquery-1.8.3.js'></script>
+<style>
+    .activeClass {
+        background: #ffdb99;
+    }
+
+    .secondClass {
+        /*background: #FF9999;*/
+        color: red;
+    }
+
+    #myempTextArea1 tr, td {
+        border: 1px solid #675d5d;
+        background: #f7f7f7;
+    }
+
+    .relation th {
+        background: rgba(60, 141, 188, 0.4);
+        color: #fff;
+        border: 1px solid #675d5d;
+        padding: 7px;
+    }
+</style>
+
+
+
+<script type='text/javascript'>
+
+    $(function getholidays() {
+
+        var active_dates = [];
+        $.ajax({
+            type: "GET",
+            async: false,
+            url: "/LeaveApply/GetDates",
+            dataType: "Json",
+            success: function (data) {
+                datesArray = data;
+                for (i = 0; i < datesArray.length; i++) {
+                    var result = datesArray[i].replace("-", "/");
+                    var result1 = result.replace("-", "/");
+                    var strArray = result1.split("/");
+                    var cdate = strArray[0] + "/" + parseInt(strArray[1]) + "/" + strArray[2]
+                    active_dates.push(cdate);
+
+                    if (i == datesArray.length - 1) {
+                        //loadcal(active_dates);
+                    }
+                }
+
+            }
+        });
+        $('.input-group.date').datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            beforeShowDay: function nonWorkingDays(date) {
+                var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
+                var week = 0 | date.getDate() / 7 //get the week
+                var dd = date.getDate();
+                var month = date.getMonth();
+                if (dd < 10) {
+                    dd = '0' + dd
+                }
+
+                if (month < 10) {
+                    month = '0' + month
+                }
+                var sunweek = date.getDay();
+                var year = date.getFullYear();
+
+                if (dd == 14 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                if (dd == 28 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                //check if it's second week or fourth week
+                else if (week == 1 || week == 3) {
+                    if (dd == 7 && day == 6 || dd == 21 && day == 6) {
+                        //check for satruday
+
+                    }
+                    else {
+                        if (day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                    }
+
+                }
+                //check for sunday
+                if (day == 0) {
+                    return {
+                        classes: 'secondClass'
+                    };
+
+                }
+                //check for holidays
+                var d = date;
+                var curr_date = d.getDate();
+                var curr_month = d.getMonth() + 1; //Months are zero based
+                if (curr_date < 10) {
+                    curr_date = '0' + curr_date
+                }
+                var curr_year = d.getFullYear();
+                var formattedDate = curr_date + "/" + curr_month + "/" + curr_year
+
+                if ($.inArray(formattedDate, active_dates) != -1) {
+                    return {
+                        classes: 'activeClass'
+                    };
+                }
+                return [true];
+            }
+        });
+
+    });
+</script>
+<script type="text/javascript">
+    function Confirm() {
+
+        if (confirm("Are you sure to Delete full day workdiary?"))
+            return true;
+        else
+            return false;
+
+    }
+</script>
+
+
+
+
+

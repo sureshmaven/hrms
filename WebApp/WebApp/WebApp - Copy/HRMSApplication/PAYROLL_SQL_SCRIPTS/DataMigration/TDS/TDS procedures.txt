@@ -1,0 +1,305 @@
+--procedure to inset personal earnings into master when there is no id with the given name--
+create procedure personal_earnings_insert  
+ @mastetablename varchar(200),
+ @name varchar(200),
+ @type varchar(200),
+ @fy int,
+ @fm varchar(200),
+ @emp_code int,
+ @amount decimal
+as
+
+declare @StartValue int;
+
+set @StartValue=(select  last_num from new_num where table_name =  'pr_earn_field_master' );
+
+insert into pr_earn_field_master values(@StartValue+1,@name,@type,1,1000,null);
+
+declare @lastnum int;
+set @lastnum = (select top 1 id from pr_earn_field_master order by id desc);
+insert into pr_emp_perearning values(@lastnum,@fy,@fm,(select id from Employees where EmpId=@emp_code),@emp_code,
+(select id from pr_earn_field_master where name=@name and type=@type),@type,@amount,null,1,1000);
+
+update new_num set last_num=@lastnum where table_name=@mastetablename;
+
+--procedure to inset deductions earnings into master when there is no id with the given name--
+
+CREATE procedure personal_deduction_insert    
+ @mastetablename varchar(200),  
+ @name varchar(200),  
+ @type varchar(200),  
+ @fy int,  
+ @fm varchar(200),  
+ @emp_code int,  
+ @amount decimal,  
+ @section varchar(200)  
+as  
+  
+declare @StartValue int;  
+  
+
+  
+set @StartValue=(select  last_num from new_num where table_name =  'pr_deduction_field_master' );  
+  
+insert into pr_deduction_field_master values(@StartValue+1,@name,@type,1,1000,null);  
+  
+declare @lastnum int;  
+set @lastnum = (select top 1 id from pr_deduction_field_master order by id desc);  
+insert into pr_emp_perdeductions values(@lastnum,@fy,@fm,(select id from Employees where EmpId=@emp_code),@emp_code,  
+(select id from pr_deduction_field_master where name=@name and type=@type),@type,@amount,@section,1,1000);  
+  
+update new_num set last_num=@lastnum where table_name=@mastetablename;
+
+
+--dynamic insertion of payslip data from goodwill to payroll--
+
+--exec sp_emp_payslip_payfields_migration_present 175,'2019-07-01',2020,'201907'
+--PPayslip ,POldslip 
+--select * from [TEST].dbo.PPayslip where Pmonth=201707; 
+
+
+
+create procedure sp_emp_payslip_payfields_migration_present(@employeecode int, @fm varchar(20),@fy int,@pmonth varchar(20))
+as 
+begin
+
+set nocount on;
+declare @new_id int;
+declare @query  AS NVARCHAR(MAX);
+declare @query_final as nvarchar(max);
+
+declare @StartValue int;
+set @StartValue=(select last_num from new_num where table_name = 'pr_emp_payslip');
+declare @initValue int;
+
+set @initValue = @StartValue+1;
+
+select @initValue as id,getdate() as gen_date,@fy as fy,
+@fm as fm,(select id from employees where empid = @employeecode) as emp_id,@employeecode as emp_code,
+(select d.Name from  Employees e join Designations d on e.CurrentDesignation = d.Id 
+where e.EmpId= 175) as designation,
+(select d.Name from  Employees e join Branches d on e.Branch = d.Id where e.EmpId= @employeecode) as branch,
+p.WorkDays as working_days,
+p.LopDays as lop,p.Basic as er_basic,p.DA as er_da,p.CCA as er_cca,p.HRA as er_hra,
+p.IRLF as er_interim_relief,p.TSINCR as er_telangana_inc,p.Grpay as gross_amount,
+p.PF as dd_provident_fund,p.Tds as dd_income_tax,p.Ptax as dd_prof_tax,p.SUBCLUB as dd_club_subscription,
+p.TGASSN as dd_telangana_officers_assn,p.Netpay as net_amount,p.Deductions as deductions_amount, 1 as active,1000 as trans_id,p.SBASICDA as spl_da,p.SBASICALW as spl_allw, 'General' as spl_type 
+into #pr_emp_payslip
+from [TEST].dbo.PPayslip p join [TEST].dbo.pempmast m on p.EID = m.EID  where m.Empid = @employeecode and p.Pmonth=@pmonth;
+
+
+
+--select * from #pr_emp_payslip;
+
+--select * from pr_emp_payslip
+
+
+insert into pr_emp_payslip(id,gen_date,fy,
+fm,emp_id,emp_code,
+designation,branch,working_days,lop,er_basic,er_da,er_cca,er_hra,er_interim_relief,er_telangana_inc,
+gross_amount,dd_provident_fund,dd_income_tax,dd_prof_tax,dd_club_subscription,dd_telangana_officers_assn,
+net_amount,deductions_amount,active,trans_id,spl_da,spl_allw,spl_type) select * from #pr_emp_payslip;
+
+
+declare @lastnum int;
+set @lastnum = (select top 1 id from pr_emp_payslip order by id desc)
+update new_num set last_num=@lastnum where table_name='pr_emp_payslip';
+
+--get good will data and keep in temp table for that employee
+Select p.* 
+into #gw_data 
+from [TEST].dbo.POldslip p join [TEST].dbo.pempmast m on p.EID = m.EID  where m.Empid = @employeecode;
+
+CREATE  TABLE #codes_master (
+id INT, 
+name nvarchar(100), 
+code nvarchar(100),
+type nvarchar(100)
+);
+
+--get codes
+insert into #codes_master select id, name,code,type from pr_earn_field_master where code!='' union all 
+select id, name,code,type from pr_allowance_field_master where code!='' ;
+
+declare @ID int
+declare @name nvarchar(100)
+declare @code nvarchar(50)
+declare @val nvarchar(50)
+declare @type nvarchar(50)
+
+declare @new_num int;
+set @new_num=(select last_num from new_num where table_name = 'pr_emp_payslip_allowance');
+
+set @new_id = @new_num;
+--loop
+
+while exists (select * from #codes_master)
+begin
+	set @new_id = @new_id+1;
+    select @ID = (select top 1 id from #codes_master order by id asc);
+
+	select @name = name, @code = code,@type= type from #codes_master where id = @ID;
+	--get value from gw table
+	set @query = 'Select @val = ' + @code + ' from #gw_data'
+	execute sp_executesql 
+    @query, 
+    N'@val nvarchar(50) OUTPUT', 
+    @val = @val output;
+
+INSERT into pr_emp_payslip_allowance(id,emp_id,emp_code,payslip_mid,all_mid,all_name,
+	all_amount,all_type,active,trans_id) 
+VALUES( @new_id,(select id from employees where empid =  @employeecode  ), @employeecode ,
+(select id from pr_emp_payslip where fm= @fm and  emp_code = @employeecode), @ID ,
+@name,@val ,@type,1,1000);
+	
+
+    delete #codes_master where id = @ID and name=@name and type=@type and code=@code;
+end
+  
+--drop temp table
+drop table #codes_master;
+drop table #gw_data;
+drop table #pr_emp_payslip;
+
+--update new_num for pr_empl_allowern
+
+end
+
+
+----dynamic insertion of payslip data for previous months----
+
+
+--exec sp_emp_payslip_payfields_migration_all_employess '2019-04-01',2020,'201904'
+--PPayslip ,POldslip 
+
+--select * from [TEST].dbo.PPayslip where Pmonth=201707; 
+
+
+
+create procedure sp_emp_payslip_payfields_migration_all_employess(@fm varchar(20),@fy int,@pmonth varchar(20))
+as 
+begin
+
+CREATE  TABLE #emp_codes (
+id INT, 
+);
+
+
+--get emp codes from employess codes
+insert into #emp_codes select emp_code from pr_emp_general;
+declare @employeecode int;
+
+while exists (select * from #emp_codes)
+begin
+	
+    select @employeecode = (select top 1 id from #emp_codes order by id asc);
+	print(@employeecode);
+set nocount on;
+declare @new_id int;
+declare @query  AS NVARCHAR(MAX);
+declare @query_final as nvarchar(max);
+
+declare @StartValue int;
+set @StartValue=(select last_num from new_num where table_name = 'pr_emp_payslip');
+declare @initValue int;
+
+set @initValue = @StartValue+1;
+
+select @initValue as id,getdate() as gen_date,@fy as fy,
+@fm as fm,(select id from employees where empid = @employeecode) as emp_id,@employeecode as emp_code,
+(select d.Name from  Employees e join Designations d on e.CurrentDesignation = d.Id 
+where e.EmpId= 175) as designation,
+(select d.Name from  Employees e join Branches d on e.Branch = d.Id where e.EmpId= @employeecode) as branch,
+p.WorkDays as working_days,
+p.LopDays as lop,p.Basic as er_basic,p.DA as er_da,p.CCA as er_cca,p.HRA as er_hra,
+p.IRLF as er_interim_relief,p.TSINCR as er_telangana_inc,p.Grpay as gross_amount,
+p.PF as dd_provident_fund,p.Tds as dd_income_tax,p.Ptax as dd_prof_tax,p.SUBCLUB as dd_club_subscription,
+p.TGASSN as dd_telangana_officers_assn,p.Netpay as net_amount,p.Deductions as deductions_amount, 0 as active,1000 as trans_id,p.SBASICDA as spl_da,p.SBASICALW as spl_allw, 'General' as spl_type 
+into #pr_emp_payslip
+from [TEST].dbo.POldslip p join [TEST].dbo.pempmast m on p.EID = m.EID  where m.Empid = @employeecode and p.Pmonth=@pmonth;
+
+
+
+--select * from #pr_emp_payslip;
+
+--select * from pr_emp_payslip
+
+
+insert into pr_emp_payslip(id,gen_date,fy,
+fm,emp_id,emp_code,
+designation,branch,working_days,lop,er_basic,er_da,er_cca,er_hra,er_interim_relief,er_telangana_inc,
+gross_amount,dd_provident_fund,dd_income_tax,dd_prof_tax,dd_club_subscription,dd_telangana_officers_assn,
+net_amount,deductions_amount,active,trans_id,spl_da,spl_allw,spl_type) select * from #pr_emp_payslip;
+
+
+declare @lastnum int;
+set @lastnum = (select top 1 id from pr_emp_payslip order by id desc)
+update new_num set last_num=@lastnum where table_name='pr_emp_payslip';
+
+--get good will data and keep in temp table for that employee
+Select p.* 
+into #gw_data 
+from [TEST].dbo.POldslip p join [TEST].dbo.pempmast m on p.EID = m.EID  where m.Empid = @employeecode;
+
+CREATE  TABLE #codes_master (
+id INT, 
+name nvarchar(100), 
+code nvarchar(100),
+type nvarchar(100)
+);
+
+--get codes
+insert into #codes_master select id, name,code,type from pr_earn_field_master where code!='' union all 
+select id, name,code,type from pr_allowance_field_master where code!='' ;
+
+declare @ID int
+declare @name nvarchar(100)
+declare @code nvarchar(50)
+declare @val nvarchar(50)
+declare @type nvarchar(50)
+
+declare @new_num int;
+set @new_num=(select last_num from new_num where table_name = 'pr_emp_payslip_allowance');
+
+set @new_id = @new_num;
+--loop
+
+while exists (select * from #codes_master)
+begin
+	set @new_id = @new_id+1;
+    select @ID = (select top 1 id from #codes_master order by id asc);
+
+	select @name = name, @code = code,@type= type from #codes_master where id = @ID;
+	--get value from gw table
+	set @query = 'Select @val = ' + @code + ' from #gw_data'
+	execute sp_executesql 
+    @query, 
+    N'@val nvarchar(50) OUTPUT', 
+    @val = @val output;
+--	declare @query_final2 nvarchar;
+	--insert script
+	--set @query_final = 'Insert into maven_table values('+ CONVERT(nvarchar, @new_id)
+--+ ',`' + @name+ '`,'+ @val + ')';
+	--set @query_final2 = 
+INSERT into pr_emp_payslip_allowance(id,emp_id,emp_code,payslip_mid,all_mid,all_name,
+	all_amount,all_type,active,trans_id) 
+VALUES( @new_id,(select id from employees where empid =  @employeecode  ), @employeecode ,
+(select id from pr_emp_payslip where fm= @fm and  emp_code = @employeecode), @ID ,
+@name,@val ,@type,0,1000);
+	--print(@query_final);
+
+--	print(@query_final2);
+
+    delete #codes_master where id = @ID and name=@name and type=@type and code=@code;
+end
+  
+--drop temp table
+drop table #codes_master;
+drop table #gw_data;
+drop table #pr_emp_payslip;
+
+--update new_num for pr_empl_allowern
+delete  from #emp_codes where id =@employeecode;
+end
+drop table #emp_codes;
+end

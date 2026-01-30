@@ -1,0 +1,1383 @@
+﻿@{
+    var fm = ViewBag.fm;
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+    var reportTitle = ViewBag.ReportTitle;
+    ViewBag.Title = reportTitle + " Report";
+    var dataUrl = ViewBag.DataUrl;
+    var ExportColumns = ViewBag.ExportColumns;
+    var PdfOrientation = ViewBag.PdfOrientation;
+    var PdfColumnsWidths = ViewBag.PdfColumnsWidths;
+
+}
+<style>
+    .reports-grids {
+        width: 100% !important;
+    }
+
+    .rptGrid th {
+        width: 100% !important;
+    }
+</style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/css/bootstrap-select.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/js/bootstrap-select.min.js"></script>
+
+<div class="page">
+    <div class="form-horizontal">
+        <div class="page_start">
+            <div class="leftmenu-container">
+                <div class="sidebar-menu">
+                    @{Html.RenderPartial("_PVPayrollMenu");}
+                </div>
+                <div class="sidebar-content">
+                    <div class="main_heading heading_main">
+                        <h1>@ViewBag.ReportTitle</h1>
+                        <div class="col-md-12">
+                            <div class="fancy-collapse-panel">
+                                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading" role="tab" id="headingOne">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#reportsearch" aria-expanded="true" aria-controls="reportsearch">
+                                                    Report Filter
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="reportsearch" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                            <div class="panel-body">
+                                                <div class="reports_search">
+                                                    <div class="rep_down_fields">
+                                                        @{
+                                                            if (ViewBag.ReportFiltersTemplate == "T1-twoDtpickers")
+                                                            {
+                                                                <div class="fl_left mb_10">
+                                                                    <div class="col-sm-4">
+                                                                        <label class="col-sm-4 control-label label_left">@ViewBag.twoDtpickersLabel1 :</label>
+                                                                        <div class="input-group date col-sm-8" id="monthyearF">
+                                                                            <input type="text" id="rtfromDate" class="form-control" onchange="rdtDateValidationfrom()"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-4">
+                                                                        <label class="col-sm-4 control-label label_left">@ViewBag.twoDtpickersLabel2:</label>
+                                                                        <div class="input-group date col-sm-8" id="monthyearT">
+                                                                            <input type="text" id="rttoDate" class="form-control" onchange="rdtDateValidationto()"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <button class="btn btn-primary btn-sm pull-right" id="btntwoDtpickersSearch">Search</button>
+                                                                    </div>
+                                                                </div>
+
+                                                            }
+                                                            else if (ViewBag.ReportFiltersTemplate == "T2-OneMonthPicker")
+                                                            {
+
+                                                                <div class="col-md-3">
+                                                                    <div class="form-group">
+                                                                        <label class="col-sm-4 control-label dept_label">@ViewBag.OneMonthPickerLabel1:</label>
+                                                                        <div class="col-sm-8 date input-group p0" id="dtOneMonthPickerYear">
+                                                                            <input type="text" class="form-control form-control-1 input-sm from fromFudis" placeholder="Select-Month" id="dtOneMonthPicker">
+                                                                            <span class="input-group-addon">
+                                                                                <span class="glyphicon glyphicon-calendar"></span>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <div class="pull-right">
+                                                                        <button class="btn btn-primary btn-sm" id="btnOneMonthPickerSearch">Search</button>
+                                                                    </div>
+                                                                </div>
+
+                                                            }
+                                                            else if (ViewBag.ReportFiltersTemplate == "T3-OneMonthPicker")
+                                                            {
+
+                                                                <div class="col-md-5">
+                                                                    <div class="form-group">
+                                                                        <label class="col-sm-6 control-label dept_label">@ViewBag.OneMonthPickerLabel1:</label>
+                                                                        <div class="col-sm-5 date input-group p0" id="dtOneMonthPickerYear">
+                                                                            <input type="text" class="form-control form-control-1 input-sm from fromFudis" placeholder="Select-Month" id="dtOneMonthPicker">
+                                                                            <span class="input-group-addon">
+                                                                                <span class="glyphicon glyphicon-calendar"></span>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <div class="pull-right">
+                                                                        <button class="btn btn-primary btn-sm pull-right" id="btnOneMonthPickerSearch">Search</button>
+                                                                    </div>
+                                                                </div>
+
+                                                            }
+                                                            else if (ViewBag.ReportFiltersTemplate == "T3-AllEmpSearchOneMultiSelOneDropdown")
+                                                            {
+                                                                <div id="reportsearch" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                                                    <div class="panel-body">
+                                                                        <div class="reports_search">
+                                                                            <div id="rdbAll">
+                                                                                @{ Html.RenderPartial("_PvEmployeeSearchwithCheckboxes"); }
+
+                                                                                <div class="rep_down_fields">
+
+
+                                                                                    <div class="col-md-6">
+                                                                                        <div class="form-group">
+                                                                                            <label class="col-sm-3 control-label dept_label">@ViewBag.T3MultiSelLabel Type:</label>
+                                                                                            <div class="col-sm-9 mul_drop">
+                                                                                                <select id="T3_LoansTypes" data-style="btn-default" class="selectpicker form-control" multiple data-max-options="3">
+                                                                                                    @{
+                                                                                                        foreach (var opt in ViewBag.T3MultiSelList)
+                                                                                                        {
+                                                                                                            <option value="@opt.id">@opt.name</option>
+                                                                                                        }
+                                                                                                    }
+                                                                                                </select>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+
+
+                                                                                    <div class="col-md-4">
+                                                                                        <div class="form-group">
+                                                                                            <label class="col-sm-5 control-label dept_label" value="year" id="Year">@ViewBag.T3DdlOneLabel</label>
+                                                                                            <div class="col-sm-7 mul_drop" id="fYear">
+                                                                                                @Html.DropDownList("fY", ViewBag.DdlOneData as SelectList, new { @class = "form-control" })
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2">
+                                                                                        <div class="pull-right">
+                                                                                            <button class="btn btn-primary" id="btnT3AllEmpSearchOneMultiSelOneDropdown">Search</button>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            }
+                                                            else if (ViewBag.ReportfiltersTemplate == "T4-AllEmpSearchOneMultiSelOneMonthpic")
+                                                            {
+                                                                <div id="reportsearch" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                                                    <div class="panel-body">
+                                                                        <div class="reports_search">
+                                                                            @{ Html.RenderPartial("_PvEmployeeSearchwithCheckboxes"); }
+                                                                            <div class="rep_down_fields">
+                                                                                <div class="col-md-5">
+                                                                                    <div class="form-group p2">
+                                                                                        <label class="col-sm-4 control-label dept_label">@ViewBag.T3MultiSelLabel:</label>
+                                                                                        <div class="col-sm-8 mul_drop">
+                                                                                            <select id="DDLActivites" data-style="btn-default" class="selectpicker form-control" title="Select" multiple data-max-options="3">
+                                                                                                @{
+                                                                                                    foreach (var opt in ViewBag.T3MultiSelList)
+                                                                                                    {
+                                                                                                        <option value="@opt.Id">@opt.Type</option>
+                                                                                                    }
+                                                                                                }
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-5">
+                                                                                    <div class="form-group">
+                                                                                        <label class="col-sm-2 control-label dept_label"> @ViewBag.OneMonthPickerLabel1:</label>
+                                                                                        <div class="col-sm-6 mul_drop">
+                                                                                            <div class="date input-group p0" id="dtOneMonthPickerYear">
+                                                                                                <input type="text" class="form-control form-control-1 input-sm from fromFudis" placeholder="Select-Month" id="dtOneMonthPicker">
+                                                                                                <span class="input-group-addon">
+                                                                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                                                                </span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-2">
+                                                                                    <div class="pull-right">
+                                                                                        <button class="btn btn-primary" id="btnT4AllEmpSearchOneMultiSelOneMonthpic">Search</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            }
+
+
+                                                            else if (ViewBag.ReportfiltersTemplate == "T5-AllAndSingleEmpSearchRbtn")
+                                                            {
+
+                                                                <div id="reportsearch" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                                                    <div class="panel-body">
+                                                                        <div class="reports_search">
+                                                                            <div class="col-md-12">
+                                                                                <div class="report_search_emp">
+                                                                                    <label class="col-sm-1 control-label">
+                                                                                        Employee:
+                                                                                    </label>
+
+                                                                                    <div class="col-md-1">
+                                                                                        <input id="rdbEmpAll" type="radio" name="wise" value="All" checked="checked"><label for="rdbEmpAll"><span><span></span></span>All</label>
+                                                                                    </div>
+                                                                                    <div class="col-md-9">
+                                                                                        <div class="form-group">
+                                                                                            <label class="col-sm-5 control-label">
+                                                                                                <input id="rdbEmpAll1" type="radio" name="wise" value="rdbEmpAll1"><label for="rdbEmpAll"><span><span></span></span>Emp Code:</label>
+                                                                                            </label>
+                                                                                            <div class="col-sm-7">
+                                                                                                <div class="navbar-form" role="search">
+                                                                                                    <div class="input-group">
+                                                                                                        <input type="text" id="T5-AllEmpSearch" class="form-control" placeholder="Search">
+
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-md-2">
+                                                                                                <div class="pull-right">
+                                                                                                    <button class="btn btn-primary" id="T5-AllAndSingleEmpSearchRbtn">Search</button>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-6">
+                                                                                        <div class="form-group">
+                                                                                            <div class="col-sm-12">
+                                                                                                <label id="lblEmpName" class="control-label emp_name"></label>
+
+                                                                                                <label id="lblDesig" class="control-label"></label>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            }
+
+                                                            else if (ViewBag.ReportfiltersTemplate == "T6-AllAllowanceandMonthly")
+                                                            {
+
+                                                                <div id="reportsearch" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                                                    <div class="panel-body">
+                                                                        <div class="reports_search">
+                                                                            <div class="col-md-12">
+                                                                                <div class="report_search_emp">
+                                                                                    <label class="col-sm-1 control-label">
+                                                                                        Employee:
+                                                                                    </label>
+
+                                                                                    <div class="col-md-1">
+                                                                                        <input id="rdbEmpAll" type="radio" name="wise" value="All" checked="checked"><label for="rdbEmpAll"><span><span></span></span>All</label>
+                                                                                    </div>
+                                                                                    <div class="col-md-9">
+                                                                                        <div class="form-group">
+                                                                                            <label class="col-sm-5 control-label">
+                                                                                                <input id="rdbEmpAll1" type="radio" name="wise" value="rdbEmpAll1"><label for="rdbEmpAll"><span><span></span></span>Emp Code:</label>
+                                                                                            </label>
+                                                                                            <div class="col-sm-7">
+                                                                                                <div class="navbar-form" role="search">
+                                                                                                    <div class="input-group">
+                                                                                                        <input type="text" id="T5-AllEmpSearch" class="form-control" placeholder="Search">
+
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-md-2">
+                                                                                                <div class="pull-right">
+                                                                                                    <button class="btn btn-primary" id="T6-AllAllowanceSearchRbtn">Search</button>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-6">
+                                                                                        <div class="form-group">
+                                                                                            <div class="col-sm-12">
+                                                                                                <label id="lblEmpName" class="control-label emp_name"></label>
+
+                                                                                                <label id="lblDesig" class="control-label"></label>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            }
+                                                            else if (ViewBag.ReportfiltersTemplate == "T7-OneMonthPickeronedropdown")
+                                                            {
+                                                                <div id="reportsearch" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                                                    <div class="panel-body">
+                                                                        <div class="reports_search">
+                                                                            <div class="col-md-12">
+
+                                                                                <div class="rep_down_fields">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-5">
+                                                                                            <div class="form-group">
+                                                                                                <label class="col-sm-2 control-label dept_label">@ViewBag.T3MultiSelLabel:</label>
+                                                                                                <div class="col-sm-8 mul_drop">
+                                                                                                    <select id="DDLActivites" data-style="btn-default" class="selectpicker form-control" multiple data-max-options="3">
+                                                                                                        @{
+                                                                                                            foreach (var opt in ViewBag.T3MultiSelList)
+                                                                                                            {
+                                                                                                                <option value="@opt.BrId">@opt.Name</option>
+                                                                                                            }
+                                                                                                        }
+                                                                                                    </select>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <div class="col-md-5">
+                                                                                            <div class="form-group">
+                                                                                                <label class="col-sm-5 control-label dept_label">Select @ViewBag.OneMonthPickerLabel1</label>
+                                                                                                <div class="col-sm-6 mul_drop">
+                                                                                                    <div class="col-sm-9 date input-group p0" id="dtOneMonthPickerYear">
+                                                                                                        <input type="text" class="form-control form-control-1 input-sm from fromFudis" placeholder="Select-Month" id="dtOneMonthPicker">
+                                                                                                        <span class="input-group-addon">
+                                                                                                            <span class="glyphicon glyphicon-calendar"></span>
+                                                                                                        </span>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-md-2">
+                                                                                            <div class="pull-right">
+                                                                                                <button class="btn btn-primary" id="btnT7OneMonthPickeronedropdown">Search</button>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                            else if (ViewBag.ReportFiltersTemplate == "T8-OneMonthPickerTwoRadioButtons")
+                                                            {
+                                                                <div class="col-md-12">
+
+                                                                    <div class="col-md-2">
+                                                                        <div class="form-group">
+                                                                            <input id="rdRegbEmp" type="radio" name="wise" value="Regular" checked="checked"><label for="rdRegbEmp"><span><span></span></span> Regular Employee</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <div class="form-group">
+                                                                            @*<label class="control-label">*@
+                                                                            <input id="rdbSupEmp" type="radio" name="wise" value="Supplement"><label for="rdbSupEmp"><span><span></span></span>Supplementery Employee</label>
+                                                                            @*</label>*@
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                            <label class="col-sm-6 control-label dept_label">Select @ViewBag.OneMonthPickerLabel1</label>
+                                                                            <div class="col-md-8 date input-group p0" id="dtOneMonthPickerYear">
+                                                                                <input type="text" class="form-control form-control-1 input-sm from fromFudis" placeholder="Select-Month" id="dtOneMonthPicker">
+                                                                                <span class="input-group-addon">
+                                                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-md-3">
+                                                                        <div class="pull-right">
+                                                                            <button class="btn btn-primary btn-sm" id="btnOneMonthPickerSearchtsheet">Search</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            }
+                                                            else if (ViewBag.ReportFiltersTemplate == "T6-AllAndSingleEmpPdfGenbtn")
+                                                            {
+                                                                <div id="reportsearch" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                                                    <div class="panel-body">
+                                                                        <div class="reports_search">
+
+                                                                            @{ Html.RenderPartial("_PvEmployeeSearchwithCheckboxes"); }
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="clearfix"></div>
+                                                                <div class="col-md-12">
+
+
+                                                                    <input type="hidden" id="EmployeeId" />
+                                                                    <div class="row" id="payslipstypes">
+                                                                        <div class="col-sm-2">
+                                                                            <input id="stopsalary" type="checkbox" name="stopsalary" value="stopsalary">
+                                                                            <label for="stopsalary"><span><span></span></span>Stop Salary</label>
+                                                                        </div>
+                                                                        <div class="col-sm-2">
+                                                                            <input id="Encashment" type="checkbox" name="Encashment" value="Encashment">
+                                                                            <label for="Encashment"><span><span></span></span>Encashment</label>
+                                                                        </div>
+                                                                        <div class="col-sm-2">
+                                                                            <input id="General" type="checkbox" name="General" value="General">
+                                                                            <label for="General"><span><span></span></span>Regular</label>
+                                                                        </div>
+                                                                        <div class="col-sm-2">
+                                                                            <input id="Adhoc" type="checkbox" name="Adhoc" value="Adhoc">
+                                                                            <label for="Adhoc"><span><span></span></span>Adhoc</label>
+                                                                        </div>
+                                                                        <div class="col-md-4">
+                                                                            <div class="form-group">
+                                                                                <label class="col-sm-6 control-label dept_label">Select @ViewBag.OneMonthPickerLabel1:</label>
+                                                                                <div class="col-sm-5 date input-group p0" id="dtOneMonthPickerYear">
+                                                                                    <input type="text" class="form-control form-control-1 input-sm from fromFudis" placeholder="Select-Month" id="dtOneMonthPicker">
+                                                                                    <span class="input-group-addon">
+                                                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-12">
+                                                                            <div class="col-md-12">
+                                                                                <div class="pull-right">
+                                                                                    <button class="btn btn-primary" id="searchmultpleorsingleemp">Search</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+
+                                                                    </div>
+
+
+                                                                    <div style='margin-top: 20px;'>
+                                                                        <div style='float: left;'>
+
+                                                                            @*<input type="button" value="Download PDF" class="btn btn-info" id='excelExport' onclick='window.location ="@Url.Action("CreatePdf", "PayslipPdf"? {id = hdnfld  })";' />*@
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+
+                                                            }
+
+
+                                                            else if (ViewBag.ReportFiltersTemplate == "FinacialPeriod")
+                                                            {
+                                                                <div id="reportsearch" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                                                    <div class="panel-body">
+                                                                        <div class="reports_search">
+                                                                            <div id="rdbAll">
+                                                                                @*@{ Html.RenderPartial("_PvEmployeeSearchwithCheckboxes"); }*@
+                                                                                <div class="rep_down_fields">
+                                                                                    <div class="col-md-4">
+                                                                                        <div class="form-group">
+                                                                                            <label class="col-sm-5 control-label dept_label" value="year" id="Year">@ViewBag.T3DdlOneLabel</label>
+                                                                                            <div class="col-sm-7 mul_drop" id="fYear">
+                                                                                                @Html.DropDownList("fY", ViewBag.DdlOneData as SelectList, new { @class = "form-control" })
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2">
+                                                                                        <div class="pull-right">
+                                                                                            <button class="btn btn-primary" id="btnGT2AllEmpSearchOneDropdown">Search</button>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            }
+
+                                                            else if (ViewBag.ReportFiltersTemplate == "T2-AllEmpSearchTwoDropdown")
+                                                            {
+                                                                <div id="reportsearch" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                                                    <div class="panel-body">
+                                                                        <div class="reports_search">
+                                                                            <div id="rdbAll">
+                                                                                @{ Html.RenderPartial("_PvEmployeeSearchwithCheckboxes"); }
+                                                                                <div class="rep_down_fields">
+                                                                                    <div class="col-md-5">
+                                                                                        <div class="form-group p2">
+                                                                                            <label class="col-sm-4 control-label dept_label" value="year" id="Year">@ViewBag.T3DdlOneLabel</label>
+                                                                                            <div class="col-sm-6 mul_drop" id="fYear">
+                                                                                                @Html.DropDownList("fY", ViewBag.DdlOneData as SelectList, new { @class = "form-control" })
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-5">
+                                                                                        <div class="form-group">
+                                                                                            <label class="col-sm-6 control-label dept_label">@ViewBag.T3MultiSelLabel:</label>
+                                                                                            <div class="col-sm-6 mul_drop">
+                                                                                                <select id="DDLActivites" data-style="btn-default" title="Select" class="selectpicker form-control" multiple data-max-options="3">
+                                                                                                    @{
+                                                                                                        foreach (var opt in ViewBag.T3MultiSelList)
+                                                                                                        {
+                                                                                                            if (opt.id != null) { 
+                                                                                                            <option value="@opt.id">@opt.Name</option>
+                                                                                                            }
+                                                                                                        }
+                                                                                                    }
+                                                                                                </select>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2">
+                                                                                        <div class="pull-right">
+                                                                                            <button class="btn btn-primary" id="btnT2AllEmpSearchTwoDropdown">Search</button>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            }
+
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="table-responsive ">
+                                <table id="rptGrid" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0"></table>
+
+                            </div>
+
+                        </div>
+
+                        @{
+
+                            if (ViewBag.buttons == "b1-Pdfreportbutton")
+                            {
+
+
+
+                                <input type="hidden" id="EmployeeId" />
+
+
+                                <div class="col-sm-12 mt_10">
+                                    <div class="pull-right">
+                                        <input type="button" value="Download PDF" class="btn btn-primary" id="GetPdf" />
+                                        @*<input type="button" value="Download PDF" class="btn btn-info" id='excelExport' onclick='window.location ="@Url.Action("CreatePdf", "PayslipPdf"? {id = hdnfld  })";' />*@
+                                        <input type="button" value="Send Mail" class="btn btn-primary" id="SendPdf" />
+                                    </div>
+                                </div>
+
+
+
+
+                            }
+
+
+                        }
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#txtAllEmpSearchforLoansAndSchedules2').hide();
+        setTimeout(pageInitLoad(), 2000);
+    });
+
+
+
+    var reportMsgTop = '';
+    var fnMessageTop = function () {
+        return (reportMsgTop == '' ? '' : 'Filters : ' + reportMsgTop);
+    };
+
+    $(document).ready(function () {
+
+        //setTimeout(pageInitLoad(), 2000);
+        $("#txtEmployeeSearchBox1450").attr("disabled", true);
+        $("#idwise1").click(function () {
+            if ($("input[name=wise]:checked").val() == "rdbEmpAll1empsearch") {
+                $("#pvTxtEmpCode1440").attr("disabled", false);
+                count++;
+            }
+        });
+    });
+
+    function pageInitLoad() {
+
+        //
+        //$.noConflict();
+        var serviceurl = '@dataUrl';
+        serviceurl = serviceurl.replace('&amp;', '&');
+
+        $('#rptGrid').DataTable({
+
+            //scrollX: true,
+            //scrollCollapse: true,
+            responsive: true,
+            "language": {
+                "search": "Filter records:"
+            },
+            //"destroy" : true,
+            "ajax": {
+                "url": serviceurl,
+                "type": "GET",
+                "datatype": "json",
+                "dataSrc": ""
+
+            },
+            dom: 'Bfrtip',
+            //"aoColumnDefs": [
+            //    { 'bSortable': false, 'aTargets': [0,1,2,3,4] }
+            //],
+            buttons: [
+                {
+                    extend: 'excelHtml5',
+                    text: '<i class="fa fa-file-excel-o dt-export-icon-excel"></i>',
+                    titleAttr: 'Excel',
+                    title: '@reportTitle',
+                    messageTop: fnMessageTop,
+                    exportOptions: {@ExportColumns},
+                    className: 'dt-export-btn',
+                    color: 'red'
+                },
+                {
+                    extend: 'pdfHtml5',
+                    text: '<i class="fa fa-file-pdf-o dt-export-icon-pdf"></i>',
+                    className: 'dt-export-btn',
+                    titleAttr: 'Pdf',
+                    orientation: '@PdfOrientation',
+                    exportOptions: {@ExportColumns},
+                    title: '@reportTitle',
+                    messageTop: fnMessageTop,
+                    customize: function (doc) {
+                        var docIdx = reportMsgTop != '' ? 3 : 2;
+                        doc.styles.tableHeader.alignment = 'left';
+                        doc.content.splice(1, 0, {
+                            margin: [0, -50, 0, 10],
+                            alignment: 'left',
+                            image: 'data:image/png;base64,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'
+
+                           // image: 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAA5AFADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD3+iiigArOvdYgtJxaxRyXV6RkW8AywHqx6KPckUzVb2cTRabYEC9uAWMhGRBGOrkdz2A7n2Bqzp+nW+m2/lQKcsd0kjnLyN3Zj3NK99jNycnaJQd9dkiaaaaw06FQWbKmZlA9TlRWJpPiQ6xfPaaf4jtp7hclY5rAoJAOu07hmovHGoS6leQeFbKUI04829l7Qwjk5/n+XrXICLQrvdN4TFzBqumfv4zK2ftSL94gZ698cZHaspSs9Dzq+Icalou6W+ru/JW00/4B6gdWvtP51axxCOt1aEyIvuy43KPfkVrQzRXEKTQyLJE4yrocgj2NZ/h/WoNf0W31CDA8xcOmfuOOoqpdQHw/M2o2an7Azbry2UcJ6yoOxHVgOo56jnS+l+h3xnaKkneJvUUisrorowZWGQQeCKWqNgooqK4JW1lZfvBCR+VAMzNBH2kXeqty95KQh9IkJVB+hb/gVT67rEGhaPcahcH5Yl+Vc8u3ZR9TSeHgF8N6aF6fZoz/AOOiuE8RapBr3iGUzHfoeh/PMB0uJ+ioPXJ4/P1rNy5YnHUq+yoq27/4dv5bmSIL2W3aCRnOra2RcX8iDLW1qThRjrg8EgdAKt3XhX+x7fSdR0ScPqVvDudIiGM0m4e/C4LAnpgVzX/CV6vYarfzTwW5uppGLrcwAtC3T5T1GBgY6cVq33jcRWuntZWFj5hhIlV41cAcjaQAO43c+tYJxtqePGth2m5br71rv69WbPh/VoND8QQ3EBC6Hrhyq5yLe4HDL+fH0I9K9OIDKVYAgjBB714Z4duJPElze6HdhcX4M0LRoFWCZBwwA4AIGDXpfgbXpNV0p7O9yNSsG8i4U9TjgN+mPqK1pS6HoZfiFJcvR7evVfqjR0DNvHd6Yxz9hm2R5/55MAyfkDt/4DWxWRa8eKtSA6G2gJ+uZB/KtetVsehS+G3a4UEZGD0NFFM0MXQVzo8umOzLJaO9qxU4YL/CR/wEqay7vwLp6eD5dGguGhUSfaPtMmCd45y3TIxxWpqSyaZf/wBsQIzwsgjvY0GSUH3ZAO5XJz6g+wq7d21prmkSW7SF7W6jxvhfG5T6EVFk1ZnM6cZRcJK7St8jzrTRrl/ZNNaeMtNmihU72lgBdQO53Lnp3pLebWLqcQx+MdKEjfdEloI9/wDu7kGfwqPUfhk+ms89ne3MidEKRgsg77sHJH0HbpWdpHg/W55Xia1LLuKvJdKdmeecNyR7jnkEelY+8tLHlWrxajKLv/if+Zu6dF4k1S4urfTvF+nSS252y+VbgEZ9Dt5HuK2fBvgy68O395fXt+tzNcLtOwHnnJJJ6nNW/DngnTvD0y3UbSPd7CrNuwvPUYHUfWtDVr2WSQaTp7/6bMvzyD/l3jPVz7/3R3PsDWkY21lud1LDqKVSqveW2rf5iaMftV7qeoD/AFc04iiPqsY25/7631sVDaWsVlaQ2sC7YokCKPYVNWi0R3Qi4xswoooplBWBHZ6d9suob0RxCOT9xCzbECEA7lHAOWLZPrxW/WH4m/49I/qaTMqqXLzdjDvLfyLpvs8VpND9qVVAxnytoJ53+pIyfSmAEC3/AOJfbyEyH7RuYJsXGML8/wA2GOc9wpqlRWR53Mr7GzoMFncaa0mrwW1vcBzjEmz5cDn73HOfyre0aPbZGUr80jk+ay4eRQcIzep2gda5PT/+PgfUfzrvauJ14ZJq/YKKKKs6z//Z'
+                        });
+
+                        doc.content[0].text = doc.content[0].text.trim();
+
+                        doc.content[docIdx].table.widths = [@PdfColumnsWidths];
+
+                        if (doc.content[0].text == 'LIC/HFC') {
+
+                            var rowCount = doc.content[3].table.body.length;
+                            for (i = 1; i < rowCount; i++) {
+                                doc.content[3].table.body[i][4].alignment = 'right';
+                            }
+                        }
+                        if (doc.content[0].text == 'Form 5A') {
+
+                            var rowCount = doc.content[3].table.body.length;
+                            for (i = 1; i < rowCount; i++) {
+                                doc.content[3].table.body[i][2].alignment = 'right';
+                            }
+                        }
+                        doc.styles.title = {
+                            fontSize: '20',
+                            alignment: 'center'
+                        };
+                        doc.styles.message = {
+                            fontSize: '9',
+                            alignment: 'center'
+                        };
+
+                        doc['footer'] = (function (page, pages) {
+                            return {
+                                columns: [
+                                    'By: @ViewBag.LoginUserName , @ViewBag.LoginBranchName .',
+                                    {
+                                        alignment: 'right',
+                                        text: [
+                                            new Date().toLocaleDateString("en-IN", { day: "2-digit", month: "2-digit", year: "numeric", hour: '2-digit', minute: '2-digit' }),
+                                            '    Page ', { text: page.toString() }, ' of ', { text: pages.toString() }
+                                        ]
+                                    }
+                                ],
+                                fontSize: '9',
+                                margin: [40, 10]
+                            }
+                        });
+                    }
+                }
+            ],
+            "columns": @Html.Raw(ViewBag.ReportColumns),
+        });
+    };
+
+    $("#btnOneMonthPickerSearch").click(function () {
+        //
+        var mnpkrVal = $("#dtOneMonthPicker").val();
+        if (mnpkrVal == "") {
+            showGlobalModal('E#Validation#Please Select Month');
+            return;
+        }
+
+        ajaxSpinnerShow();
+        var mainUrl = '@dataUrl';
+
+        var ajaxurl = mainUrl.replace('^1', mnpkrVal);
+
+        reportMsgTop = '  Return of Tax Payable for the Month , ' + mnpkrVal;
+        $('#rptGrid').DataTable().ajax.url(ajaxurl).load(function () {
+            ajaxSpinnerHide();
+        });
+
+    });
+
+    //Tsheet report
+    $("#btnOneMonthPickerSearchtsheet").click(function () {
+        //
+        var RegEmp = $("input[id='rdRegbEmp']:checked").val();
+        var SupEmp = $("input[id='rdbSupEmp']:checked").val();
+        var mnpkrVal = $("#dtOneMonthPicker").val();
+        if (mnpkrVal == "") {
+            showGlobalModal('E#Validation#Please Select Month');
+            return;
+        }
+
+        //if (SupEmp == undefined) {
+        //    $("input[id='rdRegbEmp']:checked").val();
+
+        //}
+
+        ajaxSpinnerShow();
+        var mainUrl = '@dataUrl';
+
+        var ajaxurl = mainUrl.replace('^1', mnpkrVal);
+        ajaxurl = ajaxurl.replace('^2', RegEmp);
+        ajaxurl = ajaxurl.replace('^3', SupEmp);
+        ajaxurl = ajaxurl.split('&amp;').join('&');
+        reportMsgTop = '@ViewBag.OneMonthPickerLabel1 : ' + mnpkrVal + ', RegEmp:'+RegEmp, 'SupEmp:'+SupEmp;
+        $('#rptGrid').DataTable().ajax.url(ajaxurl).load(function () {
+            ajaxSpinnerHide();
+        });
+    });
+
+
+
+    //Loan Ledger Report
+    $("#btnT3AllEmpSearchOneMultiSelOneDropdown").click(function () {
+        //
+        var LoansTypes = [];
+        var empcode = $("#txtEmployeeSearchBox1450").val();
+        var Loans = $("#T3_LoansTypes").val();
+        $('#T3_LoansTypes :selected').each(function (i, sel) {
+
+            LoansTypes.push($(sel).text());
+        });
+        if (LoansTypes.length == 0) {
+            LoansTypes.push("All");
+        }
+        var fYear = $("#fY option:selected").text();
+        fYear = fYear.substring(5, fYear.length);
+        if (empcode == "") {
+            empcode = $("input[id='rdbEmpAll']:checked").val();
+        }
+        $("input[id='rdbEmpAll']").click(function () {
+            if ($("#rdbEmpAll").is(":checked")) {
+                var empcode = $("#txtEmployeeSearchBox1450").val("");
+            }
+        });
+
+        if (empcode == undefined) {
+            showGlobalModal('E#Warning #Please Enter Employee Code');
+            return false;
+        }
+        if (fYear == "") {
+            showGlobalModal('E#Warning #Please Select Financial Year');
+            return false;
+        }
+        ajaxSpinnerShow();
+        var mainUrl = '@dataUrl';
+        var ajaxurl = mainUrl.replace('^1', empcode);
+        ajaxurl = ajaxurl.replace('^2', Loans);
+        ajaxurl = ajaxurl.replace('^3', fYear);
+        ajaxurl = ajaxurl.split('&amp;').join('&');
+
+        reportMsgTop = 'Employee : ' + empcode + ' , @ViewBag.T3MultiSelLabel : ' + LoansTypes + ' , FY : ' + fYear;
+        if (fYear != undefined && empcode != undefined) { //Loans != undefined &&
+            $('#rptGrid').DataTable().ajax.url(ajaxurl).load(function () {
+                ajaxSpinnerHide();
+            });
+        }
+    });
+
+
+    var day = '@fm'; //{fm : "01-02-12"};
+    var MonthNameyear;
+    //debugger;
+    dteSplit = day.split('-');
+    days = dteSplit[0];
+    month = dteSplit[1];
+    year = dteSplit[2];
+   // year = year.substring(0, 4);
+    MonthNameyear = days + "-" + month + "-" + year;
+    $(function () {
+        var dateyear = new Date(MonthNameyear)
+        $('#monthyearF').datepicker();
+        $('#monthyearF').datepicker('setDate', dateyear);
+
+    });
+    $(function () {
+        var dateyear1 = new Date(MonthNameyear)
+        $('#monthyearT').datepicker();
+        $('#monthyearT').datepicker('setDate', dateyear1);
+
+    });
+    $('#rtfromDate').val(MonthNameyear);
+    $('#rttoDate').val(MonthNameyear);
+    $("#btntwoDtpickersSearch").click(function ()
+    {
+        //debugger;
+        var fromDate = $("#rtfromDate").val();
+        var toDate = $("#rttoDate").val();
+
+        if ($("#rttoDate").val() == "") {
+            showGlobalModal('E#Save Error#Please Select Todate ');
+            //$('#rttoDate').focus();
+        }
+        else {
+            var Todate = $('#rttoDate').val();
+        }
+        if ($("#rtfromDate").val() == "") {
+            showGlobalModal('E#Save Error#Please Select Fromdate ');
+            $('#rtfromDate').focus();
+        } else {
+            var Fromdate = $('#rtfromDate').val();
+        }
+        if (Fromdate != undefined && Todate != undefined) {
+            ajaxSpinnerShow();
+            var mainUrl = '@dataUrl';
+
+            //var fromDate = $("#rtfromDate").val();
+            //    var toDate = $("#rttoDate").val();
+            var ajaxurl = mainUrl.replace('^1', fromDate);
+            ajaxurl = ajaxurl.replace('^2', toDate);
+            ajaxurl = ajaxurl.replace('&amp;', '&');
+
+            reportMsgTop = 'From Date : ' + fromDate + ' - ' + toDate;
+            $('#rptGrid').DataTable().ajax.url(ajaxurl).load(function () {
+                ajaxSpinnerHide();
+            });
+        }
+    });
+
+      //validation for From date greater then To date
+    function rdtDateValidationfrom() {
+        //debugger;
+        var fm = $("#rtfromDate").val();
+        var fm2 = $("#rttoDate").val();
+        var StartDate = document.getElementById('rtfromDate').value;
+        var EndDate = document.getElementById('rttoDate').value;
+        var eDate = moment(EndDate, "DD.MM.YYYY");
+        var sDate = moment(StartDate, "DD.MM.YYYY");
+        if ( sDate > eDate) {
+            showGlobalModal('E#Warning #Please ensure that To Date is greater than or equal to From Date.');
+            document.getElementById('rtfromDate').value = '';
+            document.getElementById("rtfromDate").focus();
+            return false;
+        }
+    }
+
+    function rdtDateValidationto() {
+       // debugger;
+        var fm = $("#rtfromDate").val();
+        var fm2 = $("#rttoDate").val();
+
+        var StartDate = document.getElementById('rtfromDate').value;
+        var EndDate = document.getElementById('rttoDate').value;
+        var eDate = moment(EndDate, "DD.MM.YYYY");
+        var sDate = moment(StartDate, "DD.MM.YYYY");
+        if (sDate > eDate) {
+            debugger;
+            showGlobalModal('E#Warning #Please ensure that To Date is greater than or equal to From Date.');
+            document.getElementById('rttoDate').value = '';
+            document.getElementById("rttoDate").focus();
+            return false;
+        }
+
+    }
+
+   // debugger;
+       var finmonth = '@fm';
+    var fmonth=finmonth.split('-');
+
+    var finmonthyear="'"+fmonth[1] +"-"+fmonth[0]+"'";
+
+    $('#dtOneMonthPickerYear').datepicker({
+        minViewMode: 1,
+        autoclose: true,
+        format: 'MM-yyyy',
+    }).datepicker("setDate", finmonthyear);
+
+
+    //$('#dtOneMonthPickerYear').datepicker({
+    //    minViewMode: 1,
+    //    autoclose: true,
+    //    format: 'MM-yyyy',
+    //}).datepicker("setDate", "+0d");
+
+     //LIC Report Search function
+    $("#btnT4AllEmpSearchOneMultiSelOneMonthpic").click(function () {
+        debugger;
+       var emp_code = $("#txtEmployeeSearchBox1450").val();
+       var mnth = $("#dtOneMonthPicker").val();
+       var Types = $("#DDLActivites").val();
+       console.log(Types);
+       var Finance = $("#DDLActivites :selected").text();
+       console.log(Finance);
+       var emp_code = $("#txtEmployeeSearchBox1450").val();
+       var allemp = $("input[id='rdbEmpAll']:checked").val();
+
+       if (allemp == "All") {
+           emp_code = $("input[id='rdbEmpAll']:checked").val();
+       }
+       if (emp_code == undefined || emp_code == "") {
+           showGlobalModal('E#Warning #Please Enter Employee Code');
+           return false;
+       }
+
+
+        if (emp_code != undefined && mnth != undefined ) {
+            ajaxSpinnerShow();
+            var mainUrl = '@dataUrl';
+
+            var ajaxurl = mainUrl.replace('^1', emp_code);
+            ajaxurl = ajaxurl.replace('^2', Types );
+            ajaxurl = ajaxurl.replace('^3', mnth );
+            ajaxurl = ajaxurl.split('&amp;').join('&');
+
+            reportMsgTop = 'Employee : ' + emp_code + ' , @ViewBag.T3MultiSelLabel :  ' + Finance +  '    Month :  ' + mnth;
+            $('#rptGrid').DataTable().ajax.url(ajaxurl).load(function () {
+                ajaxSpinnerHide();
+            });
+        }
+
+    });
+
+
+
+        //LoanReport Search function
+     $("#T5-AllAndSingleEmpSearchRbtn").click(function () {
+
+         var emp_code = $("#T5-AllEmpSearch").val();
+         if (emp_code == "") {
+             emp_code = $("input[id='rdbEmpAll']:checked").val();
+         }
+         $("input[id='rdbEmpAll1']").click(function () {
+             if ($("#rdbEmpAll1").is(":checked")) {
+                  emp_code = $("#T5-AllEmpSearch").val("");
+             }
+         });
+         if (emp_code == undefined) {
+             showGlobalModal('E#Warning #Please Enter Employee Code');
+             return false;
+         }
+
+        if (emp_code != undefined) {
+            ajaxSpinnerShow();
+            var mainUrl = '@dataUrl';
+
+            var ajaxurl = mainUrl.replace('^1', emp_code);
+            //ajaxurl = ajaxurl.replace('^2', Types );
+            //ajaxurl = ajaxurl.replace('^3', mnth );
+            //ajaxurl = ajaxurl.replace('&amp;', '&');
+            ajaxurl = ajaxurl.replace('&amp;', '&');
+
+           // reportMsgTop = '@ViewBag.OneMonthPickerLabel1 : ' + Types + ' of month ' + mnth;
+            $('#rptGrid').DataTable().ajax.url(ajaxurl).load(function () {
+                ajaxSpinnerHide();
+            });
+        }
+
+    });
+    //salary bill fro month report
+
+    $("#btnT7OneMonthPickeronedropdown").click(function () {
+
+        var inputMonth = $("#dtOneMonthPicker").val();
+        var Branch = $("#DDLActivites").val();
+
+            ajaxSpinnerShow();
+            var mainUrl = '@dataUrl';
+
+            var ajaxurl = mainUrl.replace('^1', Branch);
+            ajaxurl = ajaxurl.replace('^2', inputMonth );
+
+           // ajaxurl = ajaxurl.replace('&amp;', '&');
+            ajaxurl = ajaxurl.replace('&amp;', '&');
+
+            //reportMsgTop = '@ViewBag.OneMonthPickerLabel1 :Branch: ' + branch + ' , '+ 'Month:' + mnth';
+            $('#rptGrid').DataTable().ajax.url(ajaxurl).load(function () {
+                ajaxSpinnerHide();
+            });
+
+
+    });
+
+    //Loan Schedule Report
+    $("#BtnSearchForLonsAndSchedulesOfEmp").click(function () {
+
+         loanids = [];
+         scheduleids = [];
+        $('input:checkbox').removeAttr('checked');
+        var loancode = $("#txtAllEmpSearchforLoansAndSchedules1").val();
+        var schedulecode=$("#txtAllEmpSearchforLoansAndSchedules2").val();
+       // var allemp = $("input[id='rdbLoanWise']:checked").val();
+
+        //if (allemp == "All") {
+        //    loancode = $("input[id='rdbScheduleWise']:checked").val();
+        //}
+
+        if (loancode == undefined && schedulecode != undefined) {
+             showGlobalModal('E#Warning #Please Enter Loan Code');
+             return false;
+        }
+
+        if (schedulecode == undefined && loancode != undefined) {
+            showGlobalModal('E#Warning #Please Enter Schedule Code');
+            return false;
+        }
+
+
+
+        if ((loancode != undefined || loancode == "") && (schedulecode == undefined || schedulecode == "")) {
+
+            ajaxSpinnerShow();
+            var mainUrl = '@dataUrl';
+
+            var ajaxurl = mainUrl.replace('^1', loancode);
+            //ajaxurl = ajaxurl.replace('^2', Types );
+            //ajaxurl = ajaxurl.replace('^3', mnth );
+            //ajaxurl = ajaxurl.replace('&amp;', '&');
+            ajaxurl = ajaxurl.replace('&amp;', '&');
+
+            reportMsgTop = '@ViewBag.OneMonthPickerLabel1 loancode: ' + loancode ;
+            $('#rptGrid').DataTable().ajax.url(ajaxurl).load(function () {
+                ajaxSpinnerHide();
+            });
+
+        }
+        else if ((schedulecode != undefined || schedulecode == "") && (loancode == undefined || loancode == "")) {
+
+             ajaxSpinnerShow();
+            var mainUrl = '@dataUrl';
+
+            var ajaxurl = mainUrl.replace('^2', schedulecode);
+            //ajaxurl = ajaxurl.replace('^2', Types );
+            //ajaxurl = ajaxurl.replace('^3', mnth );
+            //ajaxurl = ajaxurl.replace('&amp;', '&');
+            ajaxurl = ajaxurl.replace('&amp;', '&');
+
+            reportMsgTop = '@ViewBag.OneMonthPickerLabel1 schedulecode: ' + schedulecode ;
+            $('#rptGrid').DataTable().ajax.url(ajaxurl).load(function () {
+                ajaxSpinnerHide();
+            });
+        }
+    });
+
+</script>
+<script>
+
+    var hdnfld = 0;
+    //search with employee_code
+    function getDataAfterEmpSearch1440(empcode) {
+        //
+        hdnfld = empcode;
+        $('#EmployeeId').val(hdnfld);
+        CommonApiGET('/Payroll/PayslipPdf/SearchEmployee?EmpCode=' + empcode, function (respData) {
+            originalData = respData;
+            //fillDataTables(respData);
+        });
+
+    }
+
+    var pdftypes = [];
+    var val = [];
+    var string = "";
+
+    //checkbox Genereal checked or not
+    $("#General").click(function () {
+
+        if ($(this).prop("checked") == true) {
+            //
+            $('#General').attr('checked', this.checked);
+            pdftypes.push($('#General').val());
+            //$("#Adhoc").attr('disabled', !$("#Adhoc").attr('disabled'));
+            //$("#Encashment").attr('disabled', !$("#Encashment").attr('disabled'));
+            //$("#stopsalary").attr('disabled', !$("#stopsalary").attr('disabled'));
+            //$("#dtOneMonthPicker").attr('disabled', !$("#dtOneMonthPicker").attr('disabled'));
+        }
+        else {
+            //
+            //pdftypes = [];
+            pdftypes = pdftypes.filter(e => e !== 'General');
+        }
+    });
+
+    //checkbox Encashment checked or not
+    $("#Encashment").click(function () {
+
+        if ($(this).prop("checked") == true) {
+            //
+            $('#Encashment').attr('checked', this.checked);
+            pdftypes.push($('#Encashment').val());
+
+            //$("#Adhoc").attr('disabled', !$("#Adhoc").attr('disabled'));
+            //$("#General").attr('disabled', !$("#General").attr('disabled'));
+            //$("#stopsalary").attr('disabled', !$("#stopsalary").attr('disabled'));
+            //$("#dtOneMonthPicker").attr('disabled', !$("#dtOneMonthPicker").attr('disabled'));
+
+        }
+        else {
+            //
+            //pdftypes = [];
+            pdftypes = pdftypes.filter(e => e !== 'Encashment');
+        }
+    });
+
+    //checkbox Adhoc checked or not
+    $("#Adhoc").click(function () {
+
+        if ($(this).prop("checked") == true) {
+            //
+            $('#Adhoc').attr('checked', this.checked);
+            pdftypes.push($('#Adhoc').val());
+            ////$("#Encashment").attr('disabled', !$("#Encashment").attr('disabled'));
+            ////$("#General").attr('disabled', !$("#General").attr('disabled'));
+            ////$("#stopsalary").attr('disabled', !$("#stopsalary").attr('disabled'));
+
+        }
+        else {
+            //
+            //pdftypes = [];
+            pdftypes = pdftypes.filter(e => e !== 'Adhoc');
+        }
+    });
+
+    //checkbox StopSalary checked or not
+    $("#stopsalary").click(function () {
+
+        if ($(this).prop("checked") == true) {
+            //
+       $('#stopsalary').attr('checked', this.checked);
+            pdftypes.push($('#stopsalary').val());
+            //$("#Encashment").attr('disabled', !$("#Encashment").attr('disabled'));
+            //$("#General").attr('disabled', !$("#General").attr('disabled'));
+            //$("#Adhoc").attr('disabled', !$("#Adhoc").attr('disabled'));
+            //$("#dtOneMonthPicker").attr('disabled', !$("#dtOneMonthPicker").attr('disabled'));
+        }
+        else {
+            //
+            //pdftypes = [];
+            pdftypes = pdftypes.filter(e => e !== 'stopsalary');
+        }
+    });
+
+
+    $('#GetPdf').click(function () {
+
+        var epmIds = $("#txtEmployeeSearchBox1450").val();
+        var mnpkrVal = $("#dtOneMonthPicker").val();
+        window.location = '@Url.Action("CreatePdf", "PayslipPdf")?EmpCode=' + epmIds + '&pdftypes=' + pdftypes + '&Months=' + mnpkrVal;
+    });
+
+
+    $('#SendPdf').click(function () {
+
+
+        var emp_code = $("#txtEmployeeSearchBox1450").val();
+
+        var mnpkrVal = $("#dtOneMonthPicker").val();
+
+        if (emp_code == "") {
+           emp_code = $("input[id='rdbEmpAll']:checked").val();
+       }
+
+       if (emp_code == undefined) {
+           showGlobalModal('E#Warning #Please Enter Employee Code');
+           return false;
+        }
+
+
+         var allemp = $("input[id='rdbEmpAll']:checked").val();
+
+         if (allemp == "All") {
+             emp_code = $("input[id='rdbEmpAll']:checked").val();
+         }
+        var dataToSebd = JSON.stringify({
+            StringData: emp_code,
+            pdftypes: pdftypes,
+            Monthdata: mnpkrVal
+
+        });
+        //if (epmIds == "") {
+        //    showGlobalModal('E#Validation#Please Enter Employee Code');
+        //    return;
+        //}
+
+            CommonApiPOST("/Payroll/PayslipPdf/SendePdf", dataToSebd, function (isSuccess) {
+                if (isSuccess) {
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+
+
+
+    });
+
+
+
+    $("#searchmultpleorsingleemp").click(function () {
+        //
+        var emp_code = $("#txtEmployeeSearchBox1450").val();
+        var mnpkrVal1 = $("#dtOneMonthPicker").val();
+        if (emp_code == "") {
+            emp_code = $("input[id='rdbEmpAll']:checked").val();
+        }
+
+        if (emp_code == undefined) {
+            showGlobalModal('E#Warning #Please Enter Employee Code');
+            return false;
+        }
+
+
+        var allemp = $("input[id='rdbEmpAll']:checked").val();
+
+        if (allemp == "All") {
+            emp_code = $("input[id='rdbEmpAll']:checked").val();
+        }
+
+        if (emp_code != undefined)
+        {
+            ajaxSpinnerShow();
+
+            var mainUrl = '@dataUrl';
+
+            var ajaxurl = mainUrl.replace('^1', emp_code);
+
+            ajaxurl = ajaxurl.replace('^2', pdftypes);
+
+            ajaxurl = ajaxurl.replace('^3', mnpkrVal1);
+
+            // ajaxurl = ajaxurl.replace('&amp;', '&');
+            ajaxurl = ajaxurl.split('&amp;').join('&');
+
+
+        }
+
+        $('#rptGrid').DataTable().ajax.url(ajaxurl).load(function () {
+            ajaxSpinnerHide();
+        });
+
+    });
+
+
+    $("#btnGT2AllEmpSearchOneDropdown").click(function () {
+        debugger;
+
+        var fYear = $("#fY option:selected").text();
+        if (fYear == "Select") {
+            showGlobalModal('E#Warning #Please Select Financial Year');
+            return false;
+        }
+
+        if (fYear != undefined) { //Loans != undefined &&
+        fYear = fYear.substring(5, fYear.length);
+
+        ajaxSpinnerShow();
+        var mainUrl = '@dataUrl';
+            var ajaxurl = mainUrl.replace('^1', fYear);
+        reportMsgTop = '  FY : ' + fYear;
+
+            $('#rptGrid').DataTable().ajax.url(ajaxurl).load(function () {
+                ajaxSpinnerHide();
+            });
+        }
+    });
+
+
+
+    $("#btnT2AllEmpSearchTwoDropdown").click(function () {
+        debugger;
+        var fYear = $("#fY option:selected").text();
+        if (fYear == "Select") {
+            showGlobalModal('E#Warning #Please Select Financial Year');
+            return false;
+        }
+
+        var emp_code = $("#txtEmployeeSearchBox1450").val();
+
+        var allemp = $("input[id='rdbEmpAll']:checked").val();
+
+        if (allemp == "All") {
+            emp_code = $("input[id='rdbEmpAll']:checked").val();
+        }
+
+
+        //if (emp_code == "") {
+        //    emp_code = $("input[id='rdbEmpAll']:checked").val();
+        //}
+        if (emp_code == undefined) {
+            showGlobalModal('E#Warning #Please Enter Employee Code');
+            return false;
+        }
+        var incType = $("#DDLActivites").val();
+        if (incType == null) {
+            showGlobalModal('E#Warning #Please Select Increment Type');
+            return false;
+        }
+        var inctypeText = $("#DDLActivites option:selected").text();
+        if (emp_code != undefined && fYear != undefined && incType != undefined) {
+            ajaxSpinnerShow();
+            var mainUrl = '@dataUrl';
+            if(mainUrl='/Payroll/PrAllReports/JAIIB_CAIIB_Data?empcode=^1&amp;fYear=^2&amp;incType=^3'){
+                var ajaxurl = mainUrl.replace('^1', emp_code);
+                ajaxurl = ajaxurl.replace('^2', fYear);
+                ajaxurl = ajaxurl.replace('^3', incType);
+                ajaxurl = ajaxurl.split('&amp;').join('&');
+            }
+            else{
+                var ajaxurl = mainUrl.replace('dash', emp_code);
+                ajaxurl = ajaxurl.replace('dyear', fYear);
+                ajaxurl = ajaxurl.replace('dtype', incType);
+                ajaxurl = ajaxurl.split('&amp;').join('&');
+            }
+               
+            
+            reportMsgTop = 'Employee  : ' + emp_code + '  Financial Period  :   ' + fYear + '   Increment Type  :  ' + inctypeText;
+
+            $('#rptGrid').DataTable().ajax.url(ajaxurl).load(function () {
+                ajaxSpinnerHide();
+            });
+        }
+    });
+</script>
+
+
+
+
+
+

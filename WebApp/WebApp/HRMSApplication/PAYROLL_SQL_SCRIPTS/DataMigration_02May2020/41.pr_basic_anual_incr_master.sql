@@ -1,0 +1,95 @@
+												
+Insert into pr_basic_anual_incr_master values(1,(select id from pr_emp_designation where designation='Assistant General Manager'),'2010-05-01 00:00:00',	30600	,	900	,	4	,1,111);
+Insert into pr_basic_anual_incr_master values(2,(select id from pr_emp_designation where designation='Assistant General Manager'),'2010-05-01 00:00:00',	34200	,	1000	,	2	,1,111);
+Insert into pr_basic_anual_incr_master values(3,(select id from pr_emp_designation where designation='Assistant General Manager'),'2010-05-01 00:00:00',	36200	,	0	,	0	,1,111);
+Insert into pr_basic_anual_incr_master values(4,(select id from pr_emp_designation where designation='Attender'),'2010-05-01 00:00:00',	5850	,	200	,	4	,1,111);
+Insert into pr_basic_anual_incr_master values(5,(select id from pr_emp_designation where designation='Attender'),'2010-05-01 00:00:00',	6650	,	250	,	5	,1,111);
+Insert into pr_basic_anual_incr_master values(6,(select id from pr_emp_designation where designation='Attender'),'2010-05-01 00:00:00',	7900	,	300	,	4	,1,111);
+Insert into pr_basic_anual_incr_master values(7,(select id from pr_emp_designation where designation='Attender'),'2010-05-01 00:00:00',	9100	,	350	,	3	,1,111);
+Insert into pr_basic_anual_incr_master values(8,(select id from pr_emp_designation where designation='Attender'),'2010-05-01 00:00:00',	10150	,	400	,	7	,1,111);
+Insert into pr_basic_anual_incr_master values(9,(select id from pr_emp_designation where designation='Attender'),'2010-05-01 00:00:00',	12950	,	450	,	1	,1,111);
+Insert into pr_basic_anual_incr_master values(10,(select id from pr_emp_designation where designation='Attender'),'2010-05-01 00:00:00',	13400	,	0	,	0	,1,111);
+Insert into pr_basic_anual_incr_master values(11,(select id from pr_emp_designation where designation='Chief General Manager'),'2010-05-01 00:00:00',	46800	,	1300	,	4	,1,111);
+Insert into pr_basic_anual_incr_master values(12,(select id from pr_emp_designation where designation='Chief General Manager'),'2010-05-01 00:00:00',	52000	,	0	,	0	,1,111);
+Insert into pr_basic_anual_incr_master values(13,(select id from pr_emp_designation where designation='Deputy General manager'),'2010-05-01 00:00:00',	36200	,	1000	,	2	,1,111);
+Insert into pr_basic_anual_incr_master values(14,(select id from pr_emp_designation where designation='Deputy General manager'),'2010-05-01 00:00:00',	38200	,	1100	,	2	,1,111);
+Insert into pr_basic_anual_incr_master values(15,(select id from pr_emp_designation where designation='Deputy General manager'),'2010-05-01 00:00:00',	40400	,	0	,	0	,1,111);
+Insert into pr_basic_anual_incr_master values(16,(select id from pr_emp_designation where designation='General Manager'),'2010-05-01 00:00:00',	42000	,	1200	,	4	,1,111);
+Insert into pr_basic_anual_incr_master values(17,(select id from pr_emp_designation where designation='General Manager'),'2010-05-01 00:00:00',	46800	,	0	,	0	,1,111);
+Insert into pr_basic_anual_incr_master values(18,(select id from pr_emp_designation where designation='Staff Assistant'),'2010-05-01 00:00:00',	5900	,	250	,	2	,1,111);
+Insert into pr_basic_anual_incr_master values(19,(select id from pr_emp_designation where designation='Staff Assistant'),'2010-05-01 00:00:00',	6400	,	300	,	5	,1,111);
+Insert into pr_basic_anual_incr_master values(20,(select id from pr_emp_designation where designation='Staff Assistant'),'2010-05-01 00:00:00',	7900	,	350	,	5	,1,111);
+Insert into pr_basic_anual_incr_master values(21,(select id from pr_emp_designation where designation='Staff Assistant'),'2010-05-01 00:00:00',	9650	,	400	,	2	,1,111);
+Insert into pr_basic_anual_incr_master values(22,(select id from pr_emp_designation where designation='Staff Assistant'),'2010-05-01 00:00:00',	10450	,	450	,	6	,1,111);
+Insert into pr_basic_anual_incr_master values(23,(select id from pr_emp_designation where designation='Staff Assistant'),'2010-05-01 00:00:00',	13150	,	0	,	0	,1,111);
+Insert into pr_basic_anual_incr_master values(24,(select id from pr_emp_designation where designation='General Manager'),'2010-05-01 00:00:00',	14500	,	600	,	7	,1,111);
+Insert into pr_basic_anual_incr_master values(25,(select id from pr_emp_designation where designation='General Manager'),'2010-05-01 00:00:00',	18700	,	700	,	2	,1,111);
+Insert into pr_basic_anual_incr_master values(26,(select id from pr_emp_designation where designation='General Manager'),'2010-05-01 00:00:00',	20100	,	800	,	12	,1,111);
+Insert into pr_basic_anual_incr_master values(27,(select id from pr_emp_designation where designation='General Manager'),'2010-05-01 00:00:00',	29700	,	900	,	2	,1,111);
+Insert into pr_basic_anual_incr_master values(28,(select id from pr_emp_designation where designation='General Manager'),'2010-05-01 00:00:00',	31500	,	0	,	0	,1,111);
+Insert into pr_basic_anual_incr_master values(29,(select id from pr_emp_designation where designation='Manager Scale-1'),'2010-05-01 00:00:00',	14500	,	600	,	7	,1,111);
+Insert into pr_basic_anual_incr_master values(30,(select id from pr_emp_designation where designation='Manager Scale-1'),'2010-05-01 00:00:00',	18700	,	700	,	2	,1,111);
+Insert into pr_basic_anual_incr_master values(31,(select id from pr_emp_designation where designation='Manager Scale-1'),'2010-05-01 00:00:00',	20100	,	800	,	12	,1,111);
+Insert into pr_basic_anual_incr_master values(32,(select id from pr_emp_designation where designation='Manager Scale-1'),'2010-05-01 00:00:00',	29700	,	900	,	2	,1,111);
+Insert into pr_basic_anual_incr_master values(33,(select id from pr_emp_designation where designation='Manager Scale-1'),'2010-05-01 00:00:00',	31500	,	0	,	0	,1,111);
+Insert into pr_basic_anual_incr_master values(34,(select id from pr_emp_designation where designation='Staff Assistant '),'2010-05-01 00:00:00',	7200	,	400	,	3	,1,111);
+Insert into pr_basic_anual_incr_master values(35,(select id from pr_emp_designation where designation='Staff Assistant '),'2010-05-01 00:00:00',	8400	,	500	,	3	,1,111);
+Insert into pr_basic_anual_incr_master values(36,(select id from pr_emp_designation where designation='Staff Assistant '),'2010-05-01 00:00:00',	9900	,	600	,	4	,1,111);
+Insert into pr_basic_anual_incr_master values(37,(select id from pr_emp_designation where designation='Staff Assistant '),'2010-05-01 00:00:00',	12300	,	700	,	7	,1,111);
+Insert into pr_basic_anual_incr_master values(38,(select id from pr_emp_designation where designation='Staff Assistant '),'2010-05-01 00:00:00',	17200	,	1300	,	1	,1,111);
+Insert into pr_basic_anual_incr_master values(39,(select id from pr_emp_designation where designation='Staff Assistant '),'2010-05-01 00:00:00',	18500	,	800	,	1	,1,111);
+Insert into pr_basic_anual_incr_master values(40,(select id from pr_emp_designation where designation='Staff Assistant '),'2010-05-01 00:00:00',	19300	,	0	,	0	,1,111);
+
+
+Insert into pr_basic_anual_incr_master values(41,(select id from pr_emp_designation where designation='Assistant General Manager'),'2016-02-01 00:00:00',	50030	,	1460	,	4	,1,111);
+Insert into pr_basic_anual_incr_master values(42,(select id from pr_emp_designation where designation='Assistant General Manager'),'2016-02-01 00:00:00',	55870	,	1650	,	5	,1,111);
+Insert into pr_basic_anual_incr_master values(43,(select id from pr_emp_designation where designation='Assistant General Manager'),'2016-02-01 00:00:00',	64120	,	0	,	0	,1,111);
+
+Insert into pr_basic_anual_incr_master values(44,(select id from pr_emp_designation where designation='Attender'),'2016-02-01 00:00:00',	9560	,	325	,	4	,1,111);
+Insert into pr_basic_anual_incr_master values(45,(select id from pr_emp_designation where designation='Attender'),'2016-02-01 00:00:00',	10860	,	410	,	5	,1,111);
+Insert into pr_basic_anual_incr_master values(46,(select id from pr_emp_designation where designation='Attender'),'2016-02-01 00:00:00',	12910	,	490	,	4	,1,111);
+Insert into pr_basic_anual_incr_master values(47,(select id from pr_emp_designation where designation='Attender'),'2016-02-01 00:00:00',	14870	,	570	,	3	,1,111);
+Insert into pr_basic_anual_incr_master values(48,(select id from pr_emp_designation where designation='Attender'),'2016-02-01 00:00:00',	16580	,	655	,	7	,1,111);
+Insert into pr_basic_anual_incr_master values(49,(select id from pr_emp_designation where designation='Attender'),'2016-02-01 00:00:00',	21165	,	735	,	1	,1,111);
+Insert into pr_basic_anual_incr_master values(50,(select id from pr_emp_designation where designation='Attender'),'2016-02-01 00:00:00',	21900	,	0	,	0	,1,111);
+
+Insert into pr_basic_anual_incr_master values(51,(select id from pr_emp_designation where designation='Chief General Manager'),'2016-02-01 00:00:00',	76520	,	2120	,	7	,1,111);
+Insert into pr_basic_anual_incr_master values(52,(select id from pr_emp_designation where designation='Chief General Manager'),'2016-02-01 00:00:00',	91360	,	0	,	0	,1,111);
+
+Insert into pr_basic_anual_incr_master values(53,(select id from pr_emp_designation where designation='Deputy General Manager'),'2016-02-01 00:00:00',	59170	,	1650	,	2	,1,111);
+Insert into pr_basic_anual_incr_master values(54,(select id from pr_emp_designation where designation='Deputy General Manager'),'2016-02-01 00:00:00',	62470	,	1800	,	5	,1,111);
+Insert into pr_basic_anual_incr_master values(55,(select id from pr_emp_designation where designation='Deputy General Manager'),'2016-02-01 00:00:00',	71470	,	0	,	0	,1,111);
+
+insert into pr_basic_anual_incr_master values(56,(select id from pr_emp_designation where designation='general manager'),'2016-02-01 00:00:00',	68680	,	1960	,	7	,1,111);
+insert into pr_basic_anual_incr_master values(57,(select id from pr_emp_designation where designation='general manager'),'2016-02-01 00:00:00',	82400	,	0	,	0	,1,111);
+
+
+
+Insert into pr_basic_anual_incr_master values(62,(select id from pr_emp_designation where designation='Manager Scale-1'),'2016-02-01 00:00:00',	23700	,	980	,	7	,1,111);
+Insert into pr_basic_anual_incr_master values(63,(select id from pr_emp_designation where designation='Manager Scale-1'),'2016-02-01 00:00:00',	30560	,	1145	,	2	,1,111);
+Insert into pr_basic_anual_incr_master values(64,(select id from pr_emp_designation where designation='Manager Scale-1'),'2016-02-01 00:00:00',	32850	,	1310	,	7	,1,111);
+Insert into pr_basic_anual_incr_master values(65,(select id from pr_emp_designation where designation='Manager Scale-1'),'2016-02-01 00:00:00',	42020	,	0	,	0	,1,111);
+
+Insert into pr_basic_anual_incr_master values(66,(select id from pr_emp_designation where designation='Managing Director'),'2016-02-01 00:00:00',	76520	,	2120	,	7	,1,111);
+Insert into pr_basic_anual_incr_master values(67,(select id from pr_emp_designation where designation='Managing Director'),'2016-02-01 00:00:00',	91360	,	0	,	0	,1,111);
+
+Insert into pr_basic_anual_incr_master values(68,(select id from pr_emp_designation where designation='Staff Assistant'),'2016-02-01 00:00:00',	11765	,	655	,	3	,1,111);
+Insert into pr_basic_anual_incr_master values(69,(select id from pr_emp_designation where designation='Staff Assistant'),'2016-02-01 00:00:00',	13730	,	815	,	3	,1,111);
+Insert into pr_basic_anual_incr_master values(70,(select id from pr_emp_designation where designation='Staff Assistant'),'2016-02-01 00:00:00',	16175	,	980	,	4	,1,111);
+Insert into pr_basic_anual_incr_master values(71,(select id from pr_emp_designation where designation='Staff Assistant'),'2016-02-01 00:00:00',	20095	,	1145	,	7	,1,111);
+Insert into pr_basic_anual_incr_master values(72,(select id from pr_emp_designation where designation='Staff Assistant'),'2016-02-01 00:00:00',	28110	,	2120	,	1	,1,111);
+Insert into pr_basic_anual_incr_master values(73,(select id from pr_emp_designation where designation='Staff Assistant'),'2016-02-01 00:00:00',	30230	,	1310	,	1	,1,111);
+Insert into pr_basic_anual_incr_master values(74,(select id from pr_emp_designation where designation='Staff Assistant'),'2016-02-01 00:00:00',	31540	,	0	,	0	,1,111);
+
+Insert into pr_basic_anual_incr_master values(44,(select id from pr_emp_designation where designation='Driver'),'2016-02-01 00:00:00',	9560	,	325	,	4	,1,111);
+Insert into pr_basic_anual_incr_master values(45,(select id from pr_emp_designation where designation='Driver'),'2016-02-01 00:00:00',	10860	,	410	,	5	,1,111);
+Insert into pr_basic_anual_incr_master values(46,(select id from pr_emp_designation where designation='Driver'),'2016-02-01 00:00:00',	12910	,	490	,	4	,1,111);
+Insert into pr_basic_anual_incr_master values(47,(select id from pr_emp_designation where designation='Driver'),'2016-02-01 00:00:00',	14870	,	570	,	3	,1,111);
+Insert into pr_basic_anual_incr_master values(48,(select id from pr_emp_designation where designation='Driver'),'2016-02-01 00:00:00',	16580	,	655	,	7	,1,111);
+Insert into pr_basic_anual_incr_master values(49,(select id from pr_emp_designation where designation='Driver'),'2016-02-01 00:00:00',	21165	,	735	,	1	,1,111);
+Insert into pr_basic_anual_incr_master values(50,(select id from pr_emp_designation where designation='Driver'),'2016-02-01 00:00:00',	21900	,	0	,	0	,1,111);
+
+Insert into pr_basic_anual_incr_master values(56,(select id from pr_emp_designation where designation='Senior Manager'),'2016-02-01 00:00:00',	31705   ,       1145    ,       1,       1,111);
+Insert into pr_basic_anual_incr_master values(57,(select id from pr_emp_designation where designation='Senior Manager'),'2016-02-01 00:00:00',	32850	,	1310	,	12	,1,111);
+Insert into pr_basic_anual_incr_master values(58,(select id from pr_emp_designation where designation='Senior Manager'),'2016-02-01 00:00:00',	48570	,	1460	,	2	,1,111);
+Insert into pr_basic_anual_incr_master values(59,(select id from pr_emp_designation where designation='Senior Manager'),'2016-02-01 00:00:00',	51490	,	0	,	0	,1,111);

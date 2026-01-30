@@ -1,0 +1,1333 @@
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6401	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6401	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6401	),
+(select Department from Employees where empid=	6401	),
+(select Branch from Employees where empid=	6401	),
+(select CurrentDesignation from Employees where empid=	6401	),'Credit',
+(select branch_value1 from employees where empid=	6401	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6401	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6402	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6402	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6402	),
+(select Department from Employees where empid=	6402	),
+(select Branch from Employees where empid=	6402	),
+(select CurrentDesignation from Employees where empid=	6402	),'Credit',
+(select branch_value1 from employees where empid=	6402	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6402	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6403	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6403	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6403	),
+(select Department from Employees where empid=	6403	),
+(select Branch from Employees where empid=	6403	),
+(select CurrentDesignation from Employees where empid=	6403	),'Credit',
+(select branch_value1 from employees where empid=	6403	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6403	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6404	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6404	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6404	),
+(select Department from Employees where empid=	6404	),
+(select Branch from Employees where empid=	6404	),
+(select CurrentDesignation from Employees where empid=	6404	),'Credit',
+(select branch_value1 from employees where empid=	6404	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6404	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6405	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6405	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6405	),
+(select Department from Employees where empid=	6405	),
+(select Branch from Employees where empid=	6405	),
+(select CurrentDesignation from Employees where empid=	6405	),'Credit',
+(select branch_value1 from employees where empid=	6405	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6405	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6406	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6406	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6406	),
+(select Department from Employees where empid=	6406	),
+(select Branch from Employees where empid=	6406	),
+(select CurrentDesignation from Employees where empid=	6406	),'Credit',
+(select branch_value1 from employees where empid=	6406	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6406	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6407	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6407	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6407	),
+(select Department from Employees where empid=	6407	),
+(select Branch from Employees where empid=	6407	),
+(select CurrentDesignation from Employees where empid=	6407	),'Credit',
+(select branch_value1 from employees where empid=	6407	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6407	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6408	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6408	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6408	),
+(select Department from Employees where empid=	6408	),
+(select Branch from Employees where empid=	6408	),
+(select CurrentDesignation from Employees where empid=	6408	),'Credit',
+(select branch_value1 from employees where empid=	6408	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6408	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6409	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6409	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6409	),
+(select Department from Employees where empid=	6409	),
+(select Branch from Employees where empid=	6409	),
+(select CurrentDesignation from Employees where empid=	6409	),'Credit',
+(select branch_value1 from employees where empid=	6409	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6409	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6410	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6410	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6410	),
+(select Department from Employees where empid=	6410	),
+(select Branch from Employees where empid=	6410	),
+(select CurrentDesignation from Employees where empid=	6410	),'Credit',
+(select branch_value1 from employees where empid=	6410	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6410	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6411	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6411	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6411	),
+(select Department from Employees where empid=	6411	),
+(select Branch from Employees where empid=	6411	),
+(select CurrentDesignation from Employees where empid=	6411	),'Credit',
+(select branch_value1 from employees where empid=	6411	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6411	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6412	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6412	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6412	),
+(select Department from Employees where empid=	6412	),
+(select Branch from Employees where empid=	6412	),
+(select CurrentDesignation from Employees where empid=	6412	),'Credit',
+(select branch_value1 from employees where empid=	6412	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6412	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6413	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6413	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6413	),
+(select Department from Employees where empid=	6413	),
+(select Branch from Employees where empid=	6413	),
+(select CurrentDesignation from Employees where empid=	6413	),'Credit',
+(select branch_value1 from employees where empid=	6413	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6413	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6414	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6414	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6414	),
+(select Department from Employees where empid=	6414	),
+(select Branch from Employees where empid=	6414	),
+(select CurrentDesignation from Employees where empid=	6414	),'Credit',
+(select branch_value1 from employees where empid=	6414	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6414	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6415	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6415	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6415	),
+(select Department from Employees where empid=	6415	),
+(select Branch from Employees where empid=	6415	),
+(select CurrentDesignation from Employees where empid=	6415	),'Credit',
+(select branch_value1 from employees where empid=	6415	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6415	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6416	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6416	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6416	),
+(select Department from Employees where empid=	6416	),
+(select Branch from Employees where empid=	6416	),
+(select CurrentDesignation from Employees where empid=	6416	),'Credit',
+(select branch_value1 from employees where empid=	6416	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6416	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6417	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6417	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6417	),
+(select Department from Employees where empid=	6417	),
+(select Branch from Employees where empid=	6417	),
+(select CurrentDesignation from Employees where empid=	6417	),'Credit',
+(select branch_value1 from employees where empid=	6417	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6417	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6418	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6418	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6418	),
+(select Department from Employees where empid=	6418	),
+(select Branch from Employees where empid=	6418	),
+(select CurrentDesignation from Employees where empid=	6418	),'Credit',
+(select branch_value1 from employees where empid=	6418	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6418	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6419	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6419	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6419	),
+(select Department from Employees where empid=	6419	),
+(select Branch from Employees where empid=	6419	),
+(select CurrentDesignation from Employees where empid=	6419	),'Credit',
+(select branch_value1 from employees where empid=	6419	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6419	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6420	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6420	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6420	),
+(select Department from Employees where empid=	6420	),
+(select Branch from Employees where empid=	6420	),
+(select CurrentDesignation from Employees where empid=	6420	),'Credit',
+(select branch_value1 from employees where empid=	6420	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6420	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6421	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6421	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6421	),
+(select Department from Employees where empid=	6421	),
+(select Branch from Employees where empid=	6421	),
+(select CurrentDesignation from Employees where empid=	6421	),'Credit',
+(select branch_value1 from employees where empid=	6421	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6421	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6422	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6422	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6422	),
+(select Department from Employees where empid=	6422	),
+(select Branch from Employees where empid=	6422	),
+(select CurrentDesignation from Employees where empid=	6422	),'Credit',
+(select branch_value1 from employees where empid=	6422	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6422	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6423	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6423	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6423	),
+(select Department from Employees where empid=	6423	),
+(select Branch from Employees where empid=	6423	),
+(select CurrentDesignation from Employees where empid=	6423	),'Credit',
+(select branch_value1 from employees where empid=	6423	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6423	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6424	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6424	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6424	),
+(select Department from Employees where empid=	6424	),
+(select Branch from Employees where empid=	6424	),
+(select CurrentDesignation from Employees where empid=	6424	),'Credit',
+(select branch_value1 from employees where empid=	6424	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6424	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6425	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6425	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6425	),
+(select Department from Employees where empid=	6425	),
+(select Branch from Employees where empid=	6425	),
+(select CurrentDesignation from Employees where empid=	6425	),'Credit',
+(select branch_value1 from employees where empid=	6425	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6425	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6426	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6426	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6426	),
+(select Department from Employees where empid=	6426	),
+(select Branch from Employees where empid=	6426	),
+(select CurrentDesignation from Employees where empid=	6426	),'Credit',
+(select branch_value1 from employees where empid=	6426	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6426	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6427	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6427	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6427	),
+(select Department from Employees where empid=	6427	),
+(select Branch from Employees where empid=	6427	),
+(select CurrentDesignation from Employees where empid=	6427	),'Credit',
+(select branch_value1 from employees where empid=	6427	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6427	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6428	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6428	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6428	),
+(select Department from Employees where empid=	6428	),
+(select Branch from Employees where empid=	6428	),
+(select CurrentDesignation from Employees where empid=	6428	),'Credit',
+(select branch_value1 from employees where empid=	6428	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6428	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6429	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6429	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6429	),
+(select Department from Employees where empid=	6429	),
+(select Branch from Employees where empid=	6429	),
+(select CurrentDesignation from Employees where empid=	6429	),'Credit',
+(select branch_value1 from employees where empid=	6429	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6429	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6430	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6430	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6430	),
+(select Department from Employees where empid=	6430	),
+(select Branch from Employees where empid=	6430	),
+(select CurrentDesignation from Employees where empid=	6430	),'Credit',
+(select branch_value1 from employees where empid=	6430	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6430	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6431	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6431	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6431	),
+(select Department from Employees where empid=	6431	),
+(select Branch from Employees where empid=	6431	),
+(select CurrentDesignation from Employees where empid=	6431	),'Credit',
+(select branch_value1 from employees where empid=	6431	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6431	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6432	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6432	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6432	),
+(select Department from Employees where empid=	6432	),
+(select Branch from Employees where empid=	6432	),
+(select CurrentDesignation from Employees where empid=	6432	),'Credit',
+(select branch_value1 from employees where empid=	6432	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6432	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6433	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6433	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6433	),
+(select Department from Employees where empid=	6433	),
+(select Branch from Employees where empid=	6433	),
+(select CurrentDesignation from Employees where empid=	6433	),'Credit',
+(select branch_value1 from employees where empid=	6433	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6433	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6434	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6434	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6434	),
+(select Department from Employees where empid=	6434	),
+(select Branch from Employees where empid=	6434	),
+(select CurrentDesignation from Employees where empid=	6434	),'Credit',
+(select branch_value1 from employees where empid=	6434	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6434	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6435	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6435	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6435	),
+(select Department from Employees where empid=	6435	),
+(select Branch from Employees where empid=	6435	),
+(select CurrentDesignation from Employees where empid=	6435	),'Credit',
+(select branch_value1 from employees where empid=	6435	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6435	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6436	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6436	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6436	),
+(select Department from Employees where empid=	6436	),
+(select Branch from Employees where empid=	6436	),
+(select CurrentDesignation from Employees where empid=	6436	),'Credit',
+(select branch_value1 from employees where empid=	6436	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6436	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6437	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6437	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6437	),
+(select Department from Employees where empid=	6437	),
+(select Branch from Employees where empid=	6437	),
+(select CurrentDesignation from Employees where empid=	6437	),'Credit',
+(select branch_value1 from employees where empid=	6437	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6437	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6438	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6438	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6438	),
+(select Department from Employees where empid=	6438	),
+(select Branch from Employees where empid=	6438	),
+(select CurrentDesignation from Employees where empid=	6438	),'Credit',
+(select branch_value1 from employees where empid=	6438	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6438	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6439	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6439	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6439	),
+(select Department from Employees where empid=	6439	),
+(select Branch from Employees where empid=	6439	),
+(select CurrentDesignation from Employees where empid=	6439	),'Credit',
+(select branch_value1 from employees where empid=	6439	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6439	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6440	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6440	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6440	),
+(select Department from Employees where empid=	6440	),
+(select Branch from Employees where empid=	6440	),
+(select CurrentDesignation from Employees where empid=	6440	),'Credit',
+(select branch_value1 from employees where empid=	6440	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6440	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6441	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6441	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6441	),
+(select Department from Employees where empid=	6441	),
+(select Branch from Employees where empid=	6441	),
+(select CurrentDesignation from Employees where empid=	6441	),'Credit',
+(select branch_value1 from employees where empid=	6441	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6441	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6442	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6442	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6442	),
+(select Department from Employees where empid=	6442	),
+(select Branch from Employees where empid=	6442	),
+(select CurrentDesignation from Employees where empid=	6442	),'Credit',
+(select branch_value1 from employees where empid=	6442	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6442	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6443	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6443	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6443	),
+(select Department from Employees where empid=	6443	),
+(select Branch from Employees where empid=	6443	),
+(select CurrentDesignation from Employees where empid=	6443	),'Credit',
+(select branch_value1 from employees where empid=	6443	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6443	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6444	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6444	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6444	),
+(select Department from Employees where empid=	6444	),
+(select Branch from Employees where empid=	6444	),
+(select CurrentDesignation from Employees where empid=	6444	),'Credit',
+(select branch_value1 from employees where empid=	6444	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6444	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6445	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6445	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6445	),
+(select Department from Employees where empid=	6445	),
+(select Branch from Employees where empid=	6445	),
+(select CurrentDesignation from Employees where empid=	6445	),'Credit',
+(select branch_value1 from employees where empid=	6445	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6445	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6446	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6446	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6446	),
+(select Department from Employees where empid=	6446	),
+(select Branch from Employees where empid=	6446	),
+(select CurrentDesignation from Employees where empid=	6446	),'Credit',
+(select branch_value1 from employees where empid=	6446	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6446	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6447	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6447	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6447	),
+(select Department from Employees where empid=	6447	),
+(select Branch from Employees where empid=	6447	),
+(select CurrentDesignation from Employees where empid=	6447	),'Credit',
+(select branch_value1 from employees where empid=	6447	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6447	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6448	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6448	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6448	),
+(select Department from Employees where empid=	6448	),
+(select Branch from Employees where empid=	6448	),
+(select CurrentDesignation from Employees where empid=	6448	),'Credit',
+(select branch_value1 from employees where empid=	6448	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6448	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6450	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6450	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6450	),
+(select Department from Employees where empid=	6450	),
+(select Branch from Employees where empid=	6450	),
+(select CurrentDesignation from Employees where empid=	6450	),'Credit',
+(select branch_value1 from employees where empid=	6450	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6450	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6451	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6451	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6451	),
+(select Department from Employees where empid=	6451	),
+(select Branch from Employees where empid=	6451	),
+(select CurrentDesignation from Employees where empid=	6451	),'Credit',
+(select branch_value1 from employees where empid=	6451	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6451	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6452	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6452	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6452	),
+(select Department from Employees where empid=	6452	),
+(select Branch from Employees where empid=	6452	),
+(select CurrentDesignation from Employees where empid=	6452	),'Credit',
+(select branch_value1 from employees where empid=	6452	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6452	) and year=2020)+4),2020);
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+VALUES(
+(select id from Employees where empid=	6453	),
+1,4,
+0,123456,
+GETDATE(),(select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6453	) and year=2020),'Leaves Credited',
+(select ShortName from Employees where empid=	6453	),
+(select Department from Employees where empid=	6453	),
+(select Branch from Employees where empid=	6453	),
+(select CurrentDesignation from Employees where empid=	6453	),'Credit',
+(select branch_value1 from employees where empid=	6453	),((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6453	) and year=2020)+4),2020);
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6401	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6401	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6402	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6402	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6403	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6403	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6404	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6404	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6405	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6405	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6406	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6406	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6407	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6407	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6408	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6408	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6409	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6409	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6410	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6410	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6411	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6411	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6412	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6412	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6413	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6413	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6414	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6414	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6415	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6415	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6416	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6416	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6417	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6417	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6418	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6418	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6419	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6419	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6420	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6420	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6421	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6421	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6422	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6422	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6423	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6423	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6424	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6424	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6425	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6425	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6426	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6426	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6427	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6427	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6428	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6428	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6429	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6429	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6430	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6430	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6431	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6431	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6432	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6432	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6433	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6433	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6434	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6434	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6435	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6435	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6436	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6436	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6437	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6437	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6438	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6438	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6439	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6439	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6440	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6440	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6441	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6441	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6442	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6442	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6443	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6443	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6444	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6444	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6445	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6445	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6446	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6446	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6447	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6447	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6448	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6448	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6450	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6450	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6451	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6451	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6452	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6452	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=((select LeaveBalance from empleavebalance where  LeaveTypeId=1 and empid=
+(select id from employees where empid=	6453	) and year=2020)+4) 
+where LeaveTypeId=1 and empid=(select id from employees where empid=	6453	) and year=2020;
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+SET IDENTITY_INSERT dbo.AutoLeaveCredit OFF
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6454	), (select ShortName from employees where EmpId=	6454	), (select ShortName from employees where EmpId= 	6454	), CONVERT (datetime2, '	11.06.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6454	), (select ShortName from employees where EmpId=	6454	), (select ShortName from employees where EmpId= 	6454	), CONVERT (datetime2, '	03.07.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6454	), (select ShortName from employees where EmpId=	6454	), (select ShortName from employees where EmpId= 	6454	), CONVERT (datetime2, '	25.07.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6454	), (select ShortName from employees where EmpId=	6454	), (select ShortName from employees where EmpId= 	6454	), CONVERT (datetime2, '	16.08.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6454	), (select ShortName from employees where EmpId=	6454	), (select ShortName from employees where EmpId= 	6454	), CONVERT (datetime2, '	07.09.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6454	), (select ShortName from employees where EmpId=	6454	), (select ShortName from employees where EmpId= 	6454	), CONVERT (datetime2, '	29.09.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6454	), (select ShortName from employees where EmpId=	6454	), (select ShortName from employees where EmpId= 	6454	), CONVERT (datetime2, '	21.10.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6454	), (select ShortName from employees where EmpId=	6454	), (select ShortName from employees where EmpId= 	6454	), CONVERT (datetime2, '	12.11.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6454	), (select ShortName from employees where EmpId=	6454	), (select ShortName from employees where EmpId= 	6454	), CONVERT (datetime2, '	04.12.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6454	), (select ShortName from employees where EmpId=	6454	), (select ShortName from employees where EmpId= 	6454	), CONVERT (datetime2, '	26.12.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6454	), (select ShortName from employees where EmpId=	6454	), (select ShortName from employees where EmpId= 	6454	), CONVERT (datetime2, '	17.01.2021	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6455	), (select ShortName from employees where EmpId=	6455	), (select ShortName from employees where EmpId= 	6455	), CONVERT (datetime2, '	11.06.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6455	), (select ShortName from employees where EmpId=	6455	), (select ShortName from employees where EmpId= 	6455	), CONVERT (datetime2, '	03.07.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6455	), (select ShortName from employees where EmpId=	6455	), (select ShortName from employees where EmpId= 	6455	), CONVERT (datetime2, '	25.07.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6455	), (select ShortName from employees where EmpId=	6455	), (select ShortName from employees where EmpId= 	6455	), CONVERT (datetime2, '	16.08.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6455	), (select ShortName from employees where EmpId=	6455	), (select ShortName from employees where EmpId= 	6455	), CONVERT (datetime2, '	07.09.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6455	), (select ShortName from employees where EmpId=	6455	), (select ShortName from employees where EmpId= 	6455	), CONVERT (datetime2, '	29.09.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6455	), (select ShortName from employees where EmpId=	6455	), (select ShortName from employees where EmpId= 	6455	), CONVERT (datetime2, '	21.10.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6455	), (select ShortName from employees where EmpId=	6455	), (select ShortName from employees where EmpId= 	6455	), CONVERT (datetime2, '	12.11.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6455	), (select ShortName from employees where EmpId=	6455	), (select ShortName from employees where EmpId= 	6455	), CONVERT (datetime2, '	04.12.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6455	), (select ShortName from employees where EmpId=	6455	), (select ShortName from employees where EmpId= 	6455	), CONVERT (datetime2, '	26.12.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6455	), (select ShortName from employees where EmpId=	6455	), (select ShortName from employees where EmpId= 	6455	), CONVERT (datetime2, '	17.01.2021	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6456	), (select ShortName from employees where EmpId=	6456	), (select ShortName from employees where EmpId= 	6456	), CONVERT (datetime2, '	11.06.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6456	), (select ShortName from employees where EmpId=	6456	), (select ShortName from employees where EmpId= 	6456	), CONVERT (datetime2, '	03.07.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6456	), (select ShortName from employees where EmpId=	6456	), (select ShortName from employees where EmpId= 	6456	), CONVERT (datetime2, '	25.07.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6456	), (select ShortName from employees where EmpId=	6456	), (select ShortName from employees where EmpId= 	6456	), CONVERT (datetime2, '	16.08.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6456	), (select ShortName from employees where EmpId=	6456	), (select ShortName from employees where EmpId= 	6456	), CONVERT (datetime2, '	07.09.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6456	), (select ShortName from employees where EmpId=	6456	), (select ShortName from employees where EmpId= 	6456	), CONVERT (datetime2, '	29.09.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6456	), (select ShortName from employees where EmpId=	6456	), (select ShortName from employees where EmpId= 	6456	), CONVERT (datetime2, '	21.10.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6456	), (select ShortName from employees where EmpId=	6456	), (select ShortName from employees where EmpId= 	6456	), CONVERT (datetime2, '	12.11.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6456	), (select ShortName from employees where EmpId=	6456	), (select ShortName from employees where EmpId= 	6456	), CONVERT (datetime2, '	04.12.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6456	), (select ShortName from employees where EmpId=	6456	), (select ShortName from employees where EmpId= 	6456	), CONVERT (datetime2, '	26.12.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6456	), (select ShortName from employees where EmpId=	6456	), (select ShortName from employees where EmpId= 	6456	), CONVERT (datetime2, '	17.01.2021	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6456	), (select ShortName from employees where EmpId=	6456	), (select ShortName from employees where EmpId= 	6456	), CONVERT (datetime2, '	08.02.2021	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6457	), (select ShortName from employees where EmpId=	6457	), (select ShortName from employees where EmpId= 	6457	), CONVERT (datetime2, '	16.06.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6457	), (select ShortName from employees where EmpId=	6457	), (select ShortName from employees where EmpId= 	6457	), CONVERT (datetime2, '	08.07.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6457	), (select ShortName from employees where EmpId=	6457	), (select ShortName from employees where EmpId= 	6457	), CONVERT (datetime2, '	30.07.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6457	), (select ShortName from employees where EmpId=	6457	), (select ShortName from employees where EmpId= 	6457	), CONVERT (datetime2, '	21.08.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6457	), (select ShortName from employees where EmpId=	6457	), (select ShortName from employees where EmpId= 	6457	), CONVERT (datetime2, '	12.09.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6457	), (select ShortName from employees where EmpId=	6457	), (select ShortName from employees where EmpId= 	6457	), CONVERT (datetime2, '	03.10.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6457	), (select ShortName from employees where EmpId=	6457	), (select ShortName from employees where EmpId= 	6457	), CONVERT (datetime2, '	26.10.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6457	), (select ShortName from employees where EmpId=	6457	), (select ShortName from employees where EmpId= 	6457	), CONVERT (datetime2, '	17.11.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6457	), (select ShortName from employees where EmpId=	6457	), (select ShortName from employees where EmpId= 	6457	), CONVERT (datetime2, '	09.12.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6457	), (select ShortName from employees where EmpId=	6457	), (select ShortName from employees where EmpId= 	6457	), CONVERT (datetime2, '	31.12.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6457	), (select ShortName from employees where EmpId=	6457	), (select ShortName from employees where EmpId= 	6457	), CONVERT (datetime2, '	22.01.2021	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6458	), (select ShortName from employees where EmpId=	6458	), (select ShortName from employees where EmpId= 	6458	), CONVERT (datetime2, '	17.06.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6458	), (select ShortName from employees where EmpId=	6458	), (select ShortName from employees where EmpId= 	6458	), CONVERT (datetime2, '	09.07.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6458	), (select ShortName from employees where EmpId=	6458	), (select ShortName from employees where EmpId= 	6458	), CONVERT (datetime2, '	31.07.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6458	), (select ShortName from employees where EmpId=	6458	), (select ShortName from employees where EmpId= 	6458	), CONVERT (datetime2, '	22.08.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6458	), (select ShortName from employees where EmpId=	6458	), (select ShortName from employees where EmpId= 	6458	), CONVERT (datetime2, '	13.09.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6458	), (select ShortName from employees where EmpId=	6458	), (select ShortName from employees where EmpId= 	6458	), CONVERT (datetime2, '	04.10.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6458	), (select ShortName from employees where EmpId=	6458	), (select ShortName from employees where EmpId= 	6458	), CONVERT (datetime2, '	27.10.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6458	), (select ShortName from employees where EmpId=	6458	), (select ShortName from employees where EmpId= 	6458	), CONVERT (datetime2, '	18.11.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6458	), (select ShortName from employees where EmpId=	6458	), (select ShortName from employees where EmpId= 	6458	), CONVERT (datetime2, '	10.12.2020	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6458	), (select ShortName from employees where EmpId=	6458	), (select ShortName from employees where EmpId= 	6458	), CONVERT (datetime2, '	01.01.2021	', 103) ,1,getdate(),123456);
+insert into AutoLeaveCredit(EmpId,
+EmpName,
+CreditDate,
+CreditBalance,
+UpdatedDate,
+UpdatedBy) values ((select id from employees where EmpId=	6458	), (select ShortName from employees where EmpId=	6458	), (select ShortName from employees where EmpId= 	6458	), CONVERT (datetime2, '	23.01.2021	', 103) ,1,getdate(),123456);

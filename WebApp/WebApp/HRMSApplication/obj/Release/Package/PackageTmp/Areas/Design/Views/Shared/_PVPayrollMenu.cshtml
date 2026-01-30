@@ -1,0 +1,292 @@
+﻿<style>
+.toggle-custom {
+    top: 7px;
+    right: 4px;
+    color: #fff;
+    display: block;
+    }
+.toggle-custom span {float:right; margin-top: 6px;}
+.toggle-custom[aria-expanded='true'] .glyphicon-plus:before {
+            content: "\2212" !important;
+}
+</style>
+@if (ViewBag.SectionName == "Transactions")
+{
+    <div class="main_heading left-menu">
+        <h1>Transactions</h1>
+        <nav>
+            <div class="menu-toggle">
+                <h3>Menu</h3>
+                <button type="button" id="menu-btn">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div>
+                <div id="Transactions">
+                    <ul id="respMenu" class="ace-responsive-menu" data-menu-style="vertical">
+                        <li><a href="@Url.Action("MonthDetails", "Transactions")">Month Details</a></li>
+                        <li><a href="@Url.Action("Attendence", "Transactions")">Attendence</a></li>
+                        <li><a href="@Url.Action("PayDetails", "Transactions")">Pay Details</a></li>
+                        <li><a href="@Url.Action("Adjustments", "Transactions")">Adjustments</a></li>
+                        <li><a href="@Url.Action("DateOfLeaving", "Transactions")">Date Of Leaving</a></li>
+                        <li><a href="@Url.Action("LoanAdjustment", "Transactions")">Loan Adjustment</a></li>
+                        <li><a href="@Url.Action("AdhocPayments", "Transactions")">Adhoc Payments </a></li>
+                        <li><a href="@Url.Action("Deputation", "Transactions")">Deputation</a></li>
+                        <li><a href="@Url.Action("EmployeePayFields", "Transactions")">Employee Pay Fields</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+}
+else if (ViewBag.SectionName == "Masters")
+{
+    <div class="main_heading left-menu">
+        <h1><a href="#" class="toggle-custom" id="btn-1" data-toggle="collapse" data-target="#submenu1" aria-expanded="false"><span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>Masters</a></h1>
+        <nav>
+            <div class="menu-toggle">
+                <h3>Menu</h3>
+                <button type="button" id="menu-btn">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="nav collapse" id="submenu1" role="menu" aria-labelledby="btn-1">
+                <div id="Masters">
+                    <ul id="respMenu" class="ace-responsive-menu" data-menu-style="vertical">
+                        <li><a href="@Url.Action("EmployeeMasters", "Masters")">Employee Master </a></li>
+                        <li><a href="@Url.Action("LoansAdvances", "Masters")">Loans & Advances </a></li>
+                        <li><a href="@Url.Action("RevisionOfSalary", "Masters")">Revision Of Salary</a></li>
+                        <li><a href="@Url.Action("PersonnelEarnings", "Masters")">Personnel Earnings</a></li>
+                        <li><a href="@Url.Action("PersonnelDeductions", "Masters")">Personnel Deductions</a></li>
+                        <li><a href="@Url.Action("RentDetails", "Masters")">Rent Details</a></li>
+                        <li><a href="@Url.Action("IncomeTaxDetails", "Masters")">Income Tax Details</a></li>
+                        <li><a href="@Url.Action("AllowanceMaster", "Masters")">Allowance Master</a></li>
+                        <li><a href="@Url.Action("ServiceRecordDetails", "Masters")">Service Record Details</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+        <div class="main_heading left-menu">
+            <h1><a href="#" class="toggle-custom" id="btn-1" data-toggle="collapse" data-target="#submenu2" aria-expanded="false"><span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>HRMS Masters</a></h1>
+            <nav>
+                <div class="menu-toggle">
+                    <h3>Menu</h3>
+                    <button type="button" id="menu-btn">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="nav collapse" id="submenu2" role="menu" aria-labelledby="btn-1">
+                    <div id="Masters">
+                        <ul id="respMenu2" class="ace-responsive-menu" data-menu-style="vertical">
+                            <li><a href="@Url.Action("Promotion", "Masters")">Promotion </a></li>
+                            <li><a href="@Url.Action("IncrementDateChange", "Masters")">Increment Date Change </a></li>
+                            <li><a href="@Url.Action("IncrementAnnualStagnation", "Masters")">Increment Annual Stagnation </a></li>
+                            <li><a href="@Url.Action("JAIIBCAIIBGeneral", "Masters")">JAIIB / CAIIB /General </a></li>
+                            <li>
+                                <a href="#">Basic Pay Structure</a>
+                                <ul>
+                                    <li><a href="@Url.Action("AnnualIncrement", "Masters")">Annual Increment</a></li>
+                                    <li><a href="@Url.Action("StagnationIncrement", "Masters")">Stagnation Increment </a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">PF Loans</a>
+                                <ul>
+                                    <li><a href="@Url.Action("NonRepayableLoans", "Masters")">Non Repayable Loans</a></li>
+                                    <li><a href="@Url.Action("RepayableLoans", "Masters")"> Repayable Loans </a></li>
+                                </ul>
+                            </li>
+                            <li><a href="@Url.Action("PFNominee", "Masters")">PF Nominee</a></li>
+                            <li><a href="@Url.Action("Encashment", "Masters")">Encashment</a></li>
+                            <li><a href="@Url.Action("LoanRateSelection", "Masters")">Loan Rate Selection </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+}
+else if (ViewBag.SectionName == "Authorisation")
+{
+    <div class="main_heading left-menu">
+        <h1>Authorisation</h1>
+        <nav>
+            <div class="menu-toggle">
+                <h3>Menu</h3>
+                <button type="button" id="menu-btn">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div id="Masters">
+                <ul id="respMenu2" class="ace-responsive-menu" data-menu-style="vertical">
+                    <li><a href="@Url.Action("PromotionAuthorisation", "Authorisation")">Promotion Authorisation  </a></li>
+                    <li><a href="@Url.Action("IncrementDateChange", "Authorisation")">Increment Date Change  </a></li>
+                    <li><a href="@Url.Action("AnnualStagIncrementAuthorisation", "Authorisation")">Annual Stag Increment Authorisation</a></li>
+                    <li><a href="@Url.Action("JAIIBCAIIBGENERAL", "Authorisation")">JAIIB / CAIIB / General </a></li>
+                    <li>
+                        <a href="#">PF Loans</a>
+                        <ul>
+                            <li><a href="@Url.Action("NonRepayableLoans", "Authorisation")">Non Repayable Loans</a></li>
+                            <li><a href="@Url.Action("RepayableLoans", "Authorisation")"> Repayable Loans </a></li>
+                        </ul>
+                    </li>
+                    <li><a href="@Url.Action("PFAuthorisation", "Authorisation")">PF Authorisation</a></li>
+                    <li><a href="@Url.Action("Encashment", "Authorisation")">Encashment</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+}
+else if (ViewBag.SectionName == "Process")
+{
+    <div class="main_heading left-menu">
+        <h1>Process</h1>
+        <nav>
+            <div class="menu-toggle">
+                <h3>Menu</h3>
+                <button type="button" id="menu-btn">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div id="Masters">
+                <ul id="respMenu" class="ace-responsive-menu" data-menu-style="vertical">
+                    <li><a href="@Url.Action("PaySlip", "Process")">Payslip </a></li>
+                    <li><a href="#">Month End </a></li>
+                    <li><a href="@Url.Action("TDSProcess", "Process")">TDS Process </a></li>
+                    <li><a href="@Url.Action("TDSUpdate", "Process")">TDS Update </a></li>
+                    <li><a href="@Url.Action("EncashmentProcess", "Process")">Encashment Process </a></li>
+                    <li><a href="@Url.Action("GratuityProcess", "Process")">Gratuity Process </a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+        <div class="main_heading left-menu">
+            <h1>HRMS Process</h1>
+            <nav>
+                <div class="menu-toggle">
+                    <h3>Menu</h3>
+                    <button type="button" id="menu-btn">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div id="Masters">
+                    <ul id="respMenu" class="ace-responsive-menu" data-menu-style="vertical">
+                        <li><a href="@Url.Action("PostIncrements", "Process")">Post Increments  </a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+}
+else if (ViewBag.SectionName == "Reports")
+{
+    <div class="main_heading left-menu">
+        <h1>Reports</h1>
+        <nav>
+            <div class="menu-toggle">
+                <h3>Menu</h3>
+                <button type="button" id="menu-btn">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div id="Masters">
+                <ul id="respMenu" class="ace-responsive-menu" data-menu-style="vertical">
+                    <li><a href="@Url.Action("PayslipReports", "Reports")">Payslip Reports</a></li>
+                    <li><a href="@Url.Action("Form5A", "Reports")">Form 5A</a></li>
+                    <li><a href="@Url.Action("LICReport", "Reports")">LIC Report</a></li>
+                    <li><a href="@Url.Action("LoanReport", "Reports")">Loan Report</a></li>
+                    <li><a href="@Url.Action("LoanScheduleReport", "Reports")">Loan Schedule Report</a></li>
+                    <li><a href="@Url.Action("PFMonthly", "Reports")">PF Monthly</a></li>
+                    <li><a href="@Url.Action("MISonTransactions", "Reports")">MIS on Transactions</a></li>
+                    <li><a href="@Url.Action("TDSReport", "Reports")">TDS Report</a></li>
+                    <li><a href="@Url.Action("AllowanceReport", "Reports")">Allowance Report</a></li>
+                    <li><a href="@Url.Action("GratuityReport", "Reports")">Gratuity Report</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+        <div class="main_heading left-menu">
+            <h1>HRMS Reports</h1>
+            <nav>
+                <div class="menu-toggle">
+                    <h3>Menu</h3>
+                    <button type="button" id="menu-btn">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div id="Masters">
+                    <ul id="respMenu" class="ace-responsive-menu" data-menu-style="vertical">
+                        <li><a href="@Url.Action("IncrementReport", "Reports")">Increment Report</a></li>
+                        <li><a href="@Url.Action("RetirementReport", "Reports")">Retirement Report</a></li>
+                        <li><a href="@Url.Action("TSheet", "Reports")">T Sheet</a></li>
+                        <li><a href="@Url.Action("TSum", "Reports")">T Sum</a></li>
+                        <li><a href="@Url.Action("Salarybillofbranch", "Reports")">Salary bill of branch</a></li>
+                        <li><a href="@Url.Action("AllAllowance", "Reports")">All Allowance</a></li>
+                        <li><a href="@Url.Action("AllDeductions", "Reports")">All Deductions</a></li>
+                        <li><a href="@Url.Action("AllLoans", "Reports")">All Loans</a></li>
+                        <li><a href="@Url.Action("LoansReport", "Reports")">Loans Report</a></li>
+                        <li><a href="@Url.Action("LoanLedger", "Reports")">All Loans</a></li>
+                        <li><a href="@Url.Action("LoanLedgerReceipt", "Reports")">Loans Ledger Report</a></li>
+                        <li>
+                            <a href="#">Encashment </a>
+                            <ul>
+                                <li><a href="#">Summary</a></li>
+                                <li><a href="#">Register</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#")">Branches Staff List </a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+}
+else if (ViewBag.SectionName == "Customization")
+{
+    <div class="main_heading left-menu">
+        <h1>Payroll customizations</h1>
+        <nav>
+            <div class="menu-toggle">
+                <h3>Menu</h3>
+                <button type="button" id="menu-btn">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div id="Transaction">
+                <ul id="respMenu" class="ace-responsive-menu" data-menu-style="vertical">
+                    <li><a href="@Url.Action("LoansAdvances", "Customization")">Loans & Advances</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+}
+<script type="text/javascript">
+           $(document).ready(function () {
+               $("#respMenu").aceResponsiveMenu({
+                   resizeWidth: '768', // Set the same in Media query
+                   animationSpeed: 'fast', //slow, medium, fast
+                   accoridonExpAll: false //Expands all the accordion menu on click
+               });
+               $("#respMenu2").aceResponsiveMenu({
+                   resizeWidth: '768', // Set the same in Media query
+                   animationSpeed: 'fast', //slow, medium, fast
+                   accoridonExpAll: false //Expands all the accordion menu on click
+               });
+           });
+</script>

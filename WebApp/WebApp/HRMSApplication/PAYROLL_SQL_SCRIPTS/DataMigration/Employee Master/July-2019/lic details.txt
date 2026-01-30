@@ -1,0 +1,1356 @@
+select * into pr_emp_lic_details_temp from pr_emp_lic_details;
+
+truncate table pr_emp_lic_details_temp;
+
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 177),177,'649329572',1105,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 184),184,'641374429',117,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 184),184,'641855361',83.9,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 184),184,'641967372',287,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 233),233,'649307719',1850,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 239),239,'643962385',605,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 288),288,'640892695',383,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 288),288,'641162843',1225,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 288),288,'649323506',766,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 293),293,'640297978',69,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 293),293,'640669422',284,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 293),293,'643963351',240,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 293),293,'643965942',143,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 293),293,'643967432',301,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 293),293,'643969953',703,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 293),293,'643973510',2168,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 293),293,'649334326',831,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 299),299,'642085290',374,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 299),299,'642085917',240,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 299),299,'642090794',1264,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 301),301,'644564371',645,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 301),301,'644565595',510,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 301),301,'644567207',1437,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 301),301,'682154520',142,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 304),304,'644658756',3494,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 308),308,'642091458',1606,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 319),319,'643970011',677,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 331),331,'643969893',836,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 340),340,'640661666',206,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 354),354,'640659276',105,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 356),356,'643969739',1921,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 356),356,'644566874',510,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 363),363,'649331169',1021,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 365),365,'643961473',249,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 365),365,'643965943',100,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 365),365,'643966640',639,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 365),365,'643969734',703,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 365),365,'643973635',510,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 371),371,'640430741',128.8,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 371),371,'640672981',281,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 371),371,'640672985',143,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 371),371,'643971363',1021,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 371),371,'644560774',143,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 371),371,'649318046',741,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 371),371,'649318258',1095,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 377),377,'640669431',217,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 377),377,'640669432',551,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 377),377,'643783083',504,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 377),377,'643791160',1633,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 420),420,'640886967',400,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 420),420,'640894118',345,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 420),420,'642091150',762,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 420),420,'642091435',1555,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 420),420,'644566642',1411,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 420),420,'644566881',745,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 420),420,'644568009',1225,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 421),421,'641967531',97,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 422),422,'640660292',130,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 422),422,'640660671',65,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 425),425,'641492872',240,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 427),427,'605979811',1533,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 432),432,'604767665',935,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 432),432,'604795777',479,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 432),432,'642087782',725,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 432),432,'643718059',90,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 432),432,'643790482',1387,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 433),433,'644566905',510,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 434),434,'644563517',405,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 434),434,'644564709',349,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 436),436,'640670731',289,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 436),436,'642085915',651,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 436),436,'644246230',114,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 436),436,'644566785',2179,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 440),440,'646642252',710,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 440),440,'646642533',418,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 443),443,'640668516',65,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 443),443,'641671782',179,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 443),443,'644569194',1606,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 444),444,'644568657',1346,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 445),445,'640670962',152,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 445),445,'641060901',733,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 452),452,'642689563',277,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 452),452,'643968659',473,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 457),457,'644564760',703,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 457),457,'644565028',612,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 460),460,'641290089',408,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 462),462,'600064118',508,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 462),462,'600076420',1009,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 462),462,'643966608',722,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 463),463,'641677887',441,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 463),463,'643966100',376,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 468),468,'641474582',302,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 468),468,'649325173',510,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 474),474,'649381005',1463,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 476),476,'641478621',111,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 476),476,'643969972',712,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 476),476,'643972626',1190,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 476),476,'643973984',1390,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 476),476,'643974156',760,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 476),476,'643974706',1012,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 478),478,'640676848',486,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 478),478,'643962119',540,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 484),484,'644253112',115,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 484),484,'644562357',152,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 484),484,'644564078',338,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 484),484,'644567297',612,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 485),485,'643962117',537,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 485),485,'644567882',2042,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 485),485,'644569267',2511,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 490),490,'640667907',404,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 490),490,'640668139',202,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 491),491,'643961791',427,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 491),491,'643965499',144,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 491),491,'644569814',1044,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 492),492,'640891064',592,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 493),493,'642197503',1002,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 493),493,'643967187',504,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 495),495,'642090649',1297,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 495),495,'644466653',495,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 499),499,'641483738',146,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 499),499,'641492874',275,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 505),505,'641493309',817,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 505),505,'642091439',1434,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 505),505,'644565440',510,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 505),505,'644568138',766,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 505),505,'649316447',612,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 505),505,'649319990',639,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 507),507,'640682820',628,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 507),507,'649382205',1973,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 508),508,'644567274',408,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 508),508,'644567296',1237,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 511),511,'649328728',900,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 514),514,'644569413',909,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 516),516,'644565631',1021,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 517),517,'642092223',1539,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 518),518,'644568154',408,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 519),519,'641986777',710,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 519),519,'641988482',717,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 519),519,'642091436',855,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 525),525,'649328323',734,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 526),526,'649317187',255,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 526),526,'649318039',255,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 526),526,'649319411',336,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 526),526,'649319982',268,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 527),527,'649308060',255,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 527),527,'649317188',255,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 528),528,'644565804',408,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 530),530,'644565482',408,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 534),534,'644568652',745,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 535),535,'644565645',510,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 536),536,'644565411',510,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 536),536,'649319582',770,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 538),538,'641562209',343,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 538),538,'644565441',510,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 539),539,'644565837',510,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 543),543,'641992016',1431,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 544),544,'649330591',925,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 545),545,'649318668',584,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 545),545,'649319220',587,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 549),549,'649339761',823,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 550),550,'642090774',2281,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 550),550,'642091151',480,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 550),550,'642092235',539,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 550),550,'644569598',3190,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 556),556,'649371898',1428,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 559),559,'644569284',1382,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 563),563,'603869435',1474,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 570),570,'644569336',1902,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 574),574,'648298769',2042,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 686),686,'643371056',5104,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 702),702,'644569597',3843,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 709),709,'643171517',1835,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 714),714,'673916753',1940,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 714),714,'673958183',1064,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 731),731,'644569323',1902,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 749),749,'644569624',4458,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 763),763,'644569337',1244,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 763),763,'644569418',272,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 796),796,'644569791',1623,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 801),801,'649346173',1084,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 814),814,'649371934',4704,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 814),814,'649372672',4029,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 815),815,'642891906',3918,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 830),830,'644569329',2940,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 831),831,'642091442',560,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 832),832,'649319385',561,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 832),832,'649319930',492,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 833),833,'642091437',528,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 833),833,'642092856',493,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 833),833,'644569013',1660,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 836),836,'641562815',1707.5,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 836),836,'644474383',3693,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 837),837,'642994063',4635,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 846),846,'641991320',678,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 847),847,'641990351',1320,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 847),847,'641991709',1985,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 855),855,'603870858',1247,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 858),858,'644060013',2312,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 863),863,'642091432',529,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 864),864,'641562686',2773,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 868),868,'642091120',2281,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 868),868,'642091344',763,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 878),878,'642092337',2355,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 890),890,'642092069',1174,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 901),901,'600178189',2599,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 911),911,'644569723',575,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 920),920,'649180082',4149,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 936),936,'602205218',423,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 936),936,'602206973',1019,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 937),937,'642092140',1180,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 940),940,'642092855',1337,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 950),950,'642092854',2355,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 959),959,'641991793',1352,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 967),967,'641992185',1350,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 974),974,'641992024',5151,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 984),984,'642786285',4499,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 984),984,'649266131',1964,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 985),985,'604387750',3677,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 986),986,'642092152',1025,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 987),987,'642093555',9439,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 990),990,'658399724',3726,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 995),995,'641991816',692,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 996),996,'600178310',2582,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5150),5150,'644245788',142,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5150),5150,'644252791',289,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5150),5150,'644256998',345,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5150),5150,'646641802',590,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5660),5660,'640668921',221,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5660),5660,'642091113',2013,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5660),5660,'642091441',1597,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5660),5660,'646641739',639,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5660),5660,'649327998',817,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5660),5660,'649329195',1021,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5660),5660,'649330471',1176,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5738),5738,'644259724',600,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5757),5757,'642085824',645,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5757),5757,'644565553',1021,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5757),5757,'649331603',1531,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5768),5768,'600073796',316,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5768),5768,'644568008',762,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5768),5768,'644568287',766,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5768),5768,'644568703',987,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5768),5768,'683033391',247,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5781),5781,'642085914',240,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5782),5782,'644243930',96,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5782),5782,'644250948',232,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5782),5782,'644253821',240,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5782),5782,'644256910',169,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5782),5782,'646640060',280,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5782),5782,'646641893',364,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5782),5782,'649326957',510,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5782),5782,'649329175',612,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5782),5782,'649370802',799,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5794),5794,'644251988',280,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5796),5796,'600971654',658,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5796),5796,'640668690',130,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5796),5796,'641293858',1639,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5796),5796,'646641801',317,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5802),5802,'640669080',127,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5802),5802,'644253872',127,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5802),5802,'649328942',1539,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5802),5802,'649371160',1595,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5809),5809,'641975177',218,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5809),5809,'641975937',137,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5862),5862,'644253902',295,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5862),5862,'644565602',1021,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5862),5862,'644566629',1021,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5866),5866,'646641325',500,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5869),5869,'600977624',408,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5869),5869,'646640468',243,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5869),5869,'646641379',538,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5869),5869,'646642045',550,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5869),5869,'646644762',510,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5884),5884,'642088191',1531,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5884),5884,'649332452',817,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5888),5888,'640669109',59,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5888),5888,'641988664',757,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5888),5888,'642085918',220,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5888),5888,'644565367',690,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5889),5889,'640668386',58,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5889),5889,'642085797',221,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5908),5908,'644254132',251,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5908),5908,'649316386',612,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5908),5908,'649318763',794.5,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5909),5909,'644253774',130,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5909),5909,'649326078',991,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5909),5909,'649330918',1023,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 5910),5910,'640125507',39.9,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6132),6132,'603867137',2042,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6132),6132,'640894152',338,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6132),6132,'641690942',404,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6132),6132,'641991708',1589,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6132),6132,'644565366',1108,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6173),6173,'640670872',201,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6173),6173,'640683662',596,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6173),6173,'642864172',245,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6173),6173,'644657460',435,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6173),6173,'644658369',585,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6173),6173,'644658887',623,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6173),6173,'683615133',295,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6177),6177,'640668187',271,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6177),6177,'640674004',500,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6177),6177,'649310058',1021,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6191),6191,'643974159',2387,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6191),6191,'643974705',447,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6191),6191,'842074451',463,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6191),6191,'842125555',668,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6191),6191,'842176628',1638,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6192),6192,'649329328',1008,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6192),6192,'649370540',1271,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6192),6192,'649371462',1059,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6193),6193,'642091354',830,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6193),6193,'642092236',765,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6193),6193,'646643572',1213,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6194),6194,'646640360',125,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6194),6194,'649371123',1602,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6195),6195,'602201841',1223,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6196),6196,'644569615',1254,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6198),6198,'644252875',150,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6198),6198,'644568155',510,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6199),6199,'641280256',51,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6209),6209,'642082042',463,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6209),6209,'642084817',526,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6209),6209,'643969740',724,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6209),6209,'643972628',1344,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6209),6209,'643974098',961,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6300),6300,'649485913',4642,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6301),6301,'649515933',3587,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6312),6312,'649395373',1570,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6313),6313,'642092336',2355,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6315),6315,'642092070',2271,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6318),6318,'641992188',1352,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6329),6329,'642092075',4520,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6335),6335,'605532087',2343,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6340),6340,'642092234',541,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6340),6340,'642093556',1463,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6342),6342,'648871297',4568,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6350),6350,'642092180',2318,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6353),6353,'770180426',2751,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6356),6356,'642092151',2330,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000)
+;INSERT INTO pr_emp_lic_details_temp ([fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+VALUES(2019,'2019-07-01',(select id from employees where empid = 6376),6376,'649348239',950,' Monthly','1,2,3,4,5,6,7,8,9,10,11,12','No',NULL,1,1000);
+
+-- insert into table
+
+declare @StartValue int;
+set @StartValue=(select last_num from new_num where table_name = 'pr_emp_lic_details');
+
+insert into pr_emp_lic_details([id],[fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id]) 
+select @StartValue+ROW_NUMBER() OVER(ORDER BY emp_code) AS Row,[fy],[fm],[emp_id],[emp_code],[account_no],[amount],[pay_type],[pay_months],[stop],[stop_month],[active],[trans_id] from pr_emp_lic_details_temp
+
+declare @lastnum int;
+set @lastnum = (select top 1 id from pr_emp_lic_details order by id desc)
+update new_num set last_num=@lastnum where table_name='pr_emp_lic_details'
+
+
+
+
+--drop
+
+drop table pr_emp_lic_details_temp
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

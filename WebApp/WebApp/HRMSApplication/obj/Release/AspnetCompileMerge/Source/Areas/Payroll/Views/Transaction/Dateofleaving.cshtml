@@ -1,0 +1,130 @@
+﻿
+@{
+    ViewBag.Title = "Dateofleaving";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+    var date = @ViewBag.fm;
+}
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="leftmenu-container">
+                <div class="sidebar-menu">
+                    @{Html.RenderPartial("_PVPayrollMenu");}
+                </div>
+                <div class="sidebar-content">
+                    <div class="main_heading heading_main">
+                        <h1>Date Of Leaving / Separation date<span class="year-end">@ViewBag.Env_Fm_Fy</span></h1>
+                        @{ Html.RenderPartial("_pvEmployeeSearchDateOfLeaving"); }
+                        <input type="hidden" id="EmployeeId" />
+                        <input type="hidden" id="lblDOR" />
+                        <input type="hidden" id="lblDOJ" />
+                        @*<div>
+                                <label class="col-sm-2 control-label" id="Date">Conformation Date :</label>
+                            </div>*@
+                        <div class="col-md-12 mt_10">
+                            <div class="inner_heading">
+                                <h1>Date Of Leaving</h1>
+                               
+                                <div class="form-horizontal">
+                                    <div class="col-md-6">
+                                        <div class="form-group" id="statushide" >
+                                            <label class="col-sm-7 control-label">Update Retirement Date/Seperation Date:</label>
+                                            <div class="input-group date col-sm-5" id="Status_date">
+                                                <input type="text" name="Statusdate1" id="Dor" Value="" class="form-control"  onchange="rdtDateValidationfrom()" required />
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group" id="divempid">
+                                            <label class="col-sm-4 control-label">Employee Id:<span class="mandatory"></span></label>
+                                            <div class="col-sm-8">
+                                                <input type="text" name="Week" id="EmpCode" value="" readonly="readonly" class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                </div>
+                          
+                        </div>
+                 
+                        <div class="col-md-12 mt_10">
+                            <div class="pull-right">
+                                @*<button type="reset" id="btnCancel" onclick="resetForm()" value="reset" class="btn btn-default calcel">Cancel</button>*@
+                                <button type="reset" id="btnCancel" value="reset" class="btn btn-default calcel" title="Clear the data">Cancel</button>
+                                <button type="submit" id="btnsubmit" class="btn btn-primary" title="Submit details">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+   
+    var dordata;
+    function getDataAfterEmpSearch1440(empcode) {
+
+        $("#btnsubmit").attr("disabled", false);
+        $('#EmployeeId').val(empcode);
+        hiddenempcode = empcode;
+        dor = $("#lblDOR").text()
+        $("#EmpCode").val(hiddenempcode);
+        $("#Dor").val(dor);
+    }
+
+    $(document).ready(function () {
+        $("#divempid").hide();
+    });
+    
+    $('#btnsubmit').click(function () {
+         
+        dordata = $('#EmpCode').val() + "&" + $('#Dor').val();
+        var dataToSend = JSON.stringify({
+            'Retirementdata': dordata
+        });
+
+        CommonApiPOST("/Payroll/Transaction/UpdateRetirementDate", dataToSend, function (isSuccess) {
+
+            if (isSuccess) {
+
+                setTimeout(function () { window.location.reload(); clearfields(); }, g_pagereload_seconds);
+            }
+        });
+    });
+    debugger;
+ 
+    var dat = '@date';
+    var MonthNameyear;
+    dteSplit = dat.split('-');
+    var dateyear;
+    MonthNameyear = dteSplit[0] + "-" + dteSplit[1] + "-" + dteSplit[2];
+    $(function () {
+     //  debugger;
+         dateyear = new Date(MonthNameyear)
+       //$('#Status_date').datepicker();
+        $('#Status_date').datepicker('setDate', dateyear);
+
+    });
+   
+    function rdtDateValidationfrom() {
+      // debugger;
+        var lblDOJ1 = $('#lblDOJ').text();
+        var Dor = $("#Dor").val();
+        var DOR = $("#lblDOR").text();
+        var DateJ = moment(Dor, "DD.MM.YYYY");
+        var DateR = moment(lblDOJ1, "DD.MM.YYYY");
+
+        if (DateJ < DateR)
+        {
+            showGlobalModal('W#Warning# Retirement date should be greater then DOJ'); 
+            var Dor = $("#Dor").val("");
+            $('#Status_date').datepicker('setDate', DOR);
+            return false;
+        }
+    }
+</script>
+

@@ -1,0 +1,177 @@
+﻿@model IEnumerable<HRMSApplication.Models.Payroll_EW>
+
+@{
+
+  
+    Layout = "~/Views/Shared/_ReportsLayout.cshtml";
+   var rolepages = TempData["RolePages"].ToString();
+   ViewBag.RolePages = TempData["RolePages"];
+}
+
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+               <div class="container">
+                <div class="page_st">
+                    <div class="page">
+                        <div class="form-horizontal form-horizontal2">
+                            <div class="page_start">
+
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="main_heading">
+                                            <h1>Earned Wages</h1>
+                                 <div class="table-responsive">
+                                            <table class="table table-bordered printtable">
+                                                <tr>
+                                                    <th>
+                                                        @Html.DisplayNameFor(model => model.Id)
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayNameFor(model => model.EmpCode)
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayNameFor(model => model.Date)
+                                                    </th>
+
+                                                    <th>
+                                                        @Html.DisplayNameFor(model => model.WorkingDays)
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayNameFor(model => model.WorkDays)
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayNameFor(model => model.EarnedBasic)
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayNameFor(model => model.EarnedHRA)
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayNameFor(model => model.EarnedConveyance)
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayNameFor(model => model.EarnedMedical)
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayNameFor(model => model.EarnedSA)
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayNameFor(model => model.EarnedGross)
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayNameFor(model => model.LOPDays)
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayNameFor(model => model.LOPamount)
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayNameFor(model => model.PF)
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayNameFor(model => model.ESI)
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayNameFor(model => model.PT)
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayNameFor(model => model.TDS)
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayNameFor(model => model.Loan)
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayNameFor(model => model.Others)
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayNameFor(model => model.Totaldeductions)
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayNameFor(model => model.NetSalary)
+                                                    </th>
+                                                    <th></th>
+                                                </tr>
+
+                                                @foreach (var item in Model)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.Id)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.EmpCode)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.Date)
+                                                        </td>
+
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.WorkingDays)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.WorkDays)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.EarnedBasic)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.EarnedHRA)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.EarnedConveyance)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.EarnedMedical)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.EarnedSA)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.EarnedGross)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.LOPDays)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.LOPamount)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.PF)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.ESI)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.PT)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.TDS)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.Loan)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.Others)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.Totaldeductions)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.NetSalary)
+                                                        </td>
+                                                        <td>
+                                                            @Html.ActionLink("Print Salary Slip", "PrintSalarySlip", new { id = item.Id })
+                                                        </td>
+                                                    </tr>
+                                                }
+
+                                            </table>
+                                        </div>
+                                        </div>
+                                    </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>

@@ -1,0 +1,686 @@
+﻿@{
+    /**/
+
+    ViewBag.Title = "Payroll Dashboard";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-12">
+                <div class="main_heading">
+                    <h1>Dashboard</h1>
+                    <div class="col-md-4">
+                        <div class="inner_heading" style="border: 1px solid #e6e6e6;padding: 5px;">
+                            <h1>Loans</h1>
+                        <div class="col-md-6 col-sm-3 rpf_loans" id="pf_loans">
+
+                            <div class="tile-progress tile-green">
+                                <div class="tile-header">
+                                    <h3> PF Repayable Loans </h3><span>Authorisation</span>
+                                </div>
+                                <div class="tile-progressbar"> <span data-fill="65.5%" style="width: 65.5%;"></span> </div>
+                                <div class="tile-footer">
+
+                                    <h4>
+                                        <span id="pfrepauth" class="badge"></span>
+
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-3 rpf">
+                            <div class="tile-progress tile-orange">
+                                <div class="tile-header">
+                                    <h3> PF Repayable Loans  </h3> <span>Process</span>
+                                </div>
+                                <div class="tile-progressbar"> <span data-fill="65.5%" style="width: 65.5%;"></span> </div>
+                                <div class="tile-footer">
+
+                                    <h4>
+                                        <span id="pfreprocess" class="badge"></span>
+
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-3 pf_loans" id="pf_loans">
+
+                            <div class="tile-progress tile-blue">
+                                <div class="tile-header">
+                                    <h3> PF NR Loans </h3><span>Authorisation</span>
+                                </div>
+                                <div class="tile-progressbar"> <span data-fill="65.5%" style="width: 65.5%;"></span> </div>
+                                <div class="tile-footer">
+
+                                    <h4>
+                                        <span id="nonrep" class="badge"></span>
+
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-3 pf">
+                            <div class="tile-progress tile-green">
+                                <div class="tile-header">
+                                    <h3> PF NR Loans  </h3> <span>Process</span>
+                                </div>
+                                <div class="tile-progressbar"> <span data-fill="65.5%" style="width: 65.5%;"></span> </div>
+                                <div class="tile-footer">
+
+                                    <h4>
+                                        <span id="nrlloanp" class="badge"></span>
+
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        </div>
+                    <div class="col-md-4">
+                        <div class="inner_heading" style="border: 1px solid #e6e6e6;padding: 5px;">
+                            <h1>Increment</h1>
+                            <div class="col-md-6 col-sm-3 month_endstag">
+                                <div class="tile-progress tile-green">
+                                    <div class="tile-header">
+                                        <h3>Inc Stagnation</h3> <span>Authorization</span>
+                                    </div>
+                                    <div class="tile-progressbar"> <span data-fill="65.5%" style="width: 65.5%;"></span> </div>
+                                    <div class="tile-footer">
+
+                                        <h4>
+                                            <span id="instag" class="badge"></span>
+
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-sm-3 month_end">
+                                <div class="tile-progress tile-orange">
+                                    <div class="tile-header">
+                                        <h3>Increment</h3> <span>Process</span>
+                                    </div>
+                                    <div class="tile-progressbar"> <span data-fill="65.5%" style="width: 65.5%;"></span> </div>
+                                    <div class="tile-footer">
+
+                                        <h4>
+                                            <span id="inccount" class="badge"></span>
+
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-sm-3 month_endinc">
+                                <div class="tile-progress tile-blue">
+                                    <div class="tile-header">
+                                        <h3>Inc Date Change</h3> <span>Authorization</span>
+                                    </div>
+                                    <div class="tile-progressbar"> <span data-fill="65.5%" style="width: 65.5%;"></span> </div>
+                                    <div class="tile-footer">
+
+                                        <h4>
+                                            <span id="incdate" class="badge"></span>
+
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-3 jaiib">
+                                <div class="tile-progress tile-green">
+                                    <div class="tile-header">
+                                        <h3>JAIIB/CAIIB</h3> <span>Authorisation</span>
+                                    </div>
+                                    <div class="tile-progressbar"> <span data-fill="65.5%" style="width: 65.5%;"></span> </div>
+                                    <div class="tile-footer">
+
+                                        <h4>
+                                            <span id="jiibciib" class="badge"></span>
+
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="inner_heading" style="border: 1px solid #e6e6e6;padding: 5px;">
+                                <h1>Other</h1>
+                                <div class="col-md-6 col-sm-3 promotion">
+                                    <div class="tile-progress tile-green">
+                                        <div class="tile-header">
+                                            <h3> Promotion </h3><span>Process</span>
+                                        </div>
+                                        <div class="tile-progressbar"> <span data-fill="65.5%" style="width: 65.5%;"></span> </div>
+                                        <div class="tile-footer">
+
+                                            <h4>
+                                                <span id="prom" class="badge"></span>
+
+                                            </h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-3 encashment">
+                                    <div class="tile-progress tile-orange">
+                                        <div class="tile-header">
+                                            <h3> Encashment </h3><span>Process</span>
+                                        </div>
+                                        <div class="tile-progressbar"> <span data-fill="65.5%" style="width: 65.5%;"></span> </div>
+                                        <div class="tile-footer">
+
+                                            <h4>
+                                                <span id="encash" class="badge"></span>
+
+                                            </h4>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-3 pay_slip">
+                                    <div class="tile-progress tile-blue">
+                                        <div class="tile-header">
+                                            <span>Go to</span><h3>Payslip Process</h3>
+                                        </div>
+                                        <div class="tile-progressbar"> <span data-fill="65.5%" style="width: 65.5%;"></span> </div>
+                                        <div class="tile-footer">
+                                            <h4>
+                                                <span id="empmas" class="badge" style="background: none !important;">&nbsp;</span>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-3 empmaster">
+                                    <div class="tile-progress tile-green">
+                                        <div class="tile-header">
+                                            <span>Go to</span><h3>Employee Master</h3>
+                                        </div>
+                                        <div class="tile-progressbar"> <span data-fill="65.5%" style="width: 65.5%;"></span> </div>
+                                        <div class="tile-footer">
+                                            <h4>
+                                                <span id="empmas" class="badge" style="background: none !important;">&nbsp;</span>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <div class="inner_heading">
+                                    <h1>PF Loans</h1>
+                                    <canvas id="bar-chart" width="800" height="450"></canvas>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="inner_heading">
+                                    <h1>Employee Stop Salary </h1>
+                                    <div class="tableFixHead">
+                                        <table id="dashboad_table" class="display" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Employee Name</th>
+                                                    <th>Designation</th>
+                                                    <th>Financial Month</th>
+                                                </tr>
+                                            </thead>
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        @*<div class="col-md-12">
+                            <div class="col-md-6">
+                                <div class="inner_heading">
+                                    <h1>Lorem Ipsum is simply dummy text </h1>
+                                    <div class="tableFixHead">
+                                        <table class="dataTable " style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Dummy text</th>
+                                                    <th>Dummy text</th>
+                                                    <th>Dummy text</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>test</td>
+                                                    <td>test</td>
+                                                    <td>test</td>
+                                                </tr>
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="inner_heading">
+                                    <h1>Lorem Ipsum is simply dummy text </h1>
+                                    <div id="canvas-holder" style="width:100%">
+                                        <canvas id="chart-area"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>*@
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+       
+        //initial data in background
+        CommonApiGET_NoSpinner('/Payroll/Common/BgLoadInitData', function (respData) {
+            //no work here
+        });
+
+        $('#dashboad_table').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+        });
+    });
+    $('div.pf_loans').click(function(){
+        //alert("loans clicked");
+        window.location = '@Url.Action("PFNonRepayable", "Authorization")';
+    });
+    $('div.rpf_loans').click(function () {
+        //alert("loans clicked");
+        window.location = '@Url.Action("PFRepayable", "Authorization")';
+    });
+    $('div.promotion').click(function(){
+        window.location = '@Url.Action("PromotionAuthorisation", "Authorization")';
+    });
+    $('div.encashment').click(function () {
+        window.location = '@Url.Action("EncashmentProcess", "Process")';
+    }); 
+    $('div.pf').click(function(){
+        window.location = '@Url.Action("PFNonRepayableProcess", "Process")';
+    });
+    $('div.rpf').click(function () {
+        window.location = '@Url.Action("PFRepayableProcess", "Process")';
+    });
+    $('div.pay_slip').click(function(){
+        window.location = '@Url.Action("PayslipUI", "Process")';
+    });
+    $('div.empmaster').click(function () {
+        window.location = '@Url.Action("EmployeeMaster", "Masters")';
+    }); 
+    $('div.month_end').click(function(){
+        window.location = '@Url.Action("PostIncrements", "Process")';
+    });
+    $('div.month_endstag').click(function () {
+        window.location = '@Url.Action("AnnualStagIncrementAuthorisation", "Authorization")';
+    }); 
+    $('div.month_endinc').click(function () {
+        window.location = '@Url.Action("IncrementDateChange", "Authorization")';
+    });
+    $('div.jaiib').click(function () {
+        window.location = '@Url.Action("JAIIB_CAIIB_ReportDashboard", "PrAllReports")';
+   });
+</script>
+
+
+<script>
+    var prodata = "";
+    var orgData = "";
+    $(document).ready(function () {
+         
+        CommonApiGET('/Payroll/PRDashboard/GetEmpDAta', function (respData) {
+            orgCancelData = respData;
+            fillDataTables(respData);
+        });
+   
+        CommonApiGET('/Payroll/PRDashboard/GetProcessCount', function (respData) {
+         
+            fillDataTablesCount(respData);
+       
+           
+        });
+        });
+    function fillDataTablesCount(respData) {
+    
+        var Countdata = respData;
+        prodata = Countdata;
+        var arrUpdate = prodata.split("*");
+     
+        $("#jiibciib").html(arrUpdate[2]);
+        $("#inccount").html(arrUpdate[1]);
+        $("#nrlloanp").html(arrUpdate[4]);
+        $("#prom").html(arrUpdate[3]);
+        $("#nonrep").html(arrUpdate[0]);
+        $("#pslipcount").html(arrUpdate[5]);
+        $("#pfrepauth").html(arrUpdate[6]);
+        $("#pfreprocess").html(arrUpdate[7]);
+        $("#encash").html(arrUpdate[8]);
+        $("#instag").html(arrUpdate[9]);
+        $("#incdate").html(arrUpdate[10]);
+        var sem = $("#prom").html();
+        var encas = $("#encash").html();
+        var jiib = $("#jiibciib").html();
+        var inccount = $("#inccount").html();
+        var nrlloanp = $("#nrlloanp").html();
+        var nonrep = $("#nonrep").html();
+        var pslipcount = $("#pslipcount").html();
+        var pfrepauth = $("#pfrepauth").html();
+        var pfreprocess = $("#pfreprocess").html();
+        var instag = $("#instag").html();
+        var incdate = $("#incdate").html();
+        if (parseInt(encas) > 0) {
+            $('#encash').css({ "color": "red" });
+        }
+        if (parseInt(sem) > 0) {
+            $('#prom').css({ "color": "red" });
+        }
+        if (parseInt(jiib) > 0) {
+            $('#jiibciib').css({ "color": "red" });
+        }
+        
+        if (parseInt(inccount) > 0) {
+            $('#inccount').css({ "color": "red" });
+        }
+        if (parseInt(nrlloanp) > 0) {
+            $('#nrlloanp').css({ "color": "red" });
+        }
+
+        if (parseInt(nonrep) > 0) {
+            $('#nonrep').css({ "color": "red" });
+        }
+        if (parseInt(pslipcount) > 0) {
+            $('#pslipcount').css({ "color": "red" });
+        }
+        if (parseInt(pfrepauth) > 0) {
+            $('#pfrepauth').css({ "color": "red" });
+        }
+
+        if (parseInt(pfreprocess) > 0) {
+            $('#pfreprocess').css({ "color": "red" });
+        }
+        if (parseInt(incdate) > 0) {
+            $('#incdate').css({ "color": "red" });
+        }
+        if (parseInt(instag) > 0) {
+            $('#instag').css({ "color": "red" });
+        }
+    }
+
+    function fillDataTables(respData) {
+    
+        var Empdata = respData;
+        //var empData = Empdata;
+        orgData = Empdata;
+        $('#dashboad_table').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+            data: Empdata,
+            "columns": [
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+
+                        return getColumnReadOnlyAllowance('*' + data.id, data.name);
+                    }
+                },
+
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return getColumnReadOnlyAllowance(data.id, data.designation);
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return getColumnReadOnlyAllowance(data.id, data.fm);
+
+                    }
+                },
+
+            ],
+            "order": [[1, 'asc']]
+        });
+
+    }
+
+</script>
+<script>
+    'use strict';
+    window.chartColors = {
+        red: '#ffa812',
+        orange: '#51a29a',
+        yellow: 'rgb(255, 205, 86)',
+        green: 'rgb(75, 192, 192)',
+        blue: 'rgb(54, 162, 235)',
+        purple: 'rgb(153, 102, 255)',
+        grey: 'rgb(201, 203, 207)'
+    };
+
+    (function (global) {
+        var MONTHS = [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+            'July',
+            'August',
+            'September',
+            'October',
+            'November',
+            'December'
+        ];
+
+        var COLORS = [
+            '#4dc9f6',
+            '#f67019',
+            '#f53794',
+            '#537bc4',
+            '#acc236',
+            '#166a8f',
+            '#00a950',
+            '#58595b',
+            '#8549ba'
+        ];
+
+        var Samples = global.Samples || (global.Samples = {});
+        var Color = global.Color;
+
+        Samples.utils = {
+            // Adapted from http://indiegamr.com/generate-repeatable-random-numbers-in-js/
+            srand: function (seed) {
+                this._seed = seed;
+            },
+
+            rand: function (min, max) {
+                var seed = this._seed;
+                min = min === undefined ? 0 : min;
+                max = max === undefined ? 1 : max;
+                this._seed = (seed * 9301 + 49297) % 233280;
+                return min + (this._seed / 233280) * (max - min);
+            },
+
+            numbers: function (config) {
+                var cfg = config || {};
+                var min = cfg.min || 0;
+                var max = cfg.max || 1;
+                var from = cfg.from || [];
+                var count = cfg.count || 8;
+                var decimals = cfg.decimals || 8;
+                var continuity = cfg.continuity || 1;
+                var dfactor = Math.pow(10, decimals) || 0;
+                var data = [];
+                var i, value;
+
+                for (i = 0; i < count; ++i) {
+                    value = (from[i] || 0) + this.rand(min, max);
+                    if (this.rand() <= continuity) {
+                        data.push(Math.round(dfactor * value) / dfactor);
+                    } else {
+                        data.push(null);
+                    }
+                }
+
+                return data;
+            },
+
+            labels: function (config) {
+                var cfg = config || {};
+                var min = cfg.min || 0;
+                var max = cfg.max || 100;
+                var count = cfg.count || 8;
+                var step = (max - min) / count;
+                var decimals = cfg.decimals || 8;
+                var dfactor = Math.pow(10, decimals) || 0;
+                var prefix = cfg.prefix || '';
+                var values = [];
+                var i;
+
+                for (i = min; i < max; i += step) {
+                    values.push(prefix + Math.round(dfactor * i) / dfactor);
+                }
+
+                return values;
+            },
+
+            months: function (config) {
+                var cfg = config || {};
+                var count = cfg.count || 12;
+                var section = cfg.section;
+                var values = [];
+                var i, value;
+
+                for (i = 0; i < count; ++i) {
+                    value = MONTHS[Math.ceil(i) % 12];
+                    values.push(value.substring(0, section));
+                }
+
+                return values;
+            },
+
+            color: function (index) {
+                return COLORS[index % COLORS.length];
+            },
+
+            transparentize: function (color, opacity) {
+                var alpha = opacity === undefined ? 0.5 : 1 - opacity;
+                return Color(color).alpha(alpha).rgbString();
+            }
+        };
+
+        // DEPRECATED
+        window.randomScalingFactor = function () {
+            return Math.round(Samples.utils.rand(-100, 100));
+        };
+
+        // INITIALIZATION
+
+        Samples.utils.srand(Date.now());
+
+        // Google Analytics
+        /* eslint-disable */
+        if (document.location.hostname.match(/^(www\.)?chartjs\.org$/)) {
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+            ga('create', 'UA-28909194-3', 'auto');
+            ga('send', 'pageview');
+        }
+        /* eslint-enable */
+
+    }(this));
+
+</script>
+
+<script>
+    new Chart(document.getElementById("bar-chart"), {
+        type: 'bar',
+        data: {
+            labels: ["Festival", "Marriage Loan", "Education Loan", "Medical", "Adiitional To Existing House"],
+            datasets: [
+                {
+                    label: "Population (millions)",
+                    backgroundColor: ["#3e95cd", "#91ca91", "#ffa812", "#51a29a", "#9fdb9f"],
+                    data: [300, 400, 222, 676, 800]
+                }
+            ]
+        },
+        options: {
+            legend: { display: false },
+            title: {
+                display: true,
+                text: 'PF Loans'
+            }
+        }
+    });
+
+</script>
+
+
+<script>
+    var randomScalingFactor = function () {
+        return Math.round(Math.random() * 100);
+    };
+
+    var config = {
+        type: 'pie',
+        data: {
+            datasets: [{
+                data: [
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                ],
+                backgroundColor: [
+                    window.chartColors.red,
+                    window.chartColors.orange,
+                    window.chartColors.yellow,
+                    window.chartColors.green,
+                    window.chartColors.blue,
+                ],
+                label: 'Dataset 1'
+            }],
+            labels: [
+                'Red',
+                'Orange',
+                'Yellow',
+                'Green',
+                'Blue'
+            ]
+        },
+        options: {
+            responsive: true
+        }
+    };
+
+    window.onload = function () {
+        var ctx = document.getElementById('chart-area').getContext('2d');
+        window.myPie = new Chart(ctx, config);
+    };
+    
+    
+</script>

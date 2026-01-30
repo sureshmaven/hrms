@@ -1,0 +1,185 @@
+﻿@{
+
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="leftmenu-container">
+            <div class="sidebar-menu">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="sidebar-content">
+                <div class="main_heading heading_main">
+                    <h1>Encashment</h1>
+                    @{ Html.RenderPartial("_pvEmployeeSearch"); }
+                    <input type="hidden" id="hdnEmpCode" />
+                    <div class="col-md-12 mt_10">
+                        <div class="inner_heading">
+                            <h1>Encashment Details</h1>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label">Previous Encashment Date:</label>
+                                    <div class="col-sm-7">
+                                        <h5 id="pldate"></h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label">Available Leaves:</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" id="plbal" readonly="readonly" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label">Encash:</label>
+                                    <div class="col-sm-7">
+                                        @Html.DropDownList("encash", new[] {
+         new SelectListItem() {Text = "15",Value = "15"},
+        new SelectListItem() {Text = "30",Value = "30"},
+
+        }, "Select", new { @class = "form-control", id = "encash30" })
+                                        @Html.DropDownList("encash", new[] {
+        new SelectListItem() {Text = "15",Value = "15"},
+       }, "Select", new { @class = "form-control", id = "encash15" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="pull-right">
+                            <button type="button" id="btnCancel" class="btn btn-default calcel">Cancel</button>
+
+                            <button type="button" id="btnsubmit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			</div>
+        </div>
+    </div>
+</div>
+<script>
+
+    $(document).ready(function () {
+        $("#encash15").hide();
+        $("#encash30").show();
+    });
+
+    var orgCdlist;
+    var days;
+    $("#btnCancel").click(function () {
+        var empid = $("#hdnEmpCode").val();
+        if (empid == "") {
+            window.location.reload();
+        }
+        else {
+            getDataAfterEmpSearch1440(empid);
+        }
+    });
+    function selectDays(value) {
+        days = value;
+    }
+    $('#btnsubmit').click(function () {
+        // 
+        var updRmList = "";
+        var encashpl = $("#encash15").val();
+        var encashpl2 = $("#encash30").val();
+        if ($("#hdnEmpCode").val() == "") {
+            showGlobalModal("I#Required Field#Employee Id cannot be empty.");
+        } else if (encashpl == "" && encashpl2 == "") {
+            showGlobalModal("I#Required Field#Please select Encash Days.");
+        } else {
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1; //January is 0!
+
+            var yyyy = today.getFullYear();
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            var today = dd + '-' + mm + '-' + yyyy;
+            if (encashpl == "") {
+                updRmList = $("#plbal").val() + "," + today + "," + encashpl2;
+            } else if (encashpl2 == "") {
+                updRmList = $("#plbal").val() + "," + today + "," + encashpl;
+            }
+
+            var dataToSend = JSON.stringify({
+                'EntityId': $("#hdnEmpCode").val(),
+                'StringData': updRmList,
+
+            });
+            CommonApiPOST('/Payroll/HRMSMasters/savePLEncash', dataToSend, function (isSuccess) {
+                if (isSuccess) {
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+        }
+        return false;
+    });
+    function fillEpfDt(respData) {
+        // 
+        var ldtypes = [];
+        var dataObj = JSON.parse(respData);
+        var lencash = dataObj.plencash.split(',');
+        ldtypes.push(dataObj.totalpl);
+        var ltotalplbal = ldtypes[0];
+        var lpldate = lencash[1]; //2019-05-15
+        var arrDate = lpldate.split("-");
+        var encashedDate = arrDate[2] + "-" + arrDate[1] + "-" + arrDate[0];
+        document.getElementById("plbal").value = ltotalplbal;
+        const date1 = new Date(lpldate);
+        const date2 = new Date();
+        const diffTime = Math.abs(date2.getTime() - date1.getTime());
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        console.log(diffDays);
+        if (diffDays < 730) {
+            document.getElementById("pldate").innerHTML = encashedDate;
+            $("#encash30").hide();
+            $("#encash15").show();
+        } else if (diffDays > 730) {
+            document.getElementById("pldate").innerHTML = encashedDate;
+            $("#encash15").hide();
+            $("#encash30").show();
+        } else {
+            $("#encash15").hide();
+            $("#encash30").show();
+        }
+    }
+    function getDataAfterEmpSearch1440(empcode) {
+
+        $("#btnsubmit").attr("disabled", false);
+        $('#hdnEmpCode').val(empcode);
+        CommonApiGET('/Payroll/HRMSMasters/GetEmpEncashDetails?EmpId=' + empcode, function (respData) {
+            $("#encash15").val("");
+            $("#encash30").val("");
+            document.getElementById("pldate").innerHTML ="";
+            fillEpfDt(respData);
+
+
+        });
+    };
+
+    //only numbers
+    function isNumber(evt) {
+
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            alert("Only Numbers Allowed");
+            return false;
+        }
+        return true;
+    }
+
+</script>

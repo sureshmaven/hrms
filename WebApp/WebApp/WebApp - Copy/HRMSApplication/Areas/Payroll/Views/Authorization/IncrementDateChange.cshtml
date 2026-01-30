@@ -1,0 +1,197 @@
+﻿@{
+    ViewBag.Title = "IncrementDateChange";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+		<div class="leftmenu-container">
+            <div class="sidebar-menu">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="sidebar-content">
+                <div class="main_heading heading_main">
+                    <h1>Increment Date Change <span class="year-end">@ViewBag.Env_Fm_Fy</span></h1>
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table id="incr_date_change" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <input name="select" value="1" id="checkAll" type="checkbox" onclick="checkboxRowAll()">
+                                            <label for="checkbox1"><span></span></label>
+                                        </th>
+                                        <th>Emp Code</th>
+                                        <th>Emp Name</th>
+                                        <th>Designation</th>
+                                        <th>Increment Date W.E.F</th>
+                                        <th>Increment Date</th>
+                                        <th>Change Increment Date</th>
+                                        <th>Remarks</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mt_10">
+                        <div class="pull-right">
+                            <button type="reset" onclick="resetForm()" id="btnCancel" value="reset" class="btn btn-default calcel">Cancel</button>
+                            <button type="submit" id="btnsubmit" class="btn btn-primary">Authorize</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			</div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#incr_date_change').DataTable();
+    });
+</script>
+<script>
+    $("#checkAll").click(function () {
+        $('input:checkbox').not(this).prop('checked', this.checked);
+    });
+</script>
+<script>
+    var respData;
+    var orgDdlist;
+    var arrerresult = [];
+    var cancelOrg;
+    $(document).ready(function () {
+        // 
+        var orgData;
+        CommonApiGET('/Payroll/Authorization/getAuthIncrementDateChange', function (respData) {
+            orgData = respData;
+            cancelOrg = respData;
+            fillDataTables(respData);
+        });
+        $("#btnCancel").click(function () {
+            // 
+            fillDataTables(cancelOrg);
+            $('#checkAll').attr("checked", false)
+
+        });
+        function fillDataTables(respData) {
+             
+
+            orgDdlist = respData;
+            $('#incr_date_change').DataTable({
+                destroy: true,
+                "paging": false,
+                "ordering": true,
+                "info": false,
+                "bFilter": false,
+                "searching": true,
+                "language": {
+                    "search": "Filter records:"
+                },
+                data: respData,
+                "columns": [
+                    {
+                        "mData": null,
+                        "bSortable": false,
+                        'mRender': function (data, type, full) {
+                            return getColumnCheckBox(data.Id, data.value);
+                        }
+                    },
+                    { "data": "Id" },
+                    { "data": "Name" },
+                    { "data": "Designation" },
+                    { "data": "Increment_Date_WEF" },
+                    { "data": "IncDate" },
+                    { "data": "change_inc_date" },
+                    { "data": "remarks" },
+
+                ],
+                "order": [[1, 'asc']]
+            });
+        }
+    });
+    
+    var arrObj = [];
+    function checkboxRow(id) {
+         
+        //var change_inc_date;
+        orgDdlist.map(function (o) {
+            var obj = {};
+            if (o.Id == id) {
+                 
+                obj.Id = o.Id;
+                obj.change_incr_date = o.change_inc_date;
+                obj.Increment_Date_WEF = o.Increment_Date_WEF;
+                arrObj.push(obj);
+            }
+        });
+        console.log(JSON.stringify(arrObj));
+    };
+
+    //row wise checked
+    //function checkboxRow(id) {
+    //    // 
+    //    $('input[type="checkbox"]').click(function () {
+    //        if ($(this).prop("checked") == true) {
+    //            orgDdlist.map(function (o) {
+    //                // 
+    //                if (o.Id == id) {
+    //                    arrerresult.push(o.Id);
+    //                }
+    //            });
+    //        }
+    //        else if ($(this).prop("checked") == false) {
+    //            orgDdlist.map(function (o) {
+    //                if (o.Id == id) {
+    //                    arrerresult = [];
+    //                }
+    //            });
+    //        }
+    //    });
+    //};
+    // all checked 
+    function checkboxRowAll() {
+        // 
+         
+        $('input[type="checkbox"]').click(function () {
+            if ($(this).prop("checked") == true) {
+                orgDdlist.map(function (o) {
+                     
+                    //arrObj.push(o.Id);
+                    var obj = {};
+                    if (o.Id == o.Id) {
+                       //  
+                        obj.Id = o.Id;
+                        //obj.change_incr_date = o.change_inc_date;
+                        obj.Increment_Date_WEF = o.Increment_Date_WEF;
+                        //obj.change_incr_date = o.change_incr_date;
+                        obj.change_incr_date = o.change_inc_date;
+                        arrObj.push(obj);
+                    }
+                });
+            }
+            else if ($(this).prop("checked") == false) {
+                orgDdlist.map(function (o) {
+                    arrObj = [];
+                    
+                });
+            }
+        });
+    };
+
+   
+</script>
+<script>
+    $('#btnsubmit').click(function () {
+         
+        if (arrObj.length > 0) {
+            CommonApiPOST("/Payroll/Authorization/AuthIncrementDateChange", JSON.stringify(arrObj), function (isSuccess) {
+                if (isSuccess) {
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+        }
+    });
+
+</script>

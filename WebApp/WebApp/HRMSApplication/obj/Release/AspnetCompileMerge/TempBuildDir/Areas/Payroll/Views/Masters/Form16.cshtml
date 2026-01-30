@@ -1,0 +1,171 @@
+﻿
+@{
+    ViewBag.Title = "Form16";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="leftmenu-container">
+                <div class="sidebar-menu">
+                    @{Html.RenderPartial("_PVPayrollMenu");}
+                </div>
+                <div class="sidebar-content">
+                    <div class="main_heading">
+                        <h1>Form 16 <span class="year-end">@ViewBag.Env_Fm_Fy</span></h1>
+                        <div class="col-md-12">
+                            <div class="inner_heading mt_10">
+                                <h1> Income Tax Payment Details</h1>
+                                <div class="row">
+                                    <div class="form-horizontal">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="col-sm-5 control-label dept_label" value="year" id="Year">Financial Year :</label>
+                                                <div class="col-sm-7 mul_drop" id="fYear">
+                                                    @Html.DropDownList("fY", ViewBag.DdlOneData as SelectList, new { @class = "form-control", @onchange = "callChangefunc()" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="col-sm-5 control-label">BSR Code:</label>
+                                                <div class="col-sm-7">
+                                                    <input type="text" class="form-control" id="BSRCODE">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="col-sm-5 control-label">Challan Number:</label>
+                                                <div class="col-sm-7">
+                                                    <input type="text" class="form-control vldclass" id="Challan_No">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="col-sm-5 control-label">Payment Date:</label>
+                                                <div class="col-sm-7 input-group date" id="incrementdate1">
+                                                    <input type="text" class="form-control vldclass" id="paymentdate">
+                                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="col-md-12 mt_10">
+                            <div class="pull-right">
+                                <button type="button" id="btnCancel" class="btn btn-default" title="Clear the data">Cancel</button>
+                                <button type="submit" id="btnsubmit" value="Submit" class="btn btn-primary" title="Submit details"> Submit</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#btnsubmit').click(function () {
+        var fy = $("#fY option:selected").text();
+        var bsrcode = $('#BSRCODE').val();
+        var challan_no = $('#Challan_No').val();
+        var payment_date = $('#paymentdate').val();
+        var form16 = [];
+        var obj = {};
+
+        obj.bsrcode = bsrcode;
+        obj.challan_no = challan_no;
+        obj.fy = fy;
+        obj.payment_date = payment_date;
+
+
+        if (fy == "" || fy == "Select")
+        {
+            showGlobalModal("I#Warning!# Please Select Financial Year");
+            return false;
+        }
+        
+        if (bsrcode == "") {
+            showGlobalModal("I#Warning!# Please Enter BSR Code");
+            return false;
+        }
+        else if (challan_no == "") {
+            showGlobalModal("I#Warning!# Please Enter Challan No");
+            return false;
+        }
+        else if (payment_date == "") {
+            showGlobalModal("I#Warning!# Please Enter Payment Date ");
+            return false;
+        }
+        else {
+            //var updateform = fyear + "&" + code +  "&" + challna + "&" + paymentdt;
+
+            var dataToSend = JSON.stringify({
+                fy: fy,
+                bsrcode: bsrcode,
+                challan_no: challan_no,
+                payment_date: payment_date
+            });
+        }
+
+        CommonApiPOST("/Payroll/Masters/saveForm16", dataToSend, function (isSuccess) {
+                if (isSuccess) {
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+       
+    });   
+
+    $('#btnCancel').click(function () {
+        clearfields();
+    });
+    function clearfields() {
+        $("#fY option:selected").val('');
+        $('#BSRCODE').val('');
+        $('#Challan_No').val('');
+        $('#paymentdate').val('');
+    }
+
+    function fillData(respData)
+    {
+        if (respData != "") {
+            $('#BSRCODE').val(respData[0].bsrcode_of_bank);
+            console.log(respData[0].payment_date);
+            $('#Challan_No').val(respData[0].challan_no);
+            $('#paymentdate').val(respData[0].payment_date);
+        }
+        else
+        {
+            $('#BSRCODE').val('');
+            $('#Challan_No').val('');
+            $('#paymentdate').val('');
+        }
+    }
+
+    function callChangefunc() {
+       
+
+        var x = $("#fY option:selected").text();
+        
+        CommonApiGET('/Payroll/Masters/getData?mnth=' + x , function (respData) {
+                if (respData != null) {
+                    fillData(respData);
+                }
+                //else {
+                //    $('#JIIBCIIBIncrementtype').val("JAIIB");
+                //    $('#btnSubmit').attr('disabled', false);
+                //}
+            });
+        
+    }
+</script>

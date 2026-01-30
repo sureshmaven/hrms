@@ -1,0 +1,44 @@
+----------------- credit the C-offs to below employees---------------
+--Emp Name               Emp Code              C-Offs
+ T Narsing                 5796                36
+  M Srinivas               308                  10
+------------------------------------------------------------
+------------------------------------------------------------
+--Emp Name               Emp Code              C-Offs
+T Narsing                  5796                36
+
+INSERT INTO [dbo].[Leaves_CreditDebit] values(	(select id from Employees where empid=	5796),13,36,0,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5796) and LeaveTypeId=13 and year=2021),
+'Credit Coffs',
+(select ShortName from Employees where empid=	5796),
+(select Department from Employees where empid=	5796),
+(select Branch from Employees where empid=	5796),
+(select CurrentDesignation from Employees where empid=	5796),'Credit',
+(select branch_value1 from employees where empid=	5796),
+(36	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5796) and LeaveTypeId=13 and year=2021)),2021);
+
+
+--Update leave balance
+update EmpLeaveBalance set LeaveBalance=
+(36+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=5796 and LeaveTypeId=13) and year=2021)) 
+where LeaveTypeId=13 and empid=(select id from employees where empid= 5796) and year=2021;
+
+------------------------------------------------------------
+--Emp Name               Emp Code              C-Offs
+ M Srinivas               308                  10
+
+INSERT INTO [dbo].[Leaves_CreditDebit] values(	(select id from Employees where empid=	308),13,10,0,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=308) and LeaveTypeId=13 and year=2021),
+'Credit Coffs',
+(select ShortName from Employees where empid=	308),
+(select Department from Employees where empid=	308),
+(select Branch from Employees where empid=	308),
+(select CurrentDesignation from Employees where empid=	308),'Credit',
+(select branch_value1 from employees where empid=	308),
+(10	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=308) and LeaveTypeId=13 and year=2021)),2021);
+
+
+--Update leave balance
+update EmpLeaveBalance set LeaveBalance=
+(10+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=308 and LeaveTypeId=13) and year=2021)) 
+where LeaveTypeId=13 and empid=(select id from employees where empid= 308) and year=2021;

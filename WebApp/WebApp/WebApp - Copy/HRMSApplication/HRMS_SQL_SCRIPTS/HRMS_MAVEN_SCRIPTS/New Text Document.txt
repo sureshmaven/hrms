@@ -1,0 +1,81 @@
+
+
+
+
+ALTER procedure [dbo].[workdiaryempid] @empcode int,@fromDate DATETIME,@toDate DATETIME
+as
+begin
+
+--step1 emp == admin or not
+
+--if(admin) {
+--else{
+
+IF OBJECT_ID('workdairyTemp') IS NOT NULL 
+BEGIN 
+    DROP TABLE workdairyTemp
+END
+
+create table workdairyTemp (
+EmpId  int,
+wddate nvarchar(50),
+ShortName varchar(100),
+Designation  varchar(200));
+
+declare @fromdt as DATETIME;
+declare @role as int;
+set @role=(Select role from employees where empid=@empcode);
+set @fromdt =@fromDate;
+if(@fromdt = @toDate )
+begin
+
+if(@empcode=0)
+begin
+insert into workdairyTemp select EmpId,Format(@fromdt,'dd/MM/yyyy') as wddate,ShortName,d.name as Designation  from 
+employees join designations d on d.Id=Employees.CurrentDesignation where EmpId not in (SELECT WorkDiary_hrs.EmpId FROM WorkDiary_hrs join 
+Employees on Employees.EmpId=WorkDiary_hrs.EmpId  where WDDate between  @fromdt
+                                          AND  @fromdt and WorkDiary_hrs.WDDate is not null) ;
+										   select * from workdairyTemp;
+end
+else
+begin
+insert into workdairyTemp select EmpId,Format(@fromdt,'dd/MM/yyyy') as wddate,ShortName  ,d.name as Designation  from employees join designations d 
+on d.Id=Employees.CurrentDesignation where EmpId not in (SELECT WorkDiary_hrs.EmpId FROM WorkDiary_hrs join Employees on Employees.EmpId=WorkDiary_hrs.EmpId  
+where WDDate between  @fromdt
+                                          AND  @fromdt and WorkDiary_hrs.WDDate is not null) and Employees.empid=@empcode;
+										   select * from workdairyTemp;
+end
+end
+
+ else 
+
+  begin
+  while(@fromdt <=  @toDate)
+   begin
+if(@empcode=0)
+   begin
+ insert into workdairyTemp select EmpId,Format(@fromdt,'dd/MM/yyyy') as wddate,ShortName ,d.name as Designation  from 
+ employees join designations d on d.Id=Employees.CurrentDesignation where EmpId not in (SELECT WorkDiary_hrs.EmpId FROM WorkDiary_hrs join 
+ Employees on Employees.EmpId=WorkDiary_hrs.EmpId  where WDDate between  @fromdt
+                                         AND  @fromdt and WorkDiary_hrs.WDDate is not null);
+ 		 set @fromdt = DATEADD(day, +1, @fromdt);					  
+   end
+   else
+   begin 
+    insert into workdairyTemp select EmpId,Format(@fromdt,'dd/MM/yyyy') as wddate ,ShortName ,d.name as Designation  
+	from employees join designations d on d.Id=Employees.CurrentDesignation where EmpId not in (SELECT WorkDiary_hrs.EmpId 
+	FROM WorkDiary_hrs join Employees on Employees.EmpId=WorkDiary_hrs.EmpId  where WDDate between  @fromdt
+                                         AND  @fromdt and WorkDiary_hrs.WDDate is not null)and Employees.empid=@empcode;
+ 		 set @fromdt = DATEADD(day, +1, @fromdt);	
+   end
+   end
+  select * from workdairyTemp;
+end
+
+end
+ --
+
+  --exec workdiaryempid 247,'2020-01-21','2020-01-21';
+ --drop table workdairyTemp
+
+ 

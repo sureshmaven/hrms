@@ -1,0 +1,6 @@
+
+While processing TDS we are inserting Section80C ID's from the code level into pr_emp_tds_section_deductions, after migration we need to run these procedures for Section80C details.
+
+Run the below to execute all the Section80C related procedures.
+
+exec sp_execTDSSection80CProcedures

@@ -1,0 +1,302 @@
+﻿@model Entities.AddPayMonth
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.RolePages = TempData["RolePages"];
+    var rolepages = TempData["RolePages"].ToString();
+}
+
+@{
+    var message = TempData["AlertMessage"] ?? string.Empty;
+}
+<script type="text/javascript">
+    var message = '@message';
+    if (message) alert(message);
+
+</script>
+<style>
+    .activeClass {
+        background: #ffdb99;
+    }
+
+    .secondClass {
+        color: red;
+    }
+</style>
+
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-heading">
+            @{
+                <ul class="nav nav-tabs">
+                    @if (rolepages.Contains("PRMain"))
+                    {
+
+
+                        <li class="active"><a href=@Url.Action("AddPAyMonthDetails", "Payroll")>AddPayMonth</a></li>
+                        <li>  <a href=@Url.Action("EmployeePayField", "Payroll")>Employee Pay Field</a></li>
+                        <li><a href="@Url.Action("AttendenceMonthly", "Payroll")">AttendenceMonthly</a></li>
+                    }
+                </ul>
+            }
+        </div>
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade  in active" id="tab2primary">
+                    <div class="page_st">
+                        <div class="page">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="main_heading">
+                                    <h1>Month Details</h1>
+                                    <div class="leave_cont_start">
+                                        @using (Html.BeginForm("AddPAyMonthDetailsPost", "Payroll", FormMethod.Post))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                        <label class="col-md-12 text-center">TGCAB 01-04-2019 - 31-04-2020</label>
+                                            <div class="col-md-12 col-sm-12">
+                                                <div class="main_heading">
+                                                    <h1>Add Month</h1>
+                                                    <div class="form-horizontal col-md-offset-2 col-md-8">
+
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Month Name:</label>
+                                                                <div class="col-sm-7 input-group date" id="months">
+                                                                    @Html.EditorFor(model => model.FM, new { htmlAttributes = new { @class = "form-control", @id = "monthname", onkeypress = "return nokeyword(event)", onchange = "return updateMonth();", @Value = ViewBag.fm } })
+                                                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Payment Date:<span class="mandatory">*</span></label>
+                                                                <div class="input-group date col-sm-7">
+                                                                    @Html.EditorFor(model => model.Paymentdate, new { htmlAttributes = new { @class = "form-control", @id = "pdate", onkeypress = "return nokeyword(event)", onchange = "return Dateevent1()", @Value = ViewBag.pdate } })
+                                                                    @Html.ValidationMessageFor(model => model.Paymentdate, "", new { @class = "text-danger" })
+                                                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Week Holidays:</label>
+                                                                <div class="col-sm-7">
+                                                                    @Html.EditorFor(model => model.Weekholidays, new { htmlAttributes = new { @class = "form-control", @id = "WHdays", @Value = ViewBag.wdays } })
+                                                                    @*@Html.ValidationMessageFor(model => model.Weekholidays, "", new { @class = "text-danger" })*@
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">DA Slabs:<span class="mandatory">*</span></label>
+                                                                <div class="col-sm-7">
+                                                                    @Html.EditorFor(model => model.DAslabs, new { htmlAttributes = new { @class = "form-control", @id = "DaSlabs", @Value = ViewBag.daslabs } })
+                                                                    @Html.ValidationMessageFor(model => model.DAslabs, "", new { @class = "text-danger" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Total Days:<span class="mandatory">*</span></label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" id="txttotaldays" value="@ViewBag.monthdays" class="form-control" readonly />
+
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">DA Points:<span class="mandatory">*</span></label>
+                                                                <div class="col-sm-7">
+                                                                    @Html.EditorFor(model => model.DApoints, new { htmlAttributes = new { @class = "form-control", @id = "DaPoints", @Value = ViewBag.dapoints } })
+                                                                    @Html.ValidationMessageFor(model => model.DApoints, "", new { @class = "text-danger" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Paid Holidays:</label>
+                                                                <div class="col-sm-7">
+
+                                                                    @Html.EditorFor(model => model.Paidholidays, new { htmlAttributes = new { @class = "form-control", @id = "PhDays", @Value = ViewBag.pdays } })
+                                                                    @*@Html.ValidationMessageFor(model => model.Paidholidays, "", new { @class = "text-danger" })*@
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
+
+
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">DA Percent:<span class="mandatory">*</span></label>
+                                                                <div class="col-sm-7">
+                                                                    @Html.EditorFor(model => model.DApercent, new { htmlAttributes = new { @class = "form-control", @id = "DaPercent", @Value = ViewBag.dapercent } })
+                                                                    @Html.ValidationMessageFor(model => model.DApercent, "", new { @class = "text-danger" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Financial Year:</label>
+                                                                <div class="col-sm-7">
+                                                                    @*@Html.EditorFor(model => model.FY,  new { htmlAttributes = new { @class = "form-control", @value = DateTime.Now.ToShortDateString() } })*@
+                                                                    <input type="text" id="txtyear" value="@ViewBag.month " name="Fyear" class="form-control" />
+                                                                    @Html.ValidationMessageFor(model => model.FY, "", new { @class = "text-danger" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+
+                                                        <div class="col-md-12">
+                                                            <div class="pull-right">
+                                                                <button type="button" onclick="resetForm()" value="reset" class="btn btn-default">Cancel</button>
+                                                                @*<button type="submit" id="btsubmit" onclick="return leaveapply();" class="btn btn-primary subleave">Submit</button>*@
+
+                                                                @*<button type="button" id="btnsave" formaction="AddPAyMonthDetailsPost" class="btn btn-primary">Save</button>*@
+                                                                <button type="submit" id="Save" value="Submit" class="btn btn-primary" onclick="return addmonthdetails();"> Submit</button>
+                                                                @*<button type="submit" id="btsubmit" class="btn btn-primary subleave" data-toggle="modal" data-target="#myModal">
+                                                                        Submit
+                                                                    </button>*@
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+   
+
+
+
+        function changeSession() {
+           
+             
+
+            var start = document.getElementById('monthname').value;
+            // var end = document.getElementsByName('daterangepicker_end').value;
+            // var dateObj = new Date();
+            //var firstDay = (date.getDate(), 1) + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+            // var lastDay = (date.getDate()) + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+
+            $.ajax({
+
+                type: 'GET',
+              
+                url: '/Payroll/Index15557?prefix=' + start,
+                dataType: 'json',
+                cache: false,
+                success: function (response) {
+                    alert("response.message");
+                }
+            });
+        }
+
+       
+    </script>
+
+<script>
+    function updateMonth() {
+
+        $('#WHdays').val('');
+        $('#PhDays').val('');
+        $('#pdate').val('');
+        $('#DaSlabs').val('');
+        $('#DaPoints').val('');
+        $('#DaPercent').val('');
+        //$('#searchField').val('');
+        //$('#searchField').val('');
+        //var el = document.getElementById(monthname);
+
+        //var d = new Date();
+
+        //for (i = 0; i < (32 - new Date(d.getFullYear(), iMonth, 32).getDate()); i++) {
+        //    option = new Option(i, i);
+        //    el.options[i] = option;
+    }
+
+</script>
+<script>
+
+    $("#Search").click(function () {
+        $.ajax({
+            url: '/Payroll/AddPAyMonthDetailsPost',
+            type: 'POST',
+            async: false,
+            dataType: 'text',
+            processData: false,
+            data: {
+                input: JSON.stringify(IVRInstant.data),
+                Id: $("#EmpID").val()
+            },
+            success: function (data) { }
+        });
+    });
+
+</script>
+
+
+<script>
+    document.getElementById("a4").className = "active";
+</script>
+
+
+
+
+
+<script>
+    var resetForm = function () { $('input,select,textarea').not('[readonly],[disabled],:button').not('input[id="SDate"]').not('input[id="EDate"]').not($("#leaveid")).not($('input[type=text].jqx-input')).val(''); }
+</script>
+
+<script src="~/Assets/hrms/PayrollValidations.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

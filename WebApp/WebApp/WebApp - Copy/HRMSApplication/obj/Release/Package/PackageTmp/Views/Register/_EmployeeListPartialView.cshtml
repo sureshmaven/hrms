@@ -1,0 +1,355 @@
+﻿@model Entities.Employees
+@{
+    ViewBag.RolePages = TempData["RolePages"];
+    var rolepages = TempData["RolePages"].ToString();
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+   
+    var reportTitle = ViewBag.ReportTitle;
+    var ReportPdfSize = ViewBag.PdfSize;
+    var ReportpageSize = ViewBag.pageSize;
+    var PdfExportColumns = ViewBag.ExportColumns;
+    var dataUrl = ViewBag.DataUrl;
+    var reportFilters = ViewBag.ReportFilters;
+    var reportFiltersTwo = ViewBag.ReportFiltersTwo;
+    var reportFiltersThree = ViewBag.ReportFiltersThree;
+    var searchBtn = ViewBag.SearchBtn;
+}
+
+<div class="page_st">
+    <div class="page">
+
+        <div class="col-md-12 col-sm-12">
+            <div class="main_heading">
+                <h1>Report List </h1>
+                <div class="report-list">
+                    @{
+                        <ul>
+                            @if (rolepages.Contains("RPBRA"))
+                            {
+                                <li class='@(reportTitle == "Branches List" ? "active" : "")'><a href=@Url.Action("Index", "AllReports")>Branches</a></li>}
+                            @if (rolepages.Contains("RPBRC"))
+                            {
+                                <li class='@(reportTitle == "Branches Contacts List" ? "active" : "")'><a href=@Url.Action("BranchContacts", "AllReports")>Branch Contacts</a></li>}
+                            @if (rolepages.Contains("RPCDR"))
+                            {
+                                @*<li><a href=@Url.Action("CadreReport", "Reports")>Cadre</a></li>*@
+                                <li class='@(reportTitle == "Cadre List" ? "active" : "")'><a href=@Url.Action("CadreList", "AllReports")>Cadre</a></li>
+                            }
+                            @if (rolepages.Contains("RPCAT"))
+                            {
+                                <li class='@(reportTitle == "Categeory List" ? "active" : "")'><a href=@Url.Action("staffCategoryList", "AllReports")>Category</a></li>}
+                            @if (rolepages.Contains("RPDOB"))
+                            {
+                                <li class='@(reportTitle == "DOB List" ? "active" : "")'><a href=@Url.Action("EmpDob", "AllReports")>DOB</a></li>}
+                            @if (rolepages.Contains("RPEMP"))
+                            {
+                                <li class='@(reportTitle == "Employee List" ? "active" : "")'><a href=@Url.Action("EmployeesRept", "AllReports")>Employees</a></li>}
+                            @if (rolepages.Contains("RPEAL"))
+                            {
+                                <li class='@(reportTitle == "Future Applied Leaves" ? "active" : "")'><a href=@Url.Action("FutureAppliedLeaves", "AllReports")>Future Applied Leaves</a></li>}
+                            @if (rolepages.Contains("RPHOF"))
+                            {
+                                <li class='@(reportTitle == "Head Office List" ? "active" : "")'><a href=@Url.Action("HeadOfficeList", "AllReports")>Head Office</a></li>}
+                            @if (rolepages.Contains("RPHOA"))
+                            {
+                                <li class='@(reportTitle == "Head Office Attender List" ? "active" : "")'><a href=@Url.Action("HeadOfcAttenders", "AllReports")>Head Office Attenders</a></li>}
+                            @if (rolepages.Contains("RPKOF"))
+                            {
+                                <li class='@(reportTitle == "Work Profile Of Key Officials" ? "active" : "")'><a href=@Url.Action("KeyOfficials", "AllReports")>Key Officials</a></li>}
+                            @if (rolepages.Contains("RPLTC"))
+                            {
+                                <li class='@(reportTitle == "LTC List" ? "active" : "")'><a href=@Url.Action("LTCList", "AllReports")>LTC</a></li>}
+                            @if (rolepages.Contains("RPLEV"))
+                            {
+                                <li><a href=@Url.Action("LeaveSearch", "MyLeaves")>Leaves</a></li>}
+                            @if (rolepages.Contains("RPLLE"))
+                            {
+                                <li class='@(reportTitle == "Long Leaves" ? "active" : "")'><a href=@Url.Action("LongLeaves", "AllReports")>Long Leaves</a></li>}
+                            @if (rolepages.Contains("RPLFA"))
+                            {
+                                <li class='@(reportTitle == "Leave Approval List" ? "active" : "")'><a href=@Url.Action("LeavesCarryForward", "AllReports")>Leaves Forwarded/Approved</a></li>}
+                            @if (rolepages.Contains("RPLAL"))
+                            {
+                                <li class='@(reportTitle == "Late Applied Leaves List" ? "active" : "")'><a href=@Url.Action("LateAppliedLeaves", "AllReports")>Late Applied Leaves</a></li>}
+                            @if (rolepages.Contains("RPLCD"))
+                            {
+                                <li class='@(reportTitle == "Cancelled Leaves" ? "active" : "")'><a href=@Url.Action("LeaveCancelled", "AllReports")>Leaves Cancelled</a></li>}
+                            @if (rolepages.Contains("RPCMP"))
+                            {
+                                <li class='@(reportTitle == "Month Wise CL/ML/PL" ? "active" : "")'><a href=@Url.Action("MonthwiseCLMLPL", "AllReports")>Month Wise CL/ML/PL</a></li>}
+                            @if (rolepages.Contains("RPMWL"))
+                            {
+                                <li class='@(reportTitle == "Month Wise Leaves" ? "active" : "")'><a href=@Url.Action("MonthWiseLeaves", "AllReports")>Month Wise Leaves</a></li>}
+                            @if (rolepages.Contains("RPMWO"))
+                            {
+                                <li class='@(reportTitle == "Month Wise OD" ? "active" : "")'><a href=@Url.Action("MonthWiseOD", "AllReports")>Month Wise OD</a></li>}
+                            @if (rolepages.Contains("RPMTT"))
+                            {
+                                <li class='@(reportTitle == "Month Wise Temporary Transfer" ? "active" : "")'><a href=@Url.Action("MonthWiseTemporaryTransfer", "AllReports")>Month Wise Temporary Transfer</a></li>}
+                            @if (rolepages.Contains("RPODD"))
+                            {
+                                <li class='@(reportTitle == "OD List" ? "active" : "")'><a href=@Url.Action("OdDuty", "AllReports")>OD</a></li>}
+                            @if (rolepages.Contains("RPPTS"))
+                            {
+                                <li class='@(reportTitle == "Permanent Transfer List" ? "active" : "")'><a href=@Url.Action("PermanentTransfer", "AllReports")>Permanent Transfers</a></li>}
+                            @if (rolepages.Contains("RPPRO"))
+                            {
+                                <li class='@(reportTitle == "Transfer List" ? "active" : "")'><a href=@Url.Action("EmpPromotions", "AllReports")>Promotion</a></li>}
+                            @if (rolepages.Contains("RPSPL"))
+                            {
+                                <li class='@(reportTitle == "PL List" ? "active" : "")'><a href=@Url.Action("PrivilegeLeave", "AllReports")>PL</a></li>}
+                            @if (rolepages.Contains("RPRET"))
+                            {
+                                <li><a href=@Url.Action("RetirementReport", "Reports")>Retirements</a></li>}
+                            @if (rolepages.Contains("RPSEN"))
+                            {
+                                <li class='@(reportTitle == "Seniorty List" ? "active" : "")'><a href=@Url.Action("Seniorty", "AllReports")>Seniority</a></li>}
+                            @if (rolepages.Contains("RPSMA"))
+                            {
+                                <li class='@(reportTitle == "StaffMaster List" ? "active" : "")'><a href=@Url.Action("StaffMaster", "AllReports")>Staff Master</a></li>}
+                            @if (rolepages.Contains("RPTXH"))
+                            {
+                                <li class='@(reportTitle == "Transaction History" ? "active" : "")'><a href=@Url.Action("TxHistory", "AllReports")>TX History</a></li>}
+                            @if (rolepages.Contains("RPTTS"))
+                            {
+                                <li class='@(reportTitle == "Temporary Transfer List" ? "active" : "")'><a href=@Url.Action("TempTrnsfr", "AllReports")>Temporary Transfers</a></li>}
+                            @if (rolepages.Contains("RPTMT"))
+                            {
+                                <li class='@(reportTitle == "Top Management List" ? "active" : "")'><a href=@Url.Action("Topmanagement", "AllReports")>TopManagement</a></li>}
+                            @if (rolepages.Contains("RPWDY"))
+                            {
+                                <li class='@(reportTitle == "Work Diary" ? "active" : "")'><a href=@Url.Action("WorkDiary", "AllReports")>WorkDiary </a></li>}
+                            @if (rolepages.Contains("RPYLB"))
+                            {
+                                @*<li><a href=@Url.Action("YearWiseLeaveBalanceReport", "Reports")>YearWiseLeaveBalance</a></li>*@
+                                <li class='@(reportTitle == "Year Wise Leave Balance" ? "active" : "")'><a href=@Url.Action("LeavesCreditDebit", "AllReports")>YearWiseLeaveBalance</a></li>}
+
+                        </ul>
+                    }
+
+
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div class="main_heading">
+                <h1>Employee List</h1>
+                <div class="col-sm-12">
+
+                    <div id="grid">
+
+                    </div>
+                    <div style='margin-top: 20px;'>
+                        <div style='float: left;'>
+                            @*<input type="button" value="Export to Excel" id='excelExport' />*@
+                        </div>
+                        <div style='margin-top: 20px; '>
+                            <div id="div1" style='float: left'>
+                                @*<input type="button" value="Export to Excel" id='excelExport' />*@
+                                <input type="button" class="jqx-rc-all jqx-button jqx-widget jqx-fill-state-normal" value="Export to Excel" id='pdf1' onclick='window.location = "@Url.Action("ExportGridToExcel", "Register")";' />
+                            </div>
+
+                        </div>
+                        @*<div id="div1" style='float: left; margin: 0px 0 0 2px;'>
+                                <input type="button" class="jqx-rc-all jqx-button jqx-widget jqx-fill-state-normal" value="Download PDF" id='pdfemp' />
+                            </div>*@
+                        <div id="div1" style='float: left; margin: 0px 0 0 2px;'>
+                            <input type="button" class="jqx-rc-all jqx-button jqx-widget jqx-fill-state-normal" value="Download PDF" id='pdfemployee' onclick='window.location = "@Url.Action("CreatePdfEmployee", "Register")";' />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+</div>
+</div>
+@{
+
+    var message = TempData["AlertMessage"] ?? string.Empty;
+
+}
+
+<script type="text/javascript">
+ var message = '@message';
+
+if(message) alert(message);
+
+</script>
+
+    <script type="text/javascript">
+        var screenTheme = 'darkblue';
+        var popupTheme = 'highcontrast';
+        var otherTheme = 'arctic';
+
+        var localizationObject = {
+            filterstringcomparisonoperators: ['contains', 'does not contain'],  /* filter String Comparison Operators    */
+            filternumericcomparisonoperators: ['less than', 'greater than'],    /* filter Numeric Comparison Operators  */
+            filterdatecomparisonoperators: ['less than', 'greater than'],       /* filter Date comparison operators.  */
+            filterbooleancomparisonoperators: ['equal', 'not equal']            /* filter bool comparison operators.*/
+        };
+        var stringcomparisonoperators = ['CONTAINS', 'DOES_NOT_CONTAIN'];
+        var numericcomparisonoperators = ['LESS_THAN', 'GREATER_THAN'];
+        var datecomparisonoperators = ['LESS_THAN', 'GREATER_THAN'];
+        var booleancomparisonoperators = ['EQUAL', 'NOT_EQUAL'];
+        $(document).ready(function () {
+
+            // prepare the data
+            var source =
+                {
+                    datatype: "json",
+
+                    datafields: [
+                        { name: 'Id', type: 'int' },
+                        { name: 'EmpId', type: 'string' },
+                        { name: 'ShortName', type: 'string' },
+                        { name: 'desib', type: 'string' },
+                        { name: 'Deptbranch', type: 'string' },
+                        { name: 'Employeename', type: 'string' }
+
+                    ],
+                    async: false,
+                    url: 'Employeelistview',
+                    data: {
+                        featureClass: "P",
+                        style: "full",
+                        maxRows: 2,
+                        username: "jqwidgets"
+                    }
+                };
+
+            var dataAdapter = new $.jqx.dataAdapter(source,
+                {
+                    formatData: function (data) {
+
+                        data.EmpId = $("#searchField").val();
+
+                        return data;
+                    }
+                }
+            );
+            var editrowindex = -1;
+            var delrowindex = -1;
+            // initialize jqxGrid
+
+
+            $("#grid").jqxGrid(
+                {
+                    width: '100%',
+                    source: dataAdapter,
+                    theme: otherTheme,
+                    autoheight: true,
+                    sortable: true,
+                    pageable: true,
+                    columnsResize: true,
+                    altRows: true,
+                    filterable: true,
+                    autoshowfiltericon: true,
+                    ready: function () {
+                        $("#grid").jqxGrid('localizestrings', localizationObject);
+                    },
+                    updatefilterconditions: function (type, defaultconditions) {
+                        switch (type) {
+                            case 'stringfilter':
+                                return stringcomparisonoperators;
+                            case 'numericfilter':
+                                return numericcomparisonoperators;
+                            case 'datefilter':
+                                return datecomparisonoperators;
+                            case 'booleanfilter':
+                                return booleancomparisonoperators;
+                        }
+                    },
+                    updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                        filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                        var index1 = 0;
+                        var index2 = 0;
+                        if (columnfilter != null) {
+                            var filter1 = columnfilter.getfilterat(0);
+                            var filter2 = columnfilter.getfilterat(1);
+                            if (filter1) {
+                                index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                                var value1 = filter1.filtervalue;
+                                filterinputfield1.val(value1);
+                            }
+                            if (filter2) {
+                                index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                                var value2 = filter2.filtervalue;
+                                filterinputfield2.val(value2);
+                            }
+                        }
+                        filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                        filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                    },
+                    columns: [
+                        { text: "SNO", datafield: "Id", editable: false, width: 100, hidden: true },
+                        { text: "Emp Code", datafield: "EmpId", editable: false, width: 100 },
+                        { text: "Name", datafield: "ShortName", editable: false, width: 205 },
+                        { text: "Designation", datafield: "desib", editable: false, width: 200 },
+                        { text: "Department/Branch", datafield: "Deptbranch", editable: false, width: 180 },
+
+                        { text: "Emp Full Name", datafield: "Employeename", editable: false, width: 250 },
+
+                        {
+                            text: 'Edit', datafield: 'Edit', align: 'center', sortable: false, filterable: false, columngroup: 'Actions', columntype: 'button', width: 140, cellsrenderer: function () {
+
+
+
+                                return "Edit";
+                            }, buttonclick: function (row) {
+                                editrowindex = row;
+                                var paginginformation = $('#grid').jqxGrid('getpaginginformation');
+                                var id = $("#grid").jqxGrid('getcellvalue', row, "Id");
+                                window.location = '/Register/Edit/?id=' + id + '&page=' + paginginformation.pagenum;
+                            }
+                        },
+
+                        
+                    ], columngroups:
+                        [
+                            { text: 'Action', align: 'center', name: 'Actions', width: 160 },
+
+                        ],
+
+                    showtoolbar: true,
+                    rendertoolbar: function (toolbar) {
+                        var me = this;
+                        var container = $("<div style='margin: 5px;'></div>");
+                        var span = $("<span style='float: left; margin-top: 5px; margin-right: 4px;'>Search: </span>");
+                        var input = $("<input class='jqx-input jqx-widget-content jqx-rc-all' id='searchField' type='text' style='height: 23px; float: left; width: 223px;' />");
+                        toolbar.append(container);
+                        container.append(span);
+                        container.append(input);
+                        if (otherTheme != "") {
+                            input.addClass('jqx-widget-content-' + otherTheme);
+                            input.addClass('jqx-rc-all-' + otherTheme);
+                        }
+                        var oldVal = "";
+                        input.on('keydown', function () {
+                            if (input.val().length >= 2) {
+                                if (me.timer) {
+                                    clearTimeout(me.timer);
+                                }
+                                if (oldVal != input.val()) {
+                                    me.timer = setTimeout(function () {
+                                        $("#grid").jqxGrid('updatebounddata');
+                                    }, 1000);
+                                    oldVal = input.val();
+                                }
+                            }
+                            else {
+                                $("#grid").jqxGrid('updatebounddata');
+                            }
+                        });
+                    }
+                });
+            //$("#excelExport").jqxButton();
+            //$("#excelExport").click(function () {
+            //    $("#grid").jqxGrid('exportdata', 'xls', 'EmployeeList');
+            //});
+        });
+    </script>
+
+<script>
+    document.getElementById("a6").className = "active";
+
+</script>

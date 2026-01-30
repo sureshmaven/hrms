@@ -1,0 +1,202 @@
+﻿@model HRMSApplication.Models.PrintPdfEW
+<style>
+    body {
+        background: #fff;
+    }
+
+    .page_st {
+        background: none;
+        display: none;
+    }
+
+    #menuheader {
+        display: none;
+    }
+
+    .footer {
+        display: none;
+    }
+
+    .page {
+        display: none;
+    }
+    .main_heading{display: none;}
+    .page_start{display: none;}
+    .panel-primary{display:none;}
+    .print-pdf a{ color:#000;}
+    div#display {
+    margin-top: 35px;
+}
+    #content {margin-top:30px;
+    }
+</style>
+<div class="col-md-10"><img src="~/Assets/images/PDFLogo.png" style="width: 100px;height: 94px;" /></div>
+@*<div class="col-md-6">
+    <img src="~/Assets/images/LoginLogo.png" style="width: 322px; height: 77px; margin-top: 15px;" />
+   
+    </div>*@
+<div id="display" class="col-md-2">
+    <div class="pull-right">
+        <button id="cmd" class="btn btn-info">Generate PDF</button>
+    </div>
+</div>
+<div id="content">
+    @*<p class="print-pdf">@Html.ActionLink("Print", "PrintAllReport")</p>*@
+   
+
+    <table class="playsliptable" style="width:100%">
+       
+        <tr>
+            <th colspan="4">PaySlip for MARCH 2019</th>
+        </tr>
+        @*<tr>
+            <td style="text-align: center;" colspan="4"><b>Playslip for MARCH 2019</b> </td>
+        </tr>*@
+
+        <tr>
+            <td class="tbg">Emp Code.</td>
+            <td>@Model.EmpCode</td>
+            <td class="tbg">Name</td>
+            <td>@Model.EmpName</td>
+        </tr>
+        <tr>
+            <td class="tbg">Branch/Dept</td>
+            <td>@Model.Branch</td>
+            <td class="tbg">Designation</td>
+            <td>@Model.Designation</td>
+
+        </tr>
+        <tr>
+            <td class="tbg">Working Days</td>
+            <td>@Model.WorkingDays</td>
+            <td class="tbg">Worked Days</td>
+            <td>@Model.WorkDays</td>
+        </tr>
+        <tr>
+            <td class="tbg">LOP Days</td>
+            <td>@Model.LOPDays</td>
+            <td class="tbg">Bank A/c No.</td>
+            <td>@Model.bankact</td>
+        </tr>
+        <tr>
+            <td class="tbg">PF No.</td>
+            <td>@Model.PF</td>
+            <td class="tbg">DOJ</td>
+            <td>@Model.DOJ</td>
+
+        </tr>
+        <tr>
+            <td class="tbg">ESI No.</td>
+            <td>@Model.ESI</td>
+            <td class="tbg">Pan NO</td>
+            <td>@Model.panno</td>
+        </tr>
+
+    </table>
+    <br><br>
+        <table class="playsliptable2" style="width:100%">
+            <tr>
+                <th>Earnings</th>
+                <th>Amount in Rs.</th>
+                <th>Deductions</th>
+                <th>Amount in Rs.</th>
+            </tr>
+            <tr>
+                <td>Earned Basic</td>
+                <td>@Model.EarnedBasic</td>
+                <td>Provident Fund</td>
+                <td>@Model.PF</td>
+            </tr>
+            <tr>
+                <td>EarnedHRA</td>
+                <td>@Model.EarnedHRA</td>
+                <td>Others</td>
+                <td>@Model.Others</td>
+            </tr>
+
+            <tr>
+                <td>Earned Medical</td>
+                <td>@Model.EarnedMedical</td>
+                <td>TDS</td>
+                <td>@Model.TDS</td>
+
+            </tr>
+            <tr>
+                <td>Earned Convenience</td>
+                <td>@Model.EarnedConveyance</td>
+                <td>Professional Tax</td>
+                <td>@Model.PT</td>
+            </tr>
+            <tr>
+                <td>Earned SA</td>
+                <td>@Model.EarnedSA</td>
+                <td>LOP AMT</td>
+                <td>@Model.LOPamount</td>
+            </tr>
+            <tr>
+                <td>Others</td>
+                <td>@Model.Others</td>
+                <td>TotalDeductions</td>
+                <td>@Model.Totaldeductions</td>
+            </tr>
+            <tr>
+                <td>Earned Gross</td>
+                <td>@Model.EarnedGross</td>
+                <td>Special Allowance</td>
+                <td>@Model.EarnedSA</td>
+            </tr>
+            <tr>
+                <td colspan="2"><span style="float: right;"><b> NET PAY </b></span></td>
+                <td colspan="2"><b>@Model.NetSalary</b></td>
+
+            </tr>
+
+        </table>
+
+</div>
+<br />
+<p class="print-pdf" id="displayBack">
+    @Html.ActionLink("Back to Report", "EmployeesEarnedwagesRept", "AllReports")
+ <br /><br />
+</p>
+<br />
+<br />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+<script>
+    var doc = new jsPDF();
+    var specialElementHandlers = {
+        'DIV to be rendered out': function (element, renderer) {
+            return true;
+        }
+    };
+
+    $('#cmd').click(function () {
+        //debugger;
+        $('#display').hide();
+        $('#displayBack').hide();
+        
+        var canvas = $(document).find('#content');
+       
+        html2canvas(document.body, {
+            onrendered: function (canvas) {
+
+                var img = canvas.toDataURL("image/jpeg");
+              
+                var imgWidth = 208;
+                var pageHeight = 295;
+                var imgHeight = canvas.height * imgWidth / canvas.width;
+                var heightLeft = imgHeight;
+                var position = 0;
+                doc.addImage(img, 'JPEG', 5, 10, 180, 120)
+                
+                doc.save('PaySlip.pdf');
+                $('#display').show();
+                $('#displayBack').show();
+            }
+
+        });
+        
+    });
+   
+</script>

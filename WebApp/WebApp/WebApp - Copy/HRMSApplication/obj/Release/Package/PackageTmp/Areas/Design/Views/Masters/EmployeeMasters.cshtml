@@ -1,0 +1,1795 @@
+﻿@{
+    ViewBag.Title = "EmployeeMasters";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <h1>Employee Master</h1>
+                    <div class="form-horizontal">
+                        <div class="col-md-12">
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label">Employee Id:</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-sm-1 col-xs-12"><button type="button" class="btn btn-primary btn-sm pull-right">Search</button></div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label">Employee Name:</label>
+                                    <div class="col-sm-6">
+                                        <label class="control-label">Jagadish Galla</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <section class="home-content-top">
+                        <div class="payroll_tabs col-md-12">
+                            <div class="tabbable-panel">
+                                <div class="tabbable-line">
+                                    <ul class="nav nav-tabs tabtop_payroll">
+                                        <li class="active"> <a href="#general" data-toggle="tab"> General </a> </li>
+                                        <li> <a href="#biological" data-toggle="tab">Biological</a> </li>
+                                        <li> <a href="#payfields" data-toggle="tab">Pay Fields</a> </li>
+                                        <li> <a href="#allowances" data-toggle="tab">Allowances</a> </li>
+                                        <li> <a href="#special_allowances" data-toggle="tab"> Special Allowances </a> </li>
+                                        <li> <a href="#deductions" data-toggle="tab"> Deductions</a> </li>
+                                        <li> <a href="#lic_details" data-toggle="tab">LIC Details</a> </li>
+                                        <li> <a href="#hfc_details" data-toggle="tab">HFC Details </a> </li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div class="tab-pane active fade in" id="general">
+                                            <div class="col-md-12">
+                                                <div class="inner_heading">
+                                                    <h1>Professional Details</h1>
+                                                    <div class="form-horizontal">
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Employee Short Name:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Sex:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Martial Status:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Zone:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Branch:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Department:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Designation Category:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Designation:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Region for Ptax:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Ptax Region:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Address 1:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Address 2:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Address 3:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Phone No:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Permanent Address1:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Permanent Address2:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Permanent Address3:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Permanent Phone No:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Native Place:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Division:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Date of Birth:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Employee Age:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Date of Joining:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Date of Confirmation:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Experience:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Provident Fund No:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">UAN:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Date of Joining PF:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Email Id:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Identification Mark 1:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Identification Mark 2:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Blood Group:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Religion:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Current Reservation:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Joining Reservation:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">PAN No:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Reg Order:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Branch Code:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Date of Retirement:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Branch Code1:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Payback:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Account Code:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Bank A/c No:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Customer ID:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Payback:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Account Code:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Bank A/c No:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Customer ID:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">A/C with Br/DCCB:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">If PHY Handicaped '1':</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">House Provided '1':</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Emp age:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Designation No:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">STLT EMP:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">FEST ADV:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">ARTR EMP:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">AADHAAR NUMBER:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12 mb_10">
+                                                            <div class="pull-right">
+                                                                <button type="reset" class="btn btn-default calcel">Cancel</button>
+                                                                <button type="submit" class="btn btn-primary">New</button>
+                                                                <button type="submit" class="btn btn-primary">Delete</button>
+                                                                <button type="submit" class="btn btn-primary">Save</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="biological">
+                                            <div class="col-md-12">
+                                                <div class="inner_heading">
+                                                    <h1>Biological Details</h1>
+                                                    <div class="form-horizontal">
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Father Name:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Father Date of Birth:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">F/H Relation:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12 mb_10">
+                                                            <div class="pull-right">
+                                                                <button type="reset" class="btn btn-default calcel">Cancel</button>
+                                                                <button type="submit" class="btn btn-primary">New</button>
+                                                                <button type="submit" class="btn btn-primary">Delete</button>
+                                                                <button type="submit" class="btn btn-primary">Save</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="payfields">
+                                            <div class="col-md-12">
+                                                <div class="inner_heading">
+                                                    <h1>PayField  Details</h1>
+                                                    <div class="form-horizontal">
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Basic:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Special Increment:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Stagnation Increments:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Employee Tds:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">LIC Premium:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Loss Of Pay:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Special Pay:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Sys. Administrator Allowance:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Teaching Allowance:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Washing Allowance:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">INTERM RELIEF:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">FIXED ALLOWANCE:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Telangana Increment:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12 mb_10">
+                                                            <div class="pull-right">
+                                                                <button type="reset" class="btn btn-default calcel">Cancel</button>
+                                                                <button type="submit" class="btn btn-primary">New</button>
+                                                                <button type="submit" class="btn btn-primary">Delete</button>
+                                                                <button type="submit" class="btn btn-primary">Save</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="allowances">
+                                            <div class="col-md-12">
+                                                <div class="inner_heading">
+                                                    <h1>Allowances Details</h1>
+                                                    <div class="form-horizontal">
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Physically Handicapped:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Deputation Allowance:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Fixed Personal Allowance:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">FPA-HRA Allowance:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Interim Allowance:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">FPIIP:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Medical Allowance:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                       <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">NPSG Allowance:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Officiating allowance:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Personal Pay:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Personal Qual Allowance:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Res. Attenders Allowance:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">FP Incentive Recovery:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Br Manager Allowance:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Petrol & Paper:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Petol & Paper 1:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Children Education Allowance:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Fest. Advance:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">LT PF LOAN:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">INCENTIVE:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">INCENTIVE DIFF:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">LTC ENCASHMENT:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12 mb_10">
+                                                            <div class="pull-right">
+                                                                <button type="reset" class="btn btn-default calcel">Cancel</button>
+                                                                <button type="submit" class="btn btn-primary">New</button>
+                                                                <button type="submit" class="btn btn-primary">Delete</button>
+                                                                <button type="submit" class="btn btn-primary">Save</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="special_allowances">
+                                            <div class="col-md-12">
+                                                <div class="inner_heading">
+                                                    <h1>Special Allowances</h1>
+                                                    <div class="form-horizontal">
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">SPL Non Promotional:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">SPL Split Duty -Award staff:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">SPL Typist:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">SPL Watchman:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">SPL Stenographer:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">SPL Bill Collector:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">SPL Despatch:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">SPL Electrician:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">SPL Dafter:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">SPL Cash Cabin:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">SPL Telephone Operator:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">SPL Library:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">SPL Incentive:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">SPL Arrear Incentive:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">SPL Conveyance:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Split Duty-Managers:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Duplicating/xerox machine:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Record from asst allowance:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Record from sub staff allowance:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">SPL Receptionist allowance:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">SPL Spl.Alw ACSTI:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">SPL Personal Pay:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Faculty Allowance:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12 mb_10">
+                                                            <div class="pull-right">
+                                                                <button type="reset" class="btn btn-default calcel">Cancel</button>
+                                                                <button type="submit" class="btn btn-primary">New</button>
+                                                                <button type="submit" class="btn btn-primary">Delete</button>
+                                                                <button type="submit" class="btn btn-primary">Save</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="deductions">
+                                            <div class="col-md-12">
+                                                <div class="inner_heading">
+                                                    <h1>Deduction Details</h1>
+                                                    <div class="form-horizontal">
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">APCOB-HFC-LT:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">APCOB-HFC-LO:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">VIJAYA Coop Society Ded:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">VISAKA Coop Society Ded:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">CSLI:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Officers Assn Fund:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Cadre Officers Assn Fund:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Club subscription:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">Union Club Subscription:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">SC/ST Assn LT Subscription:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">SC/St Assn ST Subscription:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">LT Staff Benefit Fund:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">VPF Deduction:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">VPF Percentage:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">LIC PENSION:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">JEEVAN SURAKSHA:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-5 control-label">HDFC:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12 mb_10">
+                                                            <div class="pull-right">
+                                                                <button type="reset" class="btn btn-default calcel">Cancel</button>
+                                                                <button type="submit" class="btn btn-primary">New</button>
+                                                                <button type="submit" class="btn btn-primary">Delete</button>
+                                                                <button type="submit" class="btn btn-primary">Save</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="lic_details">
+                                            <div class="col-md-12">
+                                                <div class="inner_heading">
+                                                    <h1>LIC  Details</h1>
+                                                    <div class="col-md-12">
+                                                        <div class="table-responsive">
+                                                            <table class="table" id="lic_details_table">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>AccountNo.</th>
+                                                                        <th>Amount</th>
+                                                                        <th>PayType</th>
+                                                                        <th>PayMonths</th>
+                                                                        <th>Stop</th>
+                                                                        <th>StopMonth</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>                                                          </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                    <div class="col-md-12 mb_10 mt_10">
+                                                        <div class="pull-right">
+                                                            <button type="reset" class="btn btn-default calcel">Cancel</button>
+                                                            <button type="submit" class="btn btn-primary">New</button>
+                                                            <button type="submit" class="btn btn-primary">Delete</button>
+                                                            <button type="submit" class="btn btn-primary">Save</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="hfc_details">
+                                            <div class="col-md-12">
+                                                <div class="inner_heading">
+                                                    <h1>HFC Details</h1>
+                                                    <div class="col-md-12">
+                                                        <div class="table-responsive">
+                                                            <table class="table" id="hfc_details_table">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>AccountNo.</th>
+                                                                        <th>Amount</th>
+                                                                        <th>PayType</th>
+                                                                        <th>PayMonths</th>
+                                                                        <th>Stop</th>
+                                                                        <th>StopMonth</th>
+                                                                        <th>Challan No </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control">
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    
+                                                    </div>
+                                                    <div class="col-md-12 mb_10 mt_10">
+                                                        <div class="pull-right">
+                                                            <button type="reset" class="btn btn-default calcel">Cancel</button>
+                                                            <button type="submit" class="btn btn-primary">New</button>
+                                                            <button type="submit" class="btn btn-primary">Delete</button>
+                                                            <button type="submit" class="btn btn-primary">Save</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#hfc_details_table').DataTable();
+    });
+    $(document).ready(function () {
+        $('#lic_details_table').DataTable();
+    });
+</script>

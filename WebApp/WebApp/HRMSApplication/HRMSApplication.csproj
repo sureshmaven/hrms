@@ -1,0 +1,1462 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0804F4CE-E7D9-4F93-8D6E-D81895AC200A}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>HRMSApplication</RootNamespace>
+    <AssemblyName>HRMSApplication</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ClosedXML, Version=0.95.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClosedXML.0.95.4\lib\net46\ClosedXML.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.7.2.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.7.2\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ExcelNumberFormat, Version=1.0.10.0, Culture=neutral, PublicKeyToken=23c6f5d73be07eca, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelNumberFormat.1.0.10\lib\net20\ExcelNumberFormat.dll</HintPath>
+    </Reference>
+    <Reference Include="IpPublicKnowledge, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IpPublicKnowledge.1.0.2\lib\IpPublicKnowledge.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13\lib\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp.xmlworker, Version=5.5.13.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\itextsharp.xmlworker.5.5.13\lib\itextsharp.xmlworker.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.14.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.14\lib\net45\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.4.0\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.DependencyCollector, Version=2.22.0.997, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.22.0\lib\net452\Microsoft.AI.DependencyCollector.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.PerfCounterCollector, Version=2.22.0.997, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.22.0\lib\net452\Microsoft.AI.PerfCounterCollector.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.ServerTelemetryChannel, Version=2.22.0.997, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.22.0\lib\net452\Microsoft.AI.ServerTelemetryChannel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.Web, Version=2.22.0.997, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Web.2.22.0\lib\net452\Microsoft.AI.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.WindowsServer, Version=2.22.0.997, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.2.22.0\lib\net452\Microsoft.AI.WindowsServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights, Version=2.22.0.997, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.2.22.0\lib\net46\Microsoft.ApplicationInsights.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.0.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.0.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.TelemetryCorrelation, Version=1.0.8.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.TelemetryCorrelation.1.0.8\lib\net45\Microsoft.AspNet.TelemetryCorrelation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\netstandard2.0\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.8.0.1\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.2.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Cors, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Cors.2.1.0\lib\net45\Microsoft.Owin.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.2.1.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.2.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.2.1.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.2.1.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.5.0.0\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.Primitives.4.0.1\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Packaging, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Packaging.4.0.0\lib\net46\System.IO.Packaging.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Management" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.5.0.0\lib\net45\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.7\lib\net45\System.Web.Cors.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.7\lib\net45\System.Web.Http.Cors.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.Owin, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Owin.5.2.2\lib\net45\System.Web.Http.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Design\Controllers\AuthorisationController.cs" />
+    <Compile Include="Areas\Design\Controllers\CustomizationController.cs" />
+    <Compile Include="Areas\Design\Controllers\MastersController.cs" />
+    <Compile Include="Areas\Design\Controllers\ProcessController.cs" />
+    <Compile Include="Areas\Design\Controllers\TransactionsController.cs" />
+    <Compile Include="Areas\Design\DesignAreaRegistration.cs" />
+    <Compile Include="Areas\Payroll\Controllers\AsyncPOCController.cs" />
+    <Compile Include="Areas\Payroll\Controllers\AuthorizationController.cs" />
+    <Compile Include="Areas\Payroll\Controllers\CommonController.cs" />
+    <Compile Include="Areas\Payroll\Controllers\CustomizationController.cs" />
+    <Compile Include="Areas\Payroll\Controllers\Form16Controller.cs" />
+    <Compile Include="Areas\Payroll\Controllers\Form7Controller.cs" />
+    <Compile Include="Areas\Payroll\Controllers\HelpController.cs" />
+    <Compile Include="Areas\Payroll\Controllers\HRMSMastersController.cs" />
+    <Compile Include="Areas\Payroll\Controllers\HRMSProcessController.cs" />
+    <Compile Include="Areas\Payroll\Controllers\MastersController.cs" />
+    <Compile Include="Areas\Payroll\Controllers\NegativeNetSalaryController.cs" />
+    <Compile Include="Areas\Payroll\Controllers\PayslipPdfController.cs" />
+    <Compile Include="Areas\Payroll\Controllers\POCController.cs" />
+    <Compile Include="Areas\Payroll\Controllers\PocNewController.cs" />
+    <Compile Include="Areas\Payroll\Controllers\PrAllGroupFooterController.cs" />
+    <Compile Include="Areas\Payroll\Controllers\PrAllReportsController.cs" />
+    <Compile Include="Areas\Payroll\Controllers\PRDashboardController.cs" />
+    <Compile Include="Areas\Payroll\Controllers\ProcessController.cs" />
+    <Compile Include="Areas\Payroll\Controllers\TransactionController.cs" />
+    <Compile Include="Areas\Payroll\Models\Allowance.cs" />
+    <Compile Include="Areas\Payroll\PayrollAreaRegistration.cs" />
+    <Compile Include="AuthHelpers\AuthHelper.cs" />
+    <Compile Include="AuthHelpers\SimpleAuthorizationServerProvider.cs" />
+    <Compile Include="AuthHelpers\UserInfo.cs" />
+    <Compile Include="Controllers\AllReportsController.cs" />
+    <Compile Include="Controllers\ApiMobileController.cs" />
+    <Compile Include="Controllers\BanksController.cs" />
+    <Compile Include="Controllers\BlockPeriodController.cs" />
+    <Compile Include="Controllers\BranchesController.cs" />
+    <Compile Include="Controllers\CaptchaController.cs" />
+    <Compile Include="Controllers\ChangeAuthorityController.cs" />
+    <Compile Include="Controllers\ChangeBranchManagerController.cs" />
+    <Compile Include="Controllers\ChangeProfileController.cs" />
+    <Compile Include="Controllers\Covid19Controller.cs" />
+    <Compile Include="Controllers\DashBoardController.cs" />
+    <Compile Include="Controllers\DepartmentsController.cs" />
+    <Compile Include="Controllers\DesignationsController.cs" />
+    <Compile Include="Controllers\DutyController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\HolidayListsController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LeaveApplyController.cs" />
+    <Compile Include="Controllers\LeaveApprovalController.cs" />
+    <Compile Include="Controllers\LeaveBalanceController.cs" />
+    <Compile Include="Controllers\LeaveTravelController.cs" />
+    <Compile Include="Controllers\LeaveTypesController.cs" />
+    <Compile Include="Controllers\MemoController.cs" />
+    <Compile Include="Controllers\MyLeavesController.cs" />
+    <Compile Include="Controllers\NewsController.cs" />
+    <Compile Include="Controllers\PLE_TypeController.cs" />
+    <Compile Include="Controllers\RegisterController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
+    <Compile Include="Controllers\TimeSheetController.cs" />
+    <Compile Include="Controllers\TransferController.cs" />
+    <Compile Include="Controllers\Tx_HistoryController.cs" />
+    <Compile Include="Controllers\WorkDiaryController.cs" />
+    <Compile Include="Filters\SessionTimeoutAttribute.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\DateExtensions.cs" />
+    <Compile Include="Helpers\LeaveHelper.cs" />
+    <Compile Include="Helpers\Loginformation.cs" />
+    <Compile Include="Helpers\LoginHelper.cs" />
+    <Compile Include="Helpers\ODHelper.cs" />
+    <Compile Include="Helpers\PayrollHelper.cs" />
+    <Compile Include="Helpers\PswdEncryptDecrypt.cs" />
+    <Compile Include="Helpers\SessionHelper.cs" />
+    <Compile Include="Models\PayrollResult.cs" />
+    <Compile Include="Models\PrintPdfFW.cs" />
+    <Compile Include="Models\PrintPdfEW.cs" />
+    <Compile Include="Models\CancelConfirm.cs" />
+    <Compile Include="Models\DashBoard.cs" />
+    <Compile Include="Models\EmpMonthlyReport.cs" />
+    <Compile Include="Models\EmpTransfer.cs" />
+    <Compile Include="Models\HolidayCode.cs" />
+    <Compile Include="Models\LeavesResult.cs" />
+    <Compile Include="Models\LoginCredential.cs" />
+    <Compile Include="Models\MobileApplyLeaveDTO.cs" />
+    <Compile Include="Models\MobileDashboardDTO.cs" />
+    <Compile Include="Models\ToggleColsData.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Startup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Design\Views\Authorisation\AnnualStagIncrementAuthorisation.cshtml" />
+    <Content Include="Areas\Design\Views\Authorisation\Encashment.cshtml" />
+    <Content Include="Areas\Design\Views\Authorisation\IncrementDateChange.cshtml" />
+    <Content Include="Areas\Design\Views\Authorisation\Index.cshtml" />
+    <Content Include="Areas\Design\Views\Authorisation\JAIIBCAIIBGeneral.cshtml" />
+    <Content Include="Areas\Design\Views\Authorisation\NonRepayableLoans.cshtml" />
+    <Content Include="Areas\Design\Views\Authorisation\PFAuthorisation.cshtml" />
+    <Content Include="Areas\Design\Views\Authorisation\PromotionAuthorisation.cshtml" />
+    <Content Include="Areas\Design\Views\Authorisation\RepayableLoans.cshtml" />
+    <Content Include="Areas\Design\Views\Authorisation\ROIChange.cshtml" />
+    <Content Include="Areas\Design\Views\Customization\Index.cshtml" />
+    <Content Include="Areas\Design\Views\Customization\LoansAdvances.cshtml" />
+    <Content Include="Areas\Design\Views\Masters\AllowanceMaster.cshtml" />
+    <Content Include="Areas\Design\Views\Masters\AnnualIncrement.cshtml" />
+    <Content Include="Areas\Design\Views\Masters\EmployeeMasters.cshtml" />
+    <Content Include="Areas\Design\Views\Masters\Encashment.cshtml" />
+    <Content Include="Areas\Design\Views\Masters\IncomeTaxDetails.cshtml" />
+    <Content Include="Areas\Design\Views\Masters\IncrementAnnualStagnation.cshtml" />
+    <Content Include="Areas\Design\Views\Masters\IncrementDateChange.cshtml" />
+    <Content Include="Areas\Design\Views\Masters\Index.cshtml" />
+    <Content Include="Areas\Design\Views\Masters\JAIIBCAIIBGeneral.cshtml" />
+    <Content Include="Areas\Design\Views\Masters\LoanRateSelection.cshtml" />
+    <Content Include="Areas\Design\Views\Masters\LoansAdvances.cshtml" />
+    <Content Include="Areas\Design\Views\Masters\NonRepayableLoans.cshtml" />
+    <Content Include="Areas\Design\Views\Masters\OBshare.cshtml" />
+    <Content Include="Areas\Design\Views\Masters\PersonnelDeductions.cshtml" />
+    <Content Include="Areas\Design\Views\Masters\PersonnelEarnings.cshtml" />
+    <Content Include="Areas\Design\Views\Masters\PFFinalSettlement.cshtml" />
+    <Content Include="Areas\Design\Views\Masters\PFNominee.cshtml" />
+    <Content Include="Areas\Design\Views\Masters\Promotion.cshtml" />
+    <Content Include="Areas\Design\Views\Masters\RentDetails.cshtml" />
+    <Content Include="Areas\Design\Views\Masters\RepayableLoans.cshtml" />
+    <Content Include="Areas\Design\Views\Masters\RevisionOfSalary.cshtml" />
+    <Content Include="Areas\Design\Views\Masters\ROIChange.cshtml" />
+    <Content Include="Areas\Design\Views\Masters\ServiceRecordDetails.cshtml" />
+    <Content Include="Areas\Design\Views\Masters\StagnationIncrement.cshtml" />
+    <Content Include="Areas\Design\Views\Masters\TransferDetails.cshtml" />
+    <Content Include="Areas\Design\Views\Process\AllEmployees.cshtml" />
+    <Content Include="Areas\Design\Views\Process\EncashmentProcess.cshtml" />
+    <Content Include="Areas\Design\Views\Process\GratuityProcess.cshtml" />
+    <Content Include="Areas\Design\Views\Process\Index.cshtml" />
+    <Content Include="Areas\Design\Views\Process\MonthEnd.cshtml" />
+    <Content Include="Areas\Design\Views\Process\NonRepayableloans.cshtml" />
+    <Content Include="Areas\Design\Views\Process\PaySlip.cshtml" />
+    <Content Include="Areas\Design\Views\Process\PF_Contribution.cshtml" />
+    <Content Include="Areas\Design\Views\Process\PostIncrements.cshtml" />
+    <Content Include="Areas\Design\Views\Process\Post_Increments.cshtml" />
+    <Content Include="Areas\Design\Views\Process\RepayableLoans.cshtml" />
+    <Content Include="Areas\Design\Views\Process\SingleEmployee.cshtml" />
+    <Content Include="Areas\Design\Views\Process\TDSProcess.cshtml" />
+    <Content Include="Areas\Design\Views\Process\TDSUpdate.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\AdjustmentReport.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\AllAllowance.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\AllDeductions.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\AllLoans.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\AllowanceReport.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\EmployeeContributionMonthLedger.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\EncashmentRegister.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\EncashmentSummary.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\Form12BA.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\Form16.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\Form3A.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\Form5A.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\Form7.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\GeneralVouchers.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\GratuityReport.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\IncrementReport.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\Index.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\LICReport.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\LoanLedger.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\LoanLedgerReceipt.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\LoanReport.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\LoanScheduleReport.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\LoansReport.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\MembersLeavingService.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\MISonTransactions.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\MultipleRAteLoanOutstanding.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\NonRepayableLoans.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\PayslipReports.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\PensionAnnualReport.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\PFContribution.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\PFContributionCard.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\PFFinalStatement.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\PFFund.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\PFInterestCalculation.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\PFLoansEffective_NonRepayableLoans.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\PFLoansEffective_RepayableLoans.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\PFLoansSanction_NonRepayableLoans.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\PFLoansSanction_RepayableLoans.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\PFMonthly.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\RepayableLoans.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\RetirementReport.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\Salarybillofbranch.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\SingleRateLoanOutstanding.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\TDSReport.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\TSheet.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\TSum.cshtml" />
+    <Content Include="Areas\Design\Views\Reports\Vouchers.cshtml" />
+    <Content Include="Areas\Design\Views\Shared\_PVPayrollMenu.cshtml" />
+    <Content Include="Areas\Design\Views\Transactions\AdhocPayments.cshtml" />
+    <Content Include="Areas\Design\Views\Transactions\Adjustments.cshtml" />
+    <Content Include="Areas\Design\Views\Transactions\AdjustPayments.cshtml" />
+    <Content Include="Areas\Design\Views\Transactions\Allowances.cshtml" />
+    <Content Include="Areas\Design\Views\Transactions\Attendence.cshtml" />
+    <Content Include="Areas\Design\Views\Transactions\DateOfLeaving.cshtml" />
+    <Content Include="Areas\Design\Views\Transactions\Deputation.cshtml" />
+    <Content Include="Areas\Design\Views\Transactions\EmployeeHistory.cshtml" />
+    <Content Include="Areas\Design\Views\Transactions\EmployeePayFields.cshtml" />
+    <Content Include="Areas\Design\Views\Transactions\Index.cshtml" />
+    <Content Include="Areas\Design\Views\Transactions\LoanAdjustment.cshtml" />
+    <Content Include="Areas\Design\Views\Transactions\MonthDetails.cshtml" />
+    <Content Include="Areas\Design\Views\Transactions\PayDetails.cshtml" />
+    <Content Include="Areas\Design\Views\web.config" />
+    <Content Include="Areas\Design\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Payroll\Assets\css\bootstrap-datepicker3.min.css" />
+    <Content Include="Areas\Payroll\Assets\css\bootstrap-datetimepicker.css" />
+    <Content Include="Areas\Payroll\Assets\css\bootstrap-timepicker.min.css" />
+    <Content Include="Areas\Payroll\Assets\css\bootstrap.css" />
+    <Content Include="Areas\Payroll\Assets\css\buttons.dataTables.min.css" />
+    <Content Include="Areas\Payroll\Assets\css\easy-responsive-tabs.css" />
+    <Content Include="Areas\Payroll\Assets\css\font-awesome.css" />
+    <Content Include="Areas\Payroll\Assets\css\jquery.dataTables.min.css" />
+    <Content Include="Areas\Payroll\Assets\css\popuo-box.css" />
+    <Content Include="Areas\Payroll\Assets\css\report-style.css" />
+    <Content Include="Areas\Payroll\Assets\css\style.css" />
+    <Content Include="Areas\Payroll\Assets\fonts\fontawesome-webfont.svg" />
+    <Content Include="Areas\Payroll\Assets\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Areas\Payroll\Assets\images\Check.png" />
+    <Content Include="Areas\Payroll\Assets\images\default-user-icon.jpg" />
+    <Content Include="Areas\Payroll\Assets\images\hrms.png" />
+    <Content Include="Areas\Payroll\Assets\images\payroll.png" />
+    <Content Include="Areas\Payroll\Assets\libs\chartjs\Chart.bundle.js" />
+    <Content Include="Areas\Payroll\Assets\libs\chartjs\Chart.bundle.min.js" />
+    <Content Include="Areas\Payroll\Assets\libs\chartjs\Chart.css" />
+    <Content Include="Areas\Payroll\Assets\libs\chartjs\Chart.js" />
+    <Content Include="Areas\Payroll\Assets\libs\chartjs\Chart.min.css" />
+    <Content Include="Areas\Payroll\Assets\libs\chartjs\Chart.min.js" />
+    <Content Include="Areas\Payroll\Assets\libs\jquery\bootstrap-datetimepicker.min.js" />
+    <Content Include="Areas\Payroll\Assets\libs\jquery\bootstrap.min.js" />
+    <Content Include="Areas\Payroll\Assets\libs\jquery\jquery-3.7.1.min.js" />
+    <Content Include="Areas\Payroll\Assets\libs\jquery\jspdf.debug.js" />
+    <Content Include="Areas\Payroll\Assets\libs\jquery\jspdf.plugin.autotable.js" />
+    <Content Include="Areas\Payroll\Assets\libs\jquery\moment.min.js" />
+    <Content Include="Areas\Payroll\Assets\libs\jquery\payrollmenu.js" />
+    <Content Include="Areas\Payroll\Assets\libs\jquery\toastr.min.css" />
+    <Content Include="Areas\Payroll\Assets\libs\jquery\toastr.min.js" />
+    <Content Include="Areas\Payroll\Assets\scripts\Common.js" />
+    <Content Include="Areas\Payroll\Assets\scripts\CustomApi.js" />
+    <Content Include="Areas\Payroll\Assets\scripts\DTgeneric.js" />
+    <Content Include="Areas\Payroll\Assets\images\bg11.jpg" />
+    <Content Include="Areas\Payroll\Assets\images\bg_cont1.png" />
+    <Content Include="Areas\Payroll\Assets\images\bodybg1.png" />
+    <Content Include="Areas\Payroll\Assets\images\f.png" />
+    <Content Include="Areas\Payroll\Assets\images\loading-green.gif" />
+    <Content Include="Areas\Payroll\Assets\images\LoginLogo.png" />
+    <Content Include="Areas\Payroll\Assets\images\logo.png" />
+    <Content Include="Areas\Payroll\Assets\images\m.png" />
+    <Content Include="Areas\Payroll\Assets\images\news.jpg" />
+    <Content Include="Areas\Payroll\Assets\images\payrollbg.jpg" />
+    <Content Include="Areas\Payroll\Assets\images\sort_asc.png" />
+    <Content Include="Areas\Payroll\Assets\images\sort_asc_old.png" />
+    <Content Include="Areas\Payroll\Assets\images\sort_desc.png" />
+    <Content Include="Areas\Payroll\Assets\images\sort_desc_old.png" />
+    <Content Include="Areas\Payroll\Assets\libs\jquery\bootstrap-datepicker.min.js" />
+    <Content Include="Areas\Payroll\Assets\libs\jquery\bootstrap-datetimepicker.js" />
+    <Content Include="Areas\Payroll\Assets\libs\jquery\bootstrap.js" />
+    <Content Include="Areas\Payroll\Assets\libs\jquery\buttons.flash.min.js" />
+    <Content Include="Areas\Payroll\Assets\libs\jquery\buttons.html5.min.js" />
+    <Content Include="Areas\Payroll\Assets\libs\jquery\buttons.print.min.js" />
+    <Content Include="Areas\Payroll\Assets\libs\jquery\dataTables.buttons.min.js" />
+    <Content Include="Areas\Payroll\Assets\libs\jquery\jquery-1.10.2.min.js" />
+    <Content Include="Areas\Payroll\Assets\libs\jquery\jquery.dataTables.min.js" />
+    <Content Include="Areas\Payroll\Assets\libs\jquery\jszip.min.js" />
+    <Content Include="Areas\Payroll\Assets\libs\jquery\moment.js" />
+    <Content Include="Areas\Payroll\Assets\libs\jquery\pdfmake.min.js" />
+    <Content Include="Areas\Payroll\Assets\libs\jquery\timepicki.js" />
+    <Content Include="Areas\Payroll\Assets\libs\jquery\vfs_fonts.js" />
+    <Content Include="Areas\Payroll\Views\Transaction\DeputationEntryFields.cshtml" />
+    <Content Include="Assets\css\bootstrap-datepicker3.min.css" />
+    <Content Include="Assets\css\bootstrap-datetimepicker.css" />
+    <Content Include="Assets\css\bootstrap-timepicker.min.css" />
+    <Content Include="Assets\css\bootstrap.css" />
+    <Content Include="Assets\css\buttons.dataTables.min.css" />
+    <Content Include="Assets\css\easy-responsive-tabs.css" />
+    <Content Include="Assets\css\font-awesome.css" />
+    <Content Include="Assets\css\jquery.dataTables.min.css" />
+    <Content Include="Assets\css\popuo-box.css" />
+    <Content Include="Assets\css\report-style.css" />
+    <Content Include="Assets\css\style.css" />
+    <Content Include="Assets\fonts\fontawesome-webfont.svg" />
+    <Content Include="Assets\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Assets\hrms\jquery.googoose.js" />
+    <Content Include="Assets\hrms\NewSHA512_June19th2023.js" />
+    <Content Include="Assets\hrms\PayrollValidations.js" />
+    <Content Include="Assets\hrms\Register.js" />
+    <Content Include="Assets\hrms\SHA512.min.js" />
+    <Content Include="Assets\images\bg11.jpg" />
+    <Content Include="Assets\images\bg_cont1.png" />
+    <Content Include="Assets\images\bodybg1.png" />
+    <Content Include="Assets\images\Check.png" />
+    <Content Include="Assets\images\f.png" />
+    <Content Include="Assets\images\hrms.png" />
+    <Content Include="Assets\images\loading-green.gif" />
+    <Content Include="Assets\images\LoginLogo.png" />
+    <Content Include="Assets\images\logo.png" />
+    <Content Include="Assets\images\m.png" />
+    <Content Include="Assets\images\news.jpg" />
+    <Content Include="Assets\images\payroll.png" />
+    <Content Include="Assets\images\PDFLogo.png" />
+    <Content Include="Assets\libs\excel\cdn_excel_0.17.js" />
+    <Content Include="Assets\libs\excel\cdn_excel_filesaver_v_2.0.js" />
+    <Content Include="Assets\libs\excel\table2excel.js" />
+    <Content Include="Assets\libs\jquery\bootstrap-datepicker.min.js" />
+    <Content Include="Assets\libs\jquery\bootstrap-datetimepicker.js" />
+    <Content Include="Assets\libs\jquery\bootstrap-timepicker.min.js" />
+    <Content Include="Assets\libs\jquery\bootstrap.js" />
+    <Content Include="Areas\Payroll\Views\web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Areas\Payroll\Views\Shared\_PayrollLayout.cshtml" />
+    <Content Include="Areas\Payroll\Assets\fonts\fontawesome-webfont.eot" />
+    <Content Include="Areas\Payroll\Assets\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Areas\Payroll\Assets\fonts\fontawesome-webfont.woff" />
+    <Content Include="Areas\Payroll\Assets\fonts\FontAwesome.otf" />
+    <Content Include="Areas\Payroll\Assets\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Areas\Payroll\Assets\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Areas\Payroll\Assets\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Areas\Payroll\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Payroll\Views\Shared\_PVPayrollMenu.cshtml" />
+    <Content Include="Areas\Payroll\Views\Masters\Allowance.cshtml" />
+    <Content Include="Areas\Payroll\Views\Masters\Index.cshtml" />
+    <Content Include="Areas\Payroll\Views\Transaction\Index.cshtml" />
+    <Content Include="Areas\Payroll\Views\Masters\EmployeeMaster.cshtml" />
+    <Content Include="Areas\Payroll\Views\Transaction\AdjPaymetnsView.cshtml" />
+    <Content Include="Areas\Payroll\Views\AsyncPOC\Department.cshtml" />
+    <Content Include="Areas\Payroll\Views\Process\Index.cshtml" />
+    <Content Include="Areas\Payroll\Views\Transaction\EmployeePayFields.cshtml" />
+    <Content Include="Areas\Payroll\Views\Transaction\MonthDetails.cshtml" />
+    <Content Include="Areas\Payroll\Views\Shared\_pvEmployeeSearch.cshtml" />
+    <Content Include="Areas\Payroll\Views\Transaction\AttendenceMonthly.cshtml" />
+    <Content Include="Areas\Payroll\Views\Transaction\AdhocPaymetnsView.cshtml" />
+    <Content Include="Areas\Payroll\Views\Masters\RentDetails.cshtml" />
+    <Content Include="Areas\Payroll\Views\HRMSMasters\Promotion.cshtml" />
+    <Content Include="Areas\Payroll\Views\HRMSMasters\Encashment.cshtml" />
+    <Content Include="Areas\Payroll\Views\Transaction\EmpAllowance.cshtml" />
+    <Content Include="Areas\Payroll\Views\HRMSMasters\IncrementDateChange.cshtml" />
+    <Content Include="Areas\Payroll\Views\AsyncPOC\AddRow.cshtml" />
+    <Content Include="Areas\Payroll\Views\HRMSMasters\JAIIBCAIIBIncr.cshtml" />
+    <Content Include="Areas\Payroll\Views\HRMSMasters\PersonalDeductions.cshtml" />
+    <Content Include="Areas\Payroll\Views\HRMSMasters\PersonalEarnings.cshtml" />
+    <Content Include="Areas\Payroll\Views\HRMSMasters\AnnualIncrement.cshtml" />
+    <Content Include="Areas\Payroll\Views\Masters\RepayableLoans.cshtml" />
+    <Content Include="Areas\Payroll\Views\Masters\NonRepayableLoans.cshtml" />
+    <Content Include="Areas\Payroll\Views\HRMSMasters\IncrementAnnualStagnation.cshtml" />
+    <Content Include="Areas\Payroll\Views\Transaction\AdjustmentsLoans.cshtml" />
+    <Content Include="Areas\Payroll\Views\HRMSMasters\StagnationIncrement.cshtml" />
+    <Content Include="Areas\Payroll\Views\Customization\Loan_Master.cshtml" />
+    <Content Include="Areas\Payroll\Views\Masters\LoansAdvances.cshtml" />
+    <Content Include="Areas\Payroll\Views\Authorization\PromotionAuthorisation.cshtml" />
+    <Content Include="Areas\Payroll\Views\Authorization\JAIIBCAIIBIncrAuthrization.cshtml" />
+    <Content Include="Areas\Payroll\Views\AsyncPOC\UpdateColumns.cshtml" />
+    <Content Include="Areas\Payroll\Views\Authorization\IncrementDateChange.cshtml" />
+    <Content Include="Areas\Payroll\Views\Authorization\AnnualStagIncrementAuthorisation.cshtml" />
+    <Content Include="Areas\Payroll\Views\Shared\_pvEmployeeSearchReport.cshtml" />
+    <Content Include="Areas\Payroll\Views\HRMSMasters\IncomeTaxBankPayment.cshtml" />
+    <Content Include="Areas\Payroll\Views\Process\PostIncrements.cshtml" />
+    <Content Include="Areas\Payroll\Views\PRDashboard\Index.cshtml" />
+    <Content Include="Areas\Payroll\Views\Process\EncashmentProcess.cshtml" />
+    <Content Include="Areas\Payroll\Views\Help\Index.cshtml" />
+    <Content Include="Areas\Payroll\Views\PrAllReports\Index.cshtml" />
+    <Content Include="Areas\Payroll\Views\PrAllReports\PrAllReportView.cshtml" />
+    <Content Include="Areas\Payroll\Views\Process\PayslipUI.cshtml" />
+    <Content Include="Areas\Payroll\Views\Masters\RepayableOBShare.cshtml" />
+    <Content Include="Areas\Payroll\Views\Authorization\PFRepayable.cshtml" />
+    <Content Include="Areas\Payroll\Views\Process\PFRepayableProcess.cshtml" />
+    <Content Include="Areas\Payroll\Views\Authorization\PFNonRepayable.cshtml" />
+    <Content Include="Areas\Payroll\Views\Process\PFNonRepayableProcess.cshtml" />
+    <Content Include="Areas\Payroll\Views\Authorization\Encashment.cshtml" />
+    <Content Include="Areas\Payroll\Views\Authorization\PFAuthorisation.cshtml" />
+    <Content Include="Areas\Payroll\Views\HRMSProcess\AllEmployees.cshtml" />
+    <Content Include="Areas\Payroll\Views\HRMSProcess\NonRepayableLoans.cshtml" />
+    <Content Include="Areas\Payroll\Views\HRMSProcess\PostIncrements.cshtml" />
+    <Content Include="Areas\Payroll\Views\HRMSProcess\RepayableLoans.cshtml" />
+    <Content Include="Areas\Payroll\Views\HRMSProcess\SingleEmployee.cshtml" />
+    <Content Include="Areas\Payroll\Views\Process\GratuityProcess.cshtml" />
+    <Content Include="Areas\Payroll\Views\Process\MonthEnd.cshtml" />
+    <Content Include="Areas\Payroll\Views\Process\TDSProcess.cshtml" />
+    <Content Include="Areas\Payroll\Views\Process\TDSUpdate.cshtml" />
+    <Content Include="Areas\Payroll\Views\Transaction\Dateofleaving.cshtml" />
+    <Content Include="Areas\Payroll\Views\Authorization\NonRepayableLoans.cshtml" />
+    <Content Include="Areas\Payroll\Views\Authorization\RepayableLoans.cshtml" />
+    <Content Include="Areas\Payroll\Views\Authorization\Index.cshtml" />
+    <Content Include="Areas\Payroll\Views\HRMSMasters\Promotion.cshtml" />
+    <Content Include="Areas\Payroll\Views\Process\AllowanceProcess.cshtml" />
+    <Content Include="Areas\Payroll\Views\HRMSMasters\PfNominee.cshtml" />
+    <Content Include="Areas\Payroll\Views\POC\POC1.cshtml" />
+    <Content Include="Areas\Payroll\Views\POC\PocAllReports.cshtml" />
+    <Content Include="Areas\Payroll\Views\PrAllReports\LoanReportGroupings.cshtml" />
+    <Content Include="Areas\Payroll\Views\PrAllReports\PFRepayableLoanGroupings.cshtml" />
+    <Content Include="Areas\Payroll\Views\PayslipPdf\Mainmethod.cshtml" />
+    <Content Include="Areas\Payroll\Views\PrAllReports\AllAllowanceGrouping.cshtml" />
+    <Content Include="Areas\Payroll\Views\Shared\_PvEmployeeSearchwithCheckboxes.cshtml" />
+    <Content Include="Areas\Payroll\Views\POC\GroupByPOC.cshtml" />
+    <Content Include="Areas\Payroll\Views\POC\GridwithChartPdf.cshtml" />
+    <Content Include="Areas\Payroll\Views\POC\PocHeadersIssue.cshtml" />
+    <Content Include="Areas\Payroll\Views\POC\partialview.cshtml" />
+    <Content Include="Areas\Payroll\Views\Shared\_POCmodalPopupPV.cshtml" />
+    <Content Include="Areas\Payroll\Views\PocNew\Index.cshtml" />
+    <Content Include="Areas\Payroll\Views\PrAllGroupFooter\PrAllGroupingFooterView.cshtml" />
+    <Content Include="Areas\Payroll\Views\Masters\Form12BA.cshtml" />
+    <Content Include="Areas\Payroll\Views\Masters\OtherTdsDeduction.cshtml" />
+    <Content Include="Areas\Payroll\Views\PrAllReports\TDSReport.cshtml" />
+    <Content Include="Areas\Payroll\Views\Shared\Loans_Schedules_Modal_Popups.cshtml" />
+    <Content Include="Areas\Payroll\Views\PrAllGroupFooter\PrAllFooterReportView.cshtml" />
+    <Content Include="Areas\Payroll\Views\Masters\Form12B.cshtml" />
+    <Content Include="Areas\Payroll\Views\PrAllReports\PayslipReport.cshtml" />
+    <Content Include="Areas\Payroll\Views\Shared\LoansPopUp.cshtml" />
+    <Content Include="Areas\Payroll\Views\Shared\BranchPopUp.cshtml" />
+    <Content Include="Areas\Payroll\Views\Customization\Payslip.cshtml" />
+    <Content Include="Areas\Payroll\Views\Masters\PFFinalSettlement.cshtml" />
+    <Content Include="Areas\Payroll\Views\Customization\Encashment.cshtml" />
+    <Content Include="Assets\libs\jquery\buttons.flash.min.js" />
+    <Content Include="Assets\libs\jquery\buttons.html5.min.js" />
+    <Content Include="Assets\libs\jquery\buttons.print.min.js" />
+    <Content Include="Assets\libs\jquery\dataTables.buttons.min.js" />
+    <Content Include="Assets\libs\jquery\en-gb.js" />
+    <Content Include="Assets\libs\jquery\jquery-1.10.2.min.js" />
+    <Content Include="Assets\libs\jquery\jquery-1.8.2.js" />
+    <Content Include="Assets\libs\jquery\jquery-1.8.3.js" />
+    <Content Include="Assets\libs\jquery\jquery-3.3.1.js" />
+    <Content Include="Assets\libs\jquery\jquery-3.7.1.js" />
+    <Content Include="Assets\libs\jquery\jquery-3.7.1.min.js" />
+    <Content Include="Assets\libs\jquery\jquery.dataTables.min.js" />
+    <Content Include="Assets\libs\jquery\jquery.min.js" />
+    <Content Include="Assets\libs\jquery\jszip.min.js" />
+    <Content Include="Assets\libs\jquery\moment-precise-range.js" />
+    <Content Include="Assets\libs\jquery\moment.js" />
+    <Content Include="Assets\libs\jquery\moment.min.js" />
+    <Content Include="Assets\libs\jquery\payrollmenu.js" />
+    <Content Include="Assets\libs\jquery\pdfmake.min.js" />
+    <Content Include="Assets\libs\jquery\timepicki.js" />
+    <Content Include="Assets\libs\jquery\vfs_fonts.js" />
+    <Content Include="Assets\libs\jqwidgets\globalization\globalize.culture.cs-CZ.js" />
+    <Content Include="Assets\libs\jqwidgets\globalization\globalize.culture.de-DE.js" />
+    <Content Include="Assets\libs\jqwidgets\globalization\globalize.culture.en-CA.js" />
+    <Content Include="Assets\libs\jqwidgets\globalization\globalize.culture.en-US.js" />
+    <Content Include="Assets\libs\jqwidgets\globalization\globalize.culture.fr-FR.js" />
+    <Content Include="Assets\libs\jqwidgets\globalization\globalize.culture.he-IL.js" />
+    <Content Include="Assets\libs\jqwidgets\globalization\globalize.culture.hr-HR.js" />
+    <Content Include="Assets\libs\jqwidgets\globalization\globalize.culture.hu-HU.js" />
+    <Content Include="Assets\libs\jqwidgets\globalization\globalize.culture.it-IT.js" />
+    <Content Include="Assets\libs\jqwidgets\globalization\globalize.culture.ja-JP.js" />
+    <Content Include="Assets\libs\jqwidgets\globalization\globalize.culture.lt.js" />
+    <Content Include="Assets\libs\jqwidgets\globalization\globalize.culture.ru-RU.js" />
+    <Content Include="Assets\libs\jqwidgets\globalization\globalize.culture.sa-IN.js" />
+    <Content Include="Assets\libs\jqwidgets\globalization\globalize.js" />
+    <Content Include="Assets\libs\jqwidgets\jqx-all.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxangular.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxbargauge.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxbulletchart.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxbuttongroup.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxbuttons.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxcalendar.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxchart.annotations.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxchart.api.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxchart.core.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxchart.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxchart.rangeselector.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxchart.waterfall.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxcheckbox.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxcolorpicker.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxcombobox.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxcomplexinput.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxcore.elements.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxcore.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxdata.export.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxdata.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxdatatable.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxdate.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxdatetimeinput.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxdocking.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxdockinglayout.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxdockpanel.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxdragdrop.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxdraw.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxdropdownbutton.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxdropdownlist.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxeditor.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxexpander.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxfileupload.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxformattedinput.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxgauge.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxgrid.aggregates.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxgrid.columnsreorder.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxgrid.columnsresize.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxgrid.edit.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxgrid.export.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxgrid.filter.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxgrid.grouping.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxgrid.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxgrid.pager.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxgrid.selection.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxgrid.sort.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxgrid.storage.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxinput.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxkanban.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxknob.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxknockout.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxlayout.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxlistbox.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxlistmenu.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxloader.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxmaskedinput.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxmenu.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxnavbar.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxnavigationbar.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxnotification.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxnumberinput.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxpanel.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxpasswordinput.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxpopover.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxprogressbar.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxradiobutton.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxrangeselector.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxrating.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxresponse.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxresponsivepanel.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxribbon.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxscheduler.api.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxscheduler.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxscrollbar.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxscrollview.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxslider.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxsortable.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxsplitter.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxswitchbutton.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxtabs.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxtagcloud.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxtextarea.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxtoolbar.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxtooltip.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxtouch.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxtree.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxtreegrid.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxtreemap.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxvalidator.js" />
+    <Content Include="Assets\libs\jqwidgets\jqxwindow.js" />
+    <Content Include="Assets\libs\jqwidgets\styles\bootstrap-datepicker.min.js" />
+    <Content Include="Assets\libs\jqwidgets\styles\bootstrap-datepicker3.min.css" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\backgroundTop.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\backImage.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\bg_black.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\bg_blackhover.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\bg_blackhover_horizontal.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\bg_blackpressed.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\bg_blackpressed_horizontal.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\bg_black_horizontal.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\bg_blueenergy.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\bg_darkblue.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\bg_darkbluehover.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\bg_darkbluepressed.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\blackbackground.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\black_gradient.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\check_black.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\check_blue.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\check_blue_indeterminate.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\check_disabled.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\check_indeterminate_black.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\check_indeterminate_disabled.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\check_indeterminate_white.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\check_lightblue.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\check_lightblue_indeterminate.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\check_white.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\close.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\close_black.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\close_blue.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\close_white.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\colorpicker\bar-hue.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\colorpicker\bar-saturation.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\colorpicker\map-hue.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\colorpicker\map-saturation-overlay.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\colorpicker\map-saturation.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\colorpicker\ReadMe.txt" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\common.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\crosshair-white.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\crosshair.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\darkness\ReadMe.txt" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\darkness\ui-bg_flat_30_cccccc_40x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\darkness\ui-bg_flat_50_5c5c5c_40x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\darkness\ui-bg_glass_20_555555_1x400.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\darkness\ui-bg_glass_40_0078a3_1x400.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\darkness\ui-bg_glass_40_ffc73d_1x400.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\darkness\ui-bg_gloss-wave_25_333333_500x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\darkness\ui-bg_highlight-soft_80_eeeeee_1x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\darkness\ui-bg_inset-soft_25_000000_1x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\darkness\ui-bg_inset-soft_30_f58400_1x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\darkness\ui-icons_222222_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\darkness\ui-icons_4b8e0b_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\darkness\ui-icons_a83300_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\darkness\ui-icons_cccccc_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\darkness\ui-icons_ffffff_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\darkred_gradient.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\drag.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\dragcancel.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\error.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\filter.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\html_editor.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\html_editor_white.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-calendar-light.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-calendar-metro-light.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-calendar-metro-yellow-light.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-calendar-white.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-calendar.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-cancel-white.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-cancel.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-delete-white.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-delete.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-down-blue.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-down-transparent.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-down-white.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-down.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-edit-white.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-edit.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-first-blue.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-first-transparent.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-first-white.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-first.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-last-blue.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-last-transparent.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-last-white.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-last.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-left-blue.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-left-transparent.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-left-white.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-left.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-menu-minimized-white.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-menu-minimized.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-plus-white.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-plus.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-recurrence-exception-white.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-recurrence-exception.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-recurrence-white.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-recurrence.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-right-blue.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-right-transparent.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-right-white.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-right.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-save-white.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-save.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-showpassword-white.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-showpassword.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-time-white.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-time.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-up-blue.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-up-transparent.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-up-white.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\icon-up.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\info.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\le-frog\ReadMe.txt" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\le-frog\ui-bg_diagonals-small_0_aaaaaa_40x40.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\le-frog\ui-bg_diagonals-thick_15_444444_40x40.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\le-frog\ui-bg_diagonals-thick_95_ffdc2e_40x40.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\le-frog\ui-bg_glass_55_fbf5d0_1x400.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\le-frog\ui-bg_highlight-hard_30_285c00_1x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\le-frog\ui-bg_highlight-soft_33_3a8104_1x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\le-frog\ui-bg_highlight-soft_50_4eb305_1x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\le-frog\ui-bg_highlight-soft_60_4ca20b_1x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\le-frog\ui-bg_inset-soft_10_285c00_1x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\le-frog\ui-icons_4eb305_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\le-frog\ui-icons_72b42d_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\le-frog\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\le-frog\ui-icons_ffffff_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\lightness\icon-first.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\lightness\icon-last.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\lightness\ReadMe.txt" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\lightness\ui-bg_diagonals-thick_18_b81900_40x40.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\lightness\ui-bg_diagonals-thick_20_666666_40x40.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\lightness\ui-bg_flat_10_000000_40x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\lightness\ui-bg_glass_100_f6f6f6_1x400.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\lightness\ui-bg_glass_100_fdf5ce_1x400.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\lightness\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\lightness\ui-bg_gloss-wave_35_f6a828_500x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\lightness\ui-bg_highlight-soft_100_eeeeee_1x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\lightness\ui-bg_highlight-soft_75_ffe45c_1x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\lightness\ui-icons_222222_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\lightness\ui-icons_228ef1_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\lightness\ui-icons_ef8c08_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\lightness\ui-icons_ffd27a_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\lightness\ui-icons_ffffff_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\loader-small.gif" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\loader.gif" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\logo.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\mail.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\menubutton.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\metro-icon-down-white.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\metro-icon-down.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\metro-icon-first-white.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\metro-icon-first.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\metro-icon-last-white.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\metro-icon-last.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\metro-icon-left-white.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\metro-icon-left.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\metro-icon-right - Copy.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\metro-icon-right-white.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\metro-icon-right.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\metro-icon-up-white.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\metro-icon-up.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\multi-arrow.gif" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\office-icon-down.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\office-icon-first.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\office-icon-last.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\office-icon-left.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\office-icon-right.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\office-icon-up.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\overcast\ReadMe.txt" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\overcast\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\overcast\ui-bg_flat_0_eeeeee_40x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\overcast\ui-bg_flat_55_c0402a_40x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\overcast\ui-bg_flat_55_eeeeee_40x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\overcast\ui-bg_glass_100_f8f8f8_1x400.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\overcast\ui-bg_glass_35_dddddd_1x400.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\overcast\ui-bg_glass_60_eeeeee_1x400.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\overcast\ui-bg_inset-hard_75_999999_1x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\overcast\ui-bg_inset-soft_50_c9c9c9_1x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\overcast\ui-icons_3383bb_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\overcast\ui-icons_454545_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\overcast\ui-icons_70b2e1_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\overcast\ui-icons_999999_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\overcast\ui-icons_fbc856_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\pin-black.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\pin-blue.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\pin-lightblue.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\pin-white.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\pin-yellow.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\pin.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\pinned-black.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\pinned-blue.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\pinned-lightblue.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\pinned-white.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\pinned-yellow.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\pinned.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\plus.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\plus_white.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\pointer.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\rangebar_classic.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\rangebar_darkblue.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\rangebar_shinyblack.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\rangebar_summer.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\redmond\icon-first.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\redmond\icon-last.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\redmond\ReadMe.txt" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\redmond\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\redmond\ui-bg_flat_55_fbec88_40x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\redmond\ui-bg_glass_75_d0e5f5_1x400.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\redmond\ui-bg_glass_85_dfeffc_1x400.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\redmond\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\redmond\ui-bg_gloss-wave_55_5c9ccc_500x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\redmond\ui-bg_inset-hard_100_f5f8f9_1x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\redmond\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\redmond\ui-icons_217bc0_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\redmond\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\redmond\ui-icons_469bdd_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\redmond\ui-icons_6da8d5_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\redmond\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\redmond\ui-icons_d8e7f3_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\redmond\ui-icons_f9bd01_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\red_arrow_down.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\red_arrow_up.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\red_gradient.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\roundbg_check_black.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\roundbg_check_disabled.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\roundbg_check_indeterminate.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\roundbg_check_white.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\roundbg_classic_hover.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\roundbg_classic_normal.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\roundbg_disabled.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\search.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\search_white.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\smoothness\ReadMe.txt" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\smoothness\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\smoothness\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\smoothness\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\smoothness\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\smoothness\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\smoothness\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\smoothness\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\smoothness\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\smoothness\ui-icons_222222_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\smoothness\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\smoothness\ui-icons_454545_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\smoothness\ui-icons_888888_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\smoothness\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\sortasc.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\sortascbutton.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\sortdesc.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\sortdescbutton.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\sortremove.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\star.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\start\ReadMe.txt" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\start\ui-bg_flat_55_999999_40x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\start\ui-bg_flat_75_aaaaaa_40x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\start\ui-bg_glass_45_0078ae_1x400.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\start\ui-bg_glass_55_f8da4e_1x400.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\start\ui-bg_glass_75_79c9ec_1x400.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\start\ui-bg_gloss-wave_45_e14f1c_500x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\start\ui-bg_gloss-wave_50_6eac2c_500x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\start\ui-bg_gloss-wave_75_2191c0_500x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\start\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\start\ui-icons_0078ae_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\start\ui-icons_056b93_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\start\ui-icons_d8e7f3_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\start\ui-icons_e0fdff_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\start\ui-icons_f5e175_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\start\ui-icons_f7a50d_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\start\ui-icons_fcd113_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\star_disabled.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\star_hover.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\stripes.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\success.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\sunny\ReadMe.txt" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\sunny\ui-bg_diagonals-medium_20_d34d17_40x40.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\sunny\ui-bg_flat_30_cccccc_40x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\sunny\ui-bg_flat_50_5c5c5c_40x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\sunny\ui-bg_gloss-wave_45_817865_500x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\sunny\ui-bg_gloss-wave_60_fece2f_500x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\sunny\ui-bg_gloss-wave_70_ffdd57_500x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\sunny\ui-bg_gloss-wave_90_fff9e5_500x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\sunny\ui-bg_highlight-soft_100_feeebd_1x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\sunny\ui-bg_inset-soft_30_ffffff_1x100.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\sunny\ui-icons_3d3d3d_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\sunny\ui-icons_bd7b00_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\sunny\ui-icons_d19405_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\sunny\ui-icons_eb990f_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\sunny\ui-icons_ed9f26_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\sunny\ui-icons_fadc7a_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\sunny\ui-icons_ffe180_256x240.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\tick.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\time.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\track_classic.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\track_darkblue.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\track_shinyblack.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\track_summer.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\warning.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\wp_check_indeterminate_white.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\images\wp_check_white.png" />
+    <Content Include="Assets\libs\jqwidgets\styles\jquery-1.11.1.min.js" />
+    <Content Include="Assets\libs\jqwidgets\styles\jqx.android.css" />
+    <Content Include="Assets\libs\jqwidgets\styles\jqx.arctic.css" />
+    <Content Include="Assets\libs\jqwidgets\styles\jqx.base.css" />
+    <Content Include="Assets\libs\jqwidgets\styles\jqx.black.css" />
+    <Content Include="Assets\libs\jqwidgets\styles\jqx.blackberry.css" />
+    <Content Include="Assets\libs\jqwidgets\styles\jqx.bootstrap.css" />
+    <Content Include="Assets\libs\jqwidgets\styles\jqx.classic.css" />
+    <Content Include="Assets\libs\jqwidgets\styles\jqx.dark.css" />
+    <Content Include="Assets\libs\jqwidgets\styles\jqx.darkblue.css" />
+    <Content Include="Assets\libs\jqwidgets\styles\jqx.energyblue.css" />
+    <Content Include="Assets\libs\jqwidgets\styles\jqx.flat.css" />
+    <Content Include="Assets\libs\jqwidgets\styles\jqx.fresh.css" />
+    <Content Include="Assets\libs\jqwidgets\styles\jqx.glacier.css" />
+    <Content Include="Assets\libs\jqwidgets\styles\jqx.highcontrast.css" />
+    <Content Include="Assets\libs\jqwidgets\styles\jqx.light.css" />
+    <Content Include="Assets\libs\jqwidgets\styles\jqx.metro.css" />
+    <Content Include="Assets\libs\jqwidgets\styles\jqx.metrodark.css" />
+    <Content Include="Assets\libs\jqwidgets\styles\jqx.mobile.css" />
+    <Content Include="Assets\libs\jqwidgets\styles\jqx.office.css" />
+    <Content Include="Assets\libs\jqwidgets\styles\jqx.orange.css" />
+    <Content Include="Assets\libs\jqwidgets\styles\jqx.shinyblack.css" />
+    <Content Include="Assets\libs\jqwidgets\styles\jqx.summer.css" />
+    <Content Include="Assets\libs\jqwidgets\styles\jqx.ui-darkness.css" />
+    <Content Include="Assets\libs\jqwidgets\styles\jqx.ui-le-frog.css" />
+    <Content Include="Assets\libs\jqwidgets\styles\jqx.ui-lightness.css" />
+    <Content Include="Assets\libs\jqwidgets\styles\jqx.ui-overcast.css" />
+    <Content Include="Assets\libs\jqwidgets\styles\jqx.ui-redmond.css" />
+    <Content Include="Assets\libs\jqwidgets\styles\jqx.ui-smoothness.css" />
+    <Content Include="Assets\libs\jqwidgets\styles\jqx.ui-start.css" />
+    <Content Include="Assets\libs\jqwidgets\styles\jqx.ui-sunny.css" />
+    <Content Include="Assets\libs\jqwidgets\styles\jqx.web.css" />
+    <Content Include="Assets\libs\jqwidgets\styles\jqx.windowsphone.css" />
+    <Content Include="Assets\libs\jqwidgets\Title.to.Tooltip.js" />
+    <Content Include="Content\password-validation.css" />
+    <Content Include="Content\password-validation.js" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Content\timepicki.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="Logs\LogInformation.txt" />
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="uploads\Chrysanthemum.jpg" />
+    <Content Include="uploads\Desert.jpg" />
+    <Content Include="uploads\Hydrangeas.jpg" />
+    <Content Include="uploads\Jellyfish.jpg" />
+    <Content Include="uploads\Lighthouse.jpg" />
+    <Content Include="uploads\m.png" />
+    <Content Include="uploads\Penguins.jpg" />
+    <Content Include="uploads\Tulips.jpg" />
+    <Content Include="uploads\user.png" />
+    <Content Include="Views\AllReports\AllGroupings.cshtml" />
+    <Content Include="Views\AllReports\AllReports.cshtml" />
+    <Content Include="Views\AllReports\AllReportsLateMemo.cshtml" />
+    <Content Include="Views\AllReports\AllToggleCols.cshtml" />
+    <Content Include="Views\AllReports\EarlybyGroupings.cshtml" />
+    <Content Include="Views\AllReports\EarnedWagesrpt.cshtml" />
+    <Content Include="Views\AllReports\Employeelist.cshtml" />
+    <Content Include="Views\AllReports\FixedWages.cshtml" />
+    <Content Include="Views\AllReports\groping.cshtml" />
+    <Content Include="Views\AllReports\LatebyGroupings.cshtml" />
+    <Content Include="Views\AllReports\Leaves.cshtml" />
+    <Content Include="Views\AllReports\OdList.cshtml" />
+    <Content Include="Views\AllReports\PdfMonthlyMemo.cshtml" />
+    <Content Include="Views\AllReports\Proformab.cshtml" />
+    <Content Include="Views\AllReports\Retirements.cshtml" />
+    <Content Include="Views\AllReports\TimeSheetMonthGroupings.cshtml" />
+    <Content Include="Views\AllReports\TimesheetRerun.cshtml" />
+    <Content Include="Views\AllReports\TsEmpMnGroupings.cshtml" />
+    <Content Include="Views\Banks\Delete.cshtml" />
+    <Content Include="Views\Banks\Edit.cshtml" />
+    <Content Include="Views\Banks\_BankPartails.cshtml" />
+    <Content Include="Views\BlockPeriod\Create.cshtml" />
+    <Content Include="Views\BlockPeriod\Delete.cshtml" />
+    <Content Include="Views\BlockPeriod\Edit.cshtml" />
+    <Content Include="Views\Branches\Createbranchcount.cshtml" />
+    <Content Include="Views\Branches\Delete.cshtml" />
+    <Content Include="Views\Branches\Deletebranchcount.cshtml" />
+    <Content Include="Views\Branches\Edit.cshtml" />
+    <Content Include="Views\Branches\Editbranchcount.cshtml" />
+    <Content Include="Views\Branches\_BranchPartailView.cshtml" />
+    <Content Include="Views\ChangeAuthority\Index.cshtml" />
+    <Content Include="Views\ChangeBranchManager\ChangeBranchManager.cshtml" />
+    <Content Include="Views\ChangeProfile\Index.cshtml" />
+    <Content Include="Views\Covid19\Covid19Form.cshtml" />
+    <Content Include="Views\Covid19\Covid19FormReadOnly.cshtml" />
+    <Content Include="Views\DashBoard\EmployeeDashBoard.cshtml" />
+    <Content Include="Views\DashBoard\Index.cshtml" />
+    <Content Include="Views\Departments\Delete.cshtml" />
+    <Content Include="Views\Departments\Edit.cshtml" />
+    <Content Include="Views\Departments\_DepartmentPartialView.cshtml" />
+    <Content Include="Views\Designations\Delete.cshtml" />
+    <Content Include="Views\Designations\Edit.cshtml" />
+    <Content Include="Views\Designations\_DesignationPartialView.cshtml" />
+    <Content Include="Views\Duty\Approvals.cshtml" />
+    <Content Include="Views\Duty\History.cshtml" />
+    <Content Include="Views\Duty\Index.cshtml" />
+    <Content Include="Views\HolidayLists\Delete.cshtml" />
+    <Content Include="Views\HolidayLists\Edit.cshtml" />
+    <Content Include="Views\HolidayLists\_HolidayPartialView.cshtml" />
+    <Content Include="Views\Home\ForgotPassword.cshtml" />
+    <Content Include="Views\Home\Help.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\PayrollIndex.cshtml" />
+    <Content Include="Views\Home\Policies.cshtml" />
+    <Content Include="Views\Home\Terms.cshtml" />
+    <Content Include="Views\LeaveApply\LeaveRequest.cshtml" />
+    <Content Include="Views\LeaveApproval\_EmpLeaveApproval.cshtml" />
+    <Content Include="Views\LeaveBalance\YearWiseLeaveBalance.cshtml" />
+    <Content Include="Views\LeaveBalance\_EmpLeaveBalance.cshtml" />
+    <Content Include="Views\LeaveTravel\AdminLTCApply.cshtml" />
+    <Content Include="Views\LeaveTravel\Approvals.cshtml" />
+    <Content Include="Views\LeaveTravel\Index.cshtml" />
+    <Content Include="Views\LeaveTypes\ODEdit.cshtml" />
+    <Content Include="Views\LeaveTypes\OtherdutyCreate.cshtml" />
+    <Content Include="Views\LeaveTypes\_LeaveTypePartialView.cshtml" />
+    <Content Include="Views\MyLeaves\cancelconfirmation.cshtml" />
+    <Content Include="Views\MyLeaves\CreditDebitleaves.cshtml" />
+    <Content Include="Views\MyLeaves\_EmpLeaveHistory.cshtml" />
+    <Content Include="Views\News\Create.cshtml" />
+    <Content Include="Views\News\Delete.cshtml" />
+    <Content Include="Views\News\Edit.cshtml" />
+    <Content Include="Views\Payroll\AddPAyMonthDetails.cshtml" />
+    <Content Include="Views\Payroll\AttendenceMonthly.cshtml" />
+    <Content Include="Views\Payroll\EmployeePayField.cshtml" />
+    <Content Include="Views\Payroll\FixedIndexById.cshtml" />
+    <Content Include="Views\Payroll\Index.cshtml" />
+    <Content Include="Views\Payroll\IndexById.cshtml" />
+    <Content Include="Views\Payroll\PayrollEmployee.cshtml" />
+    <Content Include="Views\Payroll\Printpdf.cshtml" />
+    <Content Include="Views\PLE_Type\AdminPLApply.cshtml" />
+    <Content Include="Views\PLE_Type\Index.cshtml" />
+    <Content Include="Views\PLE_Type\PLApprovals.cshtml" />
+    <Content Include="Views\Register\Edit.cshtml" />
+    <Content Include="Views\Register\EmployeeRegistration.cshtml" />
+    <Content Include="Views\Register\ViewProfile.cshtml" />
+    <Content Include="Views\Register\_EmployeeList.cshtml" />
+    <Content Include="Views\Register\_EmployeeListPartialView.cshtml" />
+    <Content Include="Views\Register\_SeniorityPartialView.cshtml" />
+    <Content Include="Views\Reports\FutureLeaveList.cshtml" />
+    <Content Include="Views\Reports\LateLeavelist.cshtml" />
+    <Content Include="Views\Reports\LeaveDays.cshtml" />
+    <Content Include="Views\Reports\LTCReport.cshtml" />
+    <Content Include="Views\Reports\Monthwise_CL.cshtml" />
+    <Content Include="Views\Reports\Monthwise_Leaves.cshtml" />
+    <Content Include="Views\Reports\Monthwise_OD.cshtml" />
+    <Content Include="Views\Reports\Monthwise_TempTransfer.cshtml" />
+    <Content Include="Views\Reports\MyLeaveApproval.cshtml" />
+    <Content Include="Views\Reports\PL.cshtml" />
+    <Content Include="Views\Reports\Retirementlist.cshtml" />
+    <Content Include="Views\Reports\TopmanagementList.cshtml" />
+    <Content Include="Views\Reports\TotalExperience.cshtml" />
+    <Content Include="Views\Reports\TransferReport.cshtml" />
+    <Content Include="Views\Reports\WorkDiaryReport.cshtml" />
+    <Content Include="Views\Reports\YearWiseLeaveBalanceReport.cshtml" />
+    <Content Include="Views\Reports\_Attenderlist.cshtml" />
+    <Content Include="Views\Reports\_Cadrelist.cshtml" />
+    <Content Include="Views\Reports\_Cancelleave.cshtml" />
+    <Content Include="Views\Reports\_Categorylist.cshtml" />
+    <Content Include="Views\Reports\_CS1.cshtml" />
+    <Content Include="Views\Reports\_Departmentlist.cshtml" />
+    <Content Include="Views\Reports\_DOBlist.cshtml" />
+    <Content Include="Views\Reports\_PermTransfer.cshtml" />
+    <Content Include="Views\Reports\_RetiredEmplist.cshtml" />
+    <Content Include="Views\Reports\_StaffMasterlist.cshtml" />
+    <Content Include="Views\Reports\_TempTransfer.cshtml" />
+    <Content Include="Views\Roles\Delete.cshtml" />
+    <Content Include="Views\Roles\Edit.cshtml" />
+    <Content Include="Views\Roles\UserRoles.cshtml" />
+    <Content Include="Views\Roles\_RolePartialView.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_PartialViewForMenu.cshtml" />
+    <Content Include="Views\Shared\_ReportsLayout.cshtml" />
+    <Content Include="Views\Timesheet\Delete.cshtml" />
+    <Content Include="Views\Timesheet\Edit.cshtml" />
+    <Content Include="Views\Timesheet\TimesheetApproval.cshtml" />
+    <Content Include="Views\Timesheet\Timesheetrequestform.cshtml" />
+    <Content Include="Views\Transfer\Index.cshtml" />
+    <Content Include="Views\Tx_History\_TxHistoryPartial.cshtml" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\WorkDiary\Index.cshtml" />
+    <Content Include="Views\WorkDiary\SanctionWorkApproval.cshtml" />
+    <Content Include="Views\WorkDiary\WorkApproval.cshtml" />
+    <Content Include="Views\WorkDiary\WorkApprovalAdmin.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Areas\Payroll\Views\PrAllReports\MembersLeaving.cshtml" />
+    <Content Include="Areas\Payroll\Views\Process\PFInterestMonthwise.cshtml" />
+    <Content Include="Areas\Payroll\Views\PrAllReports\MonthDetailsReportView.cshtml" />
+    <Content Include="Areas\Payroll\Views\PrAllGroupFooter\YearlyPayView.cshtml" />
+    <Content Include="Areas\Payroll\Views\PrAllReports\Form16ReportView.cshtml" />
+    <Content Include="Areas\Payroll\Views\Masters\Form16.cshtml" />
+    <Content Include="Areas\Payroll\Views\PrAllReports\PayslipReporthrms.cshtml" />
+    <Content Include="Areas\Payroll\Views\PrAllReports\PayslipSalaryNegative.cshtml" />
+    <Content Include="Areas\Payroll\Views\PrAllReports\Form7ReportView.cshtml" />
+    <Content Include="Areas\Payroll\Views\Process\CalculatePFforRetirement.cshtml" />
+    <Content Include="Areas\Payroll\Views\Process\TaxProcess.cshtml" />
+    <Content Include="Areas\Payroll\Views\Customization\MIS_Transaction.cshtml" />
+    <Content Include="Areas\Payroll\Views\Customization\PFMISReport.cshtml" />
+    <Content Include="Areas\Payroll\Views\Customization\TDSMISReport.cshtml" />
+    <Content Include="Areas\Payroll\Views\Customization\PFRandP_Report.cshtml" />
+    <Content Include="Areas\Payroll\Views\PrAllGroupFooter\PrAllGroupingFooterViewhrms.cshtml" />
+    <Content Include="Areas\Payroll\Views\PrAllGroupFooter\PrAllSinglerateViewhrms .cshtml" />
+    <Content Include="Areas\Payroll\Views\PrAllReports\TDSReporthrms.cshtml" />
+    <Content Include="Areas\Payroll\Views\Shared\_pvEmployeeSearchDateOfLeaving.cshtml" />
+    <Content Include="Areas\Payroll\Views\Customization\LoansMIS_report.cshtml" />
+    <Content Include="Areas\Payroll\Views\Shared\_pvEmployeeSearchWithOutRetirement.cshtml" />
+    <Content Include="Areas\Payroll\Views\Customization\EarningsMIS_report.cshtml" />
+    <None Include="Properties\PublishProfiles\hrms.pubxml" />
+    <Content Include="Views\Shared\_payroll.cshtml" />
+    <Content Include="Views\Memo\MemoCreate.cshtml" />
+    <Content Include="Views\Memo\MemoList.cshtml" />
+    <Content Include="Views\Memo\MemoReport.cshtml" />
+    <Content Include="Views\Memo\Employeememoreport.cshtml" />
+    <Content Include="Views\Duty\UnlockOD.cshtml" />
+    <Content Include="Views\LeaveApply\Leaveforemployee.cshtml" />
+    <Content Include="Views\MyLeaves\cancelcreditdebitconformation.cshtml" />
+    <Content Include="Views\Memo\Edit.cshtml" />
+    <Content Include="Views\Memo\PdfMemos.cshtml" />
+    <Content Include="Views\Memo\AbsentMemo.cshtml" />
+    <Content Include="Views\Memo\WorkDairyMemo.cshtml" />
+    <Content Include="Views\Memo\MedicalMemo.cshtml" />
+    <Content Include="Views\Memo\InsertLeaves.cshtml" />
+    <Content Include="Views\Memo\LateAppliedLeave.cshtml" />
+    <Content Include="Views\Memo\Controllinglateappliedleave.cshtml" />
+    <Content Include="Views\Memo\EmployeeMemo.cshtml" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Areas\Payroll\Views\Common\" />
+    <Folder Include="Areas\Payroll\Views\NegativeNetSalary\" />
+    <Folder Include="PAYROLL_SQL_SCRIPTS\payroll_old_scripts\" />
+    <Folder Include="Views\Advances_Loans\" />
+    <Folder Include="Views\Error\" />
+    <Folder Include="Views\Masters\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\fonts\fontawesome-webfont.eot" />
+    <Content Include="Assets\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Assets\fonts\fontawesome-webfont.woff" />
+    <Content Include="Assets\fonts\FontAwesome.otf" />
+    <Content Include="Assets\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Assets\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Assets\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Assets\libs\jqwidgets\styles\jquery-1.11.1.min.map" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Entities\Entities.csproj">
+      <Project>{11ec09ea-10c1-4b33-8f25-f4abf5b3a75a}</Project>
+      <Name>Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Facade\Facade.csproj">
+      <Project>{7025e376-9297-450b-8040-0b247967f26c}</Project>
+      <Name>Facade</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HRMSBusiness\HRMSBusiness.csproj">
+      <Project>{8a830919-8e51-4e10-a829-e5a7084160a8}</Project>
+      <Name>HRMSBusiness</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mavensoft.Common\Mavensoft.Common.csproj">
+      <Project>{e65635f4-0929-4560-9256-8e4f9611fd44}</Project>
+      <Name>Mavensoft.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mavensoft.DAL\Mavensoft.DAL.csproj">
+      <Project>{7cae4e34-3093-41ae-9016-fe8fc910743a}</Project>
+      <Name>Mavensoft.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PayrollModels\PayrollModels.csproj">
+      <Project>{27ebb842-d631-4e9a-9c95-d3897bca5980}</Project>
+      <Name>PayrollModels</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PayRollBusiness\PayRollBusiness.csproj">
+      <Project>{1370cd1a-47f3-412c-874c-c9b9f57aa777}</Project>
+      <Name>PayRollBusiness</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PayrollModels\PayrollModels.csproj">
+      <Project>{27ebb842-d631-4e9a-9c95-d3897bca5980}</Project>
+      <Name>PayrollModels</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Persistence\Persistence.csproj">
+      <Project>{90eb7242-e3aa-4588-b1c4-ce8ed6d3b23b}</Project>
+      <Name>Persistence</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Repository\Repository.csproj">
+      <Project>{b3e36b98-22b9-430e-a5a2-128495a37efd}</Project>
+      <Name>Repository</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>63531</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:63539/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost:63539/</IISAppRootUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.22.0\build\Microsoft.ApplicationInsights.DependencyCollector.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.22.0\build\Microsoft.ApplicationInsights.DependencyCollector.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.22.0\build\Microsoft.ApplicationInsights.PerfCounterCollector.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.22.0\build\Microsoft.ApplicationInsights.PerfCounterCollector.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.22.0\build\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.22.0\build\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.ApplicationInsights.WindowsServer.2.22.0\build\Microsoft.ApplicationInsights.WindowsServer.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.ApplicationInsights.WindowsServer.2.22.0\build\Microsoft.ApplicationInsights.WindowsServer.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.ApplicationInsights.Web.2.22.0\build\Microsoft.ApplicationInsights.Web.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.ApplicationInsights.Web.2.22.0\build\Microsoft.ApplicationInsights.Web.targets'))" />
+  </Target>
+  <Import Project="..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.22.0\build\Microsoft.ApplicationInsights.DependencyCollector.targets" Condition="Exists('..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.22.0\build\Microsoft.ApplicationInsights.DependencyCollector.targets')" />
+  <Import Project="..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.22.0\build\Microsoft.ApplicationInsights.PerfCounterCollector.targets" Condition="Exists('..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.22.0\build\Microsoft.ApplicationInsights.PerfCounterCollector.targets')" />
+  <Import Project="..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.22.0\build\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.targets" Condition="Exists('..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.22.0\build\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.targets')" />
+  <Import Project="..\packages\Microsoft.ApplicationInsights.WindowsServer.2.22.0\build\Microsoft.ApplicationInsights.WindowsServer.targets" Condition="Exists('..\packages\Microsoft.ApplicationInsights.WindowsServer.2.22.0\build\Microsoft.ApplicationInsights.WindowsServer.targets')" />
+  <Import Project="..\packages\Microsoft.ApplicationInsights.Web.2.22.0\build\Microsoft.ApplicationInsights.Web.targets" Condition="Exists('..\packages\Microsoft.ApplicationInsights.Web.2.22.0\build\Microsoft.ApplicationInsights.Web.targets')" />
+</Project>

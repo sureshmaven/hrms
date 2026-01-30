@@ -1,0 +1,134 @@
+update pr_month_attendance set lop_days=0, working_days=30 where emp_code=6464 and active=1
+update pr_month_attendance set lop_days=0, working_days=30 where emp_code=6466 and active=1
+
+insert into pr_month_attendance (id,fy,fm,emp_id,emp_code,status,status_date,leaves_available,lop_days
+,absent_days,working_days,active,trans_id,sus_per)values(2401,2021,'2020-11-01',1268,6477,'Regular',null,
+'No Leave Balance',0,0,30,1,39584,null);
+
+insert into pr_month_attendance (id,fy,fm,emp_id,emp_code,status,status_date,leaves_available,lop_days
+,absent_days,working_days,active,trans_id,sus_per)values(2402,2021,'2020-11-01',1274,6468,'Regular',null,
+'No Leave Balance',0,0,30,1,39585,null);
+insert into pr_month_attendance (id,fy,fm,emp_id,emp_code,status,status_date,leaves_available,lop_days
+,absent_days,working_days,active,trans_id,sus_per)values(2403,2021,'2020-11-01',1273,6473,'Regular',null,
+'No Leave Balance',0,0,30,1,39586,null);
+insert into pr_month_attendance (id,fy,fm,emp_id,emp_code,status,status_date,leaves_available,lop_days
+,absent_days,working_days,active,trans_id,sus_per)values(2404,2021,'2020-11-01',1272,6472,'Regular',null,
+'No Leave Balance',0,0,30,1,39587,null);
+insert into pr_month_attendance (id,fy,fm,emp_id,emp_code,status,status_date,leaves_available,lop_days
+,absent_days,working_days,active,trans_id,sus_per)values(2405,2021,'2020-11-01',1271,6471,'Regular',null,
+'No Leave Balance',0,0,30,1,39588,null);
+insert into pr_month_attendance (id,fy,fm,emp_id,emp_code,status,status_date,leaves_available,lop_days
+,absent_days,working_days,active,trans_id,sus_per)values(2406,2021,'2020-11-01',1270,6470,'Regular',null,
+'No Leave Balance',0,0,30,1,39589,null);
+insert into pr_month_attendance (id,fy,fm,emp_id,emp_code,status,status_date,leaves_available,lop_days
+,absent_days,working_days,active,trans_id,sus_per)values(2407,2021,'2020-11-01',1269,6469,'Regular',null,
+'No Leave Balance',0,0,30,1,39590,null);
+
+insert into pr_month_attendance (id,fy,fm,emp_id,emp_code,status,status_date,leaves_available,lop_days
+,absent_days,working_days,active,trans_id,sus_per)values(2408,2021,'2020-11-01',1267,6476,'Regular',null,
+'No Leave Balance',0,0,30,1,39591,null);
+insert into pr_month_attendance (id,fy,fm,emp_id,emp_code,status,status_date,leaves_available,lop_days
+,absent_days,working_days,active,trans_id,sus_per)values(2409,2021,'2020-11-01',1266,6475,'Regular',null,
+'No Leave Balance',0,0,30,1,39592,null);
+insert into pr_month_attendance (id,fy,fm,emp_id,emp_code,status,status_date,leaves_available,lop_days
+,absent_days,working_days,active,trans_id,sus_per)values(2410,2021,'2020-11-01',1265,6474,'Regular',null,
+'No Leave Balance',0,0,30,1,39593,null);
+insert into pr_month_attendance (id,fy,fm,emp_id,emp_code,status,status_date,leaves_available,lop_days
+,absent_days,working_days,active,trans_id,sus_per)values(2411,2021,'2020-11-01',1264,6467,'Regular',null,
+'No Leave Balance',0,0,30,1,39594,null);
+
+
+update pr_emp_pay_field set amount= 2100 where emp_code= 301 and m_id=17 and fm='2020-11-01'
+update pr_emp_pay_field set amount= 3100 where emp_code= 428 and m_id=17 and fm='2020-11-01'
+update pr_emp_pay_field set amount= 0 where emp_code= 474 and m_id=17 and fm='2020-11-01'
+update pr_emp_pay_field set amount= 0 where emp_code= 491 and m_id=17 and fm='2020-11-01'
+update pr_emp_pay_field set amount= 0 where emp_code= 499 and m_id=17 and fm='2020-11-01'
+update pr_emp_pay_field set amount= 0 where emp_code= 535 and m_id=17 and fm='2020-11-01'
+update pr_emp_pay_field set amount= 0 where emp_code= 539 and m_id=17 and fm='2020-11-01'
+update pr_emp_pay_field set amount= 2300 where emp_code= 598 and m_id=17 and fm='2020-11-01'
+update pr_emp_pay_field set amount= 5400 where emp_code= 800 and m_id=17 and fm='2020-11-01'
+update pr_emp_pay_field set amount= 4700 where emp_code= 822 and m_id=17 and fm='2020-11-01'
+update pr_emp_pay_field set amount= 0 where emp_code= 831 and m_id=17 and fm='2020-11-01'
+update pr_emp_pay_field set amount= 0 where emp_code= 833 and m_id=17 and fm='2020-11-01'
+update pr_emp_pay_field set amount= 2000 where emp_code= 844 and m_id=17 and fm='2020-11-01'
+update pr_emp_pay_field set amount= 3500 where emp_code= 847 and m_id=17 and fm='2020-11-01'
+update pr_emp_pay_field set amount= 0 where emp_code= 855 and m_id=17 and fm='2020-11-01'
+update pr_emp_pay_field set amount= 0 where emp_code= 859 and m_id=17 and fm='2020-11-01'
+update pr_emp_pay_field set amount= 0 where emp_code= 861 and m_id=17 and fm='2020-11-01'
+update pr_emp_pay_field set amount= 0 where emp_code= 867 and m_id=17 and fm='2020-11-01'
+update pr_emp_pay_field set amount= 0 where emp_code= 901 and m_id=17 and fm='2020-11-01'
+update pr_emp_pay_field set amount= 0 where emp_code= 913 and m_id=17 and fm='2020-11-01'
+update pr_emp_pay_field set amount= 0 where emp_code= 937 and m_id=17 and fm='2020-11-01'
+update pr_emp_pay_field set amount= 0 where emp_code= 940 and m_id=17 and fm='2020-11-01'
+update pr_emp_pay_field set amount= 0 where emp_code= 950 and m_id=17 and fm='2020-11-01'
+update pr_emp_pay_field set amount= 0 where emp_code= 952 and m_id=17 and fm='2020-11-01'
+update pr_emp_pay_field set amount= 0 where emp_code= 954 and m_id=17 and fm='2020-11-01'
+update pr_emp_pay_field set amount= 0 where emp_code= 972 and m_id=17 and fm='2020-11-01'
+update pr_emp_pay_field set amount= 1700 where emp_code= 982 and m_id=17 and fm='2020-11-01'
+update pr_emp_pay_field set amount= 1500 where emp_code= 984 and m_id=17 and fm='2020-11-01'
+update pr_emp_pay_field set amount= 0 where emp_code= 986 and m_id=17 and fm='2020-11-01'
+update pr_emp_pay_field set amount= 0 where emp_code= 989 and m_id=17 and fm='2020-11-01'
+update pr_emp_pay_field set amount= 0 where emp_code= 994 and m_id=17 and fm='2020-11-01'
+update pr_emp_pay_field set amount= 1900 where emp_code= 5884 and m_id=17 and fm='2020-11-01'
+update pr_emp_pay_field set amount= 4400 where emp_code= 5908 and m_id=17 and fm='2020-11-01'
+update pr_emp_pay_field set amount= 0 where emp_code= 6323 and m_id=17 and fm='2020-11-01'
+update pr_emp_pay_field set amount= 0 where emp_code= 6341 and m_id=17 and fm='2020-11-01'
+update pr_emp_pay_field set amount= 0 where emp_code= 6384 and m_id=17 and fm='2020-11-01'
+
+
+-----------------
+
+
+update pr_emp_perearning set amount=	5065	where emp_code=	301	and m_id=255 and fm='2020-11-01';
+update pr_emp_perearning set amount=	9831	where emp_code=	428	and m_id=255 and fm='2020-11-01';
+update pr_emp_perearning set amount=	5792	where emp_code=	474	and m_id=255 and fm='2020-11-01';
+update pr_emp_perearning set amount=	2533	where emp_code=	491	and m_id=255 and fm='2020-11-01';
+update pr_emp_perearning set amount=	7261	where emp_code=	499	and m_id=255 and fm='2020-11-01';
+update pr_emp_perearning set amount=	6456	where emp_code=	535	and m_id=255 and fm='2020-11-01';
+update pr_emp_perearning set amount=	3500	where emp_code=	539	and m_id=255 and fm='2020-11-01';
+update pr_emp_perearning set amount=	2400	where emp_code=	598	and m_id=255 and fm='2020-11-01';
+update pr_emp_perearning set amount=	3600	where emp_code=	800	and m_id=255 and fm='2020-11-01';
+update pr_emp_perearning set amount=	4800	where emp_code=	822	and m_id=255 and fm='2020-11-01';
+update pr_emp_perearning set amount=	1496	where emp_code=	831	and m_id=255 and fm='2020-11-01';
+update pr_emp_perearning set amount=	1416	where emp_code=	833	and m_id=255 and fm='2020-11-01';
+update pr_emp_perearning set amount=	12000	where emp_code=	844	and m_id=255 and fm='2020-11-01';
+update pr_emp_perearning set amount=	4800	where emp_code=	847	and m_id=255 and fm='2020-11-01';
+update pr_emp_perearning set amount=	3600	where emp_code=	855	and m_id=255 and fm='2020-11-01';
+update pr_emp_perearning set amount=	2400	where emp_code=	859	and m_id=255 and fm='2020-11-01';
+update pr_emp_perearning set amount=	13200	where emp_code=	861	and m_id=255 and fm='2020-11-01';
+update pr_emp_perearning set amount=	7200	where emp_code=	867	and m_id=255 and fm='2020-11-01';
+update pr_emp_perearning set amount=	4800	where emp_code=	901	and m_id=255 and fm='2020-11-01';
+update pr_emp_perearning set amount=	1200	where emp_code=	913	and m_id=255 and fm='2020-11-01';
+update pr_emp_perearning set amount=	2400	where emp_code=	937	and m_id=255 and fm='2020-11-01';
+update pr_emp_perearning set amount=	816	where emp_code=	940	and m_id=255 and fm='2020-11-01';
+update pr_emp_perearning set amount=	791	where emp_code=	950	and m_id=255 and fm='2020-11-01';
+update pr_emp_perearning set amount=	1200	where emp_code=	952	and m_id=255 and fm='2020-11-01';
+update pr_emp_perearning set amount=	4800	where emp_code=	954	and m_id=255 and fm='2020-11-01';
+update pr_emp_perearning set amount=	1379	where emp_code=	972	and m_id=255 and fm='2020-11-01';
+update pr_emp_perearning set amount=	4800	where emp_code=	982	and m_id=255 and fm='2020-11-01';
+update pr_emp_perearning set amount=	1200	where emp_code=	984	and m_id=255 and fm='2020-11-01';
+update pr_emp_perearning set amount=	3600	where emp_code=	986	and m_id=255 and fm='2020-11-01';
+update pr_emp_perearning set amount=	1200	where emp_code=	989	and m_id=255 and fm='2020-11-01';
+update pr_emp_perearning set amount=	2257	where emp_code=	994	and m_id=255 and fm='2020-11-01';
+update pr_emp_perearning set amount=	12634	where emp_code=	5884	and m_id=255 and fm='2020-11-01';
+update pr_emp_perearning set amount=	10071	where emp_code=	5908	and m_id=255 and fm='2020-11-01';
+update pr_emp_perearning set amount=	3600	where emp_code=	6323	and m_id=255 and fm='2020-11-01';
+update pr_emp_perearning set amount=	0	where emp_code=	6341	and m_id=255 and fm='2020-11-01';
+update pr_emp_perearning set amount=	5275	where emp_code=	6384	and m_id=255 and fm='2020-11-01';
+update pr_emp_perearning set amount=	1237	where emp_code=	6386	and m_id=255 and fm='2020-11-01';
+update pr_emp_perearning set amount=	1971	where emp_code=	6420	and m_id=255 and fm='2020-11-01';
+update pr_emp_perearning set amount=	3600	where emp_code=	6425	and m_id=255 and fm='2020-11-01';
+update pr_emp_perearning set amount=	7398	where emp_code=	6437	and m_id=255 and fm='2020-11-01';
+update pr_emp_perearning set amount=	1380	where emp_code=	6444	and m_id=255 and fm='2020-11-01';
+update pr_emp_perearning set amount=	789	where emp_code=	6453	and m_id=255 and fm='2020-11-01';
+update pr_emp_perearning set amount=	8400	where emp_code=	6454	and m_id=255 and fm='2020-11-01';
+
+
+
+insert into pr_month_attendance (id,fy,fm,emp_id,emp_code,status,status_date,leaves_available,lop_days
+,absent_days,working_days,active,trans_id,sus_per)values(2511,2021,'2020-11-01',1266,6464,'Regular',null,
+'No Leave Balance',0,0,30,1,39584,null);
+
+insert into pr_month_attendance (id,fy,fm,emp_id,emp_code,status,status_date,leaves_available,lop_days
+,absent_days,working_days,active,trans_id,sus_per)values(2512,2021,'2020-11-01',1267,6466,'Regular',null,
+'No Leave Balance',0,0,30,1,39584,null);

@@ -1,0 +1,35 @@
+
+update pr_emp_adv_loans set active=0  where emp_code=	292	and loan_type_mid=	5	;
+update pr_emp_adv_loans set active=0  where emp_code=	364	and loan_type_mid=	6	;
+update pr_emp_adv_loans set active=0  where emp_code=	364	and loan_type_mid=	10	;
+update pr_emp_adv_loans set active=0  where emp_code=	386	and loan_type_mid=	10	;
+update pr_emp_adv_loans set active=0  where emp_code=	402	and loan_type_mid=	5	;
+update pr_emp_adv_loans set active=0  where emp_code=	445	and loan_type_mid=	10	;
+update pr_emp_adv_loans set active=0  where emp_code=	5749	and loan_type_mid=	6	;
+update pr_emp_adv_loans set active=0  where emp_code=	681	and loan_type_mid=	6	;
+update pr_emp_adv_loans set active=0  where emp_code=	361	and loan_type_mid=	5	;
+update pr_emp_adv_loans set active=0  where emp_code=	374	and loan_type_mid=	10	;
+update pr_emp_adv_loans set active=1  where emp_code=	374	and loan_type_mid=	5	;
+
+update pr_emp_adv_loans_child set active=0  where  emp_adv_loans_mid in (	select id from pr_emp_adv_loans where emp_code=	292	and loan_type_mid=	5	);
+update pr_emp_adv_loans_child set active=0  where  emp_adv_loans_mid in (	select id from pr_emp_adv_loans where emp_code=	364	and loan_type_mid=	6	);
+update pr_emp_adv_loans_child set active=0  where  emp_adv_loans_mid in (	select id from pr_emp_adv_loans where emp_code=	364	and loan_type_mid=	10	);
+update pr_emp_adv_loans_child set active=0  where  emp_adv_loans_mid in (	select id from pr_emp_adv_loans where emp_code=	386	and loan_type_mid=	10	);
+update pr_emp_adv_loans_child set active=0  where  emp_adv_loans_mid in (	select id from pr_emp_adv_loans where emp_code=	402	and loan_type_mid=	5	);
+update pr_emp_adv_loans_child set active=0  where  emp_adv_loans_mid in (	select id from pr_emp_adv_loans where emp_code=	445	and loan_type_mid=	10	);
+update pr_emp_adv_loans_child set active=0  where  emp_adv_loans_mid in (	select id from pr_emp_adv_loans where emp_code=	5749	and loan_type_mid=	6	);
+update pr_emp_adv_loans_child set active=0  where  emp_adv_loans_mid in (	select id from pr_emp_adv_loans where emp_code=	681	and loan_type_mid=	6	);
+update pr_emp_adv_loans_child set active=0  where  emp_adv_loans_mid in (	select id from pr_emp_adv_loans where emp_code=	361	and loan_type_mid=	5	);
+update pr_emp_adv_loans_child set active=0  where  emp_adv_loans_mid in (	select id from pr_emp_adv_loans where emp_code=	374	and loan_type_mid=	10	);
+
+update pr_emp_adv_loans_adjustments set active=0  where  emp_adv_loans_mid in (	select id from pr_emp_adv_loans where emp_code=	292	and loan_type_mid=	5	) and fm='2020-12-01';
+update pr_emp_adv_loans_adjustments set active=0  where  emp_adv_loans_mid in (	select id from pr_emp_adv_loans where emp_code=	364	and loan_type_mid=	6	) and fm='2020-12-01';
+update pr_emp_adv_loans_adjustments set active=0  where  emp_adv_loans_mid in (	select id from pr_emp_adv_loans where emp_code=	364	and loan_type_mid=	10	) and fm='2020-12-01';
+update pr_emp_adv_loans_adjustments set active=0  where  emp_adv_loans_mid in (	select id from pr_emp_adv_loans where emp_code=	386	and loan_type_mid=	10	) and fm='2020-12-01';
+update pr_emp_adv_loans_adjustments set active=0  where  emp_adv_loans_mid in (	select id from pr_emp_adv_loans where emp_code=	402	and loan_type_mid=	5	) and fm='2020-12-01';
+update pr_emp_adv_loans_adjustments set active=0  where  emp_adv_loans_mid in (	select id from pr_emp_adv_loans where emp_code=	445	and loan_type_mid=	10	) and fm='2020-12-01';
+update pr_emp_adv_loans_adjustments set active=0  where  emp_adv_loans_mid in (	select id from pr_emp_adv_loans where emp_code=	5749	and loan_type_mid=	6	) and fm='2020-12-01';
+update pr_emp_adv_loans_adjustments set active=0  where  emp_adv_loans_mid in (	select id from pr_emp_adv_loans where emp_code=	681	and loan_type_mid=	6	) and fm='2020-12-01';
+update pr_emp_adv_loans_adjustments set active=0  where  emp_adv_loans_mid in (	select id from pr_emp_adv_loans where emp_code=	361	and loan_type_mid=	5	) and fm='2020-12-01';
+update pr_emp_adv_loans_adjustments set active=0  where  emp_adv_loans_mid in (	select id from pr_emp_adv_loans where emp_code=	374	and loan_type_mid=	10	) and fm='2020-12-01';
+

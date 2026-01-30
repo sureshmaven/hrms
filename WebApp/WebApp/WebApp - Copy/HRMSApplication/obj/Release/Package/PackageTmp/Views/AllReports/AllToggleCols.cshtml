@@ -1,0 +1,437 @@
+﻿@{
+    Layout = "~/Views/Shared/_ReportsLayout.cshtml";
+    var rolepages = TempData["RolePages"].ToString();
+    ViewBag.RolePages = TempData["RolePages"];
+    var reportTitle = ViewBag.ReportTitle;
+    var ReportPdfSize = ViewBag.PdfSize;
+    var ReportpageSize = ViewBag.pageSize;
+    var PdfExportColumns = ViewBag.ExportColumns;
+    var dataUrl = ViewBag.DataUrl;
+    var reportFilters = ViewBag.ReportFilters;
+    var searchBtn = ViewBag.SearchBtn;
+}
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade in active">
+                    <div class="page_st">
+                        <div class="page">
+                            <div class="col-md-12 col-sm-12 ">
+                                <div class="main_heading">
+                                    <h1>Report List </h1>
+                                    <div>
+                                        @{Html.RenderPartial("_PartialViewForMenu");}
+                                    </div>
+                                </div>
+                                <div class="main_heading">
+                                    <h1>@reportTitle</h1>
+                                    <br />
+                                    <div class="col-md-12">
+                                        @if (ViewBag.ToggleCols)
+                                        {
+                                            <div class="toggle-cols-div">
+                                                <b style="color: #1489b5;">Toggle column:</b>
+                                                <div class="clearfix"></div>
+                                                @foreach (var itm in ViewBag.ToggleColsList)
+                                                {
+                                                    <span class="toggle-border">
+                                                        <input style="margin-left: 5px;" checked="checked"
+                                                               id="toggle-col-@itm.Id"
+                                                               type="checkbox"
+                                                               class="toggle-chk"
+                                                               data-column="@itm.Id"
+                                                               value="true" />
+                                                        <a for="oggle-col-@itm.Id" class="toggle-vis" data-column="@itm.Id">@itm.Name</a>
+                                                    </span>
+                                                }
+                                            </div>
+                                        }
+                                        <br />
+                                        <div class="clearfix"></div>
+                                        <div class="table-responsive staff_mas_gird">
+                                            <table id="grid" class="display reports-grids" style="width:100%"></table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .toggle-cols-div {
+        margin: 15px 0;
+    }
+
+    .toggle-vis {
+        padding: 2px 5px;
+        color: black;
+    }
+    .toggle-border{    border: 1px solid #5ba4c8;
+    margin: 0 0 0 10px;}
+    .toggle-border a:hover{ color:#000; cursor:pointer;}
+</style>
+<script type="text/javascript">
+
+        var reportMsgTop = '';
+        var showcolumns = [];
+        var pageOrientation = 'portrait';
+
+    var fnMessageTop = function () {
+        return (reportMsgTop == '' ? '' : 'Filters : ' + reportMsgTop);
+    };
+
+    $(document).ready(function () {
+        $.noConflict();
+        var groupColumn = 0;
+        var serviceurl = '@dataUrl';
+        serviceurl = serviceurl.split('&amp;').join('&');
+
+        var table = $('#grid').DataTable({
+            "scrollX":  true,
+            "scrollCollapse": true,
+            "ajax": {
+                "url": serviceurl,
+                "type": "GET",
+                "datatype": "json",
+                "dataSrc": ""
+            },
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'excelHtml5',
+                    text: '<i class="fa fa-file-excel-o dt-export-icon-excel"></i>',
+                    titleAttr: 'Excel',
+                    title: 'TSCAB - @reportTitle',
+                    messageTop: fnMessageTop,
+                    className: 'dt-export-btn',
+                    color:'red'
+                },
+                {
+                    extend: 'pdfHtml5',
+                    text: '<i class="fa fa-file-pdf-o dt-export-icon-pdf"></i>',
+                    className: 'dt-export-btn',
+                    titleAttr: 'Pdf',
+                    pageSize: '@ReportpageSize',
+                    exportOptions: showcolumns,
+                    title: 'TSCAB - @reportTitle',
+                    messageTop: fnMessageTop,
+                    customize: function (doc) {
+                         
+                        doc.styles.tableHeader.alignment = 'left';
+                        doc.content.splice(1, 0, {
+                            margin: [0, -50, 0, 10],
+                            alignment: 'left',
+                            image: 'data:image/jpeg;base64,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'
+                        });
+
+                        doc.content[0].text = doc.content[0].text.trim();
+                        doc.styles.title = {
+                            fontSize: '20',
+                            alignment: 'center'
+                        };
+                        doc.styles.message = {
+                            fontSize: '9',
+                            alignment: 'center'
+                        };
+
+                        if (showcolumns.length == 0) { //show all cols
+                            showcolumns = table.columns(':visible')[0];
+                        }
+                        var bod = [];
+                        var docIdx = reportMsgTop != '' ? 3 : 2;
+
+                        doc.content[docIdx].table.body.forEach(function (line, i) {
+                            if (i < doc.content[docIdx].table.body.length) {
+                                var bodrow = [];
+                                if (i == 0) { //header
+                                    for (var j = 0; j < showcolumns.length; j++) {
+                                        bodrow.push({ text: line[showcolumns[j]].text, style: 'tableHeader' });
+                                    }
+                                } else { //rows
+                                    for (var j = 0; j < showcolumns.length; j++) {
+                                        bodrow.push({ text: line[showcolumns[j]].text, style: 'defaultStyle' });
+                                    }
+                                }
+                                bod.push(bodrow);
+                            }
+                        });
+
+                        doc.pageOrientation = pageOrientation;
+                        doc.content[docIdx].table.body = bod;
+                        doc.content[docIdx].layout = 'lightHorizontalLines';
+
+                        doc['footer'] = (function (page, pages) {
+                            return {
+                                columns: [
+                                    'By: @ViewBag.LoginUserName , @ViewBag.LoginBranchName .',
+                                    {
+                                        alignment: 'right',
+                                        text: [
+                                            new Date().toLocaleDateString("en-IN", { day: "2-digit", month: "2-digit", year: "numeric", hour: '2-digit', minute: '2-digit' }),
+                                            '    Page ', { text: page.toString() }, ' of ', { text: pages.toString() }
+                                        ]
+                                    }
+                                ],
+                                fontSize: '9',
+                                margin: [40, 10]
+                            }
+                        });
+                    }
+                },
+                {
+                    text: 'PDF-Portrait',
+                    titleAttr: 'PDF page orientation',
+                    action: function (e, dt, node, config) {
+                        if (node[0].innerText == 'PDF-Portrait') {
+                            node[0].innerText = 'PDF-Landscape';
+                            pageOrientation = 'Landscape';
+                        } else {
+                            node[0].innerText = 'PDF-Portrait';
+                            pageOrientation = 'Portrait';
+                        }
+                    }
+                }
+            ],
+            "columns": @Html.Raw(ViewBag.ReportColumns)
+        });
+
+        $('a.toggle-vis').on('click', function (e) {
+            e.preventDefault();
+            var colIdx = $(this).attr('data-column');
+            var column = table.column(colIdx);
+            // Toggle the visibility
+            column.visible(!column.visible());
+            showcolumns = table.columns(':visible')[0];
+            //toggle checkbox
+            var chkbox = $('#toggle-col-' + colIdx);
+            if (chkbox.is(':checked')) {
+                chkbox.prop("checked", false);
+            } else {
+                chkbox.prop("checked", true);
+            }
+        });
+        $('.toggle-chk').on('click', function (e) {            
+            var colIdx = $(this).attr('data-column');
+            var column = table.column(colIdx);
+            column.visible(!column.visible());
+            showcolumns = table.columns(':visible')[0];
+        });
+
+    });
+
+    $("#searchbtnWD").click(function () {
+        //if ($("#txtNumbers").val() !== '' && $("#dateFrom").val() !== '') {
+        var mainUrl = '@dataUrl';
+
+        // TODO - need dynamic way to get values and url
+        var empid = $("#txtNumbers").val();
+        var Wddatefrom = $("#dateFrom").val();
+        var fromDate = $("#fromDate").val();
+        var toDate = $("#toDate").val();
+        var lstatus = $("#Status").val();
+
+        reportMsgTop = '';
+        if (empid != '') {
+            reportMsgTop = 'Emp Id: ' + empid;
+        }
+
+        if (fromDate != '' && toDate == '') {
+            alert('Please select To Date');
+            return;
+        } else if (fromDate == '' && toDate != '') {
+            alert('Please select From Date');
+            return;
+        } else if (fromDate != '' && toDate != '') {
+            reportMsgTop += ', Dates: ' + fromDate + ' - ' + toDate;
+        }
+
+        if (lstatus != '') {
+            reportMsgTop += ', Status: ' + lstatus;
+        }
+
+        var ajaxurl = '/AllReports/WorkDairySearchData?empid=' + empid + '&WdDate=' + Wddatefrom + '&FromDate=' + fromDate + '&ToDate=' + toDate + '&status=' + lstatus;
+        $('#grid').DataTable().ajax.url(ajaxurl).load();
+    });
+
+    document.getElementById("a6").className = "active";
+
+    $(function getholidays() {
+        var active_dates = [];
+        $.ajax({
+            type: "GET",
+            async: false,
+            url: "/LeaveApply/GetDates",
+            dataType: "Json",
+            success: function (data) {
+                datesArray = data;
+                for (i = 0; i < datesArray.length; i++) {
+                    var result = datesArray[i].replace("-", "/");
+                    var result1 = result.replace("-", "/");
+                    var strArray = result1.split("/");
+                    var cdate = strArray[0] + "/" + parseInt(strArray[1]) + "/" + strArray[2]
+                    active_dates.push(cdate);
+
+                    if (i == datesArray.length - 1) {
+                        //loadcal(active_dates);
+                    }
+                }
+
+            }
+        });
+        $('.input-group.date').datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            beforeShowDay: function nonWorkingDays(date) {
+                var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
+                var week = 0 | date.getDate() / 7 //get the week
+                var dd = date.getDate();
+                var month = date.getMonth();
+                if (dd < 10) {
+                    dd = '0' + dd
+                }
+
+                if (month < 10) {
+                    month = '0' + month
+                }
+                var sunweek = date.getDay();
+                var year = date.getFullYear();
+
+                if (dd == 14 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                if (dd == 28 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                //check if it's second week or fourth week
+                else if (week == 1 || week == 3) {
+                    if (dd == 7 && day == 6 || dd == 21 && day == 6) {
+                        //check for satruday
+
+                    }
+                    else {
+                        if (day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                    }
+
+                }
+                //check for sunday
+                if (day == 0) {
+                    return {
+                        classes: 'secondClass'
+                    };
+
+                }
+                //check for holidays
+                var d = date;
+                var curr_date = d.getDate();
+                var curr_month = d.getMonth() + 1; //Months are zero based
+                if (curr_date < 10) {
+                    curr_date = '0' + curr_date
+                }
+                var curr_year = d.getFullYear();
+                var formattedDate = curr_date + "/" + curr_month + "/" + curr_year
+
+                if ($.inArray(formattedDate, active_dates) != -1) {
+                    return {
+                        classes: 'activeClass'
+                    };
+                }
+                return [true];
+            }
+        });
+    });
+    //Start And End Date Validation
+    function Dateevent1() {
+
+        var Joindate = document.getElementById("fromDate").value;
+        var Retdate = document.getElementById("toDate").value;
+        var date = moment(Joindate, "DD.MM.YYYY");
+
+        var currentDate1 = moment(Retdate, "DD.MM.YYYY");
+        var duration = moment.duration(date.diff(currentDate1));
+
+
+        if (duration > 0) {
+
+
+            alert("Please ensure that To Date is greater than or equal to From Date.");
+            document.getElementById("toDate").focus();
+            document.getElementById("toDate").value = '';
+            return false;
+
+        }
+
+        else {
+            if (Joindate != '' && Retdate != '') {
+               // datescheck();
+            }
+            return true;
+
+        }
+    }
+
+    function Dateevent3() {
+
+
+        var StartDate = document.getElementById('fromDate').value;
+        var EndDate = document.getElementById('toDate').value;
+        var eDate = moment(EndDate, "DD.MM.YYYY");
+        var sDate = moment(StartDate, "DD.MM.YYYY");
+
+        if (StartDate != '' && EndDate != '' && sDate > eDate) {
+            alert("Please ensure that To Date is greater than or equal to From Date.");
+            document.getElementById('fromDate').value = '';
+            document.getElementById("fromDate").focus();
+            return false;
+
+        }
+
+        else {
+            if (StartDate != '' && EndDate != '') {
+               // datescheck();
+            }
+            else if (EndDate != '' && StartDate != '') {
+               // Combinationdatescheck2();
+            }
+           // eventvalidates();
+
+            return true;
+        }
+    }
+    function datevalidate()
+    {
+        var StartDate = document.getElementById('fromDate').value;
+        var EndDate = document.getElementById('toDate').value;
+
+        if (StartDate != "" && EndDate=="") {
+            window.alert("Please Select To Date");
+            $("#fromDate").focus();
+         //   $("#fromDate").val('');
+            return false;
+        }
+        if (StartDate == "" && EndDate!="") {
+            window.alert("Please Select From Date");
+            $("#toDate").focus();
+           // $("#toDate").val('');
+            return false;
+        }
+        else{
+            return true;
+        }
+
+    }
+</script>

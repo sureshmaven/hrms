@@ -1,0 +1,306 @@
+﻿@{
+    ViewBag.Title = "RentDetails";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+
+}
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="leftmenu-container">
+            <div class="sidebar-menu">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="sidebar-content">
+                <div class="main_heading heading_main">
+                    <h1>Rent Details<span class="year-end">@ViewBag.Env_Fm_Fy</span></h1>
+                    @{ Html.RenderPartial("_pvEmployeeSearch");}
+                    <input type="hidden" id="hdnEmpCode" />
+                    <div class="col-md-12 mt_10">
+                        <div class="table-responsive">
+                            <table id="gridRD" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th style="width:20%;">Description</th>
+                                        <th>Amount(<i class="fa fa-rupee"></i>)</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mt_10">
+                        <div class="pull-right">
+                            <button type="reset" id="btnCancel" class="btn btn-default cancel" title="Clear the data">Cancel</button>
+                            <button type="submit" id="btnSubmit" onclick="showGlobalModal(msg);" class="btn btn-primary" title="Submit details">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			</div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#btnSubmit').attr('disabled', true);
+        $('#gridRD').DataTable({
+            "paging": false,
+            "sort": false,
+            "searching": false,
+            "language": {
+                "emptyTable": "No data available. Please enter employee code and search"
+            }
+        });
+    });
+    var orgErlist;
+    function getDataAfterEmpSearch1440(empcode) {
+        // 
+        $("#btnSubmit").attr("disabled", false);
+        $('#hdnEmpCode').val(empcode);
+        CommonApiGET('/Payroll/Masters/GetHouseRentDetails?EmpId=' + empcode, function (respData) {
+            fillDataRentDetails(respData);
+
+        });
+    }
+
+    function fillDataRentDetails(respData) {
+
+        $('#btnSubmit').attr('disabled', false);
+        debugger;
+        var rd = [];
+        var dataObj = JSON.parse(respData);
+        rd.push(dataObj.RDDetails);
+        //// 
+        var rdData = rd[0];
+        orgErlist = rdData;
+        //// 
+        $('#gridRD').DataTable({
+            "destroy": true,
+            "paging": false,
+            "sort": false,
+            "searching": false,
+            data: rdData,
+
+            "columns": [
+                { "data": "name" },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data) {
+                        if (data.name == "Section 89 Amount") {
+                            return '<input type="number" class = "form-control" name="' + data.Id + '" value="' + data.Value + '" onkeydown = "javascript: return event.keyCode == 69 || event.keyCode == 189? false : true" onkeypress="if(this.value.length==20) return false "javascript:return isNumber(event)" required/>';
+                        }
+
+                        else if (data.name == "House Rent Paid Jan (01)") {
+                            return '<input type="number" id="houserent1" class = "form-control" name="' + data.Id + '" value="' + data.Value + '" onkeydown = "javascript: return event.keyCode == 69 || event.keyCode == 189? false : true" onkeypress="if(this.value.length==20) return false "javascript:return isNumber(event)" onchange="fillallfields1()" required/>';
+                        }
+                       
+                        else if (data.name == "House Rent Paid Feb (02)") {
+                            return '<input type="number" id="houserent2" class = "form-control" name="' + data.Id + '" value="' + data.Value + '" onkeydown = "javascript: return event.keyCode == 69 || event.keyCode == 189? false : true" onkeypress="if(this.value.length==20) return false "javascript:return isNumber(event)" onchange="fillallfields2()" required/>';
+                        }
+                        
+                        else if (data.name == "House Rent Paid Mar (03)") {
+                            return '<input type="number" id="houserent3" class = "form-control" name="' + data.Id + '" value="' + data.Value + '" onkeydown = "javascript: return event.keyCode == 69 || event.keyCode == 189? false : true" onkeypress= "if(this.value.length==20) return false "javascript:return isNumber(event)" onchange="fillallfields3()" required/>';
+                        }
+                         
+                        else if (data.name == "House Rent Paid Apr (04)" ) {
+                            return '<input type="number" id="houserent4" class = "form-control" name="' + data.Id + '" value="' + data.Value + '" onkeydown = "javascript: return event.keyCode == 69 || event.keyCode == 189? false : true" onkeypress="if(this.value.length==20) return false "javascript:return isNumber(event)" onchange="fillallfields4()" required/>';
+                        }
+                         
+                        else if (data.name == "House Rent Paid May (05)") {
+                            return '<input type="number" id="houserent5" class = "form-control" name="' + data.Id + '" value="' + data.Value + '" onkeydown = "javascript: return event.keyCode == 69 || event.keyCode == 189? false : true" onkeypress="if(this.value.length==20) return false "javascript:return isNumber(event)" onchange="fillallfields5()" required/>';
+                        }
+                         
+                        else if (data.name == "House Rent Paid Jun (06)") {
+                            return '<input type="number" id="houserent6" class = "form-control" name="' + data.Id + '" value="' + data.Value + '" onkeydown = "javascript: return event.keyCode == 69 || event.keyCode == 189? false : true" onkeypress="if(this.value.length==20) return false "javascript:return isNumber(event)" onchange="fillallfields6()" required/>';
+                        }
+                         
+                        else if (data.name == "House Rent Paid Jul (07)") {
+                            return '<input type="number" id="houserent7" class = "form-control" name="' + data.Id + '" value="' + data.Value + '" onkeydown = "javascript: return event.keyCode == 69 || event.keyCode == 189? false : true" onkeypress="if(this.value.length==20) return false "javascript:return isNumber(event)" onchange="fillallfields7()" required/>';
+                        }
+                       
+                        else if (data.name == "House Rent Paid Aug (08)") {
+                            return '<input type="number" id="houserent8" class = "form-control" name="' + data.Id + '" value="' + data.Value + '" onkeydown = "javascript: return event.keyCode == 69 || event.keyCode == 189? false : true" onkeypress="if(this.value.length==20) return false "javascript:return isNumber(event)" onchange="fillallfields8()" required/>';
+                        }
+                         
+                        else if (data.name == "House Rent Paid Sep (09)") {
+                            return '<input type="number" id="houserent9" class = "form-control" name="' + data.Id + '" value="' + data.Value + '" onkeydown = "javascript: return event.keyCode == 69 || event.keyCode == 189? false : true" onkeypress="if(this.value.length==20) return false "javascript:return isNumber(event)" onchange="fillallfields9()" required/>';
+                        }
+                         
+                        else if (data.name == "House Rent Paid Oct (10)") {
+                            return '<input type="number" id="houserent10" class = "form-control" name="' + data.Id + '" value="' + data.Value + '" onkeydown = "javascript: return event.keyCode == 69 || event.keyCode == 189? false : true" onkeypress="if(this.value.length==20) return false "javascript:return isNumber(event)" onchange="fillallfields10()" required/>';
+                        }
+                        
+                        else if (data.name == "House Rent Paid Nov (11)") {
+                            return '<input type="number" id="houserent11" class = "form-control" name="' + data.Id + '" value="' + data.Value + '" onkeydown = "javascript: return event.keyCode == 69 || event.keyCode == 189? false : true" onkeypress="if(this.value.length==20) return false "javascript:return isNumber(event)" onchange="fillallfields11()" required/>';
+                        }
+                         
+                        else if (data.name == "House Rent Paid Dec (12)") {
+                            return '<input type="number" id="houserent12" class = "form-control" name="' + data.Id + '" value="' + data.Value + '" onkeydown = "javascript: return event.keyCode == 69 || event.keyCode == 189? false : true" onkeypress="if(this.value.length==20) return false "javascript:return isNumber(event)" onchange="fillallfields12()" required/>';
+                        }
+                         
+                        
+                    }
+                }
+            ],
+            "order": [[0, 'asc']]
+        });
+    }
+
+    $('#btnSubmit').click(function () {
+        // 
+        if ($("#hdnEmpCode").val() == "")
+            alert("Employee Id cannot be empty");
+        else {
+            var updErList = $('#gridRD').DataTable().$('input, select').serialize();
+            var ModifiedErList = getModifiedDataFromJDT(updErList, orgErlist);
+            var dataToSend = JSON.stringify({
+                'EntityId': $("#hdnEmpCode").val(),
+                'StringData': ModifiedErList,
+            });
+            CommonApiPOST('/Payroll/Masters/SaveHouseRentDetailsValues', dataToSend, function (isSuccess) {
+                if (isSuccess) {
+                    //window.location.reload();
+
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+        }
+        return false;
+    });
+
+    $("#btnCancel").click(function () {
+        var empid = $("#hdnEmpCode").val();
+        if (empid == "") {
+            window.location.reload();
+        }
+        else {
+            getDataAfterEmpSearch1440(empid);
+        }
+    });
+
+   
+
+    function fillallfields1() {
+        var rent = $('#houserent1').val();
+        $('#houserent2').val(rent);
+        $('#houserent3').val(rent);
+
+    }
+
+    function fillallfields2() {
+        var rent = $('#houserent2').val();
+        $('#houserent3').val(rent);
+    }
+
+    function fillallfields3() {
+        var rent = $('#houserent3').val();
+        
+    }
+
+    function fillallfields4() {
+        var rent = $('#houserent4').val();
+        $('#houserent5').val(rent);
+        $('#houserent6').val(rent);
+        $('#houserent7').val(rent);
+        $('#houserent8').val(rent);
+        $('#houserent9').val(rent);
+        $('#houserent10').val(rent);
+        $('#houserent11').val(rent);
+        $('#houserent12').val(rent);
+        $('#houserent1').val(rent);
+        $('#houserent2').val(rent);
+        $('#houserent3').val(rent);
+    }
+
+    function fillallfields5() {
+        var rent = $('#houserent5').val();
+        $('#houserent6').val(rent);
+        $('#houserent7').val(rent);
+        $('#houserent8').val(rent);
+        $('#houserent9').val(rent);
+        $('#houserent10').val(rent);
+        $('#houserent11').val(rent);
+        $('#houserent12').val(rent);
+        $('#houserent1').val(rent);
+        $('#houserent2').val(rent);
+        $('#houserent3').val(rent);
+    }
+
+
+    function fillallfields6() {
+        var rent = $('#houserent6').val();
+        $('#houserent7').val(rent);
+        $('#houserent8').val(rent);
+        $('#houserent9').val(rent);
+        $('#houserent10').val(rent);
+        $('#houserent11').val(rent);
+        $('#houserent12').val(rent);
+        $('#houserent1').val(rent);
+        $('#houserent2').val(rent);
+        $('#houserent3').val(rent);
+    }
+
+
+    function fillallfields7() {
+        var rent = $('#houserent7').val();
+        $('#houserent8').val(rent);
+        $('#houserent9').val(rent);
+        $('#houserent10').val(rent);
+        $('#houserent11').val(rent);
+        $('#houserent12').val(rent);
+        $('#houserent1').val(rent);
+        $('#houserent2').val(rent);
+        $('#houserent3').val(rent);
+    }
+
+
+    function fillallfields8() {
+        var rent = $('#houserent8').val();
+        $('#houserent9').val(rent);
+        $('#houserent10').val(rent);
+        $('#houserent11').val(rent);
+        $('#houserent12').val(rent);
+        $('#houserent1').val(rent);
+        $('#houserent2').val(rent);
+        $('#houserent3').val(rent);
+    }
+
+    function fillallfields9() {
+        var rent = $('#houserent9').val();
+        $('#houserent10').val(rent);
+        $('#houserent11').val(rent);
+        $('#houserent12').val(rent);
+        $('#houserent1').val(rent);
+        $('#houserent2').val(rent);
+        $('#houserent3').val(rent);
+    }
+
+
+    function fillallfields10() {
+        var rent = $('#houserent10').val();
+        $('#houserent11').val(rent);
+        $('#houserent12').val(rent);
+        $('#houserent1').val(rent);
+        $('#houserent2').val(rent);
+        $('#houserent3').val(rent);
+    }
+
+
+    function fillallfields11() {
+        var rent = $('#houserent11').val();
+        $('#houserent12').val(rent);
+        $('#houserent1').val(rent);
+        $('#houserent2').val(rent);
+        $('#houserent3').val(rent);
+    }
+
+    function fillallfields12() {
+        var rent = $('#houserent12').val();
+        $('#houserent1').val(rent);
+        $('#houserent2').val(rent);
+        $('#houserent3').val(rent);
+    }
+
+
+</script>
+

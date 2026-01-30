@@ -1,0 +1,295 @@
+﻿@model Entities.OD_Master
+@{
+    var rolepages = TempData["RolePages"].ToString();
+    ViewBag.RolePages = TempData["RolePages"];
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    <div class="container">
+        <div class="panel with-nav-tabs panel-primary">
+            <div class="panel-heading">
+                @{
+                    <ul class="nav nav-tabs">
+                        @if (rolepages.Contains("MABAN"))
+                        {
+                            <li><a href="@Url.Action("Create", "Banks")" data-toggle="tab" id="1">Bank</a></li>}
+                        @if (rolepages.Contains("MABRA"))
+                        {
+                            <li><a href=@Url.Action("Create", "Branches")>Branch</a></li>}
+
+                        @if (rolepages.Contains("MADEP"))
+                        {
+                            <li><a href=@Url.Action("Create", "Departments")>Department</a></li>}
+                        @if (rolepages.Contains("MADES"))
+                        {
+                            <li><a href=@Url.Action("Create", "Designations")>Designation</a></li>}
+                        @if (rolepages.Contains("MAROL"))
+                        {
+                            <li><a href=@Url.Action("Create", "Roles")>Role</a></li>}
+                        @if (rolepages.Contains("MALTY"))
+                        {
+                            <li><a href=@Url.Action("Create", "LeaveTypes")>LeaveType</a></li>}
+                        @if (rolepages.Contains("MAHLI"))
+                        {
+                            <li><a href=@Url.Action("Create", "HolidayLists")>HolidayList</a></li>}
+                        @if (rolepages.Contains("MACDL"))
+                        {
+                            <li><a href=@Url.Action("CreditDebitleaves", "MyLeaves")>Credit / Debit leaves</a></li>}
+                        @if (rolepages.Contains("MABCY"))
+                        {
+                            <li><a href=@Url.Action("Createbranchcount", "Branches")>Branch Category</a></li>}
+                        @if (rolepages.Contains("MAODY"))
+                        {
+                            <li class="active"><a href=@Url.Action("OtherdutyCreate", "LeaveTypes")>Other Duty</a></li>}
+                        @if (rolepages.Contains("MABPD"))
+                        {
+                            <li><a href=@Url.Action("Create", "BlockPeriod")>BlockPeriod</a></li>}
+                        @if (rolepages.Contains("MANES"))
+                        {
+                            <li><a href=@Url.Action("Create", "News")>News</a></li>}
+                    </ul>
+                }
+            </div>
+            <div class="panel-body">
+                <div class="tab-content">
+                    <div class="tab-pane fade in active" id="branch">
+                        <div class="page_st">
+                            <div class="page">
+                                <div class="col-md-12 col-sm-12">
+                                                           
+                                        <div>
+                                            @using (Html.BeginForm("OtherdutyCreates", "LeaveTypes", FormMethod.Post))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                <div class="main_heading">
+                                                    <h1>OD Type</h1>
+                                                    <div class="col-md-7 col-sm-12 col-md-offset-3 form-horizontal">
+                                                        <div class="col-md-8 col-sm-12 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-3 control-label">OD Type:<span class="mandatory">*</span></label>
+                                                                <div class="col-sm-9">
+                                                                    @Html.EditorFor(model => model.ODType, new { htmlAttributes = new { @class = "form-control", onBlur = "odtype()", onkeypress = "return onlyAlphabets(event)" } })
+                                                                    @Html.ValidationMessageFor(model => model.ODType, "", new { @class = "text-danger" })
+
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="col-md-4">
+
+                                                            <div class="form-group">
+
+                                                                <input type="reset" value="Cancel" class="btn btn-default" />
+                                                                <input type="submit" value="Create" onclick="return ODMasters();" class="btn btn-primary" />
+
+                                                            </div>
+                                                        </div>
+
+
+
+
+                                                    </div>
+                                                </div>
+                                                <div class="main_heading">
+                                                    <h1>OD Type List</h1>
+                                                    <div class="col-md-7 col-md-offset-3">
+                                                        <div class="table-responsive m_20">
+                                                            <div id="grid"></div>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                    }
+                                                </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+@{
+    var message = TempData["AlertMessage"] ?? string.Empty;
+}   
+<script type="text/javascript">
+ var message = '@message';
+
+if(message) alert(message);
+
+</script>
+
+
+    <script type="text/javascript">
+    $(document).ready(function () {
+        // prepare the data for BankView
+        var theme = otherTheme;
+        // prepare the data
+        var url = "../LeaveTypes/ODView";
+        var source =
+            {
+                type: "Get",
+                datatype: "json",
+                datafields: [
+                    { name: 'Id', type: 'int' },
+                    { name: 'ODType', type: 'string' },
+                ],
+                async: false,
+                url: url,
+                data: {
+                    featureClass: "P",
+                    style: "full",
+                    username: "jqwidgets"
+                }
+            };
+        var dataAdapter = new $.jqx.dataAdapter(source,
+            {
+                formatData: function (data) {
+                    data.ProductName = $("#searchField").val();
+                    return data;
+                }
+            }
+        );
+        // initialize jqxGrid
+        var editrowindex = -1;
+        var delrowindex = -1;
+        $("#grid").jqxGrid(
+            {
+                width: '96%',
+                source: dataAdapter,
+                theme: otherTheme,// for theme refernce go to Layout.cshtml
+                autoheight: true,
+                sortable: true,
+                pageable: true,
+                columnsResize: true,
+                altRows: true,
+                filterable: true,
+                autoshowfiltericon: true,
+
+                ready: function () {
+                    $("#grid").jqxGrid('localizestrings', localizationObject);
+                },
+                updatefilterconditions: function (type, defaultconditions) {
+                    switch (type) {
+                        case 'stringfilter':
+                            return stringcomparisonoperators;
+                        case 'numericfilter':
+                            return numericcomparisonoperators;
+                        case 'datefilter':
+                            return datecomparisonoperators;
+                        case 'booleanfilter':
+                            return booleancomparisonoperators;
+                    }
+                },
+                updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                    filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                    var index1 = 0;
+                    var index2 = 0;
+                    if (columnfilter != null) {
+                        var filter1 = columnfilter.getfilterat(0);
+                        var filter2 = columnfilter.getfilterat(1);
+                        if (filter1) {
+                            index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                            var value1 = filter1.filtervalue;
+                            filterinputfield1.val(value1);
+                        }
+                        if (filter2) {
+                            index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                            var value2 = filter2.filtervalue;
+                            filterinputfield2.val(value2);
+                        }
+                    }
+                    filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                    filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                },
+                columns: [
+                  //  { text: "ID", datafield: "Id", editable: false, width: 130, align: 'center' },
+                     {
+                         text: 'ID', sortable: false, filterable: false, editable: false, align: 'center',
+                         groupable: false, draggable: false, exportable: false, resizable: false,
+                         datafield: 'Id', columntype: 'number', width: 130,
+                         cellsrenderer: function (row, column, value) {
+                             return "<div style='margin:4px; text-align:center;'>" + (value + 1) + "</div>";
+                         }
+                     },
+                    { text: "OD Type", datafield: "ODType", editable: false, width: 350 },
+                    {
+                        text: 'Edit', datafield: 'Edit', align: 'center', sortable: false, filterable: false, columngroup: 'Actions', columntype: 'button', width: 110, cellsrenderer: function () {
+
+                             return "Edit";
+                         }, buttonclick: function (row) {
+                             editrowindex = row;
+                             var paginginformation = $('#grid').jqxGrid('getpaginginformation');
+                             var id = $("#grid").jqxGrid('getcellvalue', row, "Id");
+                             window.location = '/LeaveTypes/ODEdit/?id=' + id + '&page=' + paginginformation.pagenum;
+                         }
+                     },
+                    //{
+                    //    text: 'Delete', datafield: 'Delete', columngroup: 'Actions', sortable: false, filterable: false, columntype: 'button', name: 'delete', width: 85, cellsrenderer: function () {
+                    //        return "Delete";
+                    //    },
+                    //    buttonclick: function (row) {
+                    //        var res = confirm("Do You Want to Delete");
+                    //        if (res) {
+                    //            delrowindex = row;
+                    //            var id = $("#grid").jqxGrid('getcellvalue', row, "Id");
+
+                    //            var paginginformation = $('#grid').jqxGrid('getpaginginformation');
+                    //            window.location = '/LeaveTypes/ODDelete/?id=' + id + '&page=' + paginginformation.pagenum;
+                    //        }
+                    //        else
+                    //            return res;
+                    //    }
+                    //}
+                ],
+                columngroups:
+          [
+            { text: 'Action', align: 'center', name: 'Actions', width: 180 },
+          ],
+           });
+        });
+
+    </script>
+
+<script>
+function odtype() {
+    var x = location.hostname;
+    var url = window.location.href
+    var arr = url.split("/");
+    var textBoxValue = document.getElementById("ODType").value;
+
+    //var result = "https://" + arr[2] + "/" + "Leavetypes/Typecheck?type=" + textBoxValue;
+    var result = "" + arr[0] +  "//" + arr[2] +  "/"+ "Leavetypes/Typecheck?type=" + textBoxValue;
+
+    $.ajax({
+        type: "GET",
+        url: result,
+
+        dataType: "json",
+        success: function (data) {
+
+            if (data.message == "use") {
+
+            }
+            if (data.message == "used") {
+
+                document.getElementById("ODType").value = "";
+
+                alert("This OD Type already Exist!");
+            }
+
+        },
+        error: function () {
+
+        }
+    });
+
+
+}
+</script>
+
+<script>
+    document.getElementById("a2").className = "active";
+
+</script>

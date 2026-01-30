@@ -1,0 +1,1240 @@
+﻿@{
+    Layout = "~/Views/Shared/_ReportsLayout.cshtml";
+    var rolepages = TempData["RolePages"].ToString();
+    ViewBag.RolePages = TempData["RolePages"];
+    var reportTitle = ViewBag.ReportTitle;
+    var ReportPdfSize = ViewBag.PdfSize;
+    var ReportpageSize = ViewBag.pageSize;
+    var PdfExportColumns = ViewBag.ExportColumns;
+    var dataUrl = ViewBag.DataUrl;
+    var reportFilters = ViewBag.ReportFilters;
+    var searchBtn = ViewBag.SearchBtn;
+}
+
+<link href="~/Assets/css/report-style.css" rel="stylesheet" />
+@{
+    var message = TempData["AlertMessage"] ?? string.Empty;
+}
+
+<script type="text/javascript">
+      var message = '@message';
+    if (message) alert(message);
+</script>
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade in active">
+                    <div class="page_st">
+                        <div class="page">
+                            <div class="col-md-12 col-sm-12 ">
+                                <div class="main_heading">
+                                    <h1>Report List </h1>
+                                    <div>
+                                        @{Html.RenderPartial("_PartialViewForMenu");}
+                                    </div>
+                                </div>
+                                <div class="main_heading">
+                                    <h1>@reportTitle</h1>
+                                    <br />
+
+
+                                    <div class="col-md-12 p-r form-group">
+
+                                        &nbsp;&nbsp;<input type="radio" id="twoBtntwoDtpickers1" name="retirements" value="AllEmployees" checked="checked"> <label for="twoBtntwoDtpickers1">
+                                            All Employees
+                                        </label>&nbsp;&nbsp;
+                                        <input type="radio" id="twoBtntwoDtpickers2" name="retirements" value="RetiredEmployees"> <label for="twoBtntwoDtpickers2">
+                                            Retired Employees
+                                        </label>
+                                        &nbsp;&nbsp;<input type="radio" id="twoBtntwoDtpickers3" name="retirements" value="ResignedEmployees">
+                                        <label for="twoBtntwoDtpickers3">
+                                            Resigned Employees
+                                        </label>&nbsp;&nbsp;
+
+                                        @* Newly added on 02/06/2020 *@
+                                        <input type="radio" id="twoBtntwoDtpickers4" name="retirements" value="VRSEmployees"> <label for="twoBtntwoDtpickers4">
+                                            VRS Employees
+                                        </label>&nbsp;&nbsp;
+                                        <input type="radio" id="twoBtntwoDtpickers5" name="retirements" value="DeathEmployees"> <label for="twoBtntwoDtpickers5">
+                                            Death Employees
+                                        </label>&nbsp;&nbsp;
+                                        @*End*@
+
+                                    </div>
+
+                                    <div id="srchDtpikers" style="display:none;">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label label_left">@ViewBag.twoBtntwoDt1:<span class="mandatory">*</span></label>
+                                                <div class="input-group date col-sm-8">
+                                                    <input type="text" id="rtfromDate" class="form-control" onchange="return Dateevent1()"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label label_left">@ViewBag.twoBtntwoDt2:<span class="mandatory">*</span></label>
+                                                <div class="input-group date col-sm-8">
+                                                    <input type="text" id="rttoDate" class="form-control" onchange="return Dateevent2()"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-1 srchDtpikersBtn" id="twoBtntwoDtbtn1" style="display:none;">
+                                        <button class="btn btn-primary btn-sm pull-right" id="twoBtntwoDtbtnAll">Search</button>
+                                    </div>
+
+                                    <div class="col-md-1" id="twoBtntwoDtbtn2" style="display:none;">
+                                        <button class="btn btn-primary btn-sm pull-right" id="twoBtntwoDtbtnRet">Search</button>
+                                    </div>
+                                    <div class="col-md-1" id="twoBtntwoDtbtn3" style="display:none;">
+                                        <button class="btn btn-primary btn-sm pull-right" id="twoBtntwoDtbtnResig">Search</button>
+                                    </div>
+
+                                    @* Newly added on 02/06/2020 *@
+                                    <div class="col-md-1" id="twoBtntwoDtbtn4" style="display:none;">
+                                        <button class="btn btn-primary btn-sm pull-right" id="twoBtntwoDtbtnVrs">Search</button>
+                                    </div>
+                                    <div class="col-md-1" id="twoBtntwoDtbtn5" style="display:none;">
+                                        <button class="btn btn-primary btn-sm pull-right" id="twoBtntwoDtbtnDeath">Search</button>
+                                    </div>
+                                    @*End*@
+
+                                    <br /><br /><br />
+
+                                    <div class="col-md-12" id="AllEmp">
+                                        <div class="table-responsive">
+                                            <table id="gridEmpAll" class="display reports-grids" cellspacing="0" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Emp Code</th>
+                                                        <th>Emp Name</th>
+                                                        <th>Designation</th>
+                                                        <th>Department/Branch</th>
+                                                        <th>DOB</th>
+                                                        <th>DOJ</th>
+                                                        <th>Retirement/Resignation Date</th>
+                                                        <th>Age</th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-12" id="RetEmp" style="display:none;">
+                                        <div class="table-responsive">
+                                            <table id="gridEmpRet" class="display reports-grids" cellspacing="0" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Emp Code</th>
+                                                        <th>Emp Name</th>
+                                                        <th>Designation</th>
+                                                        <th>Department/Branch</th>
+                                                        <th>DOB</th>
+                                                        <th>DOJ</th>
+                                                        <th>Retirement Date</th>
+                                                        <th>Age</th>
+                                                        @*<th>Action</th>*@
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12" id="ResndEmp" style="display:none;">
+                                        <div class="table-responsive">
+                                            <table id="gridEmpresnd" class="display reports-grids" cellspacing="0" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Emp Code</th>
+                                                        <th>Emp Name</th>
+                                                        <th>Designation</th>
+                                                        <th>Department/Branch</th>
+                                                        <th>DOB</th>
+                                                        <th>DOJ</th>
+                                                        <th>Resignation Date</th>
+                                                        <th>Age</th>
+                                                        @*<th>Action</th>*@
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    @* newly added on 02/06/2020 *@
+                                    <div class="col-md-12" id="VrsEmp" style="display:none;">
+                                        <div class="table-responsive">
+                                            <table id="gridEmpVrs" class="display reports-grids" cellspacing="0" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Emp Code</th>
+                                                        <th>Emp Name</th>
+                                                        <th>Designation</th>
+                                                        <th>Department/Branch</th>
+                                                        <th>DOB</th>
+                                                        <th>DOJ</th>
+                                                        <th>VRS Date</th>
+                                                        <th>Age</th>
+                                                        @*<th>Action</th>*@
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12" id="DeathEmp" style="display:none;">
+                                        <div class="table-responsive">
+                                            <table id="gridEmpDeath" class="display reports-grids" cellspacing="0" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Emp Code</th>
+                                                        <th>Emp Name</th>
+                                                        <th>Designation</th>
+                                                        <th>Department/Branch</th>
+                                                        <th>DOB</th>
+                                                        <th>DOJ</th>
+                                                        <th>Death Date</th>
+                                                        <th>Age</th>
+                                                        @*<th>Action</th>*@
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    @* End *@
+
+                                </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+<script>
+    $(document).ready(function () {
+
+        $("#AllEmp").show();
+        $("#RetEmp").hide();
+
+        $("#ResndEmp").hide(); //added new on 02/06/2020
+        $("#VrsEmp").hide(); //added new on 02/06/2020
+        $("#DeathEmp").hide(); //added new on 02/06/2020
+
+        $("#srchDtpikers").show();
+        $("#rtfromDate").val('');
+        $("#rttoDate").val('');
+        $("#twoBtntwoDtbtn1").show();
+        $("#twoBtntwoDtbtn2").hide();
+
+        $("#twoBtntwoDtbtn3").hide(); //added new on 02/06/2020
+        $("#twoBtntwoDtbtn4").hide(); //added new on 02/06/2020
+        $("#twoBtntwoDtbtn5").hide(); //added new on 02/06/2020
+        
+
+        var reportMsgTop1 = 'All Employees';
+
+        var fnMessageTop1 = function () {
+            return (reportMsgTop1 == '' ? '' : 'Filters : ' + reportMsgTop1);
+        };
+
+        $.noConflict();
+        var serviceurl = '@dataUrl';
+        serviceurl = serviceurl.replace('&amp;', '&');
+
+        var dataTable = $('#gridEmpAll').dataTable({
+            "ajax": {
+                "url": serviceurl,
+                "type": "GET",
+                "datatype": "json",
+                "dataSrc": ""
+            },
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'excelHtml5',
+                    text: '<i class="fa fa-file-excel-o dt-export-icon-excel"></i>',
+                    titleAttr: 'Excel',
+                    title: 'TSCAB - @reportTitle',
+                    exportOptions: {@PdfExportColumns},
+                    messageTop: fnMessageTop1,
+                    className: 'dt-export-btn',
+                    color:'red'
+                },
+                {
+                    extend: 'pdfHtml5',
+                    text: '<i class="fa fa-file-pdf-o dt-export-icon-pdf"></i>',
+                    className: 'dt-export-btn',
+                    titleAttr: 'Pdf',
+                    orientation: '@ReportPdfSize',
+                    pageSize: '@ReportpageSize',
+                    exportOptions: {@PdfExportColumns},
+                    title: 'TSCAB - @reportTitle',
+                    messageTop: fnMessageTop1,
+                    customize: function (doc) {
+                        doc.styles.tableHeader.alignment = 'left';
+                        doc.content.splice(1, 0, {
+                            margin: [0, -50, 0, 10],
+                            alignment: 'left',
+                            image: 'data:image/jpeg;base64,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'
+                        });
+
+                        doc.content[0].text = doc.content[0].text.trim();
+                        doc.styles.title = {
+                            fontSize: '20',
+                            alignment: 'center'
+                        };
+                        doc.styles.message = {
+                            fontSize: '9',
+                            alignment: 'center'
+                        };
+                        doc['footer'] = (function (page, pages) {
+                            return {
+                                columns: [
+                                    'By: @ViewBag.LoginUserName , @ViewBag.LoginBranchName .',
+                                    {
+                                        alignment: 'right',
+                                        text: [
+                                            new Date().toLocaleDateString("en-IN", { day: "2-digit", month: "2-digit", year: "numeric", hour: '2-digit', minute: '2-digit' }),
+                                            '    Page ', { text: page.toString() }, ' of ', { text: pages.toString() }
+                                        ]
+                                    }
+                                ],
+                                fontSize: '9',
+                                margin: [40, 10]
+                            }
+                        });
+                    }
+                }
+            ],
+            "columns": [
+
+                  {data: "EmpId"},
+                  {data: "Name"},
+                  {data: "Designation"},
+                  { data: "BranchDepartmet" },
+                  { data: "DOB" },
+                  { data: "DOJ" },
+                  { data: "RetirementDate" },
+                  { data: "Age" }
+
+                ]
+
+
+        });
+    });
+</script>
+
+
+<script type="text/javascript">
+    var reportMsgTop = '';
+
+    var fnMessageTop = function () {
+        return (reportMsgTop == '' ? '' : 'Filters : ' + reportMsgTop);
+    };
+
+    var serviceurl = '@dataUrl';
+    serviceurl = serviceurl.replace('&amp;', '&');
+
+    var dataTable = $('#gridEmpRet').dataTable({
+
+        "ajax": {
+            "url": serviceurl,
+            "type": "GET",
+            "datatype": "json",
+            "dataSrc": ""
+        },
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'excelHtml5',
+                text: '<i class="fa fa-file-excel-o dt-export-icon-excel"></i>',
+                titleAttr: 'Excel',
+                title: 'TSCAB - @reportTitle',
+                exportOptions: {@PdfExportColumns},
+                messageTop: fnMessageTop,
+                className: 'dt-export-btn',
+                color:'red'
+            },
+            {
+                extend: 'pdfHtml5',
+                text: '<i class="fa fa-file-pdf-o dt-export-icon-pdf"></i>',
+                className: 'dt-export-btn',
+                titleAttr: 'Pdf',
+                orientation: '@ReportPdfSize',
+                pageSize: '@ReportpageSize',
+                exportOptions: {@PdfExportColumns},
+                title: 'TSCAB - @reportTitle',
+                messageTop: fnMessageTop,
+                customize: function (doc) {
+                    doc.styles.tableHeader.alignment = 'left';
+                    doc.content.splice(1, 0, {
+                        margin: [0, -50, 0, 10],
+                        alignment: 'left',
+                        image: 'data:image/jpeg;base64,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'
+                    });
+
+                    doc.content[0].text = doc.content[0].text.trim();
+                    doc.styles.title = {
+                        fontSize: '20',
+                        alignment: 'center'
+                    };
+                    doc.styles.message = {
+                        fontSize: '9',
+                        alignment: 'center'
+                    };
+                    doc['footer'] = (function (page, pages) {
+                        return {
+                            columns: [
+                                'By: @ViewBag.LoginUserName , @ViewBag.LoginBranchName .',
+                                {
+                                    alignment: 'right',
+                                    text: [
+                                        new Date().toLocaleDateString("en-IN", { day: "2-digit", month: "2-digit", year: "numeric", hour: '2-digit', minute: '2-digit' }),
+                                        '    Page ', { text: page.toString() }, ' of ', { text: pages.toString() }
+                                    ]
+                                }
+                            ],
+                            fontSize: '9',
+                            margin: [40, 10]
+                        }
+                    });
+                }
+            }
+        ],
+           "columns": [
+                  { data: "EmpId" },
+                  { data: "Name" },
+                  { data: "Designation" },
+                  { data: "BranchDepartmet" },
+                  { data: "DOB" },
+                  { data: "DOJ" },
+                  { data: "RetirementDate" },
+                  { data: "Age" },
+                  @*{
+                      data: null, render: function (data, type, RetStatus, row) {
+
+                          return "<a style= 'color:blue;' href='@ViewBag.websiteUrl/register/edit?id=" + RetStatus.EmpidCode + "'><button>Edit</button></a>";
+
+                      }
+              }*@
+        ]
+    });
+
+    //  });
+    
+
+    $("#twoBtntwoDtpickers1").click(function () {
+
+        $("#twoBtntwoDtpickers1").css("background-color", "rgb(230, 167, 78)");
+        $("#twoBtntwoDtpickers2").css("background-color", " rgb(6, 114, 19)");
+        $("#twoBtntwoDtpickers3").css("background-color", " rgb(6, 114, 19)");
+
+        $("#twoBtntwoDtpickers4").css("background-color", " rgb(6, 114, 19)"); //added new on 02/06/2020
+        $("#twoBtntwoDtpickers5").css("background-color", " rgb(6, 114, 19)"); //added new on 02/06/2020
+
+        var ajaxurl = '/AllReports/RetirementList?fromDate=-1&toDate=-2&RetireType=AllEmp';
+
+        $("#twoBtntwoDtbtn1").show();
+        $("#twoBtntwoDtbtn2").hide();
+        $("#twoBtntwoDtbtn3").hide();
+
+        $("#twoBtntwoDtbtn4").hide(); //added new on 02/06/2020
+        $("#twoBtntwoDtbtn5").hide(); //added new on 02/06/2020
+
+        $("#AllEmp").show();
+        $("#RetEmp").hide();
+        $("#ResndEmp").hide();
+
+        $("#VrsEmp").hide(); //added new on 02/06/2020
+        $("#DeathEmp").hide(); //added new on 02/06/2020
+
+        $("#srchDtpikers").show();
+
+        $("#rtfromDate").val('');
+        $("#rttoDate").val('');
+
+        reportMsgTop1 = 'All Employees';
+        $('#gridEmpAll').DataTable().ajax.url(ajaxurl).load();
+
+    });
+
+    $("#twoBtntwoDtpickers2").click(function () {
+
+        $("#twoBtntwoDtpickers2").css("background-color", "rgb(230, 167, 78)");
+        $("#twoBtntwoDtpickers3").css("background-color", " rgb(6, 114, 19)");        
+        $("#twoBtntwoDtpickers1").css("background-color", " rgb(6, 114, 19)");
+
+        $("#twoBtntwoDtpickers4").css("background-color", " rgb(6, 114, 19)"); //added new on 02/06/2020
+        $("#twoBtntwoDtpickers5").css("background-color", " rgb(6, 114, 19)"); //added new on 02/06/2020
+
+        var ajaxurl = '/AllReports/RetirementList?fromDate=-1&toDate=-2&RetireType=RetEmp';
+
+        $("#twoBtntwoDtbtn2").show();
+        $("#twoBtntwoDtbtn1").hide();
+        $("#twoBtntwoDtbtn3").hide();
+
+        $("#twoBtntwoDtbtn4").hide(); //added new on 02/06/2020
+        $("#twoBtntwoDtbtn5").hide(); //added new on 02/06/2020
+
+        $("#srchDtpikers").show();
+        $("#AllEmp").hide();
+        $("#RetEmp").show();
+        $("#ResndEmp").hide();
+
+        $("#VrsEmp").hide(); //added new on 02/06/2020
+        $("#DeathEmp").hide(); //added new on 02/06/2020
+
+        $("#rtfromDate").val('');
+        $("#rttoDate").val('');
+
+        reportMsgTop = 'Retired Employees';
+        $('#gridEmpRet').DataTable().ajax.url(ajaxurl).load();
+
+    });
+   
+   
+
+    $("#twoBtntwoDtbtnAll").click(function () {
+
+        var fromDate = $("#rtfromDate").val();
+        var toDate = $("#rttoDate").val();
+
+        if (fromDate == "" && toDate == "") {
+            alert("PLease Select FromDate and ToDate");
+            return false;
+        }
+        else if (fromDate == "") {
+            alert("PLease Select FromDate");
+            return false;
+        }
+        else if (toDate == "") {
+            alert("PLease Select ToDate");
+            return false;
+        }
+        var darray = document.getElementById('rtfromDate').value.split(" ");
+        var darraye = document.getElementById('rttoDate').value.split(" ");
+        var Joindate = darray[0];
+
+        var Retdate = darraye[0];
+        var date = moment(Joindate, "DD.MM.YYYY");
+
+        var currentDate1 = moment(Retdate, "DD.MM.YYYY");
+        var duration = moment.duration(date.diff(currentDate1));
+
+
+        if (duration > 0) {
+            alert("Please ensure that To Date is greater than or equal to From Date.");
+            return false;
+        }
+        ajaxSpinnerShow();
+
+        var mainUrl = '@dataUrl';
+
+        var fromDate = $("#rtfromDate").val();
+        var toDate = $("#rttoDate").val();
+        var RetireType = 'AllEmployees';
+
+        var ajaxurl = mainUrl.replace('-1', fromDate);
+        ajaxurl = ajaxurl.replace('-2', toDate);
+        ajaxurl = ajaxurl.replace('-3', RetireType);
+        ajaxurl = ajaxurl.replace('&amp;', '&');
+        ajaxurl = ajaxurl.replace('&amp;', '&');
+
+        $('#gridEmpAll').DataTable().ajax.url(ajaxurl).load(function () {
+            ajaxSpinnerHide();
+        });
+    });
+
+    
+    $("#twoBtntwoDtbtnRet").click(function () {
+
+        var fromDate = $("#rtfromDate").val();
+        var toDate = $("#rttoDate").val();
+
+        if (fromDate == "" && toDate == "") {
+            alert("PLease Select FromDate and ToDate");
+            return false;
+        }
+        else if (fromDate == "") {
+            alert("PLease Select FromDate");
+            return false;
+        }
+        else if (toDate == "") {
+            alert("PLease Select ToDate");
+            return false;
+        }
+        var darray = document.getElementById('rtfromDate').value.split(" ");
+        var darraye = document.getElementById('rttoDate').value.split(" ");
+        var Joindate = darray[0];
+
+        var Retdate = darraye[0];
+        var date = moment(Joindate, "DD.MM.YYYY");
+
+        var currentDate1 = moment(Retdate, "DD.MM.YYYY");
+        var duration = moment.duration(date.diff(currentDate1));
+
+
+        if (duration > 0) {
+            alert("Please ensure that To Date is greater than or equal to From Date.");
+            return false;
+        }
+        ajaxSpinnerShow();
+        var mainUrl = '@dataUrl';
+
+        var fromDate = $("#rtfromDate").val();
+        var toDate = $("#rttoDate").val();
+        var RetireType = 'Retired';
+
+        var ajaxurl = mainUrl.replace('-1', fromDate);
+        ajaxurl = ajaxurl.replace('-2', toDate);
+        ajaxurl = ajaxurl.replace('-3', RetireType);
+        ajaxurl = ajaxurl.replace('&amp;', '&');
+        ajaxurl = ajaxurl.replace('&amp;', '&');
+
+        $('#gridEmpRet').DataTable().ajax.url(ajaxurl).load(function () {
+            ajaxSpinnerHide();
+        });
+    });
+
+  
+    $(function getholidays() {
+        var active_dates = [];
+        $.ajax({
+            type: "GET",
+            async: false,
+            url: "/LeaveApply/GetDates",
+            dataType: "Json",
+            success: function (data) {
+                datesArray = data;
+                for (i = 0; i < datesArray.length; i++) {
+                    var result = datesArray[i].replace("-", "/");
+                    var result1 = result.replace("-", "/");
+                    var strArray = result1.split("/");
+                    var cdate = strArray[0] + "/" + parseInt(strArray[1]) + "/" + strArray[2]
+                    active_dates.push(cdate);
+
+                    if (i == datesArray.length - 1) {
+                        //loadcal(active_dates);
+                    }
+                }
+
+            }
+        });
+        $('.input-group.date').datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            beforeShowDay: function nonWorkingDays(date) {
+                var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
+                var week = 0 | date.getDate() / 7 //get the week
+                var dd = date.getDate();
+                var month = date.getMonth();
+                if (dd < 10) {
+                    dd = '0' + dd
+                }
+
+                if (month < 10) {
+                    month = '0' + month
+                }
+                var sunweek = date.getDay();
+                var year = date.getFullYear();
+
+                if (dd == 14 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                if (dd == 28 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                //check if it's second week or fourth week
+                else if (week == 1 || week == 3) {
+                    if (dd == 7 && day == 6 || dd == 21 && day == 6) {
+                        //check for satruday
+
+                    }
+                    else {
+                        if (day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                    }
+
+                }
+                //check for sunday
+                if (day == 0) {
+                    return {
+                        classes: 'secondClass'
+                    };
+
+                }
+                //check for holidays
+                var d = date;
+                var curr_date = d.getDate();
+                var curr_month = d.getMonth() + 1; //Months are zero based
+                if (curr_date < 10) {
+                    curr_date = '0' + curr_date
+                }
+                var curr_year = d.getFullYear();
+                var formattedDate = curr_date + "/" + curr_month + "/" + curr_year
+
+                if ($.inArray(formattedDate, active_dates) != -1) {
+                    return {
+                        classes: 'activeClass'
+                    };
+                }
+                return [true];
+            }
+        });
+    });
+
+    function Dateevent1() {
+        var StartDate = document.getElementById('rtfromDate').value;
+        var EndDate = document.getElementById('rttoDate').value;
+        var eDate = moment(EndDate, "DD.MM.YYYY");
+        var sDate = moment(StartDate, "DD.MM.YYYY");
+
+        if (StartDate != '' && EndDate != '' && sDate > eDate) {
+            alert("Please ensure that To Date is greater than or equal to From Date.");
+            document.getElementById('rtfromDate').value = '';
+            document.getElementById("rtfromDate").focus();
+            return false;
+        }
+    }
+
+    function Dateevent2() {
+        var StartDate = document.getElementById('rtfromDate').value;
+        var EndDate = document.getElementById('rttoDate').value;
+        var eDate = moment(EndDate, "DD.MM.YYYY");
+        var sDate = moment(StartDate, "DD.MM.YYYY");
+
+        if (StartDate != '' && EndDate != '' && sDate > eDate) {
+            alert("Please ensure that To Date is greater than or equal to From Date.");
+            document.getElementById('rttoDate').value = '';
+            document.getElementById("rttoDate").focus();
+            return false;
+        }
+    }
+</script>
+<script>
+       var dataTable = $('#gridEmpresnd').dataTable({
+
+        "ajax": {
+            "url": serviceurl,
+            "type": "GET",
+            "datatype": "json",
+            "dataSrc": ""
+        },
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'excelHtml5',
+                text: '<i class="fa fa-file-excel-o dt-export-icon-excel"></i>',
+                titleAttr: 'Excel',
+                title: 'TSCAB - @reportTitle',
+                exportOptions: {@PdfExportColumns},
+                messageTop: fnMessageTop,
+                className: 'dt-export-btn',
+                color:'red'
+            },
+            {
+                extend: 'pdfHtml5',
+                text: '<i class="fa fa-file-pdf-o dt-export-icon-pdf"></i>',
+                className: 'dt-export-btn',
+                titleAttr: 'Pdf',
+                orientation: '@ReportPdfSize',
+                pageSize: '@ReportpageSize',
+                exportOptions: {@PdfExportColumns},
+                title: 'TSCAB - @reportTitle',
+                messageTop: fnMessageTop,
+                customize: function (doc) {
+                    doc.styles.tableHeader.alignment = 'left';
+                    doc.content.splice(1, 0, {
+                        margin: [0, -50, 0, 10],
+                        alignment: 'left',
+                        image: 'data:image/jpeg;base64,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'
+                    });
+
+                    doc.content[0].text = doc.content[0].text.trim();
+                    doc.styles.title = {
+                        fontSize: '20',
+                        alignment: 'center'
+                    };
+                    doc.styles.message = {
+                        fontSize: '9',
+                        alignment: 'center'
+                    };
+                    doc['footer'] = (function (page, pages) {
+                        return {
+                            columns: [
+                                'By: @ViewBag.LoginUserName , @ViewBag.LoginBranchName .',
+                                {
+                                    alignment: 'right',
+                                    text: [
+                                        new Date().toLocaleDateString("en-IN", { day: "2-digit", month: "2-digit", year: "numeric", hour: '2-digit', minute: '2-digit' }),
+                                        '    Page ', { text: page.toString() }, ' of ', { text: pages.toString() }
+                                    ]
+                                }
+                            ],
+                            fontSize: '9',
+                            margin: [40, 10]
+                        }
+                    });
+                }
+            }
+        ],
+           "columns": [
+                  { data: "EmpId" },
+                  { data: "Name" },
+                  { data: "Designation" },
+                  { data: "BranchDepartmet" },
+                  { data: "DOB" },
+                  { data: "DOJ" },
+                  { data: "RetirementDate" },
+                  { data: "Age" },
+                  @*{
+                      data: null, render: function (data, type, RetStatus, row) {
+
+                          return "<a style= 'color:blue;' href='@ViewBag.websiteUrl/register/edit?id=" + RetStatus.EmpidCode + "'><button>Edit</button></a>";
+
+                      }
+              }*@
+        ]
+       });
+
+       $("#twoBtntwoDtpickers3").click(function () {
+
+        $("#twoBtntwoDtpickers3").css("background-color", " rgb(230, 167, 78)");
+        $("#twoBtntwoDtpickers2").css("background-color", "rgb(6, 114, 19)");
+        $("#twoBtntwoDtpickers1").css("background-color", " rgb(6, 114, 19)");
+       
+           $("#twoBtntwoDtpickers4").css("background-color", " rgb(6, 114, 19)"); //added new on 02/06/2020
+           $("#twoBtntwoDtpickers5").css("background-color", " rgb(6, 114, 19)"); //added new on 02/06/2020
+
+        var ajaxurl = '/AllReports/RetirementList?fromDate=-1&toDate=-2&RetireType=ResndEmp';
+
+        $("#twoBtntwoDtbtn3").show();
+        $("#twoBtntwoDtbtn2").hide();
+           $("#twoBtntwoDtbtn1").hide();
+
+           $("#twoBtntwoDtbtn4").hide(); //added new on 02/06/2020
+           $("#twoBtntwoDtbtn5").hide(); //added new on 02/06/2020
+           
+        $("#srchDtpikers").show();
+        $("#AllEmp").hide();
+          $("#RetEmp").hide();
+           $("#ResndEmp").show();
+
+           $("#VrsEmp").hide(); //added new on 02/06/2020
+           $("#DeathEmp").hide(); //added new on 02/06/2020
+
+        $("#rtfromDate").val('');
+        $("#rttoDate").val('');
+
+        reportMsgTop = 'Resigned Employees';
+        $('#gridEmpresnd').DataTable().ajax.url(ajaxurl).load();
+
+       });
+
+        $("#twoBtntwoDtbtnResig").click(function () {
+
+        var fromDate = $("#rtfromDate").val();
+        var toDate = $("#rttoDate").val();
+
+        if (fromDate == "" && toDate == "") {
+            alert("PLease Select FromDate and ToDate");
+            return false;
+        }
+        else if (fromDate == "") {
+            alert("PLease Select FromDate");
+            return false;
+        }
+        else if (toDate == "") {
+            alert("PLease Select ToDate");
+            return false;
+        }
+        var darray = document.getElementById('rtfromDate').value.split(" ");
+        var darraye = document.getElementById('rttoDate').value.split(" ");
+        var Joindate = darray[0];
+
+        var Retdate = darraye[0];
+        var date = moment(Joindate, "DD.MM.YYYY");
+
+        var currentDate1 = moment(Retdate, "DD.MM.YYYY");
+        var duration = moment.duration(date.diff(currentDate1));
+
+
+        if (duration > 0) {
+            alert("Please ensure that To Date is greater than or equal to From Date.");
+            return false;
+        }
+        ajaxSpinnerShow();
+        var mainUrl = '@dataUrl';
+
+        var fromDate = $("#rtfromDate").val();
+        var toDate = $("#rttoDate").val();
+        var RetireType = 'Resigned';
+
+        var ajaxurl = mainUrl.replace('-1', fromDate);
+        ajaxurl = ajaxurl.replace('-2', toDate);
+        ajaxurl = ajaxurl.replace('-3', RetireType);
+        ajaxurl = ajaxurl.replace('&amp;', '&');
+        ajaxurl = ajaxurl.replace('&amp;', '&');
+
+        $('#gridEmpresnd').DataTable().ajax.url(ajaxurl).load(function () {
+            ajaxSpinnerHide();
+        });
+    });
+</script>
+<script>
+    var dataTable = $('#gridEmpVrs').dataTable({
+
+        "ajax": {
+            "url": serviceurl,
+            "type": "GET",
+            "datatype": "json",
+            "dataSrc": ""
+        },
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'excelHtml5',
+                text: '<i class="fa fa-file-excel-o dt-export-icon-excel"></i>',
+                titleAttr: 'Excel',
+                title: 'TSCAB - @reportTitle',
+                exportOptions: {@PdfExportColumns},
+                messageTop: fnMessageTop,
+                className: 'dt-export-btn',
+                color:'red'
+            },
+            {
+                extend: 'pdfHtml5',
+                text: '<i class="fa fa-file-pdf-o dt-export-icon-pdf"></i>',
+                className: 'dt-export-btn',
+                titleAttr: 'Pdf',
+                orientation: '@ReportPdfSize',
+                pageSize: '@ReportpageSize',
+                exportOptions: {@PdfExportColumns},
+                title: 'TSCAB - @reportTitle',
+                messageTop: fnMessageTop,
+                customize: function (doc) {
+                    doc.styles.tableHeader.alignment = 'left';
+                    doc.content.splice(1, 0, {
+                        margin: [0, -50, 0, 10],
+                        alignment: 'left',
+                        image: 'data:image/jpeg;base64,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'
+                    });
+
+                    doc.content[0].text = doc.content[0].text.trim();
+                    doc.styles.title = {
+                        fontSize: '20',
+                        alignment: 'center'
+                    };
+                    doc.styles.message = {
+                        fontSize: '9',
+                        alignment: 'center'
+                    };
+                    doc['footer'] = (function (page, pages) {
+                        return {
+                            columns: [
+                                'By: @ViewBag.LoginUserName , @ViewBag.LoginBranchName .',
+                                {
+                                    alignment: 'right',
+                                    text: [
+                                        new Date().toLocaleDateString("en-IN", { day: "2-digit", month: "2-digit", year: "numeric", hour: '2-digit', minute: '2-digit' }),
+                                        '    Page ', { text: page.toString() }, ' of ', { text: pages.toString() }
+                                    ]
+                                }
+                            ],
+                            fontSize: '9',
+                            margin: [40, 10]
+                        }
+                    });
+                }
+            }
+        ],
+           "columns": [
+                  { data: "EmpId" },
+                  { data: "Name" },
+                  { data: "Designation" },
+                  { data: "BranchDepartmet" },
+                  { data: "DOB" },
+                  { data: "DOJ" },
+                  { data: "RetirementDate" },
+                  { data: "Age" },
+                  @*{
+                      data: null, render: function (data, type, RetStatus, row) {
+
+                          return "<a style= 'color:blue;' href='@ViewBag.websiteUrl/register/edit?id=" + RetStatus.EmpidCode + "'><button>Edit</button></a>";
+
+                      }
+              }*@
+        ]
+       });
+
+    $("#twoBtntwoDtpickers4").click(function () {
+
+        $("#twoBtntwoDtpickers4").css("background-color", " rgb(230, 167, 78)");
+        $("#twoBtntwoDtpickers2").css("background-color", "rgb(6, 114, 19)");
+        $("#twoBtntwoDtpickers1").css("background-color", " rgb(6, 114, 19)");
+
+        $("#twoBtntwoDtpickers3").css("background-color", " rgb(6, 114, 19)"); //added new on 02/06/2020
+        $("#twoBtntwoDtpickers5").css("background-color", " rgb(6, 114, 19)"); //added new on 02/06/2020
+
+        var ajaxurl = '/AllReports/RetirementList?fromDate=-1&toDate=-2&RetireType=VrsEmp';
+
+        $("#twoBtntwoDtbtn4").show();
+        $("#twoBtntwoDtbtn3").hide();
+        $("#twoBtntwoDtbtn5").hide();
+
+        $("#twoBtntwoDtbtn2").hide();
+        $("#twoBtntwoDtbtn1").hide();
+        $("#srchDtpikers").show();
+        $("#AllEmp").hide();
+        $("#RetEmp").hide();
+        $("#ResndEmp").hide();
+
+        $("#VrsEmp").show(); //added new on 02/06/2020
+        $("#DeathEmp").hide(); //added new on 02/06/2020
+
+        $("#rtfromDate").val('');
+        $("#rttoDate").val('');
+
+        reportMsgTop = 'VRS Employees';
+           $('#gridEmpVrs').DataTable().ajax.url(ajaxurl).load();
+
+       });
+
+    $("#twoBtntwoDtbtnVrs").click(function () {
+        debugger;
+        var fromDate = $("#rtfromDate").val();
+        var toDate = $("#rttoDate").val();
+
+        if (fromDate == "" && toDate == "") {
+            alert("PLease Select FromDate and ToDate");
+            return false;
+        }
+        else if (fromDate == "") {
+            alert("PLease Select FromDate");
+            return false;
+        }
+        else if (toDate == "") {
+            alert("PLease Select ToDate");
+            return false;
+        }
+        var darray = document.getElementById('rtfromDate').value.split(" ");
+        var darraye = document.getElementById('rttoDate').value.split(" ");
+        var Joindate = darray[0];
+
+        var Retdate = darraye[0];
+        var date = moment(Joindate, "DD.MM.YYYY");
+
+        var currentDate1 = moment(Retdate, "DD.MM.YYYY");
+        var duration = moment.duration(date.diff(currentDate1));
+
+
+        if (duration > 0) {
+            alert("Please ensure that To Date is greater than or equal to From Date.");
+            return false;
+        }
+        ajaxSpinnerShow();
+        var mainUrl = '@dataUrl';
+
+        var fromDate = $("#rtfromDate").val();
+        var toDate = $("#rttoDate").val();
+        var RetireType = 'VRS Employees';
+
+        var ajaxurl = mainUrl.replace('-1', fromDate);
+        ajaxurl = ajaxurl.replace('-2', toDate);
+        ajaxurl = ajaxurl.replace('-3', RetireType);
+        ajaxurl = ajaxurl.replace('&amp;', '&');
+        ajaxurl = ajaxurl.replace('&amp;', '&');
+
+            $('#gridEmpVrs').DataTable().ajax.url(ajaxurl).load(function () {
+            ajaxSpinnerHide();
+        });
+    });
+</script>
+<script>
+    var dataTable = $('#gridEmpDeath').dataTable({
+
+        "ajax": {
+            "url": serviceurl,
+            "type": "GET",
+            "datatype": "json",
+            "dataSrc": ""
+        },
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'excelHtml5',
+                text: '<i class="fa fa-file-excel-o dt-export-icon-excel"></i>',
+                titleAttr: 'Excel',
+                title: 'TSCAB - @reportTitle',
+                exportOptions: {@PdfExportColumns},
+                messageTop: fnMessageTop,
+                className: 'dt-export-btn',
+                color:'red'
+            },
+            {
+                extend: 'pdfHtml5',
+                text: '<i class="fa fa-file-pdf-o dt-export-icon-pdf"></i>',
+                className: 'dt-export-btn',
+                titleAttr: 'Pdf',
+                orientation: '@ReportPdfSize',
+                pageSize: '@ReportpageSize',
+                exportOptions: {@PdfExportColumns},
+                title: 'TSCAB - @reportTitle',
+                messageTop: fnMessageTop,
+                customize: function (doc) {
+                    doc.styles.tableHeader.alignment = 'left';
+                    doc.content.splice(1, 0, {
+                        margin: [0, -50, 0, 10],
+                        alignment: 'left',
+                        image: 'data:image/jpeg;base64,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'
+                    });
+
+                    doc.content[0].text = doc.content[0].text.trim();
+                    doc.styles.title = {
+                        fontSize: '20',
+                        alignment: 'center'
+                    };
+                    doc.styles.message = {
+                        fontSize: '9',
+                        alignment: 'center'
+                    };
+                    doc['footer'] = (function (page, pages) {
+                        return {
+                            columns: [
+                                'By: @ViewBag.LoginUserName , @ViewBag.LoginBranchName .',
+                                {
+                                    alignment: 'right',
+                                    text: [
+                                        new Date().toLocaleDateString("en-IN", { day: "2-digit", month: "2-digit", year: "numeric", hour: '2-digit', minute: '2-digit' }),
+                                        '    Page ', { text: page.toString() }, ' of ', { text: pages.toString() }
+                                    ]
+                                }
+                            ],
+                            fontSize: '9',
+                            margin: [40, 10]
+                        }
+                    });
+                }
+            }
+        ],
+           "columns": [
+                  { data: "EmpId" },
+                  { data: "Name" },
+                  { data: "Designation" },
+                  { data: "BranchDepartmet" },
+                  { data: "DOB" },
+                  { data: "DOJ" },
+                  { data: "RetirementDate" },
+                  { data: "Age" },
+                  @*{
+                      data: null, render: function (data, type, RetStatus, row) {
+
+                          return "<a style= 'color:blue;' href='@ViewBag.websiteUrl/register/edit?id=" + RetStatus.EmpidCode + "'><button>Edit</button></a>";
+
+                      }
+              }*@
+        ]
+       });
+
+       $("#twoBtntwoDtpickers5").click(function () {
+
+        $("#twoBtntwoDtpickers5").css("background-color", " rgb(230, 167, 78)");
+        $("#twoBtntwoDtpickers2").css("background-color", "rgb(6, 114, 19)");
+        $("#twoBtntwoDtpickers1").css("background-color", " rgb(6, 114, 19)");
+
+        $("#twoBtntwoDtpickers3").css("background-color", " rgb(6, 114, 19)");
+        $("#twoBtntwoDtpickers4").css("background-color", " rgb(6, 114, 19)");
+
+           var ajaxurl = '/AllReports/RetirementList?fromDate=-1&toDate=-2&RetireType=DeathEmp';
+
+        $("#twoBtntwoDtbtn5").show();
+        $("#twoBtntwoDtbtn2").hide();
+           $("#twoBtntwoDtbtn1").hide();
+
+           $("#twoBtntwoDtbtn3").hide(); //added new on 02/06/2020
+           $("#twoBtntwoDtbtn4").hide(); //added new on 02/06/2020
+
+        $("#srchDtpikers").show();
+        $("#AllEmp").hide();
+          $("#RetEmp").hide();
+           $("#DeathEmp").show();
+
+           $("#VrsEmp").hide(); //added new on 02/06/2020
+           $("#ResndEmp").hide(); //added new on 02/06/2020
+
+        $("#rtfromDate").val('');
+        $("#rttoDate").val('');
+
+           reportMsgTop = 'Death Employees';
+           $('#gridEmpDeath').DataTable().ajax.url(ajaxurl).load();
+
+       });
+
+    $("#twoBtntwoDtbtnDeath").click(function () {
+
+        var fromDate = $("#rtfromDate").val();
+        var toDate = $("#rttoDate").val();
+
+        if (fromDate == "" && toDate == "") {
+            alert("PLease Select FromDate and ToDate");
+            return false;
+        }
+        else if (fromDate == "") {
+            alert("PLease Select FromDate");
+            return false;
+        }
+        else if (toDate == "") {
+            alert("PLease Select ToDate");
+            return false;
+        }
+        var darray = document.getElementById('rtfromDate').value.split(" ");
+        var darraye = document.getElementById('rttoDate').value.split(" ");
+        var Joindate = darray[0];
+
+        var Retdate = darraye[0];
+        var date = moment(Joindate, "DD.MM.YYYY");
+
+        var currentDate1 = moment(Retdate, "DD.MM.YYYY");
+        var duration = moment.duration(date.diff(currentDate1));
+
+
+        if (duration > 0) {
+            alert("Please ensure that To Date is greater than or equal to From Date.");
+            return false;
+        }
+        ajaxSpinnerShow();
+        var mainUrl = '@dataUrl';
+
+        var fromDate = $("#rtfromDate").val();
+        var toDate = $("#rttoDate").val();
+            var RetireType = 'Death';
+
+        var ajaxurl = mainUrl.replace('-1', fromDate);
+        ajaxurl = ajaxurl.replace('-2', toDate);
+        ajaxurl = ajaxurl.replace('-3', RetireType);
+        ajaxurl = ajaxurl.replace('&amp;', '&');
+        ajaxurl = ajaxurl.replace('&amp;', '&');
+
+            $('#gridEmpDeath').DataTable().ajax.url(ajaxurl).load(function () {
+            ajaxSpinnerHide();
+        });
+    });
+</script>
+    <script>
+            document.getElementById("a6").className = "active";
+
+    </script>

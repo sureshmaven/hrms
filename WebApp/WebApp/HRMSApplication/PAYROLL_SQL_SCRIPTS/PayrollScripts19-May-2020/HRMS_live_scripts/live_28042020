@@ -1,0 +1,84 @@
+INSERT INTO [dbo].[Leaves] 
+VALUES((select id from employees where empid=6428),
+(select ControllingAuthority from employees where empid=6428),
+(select SanctioningAuthority from employees where empid=6428),12,'2020-04-01','2020-04-08','Leave Applied','Could not attend duties due to lockdown',
+123456,GETDATE(),'Pending',	8,	8,GETDATE(),2020,'','',
+'LOP',(select Branch from employees where empid=6428),
+(select Department from employees where empid=6428),
+(select CurrentDesignation from employees where empid=6428),((select leavebalance from EmpLeaveBalance where empid =(select id from employees where empid=6428	) and leavetypeid=12 and year=2020))	);
+INSERT INTO [dbo].[Leaves] 
+VALUES((select id from employees where empid=6453),
+(select ControllingAuthority from employees where empid=6453),
+(select SanctioningAuthority from employees where empid=6453),12,'2020-03-31','2020-03-31','Leave Applied','Could not attend duties due to lockdown',
+123456,GETDATE(),'Pending',	1,	1,GETDATE(),2020,'','',
+'LOP',(select Branch from employees where empid=6453),
+(select Department from employees where empid=6453),
+(select CurrentDesignation from employees where empid=6453),((select leavebalance from EmpLeaveBalance where empid =(select id from employees where empid=6453	) and leavetypeid=12 and year=2020))	);
+INSERT INTO [dbo].[Leaves] 
+VALUES((select id from employees where empid=6443),
+(select ControllingAuthority from employees where empid=6443),
+(select SanctioningAuthority from employees where empid=6443),12,'2020-03-30','2020-03-30','Leave Applied','Could not attend duties due to lockdown',
+123456,GETDATE(),'Pending',	1,	1,GETDATE(),2020,'','',
+'LOP',(select Branch from employees where empid=6443),
+(select Department from employees where empid=6443),
+(select CurrentDesignation from employees where empid=6443),((select leavebalance from EmpLeaveBalance where empid =(select id from employees where empid=6443	) and leavetypeid=12 and year=2020))	);
+INSERT INTO [dbo].[Leaves] 
+VALUES((select id from employees where empid=6441),
+(select ControllingAuthority from employees where empid=6441),
+(select SanctioningAuthority from employees where empid=6441),12,'2020-03-31','2020-04-01','Leave Applied','Could not attend duties due to lockdown',
+123456,GETDATE(),'Pending',	2,	2,GETDATE(),2020,'','',
+'LOP',(select Branch from employees where empid=6441),
+(select Department from employees where empid=6441),
+(select CurrentDesignation from employees where empid=6441),((select leavebalance from EmpLeaveBalance where empid =(select id from employees where empid=6441	) and leavetypeid=12 and year=2020))	);
+INSERT INTO [dbo].[Leaves] 
+VALUES((select id from employees where empid=6423),
+(select ControllingAuthority from employees where empid=6423),
+(select SanctioningAuthority from employees where empid=6423),12,'2020-04-24','2020-04-24','Leave Applied','Could not attend duties due to lockdown',
+123456,GETDATE(),'Pending',	1,	1,GETDATE(),2020,'','',
+'LOP',(select Branch from employees where empid=6423),
+(select Department from employees where empid=6423),
+(select CurrentDesignation from employees where empid=6423),((select leavebalance from EmpLeaveBalance where empid =(select id from employees where empid=6423	) and leavetypeid=12 and year=2020))	);
+INSERT INTO [dbo].[Leaves] 
+VALUES((select id from employees where empid=6418),
+(select ControllingAuthority from employees where empid=6418),
+(select SanctioningAuthority from employees where empid=6418),12,'2020-03-27','2020-04-01','Leave Applied','Could not attend duties due to lockdown',
+123456,GETDATE(),'Pending',	6,	6,GETDATE(),2020,'','',
+'LOP',(select Branch from employees where empid=6418),
+(select Department from employees where empid=6418),
+(select CurrentDesignation from employees where empid=6418),((select leavebalance from EmpLeaveBalance where empid =(select id from employees where empid=6418	) and leavetypeid=12 and year=2020))	);
+INSERT INTO [dbo].[Leaves] 
+VALUES((select id from employees where empid=6420),
+(select ControllingAuthority from employees where empid=6420),
+(select SanctioningAuthority from employees where empid=6420),12,'2020-04-01','2020-04-01','Leave Applied','Could not attend duties due to lockdown',
+123456,GETDATE(),'Pending',	1,	1,GETDATE(),2020,'','',
+'LOP',(select Branch from employees where empid=6420),
+(select Department from employees where empid=6420),
+(select CurrentDesignation from employees where empid=6420),((select leavebalance from EmpLeaveBalance where empid =(select id from employees where empid=6420	) and leavetypeid=12 and year=2020))	);
+INSERT INTO [dbo].[Leaves] 
+VALUES((select id from employees where empid=6446),
+(select ControllingAuthority from employees where empid=6446),
+(select SanctioningAuthority from employees where empid=6446),12,'2020-04-06','2020-04-17','Leave Applied','Could not attend duties due to lockdown',
+123456,GETDATE(),'Pending',	12,	12,GETDATE(),2020,'','',
+'LOP',(select Branch from employees where empid=6446),
+(select Department from employees where empid=6446),
+(select CurrentDesignation from employees where empid=6446),((select leavebalance from EmpLeaveBalance where empid =(select id from employees where empid=6446	) and leavetypeid=12 and year=2020))	);
+INSERT INTO [dbo].[Leaves] 
+VALUES((select id from employees where empid=6443),
+(select ControllingAuthority from employees where empid=6443),
+(select SanctioningAuthority from employees where empid=6443),12,'2020-04-01','2020-04-02','Leave Applied','Could not attend duties due to lockdown',
+123456,GETDATE(),'Pending',	2,	2,GETDATE(),2020,'','',
+'LOP',(select Branch from employees where empid=6443),
+(select Department from employees where empid=6443),
+(select CurrentDesignation from employees where empid=6443),((select leavebalance from EmpLeaveBalance where empid =(select id from employees where empid=6443	) and leavetypeid=12 and year=2020))	);
+
+-------------------------------------------------------------------------------------------------------------------------
+
+update EmpLeaveBalance set LeaveBalance=(	(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=	6428	and LeaveTypeId=12) and year=2020)+8) where LeaveTypeId=12 and empid=(select id from employees where empid=	6428	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=(	(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=	6453	and LeaveTypeId=12) and year=2020)+1) where LeaveTypeId=12 and empid=(select id from employees where empid=	6453	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=(	(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=	6443	and LeaveTypeId=12) and year=2020)+1) where LeaveTypeId=12 and empid=(select id from employees where empid=	6443	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=(	(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=	6441	and LeaveTypeId=12) and year=2020)+2) where LeaveTypeId=12 and empid=(select id from employees where empid=	6441	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=(	(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=	6423	and LeaveTypeId=12) and year=2020)+1) where LeaveTypeId=12 and empid=(select id from employees where empid=	6423	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=(	(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=	6418	and LeaveTypeId=12) and year=2020)+6) where LeaveTypeId=12 and empid=(select id from employees where empid=	6418	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=(	(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=	6420	and LeaveTypeId=12) and year=2020)+1) where LeaveTypeId=12 and empid=(select id from employees where empid=	6420	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=(	(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=	6446	and LeaveTypeId=12) and year=2020)+12) where LeaveTypeId=12 and empid=(select id from employees where empid=	6446	) and year=2020;
+update EmpLeaveBalance set LeaveBalance=(	(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=	6443	and LeaveTypeId=12) and year=2020)+2) where LeaveTypeId=12 and empid=(select id from employees where empid=	6443	) and year=2020;

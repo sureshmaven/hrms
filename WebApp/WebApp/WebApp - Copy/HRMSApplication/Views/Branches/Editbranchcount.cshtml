@@ -1,0 +1,240 @@
+﻿@model Entities.BranchStaffCount
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.RolePages = TempData["RolePages"];
+    var rolepages = TempData["RolePages"].ToString();
+}
+
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-heading">
+            @{
+                <ul class="nav nav-tabs">
+                    @if (rolepages.Contains("MABAN"))
+                    {
+                        <li><a href="@Url.Action("Create", "Banks")" data-toggle="tab" id="1">Bank</a></li>}
+                    @if (rolepages.Contains("MABRA"))
+                    {
+                        <li><a href=@Url.Action("Create","Branches")>Branch</a></li>}
+
+                    @if (rolepages.Contains("MADEP"))
+                    {
+                        <li><a href=@Url.Action("Create", "Departments")>Department</a></li>}
+                    @if (rolepages.Contains("MADES"))
+                    {
+                        <li><a href=@Url.Action("Create", "Designations")>Designation</a></li>}
+                    @if (rolepages.Contains("MAROL"))
+                    {
+                        <li><a href=@Url.Action("Create", "Roles")>Role</a></li>}
+                    @if (rolepages.Contains("MALTY"))
+                    {
+                        <li><a href=@Url.Action("Create", "LeaveTypes")>LeaveType</a></li>}
+                    @if (rolepages.Contains("MAHLI"))
+                    {
+                        <li><a href=@Url.Action("Create", "HolidayLists")>HolidayList</a></li>}
+                    @if (rolepages.Contains("MACDL"))
+                    {
+                        <li><a href=@Url.Action("CreditDebitleaves", "MyLeaves")>Credit / Debit leaves</a></li>}
+                    @if (rolepages.Contains("MABCY"))
+                    {
+                        <li class="active"><a href=@Url.Action("Createbranchcount", "Branches")>Branch Category</a></li>}
+                    @if (rolepages.Contains("MAODY"))
+                    {
+                        <li><a href=@Url.Action("OtherdutyCreate", "LeaveTypes")>Other Duty</a></li>}
+                    @if (rolepages.Contains("MABPD"))
+                    {
+                        <li><a href=@Url.Action("Create", "BlockPeriod")>BlockPeriod</a></li>}
+                    @if (rolepages.Contains("MANES"))
+                    {
+                        <li><a href=@Url.Action("Create", "News")>News</a></li>}
+                </ul>
+            }
+        </div>
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="branch">
+                    <div class="page_st">
+                        <div class="page">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="main_heading">
+                                    <h1>Branch Category</h1>
+                                    <div>
+                                        @using (Html.BeginForm())
+                                        {
+                                            @Html.AntiForgeryToken()
+
+                                            <div class="col-md-12 col-sm-12 form-horizontal">
+                                                <div class="col-md-5 col-sm-6 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label">Branch Name:<span class="mandatory">*</span></label>
+                                                        <div class="col-sm-7">
+                                                            @Html.DropDownListFor(model => model.Branchid, (SelectList)ViewBag.Name, new { @class = "form-control", @id = "bname", onChange = "brnameone()", onkeypress = "return onlyAlphabets(event)" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-5 col-sm-6 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-5 control-label">Branch Category:<span class="mandatory">*</span></label>
+                                                        <div class="col-sm-7">
+                                                            @Html.DropDownList("Category", new[] {
+                                                           new SelectListItem() {Text = "Silver",Value = "Silver"},
+                                                           new SelectListItem() {Text = "Gold",Value = "Gold"},
+                                                           new SelectListItem() {Text = "Platinum",Value = "Platinum" },
+                                                          }, "Select Category", new { @class = "form-control" })
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-5 col-sm-6 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label">Staff Count :<span class="mandatory">*</span></label>
+                                                        <div class="col-sm-7">
+                                                            @*<input type="text" id="Staffcount" name="Staffcount" class="form-control", onkeypress = "return isNumber(event)" />*@
+                                                            @Html.EditorFor(model => model.Staffcount, new { htmlAttributes = new { @class = "form-control", onkeypress = "return isNumber(event)" } })
+                                                            @Html.ValidationMessageFor(model => model.Staffcount, "", new { @class = "text-danger" })
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-5 col-sm-6 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-5 control-label">Amount Range:<span class="mandatory">*</span></label>
+                                                        <div class="col-sm-7">
+                                                            @Html.EditorFor(model => model.AmountRange, new { htmlAttributes = new { @class = "form-control", @id = "range", onkeypress = "return validatedecimal(this,event);" } })
+                                                            @Html.ValidationMessageFor(model => model.AmountRange, "", new { @class = "text-danger" })
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                                <div class="col-md-10">
+                                                    <div class="pull-right">
+                                                        <input type="reset" value="Cancel" class="btn btn-default" />
+                                                        <input type="submit" value="Update" onclick="return editbranchcountone();" class="btn btn-primary" />
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@{
+    var message = TempData["AlertMessage"] ?? string.Empty;
+}
+<script type="text/javascript">
+ var message = '@message';
+
+if(message) alert(message);
+
+</script>
+
+<script type="text/javascript">
+    function editbranchcountone() {
+        var bname = $("#bname").val();
+        var Category = $("#Category").val();
+        var Staffcount = $("#Staffcount").val();
+        var range = $("#range").val();
+
+        if (bname == "") {
+            alert("Please select Branch Name");
+            return false;
+        } else if (Category == "") {
+            alert("Please select Branch Categeory");
+            return false;
+        } else if (Staffcount == "") {
+            alert("Please enter Staff Count");
+            return false;
+        } else if (range == "") {
+            alert("Please enter  Amount Range");
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+</script>
+
+
+<script>
+    var textBoxValuedeft = document.getElementById("bname").value;
+    function brnameone() {
+        var x = location.hostname;
+        var url = window.location.href
+        var arr = url.split("/");
+        var textBoxValue = document.getElementById("bname").value;
+
+      //  var result = "https://" + arr[2] + "/" + "Branches/EditBranchName?Name=" + textBoxValue;
+          var result = "" + arr[0] +  "//" + arr[2] +  "/"+ "Branches/EditBranchName?Name=" + textBoxValue;
+        $.ajax({
+            type: "GET",
+            url: result,
+
+            dataType: "json",
+            success: function (data) {
+
+                if (data.message == "use") {
+                }
+                if (data.message == "used") {
+
+                    if (textBoxValuedeft == textBoxValue) {
+
+                    } else {
+                        document.getElementById("bname").value = textBoxValuedeft;
+                        alert("This Branch already Exist! Please select other Branch");
+                        return false;
+                    }
+
+                }
+
+            },
+            error: function () {
+
+            }
+        });
+    }
+</script>
+<script>
+    document.getElementById("a2").className = "active";
+
+</script>
+
+<script>
+    function validatedecimal(el, evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+        var number = el.value.split('.');
+        if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        //just one dot (thanks ddlab)
+        if (number.length > 1 && charCode == 46) {
+            return false;
+        }
+        //get the carat position
+        var caratPos = getSelectionStart(el);
+        var dotPos = el.value.indexOf(".");
+        if (caratPos > dotPos && dotPos > -1 && (number[1].length > 1)) {
+            return false;
+        }
+        return true;
+    }
+    function getSelectionStart(o) {
+        if (o.createTextRange) {
+            var r = document.selection.createRange().duplicate()
+            r.moveEnd('character', o.value.length)
+            if (r.text == '') return o.value.length
+            return o.value.lastIndexOf(r.text)
+        } else return o.selectionStart
+    }
+</script>

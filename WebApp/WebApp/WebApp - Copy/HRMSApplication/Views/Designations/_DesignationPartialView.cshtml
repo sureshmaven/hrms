@@ -1,0 +1,349 @@
+﻿@model Entities.ViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.RolePages = TempData["RolePages"];
+    var rolepages = TempData["RolePages"].ToString();
+}
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-heading">
+            @{
+                <ul class="nav nav-tabs">
+                    @if (rolepages.Contains("MABAN"))
+                    {
+                        <li><a href=@Url.Action("Create", "Banks")>Bank</a></li>}
+                    @if (rolepages.Contains("MABRA"))
+                    {
+                        <li><a href=@Url.Action("Create", "Branches")>Branch</a></li>}
+
+                    @if (rolepages.Contains("MADEP"))
+                    {
+                        <li><a href=@Url.Action("Create", "Departments")>Department</a></li>}
+                    @if (rolepages.Contains("MADES"))
+                    {
+                        <li class="active"><a href=@Url.Action("Create", "Designations")>Designation</a></li>}
+                    @if (rolepages.Contains("MAROL"))
+                    {
+                        <li><a href=@Url.Action("Create", "Roles")>Role</a></li>}
+                    @if (rolepages.Contains("MALTY"))
+                    {
+                        <li><a href=@Url.Action("Create", "LeaveTypes")>LeaveType</a></li>}
+                    @if (rolepages.Contains("MAHLI"))
+                    {
+                        <li><a href=@Url.Action("Create", "HolidayLists")>HolidayList</a></li>}
+                    @if (rolepages.Contains("MACDL"))
+                    {
+                        <li><a href=@Url.Action("CreditDebitleaves", "MyLeaves")>Credit / Debit leaves</a></li>}
+                    @if (rolepages.Contains("MABCY"))
+                    {
+                        <li><a href=@Url.Action("Createbranchcount", "Branches")>Branch Category</a></li>}
+                    @if (rolepages.Contains("MAODY"))
+                    {
+                        <li><a href=@Url.Action("OtherdutyCreate", "LeaveTypes")>Other Duty</a></li>}
+                    @if (rolepages.Contains("MABPD"))
+                    {
+                        <li><a href=@Url.Action("Create", "BlockPeriod")>BlockPeriod</a></li>}
+                    @if (rolepages.Contains("MANES"))
+                    {
+                        <li><a href=@Url.Action("Create", "News")>News</a></li>}
+                </ul>
+            }         
+        </div>
+ 
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="desig">
+                    <div class="page_st">
+                        <div class="page">
+                            <div class="col-md-12 col-sm-12">
+                           
+                                    
+                                    <div>
+                                   @using (Html.BeginForm("Create", "Designations", new { FormMethod.Post }))
+                                   {
+                                    @Html.AntiForgeryToken()
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="main_heading">
+                                            <h1>Designation Creation</h1>
+                                            <div class="form-horizontal col-md-offset-3 col-md-6 col-sm-9">
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label">Code:<span class="mandatory">*</span></label>
+                                                        <div class="col-sm-8">
+                                                            @Html.EditorFor(model => model.ldesignations.Code, new { htmlAttributes = new { @class = "form-control", @id = "cod", onBlur = "DesigCode()", onkeypress = "return onlyAlphabets(event)" } })
+                                                            @Html.ValidationMessageFor(model => model.ldesignations.Code, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label">Name:<span class="mandatory">*</span></label>
+                                                        <div class="col-sm-8">
+                                                            @Html.EditorFor(model => model.ldesignations.Name, new { htmlAttributes = new { @class = "form-control", @id = "nam", onBlur = "designame()", onkeypress = "return onlyAlphabets(event)" } })
+                                                            @Html.ValidationMessageFor(model => model.ldesignations.Name, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        @Html.Label("Description:", htmlAttributes: new { @class = "control-label col-sm-4" })
+                                                        <div class="col-sm-8">
+                                                            @Html.TextAreaFor(model => model.ldesignations.Description, new { @class = "form-control", @id = "de" })
+                                                            @Html.ValidationMessageFor(model => model.ldesignations.Description, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="pull-right">
+                                                        <input type="reset" value="Cancel" class="btn btn-default" />
+                                                        <input type="submit" value="Create" Onclick="return designation();" class="btn btn-primary" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        
+                                        </div> 
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="main_heading">
+                                            <h1>Designation List</h1>
+                                            <div class="col-md-12">
+                                                <div class="table-responsive">
+                                                    <div id="grid3"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                   }
+                                    </div>
+                            
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@{
+
+    var message = TempData["AlertMessage"] ?? string.Empty;
+
+}
+
+<script type="text/javascript">
+ var message = '@message';
+
+if(message) alert(message);
+
+</script>
+
+    <script type="text/javascript">
+
+
+        $(document).ready(function () {
+            // prepare the data for Department view
+            var theme = otherTheme;
+            // prepare the data
+            var url = "/Designations/DesignationViews";
+            var source =
+                {
+                    type: "Get",
+                    datatype: "json",
+                    datafields: [
+                       { name: 'Id', type: 'int' },
+                        { name: 'Code', type: 'string' },                   
+                       { name: 'Name', type: 'string' },
+                       { name: 'Description', type: 'string' },
+                    ],
+                    async: false,
+                    url: url,
+                    data: {
+                        featureClass: "P",
+                        style: "full",
+                        username: "jqwidgets"
+                    }
+                };
+            var dataAdapter = new $.jqx.dataAdapter(source,
+                {
+                    formatData: function (data) {
+                        data.ProductName = $("#searchField").val();
+                        return data;
+                    }
+                }
+            );
+            // initialize jqxGrid
+            var editrowindex = -1;
+            var delrowindex = -1;
+            $("#grid3").jqxGrid(
+                {
+                    width: '99.5%',
+                    source: dataAdapter,
+                    theme: otherTheme,// for theme refernce go to Layout.cshtml
+                    autoheight: true,
+                    sortable: true,
+                    pageable: true,
+                    columnsResize: true,
+                    altRows: true,
+                    filterable: true,
+                    autoshowfiltericon: true,
+
+                    ready: function () {
+                        $("#grid3").jqxGrid('localizestrings', localizationObject);
+                    },
+                    updatefilterconditions: function (type, defaultconditions) {
+                        switch (type) {
+                            case 'stringfilter':
+                                return stringcomparisonoperators;
+                            case 'numericfilter':
+                                return numericcomparisonoperators;
+                            case 'datefilter':
+                                return datecomparisonoperators;
+                            case 'booleanfilter':
+                                return booleancomparisonoperators;
+                        }
+                    },
+                    updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                        filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                        var index1 = 0;
+                        var index2 = 0;
+                        if (columnfilter != null) {
+                            var filter1 = columnfilter.getfilterat(0);
+                            var filter2 = columnfilter.getfilterat(1);
+                            if (filter1) {
+                                index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                                var value1 = filter1.filtervalue;
+                                filterinputfield1.val(value1);
+                            }
+                            if (filter2) {
+                                index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                                var value2 = filter2.filtervalue;
+                                filterinputfield2.val(value2);
+                            }
+                        }
+                        filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                        filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                    },
+                    columns: [
+                    { text: "Designation Code", datafield: "Code", editable: false, width: 300 },
+                    { text: "Name", datafield: "Name", editable: false, width: 300 },
+                   { text: "Description", datafield: "Description", editable: false, width: 320 },
+
+
+                        {
+                            text: 'Edit', datafield: 'Edit', sortable: false, filterable: false, columngroup: 'Actions', columntype: 'button', width: 60, cellsrenderer: function (row) {
+                                return "Edit";
+
+                            }, buttonclick: function (row) {
+                                editrowindex = row;
+                                var paginginformation = $('#grid3').jqxGrid('getpaginginformation');
+                                var id = $("#grid3").jqxGrid('getcellvalue', row, "Id");
+                                window.location = '/Designations/Edit/?id=' + id + '&page=' + paginginformation.pagenum;
+                            }
+                        },
+                        {
+                            text: 'Delete', datafield: 'Delete', columngroup: 'Actions', sortable: false, filterable: false, columntype: 'button', name: 'delete', width: 60, cellsrenderer: function () {
+                                return "Delete";
+
+                            },
+                            buttonclick: function (row) {
+                                var res = confirm("Do You Want to Delete");
+                                if (res) {
+                                    delrowindex = row;
+                                    var id = $("#grid3").jqxGrid('getcellvalue', row, "Id");
+
+                                    var paginginformation = $('#grid3').jqxGrid('getpaginginformation');
+                                    window.location = '/Designations/Delete/?id=' + id + '&page=' + paginginformation.pagenum;
+                                }
+                                else
+                                    return res;
+                            }
+
+                        }
+                    ],
+                    columngroups:
+                    [
+                        { text: 'Action', align: 'center', name: 'Actions', width: 120 },
+                    ],
+                });
+        });
+
+    </script>
+
+<script>
+function DesigCode() {
+    var x = location.hostname;
+    var url = window.location.href
+    var arr = url.split("/");
+    var textBoxValue = document.getElementById("cod").value;
+
+    //var result = "https://" + arr[2] + "/" + "Designations/Checkdesigcode?Code=" + textBoxValue;
+     var result = "" + arr[0] +  "//" + arr[2] +  "/"+ "Designations/Checkdesigcode?Code=" + textBoxValue;
+    $.ajax({
+        type: "GET",
+        url: result,
+
+        dataType: "json",
+        success: function (data) {
+
+            if (data.message == "use") {
+
+            }
+            if (data.message == "used") {
+
+                document.getElementById("cod").value = "";
+
+                alert("This Designation Code already Exist!");
+            }
+
+        },
+        error: function () {
+
+        }
+    });
+
+
+}
+</script>
+<script>
+function designame() {
+    var x = location.hostname;
+    var url = window.location.href
+    var arr = url.split("/");
+    var textBoxValue = document.getElementById("nam").value;
+
+ //   var result = "https://" + arr[2] + "/" + "Designations/Checkdesig?Name=" + textBoxValue;
+     var result = "" + arr[0] +  "//" + arr[2] +  "/"+ "Designations/Checkdesig?Name=" + textBoxValue;
+
+    $.ajax({
+        type: "GET",
+        url: result,
+
+        dataType: "json",
+        success: function (data) {
+
+            if (data.message == "use") {
+
+            }
+            if (data.message == "used") {
+
+                document.getElementById("nam").value = "";
+
+                alert("This Designation Name already Exist!");
+            }
+
+        },
+        error: function () {
+
+        }
+    });
+
+
+}
+</script>
+<script>
+    document.getElementById("a2").className = "active";
+
+</script>

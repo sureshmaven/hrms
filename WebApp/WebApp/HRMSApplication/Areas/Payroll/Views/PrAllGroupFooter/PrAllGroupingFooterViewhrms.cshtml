@@ -1,0 +1,708 @@
+﻿@using HRMSApplication.Helpers;
+
+@{
+    /**/
+
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+    var fm = ViewBag.fm;
+    var rolepages = TempData["RolePages"].ToString();
+    ViewBag.RolePages = TempData["RolePages"];
+    var reportTitle = ViewBag.ReportTitle;
+    ViewBag.Title = reportTitle + " Report";
+    var dataUrl = ViewBag.DataUrl;
+    var ExportColumns = ViewBag.ExportColumns;
+    var PdfOrientation = ViewBag.PdfOrientation;
+
+
+}
+@*<style>
+        #rptGrid th {
+            display: none;
+        }
+    </style>*@
+<link href="~/Assets/css/style.css" rel="stylesheet" />
+@*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/css/bootstrap-select.min.css">*@
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/js/bootstrap-select.min.js"></script>*@
+<style>
+
+    .headingpf {
+        background: #3a4651;
+        color: #ffffff;
+        align-content: center;
+        padding: 7px 0px 10px 275px;
+    }
+    .nav-tabs > li > a {
+        color: #fff;
+    }
+
+    .panel-primary {
+        border-color: #337ab7;
+        margin-top: 14px;
+    }
+
+    #menuheader {
+        display: none;
+    }
+
+    table.dataTable thead th, table.dataTable thead td {
+        padding: 7px 35px;
+        border-bottom: 1px solid #111;
+    }
+
+    #gridPaySlip i {
+        font-size: 13px;
+    }
+
+    .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+        background: rgba(251,180,76,0.9) !important;
+        border-radius: 14px;
+    }
+
+    .navbar-nav li > a:before, .navbar-nav li > a:after {
+        display: none !important;
+    }
+
+    .header-grid-left img:before {
+        display: none;
+    }
+
+    .header-grid-left strong {
+        float: right;
+        margin: 0 10px 0 5px;
+    }
+
+    .header-grid-left ul li {
+        float: left;
+        font-size: 12px;
+        margin: 2px 5px 0px 22px !important;
+        line-height: 12px;
+    }
+
+    .header-grid-left img {
+        border-radius: 50%;
+        width: 20%;
+        margin: -4px 8px 0 0;
+    }
+
+    tr.tdbg {
+        background: #3a4651;
+        color: white;
+        border: inherit;
+    }
+</style>
+@{
+    string rolepages1 = ViewBag.RolePages;
+}
+
+<div id="menuheader1" class="header">
+    <div class="container">
+        <div class="logo-nav">
+            <div class="logo-nav-left col-md-2 col-sm-2 col-xs-12">
+                @{
+
+                    <a href="@Url.Action("Index", "DashBoard")"><img src="~/Assets/images/logo.png" /></a>
+
+
+
+                }
+            </div>
+            <div class="logo-nav-left1 col-md-10 col-sm-10">
+                <div class="row">
+                    <div class="header-grid">
+                        <div class="header-grid-left">
+                            <ul>
+                                <li class="prhide"><i class="glyphicon glyphicon-file" aria-hidden="true"></i><a href="@Url.Action("Policies", "Home")">Policies</a></li>
+                                @*<li><i class="glyphicon glyphicon-file" aria-hidden="true"></i><a href="@Url.Action("Terms", "Home")">Terms of Use</a></li>*@
+                                <li class="prhide"><i class="glyphicon glyphicon-earphone" aria-hidden="true"></i><a href="@Url.Action("Help", "Home")">Help</a></li>
+                                @{
+                                    var lActiveEmployee = Session.GetDataFromSession<string>("EmpFullName");
+                                    var lActiveImage = Session.GetDataFromSession<string>("ActiveImage");
+                                    if (lActiveImage != "" || lActiveImage != null)
+                                    {
+                                        <li><img style="width:30px; height:30px;" src="~/uploads/@lActiveImage" />Welcome! <strong> @lActiveEmployee </strong></li>
+                                    }
+                                    else
+                                    {
+                                        <li><img style="width:30px; height:30px;" src="~/uploads/m.png" />Welcome! <strong> @lActiveEmployee </strong></li>
+                                    }
+                                }
+                                <li><i class="glyphicon glyphicon-log-in" aria-hidden="true"></i><a href="@Url.Action("Logout", "Home" )" class="login">Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <nav class="navbar navbar-default">
+
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse" data-target="#bs-megadropdown-tabs">Menu <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+                        </div>
+                        <div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
+                            <ul class="nav navbar-nav">
+                                @{
+
+                                    if (rolepages != null)
+                                    {
+
+                                        if (rolepages.Contains("DBMain"))
+                                        {
+                                            <li id="a9"><a href="@Url.Action("Index", "DashBoard")">DashBoard</a></li>
+                                        }
+                                        if (rolepages.Contains("EDMain"))
+                                        {
+                                            <li id="a9"><a href="@Url.Action("EmployeeDashBoard", "DashBoard")">DashBoard</a></li>
+                                        }
+                                        if (rolepages.Contains("MPMain"))
+                                        {
+                                            <li id="a3"><a href="@Url.Action("ViewProfile", "Register")">My Profile</a></li>
+                                        }
+                                        if (rolepages.Contains("LEMain"))
+                                        {
+                                            <li id="a4"><a href="@Url.Action("LeaveRequest","LeaveApply")">Leaves</a></li>
+                                        }
+                                        if (rolepages.Contains("ODMain"))
+                                        {
+                                            <li id="a7"><a href="@Url.Action("Index","Duty")">OD</a></li>
+                                        }
+                                        if (rolepages.Contains("LTMain"))
+                                        {
+                                            <li id="a8"><a href="@Url.Action("Index", "LeaveTravel")">LTC</a></li>
+                                        }
+                                        if (rolepages.Contains("PLMain"))
+                                        {
+                                            <li id="a10"><a href="@Url.Action("Index", "PLE_Type")">PL Encashment</a></li>
+                                        }
+                                        if (rolepages.Contains("WDMain"))
+                                        {
+                                            <li id="a11"><a href="@Url.Action("Index", "WorkDiary")">WorkDiary</a></li>
+                                        }
+                                        if (rolepages.Contains("WDAPLMain"))
+                                        {
+                                            <li id="a11"><a href=@Url.Action("WorkApproval", "WorkDiary")>WorkDiary</a></li>
+                                        }
+                                        if (rolepages.Contains("WDSHYMain"))
+                                        {
+                                            <li id="a11">  <a href=@Url.Action("SanctionWorkApproval", "WorkDiary")>WorkDiary</a></li>
+                                        }
+                                        @*if (rolepages.Contains("TsheetMain"))
+                                        {
+                                            <li id="at"><a href="@Url.Action("Timesheetrequestform", "TimeSheet")">TimeSheet Manual Form</a></li>
+                                        }*@
+
+                                        if (rolepages.Contains("Payslip"))
+                                        {
+                                            <li id="at" class="active"><a href="@Url.Action("PayslipReporthrms", "PrAllReports")">Payroll</a></li>
+
+                                        }
+                                        @*if (rolepages.Contains("PRMain"))
+                                            {
+                                                <li id="at"><a href="@Url.Action("Index", "Payroll")">payroll</a></li>}*@
+                                        @*if (rolepages.Contains("POMain"))
+                                            {
+                                                <li id="a5"><a href="@Url.Action("Policies", "Home")">Policies</a></li>}*@
+                                        if (rolepages.Contains("ADMain"))
+                                        {
+                                            <li id="a1"><a href="@Url.Action("InsertEmployees", "Register")">Admin</a></li>
+                                        }
+                                        if (rolepages.Contains("MAMain"))
+                                        {
+
+                                            <li id="a2"><a href="@Url.Action("Create","Banks")">Master</a></li>
+                                        }
+                                        if (rolepages.Contains("MABlock"))
+                                        {
+                                            <li id="a2"><a href="@Url.Action("Create", "BlockPeriod")">Master</a></li>
+                                        }
+                                        if (rolepages.Contains("MANews"))
+                                        {
+                                            <li id="a2"><a href="@Url.Action("Create", "News")">Master</a></li>
+                                        }
+
+                                        if (rolepages.Contains("RPMain"))
+                                        {
+                                            <li id="a6"><a href="@Url.Action("Index", "AllReports")">Reports</a></li>
+                                        }
+
+
+
+                                        @*if (rolepages.Contains("TsheetApp"))
+                                            {
+                                                <li id="at1"><a href=@Url.Action("TSApprovalView", "TimeSheet")>TS Approvals</a></li>}*@
+                                    }
+                                }
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-heading">
+            @{
+                <ul class="nav nav-tabs">
+                    @if (rolepages.Contains("Payslip"))
+                    {
+                        <li><a href="@Url.Action("PayslipReporthrms", "PrAllReports")">Payslip</a></li>
+                    }
+                    @if (rolepages.Contains("Payslip"))
+                    {
+                        <li id="at" class="active"><a href="@Url.Action("Pfcontributioncardhrms", "PrAllGroupFooter")">PF ContributionCard</a></li>
+                    }
+                    @if (rolepages.Contains("Payslip"))
+                    {
+                        <li><a href="@Url.Action("TDSReporthrms", "PrAllReports")">TDS</a></li>
+                    }
+                    @*@if (rolepages.Contains("Payslip"))
+                        {
+                            <li><a href="@Url.Action("SingleRateLoanOutStandinghrms", "PrAllGroupFooter")">Single Rate</a></li>
+                        }*@
+                </ul>
+            }
+        </div>
+    </div>
+    <div class="page_st">
+
+        <div class="page">
+            <div class="form-horizontal form-horizontal2">
+                <div class="page_start">
+                    <div class="leftmenu-container">
+                        <div class="sidebar-content">
+                            <div class="main_heading heading_main">
+                                <h1>@ViewBag.ReportTitle</h1>
+                                <div class="col-md-12">
+                                    <div class="fancy-collapse-panel">
+                                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                            <div class="panel panel-default">
+                                                <div id="reportsearch" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                                    <div class="panel-body">
+                                                        <div class="reports_search">
+                                                            <div class="rep_down_fields">
+                                                                @{
+
+
+
+                                                                    if (ViewBag.ReportFiltersTemplate == "GroupingTPFINSTCAL-AllEmpSearchOneMultiSelOneDropdown")
+                                                                    {
+                                                                        <div id="testTable">
+                                                                            <div class="col-md-12">
+                                                                                @*<div class="col-md-4">
+                                                                                    <label class="control-label">UAN NO :</label>
+                                                                                    <label class="control-label" id="UANnumber"></label>
+                                                                                </div>
+                                                                                <div class="col-md-8">
+                                                                                    <label class="control-label">PF NO :</label>
+                                                                                    <label class="control-label" id="PFnumber"></label>
+                                                                                </div>*@
+                                                                                <div class="col-md-12 headingpf">
+                                                                                    PROVIDENT FUND BALANCE STATEMENT OF <u>@ViewBag.Empname  (@ViewBag.empcode)</u>   <label><u>PF NO :</u></label> 
+                                                                                    <label id="PFnumber"></label>     <label><u>UAN NO :</u></label>   <label id="UANnumber"></label>
+
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="clearfix"></div>
+                                                                            <div class="col-md-12">
+                                                                                <div class="table-responsive">
+                                                                                    <table class="table ob-tablehrms">
+                                                                                        <tr>
+                                                                                            </tr>
+                                                                                        <tr class="tdbg">
+                                                                                            <td><b>SNO</b></td>
+                                                                                            <td><b>DESCRIPTION</b></td>
+                                                                                            <td><b>OWN SHARE</b></td>
+                                                                                            <td><b>VPF</b></td>
+                                                                                            <td><b>BANK SHARE</b></td>
+                                                                                            <td><b>TOTAL</b></td>
+                                                                                        </tr>
+
+                                                                                        <tr>
+                                                                                            <td>1</td>
+                                                                                            <td><label class="control-label">CONTRIBUTION</label></td>
+                                                                                            <td><label class="control-label" id="ownshare"></label></td>
+                                                                                            <td><label class="control-label" id="fund_vpf"></label></td>
+                                                                                            <td><label class="control-label" id="bankshare"></label></td>
+                                                                                            <td><label class="control-label" id="contotal"></label></td>
+
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>2</td>
+                                                                                            <td><label class="control-label">INTEREST</label></td>
+                                                                                            <td><label class="control-label" id="inst_own"></label></td>
+                                                                                            <td><label class="control-label" id="inst_vpf"></label></td>
+                                                                                            <td><label class="control-label" id="inst_bank"></label></td>
+                                                                                            <td><label class="control-label" id="inttotal"></label></td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>3</td>
+                                                                                            <td><label class="control-label"><b>TOTAL FUND</b></label></td>
+                                                                                            <td style="font-family:bold"><label class="control-label" id="own_inst"></label></td>
+                                                                                            <td style="font-family:bold"><label class="control-label" id="vpf_inst"></label></td>
+                                                                                            <td style="font-family:bold"><label class="control-label" id="bank_inst"></label></td>
+                                                                                            <td style="font-family:bold"><label class="control-label" id="tttotal"></label></td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>4</td>
+                                                                                            <td><label class="control-label"><b>NR WITHDRAWALS AVAILED</b></label></td>
+                                                                                            <td style="font-family:bold"><label class="control-label" id="prev_own"></label></td>
+                                                                                            <td style="font-family:bold"><label class="control-label" id="prev_vpf"></label></td>
+                                                                                            <td style="font-family:bold"><label class="control-label" id="prev_bank"></label></td>
+                                                                                            <td style="font-family:bold"><label class="control-label" id="totalnravail"></label></td>
+                                                                                        </tr>
+              
+                                                                                        <tr>
+                                                                                            <td>5</td>
+                                                                                            <td><label class="control-label"><b>REFUNDABLE ADVANCES DUES</b></label></td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td></td>
+                                                                                            <td><label class="control-label">PF ADVANCE-1</label></td>
+                                                                                            <td><label class="control-label" id="Outpf1"></label></td>
+                                                                                            <td><label class="control-label" id="vpf_pf1">0.00</label></td>
+
+                                                                                            <td><label class="control-label" id="svpf_pf1">0.00</label></td>
+                                                                                            <td><label class="control-label" id="pftotal1">0.00</label></td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td></td>
+                                                                                            <td><label class="control-label">PF ADVANCE-2</label></td>
+                                                                                            <td><label class="control-label" id="Outpf2"></label></td>
+                                                                                            <td><label class="control-label" id="vpf_pf2">0.00</label></td>
+
+                                                                                            <td><label class="control-label" id="svpf_pf2">0.00</label></td>
+                                                                                            <td><label class="control-label" id="pftotal2">0.00</label></td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td></td>
+                                                                                            <td><label class="control-label" id="totalpfadv0"></label></td>
+                                                                                            <td style="font-family:bold"><label class="control-label" id="totalpfadv1"></label></td>
+                                                                                            <td style="font-family:bold"><label class="control-label" id="totalpfadv2">0.00</label></td>
+
+                                                                                            <td style="font-family:bold"><label class="control-label" id="totalpfadv3">0.00</label></td>
+                                                                                            <td style="font-family:bold"><label class="control-label" id="totalpfadv4"></label></td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>6</td>
+                                                                                            <td><label class="control-label"><b>NET REFUND AS ON DATE</b></label></td>
+                                                                                            <td style="font-family:bold"><label class="control-label" id="totalpfnet"></label></td>
+                                                                                            <td style="font-family:bold"><label class="control-label" id="tvpf_instnet"></label></td>
+
+                                                                                            <td style="font-family:bold"><label class="control-label" id="tbank_instnet"></label></td>
+                                                                                            <td style="font-family:bold"><label class="control-label" id="totalpftotalnet"></label></td>
+                                                                                        </tr>
+                                                                                        @*<tr>
+            <td><label class="control-label">D.TOTAL(A-(B+C))</label></td>
+            <td><label class="control-label" id="dtotal">0</label></td>
+            <td><label class="control-label" id="dtotal1">0</label></td>
+            <td><label class="control-label" id="dtotal2">0</label></td>
+        </tr>*@
+                                                                                        @*<tr>
+            <td><label class="control-label">TOTAL(OwnShare+BankShare)</label></td>
+            <td><label class="control-label" id="totalfinal"></label></td>
+            <td><label class="control-label"></label></td>
+            <td><label class="control-label"></label></td>
+        </tr>*@
+                                                                                    </table>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-12">
+                                                                            <input type="button" class="btn btn-primary" onclick="tableToExcel('testTable', 'PF Contribution')" value="Export to Excel">
+
+                                                                        </div>
+                                                                        <div class="clearfix"></div>
+                                                                    }
+
+
+
+
+
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var tableToExcel = (function () {
+        debugger;
+        var uri = 'data:application/vnd.ms-excel;base64,'
+            , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>{table}</table></body></html>'
+            , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
+            , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) }
+        return function (table, name) {
+            debugger;
+            if (!table.nodeType) table = document.getElementById(table)
+            var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML }
+            window.location.href = uri + base64(format(template, ctx))
+        }
+    })()
+</script>
+<script>
+
+    $(document).ready(function () {
+        $('#txtAllEmpSearchforLoansAndSchedules2').hide();
+        $('#txtAllEmpSearchforLoansAndSchedules1').hide();
+        $('#txtAllEmpSearchforBranchs').hide();
+        $('#checkboxAll').prop('checked', false);
+        //setTimeout(pageInitLoad(), 2000);
+    });
+
+
+</script>
+<script>
+    var ReportColumnsCount = '@ViewBag.ReportColumnsCount';
+    var ReportFooterColumnsCount = '@ViewBag.ReportFooterColumnsCount';
+    var reportMsgTop = '';
+    var fnMessageTop = function () {
+        return (reportMsgTop == '' ? '' : 'Filters : ' + reportMsgTop);
+    };
+    var pdf = '@ViewBag.Removepdf';
+    $(document).ready(function () {
+
+            setTimeout(pffundpageInitLoad(), 2000);
+
+    });
+    function pffundpageInitLoad() {
+        var serviceurl = '@dataUrl';
+        serviceurl = serviceurl.replace('&amp;', '&');
+
+            $.ajax({
+                url: serviceurl,
+                cache: false,
+                success: function (respData) {
+                   // alert("success");
+                    orgData = respData;
+                    fillDataobshare(respData);
+
+                }
+            });
+        };
+
+        function fillDataobshare(respData) {
+            debugger;
+        if (respData.startsWith("E#")) {
+            showGlobalModal("I#Required Field#Data Not Found.");
+            //setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+        } else {
+            debugger;
+            var resUAN = [];
+            var resShare = [];
+            var resInst = [];
+            var resPrev = [];
+            var resPres = [];
+            var respf1 = [];
+            var respf2 = [];
+            var dataObj = JSON.parse(respData);
+            var dataobj1 = JSON.parse(dataObj);
+            resUAN.push(dataobj1.UanData1);
+            console.log(resUAN);
+            resShare.push(dataobj1.share);
+            resInst.push(dataobj1.inst);
+            resPrev.push(dataobj1.prev);
+            resPres.push(dataobj1.pres);
+            respf1.push(dataobj1.pf1);
+            respf2.push(dataobj1.pf2);
+            var UanData = resUAN[0];
+            var shareData = resShare[0];
+            var instData = resInst[0];
+            var prevData = resPrev[0]
+            var presData = resPres[0];
+            var pf1 = respf1[0];
+            var pf2 = respf2[0];
+            var uan = UanData[0];
+            var share = shareData[0];
+            var inst = instData[0];
+            var prev = prevData[0];
+            console.log(prev);
+            var pres = presData[0];
+            var Opf1 = pf1;
+            var Opf2 = pf2;
+            var p1 = "";
+            var p2 = "";
+            var p = "0";
+
+            if (Opf1 != "") {
+                p1 = Opf1;
+            }
+            else {
+                p1 = p;
+            }
+            if (Opf2 != "") {
+                p2 = Opf2;
+            }
+            else {
+                p2 = p;
+            }
+            debugger;
+            if (prev.prev_own != "" || prev.prev_own != undefined) {
+                prev.prev_own = prev.prev_own;
+            }
+            else {
+                prev.prev_own = "0"
+            }
+            if (prev.prev_vpf != "" || prev.prev_vpf != undefined) {
+                prev.prev_vpf = prev.prev_vpf;
+            }
+            else {
+                prev.prev_vpf = "0"
+            }
+            if (prev.prev_bank != "" || prev.prev_bank != undefined) {
+                prev.prev_bank = prev.prev_bank;
+            }
+            else {
+                prev.prev_bank = "0"
+            }
+            if (pres != undefined) {
+                if (pres.pres_own != "" || pres.pres_own != undefined) {
+                    pres.pres_own = pres.pres_own;
+                }
+                else {
+                    pres.pres_own = "0"
+                }
+                if (pres.pres_vpf != "" || pres.pres_vpf != undefined) {
+                    pres.pres_vpf = pres.pres_vpf;
+                }
+                else {
+                    pres.pres_vpf = "0"
+                }
+                if (pres.pres_bank != "" || pres.pres_bank != undefined) {
+                    pres.pres_bank = pres.pres_bank;
+                }
+                else {
+                    pres.pres_bank = "0"
+                }
+            }
+            document.getElementById("UANnumber").innerHTML = uan.UAN;
+            document.getElementById("PFnumber").innerHTML = uan.PF;
+            document.getElementById("ownshare").innerHTML = parseFloat(share.fund_own).toFixed(2);
+            document.getElementById("bankshare").innerHTML = parseFloat(share.fund_bank).toFixed(2);
+            document.getElementById("fund_vpf").innerHTML = parseFloat(share.fund_vpf).toFixed(2);
+ document.getElementById("contotal").innerHTML=(parseFloat(share.fund_own) + parseFloat(share.fund_bank)+ parseFloat(share.fund_vpf)).toFixed(2);
+            //fund_vpf
+
+            //2. Interest
+            document.getElementById("inst_own").innerHTML = inst.ist_own;
+            document.getElementById("inst_bank").innerHTML = inst.ist_bank;
+            document.getElementById("inst_vpf").innerHTML = inst.ist_vpf;
+            document.getElementById("inttotal").innerHTML=(parseFloat(inst.ist_own) + parseFloat(inst.ist_bank)+ parseFloat(inst.ist_vpf)).toFixed(2);
+
+
+
+            //3. Fund + Interest
+            document.getElementById("own_inst").innerHTML = (parseFloat(share.fund_own) + parseFloat(inst.ist_own)).toFixed(2);
+            document.getElementById("bank_inst").innerHTML = (parseFloat(share.fund_bank) + parseFloat(inst.ist_bank)).toFixed(2);
+            document.getElementById("vpf_inst").innerHTML = (parseFloat(share.fund_vpf) + parseFloat(inst.ist_vpf)).toFixed(2);
+            document.getElementById("tttotal").innerHTML =((parseFloat(share.fund_own) + parseFloat(share.fund_bank)+ parseFloat(share.fund_vpf))+(parseFloat(inst.ist_own) + parseFloat(inst.ist_bank)+ parseFloat(inst.ist_vpf))).toFixed(2);
+            debugger;
+            //4. Prev year available
+            document.getElementById("prev_own").innerHTML = (parseFloat(prev.prev_own) + parseFloat(pres.pres_own)).toFixed(2);
+            document.getElementById("prev_vpf").innerHTML = (parseFloat(prev.prev_vpf) + parseFloat(pres.pres_vpf)).toFixed(2);
+            document.getElementById("prev_bank").innerHTML = (parseFloat(prev.prev_bank) + parseFloat(pres.pres_bank)).toFixed(2);
+            document.getElementById("totalnravail").innerHTML = ((parseFloat(prev.prev_own)) + parseFloat(pres.pres_own) + (parseFloat(prev.prev_vpf)) + parseFloat(pres.pres_vpf) + (parseFloat(prev.prev_bank) + parseFloat(pres.pres_bank))).toFixed(2);
+            //5. Pres year available
+           // debugger;
+            //if (pres != undefined) {
+
+            //    document.getElementById("Outpf1").innerHTML = pres.pf1;
+            //    document.getElementById("Outpf2").innerHTML = pres.pf2;
+            //    document.getElementById("pres_own").innerHTML = pres.pres_own;
+            //    document.getElementById("pres_vpf").innerHTML = pres.pres_vpf;
+            //    document.getElementById("pres_bank").innerHTML = pres.pres_bank;
+            //} else {
+            //   // debugger;
+            //    document.getElementById("Outpf1").innerHTML = "0.00";
+            //    document.getElementById("Outpf2").innerHTML = "0.00";
+            //    document.getElementById("pres_own").innerHTML = "0.00";
+            //    document.getElementById("pres_vpf").innerHTML = "0.00";
+            //    document.getElementById("pres_bank").innerHTML = "0.00";
+
+            //}
+
+
+            document.getElementById("Outpf1").innerHTML = parseFloat(Opf1).toFixed(2);
+            document.getElementById("Outpf2").innerHTML = parseFloat(Opf2).toFixed(2);
+            document.getElementById("pftotal1").innerHTML = parseFloat(Opf1).toFixed(2);
+            document.getElementById("pftotal2").innerHTML = parseFloat(Opf2).toFixed(2);
+            document.getElementById("totalpfadv1").innerHTML =(parseFloat(Opf1) + parseFloat(Opf2)).toFixed(2);
+            document.getElementById("totalpfadv4").innerHTML = (parseFloat(Opf1) + parseFloat(Opf2)).toFixed(2);
+            
+            
+
+            debugger;
+            //document.getElementById("prev_own").innerHTML = prev.prev_own;
+            //document.getElementById("prev_vpf").innerHTML = prev.prev_vpf;
+            //document.getElementById("prev_bank").innerHTML = prev.prev_bank;
+            document.getElementById("totalpfnet").innerHTML = ((parseFloat(share.fund_own) + parseFloat(inst.ist_own)) - (parseFloat(prev.prev_own) + parseFloat(pres.pres_own)) - (parseFloat(Opf1) + parseFloat(Opf2))).toFixed(2);
+            document.getElementById("tvpf_instnet").innerHTML = ((parseFloat(share.fund_vpf) + parseFloat(inst.ist_vpf)) - (parseFloat(prev.prev_vpf) + parseFloat(pres.pres_vpf)) - (0.00 + 0.00)).toFixed(2);
+            document.getElementById("tbank_instnet").innerHTML = ((parseFloat(share.fund_bank) + parseFloat(inst.ist_bank)) - (parseFloat(prev.prev_bank) + parseFloat(pres.pres_bank)) - (0.00 + 0.00)).toFixed(2);
+            document.getElementById("totalpftotalnet").innerHTML = ((parseFloat(share.fund_own) + parseFloat(share.fund_bank) + parseFloat(share.fund_vpf)) + (parseFloat(inst.ist_own) + parseFloat(inst.ist_bank) + parseFloat(inst.ist_vpf)) - ((parseFloat(prev.prev_own)) + parseFloat(pres.pres_own) + (parseFloat(prev.prev_vpf)) + parseFloat(pres.pres_vpf)+ (parseFloat(prev.prev_bank)) + parseFloat(pres.pres_bank)) - (parseFloat(Opf1) + parseFloat(Opf2))).toFixed(2);
+            //if (pres != undefined) {
+            //    document.getElementById("btown_inst").innerHTML = (parseFloat(prev.prev_own) + parseFloat(pres.pres_own)).toFixed(2);
+            //    document.getElementById("btvpf_inst").innerHTML = (parseFloat(prev.prev_vpf) + parseFloat(pres.pres_vpf)).toFixed(2);
+            //    document.getElementById("btbank_inst").innerHTML = (parseFloat(prev.prev_bank) + parseFloat(pres.pres_bank)).toFixed(2);
+            //    document.getElementById("dtotal").innerHTML = ((parseFloat(share.fund_own) + parseFloat(inst.ist_own)) - ((parseFloat(prev.prev_own) + parseFloat(pres.pres_own) + (parseFloat(p1) + parseFloat(p2))))).toFixed(2);
+            //    document.getElementById("dtotal1").innerHTML = ((parseFloat(share.fund_vpf) + parseFloat(inst.ist_vpf)) - ((parseFloat(prev.prev_vpf) + parseFloat(pres.pres_vpf) + (0.00 + 0.00)))).toFixed(2);
+            //    document.getElementById("dtotal2").innerHTML = (parseFloat(share.fund_bank) + parseFloat(inst.ist_bank) - ((parseFloat(prev.prev_bank) + parseFloat(pres.pres_bank) + (0.00 + 0.00)))).toFixed(2);
+            //    document.getElementById("totalfinal").innerHTML = (((parseFloat(share.fund_own) + parseFloat(inst.ist_own)) - ((parseFloat(prev.prev_own) + parseFloat(pres.pres_own) + (parseFloat(p1) + parseFloat(p2))))) + (parseFloat(share.fund_bank) + parseFloat(inst.ist_bank) - ((parseFloat(prev.prev_bank) + parseFloat(pres.pres_bank) + (0.00 + 0.00)))) + (parseFloat(share.fund_vpf) + parseFloat(inst.ist_vpf)) - ((parseFloat(prev.prev_vpf) + parseFloat(pres.pres_vpf) + (0.00 + 0.00)))).toFixed(2);
+            //}
+            //else {
+            //    document.getElementById("btown_inst").innerHTML = (parseFloat(prev.prev_own)).toFixed(2);
+            //    document.getElementById("btvpf_inst").innerHTML = (parseFloat(prev.prev_vpf)).toFixed(2);
+            //    document.getElementById("btbank_inst").innerHTML = (parseFloat(prev.prev_bank)).toFixed(2);
+            //    document.getElementById("dtotal").innerHTML = ((parseFloat(share.fund_own) + parseFloat(inst.ist_own)) - ((parseFloat(prev.prev_own) + (parseFloat(p1) + parseFloat(p2))))).toFixed(2);
+            //    document.getElementById("dtotal1").innerHTML = ((parseFloat(share.fund_vpf) + parseFloat(inst.ist_vpf)) - ((parseFloat(prev.prev_vpf) + (0.00 + 0.00)))).toFixed(2);
+            //    document.getElementById("dtotal2").innerHTML = (parseFloat(share.fund_bank) + parseFloat(inst.ist_bank) - ((parseFloat(prev.prev_bank) + (0.00 + 0.00)))).toFixed(2);
+            //    document.getElementById("totalfinal").innerHTML = (((parseFloat(share.fund_own) + parseFloat(inst.ist_own)) - ((parseFloat(prev.prev_own) + (parseFloat(p1) + parseFloat(p2))))) + (parseFloat(share.fund_bank) + parseFloat(inst.ist_bank) - ((parseFloat(prev.prev_bank) + (0.00 + 0.00)))) + (parseFloat(share.fund_vpf) + parseFloat(inst.ist_vpf)) - ((parseFloat(prev.prev_vpf) + (0.00 + 0.00)))).toFixed(2);
+            //}
+        }
+    }
+
+    function pageInitLoad() {
+        var serviceurl = '@dataUrl';
+        serviceurl = serviceurl.replace('&amp;', '&');
+
+    };
+
+    function pageInitLoadRemovePdf() {
+        var serviceurl = '@dataUrl';
+        serviceurl = serviceurl.replace('&amp;', '&');
+
+
+    };
+
+
+    var day = '@fm'; //{fm : "01-02-12"};
+    debugger;
+    var MonthNameyear;
+    dteSplit = day.split('-');
+    days = dteSplit[0];
+    month = dteSplit[1];
+    year = dteSplit[2];
+    // year = year.substring(0, 4);
+    MonthNameyear = days + "-" + month + "-" + year;
+
+
+
+
+</script>
+<script>
+    $('#monthdatePFFinal').datepicker({
+        format: 'dd-mm-yyyy',
+        todayHighlight: true,
+        autoclose: true
+    });
+
+</script>

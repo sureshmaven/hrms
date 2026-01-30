@@ -1,0 +1,78 @@
+﻿@{
+    ViewBag.Title = "TDSReport";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+<div class="page">
+    <div class="page_start">
+        <div class="col-md-2">
+            @{Html.RenderPartial("_PVPayrollMenu");}
+        </div>
+        <div class="col-md-10">
+            <div class="main_heading">
+                <h1>TDS Update<span class="year-end">TGCAB 01-04-2019 - 31-04-2020</span></h1>
+                <div class="col-md-12 mt_10">
+                    <div class="table-responsive">
+                        <table id="tds_update" class="display" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Emp Id</th>
+                                    <th>Employee Name</th>
+                                    <th>DOL</th>
+                                    <th>Present TDS</th>
+                                    <th>Future TDS</th>
+                                    <th>Diff</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <input id="checkbox1" type="checkbox" name="checkbox" value="1" checked="checked"><label for="checkbox1"><span></span>123</label>
+                                    </td>
+                                    <td>M.Masood Ali</td>
+                                    <td>03/31/2021</td>
+                                    <td>8976.00</td>
+                                    <td>0.00</td>
+                                    <td>8976.00</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input id="checkbox1" type="checkbox" name="checkbox" value="2"><label for="checkbox1"><span></span>231</label>
+                                    </td>
+                                    <td>V.Venkateshwarlu</td>
+                                    <td>08/31/2019</td>
+                                    <td>8976.00</td>
+                                    <td>0.00</td>
+                                    <td>8976.00</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input id="checkbox1" type="checkbox" name="checkbox" value="3"><label for="checkbox1"><span></span>58</label>
+                                    </td>
+                                    <td>B.Bharat Gandhi</td>
+                                    <td>11/01/2016</td>
+                                    <td>8976.00</td>
+                                    <td>0.00</td>
+                                    <td>8976.00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mt_10">
+                        <label>
+                            <input id="checkbox1" type="checkbox" name="checkbox" value="4"><label for="checkbox1"><span></span>Select All</label>
+                        </label>
+                        <div class="pull-right">
+                            <button type="reset" class="btn btn-default cancel">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#tds_update').DataTable();
+    });
+</script>

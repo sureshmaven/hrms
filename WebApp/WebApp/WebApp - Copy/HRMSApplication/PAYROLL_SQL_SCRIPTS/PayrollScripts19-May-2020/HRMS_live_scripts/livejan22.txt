@@ -1,0 +1,12 @@
+--371 House2A
+  update pr_emp_adv_loans set interest_installment_amount=178 where emp_code=371 and loan_type_mid=5 and active=1 and loan_sl_no=4531
+  --371 PFST1
+   update pr_emp_adv_loans set installment_amount=1345 where emp_code=371 and loan_type_mid=16 and active=1 and loan_sl_no=7289
+   --5794 House Main
+   update pr_emp_adv_loans set interest_installment_amount=1214 where emp_code=5794 and loan_type_mid=10 and active=1 and loan_sl_no=5086
+ --359 House Main
+ update pr_emp_adv_loans set interest_installment_amount=465 where emp_code=359 and loan_type_mid=10 and active=1 and loan_sl_no=4498
+ --365 Vehicle Loan
+  update pr_emp_adv_loans set active=0 where emp_code=365 and loan_type_mid=25 and active=1 and loan_sl_no=4519
+  --514 Vehicle Loan
+  update pr_emp_adv_loans set active=0 where emp_code=514 and loan_type_mid=24 and active=1 and loan_sl_no=7658

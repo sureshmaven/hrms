@@ -1,0 +1,160 @@
+﻿
+@{
+    ViewBag.Title = "PFInterestMonthwise";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="leftmenu-container">
+                <div class="sidebar-menu">
+                    @{Html.RenderPartial("_PVPayrollMenu");}
+                </div>
+                <div class="sidebar-content">
+                    <div class="main_heading">
+                        <h1>PF Interest Rate <span class="year-end">@ViewBag.Env_Fm_Fy</span></h1>
+                        <div class="col-md-8">
+                            <div class="table-responsive">
+                                <table id="gridPF1" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Financial Year</th>
+                                            <th>Interest %</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                            
+                        </div>
+                        <div class="col-md-8 mt_10">
+                            <div class="pull-right">
+                                @*<button type="button" id="btnCancel" class="btn btn-default" title="Clear the data">Cancel</button>*@
+                               @* <button type="submit" id="btnsubmit" value="Submit" class="btn btn-primary" title="Submit details"> Submit</button>*@
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div id="Process" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Warning</h4>
+                        </div>
+                        <div class="modal-footer">
+                            <h4 style="text-align: left;margin: 0 0 6px 0;">Are you sure you want to calculate PF Interest</h4>
+                            <button type="button" class="btn btn-default" data-dismiss="modal" id="btnEmpSearchModalClose">Close</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" id="btnEmpSearchModalOK">OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var orgDdlist = [];
+
+    $(document).ready(function () {
+        debugger;
+       // $("#btnsubmit").attr("disabled", true);
+      
+    //commented below line and added another line on 24/04/2020
+        //CommonApiGET('/Payroll/Process/GetEmpOBFieldsData', function (respData) {
+        CommonApiGET('/Payroll/Process/PFInterestYearRate', function (respData) {  
+            orgDdlist = respData;
+            fillDataTables(respData);
+
+        });
+
+        
+    })
+   
+        function fillDataTables(respData) {
+        
+            orgDdlist = respData;
+            var arrObj = [];
+            $('#gridPF1').DataTable({
+            
+                destroy: true,
+                "paging": false,
+                "ordering": false,
+                "info": false,
+                "bFilter": false,
+                data: respData,
+                "columns": [
+
+                    { "data":"fy" },
+                     // { "data": "interest" },
+                   {
+                       "mData": null,
+                       "bSortable": false,
+                       "mRender": function (data) {
+                           
+                           // var ele = getpfColumnNumber(data.fm, data.interest)+"%";  // commented by chaitanya  on 24/04/2020
+                           var ele = data.interest + " %"; // added by chaitanya on 24/04/2020
+                           return ele;
+                       }
+                      
+                   },
+
+                ],
+                "order": [[1, 'asc']]
+            });
+
+        }
+        $('#btnsubmit').click(function () {
+            $("#Process").modal('toggle');
+           
+           
+            var table = $('#gridPF1').DataTable();
+            var updateData = decodeURIComponent(table.$('input, select,textarea').serializeAndEncode());
+            arrerresultBio = updateData.split('&');
+            var arrBio = [];
+            arrerresultBio.forEach(function (element) {
+
+                objEf = {};
+                var strEf = element.split("=");
+                if (strEf[1] > 0) {
+                    objEf.Id = strEf[0];
+
+                    objEf.Value = strEf[1];
+
+                    arrBio.push(objEf);
+                }
+
+            });
+            var dataToSend = JSON.stringify({
+               
+                PfIntest: arrBio
+
+
+            });
+            $("#btnEmpSearchModalClose").click(function (e) {
+
+               // setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+            });
+          
+                $("#btnEmpSearchModalOK").click(function (e) {
+
+                    if (arrBio.length > 0) {
+                        CommonApiPOST("/Payroll/Process/saveFormPFInterestDetails", dataToSend, function (isSuccess) {
+                            if (isSuccess) {
+                                setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                            } else {
+                            }
+                        });
+                    } else {
+                        showGlobalModal('E#Process Error#Please Enter Interest Percentage');
+                    }
+                    
+                });
+           
+            });
+        
+
+</script>

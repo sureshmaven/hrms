@@ -1,0 +1,131 @@
+﻿@{
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";    
+    ViewBag.Title = "Payroll Reports";
+}
+<div class="page">
+    <div class="form-horizontal">
+        <div class="page_start">
+            <div class="leftmenu-container">
+                <div class="sidebar-menu">
+                    @{Html.RenderPartial("_PVPayrollMenu");}
+                </div>
+                <div class="sidebar-content">
+                    <div class="main_heading heading_main">
+                        <h1>Payroll Reports </h1>
+                        <div class="col-md-12">
+                            <ul class="index-menus">
+                                <li><a href="@Url.Action("PayslipReport", "PrAllReports")"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="Payslip Reports" aria-hidden="true"></i> <span> Payslip</span></a> <span> : This Page consist of the Payslip Reports of the Employees</span></li>
+                                <li><a href="@Url.Action("From5AReport", "PrAllReports")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="Form 5A Report" aria-hidden="true"></i><span> Form 5A</span></a> <span> : It gives the Report of the Employees professional Tax per month</span></li>
+                                <li><a href="@Url.Action("MonthDetailsReport", "PrAllReports")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="Form 5A Report" aria-hidden="true"></i><span> Month Details Report</span></a> <span> : This Page consist of DA slabs,DA Points and DA Percentage Report</span></li>
+                                <li><a href="@Url.Action("LICReport", "PrAllReports")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title=" LIC / HFC Report" aria-hidden="true"></i><span> LIC / HFC</span></a> <span> : This Page gives the Report of LIC and HFC</span></li>
+                                <li><a href="@Url.Action("EmpLoanReport", "PrAllGroupFooter")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="Loan Report" aria-hidden="true"></i><span> Loan Installments </span></a> <span> : This Page gives the Report of Loan Instalments Paid by the Employee</span></li>
+                                <li><a href="@Url.Action("LoanScheduleReport", "PrAllGroupFooter")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="Loan Schedule Report" aria-hidden="true"></i><span> Loans & Schedule</span></a> <span> : This Page consist of loan wise and Schedule wise Report</span></li>
+                                <li><a href="@Url.Action("TDSReport", "PrAllGroupFooter")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="TDS Report " aria-hidden="true"></i><span> TDS</span></a> <span> : It gives the Report of TDS(Tax Deducted At Source)</span></li>
+                                <li><a href="@Url.Action("Form16B", "PrAllGroupFooter")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="TDS Report " aria-hidden="true"></i><span> Form 16 (General) </span></a> <span> : It is the certificate issued under section 203 of the Income tax Act for tax deducted at source (TDS) from income under the head 'salary'</span></li>
+                                <li><a href="@Url.Action("AllowanceReport", "PrAllGroupFooter")"><i class="fa fa-exchange" data-toggle="tooltip" data-placement="right" title="Allowance Report" aria-hidden="true"></i><span> Allowance </span></a> <span> : This Page gives the Report of Branch Allowances</span></li>
+                                <li><a href="@Url.Action("Form12BAReport", "PrAllGroupFooter")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="Form 5A Report" aria-hidden="true"></i><span> Form 12BA </span></a> <span> : It consist of the Report of Employee Perquisites.</span></li>
+                                <li><a href="@Url.Action("YearlyPay", "PrAllGroupFooter")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="Form 5A Report" aria-hidden="true"></i><span> Yearly Pay Report </span></a> <span> : This Page consist of the Yearly Pay Report of Employee</span></li>
+                                <li><a href="@Url.Action("Form16Report", "PrAllReports")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="Form 5A Report" aria-hidden="true"></i><span> Form 16 Report </span></a> <span> : It consist of the Report of salaried individuals information on the tax deducted.</span></li>
+                                <li><a href="@Url.Action("Form3A", "PrAllGroupFooter")"><i class="fa fa-exchange" data-toggle="tooltip" data-placement="right" title="Form 5A Report" aria-hidden="true"></i><span> *Form 3A Report </span></a> <span> : It gives Report for the Amounts deducted/contributed by the Employee and the Employer</span></li>
+
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="main_heading heading_main mt_10">
+                        <h1>HRMS Reports </h1>
+                        <div class="col-md-12">
+                            <ul class="index-menus">
+                                <li><a href="@Url.Action("IncrementReport", "PrAllReports")"><i class="fa fa-user" data-toggle="tooltip" data-placement="right" title="Increment Report" aria-hidden="true"></i><span> Increment</span></a> <span> : It gives Report for Employees having Increments in selected dates</span></li>
+                                <li><a target="_blank" href="@Url.Action("EmpPromotions", null, new { area = string.Empty, controller = "AllReports" }, Request.Url.Scheme)"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="Promotion List" aria-hidden="true"></i> <span>Promotion </span></a> <span> : It gives Report for Employees having Promotion in selected dates</span></li>
+                                <li><a target="_blank" href="@Url.Action("Retirement", null, new { area = string.Empty, controller = "AllReports" }, Request.Url.Scheme)"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="Retirement List" aria-hidden="true"></i> <span>Retirement </span></a> <span> : It gives Report for Employees retiring between selected dates</span></li>
+                                <li><a target="_blank" href="@Url.Action("Index", null, new { area = string.Empty, controller = "AllReports" }, Request.Url.Scheme)"><i class="fa fa-lock" data-toggle="tooltip" data-placement="right" title="Branch List" aria-hidden="true"></i> <span>Staff List </span></a> <span> : It consist of the report of Employees in Branch wise</span></li>
+                                <li><a href="@Url.Action("IncrementDateChangeReport", "PrAllReports")"><i class="fa fa-lock" data-toggle="tooltip" data-placement="right" title="All Deductions"></i><span> Increment Date Change </span></a> <span> : It gives Report for Employees having Annual and stagnation increments in selected dates</span></li>
+                                <li><a href="@Url.Action("TSheetReport", "PrAllGroupFooter")"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="T Sheet" aria-hidden="true"></i><span> T Sheet </span></a> <span> : It gives Report for Deductions,Allowances,Special Allowances and Playfields data between selected dates </span></li>
+                                <li><a href="@Url.Action("TSumReport", "PrAllGroupFooter")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="T Sum" aria-hidden="true"></i><span> T Sum</span></a> <span> : It gives Report for Salary,PF,VPF,Total Deductions,Net Salary of the Employee based on branches</span></li>
+                                <li><a href="@Url.Action("SalBrReport", "PrAllGroupFooter")"><i class="fa fa-lock" data-toggle="tooltip" data-placement="right" title="Salary bill of branch" aria-hidden="true"></i><span> Salary bill of branch</span></a> <span> : This page Consist of the report of total salaries of Employees based on branches</span></li>
+                                <li><a href="@Url.Action("JAIIB_CAIIB_Report", "PrAllReports")"><i class="fa fa-lock" data-toggle="tooltip" data-placement="right" title="JAIIB CAIIB Report" aria-hidden="true"></i><span> JAIIB / CAIIB </span></a> <span> : This page gives the Report of JIIB / CAIIB Authorised and Unauthorised Employees</span></li>
+
+                                <li>
+                                    <a href="#"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="All Allowance" aria-hidden="true"></i><span> All Allowance</span></a> <span>  : It Genrates the Report For All Allowance Emp Wise and All Allowance Wise </span>
+                                    <ul class="index-menus2">
+                                        <li><a href="@Url.Action("AllAllowanceEmpwise", "PrAllGroupFooter")"><i class="fa fa-lock" data-toggle="tooltip" data-placement="right" title="All Allowance Emp Wise"></i><span> All Allowance Emp Wise</span></a> <span> : This page gives the Report of all allowances based on Employee Wise</span></li>
+                                        <li><a href="@Url.Action("AllAllowanceWise", "PrAllGroupFooter")"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title=" All Allowance Wise"></i><span> All Allowance Wise</span></a> <span> : This page gives the Report of all allowances based on allowance wise</span></li>
+                                    </ul>
+                                </li>
+                                <li><a href="@Url.Action("AllDeduction", "PrAllGroupFooter")"><i class="fa fa-lock" data-toggle="tooltip" data-placement="right" title="All Deductions"></i><span> All Deductions </span></a> <span> : It give the Report of All Deductions Employee wise based on selected month</span></li>
+                                <li><a href="@Url.Action("AllLoanReport", "PrAllGroupFooter")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title=" All Loans" aria-hidden="true"></i><span> All Loans </span></a> <span> : This page gives the Report of all Loan details in selected month</span></li>
+
+                                <li>
+                                    <a href="#"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="PF Reports" aria-hidden="true"></i><span> PF Reports</span></a> <span>  : It Genrates the Report For PF</span>
+                                    <ul class="index-menus2">
+                                        @*<li><a href="@Url.Action("PFInterestCalculations", "PrAllGroupFooter")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="PF Interest calculations" aria-hidden="true"></i><span> PF Interest calculations</span></a> <span> : Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's</span></li>*@
+                                        <li><a href="@Url.Action("Pfcontributioncard", "PrAllGroupFooter")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="PF contribution card" aria-hidden="true"></i><span> PF contribution card</span></a> <span> : It contains report for an amount is deducted from their monthly salary and is put into the EPF account.</span></li>
+                                        <li><a href="@Url.Action("PFContributionEffMonth", "PrAllGroupFooter")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="Employee contribution Month Ledger" aria-hidden="true"></i><span> Employee contribution Month Ledger</span></a> <span> : It contains report for an amount is contributed by employee from their monthly salary and is put into the EPF account</span></li>
+                                        <li><a href="@Url.Action("PfFund", "PrAllGroupFooter")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="PF Fund" aria-hidden="true"></i><span> PF Fund</span></a> <span> : It contains report for PF Fund of an Employee </span></li>
+                                        <li><a href="@Url.Action("PfFinalSettlement", "PrAllGroupFooter")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="PF Final Statement" aria-hidden="true"></i><span> PF Final Statement</span></a> <span> : It shows at the end of the financial year, the employer shares the PF statement with the employees after receiving them from the Employees' PF </span></li>
+                                        @*<li><a href="#"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="All interest Due" aria-hidden="true"></i><span> All interest Due</span></a> <span> : Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's</span></li>*@
+                                        @*<li><a href="#"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="Investment Interest register" aria-hidden="true"></i><span> Investment Interest register</span></a> <span> : Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's</span></li>
+                                        <li><a href="#"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="Investment wise interest statement" aria-hidden="true"></i><span> Investment wise interest statement</span></a> <span> : Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's</span></li>
+                                        <li><a href="#"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="Interest Receivable Register" aria-hidden="true"></i><span> Interest Receivable Register</span></a> <span> : Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's</span></li>*@
+                                        <li><a href="@Url.Action("Form7Report", "PrAllReports")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="Form :7(PS)" aria-hidden="true"></i><span> Form :7(PS)</span></a> <span> : It contains Amount of Wages and Contribution To The Pension Fund of an Employee </span></li>
+                                        <li><a href="@Url.Action("Form8", "PrAllGroupFooter")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="Pension Annual Report(Form :8)" aria-hidden="true"></i><span> Pension Annual Report(Form :8)</span></a> <span> : It contains Amount of Wages and Contribution To The Pension Fund of an Employee </span></li>
+                                        <li>
+                                            <a href="#"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="Loan Type Breakup" aria-hidden="true"></i><span> PF Loans (Consolidated Report)</span></a> <span>  : It Contains the Reports of PF Non-Repayable Loans(Loan BreakUp) and PF Repayable Loans(Loan BreakUp) </span>
+                                            <ul class="index-menus3">
+                                                <li><a href="@Url.Action("PfNonRepayableReportloanbreakup", "PrAllGroupFooter")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="PF Non-Repayable Report" aria-hidden="true"></i><span>NR Withdrawals </span></a> <span> : It Generates the report for PF  Non-Repayable loans between selected dates based on loan type </span></li>
+                                                <li><a href="@Url.Action("PfRepayableReport", "PrAllGroupFooter")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="PFRepayable Report" aria-hidden="true"></i><span>Refundable Advances</span></a> <span> : It Generates the report for PF Re-Payable loans between selected dates based on loan type</span></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="#"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="PF Loans(with sanction date)" aria-hidden="true"></i><span> PF Loans (Purpose-wise Report)</span></a> <span>  : It Contains the Reports of PF Non-Repayable Loans and PF Re-Payable Loans</span>
+                                            <ul class="index-menus3">
+                                                <li><a href="@Url.Action("PfNonRepayableReport", "PrAllGroupFooter")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="PF Non-Repayable Report" aria-hidden="true"></i><span>NR Withdrawals</span></a> <span> : It Generates the report for PF  Non-Repayable loans between selected dates based on Loan sanction date</span></li>
+                                                <li><a href="@Url.Action("PfRepayableSanctionReport", "PrAllGroupFooter")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="PF Repayable Report" aria-hidden="true"></i><span> Refundable Advances</span></a> <span> : It Generates the report for PF Re-Payable loans between selected dates based on Loan sanction date</span></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="#"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="PF Loans(with Effective date)" aria-hidden="true"></i><span> PF Loans (Date-wise)</span></a> <span>  : It Contains the Reports of PF Non-Repayable Loans and PF Re-Payable Loans</span>
+                                            <ul class="index-menus3">
+                                                <li><a href="@Url.Action("PfNonRepayableEffdateReport", "PrAllGroupFooter")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="PF Non Repayable Report" aria-hidden="true"></i><span>NR Withdrawals</span></a> <span> : It Generates the report for PF  Non-Repayable loans between selected dates based on Loan effective date</span></li>
+                                                <li><a href="@Url.Action("PfRepayableEffectiveReport", "PrAllGroupFooter")"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="PFRepayable Report" aria-hidden="true"></i><span>Refundable Advances</span></a> <span> : It Generates the report for PF Re-Payable loans between selected dates based on Loan effective date</span></li>
+                                            </ul>
+                                        </li>
+
+
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="Pending Loans" aria-hidden="true"></i><span> Pending Loans</span></a> <span>  : It Contains the Reports of Single Rate and Multi Rate </span>
+                                    <ul class="index-menus2">
+
+                                        <li><a href="@Url.Action("SingleRateLoanOutStanding", "PrAllGroupFooter")"><i class="fa fa-lock" data-toggle="tooltip" data-placement="right" title="SIngle Rate"></i><span> Single Rate</span></a> <span> : It Generates the report for loans in detail on selected month based on loan type</span></li>
+                                        <li><a href="@Url.Action("MultiRate", "PrAllGroupFooter")"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="Multi Rate"></i><span> Multi Rate</span></a> <span> : It Generates the report for in detail on selected month based on loan type</span></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="Pension Scheme" aria-hidden="true"></i><span> Pension Scheme</span></a> <span>  : It Contains the Reports of Leaving Service(form no : 5) and Entitled for membership (form no : 4)  </span>
+                                    <ul class="index-menus2">
+                                        <li><a href="@Url.Action("MembersLeavingService", "PrAllReports")"><i class="fa fa-pencil-square-o" data-toggle="tooltip" data-placement="right" title="Leaving Service(form no : 5)" aria-hidden="true"></i><span> Leaving Service(form no : 5) </span></a> <span> : It Generates the report for the members who are leaving / Retiring in selected month</span></li>
+                                        @*<li><a href="#"><i class="fa fa-pencil-square-o" data-toggle="tooltip" data-placement="right" title="Entitled for membership (form no : 4)" aria-hidden="true"></i><span> Entitled for membership (form no : 4) </span></a> <span> : Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's</span></li>*@
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="Encashment" aria-hidden="true"></i><span> Encashment</span></a> <span>  : It Contains the Reports of Encashment Summary and Register </span>
+                                    <ul class="index-menus2">
+                                        <li><a href="@Url.Action("EncashSummary", "PrAllGroupFooter")"><i class="fa fa-lock" data-toggle="tooltip" data-placement="right" title="Summary"></i><span> Summary</span></a> <span> : It Generates the report for Employee pf, Income Tax and gross total amounts of regular and retired employees </span></li>
+                                        <li><a href="@Url.Action("EncashmentRegisterReports", "PrAllGroupFooter")"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="Register"></i><span> Register</span></a> <span> : It Generates the report for all employee payslip fields between selected dates</span></li>
+                                    </ul>
+                                </li>
+                                <li><a href="@Url.Action("LoanProjection", "PrAllGroupFooter")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="" aria-hidden="true" data-original-title="Loan Projection"></i><span> Loan Projection </span></a> <span> : It Generates the report for the estimations of loan instalments and interest calculations</span></li>
+                                <li><a href="@Url.Action("EmployeesLoanLedger", "PrAllGroupFooter")"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="" aria-hidden="true" data-original-title="Loan Details"></i><span> Loan Ledger </span></a> <span> : It Generates the report for the recovered instalments of loan, outstanding amounts of  instalments and interest calculations.</span></li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

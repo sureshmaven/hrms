@@ -1,0 +1,69 @@
+﻿
+@{
+    ViewBag.Title = "EncashmentRegister";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="col-md-2">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="col-md-10">
+                <div class="main_heading">
+                    <h1>Encashment Register<span class="year-end">TSCAB 01-04-2018 - 31-03-2019</span></h1>
+                    <div class="col-md-4 mt_10">
+                        <div class="main_heading">
+                            <div class="col-md-6">
+                                <input id="file" type="radio" name="file" value="1"><label for="currentmonth"><span><span></span></span>Current Month</label>
+                                <div class="clearfix"></div>
+                                <input id="file" type="radio" name="file" value="2"><label for="monthly"><span><span></span></span>Monthly</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="col-md-12 mt_10">
+                            <div class="table-responsive">
+                                <table id="single_rate" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>GBEncashDt</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td> <input id="checkbox1" type="checkbox" name="checkbox" value="1"><label for="checkbox1"><span></span>14-03-2019</label></td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mt_10">
+                        <div class="main_heading">
+                            <input id="file" type="radio" name="file" value="1"><label for="regularemployee"><span><span></span></span>Regular Employees</label>
+                            <div class="clearfix"></div>
+                            <input id="file" type="radio" name="file" value="1"><label for="supplementaryemployee"><span><span></span></span>Retired Employees</label>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="pull-right">
+                            <button type="reset" class="btn btn-default cancel">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#single_rate').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+        });
+    });
+</script>

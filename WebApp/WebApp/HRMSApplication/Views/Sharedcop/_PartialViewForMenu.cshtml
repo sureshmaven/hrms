@@ -1,0 +1,200 @@
+﻿@{
+    var rolepages = TempData["RolePages"].ToString();
+    ViewBag.RolePages = TempData["RolePages"];
+    var reportTitle = ViewBag.ReportTitle;
+}
+<link href="~/Assets/css/report-style.css" rel="stylesheet" />
+    <div class="report-list">
+        @{
+                <ul>
+                    @if (rolepages.Contains("RPBRA"))
+                    {
+                        <li class='@(reportTitle == "Branches List" ? "active" : "")'><a href=@Url.Action("Index", "AllReports")>Branches</a></li>
+                    }
+                    @if (rolepages.Contains("RPBRC"))
+                    {
+                        <li class='@(reportTitle == "Branch Contact List" ? "active" : "")'><a href=@Url.Action("BranchContacts", "AllReports")>Branch Contacts</a></li>
+
+
+                        @*<li class='@(reportTitle == "Missing Shift List" ? "active" : "")'><a href=@Url.Action("MissingShifts", "AllReports")>Missing Shift</a></li>*@
+                    }
+
+                    @if (rolepages.Contains("RPCDR"))
+                    {
+                        @*<li><a href=@Url.Action("CadreReport", "Reports")>Cadre</a></li>*@
+                        <li class='@(reportTitle == "Cadre List" ? "active" : "")'><a href=@Url.Action("CadreList", "AllReports")>Cadre</a></li>
+                    }
+                    @if (rolepages.Contains("RPCAT"))
+                    {
+                        <li class='@(reportTitle == "Categeory List" ? "active" : "")'><a href=@Url.Action("staffCategoryList", "AllReports")>Category</a></li>
+                    }
+                    @if (rolepages.Contains("RPCASAE"))
+                    {
+                        <li class='@(reportTitle == "CA and SA of Employees" ? "active" : "")'><a href=@Url.Action("CaAndSaOfEmployees", "AllReports")>CA & SA of Employees</a></li>
+                    }
+
+
+
+
+                    @if (rolepages.Contains("RPDOB"))
+                    {
+                        <li class='@(reportTitle == "DOB List" ? "active" : "")'><a href=@Url.Action("EmpDob", "AllReports")>DOB</a></li>
+                    }
+                    @if (rolepages.Contains("RPEMP"))
+                    {
+                        <li class='@(reportTitle == "Employee List" ? "active" : "")'><a href=@Url.Action("EmployeesRept", "AllReports")>Employees</a></li>
+                    }
+                    @*@if (rolepages.Contains("RPEAL"))
+        {
+            <li class='@(reportTitle == "Future Applied Leaves" ? "active" : "")'><a href=@Url.Action("FutureAppliedLeaves", "AllReports")>Future Applied Leaves</a></li>}*@
+                    @if (rolepages.Contains("RPHOF"))
+                    {
+                        <li class='@(reportTitle == "Head Office List" ? "active" : "")'><a href=@Url.Action("HeadOfficeList", "AllReports")>Head Office</a></li>
+                    }
+                    @if (rolepages.Contains("RPHOA"))
+                    {
+                        <li class='@(reportTitle == "Head Office Attender List" ? "active" : "")'><a href=@Url.Action("HeadOfcAttenders", "AllReports")>Head Office Attenders</a></li>
+                    }
+                    @if (rolepages.Contains("RPKOF"))
+                    {
+                        <li class='@(reportTitle == "Work Profile Of Key Officials" ? "active" : "")'><a href=@Url.Action("KeyOfficials", "AllReports")>Key Officials</a></li>
+                    }
+                    @if (rolepages.Contains("RPLTC"))
+                    {
+                        <li class='@(reportTitle == "LTC List" ? "active" : "")'><a href=@Url.Action("LTCList", "AllReports")>LTC</a></li>
+                    }
+                    @if (rolepages.Contains("RPLEV"))
+                    {
+                        @*<li><a href=@Url.Action("LeaveSearch", "MyLeaves")>Leaves</a></li>}*@
+                        <li class='@(reportTitle == "Emp Leave History" ? "active" : "")'><a href=@Url.Action("LeavesHistory", "AllReports")>Leaves</a></li>
+                    }
+                    @if (rolepages.Contains("RPLLE"))
+                    {
+                        <li class='@(reportTitle == "Long Leaves" ? "active" : "")'><a href=@Url.Action("LongLeaves", "AllReports")>Long Leaves</a></li>
+                    }
+                    @*@if (rolepages.Contains("RPLFA"))
+        {
+            <li class='@(reportTitle == "Leave Approval List" ? "active" : "")'><a href=@Url.Action("LeavesCarryForward", "AllReports")>Leaves Forwarded/Approved</a></li>}*@
+                    @if (rolepages.Contains("RPLAL"))
+                    {
+                        <li class='@(reportTitle == "Late Applied Leaves List" ? "active" : "")'><a href=@Url.Action("LateAppliedLeaves", "AllReports")>Late Applied Leaves</a></li>
+                    }
+                    @if (rolepages.Contains("RPLCD"))
+                    {
+                        <li class='@(reportTitle == "Cancelled Leaves" ? "active" : "")'><a href=@Url.Action("LeaveCancelled", "AllReports")>Leaves Cancelled</a></li>
+                    }
+                    @*@if (rolepages.Contains("RPCMP"))
+        {
+            <li class='@(reportTitle == "Month Wise CL/ML/PL" ? "active" : "")'><a href=@Url.Action("MonthwiseCLMLPL", "AllReports")>Month Wise CL/ML/PL</a></li>}*@
+                    @*@if (rolepages.Contains("RPMWL"))
+        {
+            <li class='@(reportTitle == "Month Wise Leaves" ? "active" : "")'><a href=@Url.Action("MonthWiseLeaves", "AllReports")>Month Wise Leaves</a></li>}*@
+                    @*@if (rolepages.Contains("RPMWO"))
+        {
+            <li class='@(reportTitle == "Month Wise OD" ? "active" : "")'><a href=@Url.Action("MonthWiseOD", "AllReports")>Month Wise OD</a></li>}*@
+                    @*@if (rolepages.Contains("RPMTT"))
+        {
+            <li class='@(reportTitle == "Month Wise Temporary Transfer" ? "active" : "")'><a href=@Url.Action("MonthWiseTemporaryTransfer", "AllReports")>Month Wise Temporary Transfer</a></li>}*@
+                    @if (rolepages.Contains("RPODD"))
+                    {
+                        <li class='@(reportTitle == "OD List" ? "active" : "")'><a href=@Url.Action("OdDuty", "AllReports")>OD</a></li>
+                    }
+                    @if (rolepages.Contains("RPPTS"))
+                    {
+                        <li class='@(reportTitle == "Permanent Transfer List" ? "active" : "")'><a href=@Url.Action("PermanentTransfer", "AllReports")>Permanent Transfers</a></li>
+                    }
+                    @if (rolepages.Contains("RPPRO"))
+                    {
+                        <li class='@(reportTitle == "Promotion List" ? "active" : "")'><a href=@Url.Action("EmpPromotions", "AllReports")>Promotion</a></li>
+                    }
+                    @if (rolepages.Contains("RPSPL"))
+                    {
+                        <li class='@(reportTitle == "PL Encashment List" ? "active" : "")'><a href=@Url.Action("PrivilegeLeave", "AllReports")>Proforma-A (PL Encashment)</a></li>
+                    }
+                    @if (rolepages.Contains("RPRET"))
+                    {
+                        <li class='@(reportTitle == "Retirement List" ? "active" : "")'><a href=@Url.Action("Retirement", "AllReports")>Retirements/Resignations</a></li>
+                    }
+                    @if (rolepages.Contains("RPSEN"))
+                    {
+                        <li class='@(reportTitle == "Seniorty List" ? "active" : "")'><a href=@Url.Action("Seniorty", "AllReports")>Seniority</a></li>
+                    }
+                    @if (rolepages.Contains("RPSMA"))
+                    {
+                        <li class='@(reportTitle == "StaffMaster List" ? "active" : "")'><a href=@Url.Action("StaffMaster", "AllReports")>Staff Master</a></li>
+                    }
+                    @if (rolepages.Contains("RPTXH"))
+                    {
+                        <li class='@(reportTitle == "Transaction History" ? "active" : "")'><a href=@Url.Action("TxHistory", "AllReports")>TX History</a></li>
+                    }
+                    @if (rolepages.Contains("RPTTS"))
+                    {
+                        <li class='@(reportTitle == "Temporary Transfer List" ? "active" : "")'><a href=@Url.Action("TempTrnsfr", "AllReports")>Temporary Transfers</a></li>
+                    }
+                    @if (rolepages.Contains("RPTMT"))
+                    {
+                        <li class='@(reportTitle == "Top Management List" ? "active" : "")'><a href=@Url.Action("Topmanagement", "AllReports")>Top Management</a></li>
+                    }
+                    @if (rolepages.Contains("RPWDY"))
+                    {
+                        <li class='@(reportTitle == "Work Diary" ? "active" : "")'><a href=@Url.Action("WorkDiary", "AllReports")>WorkDiary </a></li>
+                    }
+                    @if (rolepages.Contains("RPYLB"))
+                    {
+                        @*<li><a href=@Url.Action("YearWiseLeaveBalanceReport", "Reports")>YearWiseLeaveBalance</a></li>*@
+                        <li class='@(reportTitle == "Year Wise Leave Balance" ? "active" : "")'><a href=@Url.Action("LeavesCreditDebit", "AllReports")>Year wise Leave Balance</a></li>
+                    }
+                    @if (rolepages.Contains("RPYLB"))
+                    {
+                        <li class='@(reportTitle == "Branch Device Report" ? "active" : "")'><a href=@Url.Action("DailyReport", "AllReports")>Branch Device Report</a></li>
+
+                        <li class='@(reportTitle == "Allotment of Shifts" ? "active" : "")'><a href=@Url.Action("AllotmentofShiftReport", "AllReports")>Allotment of Shifts</a></li>
+
+                        @*<li class='@(reportTitle == "Late Arrivals" ? "active" : "")'><a href=@Url.Action("Lateby", "AllReports")>Late Arrivals</a></li>
+
+            <li class='@(reportTitle == "Early Departure" ? "active" : "")'><a href=@Url.Action("Earlyby", "AllReports")>Early Departs</a></li>
+
+            <li class='@(reportTitle == "Employee Timesheet" ? "active" : "")'><a href=@Url.Action("TimeSheetMonth", "AllReports")>Employee Timesheet</a></li>*@
+                        <li class='@(reportTitle == "Late Arrivals" ? "active" : "")'><a href=@Url.Action("LateArrivalsReport", "AllReports")>Late Arrivals</a></li>
+
+                        <li class='@(reportTitle == "Early Departs" ? "active" : "")'><a href=@Url.Action("EarlyDepartsReport", "AllReports")>Early Departs</a></li>
+
+                        <li class='@(reportTitle == "Employee Timesheet" ? "active" : "")'><a href=@Url.Action("EmployeeTimesheet", "AllReports")>Employee Timesheet</a></li>
+
+                        <li class='@(reportTitle == "Late Arrivals/Early Departures Monthly" ? "active" : "")'><a href=@Url.Action("MonthlyLateTimesheet", "AllReports")>Late Arrivals/Early Departures Monthly</a></li>
+
+                        <li class='@(reportTitle == "Late Memo Monthly" ? "active" : "")'><a href=@Url.Action("MonthlyLateMemoTimesheet", "AllReports")>Late Memo Monthly</a></li>
+
+                        <li class='@(reportTitle == "Leaves applied/approved but attended duties" ? "active" : "")'><a href=@Url.Action("Leavesapprovedbutattended", "AllReports")>Leaves applied/approved but attended duties</a></li>
+
+                        <li class='@(reportTitle == "Timesheet Manual Form" ? "active" : "")'><a href=@Url.Action("TSApprovalViewReport", "AllReports")>TimeSheet Manual Form</a></li>
+                        @*<li class='@(reportTitle == "PROFORMA-B" ? "active" : "")'><a href=@Url.Action("proformapage", "AllReports")>PROFORMA-B</a></li>*@
+                        <li class='@(reportTitle == "TimeSheet Rerun" ? "active" : "")'><a href=@Url.Action("EmpMonthlyReport", "AllReports")>TimeSheet Rerun</a></li>
+                        <li class='@(reportTitle == "DCCB Employee Timesheet" ? "active" : "")'><a href=@Url.Action("DCCBEmployeeTimesheet", "AllReports")>DCCB Employee Timesheet</a></li>
+                        @*<li class='@(reportTitle == "DCCB Employee Timesheet Duplicate" ? "active" : "")'><a href=@Url.Action("DCCBEmployeeTimesheet1", "AllReports")>DCCB Employee TimesheetDuplicate</a></li>*@
+                        <li class='@(reportTitle == "COVID19 Survey" ? "active" : "")'><a href=@Url.Action("Covid19", "AllReports")>COVID-19 Survey</a></li>
+                        <li class='@(reportTitle == "COVID-19 Submitted Employee Count" ? "active" : "")'><a href=@Url.Action("Covid19Submited", "AllReports")>COVID-19 Submitted Employee Count</a></li>
+                        <li class='@(reportTitle == "Government Staff Employee Timesheet" ? "active" : "")'><a href=@Url.Action("GovernmentStaffEmployeeTimesheet", "AllReports")>Government Staff Employee</a></li>
+                        <li class='@(reportTitle == "Missing Timesheet List" ? "active" : "")'><a href=@Url.Action("MissingTimesheet", "AllReports")>Adhoc</a></li>
+                    }
+                    @if (rolepages.Contains("EMPREP"))
+                    {
+                        <li class='@(reportTitle == "Late Arrivals" ? "active" : "")'><a href=@Url.Action("Lateby", "AllReports")>Late Arrivals</a></li>
+
+                        <li class='@(reportTitle == "Early Departure" ? "active" : "")'><a href=@Url.Action("Earlyby", "AllReports")>Early Departs</a></li>
+
+                        <li class='@(reportTitle == "Employee Timesheet" ? "active" : "")'><a href=@Url.Action("TimeSheetMonth", "AllReports")>Employee Timesheet</a></li>
+
+                        <li class='@(reportTitle == "Late Arrivals/Early Departures Monthly" ? "active" : "")'><a href=@Url.Action("MonthlyLateTimesheet", "AllReports")>Late Arrivals/Early Departures Monthly</a></li>
+
+
+                        <li class='@(reportTitle == "Leaves applied/approved but attended duties" ? "active" : "")'><a href=@Url.Action("Leavesapprovedbutattended", "AllReports")>Leaves applied/approved but attended duties</a></li>
+
+                        @*<li class='@(reportTitle == "EmpMonthlyReport" ? "active" : "")'><a href=@Url.Action("EmpMonthlyReport", "AllReports")>Employee Monthly Report</a></li>*@
+
+                    }
+                </ul>
+        }
+            <div class="clearfix"></div>
+    </div>
+

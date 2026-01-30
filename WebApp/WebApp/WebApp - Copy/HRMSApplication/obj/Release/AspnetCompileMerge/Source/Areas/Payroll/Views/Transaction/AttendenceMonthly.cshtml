@@ -1,0 +1,670 @@
+﻿@model PayrollModels.Transactions.AttendenceMonthlyModels
+
+@{
+    ViewBag.Title = "AttendenceMonthly";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+    var fm = ViewBag.fm;
+    var monthdays = ViewBag.monthdays;
+}
+@{
+    var message = TempData["AlertMessage"] ?? string.Empty;
+}
+<script type="text/javascript">
+    var message = '@message';
+    if (message) alert(message);
+
+</script>
+<style>
+    .dataTables_length {
+        display: none;
+    }
+
+    .dataTables_filter {
+        display: none;
+    }
+
+    .dataTables_info {
+        display: none;
+    }
+
+    #Status th {
+        display: none;
+    }
+
+    #Leave th {
+        display: none;
+    }
+</style>
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="leftmenu-container">
+                <div class="sidebar-menu">
+                    @{Html.RenderPartial("_PVPayrollMenu");}
+                </div>
+                <div class="sidebar-content">
+                    <div class="main_heading heading_main">
+                        <h1>Monthly Attendance <span class="year-end">@ViewBag.Env_Fm_Fy</span></h1>
+                        @{ Html.RenderPartial("_pvEmployeeSearch"); }
+                        <input type="hidden" id="EmployeeId" />
+                        <input type="hidden" id="lblDOJ" />
+                        @*<div>
+                                <label class="col-sm-2 control-label" id="Date">Conformation Date :</label>
+                            </div>*@
+                        <div class="col-md-6 mt_10">
+                            <div class="inner_heading">
+                                <h1>Monthly Payable Days</h1>
+                                <div class="col-md-12">
+                                    <div class="form-horizontal">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">Week Holidays:<span class="mandatory"></span></label>
+                                            <div class="col-sm-8">
+                                                <input type="text" name="Week" id="Week" value="@ViewBag.Weekhol" readonly="readonly" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">Paid Holidays:<span class="mandatory"></span></label>
+                                            <div class="col-sm-8">
+                                                <input type="text" name="Paid" id="Paid" readonly="readonly" value="@ViewBag.Paidhol" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">Total Payable Days:<span class="mandatory"></span></label>
+                                            <div class="col-sm-8">
+                                                <input type="text" name="Payable" id="Payable" readonly="readonly" value="@ViewBag.TotalPayable" class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="inner_heading">
+                                <h1>Monthly Attendance</h1>
+                                <div class="col-md-12">
+                                    <input type="hidden" name="FY" id="FY" Value="@ViewBag.FY" />
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Status:<span class="mandatory"></span></label>
+                                        <div class="col-sm-8">
+                                            @Html.DropDownList("status", new[] {
+                                            new SelectListItem() {Text = "Regular",Value = "Regular"},
+                                            new SelectListItem() {Text = "Stop Salary",Value = "StopSalary"},
+                                            new SelectListItem() {Text = "Suspended",Value = "Suspended"},
+                                            new SelectListItem() {Text = "Deputation",Value = "Deputation"},
+                                            }, "Select Status", new { @class = "form-control", Value = "@ViewBag.status", id = "status" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" id="statushide">
+                                        <label class="col-sm-4 control-label">Status Date:</label>
+                                        <div class="input-group date col-sm-8" id="Status_date">
+                                            <input type="text" name="Statusdate1" id="Statusdate" Value="@ViewBag.Status_date" class="form-control" required />
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" id="susperhide">
+                                        <label class="col-sm-4 control-label">Suspend Pecentage:</label>
+                                        <div class="col-sm-8" id="sus_per">
+                                            <input type="number" name="susper" id="Susper" onchange="handleChange(this);" class="form-control3" required />
+                                            <label class="control-label">%</label>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <table id="myTextArea" style="width:100%;"></table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mt_10">
+                            <div class="form-horizontal">
+                                <div class="inner_heading">
+                                    <h1>Leave Balance</h1>
+                                    <div class="leaves_table">
+                                        <div class="table-responsive">
+                                            <table id="LeaveDetails" class="display" style="width:100%;">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Leave Type</th>
+                                                        <td>Total Leaves</td>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mt_10" id="leaves">
+                                    <input type="hidden" name="FY" id="FY" Value="@ViewBag.FY" />
+
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">LOP Days:</label>
+                                        <div class="col-sm-8">
+                                            <input type="number" class="form-control" id="lop_days" onkeyup="data()" min="0" max="4" value="0" onkeypress="if(this.value.length==4) return false;  ">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Absent Days:</label>
+                                        <div class="col-sm-8">
+                                            <input type="number" class="form-control" id="absent_days" onkeyup="data2()" min="0" max="2" value="0"
+                                                   onkeypress="if(this.value.length==2) return false;  return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Working Days:</label>
+                                        <div class="col-sm-8">
+                                            <input type="number" class="form-control" id="working_days" min="0" maxlength="2" readonly
+                                                   onkeypress="if(this.value.length==4) return false;  return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57">
+                                            @*onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57" >*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt_10">
+                            <div class="pull-right">
+                                @*<button type="reset" id="btnCancel" onclick="resetForm()" value="reset" class="btn btn-default calcel">Cancel</button>*@
+                                <button type="reset" id="btnCancel" value="reset" class="btn btn-default calcel" title="Clear the data">Cancel</button>
+                                <button type="submit" id="btnsubmit" class="btn btn-primary" title="Submit details">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*<script>
+        $("#btnCancel").click(function () {
+            var empid = $("#hdnEmpCode").val();
+            if (empid == "") {
+                window.location.reload();
+            }
+            else {
+                getDataAfterEmpSearch1440(empid);
+            }
+        });
+    </script>*@
+
+<script>
+    debugger;
+    var date = '@fm';
+    var mond = '@monthdays';
+    var MonthNameyear;
+    dteSplit = date.split('-');
+
+    MonthNameyear = dteSplit[0] + "-" + dteSplit[1] + "-" + dteSplit[2];
+    $(function () {
+        var dateyear = new Date(MonthNameyear)
+        $('#Status_date').datepicker();
+        $('#Status_date').datepicker('setDate', dateyear);
+
+    });
+    $('#Statusdate').val(MonthNameyear);
+
+    var today = new Date(date);
+    var lastDate = new Date(today.getFullYear(), today.getMonth(0), mond);  
+     $('#Status_date').datepicker({
+        
+         autoclose: true,
+         minDate: today,
+         startDate: new Date(date),
+         format:'dd-mm-yyyy',
+         endDate: lastDate,
+       // maxDate: '+1w',
+     
+        // minViewMode: 1,
+    });
+    $(document).ready(function () {
+        //debugger;
+        $("#statushide").show();
+        $("#susperhide").hide();
+        $('#status').on('change', function () {
+            //debugger;
+            if (this.value == 'Regular') {
+                $("#statushide").hide();
+                $("[name='Statusdate1']").val('');
+                $("#susperhide").hide();
+                $("[name='susper']").val('');
+
+            }
+            else if (this.value == 'StopSalary') {
+                $("#statushide").hide();
+                $("[name='Statusdate1']").val('');
+                $("#susperhide").hide();
+                $("[name='susper']").val('');
+            }
+            else if (this.value == 'Deputation') {
+                $("#statushide").show();
+                $("[name='Statusdate1']").val('');
+                $("#susperhide").hide();
+                $("[name='susper']").val('');
+            }
+            else if (this.value == 'Suspended') {
+                $("#statushide").show();
+                $("[name='Statusdate1']").val('');
+                $("#susperhide").show();
+                $("[name='susper']").val('');
+            }
+        });
+    });
+
+    // validation suss per between 0 to 100 only
+    function handleChange(input) {
+        if (input.value < 0) {
+         showGlobalModal('E#Error# Percentage should be more than 0');
+            input.value = 0;
+        }
+        if (input.value > 100) {
+            showGlobalModal('E#Error# Percentage should be below  100');
+            input.value = 100;
+        }
+    }
+
+
+
+
+
+
+     @*var dat=acivemonth = "@ViewBag.Fm_AdjustLoanDatePicker";
+    $('#Status_date').datepicker('setDate', new Date(dat));
+    $('#Statusdate').val('');*@
+</script>
+<script>
+    var ld2 = [];
+    $(document).ready(function () {
+        //
+        var orgData;
+        var lempid = 0;
+
+        $.ajax({
+            type: "GET",
+            url: '/Transaction/SearchEmpDetails?EmpCode=' + lempid,
+            dataType: 'json',
+
+            success: function (d, textstatus) {
+                //
+                var ld = [];
+                ////debugger;
+                var dataObj = JSON.parse(d);
+                ld.push(dataObj.EmpLDetails); // leave data
+                ld2.push(dataObj.Mday); //month days
+
+                var ldData = ld[0];
+                var Data = ld2[0];
+                orgErlist = ldData;
+                orgErlist1 = Data;
+
+                $('#LeaveDetails').DataTable({
+                    "ordering": false,
+                    "paging": false,
+                    data: ldData,
+                    "columns": [
+                        { "data": "Name" },
+                        { "data": "Value" },
+                    ],
+                    "order": [[0, 'desc']]
+                });
+            }
+
+        });
+
+    });
+
+    var working_days;
+    var orgData;
+    var orgslist;
+    var cancelOrg;
+    var hiddenempcode;
+    var m1;
+    var m2;
+    var m3;
+    var m4;
+    var m5 = "";
+    var m6;
+    $('#btnsubmit').click(function () {
+        //
+        var count = 0;
+        var mcount = 0;
+        var arrerresult = [];
+        data();
+        var emp_id = $('#pvTxtEmpCode1440').val();
+
+        if ($("#pvTxtEmpCode1440").val() == "")
+            //alert("Employee Id cannot be empty");
+            showGlobalModal('E#Save Error#Employee Id cannot be empty');
+        if ($("#lop_days").val() == "") {
+            showGlobalModal('E#Save Error#Please Enter LOP days ');
+        } else {
+            var lop_days = $('#lop_days').val();
+        }
+        if ($("#absent_days").val() == "") {
+            showGlobalModal('E#Save Error#Please Enter Absent days ');
+        }
+        else {
+            var absent_days = $('#absent_days').val();
+        }
+        if ($("#working_days").val() == "") {
+            showGlobalModal('E#Save Error#Please enter LOP days below 32 ');
+        }
+        else {
+            var working_days = $('#working_days').val();
+        }
+        if ($("#status").val() == "") {
+            showGlobalModal('E#Save Error#Please Select Status ');
+        }
+        else {
+            var status = $('#status').val();
+        }
+        //var Statusdate = $('#Statusdate').val();
+        var status = $('#status').val();
+        if (status == 'Deputation') {
+            if ($("#Statusdate").val() == "") {
+                showGlobalModal('E#Save Error#Please Select date ');
+            }
+            else {
+                var Statusdate = $('#Statusdate').val();
+            }
+        }
+
+        if (status == 'Suspended') {
+            if ($("#Statusdate").val() == "") {
+                showGlobalModal('E#Save Error#Please Enter Select date ');
+            }
+            else if ($("#Susper").val() == "") {
+                showGlobalModal('E#Save Error#Please Enter Suspend Percentage ');
+            }
+            else {
+                var Statusdate = $('#Statusdate').val();
+                var suspenper = $('#Susper').val();
+            }
+        }
+
+        if ( status == 'Deputation') {
+            if (working_days != undefined && absent_days != undefined && lop_days != undefined && Statusdate != undefined) {
+                //
+                var dataToSend = JSON.stringify({
+
+                    'EmpId': emp_id,
+                    'status_date': Statusdate,
+                    'lop_days': lop_days,
+                    'absent_days': absent_days,
+                    'working_days': working_days,
+                    'status': status
+                });
+                if (dataToSend.length > 0 && count < 1) {
+                    //
+                    CommonApiPOST("/Payroll/Transaction/UpdateAttendance", dataToSend, function (isSuccess) {
+                        if (isSuccess) {
+                            setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                        } else { }
+                    });
+                }
+            }
+        }
+        if (status == 'Suspended') {
+
+            if (working_days != undefined && absent_days != undefined && lop_days != undefined && Statusdate != undefined && suspenper != undefined) {
+                //
+                var dataToSend = JSON.stringify({
+
+                    'EmpId': emp_id,
+                    'status_date': Statusdate,
+                    'lop_days': lop_days,
+                    'absent_days': absent_days,
+                    'working_days': working_days,
+                    'status': status,
+                    'suspend_percent': suspenper
+                });
+                if (dataToSend.length > 0 && count < 1) {
+                    //
+                    CommonApiPOST("/Payroll/Transaction/UpdateAttendance", dataToSend, function (isSuccess) {
+                        if (isSuccess) {
+                            setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                        } else { }
+                    });
+                }
+            }
+        }
+        else {
+            if (working_days != undefined && absent_days != undefined && lop_days != undefined && status != "" ) {
+                //
+                var dataToSend = JSON.stringify({
+
+                    'EmpId': emp_id,
+                    'status_date': Statusdate,
+                    'lop_days': lop_days,
+                    'absent_days': absent_days,
+                    'working_days': working_days,
+                    'status': status,
+                    'suspend_percent': suspenper
+                });
+                if (dataToSend.length > 0 && count < 1) {
+                   //
+                    CommonApiPOST("/Payroll/Transaction/UpdateAttendance", dataToSend, function (isSuccess) {
+                        if (isSuccess) {
+                            setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                        } else { }
+                    });
+                }
+            }
+        }
+    });
+
+
+    function data() {
+       // //debugger;
+
+        // Mday
+        var Data = ld2[0]; //{fm : "01-02-12"};
+        var days = Data[0].month_days;
+
+        var LOP_days = $("#lop_days").val();
+
+        working_days = (days - LOP_days); //31-20=11
+        var textcontrol = document.getElementById("working_days");
+        if (working_days >= 0) {
+            textcontrol.value = working_days;
+        }
+        else {
+            showGlobalModal('E#Save Error# Please enter LOP days less than or equal to month days');
+            textcontrol.value = " ";
+            var LOP_days = $("#lop_days").val("");
+            //textcontrol.value = working_days;
+        }
+    }
+    @*// search*@
+    function fillEpfDt(respData) {
+        //debugger;
+        var pref = [];
+        var dataObj = JSON.parse(respData);
+        var ld = [];
+        var dataObj = JSON.parse(respData);
+        ld.push(dataObj.EmpLDetails); // leave data
+        pref.push(dataObj.StatusDetails);
+        console.log(pref);
+        var ldData = ld[0];
+        orgErlist = ldData;
+        $('#LeaveDetails').DataTable({
+            "destroy": true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+            data: ldData,
+            "columns": [
+                { "data": "Name" },
+                { "data": "Value" },
+            ],
+            "order": [[0, 'desc']]
+        });
+        if (pref == 0) {
+            var data2 = data();
+           //
+            $("#statushide").show();
+            $("#status").show();
+            $("#Statusdate").val("");
+            $("#status").val('');
+            $("#susperhide").hide();
+            $('#Susper').val("");
+            if ($("#lop_days").val('')) {
+                $("#lop_days").val(0)
+            }
+            if ($("#absent_days").val('')) {
+                $("#absent_days").val(0);
+            }
+            if ($("#working_days").val('')) {
+                var wd = $("#working_days").val(working_days);
+            }
+
+           // $("#working_days").val(working_days);
+        }
+        else {
+            pref.forEach(function (element) {
+                debugger;
+                element.forEach(function (ele) {
+                    //
+                    if (ele.Name == "lop_days") {
+                        m1 = ele.Value;
+                    }
+                    if (ele.Name == "absent_days") {
+                        m2 = ele.Value;
+                    }
+                    if (ele.Name == "working_days") {
+                        m3 = ele.Value;
+                    }
+                    if (ele.Name == "status") {
+                        m4 = ele.Value;
+                    }
+                    if (ele.Name == "status_date") {
+                        m5 = ele.Value;
+                    }
+                    if (ele.Name = "sus_per") {
+                        //debugger;
+                        m6 = ele.Value;
+                    }
+
+                });
+            })
+
+            document.getElementById("lop_days").value = m1;
+            document.getElementById("absent_days").value = m2;
+            document.getElementById("working_days").value = m3;
+            document.getElementById("status").value = m4;
+
+            if (m4 == 'Regular') {
+                $("#statushide").hide();
+                $('#susperhide').hide();
+            }
+            else if (m4 == 'StopSalary') {
+                $("#statushide").hide();
+                $('#susperhide').hide();
+            }
+            else if (m4 == 'Deputation') {
+                $("#statushide").show();
+                $('#susperhide').hide();
+            }
+            else if (m4 == 'Suspended') {
+                $("#statushide").show();
+                $('#susperhide').show();
+
+            }
+            document.getElementById("Statusdate").value = m5;
+            document.getElementById("Susper").value = m6;
+        }
+    }
+    $('#EmployeeId').keypress(function (event) {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+            CommonApiGET('/Payroll/Transaction/SearchEmpDetails?EmpCode=' + $("#EmployeeId").val(), function (respData) {
+                fillDataTables(respData);
+                cancelOrg = respData;
+            });
+            return false;
+        }
+    });
+    function getDataAfterEmpSearch1440(empcode) {
+        $("#btnsubmit").attr("disabled", false);
+        $('#EmployeeId').val(empcode);
+        hiddenempcode = empcode;
+        CommonApiGET('/Payroll/Transaction/SearchEmpDetails?EmpCode=' + empcode, function (respData) {
+            //
+            cancelOrg = respData;
+            fillEpfDt(respData);
+        });
+    }
+
+    $("#btnCancel").click(function () {
+        //
+        if ($("#pvTxtEmpCode1440").val() == "") {
+            //alert("Employee Id cannot be empty");
+            showGlobalModal('E#Save Error#Employee Id cannot be empty');
+            var absent_days = $('#lop_days').val('');
+            var working_days = $('#working_days').val('');
+        }
+        fillEpfDt(cancelOrg);
+        //cancelOrg = respData;
+        //fillEpfDt(respData);
+        if (m4 == 'Regular') {
+            //
+            $("#statushide").hide();
+            $("#susperhide").hide();
+        }
+        else if (m4 == 'StopSalary') {
+            $("#statushide").hide();
+            $("#susperhide").hide();
+        }
+        else if (m4 == 'Deputation') {
+            $("#statushide").show();
+            $("#susperhide").hide();
+        }
+        else {
+            $("#statushide").show();
+            $("#susperhide").show();
+        }
+
+    });
+
+    // lop and absent days
+    var getDaysInMonth = function (month, year) {
+        return new Date(year, month, 0).getDate();
+    };
+
+    function data2() {
+        ////debugger;
+        var Data = ld2[0]; //{fm : "01-02-12"};
+        var days = Data[0].month_days;
+
+        var mcount = getDaysInMonth(days, 2019);
+        var LOP_days = $("#lop_days").val();
+        var Absent_days = $("#absent_days").val();
+
+        if (Absent_days > mcount) {
+            showGlobalModal('E#Save Error# Please Enter Absent days below 32 Days');
+            var Absent_days = $("#absent_days").val('');
+        }
+        else {
+            //textcontrol.value = " ";
+        }
+    }
+</script>
+
+<script type='text/javascript'>
+
+    $(function () {
+        $('#Event_Date1').datepicker({
+            format: 'yyyy',
+            viewMode: "years",
+            minViewMode: "years",
+            todayHighlight: true,
+            autoclose: true
+        });
+    });
+
+</script>
+
+@*<script>
+        var resetForm = function () { $('input,select,textarea').not('[readonly],[disabled],:button').val(''); }
+    </script>*@

@@ -1,0 +1,51 @@
+update employees set branch=43,department=22 where empid=926;
+update employees set branch=31 where empid=6375;
+
+update employees set ControllingAuthority=196,SanctioningAuthority=223 where empid=763;
+update employees set ControllingAuthority=60,SanctioningAuthority=223 where empid in (968,6346);
+update employees set ControllingAuthority=324,SanctioningAuthority=223 where empid in (5869,5890,6343,913);
+update employees set ControllingAuthority=462,SanctioningAuthority=223 where empid in (428,495);
+
+update employees set branch=43,Department=12 where empid=5770;
+update employees set branch=43,Department=16 where empid=6345;
+update employees set branch=38  where empid=6376;
+update employees set branch=17 where empid=857;
+update employees set branch=6 where empid=986;
+update employees set branch=29 where empid=990;
+
+update employees set shortnames=concat(firstname,' ',lastname) where shortnames is null;
+
+update employees set branch=(select id from branches where name='OtherBranch'),department=(select id from departments where code='Loans & Advances – IF') where id=1;
+update employees set branch=(select id from branches where name='VENGALRAONAGAR') where id=464;
+update employees set branch=(select id from branches where name='OtherBranch'),department=(select id from departments where code='HRD-Administration') where id=431;
+update employees set branch=(select id from branches where name='OtherBranch'),department=(select id from departments where code='Inward-Outward') where id=284;
+update employees set branch=(select id from branches where name='SAIDABAD COLONY') where id=173;
+update employees set branch=(select id from branches where name='KAMALANAGAR') where id=114;
+update employees set branch=(select id from branches where name='BAGHLINGAMPALLY') where id=174;
+update employees set branch=(select id from branches where name='OtherBranch'),department=(select id from departments where code='HRD-Administration') where id=133;
+update employees set branch=(select id from branches where name='SERILINGAMPALLY') where id=448;
+update employees set branch=(select id from branches where name='TOLICHOWKI') where id=85;
+update employees set branch=(select id from branches where name='OtherBranch'),department=(select id from departments where code='HRD-Administration') where id=123;
+update employees set branch=(select id from branches where name='BANDLAGUDA') where id=62;
+update employees set branch=(select id from branches where name='KUKATPALLY') where id=377;
+update employees set branch=(select id from branches where name='OtherBranch'),department=(select id from departments where code='Inward-Outward') where id=284;
+update employees set branch=(select id from branches where name='MALKAJGIRI') where id=180;
+update employees set branch=(select id from branches where name='OtherBranch'),department=(select id from departments where code='Reconciliation Cell') where id=280;
+update employees set branch=(select id from branches where name='KAMALANAGAR') where id=158;
+update employees set branch=(select id from branches where name='OtherBranch'),department=(select id from departments where code='HRD-Administration') where id=133;
+update employees set branch=(select id from branches where name='OtherBranch'),department=(select id from departments where code='HRD-Administration') where id=467;
+update employees set branch=(select id from branches where name='SAIDABAD COLONY') where id=312;
+update employees set branch=(select id from branches where name='BHARATNAGAR') where id=465;
+
+
+update leaves set ControllingAuthority=223 where empid=22;
+update leaves set ControllingAuthority=214 where empid=240;
+update leaves set ControllingAuthority=324,SanctioningAuthority=324 where empid=429;
+update leaves set ControllingAuthority=324,SanctioningAuthority=324 where empid=369;
+update leaves set ControllingAuthority=324,SanctioningAuthority=324 where empid=118 and id=517;
+update leaves set ControllingAuthority=196,SanctioningAuthority=223 where empid=60 and id in (946);
+update leaves set ControllingAuthority=60,SanctioningAuthority=223 where empid=381 and id in (941,975);
+
+delete from branches where name='Masabtank Branch';
+delete from branches where name='TBD';
+delete from branches where name='Warangal DCCB';

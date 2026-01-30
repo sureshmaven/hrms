@@ -1,0 +1,14 @@
+Create table LTC_BlockPeriod(Id int identity(1,1) primary key not null,
+BlockFrom int null,BlockTo int null,UpdatedBy int null,UpdatedDate datetime null);
+alter table Leaves_LTC add  BlockPeriod varchar(200) null,LtcType varchar(200) null;
+
+alter table Leaves_LTC add  LeaveType varchar(200) null;
+
+
+ALTER  view [dbo].[V_Tx_History] 
+as 
+select th.Id,th.Tx_type,th.Tx_subtype,
+ Concat(th.Tx_by,' - ',e.ShortName)as Tx_By,
+ Concat(th.Tx_on,+' - '+(select e1.ShortName from employees e1 where e1.empid=th.Tx_on))as Tx_On,
+ th.Tx_date,th.Notes,th.Comments  from Tx_History th join Employees e on e.EmpId=th.Tx_by
+GO

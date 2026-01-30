@@ -1,0 +1,29 @@
+update pr_emp_adv_loans set interest_installment_amount=448 where emp_code=5809 and loan_type_mid=25 and loan_sl_no=5106
+
+insert into pr_emp_adv_loans_child(id,emp_adv_loans_mid,slno,date_disburse,loan_amount,interest_rate,interest_accured,principal_amount_recovered,
+interest_amount_recovered,total_amount_recovered,priority,principal_start_date,principal_end_date,interest_start_date,interest_end_date,
+total_principal_installments,total_interest_installments,os_principal_amount,os_interest_amount,os_this_month_interest,os_total_amount,
+principal_recovered_flag,interest_recovered_flag,active,trans_id,loan_sl_no)
+values((select last_num from new_num where table_name='pr_emp_adv_loans_child')+1,
+(select id from pr_emp_adv_loans where emp_code=714 and loan_type_mid=24),1,
+(select installment_start_date from pr_emp_adv_loans where emp_code=714 and loan_type_mid=24),
+(select total_amount from pr_emp_adv_loans where emp_code=714and loan_type_mid=24),8.0,4086,14910,0,14910,1,
+(select installment_start_date from pr_emp_adv_loans where emp_code=714 and loan_type_mid= 24),
+(select installment_end_date from pr_emp_adv_loans where emp_code=714 and loan_type_mid=24),NULL,NULL,
+(select principal_installment from pr_emp_adv_loans where emp_code=714 and loan_type_mid=24),
+(select interest_installment from pr_emp_adv_loans where emp_code=714 and loan_type_mid=24),36142,4086,0,40228,0,0,1,1000,
+(select loan_sl_no from pr_emp_adv_loans where emp_code=714 and loan_type_mid=24));
+
+update new_num set last_num=(select max(id) from pr_emp_adv_loans_child) where table_name='pr_emp_adv_loans_child';
+
+update pr_emp_adv_loans set installment_amount=10420 where emp_code=965 and loan_type_mid=10 and active=1 and loan_sl_no=10022
+
+update pr_emp_adv_loans set installment_amount=1360 where emp_code=517 and loan_type_mid=24 and active=1 and loan_sl_no=10031
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+
+update pr_emp_payslip set er_cca='370.08',gross_amount='19799.02',net_amount='17613.7'  
+where emp_code=6397 and fm='2019-12-01' and active=1 and spl_type='Regular';

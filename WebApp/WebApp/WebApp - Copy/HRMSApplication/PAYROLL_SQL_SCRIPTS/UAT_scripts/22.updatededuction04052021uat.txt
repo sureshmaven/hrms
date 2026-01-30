@@ -1,0 +1,18 @@
+935---- PF Loan ST 1  HAVE TO DO FULL CLEAR
+
+5884--NEW PF Loan ST 1 HAVE TO BE ENTERED
+
+
+
+
+update pr_emp_adv_loans set installment_amount=4559 where emp_code=5757 and loan_type_mid= 17
+update pr_emp_adv_loans_child set os_principal_amount=4518 where emp_adv_loans_mid in (select id from pr_emp_adv_loans where loan_type_mid=17 and emp_code=5757)
+
+update pr_emp_lic_details set amount=1326 where  emp_code=6379 and active=1
+
+UPDATE pr_emp_adv_loans_child set os_principal_amount=57411.00 ,os_interest_amount=0
+where emp_adv_loans_mid in (select id from pr_emp_adv_loans where loan_type_mid=16 and emp_code=5889)
+
+
+
+

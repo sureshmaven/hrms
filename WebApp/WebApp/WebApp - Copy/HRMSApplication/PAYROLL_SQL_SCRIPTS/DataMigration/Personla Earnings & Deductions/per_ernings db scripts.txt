@@ -1,0 +1,71 @@
+-- pr_earn_field_master /
+insert into pr_earn_field_master values(98,'PL Encashment','per_earn',1,'','');
+insert into pr_earn_field_master values(99,'RENTAL INCOME','per_earn',1,'','');
+////
+select * from pr_emp_perearning
+select * from temp_ern
+
+--/ Temp table creation  for earnings/
+create table temp_ern(emp_code int,name varchar(150),amount float(20));				
+insert into temp_ern values(176,'PFPerks',1355.12);
+insert into temp_ern values(176,'PL Encashment',2389.56);
+insert into temp_ern values(262,'LTC',3382);
+insert into temp_ern values(271,'RENTAL INCOME',5031);
+insert into temp_ern values(279,'LTC',5031);
+insert into temp_ern values(303,'LTC',5031);
+insert into temp_ern values(337,'PFPerks',5031);
+insert into temp_ern values(337,'PL Encashment',5031);
+insert into temp_ern values(354,'LTC',5031);
+insert into temp_ern values(361,'RENTAL INCOME',5031);
+insert into temp_ern values(443,'LTC',5031);
+insert into temp_ern values(543,'LTC',5031);
+insert into temp_ern values(547,'LTC',5031);
+insert into temp_ern values(779,'LTC',5031);
+insert into temp_ern values(790,'LTC',6764);
+insert into temp_ern values(832,'LTC',8860);
+insert into temp_ern values(838,'LTC',10062);
+insert into temp_ern values(856,'LTC',10062);
+insert into temp_ern values(909,'LTC',10062);
+insert into temp_ern values(916,'LTC',10062);
+insert into temp_ern values(922,'LTC',10062);
+insert into temp_ern values(925,'LTC',10062);
+insert into temp_ern values(929,'LTC',10062);
+insert into temp_ern values(935,'LTC',10062);
+insert into temp_ern values(936,'LTC',10062);
+insert into temp_ern values(940,'LTC',10062);
+insert into temp_ern values(967,'LTC',10062);
+insert into temp_ern values(968,'LTC',10062);
+insert into temp_ern values(973,'LTC',10062);
+insert into temp_ern values(979,'LTC',10062);
+insert into temp_ern values(980,'LTC',10062);
+insert into temp_ern values(982,'LTC',10062);
+insert into temp_ern values(983,'LTC',10146);
+insert into temp_ern values(984,'LTC',10602);
+insert into temp_ern values(996,'LTC',13528);
+insert into temp_ern values(5150,'LTC',15093);
+insert into temp_ern values(5741,'PL Encashment',15093);
+insert into temp_ern values(5750,'LTC',20124);
+insert into temp_ern values(5882,'RENTAL INCOME',22374);
+insert into temp_ern values(5888,'LTC',24464);
+insert into temp_ern values(6184,'LTC',60000);
+insert into temp_ern values(6305,'LTC',178147);
+insert into temp_ern values(6316,'LTC',196398);
+insert into temp_ern values(6326,'LTC',510193);
+insert into temp_ern values(6334,'LTC',651390);
+
+
+////////////////////////////////////////////
+
+declare @StartValue int;
+set @StartValue=(select last_num from new_num where table_name = 'pr_emp_perearning');
+
+insert into pr_emp_perearning(id,fy,fm,emp_id,emp_code,m_id,m_type,amount,section,trans_id) 
+select @StartValue+ROW_NUMBER() OVER(ORDER BY emp_code) AS Row,
+year(getdate()),convert(varchar, getdate(), 23),e.id,t.emp_code,m.id,m.type,t.amount,t.name,1000 
+from temp_ern t 
+join Employees e on e.EmpId=t.emp_code 
+join  pr_earn_field_master m 
+ on t.name=m.name where m.type='per_earn'
+ declare @lastnum int;
+ set @lastnum = (select top 1 id from pr_emp_perearning order by id desc)
+ update new_num set last_num=@lastnum where table_name='pr_emp_perearning'

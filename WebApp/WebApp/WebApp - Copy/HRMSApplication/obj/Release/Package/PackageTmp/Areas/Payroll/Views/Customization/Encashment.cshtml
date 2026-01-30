@@ -1,0 +1,325 @@
+﻿
+@*@{
+    ViewBag.Title = "Encashment";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+<h2>Encashment</h2>*@
+
+
+
+
+@{
+    ViewBag.Title = "Encashment";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="leftmenu-container">
+                <div class="sidebar-menu">
+                    <div class="main_heading left-menu">
+                        @{Html.RenderPartial("_PVPayrollMenu");}
+                    </div>
+                </div>
+                <div class="sidebar-content">
+                    <div class="main_heading">
+                        <h1>Encashment Structure</h1>
+                        @*@{ Html.RenderPartial("_pvEmployeeSearch"); }*@
+                        <input type="hidden" id="hdnEmpCode" />
+                        @*<div class="col-md-12">
+                        <table id="EncashmentStructure" class="display" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Particular</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <br />
+                        <div class="col-md-12">
+                            <div class="pull-right">
+                                <button id="cancelData" class="btn btn-default">Cancel</button>
+                                <button type="button" id="updatGridData" class="btn btn-sm btn-primary">Update</button>
+                            </div>
+                        </div>
+                    </div>*@
+                    <div class="col-md-6">
+                        <div class="inner_heading">
+                            <div class="table-responsive">
+                                <label>Earnings</label><br />
+                                <table id="EncashmentStructure" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Particular</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="inner_heading">
+                            <div class="table-responsive">
+                                <label>Deductions</label><br />
+                                <table id="EncashmentDedStructure" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Particular</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="pull-right">
+                            <button id="cancelData" class="btn btn-default">Cancel</button>
+                            <button type="button" id="updatGridData" class="btn btn-sm btn-primary">Update</button>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var incIndex = 0;
+    var originalData = [];
+    var arrDelete = [];
+    var statusData = ["No","Yes"];
+     var orgEflist;
+    var orgDflist;
+
+    $(document).ready(function (respData) {
+
+        $('#EncashmentStructure').DataTable({
+            "paging": false,
+            "sort": false,
+            "searching": false,
+
+            "language": {
+                "emptyTable": "No data available. Please enter employee code and search"
+            }
+        });
+        $('#EncashmentDedStructure').DataTable({
+            "paging": false,
+            "sort": false,
+            "searching": false,
+
+            "language": {
+                "emptyTable": "No data available. Please enter employee code and search"
+            }
+        });
+
+        CommonApiGET('/Payroll/Customization/GetEncashmentStructure', function (respData) {
+             originalData = respData;
+            orgCancelData = respData;
+            fillDataTables(respData);
+        });
+    });
+
+
+
+    function fillDataTables(respData) {
+
+        var ef = [];//EfDetails,DfDetails
+        var df = [];
+        
+
+        var dataObj = JSON.parse(respData);
+        ef.push(dataObj.EfDetails);
+        df.push(dataObj.DfDetails);
+       
+
+
+        var efData = ef[0];
+        var dfData = df[0];
+       
+
+        orgEflist = efData;
+        orgDflist = dfData;
+       
+       
+        $('#EncashmentStructure').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+            data: orgEflist,
+            "columns": [
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                            return getColumnReadOnly('*' + data.id+','+data.type, data.name);
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+
+                            if ( data.name == "Basic") {
+                              return getColumnReadOnly(data.id,"Yes");
+                            } else if (data.status == null) {
+                                return getColumnDropdownForEmpMaster(data.id, '', statusData);
+                            } else {
+                                 return getColumnDropdownForEmpMaster(data.id, data.status, statusData);
+                            }
+
+
+                    }
+                }
+
+            ],
+            "order": [[1, 'asc']]
+        });
+        $('#EncashmentDedStructure').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+            data: orgDflist,
+            "columns": [
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                            return getColumnReadOnly('*' + data.id+','+data.type, data.name);
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+
+                            if ( data.name == "Basic") {
+                              return getColumnReadOnly(data.id,"Yes");
+                            } else if (data.status == null) {
+                                return getColumnDropdownForEmpMaster(data.id, '', statusData);
+                            } else {
+                                 return getColumnDropdownForEmpMaster(data.id, data.status, statusData);
+                            }
+
+
+                    }
+                }
+
+            ],
+            "order": [[1, 'asc']]
+        });
+    }
+
+
+    $('#updatGridData').click(function () {
+       
+        var arrSampleObJ = [];
+        var arrSampleObJD = [];
+
+        //orgEflist = efData;
+        //orgDflist = dfData;
+
+        var table = $('#EncashmentStructure').DataTable();
+        var updateData = decodeURIComponent(table.$('input, select').serializeAndEncode());
+        var arrUpdate = updateData.split("*");
+
+         var table1 = $('#EncashmentDedStructure').DataTable();
+        var updateData1 = decodeURIComponent(table1.$('input, select').serializeAndEncode());
+        var arrUpdate1 = updateData1.split("*");
+
+        arrUpdate.forEach(function (element) {
+            
+            if (element != "") {
+                var objEf = {};
+                var finalObj = {};
+                var strRow = element.split("&");
+                var strType = strRow[0].split("=");
+                var types = strType[0].split(",");
+                objEf.id = types[0];
+                objEf.type = types[1];
+                var strStatus = strRow[1].split("=");
+                objEf.status = strStatus[1];
+
+                    orgEflist.map(function (element) {
+                       
+                        if (element.id == objEf.id && element.type == objEf.type && element.status != objEf.status && element.status == "" && element.row_type == "N") {
+                            objEf.action = "Insert";
+                           
+                            arrSampleObJ.push(objEf);
+
+                        } else if (element.id == objEf.id && element.type == objEf.type && element.status != objEf.status && element.status != "" && element.row_type == "U") {
+                            objEf.action = "Update";
+                          
+                            arrSampleObJ.push(objEf);
+                        }
+                       
+                    });
+
+                }
+
+        });
+        arrUpdate1.forEach(function (element) {
+           
+            if (element != "") {
+                var objEf = {};
+                var finalObj = {};
+                var strRow = element.split("&");
+                var strType = strRow[0].split("=");
+                var types = strType[0].split(",");
+                objEf.id = types[0];
+                objEf.type = types[1];
+                var strStatus = strRow[1].split("=");
+                objEf.status = strStatus[1];
+
+                    orgDflist.map(function (element) {
+                      
+                        if (element.id == objEf.id && element.type == objEf.type && element.status != objEf.status && element.status == "" && element.row_type == "N") {
+                            objEf.action = "Insert";
+                            
+                            arrSampleObJD.push(objEf);
+
+                        } else if (element.id == objEf.id && element.type == objEf.type && element.status != objEf.status && element.status != "" && element.row_type == "U") {
+                            objEf.action = "Update";
+                           
+                            arrSampleObJD.push(objEf);
+                        }
+                      
+                    });
+
+                }
+
+        });
+       
+        var emp_code = $("#hdnEmpCode").val();
+        var dataToSend = JSON.stringify({
+           // EntityId: emp_code,
+            enashEarn: arrSampleObJ,
+            enashDed:arrSampleObJD
+        });
+        if (emp_code == 0 && arrSampleObJ.length>0 || arrSampleObJD.length>0) {
+            CommonApiPOST("/Payroll/Customization/updateEncashmentStructure", dataToSend, function (isSuccess) {
+                if (isSuccess) {
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+        }
+    });
+
+
+    $("#cancelData").click(function () {
+
+        fillDataTables(originalData);
+    });
+
+</script>
+

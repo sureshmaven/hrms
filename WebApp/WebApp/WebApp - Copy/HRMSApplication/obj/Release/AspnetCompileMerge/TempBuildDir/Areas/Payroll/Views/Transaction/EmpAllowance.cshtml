@@ -1,0 +1,239 @@
+﻿@model PayrollModels.Transactions.AllowanceModel
+@{
+    ViewBag.Title = "EmpAllowance";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+<style>
+    #BranchAllowance.dataTable tbody td:first-child + td input.input_without_brd {
+        text-align: right !important;
+    }
+</style>
+<div class="page">
+    <div class="form-horizontal">
+        <div class="page_start">
+			<div class="leftmenu-container">
+            <div class="sidebar-menu">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="sidebar-content">
+                <div class="main_heading heading_main">
+                    <h1>Allowance <span class="year-end">@ViewBag.Env_Fm_Fy</span></h1>
+                    @{ Html.RenderPartial("_pvEmployeeSearch");}
+                    <div class="clearfix"></div>
+                    <div class="col-md-12 mt_10">
+                        <div class="table-responsive">
+                            <table id="BranchAllowance" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Allowance</th>
+                                        <th>amount</th>
+                                        <th>From Date</th>
+                                        <th>To Date</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="mt_10">
+                            <div class="pull-right">
+                                <button id="cancelData" class="btn btn-default">Cancel</button>
+                                <button type="button" id="btnsubmit" class="btn btn-sm btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			</div>
+        </div>
+    </div>
+</div>
+<style>
+    input[type=date]::-webkit-inner-spin-button,
+    input[type=date]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        margin: 0;
+    }
+</style>
+<script>
+    var orgData;
+    var orgCancelData;
+    $(document).ready(function () {
+
+        $('#BranchAllowance').DataTable({
+            "paging": false,
+            "sort": false,
+            "searching": false,
+
+            "language": {
+                "emptyTable": "No data available. Please enter employee code and search"
+            }
+        });
+    });
+
+    function fillDataTables(respData) {
+        var allowancedata = respData.allowancedata;
+        orgData = allowancedata;
+        $('#BranchAllowance').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+            data: allowancedata,
+            "columns": [
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return getColumnReadOnlyAllowance('*' + data.Id, data.Name);
+                    }
+                },
+
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return getColumnReadOnlyAllowance(data.Id, data.amount);
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return getColumnDate(data.Id, data.from_date);
+                        
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return getColumnDate(data.Id, data.to_date);
+                        
+                    }
+                },
+            ],
+            "order": [[1, 'asc']]
+        });
+
+    }
+
+    function getDataAfterEmpSearch1440(empcode) {
+        CommonApiGET('/Payroll/Transaction/GetBranchEmpAllowanceData?EmpCode=' + empcode, function (respData) {
+            orgCancelData = respData;
+            fillDataTables(respData);
+        });
+    }
+
+    $('#btnsubmit').click(function () {
+        
+        var table = $('#BranchAllowance').DataTable();
+        var updateData = decodeURIComponent(table.$('input, select,textarea').serializeAndEncode());
+        var arrer = updateData.split('*');
+        console.log(orgData, updateData);
+        var Allowancedata = [];
+        arrer.forEach(function (element) {
+            if (element != "") {
+                 
+                var objEf = {};
+                var strRow = element.split("&");
+                var id = strRow[0].split("=");
+                objEf.id = id[0];
+                objEf.name = id[1];
+                var amount = strRow[1].split("=");
+                objEf.amount = amount[1];
+                var from_date = strRow[2].split("=");
+                objEf.from_date = from_date[1];
+                var to_date = strRow[3].split("=");
+                objEf.to_date = to_date[1];
+                orgData.map(function (org) {
+                   
+                    
+                    if (org.Id == objEf.id) {
+                        if (objEf.from_date == "") {
+                            objEf.from_date = null;
+                        }
+                        if (objEf.to_date == "") {
+                            objEf.to_date = null;
+                        }
+                        if ((org.from_date != objEf.from_date || org.to_date != objEf.to_date)
+                            && (objEf.from_date != "" && objEf.to_date != "")) {
+                            Allowancedata.push(objEf);
+                            if (org.from_date != "" && objEf.to_date == "" && objEf.from_date!="") {
+
+                            }
+                        }
+                    }
+                });
+
+            }
+        });
+
+        Allowancedata.map(function (modified) {
+           
+            orgData.map(function (org) {
+                if (org.Id == modified.id) {
+                   
+                    if ((org.from_date == null && org.to_date == null) && (modified.from_date != "" || modified.to_date != "")) {
+                       
+                        modified.action = "new";
+                        if (modified.from_date == null && orgData.from_date == null) {
+                            // alert("Please Select From Date");
+                            showGlobalModal("I#Required#Please Select From Date");
+                            e.preventDefault();
+                            //if ((org.from_date != null && org.to_date == null) && (modified.from_date != "" || modified.to_date == "")) {
+                            //     
+                            //    modified.action = "update";
+                            //}
+                        }
+                         
+                    }
+                    else {
+                        modified.action = "update";
+                    }
+                    if ((org.from_date != null && org.to_date != null) && (modified.from_date == null && modified.to_date != null)) {
+                        showGlobalModal("I#Required#Please Select From Date");
+                        e.preventDefault();
+                    }
+                  
+                }
+            });
+        });
+
+         
+        var empid = $('#pvTxtEmpCode1440').val();
+        var dataToSend = JSON.stringify({
+            EntityId: empid,
+            objdates: Allowancedata
+
+        });
+        var count = 0;
+        
+        Allowancedata.map(function (obj) {
+           
+            if (obj.to_date != null) {
+                var fromDate = new Date(obj.from_date);
+                var toDate = new Date(obj.to_date);
+                if (toDate < fromDate) {
+                    count++;
+                }
+            }
+            
+        });
+        if (count > 0) {
+            showGlobalModal("I#Required Field#To Dates Should Be Greater Than From Dates");
+        } else {
+            CommonApiPOST("/Payroll/Transaction/InsertAllowance", dataToSend, function (isSuccess) {
+                if (isSuccess) {
+                    setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                } else { }
+            });
+        }
+        
+    });
+
+    $('#cancelData').click(function () {
+        fillDataTables(orgCancelData);
+    });
+    
+</script>

@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "PFAuthorisation";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+
+<div class="page">
+    <div class="page_start">
+        <div class="leftmenu-container">
+            <div class="sidebar-menu">
+                @{Html.RenderPartial("_PVPayrollMenu");}
+            </div>
+            <div class="sidebar-content">
+                <div class="main_heading heading_main">
+                    <h1>PF Authorisation  <span class="year-end">@ViewBag.Env_Fm_Fy</span></h1>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

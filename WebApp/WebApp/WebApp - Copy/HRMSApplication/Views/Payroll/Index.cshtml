@@ -1,0 +1,419 @@
+﻿@model Entities.Employees
+
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var rolepages = TempData["RolePages"].ToString();
+    ViewBag.RolePages = TempData["RolePages"];
+}
+
+@{
+    var message = TempData["AlertMessage"] ?? string.Empty;
+}
+@*<script type="text/javascript" src="~/Assets/hrms/Register.js"></script>*@
+<script type="text/javascript">
+    var message = '@message';
+    if (message) alert(message);
+
+</script>
+
+<style>
+    .activeClass {
+        background: #ffdb99;
+    }
+
+    .secondClass {
+        /*background: #FF9999;*/
+        color: red;
+    }
+</style>
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-heading">
+            @{
+                <ul class="nav nav-tabs">
+                    @if (rolepages.Contains("PRMain"))
+                    {
+                        <li class="active"><a href=@Url.Action("Index", "Payroll")>PAYROLL</a></li>}
+
+                </ul>
+            }
+        </div>
+        @using (Html.BeginForm("Index", "Payroll", FormMethod.Post))
+        {
+            <div class="container">
+                <div class="page_st">
+                    <div class="page">
+                        <div class="form-horizontal form-horizontal2">
+                            <div class="page_start">
+                                @{
+
+
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="main_heading">
+                                            <h1>Payroll </h1>
+                                            <div class="form-horizontal col-md-12 col-sm-12 col-xs-12">
+
+                                                <div class="col-md-12 col-sm-12">
+                                                    <div class="main_heading">
+                                                        <h1>Request History</h1>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-5 control-label">Branch:<span class="mandatory">*</span> </label>
+                                                            <div class="col-sm-7">
+
+
+                                                                @Html.DropDownListFor(model => model.Branch, (SelectList)ViewBag.Branch, "Select Branch", new { @class = "form-control", @id = "Branch" })
+
+
+
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-1 col-sm-1 col-xs-12">
+                                                            <button type="button" id="btnApply" class="btn btn-primary btn-sm pull-right">Search</button>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                        <div class="col-md-12">
+                                                            <div class="table-responsive m_20">
+                                                                <div id="grid"></div>
+                                                            </div>
+
+
+
+
+                                                        </div>
+                                                        <div class="clearfix"></div>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-1 col-sm-1 col-xs-12">
+                                                <button type="button" onclick="window.location='@Url.Action("PayrollEmployee", "Payroll")'" id="Proceed" class="btn btn-primary btn-sm pull-right">Proceed</button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                }
+
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        @using (Html.BeginForm("Index", "Payroll", FormMethod.Post))
+        {
+           
+               
+           
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    function reasontype() {
+
+        var Textb = document.getElementById('rdes');
+        var parLab = document.getElementById('Type').options[document.getElementById('Type').selectedIndex].text;
+
+        if (parLab != 'Other') {
+            rdes.value = parLab;
+
+            $('#rdes').attr("disabled", true)
+
+        }
+        else {
+
+            rdes.value = '';
+            $('#rdes').attr("disabled", false)
+        }
+
+    }
+</script>
+
+<script>
+    document.getElementById("at").className = "active";
+    $(document).ready(function () {
+        $(function () {
+
+            $.ajax({
+                type: "GET",
+                url: "/TimeSheet/GetAuthorityNamess",
+                dataType: "Json",
+                success: function (response) {
+                    if (response != null) {
+                        document.getElementById("UserId").value = response.luseridAjax;
+                        document.getElementById("ControllingAuthority").value = response.lControllingAuthorityAjax;
+                        document.getElementById("SanctioningAuthority").value = response.lSanctioningAuthorityAjax;
+                    }
+                    else {
+                        // alert("Something went wrong");
+                    }
+                },
+            });
+        });
+    });
+</script>
+
+
+<script type="text/javascript">
+        var screenTheme = 'darkblue';
+        var popupTheme = 'highcontrast';
+        var otherTheme = 'arctic';
+
+        var localizationObject = {
+            filterstringcomparisonoperators: ['contains', 'does not contain'],  /* filter String Comparison Operators    */
+            filternumericcomparisonoperators: ['less than', 'greater than'],    /* filter Numeric Comparison Operators  */
+            filterdatecomparisonoperators: ['less than', 'greater than'],       /* filter Date comparison operators.  */
+            filterbooleancomparisonoperators: ['equal', 'not equal']            /* filter bool comparison operators.*/
+        };
+        var stringcomparisonoperators = ['CONTAINS', 'DOES_NOT_CONTAIN'];
+        var numericcomparisonoperators = ['LESS_THAN', 'GREATER_THAN'];
+        var datecomparisonoperators = ['LESS_THAN', 'GREATER_THAN'];
+        var booleancomparisonoperators = ['EQUAL', 'NOT_EQUAL'];
+ $(document).ready(function () {
+
+            // prepare the data
+            var source =
+                {
+                    datatype: "json",
+
+                    datafields: [
+                        { name: 'available', type: 'bool' },
+                        { name: 'Id', type: 'int' },
+                        { name: 'EmpId', type: 'string' },
+                        { name: 'ShortName', type: 'string' },
+                        { name: 'desib', type: 'string' },
+                        { name: 'Deptbranch', type: 'string' },
+                        { name: 'Employeename', type: 'string' }
+
+                    ],
+                    async: false,
+                   
+                    url:  "../Payroll/Employeelistview",
+                    data: {
+                        featureClass: "P",
+                        style: "full",
+                        maxRows: 2,
+                        username: "jqwidgets"
+                    }
+                };
+
+            var dataAdapter = new $.jqx.dataAdapter(source,
+                {
+                    formatData: function (data) {
+
+                        data.EmpId = $("#searchField").val();
+
+                        return data;
+                    }
+                }
+            );
+            var editrowindex = -1;
+            var delrowindex = -1;
+            // initialize jqxGrid
+
+
+            $("#grid").jqxGrid(
+                {
+                    width: '100%',
+                    source: dataAdapter,
+                    theme: otherTheme,
+                    autoheight: true,
+                    sortable: true,
+                    pageable: true,
+                    columnsResize: true,
+                    altRows: true,
+                    filterable: true,
+                    autoshowfiltericon: true,
+                    ready: function () {
+                        $("#grid").jqxGrid('localizestrings', localizationObject);
+                    },
+                    updatefilterconditions: function (type, defaultconditions) {
+                        switch (type) {
+                            case 'stringfilter':
+                                return stringcomparisonoperators;
+                            case 'numericfilter':
+                                return numericcomparisonoperators;
+                            case 'datefilter':
+                                return datecomparisonoperators;
+                            case 'booleanfilter':
+                                return booleancomparisonoperators;
+                        }
+                    },
+                    updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                        filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                        var index1 = 0;
+                        var index2 = 0;
+                        if (columnfilter != null) {
+                            var filter1 = columnfilter.getfilterat(0);
+                            var filter2 = columnfilter.getfilterat(1);
+                            if (filter1) {
+                                index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                                var value1 = filter1.filtervalue;
+                                filterinputfield1.val(value1);
+                            }
+                            if (filter2) {
+                                index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                                var value2 = filter2.filtervalue;
+                                filterinputfield2.val(value2);
+                            }
+                        }
+                        filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                        filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                    },
+                    columns: [
+                        { text: 'Action', datafield: 'available', exportable: false, columntype: 'checkbox', width: 50, sortable: false },
+                        { text: "SNO", datafield: "Id", editable: false, width: 100, hidden: true },
+                        { text: "Emp Code", datafield: "EmpId", editable: false, width: 107 },
+                        { text: "Name", datafield: "ShortName", editable: false, width: 255 },
+                        { text: "Designation", datafield: "desib", editable: false, width: 250 },
+                        { text: "Department/Branch", datafield: "Deptbranch", editable: false, width: 180 },
+
+                       { text: "Emp Name", datafield: "Employeename", editable: false, width: 250 },
+
+                    
+
+                    ], columngroups:
+              [
+                { text: 'Action', align: 'center', name: 'Actions', width: 160 },
+
+              ],
+
+                    showtoolbar: true,
+                
+                });
+           $("#excelExport").jqxButton();
+            $("#excelExport").click(function () {
+                $("#grid").jqxGrid('exportdata', 'xls', 'EmployeeList');
+           });
+    });
+</script>
+
+<script type="text/javascript">
+    /*------------------ Click event button script in Partail view-------------*/
+
+    $("#btnApply").click(function () {
+        ajaxSpinnerShow();
+        var branch = $("#Branch").val();
+        // prepare the data
+        var source =
+            {
+                type: "Post",
+                datatype: "json",
+                datafields: [
+                    { name: 'available', type: 'bool' },
+                    { name: 'Id', type: 'int' },
+                    { name: 'EmpId', type: 'string' },
+                    { name: 'ShortName', type: 'string' },
+                    { name: 'desib', type: 'string' },
+                    { name: 'Deptbranch', type: 'string' },
+                    { name: 'Employeename', type: 'string' }
+                ],
+                async: false,
+                url: "../Payroll/Employeelistviewsearch?branch=" + branch,
+                //url: "/LeaveApply/LeaveHistorySearchView?StartDate=" + startdate + "&EndDate=" + enddate + "&LeaveType=" + leavetype,
+                data: {
+                    featureClass: "P",
+                    style: "full",
+                    username: "jqwidgets"
+                },
+                loadComplete: function () {
+                    ajaxSpinnerHide();
+                }
+            };
+     
+        var dataAdapter = new $.jqx.dataAdapter(source,
+            {
+                formatData: function (data) {
+                    data.ProductName = $("#searchField").val();
+                    return data;
+                }
+            }
+        );
+        // initialize jqxGrid
+        var editrowindex = -1;
+        var delrowindex = -1;
+        $("#grid").jqxGrid(
+            {
+                width: '100%',
+                source: dataAdapter,
+                theme: otherTheme,// for theme refernce go to Layout.cshtml
+                autoheight: true,
+                sortable: true,
+                pageable: true,
+                columnsResize: true,
+                altRows: true,
+                filterable: true,
+                autoshowfiltericon: true,
+
+                ready: function () {
+                    $("#grid").jqxGrid('localizestrings', localizationObject);
+                },
+                updatefilterconditions: function (type, defaultconditions) {
+                    switch (type) {
+                        case 'stringfilter':
+                            return stringcomparisonoperators;
+                        case 'numericfilter':
+                            return numericcomparisonoperators;
+                        case 'datefilter':
+                            return datecomparisonoperators;
+                        case 'booleanfilter':
+                            return booleancomparisonoperators;
+                    }
+                },
+                updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                    filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                    var index1 = 0;
+                    var index2 = 0;
+                    if (columnfilter != null) {
+                        var filter1 = columnfilter.getfilterat(0);
+                        var filter2 = columnfilter.getfilterat(1);
+                        if (filter1) {
+                            index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                            var value1 = filter1.filtervalue;
+                            filterinputfield1.val(value1);
+                        }
+                        if (filter2) {
+                            index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                            var value2 = filter2.filtervalue;
+                            filterinputfield2.val(value2);
+                        }
+                    }
+                    filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                    filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                },
+                columns: [
+                    { text: 'Action', datafield: 'available', exportable: false, columntype: 'checkbox', width: 50, sortable: false },
+                    { text: "SNO", datafield: "Id", editable: false, width: 100, hidden: true },
+                    { text: "Emp Code", datafield: "EmpId", editable: false, width: 107 },
+                    { text: "Name", datafield: "ShortName", editable: false, width: 255 },
+                    { text: "Designation", datafield: "desib", editable: false, width: 250 },
+                    { text: "Department/Branch", datafield: "Deptbranch", editable: false, width: 180 },
+
+                    { text: "Emp Name", datafield: "Employeename", editable: false, width: 250 },
+
+                ],
+                columngroups:
+                    [
+                        { text: 'Action', align: 'center', name: 'Actions', width: 160 },
+                    ],
+
+
+            });
+
+    });
+
+</script>
+
+
+
+
+   
+
+
+
+
+

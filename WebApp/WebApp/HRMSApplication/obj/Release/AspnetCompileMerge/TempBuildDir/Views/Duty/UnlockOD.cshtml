@@ -1,0 +1,452 @@
+﻿@model Entities.OD_Unlock
+@{
+    var rolepages = TempData["RolePages"].ToString();
+    ViewBag.RolePages = TempData["RolePages"];
+}
+<script type="text/javascript">
+    @{
+        var message = TempData["AlertMessage"] ?? string.Empty;
+    }
+    var message = '@message';
+    if (message) alert(message);
+</script>
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-heading">
+            @{
+                <ul class="nav nav-tabs">
+                    @if (rolepages.Contains("ODOAL"))
+                    {
+                        <li><a href=@Url.Action("Index", "Duty")>OD Apply</a></li>
+                    }
+                    @if (rolepages.Contains("ODOAV"))
+                    {
+                        <li><a href=@Url.Action("Approvals", "Duty")>OD Approvals</a></li>
+                        <li class="active"><a href=@Url.Action("UnlockOD", "Duty")>UnLock OD</a></li>
+
+                    }
+
+                </ul>
+            }
+        </div>
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade  in active" id="tab2primary">
+                    <div class="page_st">
+                        <div class="page">
+
+                            <div class="col-md-12 col-sm-12">
+
+                                <div class="leave_cont_start">
+                                    @using (Html.BeginForm("UnlockOD", "Duty", FormMethod.Post))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <div class="col-md-12 col-sm-12">
+                                            <div class="main_heading">
+                                                <h1>Unlock OD</h1>
+                                                <br /><br />
+                                                <div class="form-horizontal col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">Emp Code:<span class="mandatory">*</span></label>
+                                                            <div class="col-sm-6">
+                                                                @Html.EditorFor(model => model.EmpId, new { htmlAttributes = new { @class = "form-control", id = "empcode", onkeypress = "return isNumber(event)", onkeyup = "return Clear();"} })
+                                                            </div>
+                                                            <div class="col-sm-2">
+                                                                <button type="button" id="btnApply" class="btn btn-primary btn-sm pull-right">Search</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+
+
+                                                </div>
+
+                                                <div class="form-horizontal col-md-12 col-sm-12 col-xs-12">
+                                                  
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">Employee Name:<span class="mandatory">*</span></label>
+                                                            <div class="col-sm-8">
+                                                                @Html.EditorFor(model => model.EmpId, new { htmlAttributes = new { @class = "form-control", @id = "Shortname", @readonly = "readonly" } })
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">Designation:<span class="mandatory">*</span></label>
+                                                            <div class="col-sm-8">
+
+                                                                @Html.EditorFor(model => model.EmpId, new { htmlAttributes = new { @class = "form-control", @id = "desig", @readonly = "readonly" } })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">Br/Dept:<span class="mandatory">*</span></label>
+                                                            <div class="col-sm-8">
+
+                                                                @Html.EditorFor(model => model.EmpId, new { htmlAttributes = new { @class = "form-control", @id = "Branchdept", @ViewBag.branchname, @readonly = "readonly" } })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">Description:<span class="mandatory">*</span></label>
+                                                            <div class="col-sm-8">
+                                                                @Html.TextAreaFor(model => model.Note, new { @class = "form-control", style = "width:100% !important", rows = "3", @id = "subject" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">Start Date:<span class="mandatory">*</span></label>
+                                                            <div class="input-group col-sm-8 " id="datetimepicker1">
+                                                                @Html.EditorFor(model => model.FromDate, new { htmlAttributes = new { @class = "form-control", id = "FromDate", onkeypress = "return nokeyword(event)", onchange = "return Dateevent4()" } })
+                                                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">End Date:<span class="mandatory">*</span></label>
+                                                            <div class="input-group col-sm-8" id="datetimepicker2">
+                                                                @Html.EditorFor(model => model.ToDate, new { htmlAttributes = new { @class = "form-control", id = "ToDate", onkeypress = "return nokeyword(event)", onchange = "return Dateevent2()" } })
+                                                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-12">
+                                                        <div class="pull-right">
+                                                            <button type="button" onclick="resetForm()" value="reset" class="btn btn-default">Cancel</button>
+                                                            <button type="submit" id="btsubmit" onclick="return unlockapply();" class="btn btn-primary subleave1">Submit</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                                    }
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+</div>
+<script type='text/javascript'>
+    $(function () {
+
+        var curryear = new Date().getFullYear();
+        var first = curryear + 1;
+        var two = curryear - 1;
+        var stdate = 03 + "-" + first;
+        var edate = 04 + "-" + two;
+        $('#fmy').datepicker({
+            format: "MM-yyyy",
+            autoclose: true,
+            minViewMode: 1,
+            startDate: edate,
+            endDate: stdate,
+        });
+    });
+
+</script>
+<script type="text/javascript">
+    
+    $("#btnApply").click(function () {
+
+        var lempid = $("#empcode").val();
+        if (lempid == "") {
+            //showGlobalModal("I#Required#Please Enter EmpCode.");
+
+            alert("Please Enter Emp Code.");
+            $("#empcode").focus();
+            return false;
+        }
+        $("#shortname").val('');
+        $("#desig").val('');
+        $("#Branchdept").val('');
+       
+
+        ajaxSpinnerShow();
+        $.ajax({
+
+            url: "/PLE_Type/GetEmployeeData?empcode=" + lempid,
+            dataType: "Json",
+            cache: false,
+            success: function (response) {
+
+                if (response != null) {
+                    ajaxSpinnerHide();
+                    document.getElementById("Shortname").value = response.lshortnmaeAjax;
+                    document.getElementById("desig").value = response.ldesigAjax;
+                    document.getElementById("Branchdept").value = response.lbranchAjax;
+                    
+                    if (response.Status == "Notfound") {
+                        //ajaxSpinnerHide();
+                        alert("Employee doesn't exists.");
+                        $("#empcode").val('');
+
+                    }
+                    else if (response.Status == "AlreadyRetired") {
+                        //ajaxSpinnerHide();
+                        alert("Employee is Retired.");
+                        $("#empcode").val('');
+
+
+                    }
+                }
+                else {
+                    // alert("Something went wrong");
+                }
+            },
+
+        });
+
+
+    });
+  
+</script>
+<script>
+    document.getElementById("a7").className = "active";
+
+</script>
+<script>
+    function unlockapply() {
+        //debugger;
+		var empname=$("#Shortname").val();
+        var startdate = $("#FromDate").val();
+        var enddate = $("#ToDate").val();
+        var empcode = $("#empcode").val();
+		var description=$("#subject").val();
+        if (empcode == "") {
+            window.alert("Please Enter empid");
+            return false;
+        }
+		else if(empname==""){
+		window.alert("Please search EmpId");
+		$("#empcode").focus();
+		
+		
+		return false;
+		}
+        else if (startdate == "") {
+            window.alert("Please Select Start Date");
+            //showGlobalModal("I#Required#Please Select Start Date.");
+            $("#FromDate").focus();
+
+
+            return false;
+        }
+        else if (enddate == "") {
+            window.alert("Please Select End Date");
+            //showGlobalModal("I#Required#Please Select End Date.");
+            $("#ToDate").focus();
+            return false;
+        }
+		else if(description == ""){
+		window.alert("Please Enter Description");
+		$("#subject").focus();
+		return false;
+		}
+        else {
+            document.getElementById('empcode').value = empcode;
+
+        }
+        //alert(empcode);
+
+    }
+</script>
+
+<script>
+    $(function () {
+        $('#datetimepicker1').datetimepicker({
+            useCurrent: true,
+            format: 'DD-MM-YYYY LT',
+            minDate: moment().add(-10, 'Year').add(0, 'h')
+        }).on('dp.change', function (e) {
+            //hidedt();
+            Dateevent4();
+        });
+        $('#datetimepicker2').datetimepicker({
+            useCurrent: true,
+            format: 'DD-MM-YYYY LT',
+            minDate: moment().add(-10, 'Year').add(0, 'h')
+        }).on('dp.change', function (e) {
+            //hidedt();
+            Dateevent2();
+        })
+    });
+</script>
+
+
+<script>
+    function Dateevent2() {
+        var darray = document.getElementById('FromDate').value.split(" ");
+
+        var darraye = document.getElementById('ToDate').value.split(" ");
+
+        var StartDate = darray[0];
+        var EndDate = darraye[0];
+        
+
+        var Joindate = darray[0];
+
+        var Retdate = darraye[0];
+        var date = moment(Joindate, "DD.MM.YYYY");
+
+        var currentDate1 = moment(Retdate, "DD.MM.YYYY");
+        var duration = moment.duration(date.diff(currentDate1));
+
+
+        if (duration > 0) {
+            alert("Please ensure that End Date is greater than or equal to Start Date.");
+            document.getElementById("ToDate").focus();
+            document.getElementById("ToDate").value = '';
+            return false;
+
+        }
+        else {
+            datescheck();
+            return true;
+
+        }
+    }
+    function Dateevent4() {
+        
+        var darray = document.getElementById('FromDate').value;
+
+      
+        var StartDate = darray;
+
+        document.getElementById('ToDate').value = StartDate;
+
+    }
+
+</script>
+<script>
+ function Clear(){
+        var empcode = $("#empcode").val();
+        if (empcode == "") {
+		$("#Shortname").val('');
+        $("#desig").val('');
+        $("#Branchdept").val('');
+        
+    }
+}
+
+</script>
+<script>
+    var resetForm = function () {
+
+        $("#FromDate").val('');
+        $("#ToDate").val('');
+		$("#empcode").val('');
+		$("#Shortname").val('');
+        $("#desig").val('');
+        $("#Branchdept").val('');
+        $("#subject").val('');
+    }
+</script>
+
+<style>
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+    .modal-content {
+        margin: auto;
+        padding: 0px;
+        border: 1px solid rgb(136, 136, 136);
+        width: 50%;
+        z-index: 99999999999;
+        left: 25%;
+        background: rgb(219, 238, 247);
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+    .modal-header {
+        min-height: 16.42857143px;
+        padding: 13px;
+        border-bottom: 1px solid rgb(221, 221, 221);
+        background: rgba(60, 141, 188, 0.4);
+    }
+
+        .modal-header h4 {
+            font-size: 18px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgb(255, 255, 255);
+        }
+
+    #myTextArea td {
+        border: 1px solid #c2c2c2;
+        padding: 3px 5px 3px 5px;
+    }
+
+    .modal-header .close {
+        margin-top: -2px;
+        color: rgb(0, 0, 0);
+        opacity: 4;
+        /* background: rgb(0, 0, 0); */
+    }
+</style>
+<style>
+    .activeClass {
+        background: #ffdb99;
+    }
+
+    .secondClass {
+        /*background: #FF9999;*/
+        color: red;
+    }
+</style>
+
+
+
+
+
+
+
+
+

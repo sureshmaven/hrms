@@ -1,0 +1,1809 @@
+﻿@{
+    ViewBag.Title = "EmployeeMaster";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+    var dataUrl = ViewBag.DataUrl;
+}
+<style>
+    #gridPayField.dataTable tbody td:first-child + td input.form-control {
+        text-align: right !important;
+    }
+    #gridAllowance.dataTable tbody td:first-child + td input.form-control {
+        text-align: right !important;
+    }
+    #gridSpecialAllowance.dataTable tbody td:first-child + td input.form-control {
+        text-align: right !important;
+    }
+    #gridDeduction.dataTable tbody td:first-child + td input.form-control {
+        text-align: right !important;
+    }
+    
+    
+</style>
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+            <div class="leftmenu-container">
+                <div class="sidebar-menu">
+                    @{Html.RenderPartial("_PVPayrollMenu");}
+                </div>
+                <div class="sidebar-content">
+                    <div class="main_heading heading_main">
+                        <h1>Employee Master<span class="year-end">@ViewBag.Env_Fm_Fy</span></h1>
+                        @{ Html.RenderPartial("_pvEmployeeSearch"); }
+                        <input type="hidden" id="hdnEmpCode" />
+                        <section class="home-content-top">
+                            <div class="payroll_tabs col-md-12  mt_10">
+                                <div class="tabbable-panel">
+                                    <div class="tabbable-line">
+                                        <ul class="nav nav-tabs tabtop_payroll">
+                                            <li class="active"> <a href="#general" data-toggle="tab"> General </a> </li>
+                                            <li> <a href="#biological" data-toggle="tab">Biological</a> </li>
+                                            <li> <a href="#payfields" data-toggle="tab">Pay Fields</a> </li>
+                                            <li> <a href="#allowances" data-toggle="tab">Allowances</a> </li>
+                                            @*<li> <a href="@Url.Action("Allowance", "Masters")" data-toggle="tab">Allowances</a> </li>*@
+                                            <li> <a href="#special_allowances" data-toggle="tab"> Special Allowances </a> </li>
+                                            <li> <a href="#deductions" data-toggle="tab"> Deductions</a> </li>
+                                            <li> <a href="#lic_details" data-toggle="tab">LIC Details</a> </li>
+                                            <li> <a href="#hfc_details" data-toggle="tab">HFC Details </a> </li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div class="tab-pane active fade in" id="general">
+                                                <div class="col-md-12">
+                                                    <div class="mt_10">
+                                                        <div class="table-responsive mb_10 firsttd_hide">
+                                                            <table id="generalGrid" class="display" style="width:100%"></table>
+                                                        </div>
+                                                        @*<button id="btnsubmit" class="btn btn-primary pull-right" type="button">Submit</button>*@
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="biological">
+                                                <div class="col-md-12">
+                                                    <div class="mt_10">
+                                                        <div class="table-responsive mb_10 firsttd_hide">
+                                                            <table id="bioGrid" class="display " style="width:100%"></table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="payfields">
+                                                <div class="col-md-12">
+                                                    <div class="table-responsive mt_10">
+                                                        <table id="gridPayField" class="display mb_10" style="width:100%"></table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="allowances">
+                                                <div class="col-md-12">
+                                                    <div class="table-responsive mt_10">
+                                                        <table id="gridAllowance" class="display mb_10" style="width:100%">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Allowances Details</th>
+                                                                    <th>Enter Particulars</th>
+                                                                </tr>
+                                                            </thead>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="special_allowances">
+                                                <div class="col-md-12">
+                                                    <div class="table-responsive mt_10">
+                                                        <table id="gridSpecialAllowance" class="display mb_10" style="width:100%">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Special Allowances</th>
+                                                                    <th>Enter Particulars</th>
+                                                                </tr>
+                                                            </thead>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="deductions">
+                                                <div class="col-md-12">
+                                                    <div class="inner_heading">
+                                                        <div class="table-responsive mt_10">
+                                                            <table id="gridDeduction" class="display mb_10" style="width:100%">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Deduction Details</th>
+                                                                        <th>Enter Particulars</th>
+                                                                    </tr>
+                                                                </thead>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="lic_details">
+                                                <div class="col-md-12 mt_10">
+                                                    <div class="pull-right">
+                                                        <button id="addRowForLic" class="btn btn-default mr_0" style="margin-bottom:10px;"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                    <div class="table-responsive mb_10">
+                                                        @*<id="gridLic"*@
+                                                        <table id="gridLic" class="display" style="width:100%">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Ac&nbsp;Number</th>
+                                                                    <th>Amount(<i class="fa fa-rupee"></i>)</th>
+                                                                    <th>Pay&nbsp;Type</th>
+                                                                    <th>Pay Months</th>
+                                                                    <th>Stop</th>
+                                                                    <th style="width:100px">Stop Month</th>
+                                                                    <th style="width:40px">Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="hfc_details">
+                                                <div class="col-md-12 mt_10">
+                                                    <div class="pull-right">
+                                                        <button id="addRowForHfc" class="btn btn-default mr_0" style="margin-bottom:10px;"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                    <div class="table-responsive mb_10">
+                                                        <table id="gridHfc" class="display" style="width:100%">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Ac&nbsp;Number</th>
+                                                                    <th>Amount(<i class="fa fa-rupee"></i>)</th>
+                                                                    <th>Pay&nbsp;Type</th>
+                                                                    <th>Pay Months</th>
+                                                                    <th>Stop</th>
+                                                                    <th style="width:100px">Stop Month</th>
+                                                                    <th style="width:40px">Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <div class="clearfix"></div>
+                        <div class="col-md-12">
+                            <div class="pull-right mt_10">
+                                <button id="cancelData" class="btn btn-default" title="Clear the data">Cancel</button>
+                                <button id="empDataSubmit" class="btn btn-primary" type="button" title="Submit details"> Submit </button>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="table-responsive ">
+                                <table id="rptGrid" class="display reports-grids" style="width:100%"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    var orgGeneral;
+    var orgBio;
+    var orgPay;
+    var orgAllowance;
+    var orgSpecialAllowance;
+    var orgDeduction;
+    var orgLic;
+    var orgFfc;
+    var genderArray = ['Male', 'Female'];
+    var martialStatusArray = ['Single', 'Married'];
+    var nps = ['Yes', 'No'];
+    var yesOrNo = ['False', 'True'];
+    var originalData;
+    var arrTypes = [' Monthly', ' Yearly', ' HalfYearly', ' Quarterly'];
+    var incIndex = 0;
+    var modifiedData = [];
+    var arrDelete = [];
+    var modifiedDataForHfc = [];
+    var arrDeleteForHfc = [];
+    var arrCategoryList = [];
+    var arrDesignationList = [];
+    var month_stop = ['No', 'Yes'];
+
+    $(document).ready(function () {
+         
+        $("#addRowForHfc").attr("disabled", true);
+        $("#addRowForLic").attr("disabled", true);
+        $("#cancelData").attr("disabled", true);
+        $("#empDataSubmit").attr("disabled", true);
+
+        var lempid = 0;
+        var empcode = 0;
+        CommonApiGET('/Payroll/Masters/EmployeeCodeSearchPostForDetails?EmpCode=' + empcode, function (respData) {
+            originalData = respData;
+            
+            fillDataTablesWithEmpty(respData);
+        });
+
+        CommonApiGET('/Payroll/Masters/getEmpCategoriesList', function (respData) {
+            respData.map(function (map) {
+                arrCategoryList.push(map.category);
+            });
+        });
+        CommonApiGET('/Payroll/Masters/getDesignations', function (respData) {
+            respData.map(function (map) {
+                arrDesignationList.push(map.Name);
+            });
+        });
+    });
+
+    function getDataAfterEmpSearch1440(empcode) {
+        $('#hdnEmpCode').val(empcode);
+        CommonApiGET('/Payroll/Masters/EmployeeCodeSearchPostForDetails?EmpCode=' + empcode, function (respData) {
+            originalData = respData;
+            fillDataTables(respData);
+        });
+
+    }
+    function fillDataTables(respData) {
+         
+        $("#addRowForHfc").attr("disabled", false);
+        $("#addRowForLic").attr("disabled", false);
+        $("#cancelData").attr("disabled", false);
+        $("#empDataSubmit").attr("disabled", false);
+        var general = [];
+        var bio = [];
+        var pay = [];
+        var allowance = [];
+        var specialAllowance = [];
+        var deduction = [];
+        var lic = [];
+        var hfc = [];
+        var dataObj = JSON.parse(respData);
+        general.push(dataObj.General);
+        bio.push(dataObj.Bio);
+        pay.push(dataObj.Pay);
+        allowance.push(dataObj.Allowance);
+        specialAllowance.push(dataObj.speailAllowance);
+        deduction.push(dataObj.Deduction);
+        lic.push(dataObj.Lic);
+        hfc.push(dataObj.Hfc);
+
+        var generalData = general[0];
+        var bioData = bio[0];
+        var payData = pay[0];
+        var allowanceData = allowance[0];
+        var spealAllowanceData = specialAllowance[0];
+        var deductionData = deduction[0];
+        var licData = lic[0];
+        var hfcData = hfc[0];
+
+        orgGeneral = generalData;
+        orgBio = bioData;
+        orgPay = payData;
+        orgAllowance = allowanceData;
+        orgSpecialAllowance = spealAllowanceData;
+        orgDeduction = deductionData;
+        orgLic = licData;
+        orgHfc = hfcData;
+
+
+        $('#generalGrid').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+            data: orgGeneral,
+            "columns": [
+                { "data": "Name" },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        if (data.Name == "Gender" || data.Name == "Martial Status"  || data.Name == "Phone No" || data.Name == "Permanent Phone No" ||
+                            data.Name == "Experience" || data.Name == "Email Id"
+                            || data.Name == "Blood Group" || data.Name == "AADHAAR NUMBER" || data.Name == "Employee Code"
+                            || data.Name == "Employee Age" || data.Name == "PAN No"
+                            ) {
+                            return getColumnReadOnly(data.Id, data.Value);
+                        } else if (data.Name == "Date of Birth") {
+                            return getColumnDateReadOnly(data.Id, data.Value);
+                        } else {
+                            if (data.Name == "REG Order" || data.Name == "Emp Age" || data.Name == "Designation No") {
+                                var ele = getColumnNumber(data.Id, data.Value);
+                            } else if (data.Name == "Date Of Joining PF"
+                             || data.Name == "Date of Birth") {
+                                var ele = getColumnDate(data.Id, data.Value)
+                            } else if (data.Name == "Gender") {
+
+                                var ele = getColumnDropdownForEmpMaster(data.Id, data.Value, genderArray);
+                            } else if (data.Name == "Martial Status") {
+                                var ele = getColumnDropdownForEmpMaster(data.Id, data.Value, martialStatusArray);
+                            } else if (data.Name == "Iff PHY Handicapped '1'" || data.Name == "House Provided '1'") {
+
+                                var ele = getColumnDropdownForEmpMaster(data.Id, data.Value, yesOrNo);
+                            } else if (data.Id == "action_type") {
+                                var ele = getHiddenField(data.Id, data.Value);
+                            } else if (data.Name == "Designation Category") { //arrDesignationList
+                                var ele = getColumnDropdownForEmpMaster(data.Id, data.Value, arrCategoryList);
+                            } else if (data.Name == "Designation") {
+                                 //arrDesignationList
+                                //var ele = getColumnDropdownForEmpMaster(data.Id, data.Value, arrDesignationList);
+                                var ele =  getColumnReadOnly(data.Id, data.Value);
+                            }
+                            else if (data.Name == "Address" || data.Name == "Permanent Address") {
+                                var ele = getColumnTextArea(data.Id, data.Value);
+                            }
+                            else if (data.Name == "NPS Opted")
+                            {
+                                 
+                                var ele = getColumnDropdownForEmpMaster(data.Id, data.Value, nps);
+                            }
+                            else {
+                                var ele = getColumnTextbox(data.Id, data.Value);
+                            }
+                            return ele;
+                        }
+                    }
+                },
+            ],
+
+            "order": [[1, 'asc']]
+        });
+
+        $('#bioGrid').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+            data: orgBio,
+            "columns": [
+                { "data": "Name" },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data) {
+                        if (data.Id == "action_type") {
+                            return getHiddenField(data.Id, data.Value);
+                        } else if (data.Id == "father_dob") {
+                            return getColumnDate(data.Id, data.Value);
+                        }
+                        else {
+                            return getColumnTextbox(data.Id, data.Value);
+                        }
+                    }
+                }
+            ],
+            "order": [[0, 'asc']]
+        });
+        $('#gridPayField').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+            data: orgPay,
+            "columns": [
+                { "data": "Name" },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data) {
+                        return getColumnNumber(data.Id, data.Value);
+                    }
+                }
+            ],
+            "order": [[0, 'asc']]
+        });
+        $('#gridAllowance').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+            data: orgAllowance,
+            "columns": [
+                { "data": "Name" },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data) {
+                        return getColumnNumber(data.Id, data.Value);
+                    }
+                }
+            ],
+            "order": [[0, 'asc']]
+        });
+
+        $('#gridSpecialAllowance').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+            data: orgSpecialAllowance,
+            "columns": [
+                { "data": "Name" },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data) {
+                        return getColumnNumber(data.Id, data.Value);
+                    }
+                }
+            ],
+            "order": [[0, 'asc']]
+        });
+
+        $('#gridDeduction').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+            data: orgDeduction,
+            "columns": [
+                { "data": "Name" },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data) {
+                        return getColumnNumber(data.Id, data.Value);
+                    }
+                }
+            ],
+            "order": [[0, 'asc']]
+        });
+
+        $('#gridLic').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+            data: orgLic,
+            "columns": [
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+
+                        return getColumnTextbox('*' + data.Id, data.AccNum);
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+
+                        return getColumnNumber('Amount', data.Amount);
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        var returndata = '<select id="' + data.Id + '" class="form-control" size="1" name="PayType" onchange="selectedTypeForLic(this.id+this.value)">';
+                        returndata += '<option value=" "></option >';
+                        arrTypes.map(function (x) {
+                            if (x === data.PayType)
+                                returndata += '<option value="' + x + '" selected="selected">' + x + '</option >';
+                            else
+                                returndata += '<option value="' + x + '">' + x + '</option >';
+                        });
+                        returndata += '</select>';
+                        return returndata;
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return '<input type="text" class = "form-control '+ data.Id +'" id="' + data.Id + '" name="PayMonths" value="' + data.PayMonths + '"  readonly/>';
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return getColumnDropdownForEmpMaster('StartMonth', data.StartMonth, month_stop);
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+
+                        return getColumnTextboxWithSpecialChars('StopMonth', data.StopMonth);
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+
+                        return getColumnButton(data.Id, data.Action);
+                    }
+                },
+            ],
+            "order": [[1, 'asc']]
+        });
+        $('#gridHfc').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+            data: orgHfc,
+            "columns": [
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+
+                        return getColumnTextbox('*' + data.Id, data.AccNum);
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+
+                        return getColumnNumber('Amount', data.Amount);
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                       
+                        //return getColumnDropdownForEmpMaster('PayType', data.PayType, arrTypes);
+                        var returndata = '<select id="' + data.Id + '" class="form-control" size="1" name="PayType" onchange="selectedTypeForHfc(this.id+this.value)">';
+                        returndata += '<option value=" "></option >';
+                        arrTypes.map(function (x) {
+                            if (x === data.PayType)
+                                returndata += '<option value="' + x + '" selected="selected">' + x + '</option >';
+                            else
+                                returndata += '<option value="' + x + '">' + x + '</option >';
+                        });
+                        returndata += '</select>';
+                        return returndata;
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return '<input type="text" class = "form-control ' + data.Id +'" id="paymonthsForHfc" name="PayMonths" value="' + data.PayMonths + '"  readonly/>';
+                        //return getColumnCheckBoxReadWithId('PayMonths', data.PayMonths);
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return getColumnDropdownForEmpMaster('StartMonth', data.StartMonth, month_stop);
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+
+                        return getColumnTextboxWithSpecialChars('StopMonth', data.StopMonth);
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+
+                        return getColumnButtonForHfc(data.Id, data.Action);
+                    }
+                },
+            ],
+            "order": [[1, 'asc']]
+        });
+    }
+
+    function selectedTypeForLic(type) {
+       
+        var data = type.split(" ");
+        var id = data[0];
+        var value = data[1];
+        var months = "";
+        if (value == "Monthly") {
+            months = "1,2,3,4,5,6,7,8,9,10,11,12";
+        } else if (value == "Yearly") {
+            months = "1";
+        }
+        else if (value == "HalfYearly") {
+            months = "1,2";
+        }
+        else if (value == "Quarterly") {
+            months = "1,2,3,4";
+        } else {
+            months = "";
+        }
+        $("." + id).val(months);
+    }
+
+    function selectedTypeForHfc(type) {
+     
+        var data = type.split(" ");
+        var id = data[0];
+        var value = data[1];
+        var months = "";
+        if (value == "Monthly") {
+            months = "1,2,3,4,5,6,7,8,9,10,11,12";
+        } else if (value == "Yearly") {
+            months = "1";
+        }
+        else if (value == "HalfYearly") {
+            months = "1,2";
+        }
+        else if (value == "Quarterly") {
+            months = "1,2,3,4";
+        } else {
+            months = "";
+        }
+        $("." + id).val(months);
+    }
+    function fillDataTablesWithEmpty(respData) {
+        var general = [];
+        var bio = [];
+        var pay = [];
+        var allowance = [];
+        var specialAllowance = [];
+        var deduction = [];
+        var lic = [];
+        var hfc = [];
+        var dataObj = JSON.parse(respData);
+        general.push(dataObj.General);
+        bio.push(dataObj.Bio);
+        pay.push(dataObj.Pay);
+        allowance.push(dataObj.Allowance);
+        specialAllowance.push(dataObj.speailAllowance);
+        deduction.push(dataObj.Deduction);
+        lic.push(dataObj.Lic);
+        hfc.push(dataObj.Hfc);
+
+        var generalData = general[0];
+        var bioData = bio[0];
+        var payData = pay[0];
+        var allowanceData = allowance[0];
+        var spealAllowanceData = specialAllowance[0];
+        var deductionData = deduction[0];
+        var licData = lic[0];
+        var hfcData = hfc[0];
+
+        orgGeneral = generalData;
+        orgBio = bioData;
+        orgPay = payData;
+        orgAllowance = allowanceData;
+        orgSpecialAllowance = spealAllowanceData;
+        orgDeduction = deductionData;
+        orgLic = licData;
+        orgHfc = hfcData;
+
+        $('#generalGrid').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+            data: orgGeneral,
+            "columns": [
+                { "data": "Name" },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return getColumnReadOnly("", "");
+                        //if (data.Name == "Reg Order" || data.Name == "Emp Age" || data.Name == "Designation No") {
+                        //    var ele = getColumnNumber(data.Id, data.Value);
+                        //} else if (data.Name == "Date Of Join" || data.Name == "Date Of Confirmation" || data.Name == "Date Of Joining PF"
+                        //    || data.Name == "Date Of Retirement" || data.Name == "Date of Birth") {
+                        //    var ele = getColumnDate(data.Id, data.Value)
+                        //} else if (data.Name == "Sex") {
+                        //    var ele = getColumnDropdownForEmpMaster(data.Id, data.Value, genderArray);
+                        //} else if (data.Name == "Martial Status") {
+                        //    var ele = getColumnDropdownForEmpMaster(data.Id, data.Value, martialStatusArray);
+                        //} else if (data.Name == "Iff PHY Handicapped '1'" || data.Name == "House Provided '1'") {
+                        //    var ele = getColumnDropdownForEmpMaster(data.Id, data.Value, yesOrNo);
+                        //} else if (data.Id == "action_type") {
+                        //    var ele = getHiddenField(data.Id, data.Value);
+                        //} else if (data.Name == "Designation Category") {
+                        //    var ele = getColumnDropdownForEmpMaster(data.Id, data.Value, arrCategoryList);
+                        //}
+                        //else {
+                        //    var ele = getColumnTextbox(data.Id, data.Value);
+                        //}
+                        //return ele;
+                    }
+                },
+            ],
+
+            "order": [[1, 'asc']]
+        });
+
+        $('#bioGrid').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+            data: orgBio,
+            "columns": [
+                { "data": "Name" },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data) {
+                        return getColumnReadOnly(data.Id, data.Value);
+                        //if (data.Id == "action_type") {
+                        //    return getHiddenField(data.Id, data.Value);
+                        //} else if (data.Id == "father_dob") {
+                        //    return getColumnDate(data.Id, data.Value)
+                        //}
+                        //else {
+                        //    return getColumnTextbox(data.Id, data.Value);
+                        //}
+                    }
+                }
+            ],
+            "order": [[0, 'asc']]
+        });
+        $('#gridPayField').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+            data: orgPay,
+            "columns": [
+                { "data": "Name" },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data) {
+                        return getColumnReadOnly(data.Id, data.Value);
+                    }
+                }
+            ],
+            "order": [[0, 'asc']]
+        });
+
+        $('#gridAllowance').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+            data: orgAllowance,
+            "columns": [
+                { "data": "Name" },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data) {
+                        return getColumnReadOnly(data.Id, data.Value);
+                    }
+                }
+            ],
+            "order": [[0, 'asc']]
+        });
+
+        $('#gridSpecialAllowance').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+            data: orgSpecialAllowance,
+            "columns": [
+                { "data": "Name" },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data) {
+                        return getColumnReadOnly(data.Id, data.Value);
+                    }
+                }
+            ],
+            "order": [[0, 'asc']]
+        });
+
+        $('#gridDeduction').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+            data: orgDeduction,
+            "columns": [
+                { "data": "Name" },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data) {
+                        return getColumnReadOnly(data.Id, data.Value);
+                    }
+                }
+            ],
+            "order": [[0, 'asc']]
+        });
+        $('#gridLic').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+            data: orgLic,
+            "columns": [
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return getColumnReadOnly(data.Id, "");
+
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return getColumnReadOnly(data.Id, "");
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return getColumnReadOnly(data.Id, "");
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return getColumnReadOnly(data.Id, "");
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return getColumnReadOnly(data.Id, "");
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return getColumnReadOnly(data.Id, "");
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return getColumnReadOnly(data.Id, "");
+                    }
+                },
+            ],
+            "order": [[1, 'asc']]
+        });
+        $('#gridHfc').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+            data: orgHfc,
+            "columns": [
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+
+                        return getColumnReadOnly(data.Id, "");
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+
+                        return getColumnReadOnly(data.Id, "");
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+
+                        return getColumnReadOnly(data.Id, "");
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+
+                        return getColumnReadOnly(data.Id, "");
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+
+                        return getColumnReadOnly(data.Id, "");
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+
+                        return getColumnReadOnly(data.Id, "");
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+
+                        return getColumnReadOnly(data.Id, "");
+                    }
+                },
+            ],
+            "order": [[1, 'asc']]
+        });
+
+    }
+    $('#addRowForLic').click(function () {
+        var table = $('#gridLic').DataTable();
+        var updateData = decodeURIComponent(table.$('input, select,textarea').serializeAndEncode());
+        var arrUpdate = updateData.split("*");
+        var arrSampleObJ = [];
+        arrUpdate.forEach(function (element) {
+            if (element != "") {
+                var objEf = {};
+                var strRow = element.split("&");
+                var id = strRow[0].split("=");
+                objEf.Id = id[0];
+                objEf.AccNum = id[1];
+
+                var amount = strRow[1].split("=");
+                objEf.Amount = amount[1];
+
+                var payType = strRow[2].split("=");
+                objEf.PayType = payType[1];
+
+                var payMonth = strRow[3].split("=");
+                objEf.PayMonths = payMonth[1];
+
+                var startMonth = strRow[4].split("=");
+                objEf.StartMonth = startMonth[1];
+
+                var stopMonth = strRow[5].split("=");
+                objEf.StopMonth = stopMonth[1];
+
+                if (isNaN(id[0])) {
+                    objEf.Action = "Delete";
+                } else {
+                    objEf.Action = "Add";
+                }
+                arrSampleObJ.push(objEf);
+            }
+        });
+
+        modifiedData = arrSampleObJ;
+
+        incIndex++;
+        var incId = "LicNeW" + incIndex;
+        var row = {
+            "Id": incId,
+            "AccNum": "",
+            "PayType": "",
+            "PayMonths": "",
+            "StartMonth": "",
+            "StopMonth": "",
+            "Amount": "",
+            "Action": "Delete"
+        };
+        modifiedData.push(row);
+        fillLicDataTable(modifiedData);
+    });
+    $('#addRowForHfc').click(function () {
+
+        var table = $('#gridHfc').DataTable();
+        var updateData = decodeURIComponent(table.$('input, select,textarea').serializeAndEncode());
+        var arrUpdate = updateData.split("*");
+        var arrSampleObJ = [];
+        arrUpdate.forEach(function (element) {
+            if (element != "") {
+                var objEf = {};
+                var strRow = element.split("&");
+                var id = strRow[0].split("=");
+                objEf.Id = id[0];
+                objEf.AccNum = id[1];
+
+                var amount = strRow[1].split("=");
+                objEf.Amount = amount[1];
+
+                var payType = strRow[2].split("=");
+                objEf.PayType = payType[1];
+
+                var payMonth = strRow[3].split("=");
+                objEf.PayMonths = payMonth[1];
+
+                var startMonth = strRow[4].split("=");
+                objEf.StartMonth = startMonth[1];
+
+                var stopMonth = strRow[5].split("=");
+                objEf.StopMonth = stopMonth[1];
+
+                if (isNaN(id[0])) {
+                    objEf.Action = "Delete";
+                } else {
+                    objEf.Action = "Add";
+                }
+                arrSampleObJ.push(objEf);
+            }
+        });
+
+        modifiedDataForHfc = arrSampleObJ;
+
+        incIndex++;
+        var incId = "HfcNeW" + incIndex;
+        var row = {
+            "Id": incId,
+            "AccNum": "",
+            "PayType": "",
+            "PayMonths": "",
+            "StartMonth": "",
+            "StopMonth": "",
+            "Amount": "",
+            "Action": "Delete"
+        };
+        modifiedDataForHfc.push(row);
+        fillLicDataTableForHfc(modifiedDataForHfc);
+    });
+    function deleteRow(id) {
+        var table = $('#gridLic').DataTable();
+        var updateData = decodeURIComponent(table.$('input, select,textarea').serializeAndEncode());
+        var arrUpdate = updateData.split("*");
+        var arrSampleObJ = [];
+        arrUpdate.forEach(function (element) {
+            if (element != "") {
+                var objEf = {};
+                var strRow = element.split("&");
+                var id = strRow[0].split("=");
+                objEf.Id = id[0];
+                objEf.AccNum = id[1];
+
+                var amount = strRow[1].split("=");
+                objEf.Amount = amount[1];
+
+                var payType = strRow[2].split("=");
+                objEf.PayType = payType[1];
+
+                var payMonth = strRow[3].split("=");
+                objEf.PayMonths = payMonth[1];
+
+                var startMonth = strRow[4].split("=");
+                objEf.StartMonth = startMonth[1];
+
+                var stopMonth = strRow[5].split("=");
+                objEf.StopMonth = stopMonth[1];
+
+                if (isNaN(id[0])) {
+                    objEf.Action = "Delete";
+                } else {
+                    objEf.Action = "Add";
+                }
+                arrSampleObJ.push(objEf);
+            }
+        });
+
+        modifiedData = arrSampleObJ;
+
+        modifiedData = modifiedData.filter(function (obj) {
+            return obj.Id !== id;
+        });
+
+        fillLicDataTable(modifiedData);
+    }
+    function deleteRowHfc(id) {
+        var table = $('#gridHfc').DataTable();
+        var updateData = decodeURIComponent(table.$('input, select,textarea').serializeAndEncode());
+        var arrUpdate = updateData.split("*");
+        var arrSampleObJ = [];
+        arrUpdate.forEach(function (element) {
+            if (element != "") {
+                var objEf = {};
+                var strRow = element.split("&");
+                var id = strRow[0].split("=");
+                objEf.Id = id[0];
+                objEf.AccNum = id[1];
+
+                var amount = strRow[1].split("=");
+                objEf.Amount = amount[1];
+
+                var payType = strRow[2].split("=");
+                objEf.PayType = payType[1];
+
+                var payMonth = strRow[3].split("=");
+                objEf.PayMonths = payMonth[1];
+
+                var startMonth = strRow[4].split("=");
+                objEf.StartMonth = startMonth[1];
+
+                var stopMonth = strRow[5].split("=");
+                objEf.StopMonth = stopMonth[1];
+
+                if (isNaN(id[0])) {
+                    objEf.Action = "Delete";
+                } else {
+                    objEf.Action = "Add";
+                }
+                arrSampleObJ.push(objEf);
+            }
+        });
+
+        modifiedDataForHfc = arrSampleObJ;
+
+        modifiedDataForHfc = modifiedDataForHfc.filter(function (obj) {
+            return obj.Id !== id;
+        });
+
+        fillLicDataTableForHfc(modifiedDataForHfc);
+    }
+    function deleteEntireRow(id) {
+
+        var table = $('#gridLic').DataTable();
+        var updateData = decodeURIComponent(table.$('input, select,textarea').serializeAndEncode());
+        var arrUpdate = updateData.split("*");
+        var arrSampleObJ = [];
+        arrUpdate.forEach(function (element) {
+
+            if (element != "") {
+                var objEf = {};
+                var strRow = element.split("&");
+                var id = strRow[0].split("=");
+                objEf.Id = id[0];
+                objEf.AccNum = id[1];
+
+                var amount = strRow[1].split("=");
+                objEf.Amount = amount[1];
+
+                var payType = strRow[2].split("=");
+                objEf.PayType = payType[1];
+
+                var payMonth = strRow[3].split("=");
+                objEf.PayMonths = payMonth[1];
+
+                var startMonth = strRow[4].split("=");
+                objEf.StartMonth = startMonth[1];
+
+                var stopMonth = strRow[5].split("=");
+                objEf.StopMonth = stopMonth[1];
+
+                if (isNaN(id[0])) {
+                    objEf.Action = "Delete";
+                } else {
+                    objEf.Action = "Add";
+                }
+                arrSampleObJ.push(objEf);
+            }
+        });
+
+        modifiedData = arrSampleObJ;
+        modifiedData = modifiedData.filter(function (obj) {
+
+            if (obj.Id != "null" && id != "null") {
+                if (obj.Id == id) {
+                    obj.Action = "Deleted";
+                    arrDelete.push(obj);
+                } else {
+                    return obj.Id !== id;
+                }
+            }
+        });
+
+        fillLicDataTable(modifiedData);
+    }
+    function deleteEntireRowHfc(id) {
+
+        var table = $('#gridHfc').DataTable();
+        var updateData = decodeURIComponent(table.$('input, select,textarea').serializeAndEncode());
+        var arrUpdate = updateData.split("*");
+        var arrSampleObJ = [];
+        arrUpdate.forEach(function (element) {
+
+            if (element != "") {
+                var objEf = {};
+                var strRow = element.split("&");
+                var id = strRow[0].split("=");
+                objEf.Id = id[0];
+                objEf.AccNum = id[1];
+
+                var amount = strRow[1].split("=");
+                objEf.Amount = amount[1];
+
+                var payType = strRow[2].split("=");
+                objEf.PayType = payType[1];
+
+                var payMonth = strRow[3].split("=");
+                objEf.PayMonths = payMonth[1];
+
+                var startMonth = strRow[4].split("=");
+                objEf.StartMonth = startMonth[1];
+
+                var stopMonth = strRow[5].split("=");
+                objEf.StopMonth = stopMonth[1];
+
+                if (isNaN(id[0])) {
+                    objEf.Action = "Delete";
+                } else {
+                    objEf.Action = "Add";
+                }
+                arrSampleObJ.push(objEf);
+            }
+        });
+
+        modifiedDataForHfc = arrSampleObJ;
+        modifiedDataForHfc = modifiedDataForHfc.filter(function (obj) {
+
+            if (obj.Id != "null" && id != "null") {
+                if (obj.Id == id) {
+                    obj.Action = "Deleted";
+                    arrDeleteForHfc.push(obj);
+                } else {
+                    return obj.Id !== id;
+                }
+            }
+        });
+        fillLicDataTableForHfc(modifiedDataForHfc);
+    }
+    function fillLicDataTable(respData) {
+        $('#gridLic').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+            data: respData,
+            "columns": [
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+
+                        return getColumnTextbox('*' + data.Id, data.AccNum);
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+
+                        return getColumnNumber('Amount', data.Amount);
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        var returndata = '<select id="' + data.Id + '" class="form-control" size="1" name="PayType" onchange="selectedTypeForLic(this.id+this.value)">';
+                        returndata += '<option value=" "></option >';
+                        arrTypes.map(function (x) {
+                            if (x === data.PayType)
+                                returndata += '<option value="' + x + '" selected="selected">' + x + '</option >';
+                            else
+                                returndata += '<option value="' + x + '">' + x + '</option >';
+                        });
+                        returndata += '</select>';
+                        return returndata;
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+
+                        return '<input type="text" class = "form-control ' + data.Id +'" id="' + data.Id + '" name="PayMonths" value="' + data.PayMonths + '"  readonly/>';
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return getColumnDropdownForEmpMaster('StartMonth', data.StartMonth, month_stop);
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+
+                        return getColumnTextboxWithSpecialChars('StopMonth', data.StopMonth);
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+
+                        return getColumnButton(data.Id, data.Action);
+                    }
+                },
+            ],
+            
+            "order": [[1, 'asc']]
+        });
+    }
+    function fillLicDataTableForHfc(respData) {
+
+        $('#gridHfc').DataTable({
+            destroy: true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+            data: respData,
+            "columns": [
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+
+                        return getColumnTextbox('*' + data.Id, data.AccNum);
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+
+                        return getColumnNumber('Amount', data.Amount);
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+
+                        //return getColumnDropdownForEmpMaster('PayType', data.PayType, arrTypes);
+                        var returndata = '<select id="' + data.Id + '" class="form-control" size="1" name="PayType" onchange="selectedTypeForHfc(this.id+this.value)">';
+                        returndata += '<option value=" "></option >';
+                        arrTypes.map(function (x) {
+                            if (x === data.PayType)
+                                returndata += '<option value="' + x + '" selected="selected">' + x + '</option >';
+                            else
+                                returndata += '<option value="' + x + '">' + x + '</option >';
+                        });
+                        returndata += '</select>';
+                        return returndata;
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return '<input type="text" class = "form-control ' + data.Id +'" id="paymonthsForHfc" name="PayMonths" value="' + data.PayMonths + '"  readonly/>';
+                        //return getColumnCheckBoxReadWithId('PayMonths', data.PayMonths);
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return getColumnDropdownForEmpMaster('StartMonth', data.StartMonth, month_stop);
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+
+                        return getColumnTextboxWithSpecialChars('StopMonth', data.StopMonth);
+                    }
+                },
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+
+                        return getColumnButtonForHfc(data.Id, data.Action);
+                    }
+                },
+            ],
+            //"columns": [
+            //    {
+            //        "mData": null,
+            //        "bSortable": false,
+            //        "mRender": function (data, type, full) {
+            //            return getColumnTextbox('*' + data.Id, data.AccNum);
+            //        }
+            //    },
+            //    {
+            //        "mData": null,
+            //        "bSortable": false,
+            //        "mRender": function (data, type, full) {
+            //            return getColumnNumber('Amount', data.Amount);
+            //        }
+            //    },
+            //    {
+            //        "mData": null,
+            //        "bSortable": false,
+            //        "mRender": function (data, type, full) {
+            //            return getColumnDropdownForEmpMaster('PayType', data.PayType, arrTypes);
+            //        }
+            //    },
+            //    {
+            //        "mData": null,
+            //        "bSortable": false,
+            //        "mRender": function (data, type, full) {
+            //            return getColumnNumber('PayMonths', data.PayMonths);
+            //        }
+            //    },
+            //    {
+            //        "mData": null,
+            //        "bSortable": false,
+            //        "mRender": function (data, type, full) {
+            //            return getColumnTextboxWithSpecialChars('StartMonth', data.StartMonth);
+            //        }
+            //    },
+            //    {
+            //        "mData": null,
+            //        "bSortable": false,
+            //        "mRender": function (data, type, full) {
+            //            return getColumnTextboxWithSpecialChars('StopMonth', data.StopMonth);
+            //        }
+            //    },
+            //    {
+            //        "mData": null,
+            //        "bSortable": false,
+            //        "mRender": function (data, type, full) {
+            //            return getColumnButtonForHfc(data.Id, data.Action);
+            //        }
+            //    },
+            //],
+            "order": [[1, 'asc']]
+        });
+    }
+    $('#empDataSubmit').click(function () {
+         
+        var emp_code;
+        //general table
+        var general = $('#generalGrid').DataTable();
+        var updateData = decodeURIComponent(general.$('input, select,textarea').serializeAndEncode());
+
+        //bio table
+        var bio = $('#bioGrid').DataTable();
+        var updateBioData = decodeURIComponent(bio.$('input, select').serializeAndEncode());
+
+        //pay field table
+        var bio = $('#gridPayField').DataTable();
+        var updatePayFeildData = bio.$('input, select').serialize();
+
+        //allowance table
+        var allowance = $('#gridAllowance').DataTable();
+        var updateAllowanceData = allowance.$('input, select').serialize();
+
+        //special allowance table
+        var allowance = $('#gridSpecialAllowance').DataTable();
+        var updateSpecialAllowanceData = allowance.$('input, select').serialize();
+
+        //deductions
+        var deduction = $('#gridDeduction').DataTable();
+        var updateDeductionData = deduction.$('input, select').serialize();
+
+        //Lic
+        var table = $('#gridLic').DataTable();
+        var updateLicData = decodeURIComponent(table.$('input, select,textarea').serializeAndEncode());
+        var arrUpdate = updateLicData.split("*");
+        var arrSampleObJ = [];
+        arrUpdate.forEach(function (element) {
+            //
+            if (element != "") {
+                var objEf = {};
+                var finalObj = {};
+                var strRow = element.split("&");
+                var id = strRow[0].split("=");
+                objEf.Id = id[0];
+                objEf.AccNum = id[1];
+
+                var amount = strRow[1].split("=");
+                objEf.Amount = amount[1];
+
+                var payType = strRow[2].split("=");
+                objEf.PayType = payType[1];
+
+                var payMonth = strRow[3].split("=");
+                objEf.PayMonths = payMonth[1];
+
+                var startMonth = strRow[4].split("=");
+                objEf.StartMonth = startMonth[1];
+
+                var stopMonth = strRow[5].split("=");
+                objEf.StopMonth = stopMonth[1];
+
+                if (isNaN(id[0])) {
+                    objEf.Action = "New";
+                } else {
+                    objEf.Action = "Update";
+                }
+
+                if (objEf.AccNum == ""
+                    && objEf.Amount == "" && objEf.PayType == ""
+                    && objEf.PayMonths == "" && objEf.StartMonth == "" && objEf.StopMonth == "") {
+                    console.log("row is empty");
+                } else {
+
+                    orgLic.map(function (element) {
+                        if (element.Id == objEf.Id && element.AccNum != objEf.AccNum) {
+
+                            objEf.AccNum = objEf.AccNum;
+                        }
+                        else if (element.Id == objEf.Id && element.Amount != objEf.Amount) {
+
+                            objEf.Amount = objEf.Amount;
+                        }
+                        else if (element.Id == objEf.Id && element.PayMonths != objEf.PayMonths) {
+
+                            objEf.PayMonths = objEf.PayMonths;
+                        }
+                        else if (element.Id == objEf.Id && element.PayType != objEf.PayType) {
+
+                            objEf.PayType = objEf.PayType;
+                        }
+                        else if (element.Id == objEf.Id && element.StartMonth != objEf.StartMonth) {
+
+                            objEf.StartMonth = objEf.StartMonth;
+                        } else if (element.Id == objEf.Id && element.StopMonth != objEf.StopMonth) {
+
+                            objEf.StopMonth = objEf.StopMonth;
+                        } else if (element.Id == objEf.Id
+                            && element.AccNum == objEf.AccNum
+                            && element.Amount == objEf.Amount
+                            && element.PayMonths == objEf.PayMonths
+                            && element.StartMonth == objEf.StartMonth
+                            && element.StopMonth == objEf.StopMonth
+                            && element.PayType == objEf.PayType) {
+                            objEf = {};
+                        } else if (objEf.AccNum != ""
+                            || objEf.Amount != ""
+                            || objEf.PayMonths != ""
+                            || objEf.StopMonth != "") {
+                            objEf = objEf;
+                        } else {
+                            objEf = {};
+                        }
+                    });
+
+                    if (Object.keys(objEf).length > 0) {
+                        arrSampleObJ.push(objEf);
+                    }
+
+                }
+
+            }
+        });
+
+        arrDelete.map(function (obj) {
+            arrSampleObJ.push(obj);
+        });
+
+        //Hfc
+        var table = $('#gridHfc').DataTable();
+        var updateHfcData = decodeURIComponent(table.$('input, select,textarea').serializeAndEncode());
+        var arrHfcUpdate = updateHfcData.split("*");
+        var arrHfcObJ = [];
+        arrHfcUpdate.forEach(function (element) {
+            //
+            if (element != "") {
+                var objEf = {};
+                var finalObj = {};
+                var strRow = element.split("&");
+                var id = strRow[0].split("=");
+                objEf.Id = id[0];
+                objEf.AccNum = id[1];
+
+                var amount = strRow[1].split("=");
+                objEf.Amount = amount[1];
+
+                var payType = strRow[2].split("=");
+                objEf.PayType = payType[1];
+
+                var payMonth = strRow[3].split("=");
+                objEf.PayMonths = payMonth[1];
+
+                var startMonth = strRow[4].split("=");
+                objEf.StartMonth = startMonth[1];
+
+                var stopMonth = strRow[5].split("=");
+                objEf.StopMonth = stopMonth[1];
+
+                if (isNaN(id[0])) {
+                    objEf.Action = "New";
+                } else {
+                    objEf.Action = "Update";
+                }
+
+                if (objEf.AccNum == ""
+                    && objEf.Amount == "" && objEf.PayType == ""
+                    && objEf.PayMonths == "" && objEf.StartMonth == "" && objEf.StopMonth == "") {
+                    console.log("row is empty");
+                } else {
+
+                    orgLic.map(function (element) {
+                        if (element.Id == objEf.Id && element.AccNum != objEf.AccNum) {
+
+                            objEf.AccNum = objEf.AccNum;
+                        }
+                        else if (element.Id == objEf.Id && element.Amount != objEf.Amount) {
+
+                            objEf.Amount = objEf.Amount;
+                        }
+                        else if (element.Id == objEf.Id && element.PayMonths != objEf.PayMonths) {
+
+                            objEf.PayMonths = objEf.PayMonths;
+                        }
+                        else if (element.Id == objEf.Id && element.PayType != objEf.PayType) {
+
+                            objEf.PayType = objEf.PayType;
+                        }
+                        else if (element.Id == objEf.Id && element.StartMonth != objEf.StartMonth) {
+
+                            objEf.StartMonth = objEf.StartMonth;
+                        } else if (element.Id == objEf.Id && element.StopMonth != objEf.StopMonth) {
+
+                            objEf.StopMonth = objEf.StopMonth;
+                        } else if (element.Id == objEf.Id
+                            && element.AccNum == objEf.AccNum
+                            && element.Amount == objEf.Amount
+                            && element.PayMonths == objEf.PayMonths
+                            && element.StartMonth == objEf.StartMonth
+                            && element.StopMonth == objEf.StopMonth
+                            && element.PayType == objEf.PayType) {
+                            objEf = {};
+                        } else if (objEf.AccNum != ""
+                            || objEf.Amount != ""
+                            || objEf.PayMonths != ""
+                            || objEf.StopMonth != "") {
+                            objEf = objEf;
+                        } else {
+                            objEf = {};
+                        }
+                    });
+
+                    if (Object.keys(objEf).length > 0) {
+                        arrHfcObJ.push(objEf);
+                    }
+
+                }
+
+            }
+        });
+
+        arrDeleteForHfc.map(function (obj) {
+            arrHfcObJ.push(obj);
+        });
+
+        if (updateData.includes("action_type=update")) {
+            //general
+            var arrerresult = getModifiedDataFromGrid(updateData, orgGeneral);
+
+            var arrerresultBio = getModifiedDataFromGrid(updateBioData, orgBio);
+
+            //general
+            var arrEf = getUpdateDataAsObject(arrerresult);
+            //bio
+            var arrBio = getUpdateDataAsObject(arrerresultBio);
+            //pay field
+            var ModifiedPayList = getModifiedDataFromJDT(updatePayFeildData, orgPay);
+            //allowance
+            var ModifiedAllowanceList = getModifiedDataFromJDT(updateAllowanceData, orgAllowance);
+            //special allowance
+            var ModifiedSpecialAllowanceList = getModifiedDataFromJDT(updateSpecialAllowanceData, orgSpecialAllowance);
+            //deduction
+            var ModifiedDeductionList = getModifiedDataFromJDT(updateDeductionData, orgDeduction);
+            
+           
+            var dataToSend = JSON.stringify({
+                EntityId: $("#hdnEmpCode").val(),
+                object1: arrEf,
+                object2: arrBio,
+                'StringData': ModifiedPayList,
+                'StringData2': ModifiedAllowanceList,
+                'StringData3': ModifiedSpecialAllowanceList,
+                'StringData4': ModifiedDeductionList,
+                multiObject: arrSampleObJ,
+                multiObject2: arrHfcObJ
+            });
+        CommonApiPOST("/Payroll/Masters/UpdateEmployeeMasterData", dataToSend, function (isSuccess) {
+            if (isSuccess) {
+                setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+            } else { }
+        });
+   
+        } else {
+            var EmpId;
+            var arrerresult = [];
+            var arrer = updateData.split('&');
+            var arrbio = updateBioData.split('&');
+            var arrpay = updatePayFeildData.split('&');
+            var arrallowance = updateAllowanceData.split('&');
+            var specialallowance = updateSpecialAllowanceData.split('&');
+            var deduction = updateDeductionData.split('&');
+
+            var arrGeneral = [];
+            var arrBio = [];
+            var arrPay = [];
+            var arrAllowance = [];
+            var arrSpecialAllowance = [];
+            var arrDeduction = [];
+
+
+            if (arrer.length > 0 && arrbio.length > 0) {
+                //general
+                arrGeneral = getUpdateDataAsObject(arrer);
+                //bio
+                arrBio = getUpdateDataAsObject(arrbio);
+                //pay
+                arrPay = getUpdateDataAsObject(arrpay);
+                //allowance
+                arrAllowance = getUpdateDataAsObject(arrallowance);
+                //specil allowance
+                arrSpecialAllowance = getUpdateDataAsObject(specialallowance);
+                //deduction
+                arrDeduction = getUpdateDataAsObject(deduction);
+            
+                var dataToSend = JSON.stringify({
+                    EntityId: $("#hdnEmpCode").val(),
+                    object1: arrGeneral,
+                    object2: arrBio,
+                    object3: arrPay,
+                    object4: arrAllowance,
+                    object5: arrSpecialAllowance,
+                    object6: arrDeduction,
+                    multiObject: arrSampleObJ,
+                    multiObject2: arrHfcObJ
+                });
+
+                arrGeneral.map(function (o) {
+                    if (o.Id == "emp_code" && o.Value != null) {
+                        EmpId = o.Value;
+                    }
+                });
+                var empCode = $("#hdnEmpCode").val();
+                if (empCode == null || empCode == "") {
+                    showGlobalModal("E#Eroor#Please Enter Employee Id");
+                    return false;
+                }
+                else {
+                    if (arrGeneral.length > 0) {
+                        CommonApiPOST("/Payroll/Masters/InsertEmployeeMasterData", dataToSend, function (isSuccess) {
+                            if (isSuccess) {
+                                setTimeout(function () { window.location.reload(); }, g_pagereload_seconds);
+                            } else { }
+                        });
+                    }
+                }
+            }
+        }
+    });
+    $('#cancelData').click(function () {
+        fillDataTables(originalData);
+    });
+
+</script>

@@ -1,0 +1,162 @@
+﻿<div id="reportsearch" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+    <div class="panel-body">
+        <div class="reports_search">
+           
+            <div class="report_search_emp pb_10">
+                <div class="col-md-4">
+                    <label class="control-label">Report Type:</label>
+                </div>
+                <div class="col-md-4">
+                    <input id="rdbLoanWise" type="radio" name="wise" value="All"><label for="rdbLoanWise"><span><span></span></span>Loan Wise</label>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            <input id="rdbScheduleWise" type="radio" name="wise" value="rdbEmpAll1"><label for="rdbScheduleWise"><span><span></span></span>Schedule Wise:</label>
+                        </label>
+                        <div style="display:none;">
+                            <div class="navbar-form" role="search">
+                                <div class="input-group">
+                                    <input type="text" id="txtAllEmpSearchforLoansAndSchedules1" name="txtloansSchedules1" class="form-control" placeholder="Search">
+                                    <input type="text" id="txtAllEmpSearchforLoansAndSchedules2" name="txtloansSchedules2" class="form-control" placeholder="Search">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="col-md-6">
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <label id="lblEmpName" class="control-label emp_name"></label>
+
+                        <label id="lblDesig" class="control-label"></label>
+                    </div>
+                </div>
+            </div>*@
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="adv_loans_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow:auto">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Select Loans</h4>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive" style="overflow: auto; max-height:300px;">
+                    <table id="gridLoantype" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th><input id="checkboxAllLoans" type="checkbox" name="checkbox" value="0"><label for="checkboxAll"><span></span></label></th>
+                                <th></th>
+                                <th>Loan Type</th>
+                                @*<th>Interest Rate</th>*@
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="btnLoanTypeModalOK">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="adv_Schedule_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow:auto">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Select Schedules</h4>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive" style="overflow-y: auto; max-height:300px;">
+                    <table id="gridScheduletype" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th><input id="checkboxAllSchedules" type="checkbox" name="checkbox" value="0"><label for="checkboxAll"><span></span></label></th>
+                                <th></th>
+                                <th>Schedule Name</th>
+                                @*<th>Interest Rate</th>*@
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="btnScheduleTypeModalOK">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    var loanids = [];
+    var scheduleids = [];
+    $("input[id='rdbLoanWise']").click(function () {
+         
+        scheduleids = [];
+        document.getElementById("txtAllEmpSearchforLoansAndSchedules2").value = "";
+        $('#txtAllEmpSearchforLoansAndSchedules1').hide();
+        $('#txtAllEmpSearchforLoansAndSchedules2').hide();
+        fillLoantypeDetails();
+        // return false();
+    });
+
+    $("input[id='rdbScheduleWise']").click(function () {
+         
+        loanids = [];
+        document.getElementById("txtAllEmpSearchforLoansAndSchedules1").value = "";
+        $('#txtAllEmpSearchforLoansAndSchedules1').hide();
+        $('#txtAllEmpSearchforLoansAndSchedules2').hide();
+        // document.getElementById("txtAllEmpSearchforLoansAndSchedules").value = "";
+        fillScheduletypeDetails();
+    });
+
+    $("#btnLoanTypeModalOK").click(function () {
+         
+        scheduleids = [];
+        loanids = [];
+        // $("#rdbLoanWise").prop("checked", true);
+        $("input:checkbox[name=checkbox]:checked").each(function () {
+            loanids.push($(this).val());
+        });
+        $('input[name=txtloansSchedules1]').val(loanids);
+        $('#adv_loans_modal').modal('toggle'); //or  $('#IDModal').modal('hide');
+        return false;
+    });
+
+    $("#btnScheduleTypeModalOK").click(function () {
+         
+        loanids = [];
+        scheduleids = [];
+        //('input:checkbox').removeAttr('checked');
+        $("input:checkbox[name=checkbox1]:checked").each(function () {
+            scheduleids.push($(this).val());
+        });
+        $('input[name=txtloansSchedules2]').val(scheduleids);
+        $('#adv_Schedule_modal').modal('toggle'); //or  $('#IDModal').modal('hide');
+        return false;
+    });
+
+
+</script>
+<script type="text/javascript">
+    $("#checkboxAllLoans").click(function () {
+        $('input:checkbox').not(this).prop('checked', this.checked);
+    });
+</script>
+
+<script type="text/javascript">
+    $("#checkboxAllSchedules").click(function () {
+        $('input:checkbox').not(this).prop('checked', this.checked);
+    });
+</script>

@@ -1,0 +1,533 @@
+﻿@model Entities.Employees
+@{
+    ViewBag.RolePages = TempData["RolePages"];
+    var rolepages = TempData["RolePages"].ToString();
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var message = TempData["AlertMessage"] ?? string.Empty;
+}
+<script type="text/javascript">
+    var message = '@message';
+    if (message) alert(message);
+
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        Get1();
+    });
+    function Get1() {
+        var options = {};
+        options.url = "ChangeAuthority/Authority1555",
+            options.type = "GET";
+        options.data = { "criteria": $("#companyName").val() };
+        options.dataType = "json";
+        options.success = function (data) {
+            $("#companyList").empty();
+            for  (var i = 0; i < data.length; i++) {
+                $("#companyList").append("<option value='" +
+                    data[i].EmpId + "' label='" +
+                    data[i].Name + "'></option>");
+            }
+        };
+        $.ajax(options);
+    }
+    function btnsearch(Id, Type) {
+        
+        var lempid = Id;
+        $.ajax({
+            type: "GET",
+            url: "ChangeAuthority/Authority111?prefix=" + lempid,
+            dataType: "Json",
+            success: function (response) {
+                if (response != null) {
+                    
+                    if (response.Status == "false") {
+                    }
+                    else if (response.Status == "Notfound") {
+                        alert("EmpCode doesnot exists");
+                        $("#companyName").val("");
+
+                        $("#myempTextArea").html("");
+
+                    }
+                    else if (response.Status == "AlreadyRetired") {
+                        alert("This Employee is Retired");
+                        $("#companyName").val("");
+
+                        $("#myempTextArea").html("");
+
+                    }	
+                    else {
+                        var text =
+                            "<tr><td>" + " " + " " + response.lEmployeeName + "</td><td>" + " " + " " + response.ldesig +
+                            "</td><td>" + " " + " " + response.ldeptbranch + "</td></tr>";
+                        document.getElementById("myempTextArea").innerHTML = text;
+                    }
+                }
+                else {
+                }
+            },
+        });
+    }
+    $(function () {
+        $("#btnSearch").click(function () {
+            var lresult = empidsearch();
+            if (lresult) {
+                var lempid = $("#companyName").val();
+                var Type = "btnSearch";
+                btnsearch(lempid, Type);
+
+            }
+
+        });
+
+
+    });
+</script>
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-heading">
+            @{
+            <ul class="nav nav-tabs">
+                @if (rolepages.Contains("ADERG"))
+                {
+                    <li><a href=@Url.Action("InsertEmployees", "Register")>Employee Registration</a></li>
+                }
+                @if (rolepages.Contains("ADTPO"))
+                {
+                    <li><a href="@Url.Action("Index","Transfer")">Transfer/Promotions</a></li>
+                }
+                @if (rolepages.Contains("ADCAU"))
+                {
+                    <li><a href="@Url.Action("Index","ChangeAuthority")">Change Authority</a></li>
+                }
+                @if (rolepages.Contains("ADCPR"))
+                {
+                    <li class="active"><a href="@Url.Action("Index","ChangeProfile")">Change Profile</a></li>
+                }
+                @if (rolepages.Contains("ADLTCA"))
+                {
+                    <li><a href=@Url.Action("AdminLTCApply", "LeaveTravel")>LTC Apply</a></li>
+                }
+                @if (rolepages.Contains("ADPLA"))
+                {
+                    <li><a href=@Url.Action("AdminPLApply", "PLE_Type")>Apply PL Encashment</a></li>
+                }
+                @if (rolepages.Contains("ADWDA"))
+                {
+                    <li><a href=@Url.Action("WorkApprovalAdmin", "WorkDiary")> Delete Work Dairy</a></li>
+                }
+                @if (rolepages.Contains("ADUSRO"))
+                {
+                    <li><a href=@Url.Action("UserRolesView", "AllReports")>User Roles</a></li>
+                }
+                @if (rolepages.Contains("ADCBRMG"))
+                {
+                    <li><a href=@Url.Action("ChangeBranchManager", "ChangeBranchManager")>Change Branch Manager</a></li>
+                }
+                @if (rolepages.Contains("TsheetMain"))
+                {
+                    <li><a href=@Url.Action("Timesheetrequestform", "TimeSheet")>TimeSheet Manual Form</a></li>}
+                @if (rolepages.Contains("TsheetApp"))
+                {
+                    <li><a href=@Url.Action("TSApprovalView", "TimeSheet")>TimeSheet Manual Approvals</a></li>
+                }
+            </ul>
+            }
+        </div>
+    </div>
+</div>
+@using (Html.BeginForm("ProfileIndex", "ChangeProfile", FormMethod.Post))
+{
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="container">
+        <div class="page_st">
+            <div class="page">
+                <div class="col-md-12 col-sm-12">
+                    <div class="main_heading">
+                        <h1>Change Profile</h1>
+                        <div class="form-horizontal form-horizontal2">
+                            <div class="page_start">
+                                <div class="main_radio_btn">
+                                </div>
+                                <div class="clearfix"></div>
+                                <br />
+
+                                <div class="col-md-12">
+                                    <div class="form-horizontal">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label label_left">Employee Id:<span class="mandatory">*</span></label>
+                                                        <div class="col-sm-8">
+                                                            <input id="companyName" name="Employeeid" class="form-control" list="companyList" maxlength="10" onkeypress="return isNumber(event)" />
+                                                            <datalist id="companyList"></datalist>
+                                                            @Html.ValidationMessageFor(model => model.EmpId, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <div class="col-sm-7">
+                                                            <button type="button" id="btnSearch" class="btn btn-sm btn-primary">Search</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="col-sm-12">
+                                                    <table id="myempTextArea" class="table table-bordered" style="width:50%;"></table>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <ul class="nav nav-tabs contro-tabs change_profile_tab" role="tablist">
+                                                <li role="presentation" class="active" id="valaddress" data-id="valaddress" name="Address"><a href="#cht1" aria-controls="cht1" role="tab" data-toggle="tab">Address</a></li>
+                                                <li role="presentation" id="valmobile"><a href="#cht2" aria-controls="cht2" role="tab" data-toggle="tab">Mobile</a></li>
+                                                <li role="presentation" id="valemail"><a href="#cht3" aria-controls="cht3" role="tab" data-toggle="tab"> Email</a></li>
+                                                <li role="presentation" id="valqualification"><a href="#cht4" aria-controls="cht4" role="tab" data-toggle="tab"> Qualification</a></li>
+                                            </ul>
+
+                                            <div class="tab-content">
+                                                <div role="tabpanel" class="tab-pane active" id="cht1">
+                                                    <ul class="nav nav-tabs contro-tabs change_profile_tab_sub" role="tablist">
+                                                        <li role="presentation" class="active" id="premanentval" name="presentaddress"><a href="#chtc1" aria-controls="chtc1" role="tab" data-toggle="tab">Permanent Address</a></li>
+                                                        <li role="presentation" id="presentval"><a href="#chtc2" aria-controls="chtc2" role="tab" data-toggle="tab"> Present Address</a></li>
+
+                                                    </ul>
+                                                    <div class="tab-content">
+
+                                                        <div role="tabpanel" class="tab-pane active" id="chtc1">
+                                                            <div class="row">
+                                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                    <div class="form-group">
+                                                                        <label class="col-sm-4 control-label label_left">Permanent Address:</label>
+                                                                        <div class="col-sm-8">
+                                                                            @Html.TextAreaFor(model => model.PermanentAddress, new { @class = "form-control", @id = "PAddress", @readonly = "readonly" })
+                                                                            @Html.ValidationMessageFor(model => model.PermanentAddress, "", new { @class = "text-danger" })
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                    <div class="form-group">
+                                                                        <label class="col-sm-4 control-label">New Details:</label>
+                                                                        <div class="col-sm-8">
+
+                                                                            <textarea class="form-control" name="perAddress" cols="20" id="PermAdddetails" rows="2"></textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                </div>
+                                                            </div>
+                                                        <div role="tabpanel" class="tab-pane" id="chtc2">
+                                                            <div class="row">
+                                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                    <div class="form-group">
+                                                                        <label class="col-sm-4 control-label label_left">Present Address:</label>
+                                                                        <div class="col-sm-8">
+                                                                            @Html.TextAreaFor(model => model.PresentAddress, new { @class = "form-control", @id = "PerAddress", @readonly = "readonly" })
+                                                                            @Html.ValidationMessageFor(model => model.PresentAddress, "", new { @class = "text-danger" })
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                    <div class="form-group">
+                                                                        <label class="col-sm-4 control-label">New Details:</label>
+                                                                        @*<div class="col-sm-8">
+                        <input type="text" name="presadd" class="form-control" id="PresAdddetails" />
+                    </div>*@
+                                                                        <div class="col-sm-8">
+                                                                            <textarea class="form-control" name="presadd" cols="20" id="PresAdddetails" rows="2"></textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                </div>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                                <div role="tabpanel" class="tab-pane " id="cht2">
+                                                    <ul class="nav nav-tabs contro-tabs change_profile_tab_sub" role="tablist">
+                                                        <li role="presentation" class="active" data-id="mobileval"><a href="#chtc3" aria-controls="chtc3" role="tab" data-toggle="tab">Mobile Number</a></li>
+                                                        <li role="presentation"><a href="#chtc4" aria-controls="chtc4" role="tab" data-toggle="tab"> LandLine Number</a></li>
+                                                        <li role="presentation"><a href="#chtc5" aria-controls="chtc5" role="tab" data-toggle="tab"> Emergency Contact Number</a></li>
+
+                                                    </ul>
+                                                    <div class="tab-content">
+                                                        <div role="tabpanel" class="tab-pane active" id="chtc3">
+                                                            <div class="row">
+                                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                    <div class="form-group">
+                                                                        <label class="col-sm-4 control-label label_left"> Mobile Number:</label>
+                                                                        <div class="col-sm-8">
+                                                                            @Html.EditorFor(model => model.MobileNumber, new { htmlAttributes = new { @class = "form-control", @id = "MNumber", @readonly = "readonly" } })
+                                                                            @Html.ValidationMessageFor(model => model.MobileNumber, "", new { @class = "text-danger" })
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                    <div class="form-group">
+                                                                        <label class="col-sm-4 control-label">New Details:</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="text" name="MobiNumber" class="form-control" id="MobileNdetails" maxlength="12" onkeypress="return isNumber(event)" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                </div>
+                                                            </div>
+                                                        <div role="tabpanel" class="tab-pane" id="chtc4">
+                                                            <div class="row">
+                                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                    <div class="form-group">
+                                                                        <label class="col-sm-4 control-label label_left">LandLine Number:</label>
+                                                                        <div class="col-sm-8">
+                                                                            @Html.EditorFor(model => model.HomeNumber, new { htmlAttributes = new { @class = "form-control", @id = "HomNumber", @readonly = "readonly" } })
+                                                                            @Html.ValidationMessageFor(model => model.HomeNumber, "", new { @class = "text-danger" })
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                    <div class="form-group">
+                                                                        <label class="col-sm-4 control-label">New Details:</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="text" name="HomNumber" class="form-control" id="HomeNdetails" maxlength="12" onkeypress="return isNumber(event)" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                </div>
+                                                            </div>
+                                                        <div role="tabpanel" class="tab-pane" id="chtc5">
+                                                            <div class="row">
+                                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                    <div class="form-group">
+                                                                        <label class="col-sm-4 control-label label_left">Emergency Contact:</label>
+                                                                        <div class="col-sm-8">
+                                                                            @Html.EditorFor(model => model.EmergencyContactNo, new { htmlAttributes = new { @class = "form-control", @id = "EmerNumber", @readonly = "readonly" } })
+                                                                            @Html.ValidationMessageFor(model => model.EmergencyContactNo, "", new { @class = "text-danger" })
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                    <div class="form-group">
+                                                                        <label class="col-sm-4 control-label">New Details:</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="text" name="EmerNumber" class="form-control" id="EmerNdetails" maxlength="12" onkeypress="return isNumber(event)" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                </div>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                                <div role="tabpanel" class="tab-pane " id="cht3">
+                                                    <ul class="nav nav-tabs contro-tabs change_profile_tab_sub" role="tablist">
+                                                        <li role="presentation" class="active"><a href="#chtc6" aria-controls="chtc6" role="tab" onclick="return val();" data-toggle="tab">Official Email Id</a></li>
+                                                        <li role="presentation"><a href="#chtc7" aria-controls="chtc7" role="tab" onclick="return val();" data-toggle="tab"> Personal Email ID</a></li>
+                                                    </ul>
+                                                    <div class="tab-content">
+                                                        <div role="tabpanel" class="tab-pane active" id="chtc6">
+                                                            <div class="row">
+                                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                    <div class="form-group">
+                                                                        <label class="col-sm-4 control-label label_left">Official Email Id :</label>
+                                                                        <div class="col-sm-8">
+                                                                            @Html.EditorFor(model => model.OfficalEmailId, new { htmlAttributes = new { @class = "form-control", @id = "OffEmail", @readonly = "readonly" } })
+                                                                            @Html.ValidationMessageFor(model => model.OfficalEmailId, "", new { @class = "text-danger" })
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                    <div class="form-group">
+                                                                        <label class="col-sm-4 control-label">New Details:</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="text" name="OffEmail" class="form-control" id="OffEdetails" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                </div>
+                                                            </div>
+                                                        <div role="tabpanel" class="tab-pane" id="chtc7">
+                                                            <div class="row">
+                                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                    <div class="form-group">
+                                                                        <label class="col-sm-4 control-label label_left">Personal Email Id:</label>
+                                                                        <div class="col-sm-8">
+                                                                            @Html.EditorFor(model => model.PersonalEmailId, new { htmlAttributes = new { @class = "form-control", @id = "PerEmail", @readonly = "readonly" } })
+                                                                            @Html.ValidationMessageFor(model => model.PersonalEmailId, "", new { @class = "text-danger" })
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                    <div class="form-group">
+                                                                        <label class="col-sm-4 control-label">New Details:</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="text" name="PerEmail" class="form-control" id="PerEdetails" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                </div>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                                <div role="tabpanel" class="tab-pane " id="cht4">
+                                                    <ul class="nav nav-tabs contro-tabs change_profile_tab_sub" role="tablist">
+                                                        <li role="presentation" class="active"><a href="#chtc8" aria-controls="chtc8" role="tab" data-toggle="tab">Graduation</a></li>
+                                                        <li role="presentation"><a href="#chtc9" aria-controls="chtc9" role="tab" data-toggle="tab"> Post Graduation</a></li>
+                                                        <li role="presentation"><a href="#chtc10" aria-controls="chtc10" role="tab" data-toggle="tab"> Professional Qualifications</a></li>
+                                                    </ul>
+                                                    <div class="tab-content">
+                                                        <div role="tabpanel" class="tab-pane active" id="chtc8">
+                                                            <div class="row">
+                                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                    <div class="form-group">
+                                                                        <label class="col-sm-4 control-label label_left"> Graduation:</label>
+                                                                        <div class="col-sm-8">
+                                                                            @Html.EditorFor(model => model.Graduation, new { htmlAttributes = new { @class = "form-control", @id = "Grad", @readonly = "readonly" } })
+                                                                            @Html.ValidationMessageFor(model => model.Graduation, "", new { @class = "text-danger" })
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                    <div class="form-group">
+                                                                        <label class="col-sm-4 control-label">New Details:</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="text" name="gradua" class="form-control" id="Graddetails" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                </div>
+                                                            </div>
+                                                        <div role="tabpanel" class="tab-pane" id="chtc9">
+                                                            <div class="row">
+                                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                    <div class="form-group">
+                                                                        <label class="col-sm-4 control-label label_left"> Post Graduation:</label>
+                                                                        <div class="col-sm-8">
+                                                                            @Html.EditorFor(model => model.PostGraduation, new { htmlAttributes = new { @class = "form-control", @id = "PosGrad", @readonly = "readonly" } })
+                                                                            @Html.ValidationMessageFor(model => model.PostGraduation, "", new { @class = "text-danger" })
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                    <div class="form-group">
+                                                                        <label class="col-sm-4 control-label">New Details:</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="text" name="PostGrad" class="form-control" id="Pgraddetails" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                </div>
+                                                            </div>
+                                                        <div role="tabpanel" class="tab-pane" id="chtc10">
+                                                            <div class="row">
+                                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                    <div class="form-group">
+                                                                        <label class="col-sm-4 control-label label_left"> Professional Qualifications:</label>
+                                                                        <div class="col-sm-8">
+                                                                            @Html.EditorFor(model => model.ProfessionalQualifications, new { htmlAttributes = new { @class = "form-control", @id = "ProfQual", @readonly = "readonly" } })
+                                                                            @Html.ValidationMessageFor(model => model.ProfessionalQualifications, "", new { @class = "text-danger" })
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                    <div class="form-group">
+                                                                        <label class="col-sm-4 control-label">New Details:</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="text" name="ProfQualification" class="form-control" id="ProfGdetails" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                </div>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="pull-right">
+                                                <button type="button" value="reset" onclick="resetForm()" class="btn btn-default">Cancel</button>
+                                                <button type="submit" onclick="return ProfileSubmit();" class="btn btn-primary subleave">Submit</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+<script>
+    document.getElementById("a1").className = "active";
+</script>
+
+
+<script>
+    $("#btnSearch").click(function () {
+        var theme = otherTheme;
+
+
+        // prepare the data
+        var names = document.getElementById("companyName").value;
+        $(function () {
+            $.ajax({
+                type: "GET",
+                url: "/ChangeProfile/Getprofiledetails?EmployeeCodey=" + names,
+                dataType: "Json",
+                success: function (response) {
+                    if (response != null) {
+                        document.getElementById("PAddress").value = response.lPermanentAddressAjax;
+                        document.getElementById("PerAddress").value = response.lpresentAddressAjax;
+                        document.getElementById("MNumber").value = response.lmobilenumberAjax;
+                        document.getElementById("HomNumber").value = response.lhomenumberAjax;
+                        document.getElementById("EmerNumber").value = response.lemernumberAjax;
+                        document.getElementById("OffEmail").value = response.lprofemailAjax;
+                        document.getElementById("PerEmail").value = response.lpersonalemailAjax;
+                        document.getElementById("Grad").value = response.lgradAjax;
+                        document.getElementById("PosGrad").value = response.lPgradAjax;
+                        document.getElementById("ProfQual").value = response.lprofessionalqualificationAjax;
+                    }
+                    else {
+                        // alert("Something went wrong");
+                    }
+                },
+            });
+        });
+    });
+</script>
+
+<script>
+    var resetForm = function () {
+        $("#PermAdddetails").val('');
+        $("#PresAdddetails").val('');
+        $("#MobileNdetails").val('');
+        $("#HomeNdetails").val('');
+        $("#EmerNdetails").val('');
+        $("#OffEdetails").val('');
+        $("#PerEdetails").val('');
+        $("#Graddetails").val('');
+        $("#Pgraddetails").val('');
+        $("#ProfGdetails").val('');
+    }
+</script>
+
+<script>
+    function val() {
+        $("#OffEdetails").val('');
+        $("#PerEdetails").val('');
+    }
+</script>

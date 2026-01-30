@@ -1,0 +1,499 @@
+﻿@model Entities.PR_Monthattendance
+@{
+    ViewBag.RolePages = TempData["RolePages"];
+    var rolepages = TempData["RolePages"].ToString();
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var message = TempData["AlertMessage"] ?? string.Empty;
+}
+<script type="text/javascript">
+    var message = '@message';
+    if (message) alert(message);
+
+</script>
+
+
+<style>
+    table {
+        border-collapse: collapse;
+        border: 1px solid black;
+    }
+</style>
+
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+     
+        Get1();
+    });
+    function Get1() {
+     
+        var options = {};
+        
+        options.url = "/Payroll/Index1555",
+            options.type = "GET";
+        options.data = { "criteria": $("#companyName").val() };
+        options.dataType = "json";
+        options.success = function (data) {
+            $("#companyList").empty();
+            for (var i = 0; i < data.length; i++) {
+                $("#companyList").append("<option value='" +
+                    data[i].EmpId + "' label='" +
+                    data[i].Name + "'></option>");
+            }
+        };
+        $.ajax(options);
+    }
+
+    function btnsearch(Id, Type) {
+     
+        var lempid = Id;
+     
+      
+        $.ajax({
+            type: "GET",
+            url: '/Payroll/Index111?prefix=' + lempid,
+            dataType: "Json",
+            success: function (response) {
+              
+                if (response != null) {
+
+                    if (response.Status == "false") {
+
+                    }
+                    else if (response.Status == "Notfound") {
+                        alert("EmpCode doesnot exists");
+                        $("#companyName").val("");
+
+                        $("#myTextArea").html("");
+
+                    }
+                    else if (response.Status == "AlreadyRetired") {
+                        alert("This Employee is Retired");
+                        $("#companyName").val("");
+
+                        $("#myTextArea").html("");
+
+                    }
+                    else {
+                        var text = "<tr><td>EmployeeId:" + " " + " " + response.lEmployeeId
+                            + "</td></tr> <tr><td> EmployeeName:" + " " + " " + response.lEmployeeName
+                            + "</td></tr> <tr><td> Designation:" + " " + " "
+                            + response.ldesig + "</td></tr><tr><td> Branch/Dept:" + " " + " " + response.ldeptbranch + "</td></tr> <tr><td> DOJ:" + " " + " " + response.DOJ + "</td></tr>";
+
+                        var Tbl = $("#EmpDetails").show();
+                        window.location.href = "/Payroll/AttendenceMonthly?empcode=" + lempid;
+                      
+                    
+                    }
+
+
+                }
+                else {
+                    // alert("Something went wrong");
+                }
+            },
+        });
+    }
+
+    $(function () {
+        $("#btnSearch").click(function () {
+      
+            var lresult = empidsearch();
+            if (lresult) {
+                var lempid = $("#companyName").val();
+              
+                var Tbl = $("#EmpDetails").show();
+                    var Type = "btnSearch";
+                    btnsearch(lempid, Tbl, Type);
+                 
+            }
+        });
+
+
+       $("#Resetbtn").click(function () { $("#myTextArea").hide(); });
+       $("#Resetbtn").click(function () { $("#EmpDetails").hide(); });
+    });
+</script>
+
+
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-heading">
+            @{
+            <ul class="nav nav-tabs">
+                @if (rolepages.Contains("PRMain"))
+                {
+                    
+
+                    <li><a href=@Url.Action("AddPAyMonthDetails", "Payroll")>AddPayMonth</a></li>
+                    <li>  <a href=@Url.Action("EmployeePayField", "Payroll")>Employee Pay Field</a></li>
+                    <li class="active"><a href="@Url.Action("AttendenceMonthly", "Payroll")">AttendenceMonthly</a></li>
+
+                }
+            </ul>
+            }
+
+        </div>
+    </div>
+</div>
+
+
+@using (Html.BeginForm("MonthlyAttendence", "Payroll", FormMethod.Post))
+{
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="container">
+        <div class="page_st">
+            <div class="page">
+
+
+                <div class="col-md-12 col-sm-12">
+                    <div class="main_heading">
+                        <h1>Monthly Attendence</h1>
+                        <div class="form-horizontal form-horizontal2">
+                            <div class="page_start">
+                               
+                                <div class="clearfix"></div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-md-12">
+
+                                        <div class="col-md-6">
+                                            <div class="side_heading" style="min-height: 240px;">
+                                                <h1>Employee Details</h1>
+
+                                                <div class="form-horizontal">
+                                                    <div class="col-md-12">
+                                                        <div class="col-md-10">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-3 control-label">EmpCode:<span class="mandatory">*</span></label>
+                                                                <div class="col-sm-9">
+
+                                                                  
+                                                                    <input id="companyName" name="EmpId" list="companyList"  class="form-control" maxlength="10" value="@ViewBag.EmpId"  onkeypress="return isNumber(event);"/>
+                                                                    <datalist id="companyList"></datalist>
+                                                                    @Html.ValidationMessageFor(model => model.EmpId, "", new { @class = "text-danger" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <div class="form-group">
+
+                                                                <div class="col-sm-7">
+                                                                    <button type="button" id="btnSearch" onclick="return MonthlyAttendencesearch();"  class="btn btn-sm btn-primary">Search</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+
+                                                            <div class="col-sm-12">
+
+                                                                <table class="table table-bordered" id="myTextArea" style="width:100%;"></table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+<div id="Emphide" class="col-md-12">
+    <div class="form-group">
+
+        <div  class="col-sm-12">
+
+            <table id="EmpDetails" class="table table-bordered ">
+              
+                    <tr>
+                        
+                        <td>EmpCode : @ViewBag.EmpId</td>
+                        </tr>
+                    <tr>
+                        <td>EmpName : @ViewBag.Sname</td>
+                       </tr>
+                    <tr>
+                        
+                        <td>Designation : @ViewBag.Designation</td>
+                    </tr>
+                      <tr>
+                         
+                          <td>Branch/Dept : @ViewBag.branchname</td>
+                      </tr>
+                      <tr>
+                          
+                          <td>DOJ : @ViewBag.DOJ</td>
+                      </tr>
+                     <tr>
+                        
+                         <td>Confirmation Date : @ViewBag.Confimationdate</td>
+                     </tr>
+                        
+                        
+                   
+              
+                
+            </table>
+        </div>
+    </div>
+</div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="side_heading" style="min-height: 240px;">
+                                                <h1>Monthly Payable Days</h1>
+
+                                                <div class="form-horizontal">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label">Week Holidays:<span class="mandatory">*</span></label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="Week" id="Week" value="@ViewBag.Weekhol" readonly="readonly" class="form-control" />
+
+
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label">Paid Holidays:<span class="mandatory">*</span></label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="Paid" id="Paid" readonly="readonly" value="@ViewBag.Paidhol" class="form-control" />
+
+
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label">Total Payable Days:<span class="mandatory">*</span></label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="Payable" id="Payable" readonly="readonly" value="@ViewBag.TotalPayable" class="form-control" />
+
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                      
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+
+                                        <div class="col-md-6">
+                                            <div class="side_heading" style="min-height: 240px;">
+                                            
+
+                                                <div class="form-horizontal">
+                                                  <br />
+                                                    <div class="col-md-12">
+                                                      
+                                                        <input type="hidden" name="FY" id="FY" Value="@ViewBag.FY" />
+                                                        <div class="form-group">
+                                                            <label class="col-sm-3 control-label">Status:<span class="mandatory">*</span></label>
+                                                            <div class="col-sm-9">
+                                                                @Html.DropDownList("Status", new[] {
+                                                                     new SelectListItem() {Text = "Regular",Value = "Regular"},
+                                                                    new SelectListItem() {Text = "Deputation",Value = "Deputation"},
+                                                                      new SelectListItem() {Text = "Suspended",Value = "Suspended"},
+                                                                        new SelectListItem() {Text = "Stop Salary",Value = "StopSalary"},
+                                                                    }, "Select Status", new { @class = "form-control", Value = "@ViewBag.Status",id="Status" })
+
+                                                            </div>
+                                                        </div>
+
+                                                        <div id="statushide" class="form-group">
+                                                            <label class="col-sm-3 control-label">Status Date:<span class="mandatory">*</span></label>
+                                                            <div class="input-group date col-sm-9">
+                                                                <input type="text" name="Statusdate" id="Statusdate" Value="@ViewBag.StatusDate1" class="form-control" />
+
+                                                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                            </div>
+                                                        </div>
+
+
+
+                                                       
+                                                    </div>
+                                                </div>
+
+
+
+
+                                            </div>
+                                        </div>
+                                    
+                            
+                               
+
+                                        <div class="col-md-6">
+                                            <div class="side_heading" style="min-height: 240px;">
+                                                <h1>Monthly Attendence</h1>
+
+                                                <div class="form-horizontal">
+                                                   
+                                                    <div class="col-md-12">
+                                                      
+                                                        <div class="form-group">
+                                                            <label class="col-sm-3 control-label">LOP Days:<span class="mandatory">*</span></label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" name="LOPdays" id="LOPdays" Value="@ViewBag.LopDays"  maxlength="2"  onclick="return isNumber(evt)();" class="form-control" />
+
+
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-3 control-label">Absent Days:<span class="mandatory">*</span></label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" name="Absentdays" id="Absentdays" Value="@ViewBag.Absentdays"  maxlength="2" onclick="return isNumber(evt)();" class="form-control" />
+
+
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-3 control-label">Working Days:<span class="mandatory">*</span></label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" name="Workingdays" id="Workingdays" Value="@ViewBag.Workingdays"  maxlength="2" onclick="return isNumber(evt)();" class="form-control" />
+
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+
+                                                            <div class="col-sm-12">
+
+                                                                <table class="table table-bordered" id="myTextArea" style="width:100%;"></table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                <div class="col-md-12">
+                                    <div class="main_heading">
+                                        <h1>Leave Balance</h1>
+                                        <div class="col-md-12 leaves_table">
+                                            <div class="table-responsive m_20">
+                                                <table class="table table-bordered table-center table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Leave Type</th>
+                                                            <th>CL</th>
+                                                            <th>ML</th>
+                                                            <th>PL</th>
+                                                            <th>SCL</th>
+                                                            <th>MTL</th>
+                                                            <th>PTL</th>
+                                                            <th>EOL</th>
+                                                            <th>C-OFF</th>
+                                                            <th>LOP</th>
+                                                         
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                      
+                                                        <tr>
+                                                            <td>Total Leaves</td>
+                                                            <td> @ViewBag.CL </td>
+                                                            <td>@ViewBag.ML</td>
+                                                            <td>@ViewBag.PL</td>
+                                                            <td>@ViewBag.SCL</td>
+                                                            <td>@ViewBag.MTL</td>
+                                                            <td>@ViewBag.PTL</td>
+                                                            <td>@ViewBag.EOL</td>
+                                                          
+                                                            <td>@ViewBag.COFF</td>
+                                                        
+                                                            <td>@ViewBag.LOP</td>
+                                                        </tr>
+                                                     
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+
+
+                                        </div>
+
+                                    </div>
+
+
+
+                                </div>
+                                </div>
+
+
+                                <div class="col-md-12 row buttons_div">
+                                    <div class="pull-right">
+                                        @*<button type="reset" class="btn btn-default calcel">Cancel</button>*@
+                                        <button type="reset" onclick="resetmyform();" class="btn btn-default calcel">Cancel</button>
+
+                                        <button type="submit" onclick="return MonthlyAttendences();" class="btn btn-primary">Submit</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+   
+}
+<script>
+
+    $(document).ready(function () {
+        $("#statushide").show();
+    $('#Status').on('change', function() {
+        if (this.value == 'Suspension')
+      {
+            $("#statushide").hide();
+      }
+        else if (this.value == 'Deputation')
+      {
+            $("#statushide").hide();
+        }
+        else {
+            $("#statushide").show();
+        }
+    });
+});
+</script>
+<script type='text/javascript'>
+
+    $(function () {
+        $('#Event_Date1').datepicker({
+            format: 'yyyy',
+            viewMode: "years",
+            minViewMode: "years",
+            todayHighlight: true,
+            autoclose: true
+        });
+    });
+
+</script>
+
+<script>
+    document.getElementById("ap").className = "active";
+
+</script>
+<script src="~/Assets/hrms/PayrollValidations.js"></script>

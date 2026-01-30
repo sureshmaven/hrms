@@ -1,0 +1,21 @@
+--Please credit C-offs to below employee with reason " C-Offs credited for Jan & Feb-2021"
+--Emp code              Emp Name               C-Offs
+--5796                  T Narsing               13
+
+
+--Credit leaves
+INSERT INTO [dbo].[Leaves_CreditDebit] values(	(select id from Employees where empid = 5796),13,13	,0,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid = 5796) and LeaveTypeId=13 and year=2021),
+'C-Offs credited for Jan & Feb-2021',
+(select ShortName from Employees where empid = 5796),
+(select Department from Employees where empid = 5796),
+(select Branch from Employees where empid = 5796),
+(select CurrentDesignation from Employees where empid = 5796),'Credit',
+(select branch_value1 from employees where empid = 5796),
+(13	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid = 5796) and LeaveTypeId=13 and year=2021)),2021);
+
+
+--Update leave balance
+update EmpLeaveBalance set LeaveBalance=
+(13+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid = 5796 and LeaveTypeId=13) and year=2021)) 
+where LeaveTypeId=13 and empid=(select id from employees where empid = 5796) and year=2021;

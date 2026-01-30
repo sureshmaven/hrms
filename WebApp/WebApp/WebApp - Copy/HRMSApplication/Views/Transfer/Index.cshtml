@@ -1,0 +1,1424 @@
+﻿@model HRMSApplication.Models.EmpTransfer
+@{
+    ViewBag.RolePages = TempData["RolePages"];
+    var rolepages = TempData["RolePages"].ToString();
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var message = TempData["AlertMessage"] ?? string.Empty;
+}
+<script type="text/javascript">
+    var message = '@message';
+    if (message) alert(message);
+
+</script>
+
+
+<script>
+    $(document).ready(function () {
+
+      var url = $(location).attr('href'),
+    parts = url.split("/"),
+    last_part = parts[parts.length - 1];
+
+        if (last_part == 'PayrollPromotion') {
+     
+            $("#Transfer").hide();
+            $("#PromotionTransfer").hide();
+
+            $("#Transfer1").hide();
+            $("#PromotionTransfer1").hide();
+            
+            $(".logo-nav-left").css('pointer-events', 'none');
+             $(".panel-primary > .panel-heading ").css("display", "none");
+            $(".navbar-default").css("display", "none");
+            $(".prhide").css("display", "none");
+            var title = "Page1";
+            var url = "/";
+            if (typeof (history.pushState) != "undefined") {
+                var obj = { Title: title, Url: url };
+                history.pushState(obj, obj.Title, obj.Url);
+            } else {
+
+            }
+
+        }
+
+
+        // $("#1").show();
+        $("#2").show();
+        $("#3").hide();
+        $("#4").hide();
+
+
+        $("#Promotion").click(function () {
+            Get1();
+
+            // $("#1").hide();
+            $("#3").hide();
+            $("#4").hide();
+            $("#2").show();
+            $("#myTextArea").html("");
+            $("#companyName").val("");
+            $('#newdesig')[0].selectedIndex = 0;
+            $("#Promotionfrom").val("");
+        });
+        $("#Transfer").click(function () {
+            Get1();
+            // $("#1").hide();
+            $("#2").hide();
+            $("#4").hide();
+            $("#3").show();
+            $("#myTextArea").html("");
+            $("#companyName").val("");
+            $('#tHDept')[0].selectedIndex = 0;
+            $('#tHbranchCon')[0].selectedIndex = 0;
+            $("#transferdate").val("");
+            document.getElementById('temp').checked = true;
+            document.getElementById('perm').checked = false;
+            document.getElementById('thead2').checked = true;
+            document.getElementById('tbran2').checked = false;
+            document.getElementById('tHbranchCon').value = '';
+            document.getElementById('tbranchide2').style.display = 'none';
+            document.getElementById('tdepthide2').style.display = 'block';
+            $("#transfertodate").val('');
+            $("#e2").show();
+        });
+        $("#PromotionTransfer").click(function () {
+            Get1();
+            // $("#1").hide();
+            $("#2").hide();
+            $("#3").hide();
+            $("#4").show();
+            $("#myTextArea").html("");
+            $("#companyName").val("");
+            $('#ptHbranchCon')[0].selectedIndex = 0;
+            $('#ptHDept')[0].selectedIndex = 0;
+            $('#ptHDesig')[0].selectedIndex = 0;
+            $("#PTdate").val("");
+            document.getElementById("PromotionTransfer").checked = true;
+        });
+
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('input[name=RadioValue1]:first').attr('checked', true);
+
+        if ($("#dhead2").is(":checked")) {
+            document.getElementById('dHbranchCon').value = '';
+            document.getElementById('dbranchide2').style.display = 'none';
+            document.getElementById('ddepthide2').style.display = 'block';
+
+        }
+
+
+        $("input[name='RadioValue1']").click(function () {
+
+            if ($("#dhead2").is(":checked")) {
+                document.getElementById('dHbranchCon').value = '';
+                document.getElementById('dbranchide2').style.display = 'none';
+                document.getElementById('ddepthide2').style.display = 'block';
+
+            }
+            else if ($("#dbran2").is(":checked")) {
+
+                document.getElementById('dHDept').value = '';
+                document.getElementById('ddepthide2').style.display = 'none';
+                document.getElementById('dbranchide2').style.display = 'block';
+            }
+        })
+    });
+
+    function appliedrequest(val) {
+
+        $("#Type").val(val);
+
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        $('input[name=RadioValue2]:first').attr('checked', true);
+
+        if ($("#thead2").is(":checked")) {
+            document.getElementById('tHbranchCon').value = '';
+            document.getElementById('transferdate').value = '';
+            document.getElementById('tbranchide2').style.display = 'none';
+            document.getElementById('tdepthide2').style.display = 'block';
+
+        }
+
+
+        $("input[name='RadioValue2']").click(function () {
+
+            if ($("#thead2").is(":checked")) {
+                document.getElementById('tHbranchCon').value = '';
+                document.getElementById('transferdate').value = '';
+                document.getElementById('tbranchide2').style.display = 'none';
+                document.getElementById('tdepthide2').style.display = 'block';
+
+            }
+            else if ($("#tbran2").is(":checked")) {
+
+                document.getElementById('tHDept').value = '';
+                document.getElementById('transferdate').value = '';
+                document.getElementById('tdepthide2').style.display = 'none';
+                document.getElementById('tbranchide2').style.display = 'block';
+            }
+        })
+    });
+
+    function appliedrequest(val) {
+
+        $("#Type").val(val);
+
+    }
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('input[name=radiovalue]:first').attr('checked', true);
+
+        if ($("#pthead2").is(":checked")) {
+            document.getElementById('ptHbranchCon').value = '';
+            document.getElementById('PTdate').value = '';
+            document.getElementById('ptHDesig').value = 0;
+            document.getElementById('ptbranchide2').style.display = 'none';
+            document.getElementById('ptdepthide2').style.display = 'block';
+
+        }
+
+
+        $("input[name='radiovalue']").click(function () {
+
+            if ($("#pthead2").is(":checked")) {
+                document.getElementById('ptHbranchCon').value = '';
+                document.getElementById('PTdate').value = '';
+                document.getElementById('ptHDesig').value = 0;
+                document.getElementById('ptbranchide2').style.display = 'none';
+                document.getElementById('ptdepthide2').style.display = 'block';
+
+            }
+            else if ($("#ptbran2").is(":checked")) {
+
+                document.getElementById('ptHDept').value = '';
+                document.getElementById('PTdate').value = '';
+                document.getElementById('ptHDesig').value = 0;
+                document.getElementById('ptdepthide2').style.display = 'none';
+                document.getElementById('ptbranchide2').style.display = 'block';
+            }
+        })
+    });
+
+    function appliedrequest(val) {
+
+        $("#Type").val(val);
+
+    }
+</script>
+
+
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        Get1();
+    });
+    function Get1() {
+
+        var options = {};
+        options.url = "Transfer/Index1555",
+            options.type = "GET";
+        options.data = { "criteria": $("#companyName").val() };
+        options.dataType = "json";
+        options.success = function (data) {
+            $("#companyList").empty();
+            for (var i = 0; i < data.length; i++) {
+                $("#companyList").append("<option value='" +
+                    data[i].EmpId + "' label='" +
+                    data[i].Name + "'></option>");
+            }
+        };
+        $.ajax(options);
+    }
+
+    function btnsearch(Id, Type) {
+        var lempid = Id;
+
+
+        $.ajax({
+            type: "GET",
+            url: "/Transfer/Index111?prefix=" + lempid,
+            dataType: "Json",
+            success: function (response) {
+                if (response != null) {
+
+                    if (response.Status == "false") {
+
+                    }
+                    else if (response.Status == "Notfound") {
+                        alert("EmpCode doesnot exists");
+                        $("#companyName").val("");
+
+                        $("#myTextArea").html("");
+
+                    }
+                    else if (response.Status == "AlreadyRetired") {
+                        alert("This Employee is Retired");
+                        $("#companyName").val("");
+
+                        $("#myTextArea").html("");
+
+                    }
+                    else {
+                         
+                        var text = "<tr><td>EmployeeId:" + " " + " " + response.lEmployeeId
+                            + "</td></tr> <tr><td> EmployeeName:" + " " + " " + response.lEmployeeName
+                            + "</td></tr> <tr><td> Designation:" + " " + " "
+                            + response.ldesig + "</td></tr><tr><td> HomeBranch/Dept:" + " " + " " + response.ldeptbranch 
+                            + "</td></tr><tr><td> WorkBranch/Dept:" + " " + " " + response.lemptrnsfer + "</td></tr>";
+                        document.getElementById("myTextArea").innerHTML = text;
+                    }
+
+
+                    //alert("Hello: " + response.lEmployeeId + " .\nCurrent Date and Time: " + response.lEmployeeName);
+
+
+                }
+                else {
+                    // alert("Something went wrong");
+                }
+            },
+        });
+        $.ajax({
+            type: "GET",
+            url: "/Transfer/Basic?prefix=" + lempid,
+            dataType: "Json",
+            success: function (response) {
+          
+                if (response != null) {
+
+                    if (response.Status == "false") {
+
+                    }
+                   
+                    else {
+
+                        $("#txtPoldbasic").val(response);
+                        $("#txtPnewbasic").val(response);
+                       $("#txtPoldbasic").attr("readonly", true);
+                    }
+
+
+                    //alert("Hello: " + response.lEmployeeId + " .\nCurrent Date and Time: " + response.lEmployeeName);
+
+
+                }
+                else {
+                    // alert("Something went wrong");
+                }
+            },
+        });
+    }
+
+    $(function () {
+        $("#btnSearch").click(function () {
+            var lresult = empidsearch();
+            if (lresult) {
+                var lempid = $("#companyName").val();
+                var Tbl = $("#myTextArea").show();
+                var Type = "btnSearch";
+                btnsearch(lempid, Tbl, Type);
+            }
+
+        });
+
+
+        $("#Resetbtn").click(function () { $("#myTextArea").hide(); });
+
+    });
+</script>
+
+
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-heading">
+
+            @{
+            <ul class="nav nav-tabs">
+                @if (rolepages.Contains("ADERG"))
+                {
+                    <li><a href=@Url.Action("InsertEmployees", "Register")>Employee Registration</a></li>
+                }
+                @if (rolepages.Contains("ADTPO"))
+                {
+                    <li class="active"><a href="@Url.Action("Index","Transfer")">Transfer/Promotions</a></li>
+                }
+                @if (rolepages.Contains("ADCAU"))
+                {
+                    <li><a href="@Url.Action("Index","ChangeAuthority")">Change Authority</a></li>
+                }
+                @if (rolepages.Contains("ADCPR"))
+                {
+                    <li><a href="@Url.Action("Index","ChangeProfile")">Change Profile</a></li>
+                }
+
+                @if (rolepages.Contains("ADLTCA"))
+                {
+                    <li><a href=@Url.Action("AdminLTCApply", "LeaveTravel")>Apply LTC </a></li>
+                }
+                @if (rolepages.Contains("ADPLA"))
+                {
+                    <li><a href=@Url.Action("AdminPLApply", "PLE_Type")>Apply PL Encashment</a></li>
+                }
+                @if (rolepages.Contains("ADWDA"))
+                {
+                    <li><a href=@Url.Action("WorkApprovalAdmin", "WorkDiary")>Work Dairy Delete</a></li>
+                }
+                @if (rolepages.Contains("ADUSRO"))
+                {
+                    <li><a href=@Url.Action("UserRolesView", "AllReports")>User Roles</a></li>
+                }
+                @if (rolepages.Contains("ADCBRMG"))
+                {
+                    <li><a href=@Url.Action("ChangeBranchManager", "ChangeBranchManager")>Change Branch Manager</a></li>
+                }
+                @if (rolepages.Contains("TsheetMain"))
+                {
+                    <li><a href=@Url.Action("Timesheetrequestform", "TimeSheet")>TimeSheet Manual Form</a></li>
+                }
+                @if (rolepages.Contains("TsheetApp"))
+                {
+                    <li><a href=@Url.Action("TSApprovalView", "TimeSheet")>TimeSheet Manual Approvals</a></li>
+                }
+            </ul>
+            }
+
+        </div>
+    </div>
+</div>
+
+
+@using (Html.BeginForm("Create", "Transfer", FormMethod.Post))
+{
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="container">
+        <div class="page_st">
+            <div class="page">
+
+
+                <div class="col-md-12 col-sm-12">
+                    <div class="main_heading">
+                        <h1>Deputation/Transfer/Promotion</h1>
+                        <div class="form-horizontal form-horizontal2">
+                            <div class="page_start">
+                                <div class="main_radio_btn">
+                                    @*<div class="col-md-2">
+                                            @Html.RadioButton("Type", "Deputation", new { id = "Deputation", @checked = "checked" })
+
+                                            Deputation
+                                        </div>*@
+                                    <div class="col-md-2">
+                                        @Html.RadioButton("Type", "Promotion", new { id = "Promotion", @checked = "checked" })
+                                        <label class="label_class" for="Promotion"> Promotion </label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        @Html.RadioButton("Type", "Transfer", new { id = "Transfer" })
+                                        <label id="Transfer1" class="label_class" for="Transfer"> Transfer </label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.RadioButton("Type", "PromotionTransfer", new { id = "PromotionTransfer" })
+
+                                        <label id="PromotionTransfer1" class="label_class" for="PromotionTransfer">  Promotion with Transfer </label>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-md-12">
+
+                                        <div class="col-md-6">
+                                            <div class="side_heading" style="min-height: 240px;">
+                                                <h1>Current Location</h1>
+
+                                                <div class="form-horizontal">
+                                                    <div class="col-md-12">
+                                                        <div class="col-md-10">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-3 control-label">EmpId:<span class="mandatory">*</span></label>
+                                                                <div class="col-sm-9">
+
+                                                                    @*@Html.TextBoxFor
+                                                                        (model => model.lEmployess.EmpId, new { htmlAttributes = new { @class = "form-control", id = "EmpId", list = "EmpIdList" } })
+                                                                        <datalist id="EmpIdList"></datalist>*@
+                                                                    <input id="companyName" name="fffff" list="companyList" class="form-control" maxlength="10" onkeypress="return isNumber(event)">
+                                                                    <datalist id="companyList"></datalist>
+                                                                    @Html.ValidationMessageFor(model => model.EmpId, "", new { @class = "text-danger" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <div class="form-group">
+
+                                                                <div class="col-sm-7">
+                                                                    <button type="button" id="btnSearch" class="btn btn-sm btn-primary">Search</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+
+                                                            <div class="col-sm-12">
+
+                                                                <table class="table table-bordered" id="myTextArea" style="width:100%;"></table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+
+                                            <div id="2">
+                                                <div class="col-md-12">
+                                                    <div class="side_heading" style="min-height: 240px;">
+                                                        <h1>Promotion To</h1>
+
+                                                        <div class="form-horizontal">
+
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-4 control-label">New Category:<span class="mandatory">*</span></label>
+
+                                                                    <div class="col-sm-8">
+                                                                        @Html.DropDownList("Pcategory", (SelectList)ViewBag.Categories, "Select Category", new { @class = "form-control", @id = "newcat" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-4 control-label">Designation:<span class="mandatory">*</span></label>
+
+                                                                    <div class="col-sm-8">
+                                                                        @Html.DropDownList("NewDesignation", (SelectList)ViewBag.Designation, "Select Designation", new { @class = "form-control", @id = "newdesig" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-4 control-label">New Promotion Date:<span class="mandatory">*</span></label>
+                                                                    <div class="col-sm-8">
+                                                                        <div class="input-group date" id="Event_Date1p">
+
+                                                                            @Html.TextBox("EffectiveFromP", " ", new { @class = "form-control", @id = "Promotionfrom", onkeypress = "return nokeyword(event)", onchange = "return DateeventPr3();" })<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-4 control-label">New Increment Date:<span class="mandatory">*</span></label>
+                                                                    <div class="col-sm-8">
+                                                                        <div class="input-group date" id="Event_Date1p">
+
+                                                                            @Html.TextBox("Pincrement", " ", new { @class = "form-control", @id = "increment", onkeypress = "return nokeyword(event)", onchange = "return DateeventPr1();" })<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-4 control-label">Old Basic:<span class="mandatory">*</span></label>
+                                                                    <div class="col-sm-8">
+                                                                        <div  id="Event_Date1p">
+                                                                         
+                                                                            @Html.TextBox("Poldbasic","" ,new { @class = "form-control", @id = "txtPoldbasic"})
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-4 control-label">New Basic:<span class="mandatory">*</span></label>
+                                                                    <div class="col-sm-8">
+                                                                        <div  id="Event_Date1p">
+                                                                            @Html.TextBox("Pnewbasic", " ", new { @class = "form-control", @id = "txtPnewbasic", onkeypress = "return isNumber(event);",  onblur= "return basicvalidation()" })
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-4 control-label">Seniority Order:</label>
+                                                                    <div class="col-sm-8">
+                                                                        <div  id="Event_Date1p">
+
+                                                                            @Html.TextBox("Pseniority", " ", new { @class = "form-control", @id = "Pseniority", onkeypress = "return isNumber(event)" })
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="3">
+
+                                                <div class="col-md-12">
+                                                    <div class="side_heading" style="min-height: 240px;">
+
+                                                        <h1>Transfer To</h1>
+                                                        <div>
+                                                            <div class="col-md-4">
+                                                                <input type="checkbox" name="Transfer_Type" Value="TemporaryTransfer" checked="checked" id="temp" onclick="return s1();" />
+
+                                                                <label class="label_class" for="temp">Temporary </label>
+
+                                                            </div>
+                                                            <div class="col-md-8">
+
+                                                                <input type="checkbox" name="Transfer_Type" Value="PermanentTransfer" id="perm" onclick="return s2();" />
+                                                                <label class="label_class" for="perm"> Permanent</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="inner_radio_btn">
+                                                            <div class="col-md-4">
+                                                                @Html.RadioButton("RadioValue2", "42", new { id = "thead2", @checked = "checked" })
+
+                                                                <label class="label_class" for="thead2">Head Office </label>
+
+                                                            </div>
+                                                            <div class="col-md-8">
+
+                                                                @Html.RadioButton("RadioValue2", "43", new { id = "tbran2" })
+                                                                <label class="label_class" for="tbran2">Branch </label>
+                                                            </div>
+                                                        </div>
+                                                        <br /><br /> <br />
+                                                        <div class="form-horizontal">
+                                                            <div id="tdepthide2" class="col-md-12" style="display:none;">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-4 control-label">Department:<span class="mandatory">*</span></label>
+                                                                    <div class="col-sm-8">
+                                                                        @Html.DropDownList("NewDepartmentT", (SelectList)ViewBag.Department, "Select Department", new { @class = "form-control", @id = "tHDept" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div id="tbranchide2" class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-4 control-label">Branch:<span class="mandatory">*</span></label>
+                                                                    <div class="col-sm-8">
+                                                                        @Html.DropDownList("NewBranchT", (SelectList)ViewBag.Branches, "Select Branch", new { @class = "form-control", @id = "tHbranchCon" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-4 control-label">Effective From:<span class="mandatory">*</span></label>
+                                                                    <div class="col-sm-8">
+                                                                        <div class="input-group date" id="Event_Date1t">
+                                                                            @Html.TextBox("EffectiveFromT", " ", new { @class = "form-control", @id = "transferdate", onkeypress = "return nokeyword(event)", onchange = "return Dateevent3();" })<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                                            @*@Html.DropDownListFor(model => model.lemployeetransfer.NewDesignation, (SelectList)ViewBag.Designation, "Select Designation", new { @class = "form-control", @id = "dHdesignationcon", @onchange = "dHFillDesignation()" })*@
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group" id="e2">
+                                                                    <label class="col-sm-4 control-label">Effective To:</label>
+                                                                    <div class="col-sm-8">
+                                                                        <div class="input-group date" id="Event_Date1t">
+                                                                            @Html.TextBox("EffectiveToT", " ", new { @class = "form-control", @id = "transfertodate", onkeypress = "return nokeyword(event)", onchange = "return Dateevent1();" })<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                                            @*@Html.DropDownListFor(model => model.lemployeetransfer.NewDesignation, (SelectList)ViewBag.Designation, "Select Designation", new { @class = "form-control", @id = "dHdesignationcon", @onchange = "dHFillDesignation()" })*@
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="4">
+
+                                                <div class="col-md-12">
+                                                    <div class="side_heading" style="min-height: 240px;">
+
+                                                        <h1>Transfer To</h1>
+                                                        <div class="inner_radio_btn">
+                                                            <div class="col-md-3">
+                                                                @Html.RadioButton("radiovalue", "42", new { id = "pthead2", @checked = "checked" })
+
+                                                                <label class="label_class" for="pthead2" style="margin:0px;">   Head Office </label>
+
+                                                            </div>
+                                                            <div class="col-md-9">
+
+                                                                @Html.RadioButton("radiovalue", "43", new { id = "ptbran2" })
+                                                                <label class="label_class" for="ptbran2">  Branch </label>
+                                                            </div>
+                                                        </div>
+                                                        <br /><br />
+                                                        <div class="form-horizontal">
+                                                            <div id="ptdepthide2" class="col-md-12" style="display:none;">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-4 control-label">Department:<span class="mandatory">*</span></label>
+                                                                    <div class="col-sm-8">
+                                                                        @Html.DropDownList("NewDepartmentPT", (SelectList)ViewBag.Department, "Select Department", new { @class = "form-control", @id = "ptHDept" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div id="ptbranchide2" class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-4 control-label">Branch:<span class="mandatory">*</span></label>
+                                                                    <div class="col-sm-8">
+                                                                        @Html.DropDownList("NewBranchPT", (SelectList)ViewBag.Branches, "Select Branch", new { @class = "form-control", @id = "ptHbranchCon" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-4 control-label">Designation:<span class="mandatory">*</span></label>
+                                                                    <div class="col-sm-8">
+                                                                        @if (Session["Data"] != null)
+                                                                        {
+                                                                            @Html.DropDownListFor(model => model.NewDesignationPT, (SelectList)ViewBag.DataStatus, "Select Designation", new { @id = "ptHDesig", @class = "form-control" })
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            @Html.DropDownListFor(model => model.NewDesignationPT, (SelectList)ViewBag.CurrentDesignationhead, "Select Designation", new { @id = "ptHDesig", @class = "form-control" })
+                                                                        }
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-4 control-label">Effective From:<span class="mandatory">*</span></label>
+                                                                    <div class="col-sm-8">
+                                                                        <div class="input-group date" id="Event_Date1pt">
+                                                                            @Html.TextBox("EffectiveFromPT", " ", new { @class = "form-control", @id = "PTdate", onkeypress = "return nokeyword(event)" })<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+
+
+                                <div class="col-md-12 row buttons_div">
+                                    <div class="pull-right">
+                                        @*<button type="reset" class="btn btn-default calcel">Cancel</button>*@
+                                        <button type="reset" onclick="resetmyform();" class="btn btn-default calcel">Cancel</button>
+
+                                        <button type="submit" onclick="return Worklocation();" class="btn btn-primary">Submit</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+   
+    function basicvalidation() {
+  
+        var old = $('#txtPoldbasic').val();
+        var newbasic = $('#txtPnewbasic').val();
+        if (parseFloat(old) > parseFloat(newbasic)) {
+            alert('New Basic cannot be Less than Old Basic');
+            document.getElementById("txtPnewbasic").value = '';
+            return false;
+          
+            
+        }
+    }
+    $(document).ready(function () {
+       
+        // the selector will match all input controls of type :checkbox
+        // and attach a click event handler
+        $("input:checkbox").on('click', function () {
+            // in the handler, 'this' refers to the box clicked on
+            var $box = $(this);
+            if ($box.is(":checked")) {
+                // the name of the box is retrieved using the .attr() method
+                // as it is assumed and expected to be immutable
+                var group = "input:checkbox[name='" + $box.attr("name") + "']";
+                // the checked state of the group/box on the other hand will change
+                // and the current value is retrieved using .prop() method
+                $(group).prop("checked", false);
+                $box.prop("checked", true);
+                resetForm();
+            } else {
+                $box.prop("checked", false);
+                resetForm();
+            }
+        })
+    });
+    var resetForm = function () {
+        $('select,textarea').not('[readonly],[disabled],:button').val('');
+        $("#transferdate").val("");
+        $("#transfertodate").val("");
+
+    }
+</script>
+
+
+<script>
+    function HFillBranches() {
+
+        var stateId = $('#ptHDept').val();
+
+        $.ajax({
+            url: '/Register/HLoadByBranchId',
+            type: "GET",
+            dataType: "JSON",
+            data: { State: stateId },
+            success: function (stateData) {
+
+                $("#ptHDesig").html(""); // clear before appending new list
+                $("#ptHDesig").append(
+                    $('<option></option>').val('0').html('Select Designation'));
+                $.each(stateData, function (i, ptHDesig) {
+                    $("#ptHDesig").append(
+                        $('<option></option>').val(ptHDesig.Value).html(ptHDesig.Text));
+                });
+
+            }
+        });
+    }
+
+
+
+    function BFillDesignation() {
+
+        var stateId = $('#ptHbranchCon').val();
+
+        $.ajax({
+            url: '/Register/BLoadByBranchId',
+            type: "GET",
+            dataType: "JSON",
+            data: { State: stateId },
+            success: function (stateData) {
+
+                $("#ptHDesig").html(""); // clear before appending new list
+                $("#ptHDesig").append(
+                    $('<option></option>').val('0').html('Select Designation'));
+                $.each(stateData, function (i, ptHDesig) {
+                    $("#ptHDesig").append(
+                        $('<option></option>').val(ptHDesig.Value).html(ptHDesig.Text));
+                });
+
+            }
+        });
+    }
+</script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("input[id='pthead2']").change(function () {
+            //reload dropdownlist
+            Get10();
+
+        })
+    });
+    function Get10() {
+        $("input[id='pthead2']").each(function () {
+            if ($(this).is(":checked")) {
+                var value = $(this).val();
+                $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("LoadByBranches1", "Transfer")',
+                    dataType: "JSON",
+                    data: { State: value },
+                    success: function (stateData) {
+                        $("#ptHDesig").html(""); // clear before appending new list
+                        $("#ptHDesig").append(
+                            $('<option></option>').val('0').html('Select Designation'));
+                        $.each(stateData, function (i, ptHDesig) {
+                            $("#ptHDesig").append(
+                                $('<option></option>').val(ptHDesig.Value).html(ptHDesig.Text));
+                        });
+                        @*var lvalue = '@ViewBag.CurrentDesignationId';*@
+                        //$("#ptHDesig").val(lvalue);
+                    }
+                });
+            }
+        });
+
+    }
+</script>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("input[id='ptbran2']").click(function () {
+            //reload dropdownlist
+            Get9();
+
+        })
+    });
+    function Get9() {
+
+
+
+        $("input[id='ptbran2']").each(function () {
+            if ($(this).is(":checked")) {
+                var value = $(this).val();
+                $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("LoadByBranches", "Transfer")',
+                    dataType: "JSON",
+                    data: { State: value },
+                    success: function (stateData) {
+                        $("#ptHDesig").html(""); // clear before appending new list
+                        $("#ptHDesig").append(
+                            $('<option></option>').val('0').html('Select Designation'));
+                        $.each(stateData, function (i, ptHDesig) {
+                            $("#ptHDesig").append(
+                                $('<option></option>').val(ptHDesig.Value).html(ptHDesig.Text));
+
+                        });
+
+
+
+                    }
+                });
+            }
+        });
+
+    }
+</script>
+<script>
+    document.getElementById("a1").className = "active";
+
+</script>
+
+<script>
+    function s1() {
+        $("#e2").show();
+    }
+</script>
+<script>
+    function s2() {
+        $("#e2").hide();
+    }
+</script>
+
+<script type='text/javascript'>
+    $(function getholidays() {
+
+        var active_dates = [];
+        $.ajax({
+            type: "GET",
+            async: false,
+            url: "/LeaveApply/GetDates",
+            dataType: "Json",
+            success: function (data) {
+                datesArray = data;
+                for (i = 0; i < datesArray.length; i++) {
+                    var result = datesArray[i].replace("-", "/");
+                    var result1 = result.replace("-", "/");
+                    var strArray = result1.split("/");
+                    var cdate = strArray[0] + "/" + parseInt(strArray[1]) + "/" + strArray[2]
+                    active_dates.push(cdate);
+
+                    if (i == datesArray.length - 1) {
+                        //loadcal(active_dates);
+                    }
+                }
+
+            }
+        });
+        $('#Event_Date1p').datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            beforeShowDay: function nonWorkingDays(date) {
+                var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
+                var week = 0 | date.getDate() / 7 //get the week
+                var dd = date.getDate();
+                var month = date.getMonth();
+                if (dd < 10) {
+                    dd = '0' + dd
+                }
+
+                if (month < 10) {
+                    month = '0' + month
+                }
+                var sunweek = date.getDay();
+                var year = date.getFullYear();
+
+                if (dd == 14 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                if (dd == 28 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                    //check if it's second week or fourth week
+                else if (week == 1 || week == 3) {
+                    if (dd == 7 && day == 6 || dd == 21 && day == 6) {
+                        //check for satruday
+
+                    }
+                    else {
+                        if (day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                    }
+
+                }
+                //check for sunday
+                if (day == 0) {
+                    return {
+                        classes: 'secondClass'
+                    };
+
+                }
+                //check for holidays
+                var d = date;
+                var curr_date = d.getDate();
+                var curr_month = d.getMonth() + 1; //Months are zero based
+                if (curr_date < 10) {
+                    curr_date = '0' + curr_date
+                }
+                var curr_year = d.getFullYear();
+                var formattedDate = curr_date + "/" + curr_month + "/" + curr_year
+
+                if ($.inArray(formattedDate, active_dates) != -1) {
+                    return {
+                        classes: 'activeClass'
+                    };
+                }
+                return [true];
+            }
+        });
+
+        $('#Event_Date1t').datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            beforeShowDay: function nonWorkingDays(date) {
+                var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
+                var week = 0 | date.getDate() / 7 //get the week
+                var dd = date.getDate();
+                var month = date.getMonth();
+                if (dd < 10) {
+                    dd = '0' + dd
+                }
+
+                if (month < 10) {
+                    month = '0' + month
+                }
+                var sunweek = date.getDay();
+                var year = date.getFullYear();
+
+                if (dd == 14 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                if (dd == 28 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                    //check if it's second week or fourth week
+                else if (week == 1 || week == 3) {
+                    if (dd == 7 && day == 6 || dd == 21 && day == 6) {
+                        //check for satruday
+
+                    }
+                    else {
+                        if (day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                    }
+
+                }
+                //check for sunday
+                if (day == 0) {
+                    return {
+                        classes: 'secondClass'
+                    };
+
+                }
+                //check for holidays
+                var d = date;
+                var curr_date = d.getDate();
+                var curr_month = d.getMonth() + 1; //Months are zero based
+                if (curr_date < 10) {
+                    curr_date = '0' + curr_date
+                }
+                var curr_year = d.getFullYear();
+                var formattedDate = curr_date + "/" + curr_month + "/" + curr_year
+
+                if ($.inArray(formattedDate, active_dates) != -1) {
+                    return {
+                        classes: 'activeClass'
+                    };
+                }
+                return [true];
+            }
+        });
+
+        $('#Event_Date1pt').datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            beforeShowDay: function nonWorkingDays(date) {
+                var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
+                var week = 0 | date.getDate() / 7 //get the week
+                var dd = date.getDate();
+                var month = date.getMonth();
+                if (dd < 10) {
+                    dd = '0' + dd
+                }
+
+                if (month < 10) {
+                    month = '0' + month
+                }
+                var sunweek = date.getDay();
+                var year = date.getFullYear();
+
+                if (dd == 14 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                if (dd == 28 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                    //check if it's second week or fourth week
+                else if (week == 1 || week == 3) {
+                    if (dd == 7 && day == 6 || dd == 21 && day == 6) {
+                        //check for satruday
+
+                    }
+                    else {
+                        if (day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                    }
+
+                }
+                //check for sunday
+                if (day == 0) {
+                    return {
+                        classes: 'secondClass'
+                    };
+
+                }
+                //check for holidays
+                var d = date;
+                var curr_date = d.getDate();
+                var curr_month = d.getMonth() + 1; //Months are zero based
+                if (curr_date < 10) {
+                    curr_date = '0' + curr_date
+                }
+                var curr_year = d.getFullYear();
+                var formattedDate = curr_date + "/" + curr_month + "/" + curr_year
+
+                if ($.inArray(formattedDate, active_dates) != -1) {
+                    return {
+                        classes: 'activeClass'
+                    };
+                }
+                return [true];
+            }
+        });
+        $('.input-group.date').datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            beforeShowDay: function nonWorkingDays(date) {
+                var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
+                var week = 0 | date.getDate() / 7 //get the week
+                var dd = date.getDate();
+                var month = date.getMonth();
+                if (dd < 10) {
+                    dd = '0' + dd
+                }
+
+                if (month < 10) {
+                    month = '0' + month
+                }
+                var sunweek = date.getDay();
+                var year = date.getFullYear();
+
+                if (dd == 14 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                if (dd == 28 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                    //check if it's second week or fourth week
+                else if (week == 1 || week == 3) {
+                    if (dd == 7 && day == 6 || dd == 21 && day == 6) {
+                        //check for satruday
+
+                    }
+                    else {
+                        if (day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                    }
+
+                }
+                //check for sunday
+                if (day == 0) {
+                    return {
+                        classes: 'secondClass'
+                    };
+
+                }
+                //check for holidays
+                var d = date;
+                var curr_date = d.getDate();
+                var curr_month = d.getMonth() + 1; //Months are zero based
+                if (curr_date < 10) {
+                    curr_date = '0' + curr_date
+                }
+                var curr_year = d.getFullYear();
+                var formattedDate = curr_date + "/" + curr_month + "/" + curr_year
+
+                if ($.inArray(formattedDate, active_dates) != -1) {
+                    return {
+                        classes: 'activeClass'
+                    };
+                }
+                return [true];
+            }
+        });
+    });
+</script>
+
+
+<style>
+    .activeClass {
+        background: #ffdb99;
+    }
+
+    .secondClass {
+        /*background: #FF9999;*/
+        color: red;
+    }
+</style>
+<script>
+
+    function Dateevent1() {
+
+        var Joindate = document.getElementById("transferdate").value;
+        var Retdate = document.getElementById("transfertodate").value;
+        var date = moment(Joindate, "DD.MM.YYYY");
+
+        var currentDate1 = moment(Retdate, "DD.MM.YYYY");
+        var duration = moment.duration(date.diff(currentDate1));
+
+
+        if (duration > 0) {
+
+            alert("Please ensure that To Date is greater than or equal to From Date.");
+            document.getElementById("transfertodate").focus();
+            document.getElementById("transfertodate").value = '';
+            return false;
+
+        }
+
+        //else {
+        //    if (Joindate != '' && Retdate != '') {
+        //        datescheck();
+        //    }
+        //    return true;
+
+        //}
+    }
+
+    function Dateevent3() {
+
+
+        var StartDate = document.getElementById('transferdate').value;
+        var EndDate = document.getElementById('transfertodate').value;
+        var eDate = moment(EndDate, "DD.MM.YYYY");
+        var sDate = moment(StartDate, "DD.MM.YYYY");
+        if (StartDate != '' && EndDate != '' && sDate > eDate) {
+            alert("Please ensure that End Date is greater than or equal to Start Date.");
+
+            document.getElementById('transferdate').value = '';
+            document.getElementById("transferdate").focus();
+            return false;
+
+        }
+
+        //else {
+        //    if (StartDate != '' && EndDate != '') {
+        //        datescheck();
+        //    }
+        //    else if (EndDate != '' && StartDate != '') {
+        //        Combinationdatescheck2();
+        //    }
+        //    eventvalidates();
+
+        //    return true;
+        //}
+    }
+    function DateeventPr1() {
+
+        var Joindate = document.getElementById("Promotionfrom").value;
+        var Retdate = document.getElementById("increment").value;
+        var date = moment(Joindate, "DD.MM.YYYY");
+
+        var currentDate1 = moment(Retdate, "DD.MM.YYYY");
+        var duration = moment.duration(date.diff(currentDate1));
+
+
+        if (duration > 0) {
+
+            alert("Please ensure that New Increment Date is greater than or equal to New promotion Date.");
+            document.getElementById("increment").focus();
+            document.getElementById("increment").value = '';
+            return false;
+
+        }
+
+        //else {
+        //    if (Joindate != '' && Retdate != '') {
+        //        datescheck();
+        //    }
+        //    return true;
+
+        //}
+    }
+
+    function DateeventPr3() {
+
+
+        var StartDate = document.getElementById('Promotionfrom').value;
+        var EndDate = document.getElementById('increment').value;
+        var eDate = moment(EndDate, "DD.MM.YYYY");
+        var sDate = moment(StartDate, "DD.MM.YYYY");
+        if (StartDate != '' && EndDate != '' && sDate > eDate) {
+            alert("Please ensure that New Increment Date is greater than or equal to New promotion Date.");
+
+            document.getElementById('Promotionfrom').value = '';
+            document.getElementById("Promotionfrom").focus();
+            return false;
+
+        }
+
+        //else {
+        //    if (StartDate != '' && EndDate != '') {
+        //        datescheck();
+        //    }
+        //    else if (EndDate != '' && StartDate != '') {
+        //        Combinationdatescheck2();
+        //    }
+        //    eventvalidates();
+
+        //    return true;
+        //}
+    }
+</script>
+
+<script>
+    function resetmyform() {
+
+        if (document.getElementById("Promotion").checked == true) {
+            $(':radio[value=Promotion]').attr('checked', true);
+            $(':radio[value=Transfer]').attr('checked', false);
+            $(':radio[value=PromotionTransfer]').attr('checked', false);
+            $("#newdesig").val('');
+            $("#Promotionfrom").val('');
+            $("#3").hide();
+            $("#4").hide();
+            $("#2").show();
+            $("#myTextArea").hide();
+
+        }
+
+        else if (document.getElementById("Transfer").checked == true) {
+            $(':radio[value=Transfer]').attr('checked', true);
+            $(':radio[value=Promotion]').attr('checked', false);
+            $(':radio[value=PromotionTransfer]').attr('checked', false);
+            $("#companyName").val('');
+            $("#tHDept").val('');
+            $("#transferdate").val('');
+            $("#transfertodate").val('');
+            $("#tHDept").show();
+            document.getElementById('tHbranchCon').value = '';
+            document.getElementById('transferdate').value = '';
+            document.getElementById('tbranchide2').style.display = 'none';
+            document.getElementById('tdepthide2').style.display = 'block';
+            $("#2").hide();
+            $("#3").show();
+            $("#4").hide();
+            $("#myTextArea").hide();
+
+        }
+        else if (document.getElementById("PromotionTransfer").checked == true) {
+            $(':radio[value=PromotionTransfer]').attr('checked', true);
+            $(':radio[value=Promotion]').attr('checked', false);
+            $(':radio[value=Transfer]').attr('checked', false);
+            $("#companyName").val('');
+            $("#ptHDept").val('');
+            $("#ptHDesig").val('');
+            $("#PTdate").val('');
+            $("#ptHDept").show();
+            $("#ptdepthide2").show();
+            $("#ptbranchide2").hide();
+            $("#2").hide();
+            $("#4").show();
+            $("#3").hide();
+            $("#myTextArea").hide();
+
+        }
+
+    }
+</script>

@@ -1,0 +1,715 @@
+﻿@model Entities.ViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var rolepages = TempData["RolePages"].ToString();
+    ViewBag.RolePages = TempData["RolePages"];
+}
+
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade  in active" id="tab2primary">
+                    <div class="page_st">
+                        <div class="page">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="main_heading">
+                                    <h1>COVID-19 Survey</h1>
+                                    <div class="leave_cont_start">
+                                        @using (Html.BeginForm("Covid19Post", "Covid19", FormMethod.Post, new { @id = "LTCapplyform" }))
+                                        {
+                                            @Html.AntiForgeryToken()
+
+
+                                            <div class="form-horizontal col-md-12 col-sm-12 col-xs-12">
+
+
+                                                <div class="col-md-12">
+                                                    <div class="fetch_results" id="Availment">
+                                                        <table class="table table-bordered relation" id="addedRows_new" style="width:100%">
+                                                            <thead>
+                                                                <tr>
+                                                                    @*<th>S.No</th>*@
+                                                                    <th>Family<br /> Member<br /> Name</th>
+                                                                    <th style="width: 100px;">Gender</th>
+                                                                    <th style="width: 70px;">Age</th>
+                                                                    <th>Relationship</th>
+                                                                    <th style="width: 155px;">Present &nbsp;&nbsp;<br />Residential<br /> Address</th>
+                                                                    <th style="width: 105px;">Has&nbsp;&nbsp; Diabetes</th>
+                                                                    <th style="width: 105px;">Has Hypertension</th>
+                                                                    <th style="width: 110px;">Travel /quarantine history in last 30 days</th>
+                                                                    <th>History of any complaints (like cold,cough)</th>
+                                                                    <th>Action &nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td class="Name">
+                                                                        <input class="form-control" id="rname" name="name[]" onkeypress="return checkNum1(event)" style="width:100% !important" type="text" value="" />
+                                                                    </td>
+                                                                    <td class="gender" id="gender">
+                                                                        <select class="form-control" id="Gender__" name="Gender[]">
+                                                                            <option value="">Select Gender</option>
+                                                                            <option value="Male">Male</option>
+                                                                            <option value="Female">Female</option>
+                                                                            @*<option value="Mother">Others</option>*@
+                                                                        </select>
+                                                                    </td>
+                                                                    <td class="Age"><input type="text" class="form-control" id="rage" name="RelationAge[]" onblur="Ageres('0')" maxlength="3" onkeypress="return isNumber(event);" style="width:100% !important" value="" /></td>
+                                                                    <td class="Relation" id="allvalues">
+                                                                        <select class="form-control" id="Relation__" name="relation[]" onchange="changevalue('')">
+                                                                            <option value="">Select Relation</option>
+                                                                            <option value="Self">Self</option>
+                                                                            <option value="Spouse">Spouse</option>
+                                                                            <option value="Daughter">Daughter</option>
+                                                                            <option value="Son">Son</option>
+                                                                            <option value="Mother">Mother</option>
+                                                                            <option value="Father">Father</option>
+                                                                            <option value="GrandMother">Grandmother</option>
+                                                                            <option value="GrandFather">Grandfather</option>
+                                                                            <option value="Other">Other</option>
+                                                                        </select>
+                                                                    </td>
+                                                                    <td class="address">
+                                                                        <input class="form-control" id="eaddress" name="address[]" style="width:100% !important" type="text" value="" />
+                                                                    </td>
+
+                                                                    <td class="daibetes" id="daibetes1">
+                                                                        <select class="form-control" id="daibetes" name="diabetes[]">
+                                                                            <option value="">Select </option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                        </select>
+                                                                    </td>
+                                                                    <td class="bp" id="bp1">
+                                                                        <select class="form-control" id="bp" name="hbp[]">
+                                                                            <option value="">Select </option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                        </select>
+                                                                    </td>
+                                                                    <td class="qhis"><input class="form-control" id="qhis" name="quarhistory[]" maxlength="1000" style="width:100% !important" type="text" value="" /></td>
+                                                                    <td class="complaint"><input class="form-control" id="complaint" name="complaints[]" maxlength="1000" style="width:100% !important" type="text" value="" /></td>
+                                                                    <td id="Occupation_add"><input type="button" class="btn btn-info" value="add" onclick="addMoreRows()" /></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+
+
+
+                                                </div>
+
+                                                <div id="child_divs">
+                                                </div>
+
+                                                <div class="col-md-12">
+                                                    <div class="pull-right">
+                                                        <br />
+                                                        <button type="button" onclick="location.href='@Url.Action("Index","DashBoard")';" value="reset" class="btn btn-default">Cancel</button>
+                                                        <button type="submit" id="btsubmit" onclick="return CovidForm();" class="btn btn-primary">Submit</button>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+
+
+                                        }
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+<script>
+    var resetForm = function () {
+
+    }
+</script>
+
+<script>
+    var rowCount = 1;
+    function addMoreRows() {
+     
+        var x = document.getElementsByName("relation[]");
+        rowCount = x.length;
+        if (rowCount < 10) {
+            //var recRow = '<tr id="rowCount' + rowCount + '"><td><select class="form-control" id="Relation__' + rowCount + '" name="relation[]" onchange="changevalue(' + rowCount + ');"><option value="">Select Relation</option><option value="Spouse">Spouse</option><option value="Children">Children</option><option value="Father">Father</option><option value="Mother">Mother</option></select></td><td><input class="form-control" id="subject" name="name[]" style="width:100% !important" type="text" value="" /></td><td><input class="form-control" id="Relationage__' + rowCount + '"  name="RelationAge[]" style="width:100% !important" type="text" onkeypress="return isNumber(event)" maxlength="3" value="" onchange="Ageres(' + rowCount + ');"/></td><td><input class="form-control" id="subject" name="Occupation[]" style="width:100% !important" onkeypress="return checkNum1(event)" type="text" value="" /></td><td><input type="button" value="remove" class="btn btn-info" onclick="removeRow(' + rowCount + ');" /></td></tr>';
+            //var recRow = '<tr id="rowCount' + rowCount + '"><td><input class="form-control" id="Fname" name="Fname[]" style="width:100% !important" onkeypress="return checkNum1(event)" type="text" value="" /></td> <td><select class="form-control" id="Gender__' + rowCount + '" name="relation[]" onchange="changevalue(' + rowCount + ');"><option value="">Select Gender</option><option value="Spouse">Female</option><option value="Children">Male</option></select></td><td><select class="form-control" id="Relation__' + rowCount + '" name="relation[]" onchange="changevalue(' + rowCount + ');"><option value="">Select Relation</option><option value="Spouse">Spouse</option><option value="Children">Children</option><option value="Father">Father</option><option value="Mother">Mother</option></select></td> <td><input class="form-control" id="subject1" name="name[]" style="width:100% !important" type="text" value="" /></td><td><input class="form-control" id="Relationage__' + rowCount + '"  name="RelationAge[]" style="width:100% !important" type="text" onkeypress="return isNumber(event)" maxlength="3" value="" onchange="Ageres(' + rowCount + ');"/></td><td><input class="form-control" id="subject1" name="Occupation[]" style="width:100% !important" onkeypress="return checkNum1(event)" type="text" value="" /></td><td><input class="form-control" id="subject2" name="Occupation[]" style="width:100% !important" onkeypress="return checkNum1(event)" type="text" value="" /></td><td><input class="form-control" id="subject3" name="Occupation[]" style="width:100% !important" onkeypress="return checkNum1(event)" type="text" value="" /></td><td><input class="form-control" id="subject4" name="Occupation[]" style="width:100% !important" onkeypress="return checkNum1(event)" type="text" value="" /></td><td><input type="button" value="remove" class="btn btn-info" onclick="removeRow(' + rowCount + ');" /></td></tr>';
+            var recRow = '<tr id="rowCount' + rowCount + '"><td><input class="form-control" id="Fname" name="name[]" style="width:100% !important" onkeypress="return checkNum1(event)" type="text" value="" /></td> <td><select class="form-control" id="Gender__' + rowCount + '" name="Gender[]" onchange="changevalue(' + rowCount + ');"><option value="">Select Gender</option><option value="Female">Female</option><option value="Male">Male</option></select></td><td><input class="form-control" id="Age" name="RelationAge[]" style="width:100% !important"  type="text" value="" /> <td><select class="form-control" id="Relation__' + rowCount + '" name="relation[]" onchange="changevalue(' + rowCount + ');"><option value="">Select Relation</option><option value="Spouse">Spouse</option><option value="Daughter">Daughter</option><option value="Son">Son</option><option value="Father">Father</option><option value="Mother">Mother</option><option value="GrandMother">Grandmother</option><option value = "GrandFather" >Grandfather</option><option value = "Other" >Other</option></select></td><td><input class="form-control" id="Address" name="address[]" style="width:100% !important" type="text" value="" /></td><td><select class="form-control" id="daibetes' + rowCount + '" name="diabetes[]" onchange="changevalue(' + rowCount + ');"><option value="">Select </option><option value="Yes">Yes</option><option value="No">No</option></select></td><td><select class="form-control" id="bp' + rowCount + '" name="hbp[]" onchange="changevalue(' + rowCount + ');"><option value="">Select </option><option value="Yes">Yes</option><option value="No">No</option></select></td><td><input class="form-control" id="qhistory" name="quarhistory[]"  maxlength="1000" style = "width:100% !important"  type = "text" value = "" /></td > <td><input class="form-control" id="complaints" name="complaints[]" style="width:100% !important"  type="text" value="" maxlength="1000" /></td> <td><input type="button" value="remove" class="btn btn-info" onclick="removeRow(' + rowCount + ');" /></td></tr > ';
+            jQuery('#addedRows_new').append(recRow);
+        }
+        else {
+            alert("Can't add more than 5 relations");
+        }
+    }
+    function removeRow(removeNum) {
+
+        jQuery('#rowCount' + removeNum).remove();
+        var x = document.getElementsByName("relation[]");
+        var i;
+        var spouse = false;
+        var other = false;
+        for (i = 0; i < x.length; i++) {
+
+            if (x[i].value == "Father" || x[i].value == "Children" || x[i].value == "Mother") {
+
+                other = true;
+            }
+            //else {
+            //    if (x[i].value != "Spouse") {
+            //        other = true;
+            //    }
+
+            //}
+            if (x[i].value == "Spouse") {
+
+                spouse = true;
+            }
+
+        }
+        if (spouse) {
+            $("#Declarationform2").show();
+        }
+        else {
+            $("#Declarationform2").hide();
+        }
+        if (other) {
+            $("#Declarationform1").show();
+        }
+        else {
+            $("#Declarationform1").hide();
+        }
+
+    }
+    function changevalue(idnumber) {
+        $("#Relation__" + idnumber).val();
+
+        var Children = 0;
+        var Father = 0;
+        var Fatherindex = '';
+        var Motherindex = '';
+        var Childrenindex = '';
+        var Spouseindex = '';
+        var Mother = 0;
+        var Spouse = 0;
+        var x = document.getElementsByName("relation[]");
+        var i;
+        var spouse = false;
+        var other = false;
+
+        for (i = 0; i < x.length; i++) {
+
+            if (x[i].value == "Father") {
+
+                Father = Father + 1;
+                Fatherindex += '_' + i;
+
+            }
+            if (x[i].value == "Mother") {
+
+                Mother = Mother + 1;
+                Motherindex += '_' + i;
+            }
+            if (x[i].value == "Children") {
+
+                Children = Children + 1;
+                Childrenindex += '_' + i;
+            }
+            if (x[i].value == "Spouse") {
+
+                Spouse = Spouse + 1;
+                Spouseindex += '_' + i;
+            }
+        }
+        if (Father > 1) {
+
+            var FatherArray = Fatherindex.split("_");
+
+            for (var j = 2; j < FatherArray.length; j++) {
+
+                alert('Please select another relation');
+                x[FatherArray[j]].value = '';
+            }
+        }
+        if (Mother > 1) {
+
+            var MotherArray = Motherindex.split("_");
+
+            for (var k = 2; k < MotherArray.length; k++) {
+
+                alert('Please select another relation');
+                x[MotherArray[k]].value = '';
+            }
+        }
+        if (Spouse > 1) {
+
+            var SpouseArray = Spouseindex.split("_");
+
+            for (var m = 2; m < SpouseArray.length; m++) {
+
+                alert('Please select another relation');
+                x[SpouseArray[m]].value = '';
+            }
+        }
+        if (Children > 2) {
+
+            var ChildrenArray = Childrenindex.split("_");
+
+            for (var l = 3; l < ChildrenArray.length; l++) {
+
+                x[ChildrenArray[l]].value = '';
+                alert('Please select another relation');
+            }
+        }
+
+        if ($("#Relation__" + idnumber).val() == "Spouse") {
+            $("#Declarationform2").show();
+        }
+        //Mother
+        if ($("#Relation__" + idnumber).val() == "Father" || $("#Relation__" + idnumber).val() == "Children" || $("#Relation__" + idnumber).val() == "Mother") {
+            $("#Declarationform1").show();
+
+
+
+
+
+
+        }
+    }
+
+
+
+</script>
+<script>
+    function Ageres(id) {
+      
+
+        if (id == '0') {
+            var textBoxValue = document.getElementById("rage").value;
+            if (textBoxValue == "0" || textBoxValue == "00" || textBoxValue == "000") {
+                window.alert("Please Enter valid Age.");
+                $("#rage").focus();
+                $("#rage").val('');
+                return false;
+            }
+
+            if (document.getElementById("Relation__").value == "Children") {
+
+                if (textBoxValue > 25) {
+                    alert("Please enter below 26 Age");
+                    document.getElementById("rage").value = '';
+                }
+
+
+            }
+            else if (document.getElementById("Relation__").value == "Spouse" || document.getElementById("Relation__").value == "Mother" || document.getElementById("Relation__").value == "Father") {
+                if (textBoxValue < 21) {
+                    alert("Please enter above 21 Age");
+                    document.getElementById("rage").value = '';
+                }
+            }
+        }
+        else {
+            var textBoxlat = document.getElementById("Relationage__" + id).value;
+            if (textBoxlat == "0" || textBoxlat == "00" || textBoxlat == "000") {
+                window.alert("Please Enter valid Age.");
+                document.getElementById("Relationage__" + id).value = '';
+
+            }
+            if (document.getElementById("Relation__" + id).value == "Children") {
+
+                if (textBoxlat > 25) {
+                    alert("Please enter below 26 Age");
+                    document.getElementById("Relationage__" + id).value = '';
+                }
+            }
+
+            else if (document.getElementById("Relation__" + id).value == "Spouse" || document.getElementById("Relation__" + id).value == "Mother" || document.getElementById("Relation__" + id).value == "Father") {
+                if (textBoxlat < 21) {
+                    alert("Please enter above 21 Age");
+                    document.getElementById("Relationage__" + id).value = '';
+                }
+            }
+        }
+
+    }
+</script>
+<style>
+    table, th, td {
+        border-collapse: collapse;
+    }
+
+    .activeClass {
+        background: #ffdb99;
+    }
+
+    .secondClass {
+        /*background: #FF9999;*/
+        color: red;
+    }
+</style>
+
+<script type='text/javascript'>
+    $(function getholidays() {
+        var active_dates = [];
+        $.ajax({
+            type: "GET",
+            async: false,
+            url: "/LeaveApply/GetDates",
+            dataType: "Json",
+            success: function (data) {
+                datesArray = data;
+                for (i = 0; i < datesArray.length; i++) {
+                    var result = datesArray[i].replace("-", "/");
+                    var result1 = result.replace("-", "/");
+                    var strArray = result1.split("/");
+                    var cdate = strArray[0] + "/" + parseInt(strArray[1]) + "/" + strArray[2]
+                    active_dates.push(cdate);
+
+                    if (i == datesArray.length - 1) {
+                        //loadcal(active_dates);
+                    }
+                }
+
+            }
+        });
+        $('.input-group.date').datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            beforeShowDay: function nonWorkingDays(date) {
+                var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
+                var week = 0 | date.getDate() / 7 //get the week
+                var dd = date.getDate();
+                var month = date.getMonth();
+                if (dd < 10) {
+                    dd = '0' + dd
+                }
+
+                if (month < 10) {
+                    month = '0' + month
+                }
+                var sunweek = date.getDay();
+                var year = date.getFullYear();
+
+                if (dd == 14 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                if (dd == 28 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                //check if it's second week or fourth week
+                else if (week == 1 || week == 3) {
+                    if (dd == 7 && day == 6 || dd == 21 && day == 6) {
+                        //check for satruday
+
+                    }
+                    else {
+                        if (day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                    }
+
+                }
+                //check for sunday
+                if (day == 0) {
+                    return {
+                        classes: 'secondClass'
+                    };
+
+                }
+                //check for holidays
+                var d = date;
+                var curr_date = d.getDate();
+                var curr_month = d.getMonth() + 1; //Months are zero based
+                if (curr_date < 10) {
+                    curr_date = '0' + curr_date
+                }
+                var curr_year = d.getFullYear();
+                var formattedDate = curr_date + "/" + curr_month + "/" + curr_year
+
+                if ($.inArray(formattedDate, active_dates) != -1) {
+                    return {
+                        classes: 'activeClass'
+                    };
+                }
+                return [true];
+            }
+        });
+
+
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+       
+     //$("#empcode").keypress(function (event) {
+        //    if (event.keyCode == 13) {
+        //        event.preventDefault();
+        //    }
+        //});
+        var name = '@ViewBag.name';
+        var gender = '@ViewBag.gender';
+        var datacvd = JSON.parse('@Html.Raw(ViewBag.MyStates)');
+       // $("#addedRows_new").bootstrapTable('removeRow', { index: 1 });
+
+        if (datacvd.length > 0) {
+         
+            var rowCount = 0;
+            $('#addedRows_new tr:last').remove();
+            datacvd.forEach(function (item) {
+                rowCount += 1;
+                var recRow = '<tr id="rowCount' + rowCount + '">'
+                    + '<td><input class="form-control" id="Fname" name="name[]" style="width:100% !important" onkeypress="return checkNum1(event)" type="text" value="' + item.Name + '" /></td>'
+                    + '<td><select class="form-control" id="Gender__' + rowCount + '" name="Gender[]" onchange="changevalue(' + rowCount + ');"><option selected="selected">' + item.Gender + '</option><option value="Female">Female</option><option value="Male">Male</option></select></td><td><input class="form-control" id="Age" name="RelationAge[]" style="width:100% !important"  type="text" value="' + item.Age + '" /> <td><select class="form-control" id="Relation__' + rowCount + '" name="relation[]" onchange="changevalue(' + rowCount + ');"><option value="' + item.Relationship + '">' + item.Relationship + '</option><option value="Spouse">Spouse</option><option value="Daughter">Daughter</option><option value="Son">Son</option><option value="Father">Father</option><option value="Mother">Mother</option><option value="GrandMother">Grandmother</option><option value = "Grandfather" > Grand Father</option></select></td><td><input class="form-control" id="Address" name="address[]" style="width:100% !important" type="text" value="' + item.Address + '" /></td><td><select class="form-control" id="daibetes' + rowCount + '" name="diabetes[]" onchange="changevalue(' + rowCount + ');"><option value="' + item.Diabetes + '">' + item.Diabetes + '</option><option value="Yes">Yes</option><option value="No">No</option></select></td><td><select class="form-control" id="bp' + rowCount + '" name="hbp[]" onchange="changevalue(' + rowCount + ');"><option value="' + item.Hypertension + '">' + item.Hypertension + '</option><option value="Yes">Yes</option><option value="No">No</option></select></td><td><input class="form-control" id="qhistory" name="quarhistory[]" maxlength="1000" style = "width:100% !important"  type = "text" value = "' + item.Quarantine + '" /></td > <td><input class="form-control" id="complaints" name="complaints[]" maxlength="1000" style="width:100% !important"  type="text" value="' + item.Complaints + '"/></td>';
+                if (rowCount == 1) {
+                    recRow += '<td><input type="button" value="add" class="btn btn-info" onclick="addMoreRows(' + rowCount + ');" /></td></tr >';
+                }
+                else {
+                    recRow += '<td><input type="button" value="remove" class="btn btn-info" onclick="removeRow(' + rowCount + ');" /></td></tr >'
+                }
+                jQuery('#addedRows_new').append(recRow);
+            });
+        } else {
+            $("#rname").val(name);
+            $("#Gender__").val(gender);
+            $("#Relation__").val('Self');
+        }
+    });
+
+    $("#btnApplys").click(function () {
+
+        var lempid = $("#empcode").val();
+        if (lempid == "") {
+            showGlobalModal("I#Required#Please Enter EmpCode.");
+            $("#empcode").focus();
+            return false;
+        }
+        $.ajax({
+
+            url: "/LeaveTravel/GetEmployeeData?empcode=" + lempid,
+            dataType: "Json",
+            success: function (response) {
+
+                if (response != null) {
+                    document.getElementById("formempId").value = lempid;
+                    document.getElementById("formempId1").value = lempid;
+                    document.getElementById("Shortname").value = response.lshortnmaeAjax;
+                    document.getElementById("desig").value = response.ldesigAjax;
+                    document.getElementById("Branchdept").value = response.lbranchAjax;
+                    document.getElementById("TotalExperience").value = response.lTotalexpAjax;
+                    document.getElementById("TotalCl").value = response.lcasual;
+                    document.getElementById("TotalPl").value = response.lprivilege;
+
+                }
+                else {
+                    // alert("Something went wrong");
+                }
+            },
+        });
+
+
+        $.ajax({
+            type: "GET",
+            url: "/ChangeAuthority/Authority111?prefix=" + lempid,
+            dataType: "Json",
+            success: function (response) {
+                if (response != null) {
+
+                    if (response.Status == "false") {
+                    }
+                    else if (response.Status == "Notfound") {
+                        alert("EmpCode doesnot exists");
+                        $("#Shortname").val("");
+                        $("#desig").val("");
+                        $("#Branchdept").val("");
+                        $("#TotalExperience").val("");
+                        $("#empcode").val(""); TotalCl
+                        $("#TotalCl").val("");
+                        $("#TotalPl").val("");
+                    }
+                    else if (response.Status == "AlreadyRetired") {
+                        alert("This Employee is Retired");
+                        $("#Shortname").val("");
+                        $("#desig").val("");
+                        $("#Branchdept").val("");
+                        $("#TotalExperience").val("");
+                        $("#empcode").val("");
+
+                        $("#TotalCl").val("");
+                        $("#TotalPl").val("");
+
+                    }
+
+                }
+                else {
+                }
+            },
+        });
+    });
+    $("#LTCapplyform").submit(function (event) {
+        if ($('#C').prop('checked')) {
+            Cookies.set('current_form', 1);
+        }
+        if ($('#D').prop('checked')) {
+            Cookies.set('current_form', 2);
+        }
+    });
+
+    if (Cookies.get('current_form') == 1) {
+        console.log('need to check C');
+        $('input[id=C]').attr('checked', true);
+    }
+    else if (Cookies.get('current_form') == 2) {
+        console.log('need to check D');
+        //$('input[id=D]').attr('checked', true);
+        //$("#Availment").hide();
+        //$("#Encashment").show();
+        //$("#gridApply2").show();
+        //$("#gridApply1").hide();
+        //$("#2").show();
+        //$("#1").hide();
+        //$("#btnApplyencash").show();
+        //$("#btnApply").hide();
+        $('input[id=D]').attr('checked', true);
+    }
+
+    $('.login').click(function () {
+        Cookies.set('current_form', null);
+        $('input[id=D]').attr('checked', false);
+    });
+
+    $('#LeaveTravelmenu').click(function () {
+        Cookies.set('current_form', null);
+        $('input[id=D]').attr('checked', false);
+    });
+
+    $('#a8').click(function () {
+        Cookies.set('current_form', null);
+        $('input[id=D]').attr('checked', false);
+    });
+
+</script>
+
+<script type="text/javascript">
+
+    @*$(document).ready(function () {
+       
+        $("#rname").val()=@ViewBag.name;
+        $("#Gender__").val()=@ViewBag.gender;
+    });*@
+
+
+    $("#D").click(function () {
+        $(".datepick").css("display", "table-cell");
+        $("#Placeofvis").show();
+        $("#ModeofTransports").show();
+        $("#TravelAdvance").show();
+        $("#Occupation_add").show();
+        // $("#Encashment").hide();
+        $("#Availment").show();
+        //  $("#gridApplyl").show();
+        //  $("#gridApply2").hide();
+        $("#1").show();
+        $("#2").hide();
+        $("#btnApply").show();
+        $("#btnApplyencash").hide();
+        $("#TravelAdvances").attr('disabled', false);
+        $("#subjects").attr('disabled', false);
+        $("#Type").attr('disabled', false);
+        $("#sdate").attr('disabled', false);
+        $("#edate").attr('disabled', false);
+        $("#Placeofvisit").attr('disabled', false);
+        $("#Mtrans").attr('disabled', false);
+
+    });
+    $("#C").click(function () {
+        $(".datepick").css("display", "table-cell");
+        $("#Placeofvis").show();
+        $("#ModeofTransports").show();
+        $("#TravelAdvance").show();
+        $("#Occupation_add").show();
+        // $("#Encashment").hide();
+        $("#Availment").show();
+        // $("#gridApplyl").show();
+        //  $("#gridApply2").hide();
+        $("#1").show();
+        $("#2").hide();
+        $("#btnApply").show();
+        $("#btnApplyencash").hide();
+        $("#TravelAdvances").attr('disabled', false);
+        $("#subjects").attr('disabled', false);
+        $("#Type").attr('disabled', false);
+        $("#sdate").attr('disabled', false);
+        $("#edate").attr('disabled', false);
+        $("#Placeofvisit").attr('disabled', false);
+        $("#Mtrans").attr('disabled', false);
+        // document.getElementById("SDate").value = '';
+        //  document.getElementById("EDate").value = '';
+    });
+
+
+    //$("#btsubmit").click(function () {
+    //     
+    //    var name = $("#rname").val();
+    //    var age = $("#rage").val();
+    //    var gender = $("#Gender__").val();
+    //    var Relation = $("#Relation__").val();
+    //    var eaddress = $("#eaddress").val();
+    //    var diabetes = $("#daibetes").val();
+    //    var bp = $("#bp").val();
+
+    //    if (name == "") {
+    //        alert('Please Enter Relation Name')
+    //        return false;
+    //    }
+    //    else if (gender == "") {
+    //        alert('Please Enter Gender')
+    //        return false;
+    //    }
+    //    else if (Relation == "") {
+    //        alert('Please Enter Relation ')
+    //        return false;
+    //    }
+    //    else if (eaddress == "") {
+    //        alert('Please Enter Address')
+    //        return false;
+    //    }
+    //    else if (diabetes == "" || diabetes == undefined) {
+    //        alert('Please Enter Diabetes')
+    //        return false;
+    //    }
+    //    else if (bp == "") {
+    //        alert('Please Enter bp')
+    //        return false;
+    //    }
+    //    else if (age == "") {
+    //        alert('Please Enter Age')
+    //        return false;
+    //    }
+    //});
+</script>
+
+
+
+
+
+

@@ -1,0 +1,16 @@
+update pr_emp_adhoc_det_field set cheque_no=null;
+
+delete from pr_emp_adhoc_det_field where emp_code=6437;
+delete from pr_emp_adhoc_earn_field where emp_code=6437;
+delete from pr_emp_adhoc_deduction_field where emp_code=6437;
+delete from pr_emp_adhoc_contribution_field where emp_code=6437;
+
+
+
+delete from pr_emp_payslip_allowance where emp_code in (6437,5824) and
+payslip_mid in (select id from pr_emp_payslip where emp_code in (6437,5824) and fm='2019-12-01');
+
+delete from pr_emp_payslip_deductions where emp_code in (6437,5824) and
+payslip_mid in (select id from pr_emp_payslip where emp_code in (6437,5824) and fm='2019-12-01');
+
+delete from pr_emp_payslip where emp_code in (6437,5824) and fm='2019-12-01';

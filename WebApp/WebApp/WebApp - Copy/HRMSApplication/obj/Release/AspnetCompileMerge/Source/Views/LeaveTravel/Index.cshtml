@@ -1,0 +1,1537 @@
+﻿@model Entities.ViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var rolepages = TempData["RolePages"].ToString();
+    ViewBag.RolePages = TempData["RolePages"];
+}
+
+<div class="container">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-heading">
+            @{
+                <ul class="nav nav-tabs">
+                    @if (rolepages.Contains("LTCAL"))
+                    {
+                        <li id="LeaveTravelmenu" class="active"><a href=@Url.Action("Index", "LeaveTravel")>LTC History</a></li>}
+                    @*@if (rolepages.Contains("LTCAV"))
+                    {
+                        <li><a href=@Url.Action("Approvals", "LeaveTravel")>LTC Approvals</a></li>}*@
+                </ul>
+            }
+        </div>
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade  in active" id="tab2primary">
+                    <div class="page_st">
+                        <div class="page">
+                            <div class="col-md-12 col-sm-12">
+                               
+                                    <div class="leave_cont_start">
+                                       
+                                            <div class="col-md-12 col-sm-12">
+
+                                                <div class="main_heading">
+                                                    <h1>LTC History</h1>
+                                                    <div class="form-horizontal">
+                                                        <div class="col-md-4 col-sm-3  col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label label_left">From Date:<span class="mandatory">*</span></label>
+                                                                <div class="input-group date col-sm-8">
+                                                                    <input type="text" id="SDate" class="form-control" onkeypress="return nokeyword(event)" , onchange="return Dateevent4();"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4 col-sm-3 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">To Date:<span class="mandatory">*</span></label>
+                                                                <div class="input-group date col-sm-8">
+                                                                    <input type="text" id="EDate" class="form-control" onkeypress="return nokeyword(event)" , onchange="return Dateevent2();"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4 col-sm-3 col-xs-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">LTC Type:</label>
+                                                              
+                                                                        <div class="col-sm-7">
+
+
+                                                                            @Html.DropDownList("Type", new[] {
+                                                                     new SelectListItem() {Text = "Availment",Value = "Availment"},
+                                                                    new SelectListItem() {Text = "Encashment",Value = "Encashment"},
+                                                                   
+                                                                    }, "Select", new { @class = "form-control" })
+                                                                        
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-12">
+                                                            <div class="pull-right">
+                                                                <button type="button" id="btnApply" onclick="return LTCapply2();" class="btn btn-primary btn-sm pull-right">Search</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="clearfix"></div>
+
+                                                    <div class="col-md-12">
+                                                        <div class="table-responsive m_20">
+                                                            <div id="gridApplyl" style="display:none;"></div>
+                                                            <div id="gridApply2" style="display:none;"></div>
+                                                            <div style='margin-top: 20px;'>
+                                                                @*<div id="excelExport" style='float: left;'>*@
+                                                                <div id="1" style='float: left;'>
+                                                                    <input type="button" class="btn btn-info" value="Export to Excel" id='excelExport' />
+                                                                </div>
+                                                                <div id="2" style='float: left;'>
+                                                                    <input type="button" class="btn btn-info" value="Export to Excel" id='excelExport2' />
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                               
+                                    </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+
+
+<script>
+    var rowCount = 1;
+    function addMoreRows() {
+        var x = document.getElementsByName("relation[]");
+        rowCount = x.length;
+        if (rowCount <= 5) {
+            var recRow = '<tr id="rowCount' + rowCount + '"><td><select class="form-control" id="Relation__' + rowCount + '" name="relation[]" onchange="changevalue(' + rowCount + ');"><option value="">Select Relation</option><option value="Spouse">Spouse</option><option value="Children">Children</option><option value="Father">Father</option><option value="Mother">Mother</option></select></td><td><input class="form-control" id="subject" name="name[]" style="width:100% !important" type="text" value="" /></td><td><input class="form-control" id="Relationage__' + rowCount + '"  name="RelationAge[]" style="width:100% !important" type="text" onkeypress="return isNumber(event)" maxlength="3" value="" onchange="Ageres(' + rowCount + ');"/></td><td><input class="form-control" id="subject" name="Occupation[]" style="width:100% !important" onkeypress="return checkNum1(event)" type="text" value="" /></td><td><input type="button" value="remove" class="btn btn-info" onclick="removeRow(' + rowCount + ');" /></td></tr>';
+
+            jQuery('#addedRows_new').append(recRow);
+        }
+        else {
+            alert("Can't add more than 5 relations");
+        }
+    }
+    function removeRow(removeNum) {
+
+        jQuery('#rowCount' + removeNum).remove();
+        var x = document.getElementsByName("relation[]");
+        var i;
+        var spouse = false;
+        var other = false;
+        for (i = 0; i < x.length; i++) {
+
+            if (x[i].value == "Father" || x[i].value == "Children" || x[i].value == "Mother") {
+
+                other = true;
+            }
+            //else {
+            //    if (x[i].value != "Spouse") {
+            //        other = true;
+            //    }
+
+            //}
+            if (x[i].value == "Spouse") {
+
+                spouse = true;
+            }
+
+        }
+        if (spouse) {
+            $("#Declarationform2").show();
+        }
+        else {
+            $("#Declarationform2").hide();
+        }
+        if (other) {
+            $("#Declarationform1").show();
+        }
+        else {
+            $("#Declarationform1").hide();
+        }
+
+    }
+    function changevalue(idnumber) {
+        $("#Relation__" + idnumber).val();
+
+        var Children = 0;
+        var Father = 0;
+        var Fatherindex = '';
+        var Motherindex = '';
+        var Childrenindex = '';
+        var Spouseindex = '';
+        var Mother = 0;
+        var Spouse = 0;
+        var x = document.getElementsByName("relation[]");
+        var i;
+        var spouse = false;
+        var other = false;
+
+        for (i = 0; i < x.length; i++) {
+
+            if (x[i].value == "Father") {
+
+                Father = Father + 1;
+                Fatherindex += '_' + i;
+
+            }
+            if (x[i].value == "Mother") {
+
+                Mother = Mother + 1;
+                Motherindex += '_' + i;
+            }
+            if (x[i].value == "Children") {
+
+                Children = Children + 1;
+                Childrenindex += '_' + i;
+            }
+            if (x[i].value == "Spouse") {
+
+                Spouse = Spouse + 1;
+                Spouseindex += '_' + i;
+            }
+        }
+        if (Father > 1) {
+
+            var FatherArray = Fatherindex.split("_");
+
+            for (var j = 2; j < FatherArray.length; j++) {
+
+                alert('Please select another relation');
+                x[FatherArray[j]].value = '';
+            }
+        }
+        if (Mother > 1) {
+
+            var MotherArray = Motherindex.split("_");
+
+            for (var k = 2; k < MotherArray.length; k++) {
+
+                alert('Please select another relation');
+                x[MotherArray[k]].value = '';
+            }
+        }
+        if (Spouse > 1) {
+
+            var SpouseArray = Spouseindex.split("_");
+
+            for (var m = 2; m < SpouseArray.length; m++) {
+
+                alert('Please select another relation');
+                x[SpouseArray[m]].value = '';
+            }
+        }
+        if (Children > 2) {
+
+            var ChildrenArray = Childrenindex.split("_");
+
+            for (var l = 3; l < ChildrenArray.length; l++) {
+
+                x[ChildrenArray[l]].value = '';
+                alert('Please select another relation');
+            }
+        }
+
+        if ($("#Relation__" + idnumber).val() == "Spouse") {
+            $("#Declarationform2").show();
+        }
+        //Mother
+        if ($("#Relation__" + idnumber).val() == "Father" || $("#Relation__" + idnumber).val() == "Children" || $("#Relation__" + idnumber).val() == "Mother") {
+            $("#Declarationform1").show();
+
+
+
+
+
+
+        }
+    }
+</script>
+<script>
+    function Ageres(id) {
+        //debugger;
+
+        if (id == '0') {
+            var textBoxValue = document.getElementById("rage").value;
+            if (textBoxValue == "0" || textBoxValue == "00" || textBoxValue == "000") {
+                window.alert("Please Enter valid Age.");
+                $("#rage").focus();
+                $("#rage").val('');
+                return false;
+            }
+
+            if (document.getElementById("Relation__").value == "Children") {
+
+                if (textBoxValue > 25) {
+                    alert("Please enter below 26 Age");
+                    document.getElementById("rage").value = '';
+                }
+
+
+            }
+            else if (document.getElementById("Relation__").value == "Spouse" || document.getElementById("Relation__").value == "Mother" || document.getElementById("Relation__").value == "Father")
+            {
+                if (textBoxValue < 21) {
+                    alert("Please enter above 21 Age");
+                    document.getElementById("rage").value = '';
+                }
+            }
+        }
+        else {
+            var textBoxlat = document.getElementById("Relationage__" + id).value;
+            if (textBoxlat == "0" || textBoxlat == "00" || textBoxlat == "000") {
+                window.alert("Please Enter valid Age.");
+                document.getElementById("Relationage__" + id).value = '';
+
+            }
+            if (document.getElementById("Relation__" + id).value == "Children") {
+
+                if (textBoxlat > 25) {
+                    alert("Please enter below 26 Age");
+                    document.getElementById("Relationage__" + id).value = '';
+                }
+            }
+
+            else if (document.getElementById("Relation__" + id).value == "Spouse" || document.getElementById("Relation__" + id).value == "Mother" || document.getElementById("Relation__" + id).value == "Father" ) {
+                if (textBoxlat < 21) {
+                    alert("Please enter above 21 Age");
+                    document.getElementById("Relationage__" + id).value = '';
+                }
+            }
+        }
+
+    }
+</script>
+<style>
+    table, th, td {
+        border-collapse: collapse;
+    }
+
+    .activeClass {
+        background: #ffdb99;
+    }
+
+    .secondClass {
+        /*background: #FF9999;*/
+        color: red;
+    }
+</style>
+@{
+    var message = TempData["AlertMessage"] ?? string.Empty;
+}
+
+<script type='text/javascript'>
+    $(function getholidays() {
+        var active_dates = [];
+        $.ajax({
+            type: "GET",
+            async: false,
+            url: "/LeaveApply/GetDates",
+            dataType: "Json",
+            success: function (data) {
+                datesArray = data;
+                for (i = 0; i < datesArray.length; i++) {
+                    var result = datesArray[i].replace("-", "/");
+                    var result1 = result.replace("-", "/");
+                    var strArray = result1.split("/");
+                    var cdate = strArray[0] + "/" + parseInt(strArray[1]) + "/" + strArray[2]
+                    active_dates.push(cdate);
+
+                    if (i == datesArray.length - 1) {
+                        //loadcal(active_dates);
+                    }
+                }
+
+            }
+        });
+        $('.input-group.date').datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            beforeShowDay: function nonWorkingDays(date) {
+                var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
+                var week = 0 | date.getDate() / 7 //get the week
+                var dd = date.getDate();
+                var month = date.getMonth();
+                if (dd < 10) {
+                    dd = '0' + dd
+                }
+
+                if (month < 10) {
+                    month = '0' + month
+                }
+                var sunweek = date.getDay();
+                var year = date.getFullYear();
+
+                if (dd == 14 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                if (dd == 28 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                //check if it's second week or fourth week
+                else if (week == 1 || week == 3) {
+                    if (dd == 7 && day == 6 || dd == 21 && day == 6) {
+                        //check for satruday
+
+                    }
+                    else {
+                        if (day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                    }
+
+                }
+                //check for sunday
+                if (day == 0) {
+                    return {
+                        classes: 'secondClass'
+                    };
+
+                }
+                //check for holidays
+                var d = date;
+                var curr_date = d.getDate();
+                var curr_month = d.getMonth() + 1; //Months are zero based
+                if (curr_date < 10) {
+                    curr_date = '0' + curr_date
+                }
+                var curr_year = d.getFullYear();
+                var formattedDate = curr_date + "/" + curr_month + "/" + curr_year
+
+                if ($.inArray(formattedDate, active_dates) != -1) {
+                    return {
+                        classes: 'activeClass'
+                    };
+                }
+                return [true];
+            }
+        });
+
+
+    });
+</script>
+
+
+<script type="text/javascript">
+    var message = '@message';
+
+    if (message) alert(message);
+
+</script>
+
+
+<script type="text/javascript">
+
+    $("#LTCapplyform").submit(function (event) {
+        if ($('#C').prop('checked')) {
+            Cookies.set('current_form', 1);
+        }
+        if ($('#D').prop('checked')) {
+            Cookies.set('current_form', 2);
+        }
+    });
+
+    if (Cookies.get('current_form') == 1) {
+        console.log('need to check C');
+        $('input[id=C]').attr('checked', true);
+    }
+    else if (Cookies.get('current_form') == 2) {
+        console.log('need to check D');
+        $('input[id=D]').attr('checked', true);
+        $("#Availment").hide();
+        $("#Encashment").show();
+        $("#gridApply2").show();
+        $("#gridApply1").hide();
+        $("#2").show();
+        $("#1").hide();
+      //  $("#btnApplyencash").show();
+        $("#btnApply").hide();
+    }
+
+    $('.login').click(function () {
+        Cookies.set('current_form', null);
+        $('input[id=D]').attr('checked', false);
+    });
+
+    $('#LeaveTravelmenu').click(function () {
+        Cookies.set('current_form', null);
+        $('input[id=D]').attr('checked', false);
+    });
+
+    $('#a8').click(function () {
+        Cookies.set('current_form', null);
+        $('input[id=D]').attr('checked', false);
+    });
+
+</script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        if (Cookies.get('current_form') != 2) {
+            $("#Encashment").hide();
+            $("#Availment").show();
+            $("#gridApplyl").show();
+            $("#gridApply2").hide();
+            $("#1").show();
+            $("#2").hide();
+            $("#btnApply").show();
+            //$("#btnApplyencash").hide();
+        }
+    });
+
+
+    $("#D").click(function () {
+        $(".datepick").css("display", "none");
+        $("#Event_Date1").css("width", "100%"); 
+        $("#Event_Date2").css("width", "100%");
+        $("#gridApplyl").hide();
+        $("#gridApply2").show();
+        $("#Placeofvis").show();
+        $("#Placeofvis").show();
+        $("#ModeofTransports").show();
+        $("#TravelAdvance").show();
+        $("#Occupation_add").hide();
+        $("#Encashment").show();
+        $("#Availment").hide();
+        $("#btnApply").hide();
+     //   $("#btnApplyencash").show();
+        $("#TravelAdvances").attr('disabled', true);
+        $("#subjects").attr('disabled', true);
+        $("#Type").attr('disabled', true);
+        $("#sdate").attr('disabled', true);
+        $("#edate").attr('disabled', true);
+        $("#Placeofvisit").attr('disabled', true);
+        $("#Mtrans").attr('disabled', true);
+        $("#1").hide();
+        $("#2").show();
+        $("#Declarationform1").hide();
+        $("#Declarationform2").hide();
+        // document.getElementById("ControllingAuthority").value = '';
+        // document.getElementById("SanctioningAuthority").value = '';
+        //document.getElementById("TotalExperience").value = '';
+        document.getElementById("Placeofvisit").value = '';
+        document.getElementById("sdate").value = '';
+        document.getElementById("edate").value = '';
+        document.getElementById("subjects").value = '';
+        document.getElementById("TravelAdvances").value = '';
+        document.getElementById("Mtrans").value = '';
+        document.getElementById("Type").value = '';
+        document.getElementById("SDate").value = '';
+        document.getElementById("EDate").value = '';
+
+    });
+    $("#C").click(function () {
+        $(".datepick").css("display", "table-cell");
+        $("#Placeofvis").show();
+        $("#ModeofTransports").show();
+        $("#TravelAdvance").show();
+        $("#Occupation_add").show();
+        $("#Encashment").hide();
+        $("#Availment").show();
+        $("#gridApplyl").show();
+        $("#gridApply2").hide();
+        $("#1").show();
+        $("#2").hide();
+        $("#btnApply").show();
+      //  $("#btnApplyencash").hide();
+        $("#TravelAdvances").attr('disabled', false);
+        $("#subjects").attr('disabled', false);
+        $("#Type").attr('disabled', false);
+        $("#sdate").attr('disabled', false);
+        $("#edate").attr('disabled', false);
+        $("#Placeofvisit").attr('disabled', false);
+        $("#Mtrans").attr('disabled', false);
+        document.getElementById("SDate").value = '';
+        document.getElementById("EDate").value = '';
+    });
+</script>
+
+
+
+
+<script type="text/javascript">
+    $("#Relation__").change(function () {
+
+        if ($(this).val() == "Mother") {
+            $("#Declarationform1").show();
+            $("#Declarationform2").hide();
+        }
+        else if ($(this).val() == "Father") {
+            $("#Declarationform1").show();
+            $("#Declarationform2").hide();
+        }
+        else if ($(this).val() == "Children") {
+            $("#Declarationform1").show();
+            $("#Declarationform2").hide();
+        }
+        else if ($(this).val() == "Spouse") {
+            $("#Declarationform2").show();
+            $("#Declarationform1").hide();
+        }
+
+    });
+
+</script>
+<script type="text/javascript">
+    var screenTheme = 'darkblue';
+    var popupTheme = 'highcontrast';
+    var otherTheme = 'arctic';
+    var localizationObject = {
+        filterstringcomparisonoperators: ['contains', 'does not contain'],  /* filter String Comparison Operators    */
+        filternumericcomparisonoperators: ['less than', 'greater than'],    /* filter Numeric Comparison Operators  */
+        filterdatecomparisonoperators: ['less than', 'greater than'],       /* filter Date comparison operators.  */
+        filterbooleancomparisonoperators: ['equal', 'not equal']            /* filter bool comparison operators.*/
+    };
+    var stringcomparisonoperators = ['CONTAINS', 'DOES_NOT_CONTAIN'];
+    var numericcomparisonoperators = ['LESS_THAN', 'GREATER_THAN'];
+    var datecomparisonoperators = ['LESS_THAN', 'GREATER_THAN'];
+    var booleancomparisonoperators = ['EQUAL', 'NOT_EQUAL'];
+    $(document).ready(function () {
+        // prepare the data for BankView
+        var theme = otherTheme;
+        // prepare the data
+
+       
+
+        var url = "../LeaveTravel/LTCView";
+        var source =
+            {
+                datatype: "json",
+                datafields: [
+                    { name: 'EmpId', type: 'string' },
+                    { name: 'ShortName', type: 'string' },
+                    { name: 'UpdatedDate', type: 'date' },
+                    { name: 'Code', type: 'string' },
+                    { name: 'Deptbranch', type: 'string' },
+                    { name: 'TotalExperience', type: 'string' },
+                    { name: 'UpdatedDate', type: 'date' },
+                    { name: 'TravelAdvance', type: 'string' },
+                    { name: 'ModeOfTransport', type: 'string' },
+                    { name: 'PlaceOfVisits', type: 'string' },
+                    { name: 'LtcType', type: 'string' },
+                    { name: 'Block_Period', type: 'string' },
+                    { name: 'StartDate', type: 'date' },
+                    { name: 'EndDate', type: 'date' },
+                    { name: 'Type', type: 'string' },
+                    { name: 'Subject', type: 'string' },
+                    { name: 'Status', type: 'string' },
+                ],
+                async: false,
+                url: url,
+                data: {
+                    featureClass: "P",
+                    style: "full",
+                    username: "jqwidgets"
+                }
+            };
+        var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties, rowdata) {
+            if (value == "Pending") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #FFA500;">' + value + '</span>';
+            }
+            else if (value == "Forwarded") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #33b5e5;">' + value + '</span>';
+            }
+            else if (value == "Approved") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #00C851;">' + value + '</span>';
+            }
+            else {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #ff4444;">' + value + '</span>';
+            }
+        }
+        var dataAdapter = new $.jqx.dataAdapter(source,
+            {
+                formatData: function (data) {
+                    data.ProductName = $("#searchField").val();
+                    return data;
+                }
+            }
+        );
+        // initialize jqxGrid
+        var editrowindex = -1;
+        var delrowindex = -1;
+        $("#gridApplyl").jqxGrid(
+            {
+                width: '99%',
+                source: dataAdapter,
+                theme: otherTheme,// for theme refernce go to Layout.cshtml
+                autoheight: true,
+                sortable: true,
+                pageable: true,
+
+                columnsResize: true,
+                altRows: true,
+                filterable: true,
+                autoshowfiltericon: true,
+
+                ready: function () {
+                    $("#gridApplyl").jqxGrid('localizestrings', localizationObject);
+                },
+                updatefilterconditions: function (type, defaultconditions) {
+                    switch (type) {
+                        case 'stringfilter':
+                            return stringcomparisonoperators;
+                        case 'numericfilter':
+                            return numericcomparisonoperators;
+                        case 'datefilter':
+                            return datecomparisonoperators;
+                        case 'booleanfilter':
+                            return booleancomparisonoperators;
+                    }
+                },
+                updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                    filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                    var index1 = 0;
+                    var index2 = 0;
+                    if (columnfilter != null) {
+                        var filter1 = columnfilter.getfilterat(0);
+                        var filter2 = columnfilter.getfilterat(1);
+                        if (filter1) {
+                            index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                            var value1 = filter1.filtervalue;
+                            filterinputfield1.val(value1);
+                        }
+                        if (filter2) {
+                            index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                            var value2 = filter2.filtervalue;
+                            filterinputfield2.val(value2);
+                        }
+                    }
+                    filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                    filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                },
+                columns: [
+
+                    {
+                        text: 'SNO', sortable: false, filterable: false, editable: false, align: 'center',
+                        groupable: false, draggable: false, resizable: false, exportable: false,
+                        datafield: '', columntype: 'number', width: 50,
+                        cellsrenderer: function (row, column, value) {
+                            return "<div style='margin:4px; text-align: center;'>" + (value + 1) + "</div>";
+                        }
+                    },
+                    { text: "Emp Code", datafield: "EmpId", editable: false, width: 75 },
+                    { text: "Employee Name", datafield: "ShortName", editable: false, width: 150 },
+                    { text: "Applied Date", datafield: "UpdatedDate", editable: false, width: 100, cellsformat: "dd/MM/yyyy" },
+                    { text: "Designation", datafield: "Code", editable: false, width: 85 },
+                    { text: "Department/Branch", datafield: "Deptbranch", width: 140, editable: false },
+                    { text: "LTC Type", datafield: "LtcType", editable: false, width: 90 },
+                    { text: "Block Period", datafield: "Block_Period", editable: false, width: 90 },
+                    { text: "From Date", datafield: "StartDate", editable: false, width: 90, cellsformat: "dd/MM/yyyy" },
+                    { text: "To Date", datafield: "EndDate", editable: false, width: 90, cellsformat: "dd/MM/yyyy" },
+                    { text: "Leave Type", datafield: "Type", editable: false, width: 120 },
+                    { text: "Place of Visits", datafield: "PlaceOfVisits", editable: false, width: 100 },
+                    { text: "Travel Advance", datafield: "TravelAdvance", editable: false, width: 105 },
+                    { text: "Mode Of Transport", datafield: "ModeOfTransport", editable: false, width: 130 },
+                    { text: "Status", cellsrenderer: cellsrenderer, datafield: "Status", editable: false, width: 90 },
+
+
+                ],
+
+
+
+            });
+        $("#excelExport").jqxButton();
+
+
+        $("#excelExport").click(function () {
+            $("#gridApplyl").jqxGrid('exportdata', 'xls', 'LTCHistory');
+        });
+    });
+
+
+    function datescheck() {
+        var x = location.hostname;
+        var url = window.location.href
+        var arr = url.split("/");
+        // var darray = document.getElementById('sdate').value;
+        // var darraye = document.getElementById('edate').value;
+        var sdate = document.getElementById('sdate').value;
+        var edate = document.getElementById('edate').value;
+
+        var selected = $('[name="lleavetravel.LtcType"]:checked').val();
+        if (sdate != '' && edate != '') {
+           // var result = "https://" + arr[2] + "/" + "LeaveTravel/checkLeaveEligebleOrNot?StartDate=" + sdate + "&EndDate=" + edate + "&Ltctype=" + selected;
+            var result = "" + arr[0] +  "//" + arr[2] +  "/"+ "LeaveTravel/checkLeaveEligebleOrNot?StartDate=" + sdate + "&EndDate=" + edate + "&Ltctype=" + selected;
+            $.ajax({
+                type: "GET",
+                url: result,
+
+                dataType: "json",
+                success: function (data) {
+
+                    var input = data.message;
+
+                    var fields = input.split('/');
+                    var status = fields[0];
+                    var dates = fields[1];
+
+                    if (status == "false") {
+                        document.getElementById("sdate").value = "";
+                        document.getElementById("edate").value = "";
+                        alert(dates);
+                    }
+                    if (status == "countzero") {
+                        /// alert("Leaves are not available");
+                    }
+
+                },
+                error: function () {
+
+                }
+            });
+        }
+
+    }
+    function datescheckEncashment() {
+        var x = location.hostname;
+        var url = window.location.href
+        var arr = url.split("/");
+        // var darray = document.getElementById('sdate').value;
+        // var darraye = document.getElementById('edate').value;
+        var sdate = document.getElementById('sdate').value;
+        var edate = document.getElementById('edate').value;
+
+        var selected = $('[name="lleavetravel.LtcType"]:checked').val();
+        if (sdate != '' && edate != '') {
+           // var result = "https://" + arr[2] + "/" + "LeaveTravel/checkLTCEligebleOrNot?StartDate=" + sdate + "&EndDate=" + edate + "&Ltctype=" + selected;
+            var result = "" + arr[0] +  "//" + arr[2] +  "/"+ "LeaveTravel/checkLTCEligebleOrNot?StartDate=" + sdate + "&EndDate=" + edate + "&Ltctype=" + selected;
+            $.ajax({
+                type: "GET",
+                url: result,
+
+                dataType: "json",
+                success: function (data) {
+
+                    var input = data.message;
+
+                    var fields = input.split('/');
+                    var status = fields[0];
+                    var dates = fields[1];
+
+                    if (status == "false") {
+                        document.getElementById("sdate").value = "";
+                        document.getElementById("edate").value = "";
+                        document.getElementById("Placeofvisit").value = "";
+                        document.getElementById("subjects").value = "";
+                        document.getElementById("TravelAdvances").value = "";
+                        document.getElementById("Mtrans").value = "";
+                        document.getElementById("Type").value = "";
+                        $("#addedRows").find("tr:gt(0)").remove();
+                        //$("#addedRows > tbody").append("<tr><td class='Relation'></td><td class='Name'></td><td class='Age'></td><td class='Occupation'></td></tr>");
+                        alert(dates);
+                    }
+                    if (status == "countzero") {
+                        /// alert("Leaves are not available");
+                    }
+
+                },
+                error: function () {
+
+                }
+            });
+        }
+
+    }
+    function blockperiodcheck() {
+        var x = location.hostname;
+        var url = window.location.href
+        var arr = url.split("/");
+
+        var block = document.getElementById('Bperiod').value;
+        //var result = "https://" + arr[2] + "/" + "LeaveTravel/checkBlockPeriodEligebleOrNot?blockperiod=" + block;
+         var result = "" + arr[0] +  "//" + arr[2] +  "/"+ "LeaveTravel/checkBlockPeriodEligebleOrNot?blockperiod=" + block;
+        $.ajax({
+            type: "GET",
+            url: result,
+
+            dataType: "json",
+            success: function (data) {
+
+                var input = data.message;
+
+                var fields = input.split('/');
+                var status = fields[0];
+                var dates = fields[1];
+
+                if (status == "false") {
+                    document.getElementById("Bperiod").value = "";
+                    alert(dates);
+                }
+                if (status == "countzero") {
+                    /// alert("BlockPeriod is not available");
+                }
+
+            },
+            error: function () {
+
+            }
+        });
+
+
+    }
+</script>
+<script type="text/javascript">
+    /*------------------ Click event button script in Partail view-------------*/
+
+    $("#btnApply").click(function () {
+        ajaxSpinnerShow();
+        var startdate = $("#SDate").val();
+        var enddate = $("#EDate").val();
+        var type = $("#Type").val();
+        var url = "../LeaveTravel/LTCViews";
+        // prepare the data
+        var source =
+            {
+                type: "Post",
+                datatype: "json",
+                datafields: [
+                    { name: 'EmpId', type: 'string' },
+                    { name: 'ShortName', type: 'string' },
+                    { name: 'UpdatedDate', type: 'date' },
+                    { name: 'Code', type: 'string' },
+                    { name: 'Deptbranch', type: 'string' },
+                    { name: 'TotalExperience', type: 'string' },
+                    { name: 'TravelAdvance', type: 'string' },
+                    { name: 'ModeOfTransport', type: 'string' },
+                    { name: 'PlaceOfVisits', type: 'string' },
+                    { name: 'LtcType', type: 'string' },
+                    { name: 'Reason', type: 'string' },
+                    { name: 'Block_Period', type: 'string' },
+                    { name: 'StartDate', type: 'date' },
+                    { name: 'EndDate', type: 'date' },
+                    { name: 'Status', type: 'string' },
+                    { name: 'Type', type: 'string' },
+                ],
+                async: false,
+                url: "/LeaveTravel/LTCViews?StartDate=" + startdate + "&EndDate=" + enddate + "&Type=" + type,
+                data: {
+                    featureClass: "P",
+                    style: "full",
+                    username: "jqwidgets",
+                    StartDate: startdate,
+                    EndDate: enddate
+
+                },
+                loadComplete: function () {
+                    ajaxSpinnerHide();
+                }
+            };
+        var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties, rowdata) {
+            if (value == "Pending") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #FFA500;">' + value + '</span>';
+            }
+            else if (value == "Forwarded") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #33b5e5;">' + value + '</span>';
+            }
+            else if (value == "Approved") {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #00C851;">' + value + '</span>';
+            }
+            else {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #ff4444;">' + value + '</span>';
+            }
+        }
+        var dataAdapter = new $.jqx.dataAdapter(source,
+            {
+                formatData: function (data) {
+                    data.ProductName = $("#searchField").val();
+                    return data;
+                }
+            }
+        );
+        // initialize jqxGrid
+        var editrowindex = -1;
+        var delrowindex = -1;
+        $("#gridApplyl").jqxGrid(
+            {
+                width: '99%',
+                source: dataAdapter,
+                theme: otherTheme,// for theme refernce go to Layout.cshtml
+                autoheight: true,
+                sortable: true,
+                pageable: true,
+                columnsResize: true,
+                altRows: true,
+                filterable: true,
+                autoshowfiltericon: true,
+
+                ready: function () {
+                    $("#gridApplyl").jqxGrid('localizestrings', localizationObject);
+                },
+                updatefilterconditions: function (type, defaultconditions) {
+                    switch (type) {
+                        case 'stringfilter':
+                            return stringcomparisonoperators;
+                        case 'numericfilter':
+                            return numericcomparisonoperators;
+                        case 'datefilter':
+                            return datecomparisonoperators;
+                        case 'booleanfilter':
+                            return booleancomparisonoperators;
+                    }
+                },
+                updatefilterpanel: function (filtertypedropdown1, filtertypedropdown2, filteroperatordropdown, filterinputfield1, filterinputfield2,
+                    filterbutton, clearbutton, columnfilter, filtertype, filterconditions) {
+                    var index1 = 0;
+                    var index2 = 0;
+                    if (columnfilter != null) {
+                        var filter1 = columnfilter.getfilterat(0);
+                        var filter2 = columnfilter.getfilterat(1);
+                        if (filter1) {
+                            index1 = filterconditions.indexOf(filter1.comparisonoperator);
+                            var value1 = filter1.filtervalue;
+                            filterinputfield1.val(value1);
+                        }
+                        if (filter2) {
+                            index2 = filterconditions.indexOf(filter2.comparisonoperator);
+                            var value2 = filter2.filtervalue;
+                            filterinputfield2.val(value2);
+                        }
+                    }
+                    filtertypedropdown1.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index1 });
+                    filtertypedropdown2.jqxDropDownList({ autoDropDownHeight: true, selectedIndex: index2 });
+                },
+                columns: [
+                    {
+                        text: 'SNO', sortable: false, filterable: false, editable: false,
+                        groupable: false, draggable: false, resizable: false, exportable: false,
+                        datafield: '', columntype: 'number', width: 50,
+                        cellsrenderer: function (row, column, value) {
+                            return "<div style='margin:4px;'>" + (value + 1) + "</div>";
+                        }
+                    },
+                    { text: "Emp Code", datafield: "EmpId", editable: false, width: 75 },
+                    { text: "Employee Name", datafield: "ShortName", editable: false, width: 150 },
+                    { text: "AppliedDate", datafield: "UpdatedDate", editable: false, width: 90, cellsformat: "dd/MM/yyyy" },
+                    { text: "Designation", datafield: "Code", editable: false, width: 85 },
+                    { text: "Department/Branch", datafield: "Deptbranch", width: 140, editable: false },
+                    { text: "LTCType", datafield: "LtcType", editable: false, width: 90 },
+                    { text: "Block Period", datafield: "Block_Period", editable: false, width: 90 },
+                    { text: "FromDate", datafield: "StartDate", editable: false, width: 90, cellsformat: "dd/MM/yyyy" },
+                    { text: "ToDate", datafield: "EndDate", editable: false, width: 90, cellsformat: "dd/MM/yyyy" },
+                    { text: "Leave Type", datafield: "Type", editable: false, width: 120 },
+                    { text: "PlaceofVisits", datafield: "PlaceOfVisits", editable: false, width: 90 },
+                    { text: "TravelAdvance", datafield: "TravelAdvance", editable: false, width: 105 },
+                    { text: "ModeOfTransport", datafield: "ModeOfTransport", editable: false, width: 130 },
+                    { text: "Status", cellsrenderer: cellsrenderer, datafield: "Status", editable: false, width: 90 },
+                ],
+
+
+
+            });
+        $("#excelExport").jqxButton();
+
+
+        $("#excelExport").click(function () {
+            $("#grid1").jqxGrid('exportdata', 'xls', 'LTCHistory');
+        });
+    });
+
+   
+
+</script>
+<script>
+    //Start And End Date Validation
+    function Dateevent1() {
+
+        var darray = document.getElementById('sdate').value.split(" ");
+        var darraye = document.getElementById('edate').value.split(" ");
+        var Joindate = darray[0];
+
+        var Retdate = darraye[0];
+        var date = moment(Joindate, "DD.MM.YYYY");
+
+        var currentDate1 = moment(Retdate, "DD.MM.YYYY");
+        var duration = moment.duration(date.diff(currentDate1));
+
+
+        if (duration > 0) {
+            alert("Please ensure that End Date is greater than or equal to Start Date.");
+            document.getElementById("edate").focus();
+            document.getElementById("edate").value = '';
+            return false;
+
+        }
+        else {
+            datescheck();
+            return true;
+
+        }
+    }
+    //$("#datetimepicker1")
+
+
+    function Dateevent3() {
+
+        // alert("okokokokoko");
+
+        var darray = document.getElementById('sdate').value.split(" ");
+        var darraye = document.getElementById('edate').value.split(" ");
+        var StartDate = darray[0];
+        //  console.log(StartDate);
+        var EndDate = darraye[0];
+
+        var eDate = moment(EndDate, "DD.MM.YYYY");
+        var sDate = moment(StartDate, "DD.MM.YYYY");
+        if (StartDate != '' && EndDate != '' && sDate > eDate) {
+            alert("Please ensure that End Date is greater than or equal to Start Date.");
+            document.getElementById('sdate').value = '';
+            document.getElementById("sdate").focus();
+            return false;
+        }
+        else {
+            datescheck();
+            return true;
+
+        }
+    }
+</script>
+<script>
+    //Start And End Date Validation
+    function Dateevent1() {
+
+
+        var Joindate = document.getElementById("sdate").value;
+        var Retdate = document.getElementById("edate").value;
+        var date = moment(Joindate, "DD.MM.YYYY");
+
+        var currentDate1 = moment(Retdate, "DD.MM.YYYY");
+        var duration = moment.duration(date.diff(currentDate1));
+
+
+        if (duration > 0) {
+
+
+            alert("Please ensure that End Date is greater than or equal to Start Date.");
+            document.getElementById("edate").focus();
+            document.getElementById("edate").value = '';
+            return false;
+
+        }
+        else {
+            datescheck();
+            return true;
+
+        }
+    }
+
+    function Dateevent3() {
+
+
+        var StartDate = document.getElementById('sdate').value;
+        var EndDate = document.getElementById('edate').value;
+        var eDate = moment(EndDate, "DD.MM.YYYY");
+        var sDate = moment(StartDate, "DD.MM.YYYY");
+        if (StartDate != '' && EndDate != '' && sDate > eDate) {
+            alert("Please ensure that End Date is greater than or equal to Start Date.");
+            document.getElementById('sdate').value = '';
+            document.getElementById("sdate").focus();
+            return false;
+        }
+    }
+</script>
+<script>
+    //To Date and From Date Validation
+    function Dateevent2() {
+
+
+        var fromdate = document.getElementById("SDate").value;
+        var todate = document.getElementById("EDate").value;
+        var date = moment(fromdate, "DD.MM.YYYY");
+
+        var currentDate1 = moment(todate, "DD.MM.YYYY");
+        var duration = moment.duration(date.diff(currentDate1));
+
+
+        if (duration > 0) {
+
+
+            alert("Please ensure that To Date is greater than or equal to From Date.");
+            document.getElementById("EDate").focus();
+            document.getElementById("EDate").value = '';
+            return false;
+
+        }
+    }
+    function Dateevent4() {
+        var StartDate = document.getElementById('SDate').value;
+        var EndDate = document.getElementById('EDate').value;
+        var eDate = moment(EndDate, "DD.MM.YYYY");
+        var sDate = moment(StartDate, "DD.MM.YYYY");
+        if (StartDate != '' && EndDate != '' && sDate > eDate) {
+            alert("Please ensure that To Date is greater than or equal to From Date.");
+            document.getElementById('SDate').value = '';
+            document.getElementById("SDate").focus();
+            return false;
+        }
+    }
+</script>
+<script>
+    //To Date and From Date Validation
+    function Dateevent2() {
+
+
+        var fromdate = document.getElementById("SDate").value;
+        var todate = document.getElementById("EDate").value;
+        var date = moment(fromdate, "DD.MM.YYYY");
+
+        var currentDate1 = moment(todate, "DD.MM.YYYY");
+        var duration = moment.duration(date.diff(currentDate1));
+
+
+        if (duration > 0) {
+
+
+            alert("Please ensure that To Date is greater than or equal to From Date.");
+            document.getElementById("EDate").focus();
+            document.getElementById("EDate").value = '';
+            return false;
+
+        }
+    }
+    function Dateevent4() {
+        var StartDate = document.getElementById('SDate').value;
+        var EndDate = document.getElementById('EDate').value;
+        var eDate = moment(EndDate, "DD.MM.YYYY");
+        var sDate = moment(StartDate, "DD.MM.YYYY");
+        if (StartDate != '' && EndDate != '' && sDate > eDate) {
+            alert("Please ensure that To Date is greater than or equal to From Date.");
+            document.getElementById('SDate').value = '';
+            document.getElementById("SDate").focus();
+            return false;
+        }
+    }
+</script>
+<script>
+    $(function () {
+        $('#Event_Date1').datepicker({
+            format: 'dd-mm-yyyy',
+
+
+            todayHighlight: true,
+            autoclose: true
+        })
+        $('#Event_Date2').datepicker({
+            format: 'dd-mm-yyyy',
+
+
+            todayHighlight: true,
+            autoclose: true
+        })
+
+    });
+</script>
+<script>
+    function clearleavedata() {
+        $('#reason').val('');
+        $('#edate').val('');
+        $('#sdate').val('');
+        $('#subject').val('');
+    }
+</script>
+<script>
+    var resetForm = function () {
+        $("#Declarationform2").hide();
+        $("#Declarationform1").hide();
+        $('.fetch_results').find('input:text').val('');
+        $('select').not('[readonly],[disabled],:button').val('');
+        $("#Bperiod").val('');
+        $("#Type").val('');
+        $("#sdate").val('');
+        $("#edate").val('');
+        $("#Placeofvisit").val('');
+        $("#Mtrans").val('');
+        $("#subjects").val('');
+        $("#TravelAdvances").val('');
+        $("#Relation__").val('');
+        $("#rname").val('');
+        $("#rage").val('');
+        $("#roocu").val('');
+        $("#Form1CheckBox").val('');
+        $("#Form2CheckBox").val('');
+        $("#EmpWorking").val('');
+        $("#EmpAddress").val('');
+        $("#formdatespouse").val('');
+        $("#spousePlace").val('');
+        $("#formdate").val('');
+        $("#Place").val('');
+        $("#addedRows_new").find("tr:gt(1)").remove();
+        $("#addedRows").find("tr:gt(0)").remove();
+    }
+    function pp() {
+        $("#Bperiod").val('');
+        $("#Type").val('');
+        $("#sdate").val('');
+        $("#edate").val('');
+        $("#Placeofvisit").val('');
+        $("#ModeOfTransport").val('');
+        $("#subjects").val('');
+        $("#TravelAdvances").val('');
+        $("#Relation__").val('');
+        $("#rname").val('');
+        $("#rage").val('');
+        $("#roocu").val('');
+        $("#Form1CheckBox").val('');
+        $("#Form2CheckBox").val('');
+        $("#EmpWorking").val('');
+        $("#EmpAddress").val('');
+        $("#formdatespouse").val('');
+        $("#spousePlace").val('');
+        $("#formdate").val('');
+        $("#Place").val('');
+        //$("#addedRows").hide();
+    }
+    function pfp() {
+        $("#Bperiod").val('');
+        $("#Type").val('');
+        $("#sdate").val('');
+        $("#edate").val('');
+        $("#Placeofvisit").val('');
+        $("#ModeOfTransport").val('');
+        $("#subjects").val('');
+        $("#TravelAdvances").val('');
+        $("#Relation__").val('');
+        $("#rname").val('');
+        $("#rage").val('');
+        $("#roocu").val('');
+        $("#Form1CheckBox").val('');
+        $("#Form2CheckBox").val('');
+        $("#EmpWorking").val('');
+        $("#EmpAddress").val('');
+        $("#formdatespouse").val('');
+        $("#spousePlace").val('');
+        $("#formdate").val('');
+        $("#Place").val('');
+        $("#addedRows").find("tr:gt(0)").remove();
+
+    }
+</script>
+<script type="text/javascript">
+    $('.subleave1').click(function () {
+    })
+</script>
+<script>
+    document.getElementById("a8").className = "active";
+</script>
+<script type='text/javascript'>
+    $(function getholidays() {
+
+        var active_dates = [];
+        $.ajax({
+            type: "GET",
+            async: false,
+            url: "/LeaveApply/GetDates",
+            dataType: "Json",
+            success: function (data) {
+                datesArray = data;
+                for (i = 0; i < datesArray.length; i++) {
+                    var result = datesArray[i].replace("-", "/");
+                    var result1 = result.replace("-", "/");
+                    var strArray = result1.split("/");
+                    var cdate = strArray[0] + "/" + parseInt(strArray[1]) + "/" + strArray[2]
+                    active_dates.push(cdate);
+
+                    if (i == datesArray.length - 1) {
+                        //loadcal(active_dates);
+                    }
+                }
+
+            }
+        });
+        $('#Date').datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            beforeShowDay: function nonWorkingDays(date) {
+                var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
+                var week = 0 | date.getDate() / 7 //get the week
+                var dd = date.getDate();
+                var month = date.getMonth();
+                if (dd < 10) {
+                    dd = '0' + dd
+                }
+
+                if (month < 10) {
+                    month = '0' + month
+                }
+                var sunweek = date.getDay();
+                var year = date.getFullYear();
+
+                if (dd == 14 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                if (dd == 28 && day == 6) {
+                    return {
+                        classes: 'secondClass'
+                    };
+                }
+                //check if it's second week or fourth week
+                else if (week == 1 || week == 3) {
+                    if (dd == 7 && day == 6 || dd == 21 && day == 6) {
+                        //check for satruday
+
+                    }
+                    else {
+                        if (day == 6) {
+                            return {
+                                classes: 'secondClass'
+                            };
+                        }
+                    }
+
+                }
+                //check for sunday
+                if (day == 0) {
+                    return {
+                        classes: 'secondClass'
+                    };
+
+                }
+                //check for holidays
+                var d = date;
+                var curr_date = d.getDate();
+                var curr_month = d.getMonth() + 1; //Months are zero based
+                if (curr_date < 10) {
+                    curr_date = '0' + curr_date
+                }
+                var curr_year = d.getFullYear();
+                var formattedDate = curr_date + "/" + curr_month + "/" + curr_year
+
+                if ($.inArray(formattedDate, active_dates) != -1) {
+                    return {
+                        classes: 'activeClass'
+                    };
+                }
+                return [true];
+            }
+        });
+    });
+</script>
+
+<script>
+    function blockperiodonchange() {
+        var bp = $("#Bperiod").val();
+        var selected = $('[name="lleavetravel.LtcType"]:checked').val();
+        if (selected == "Encashment") {
+            $(function () {
+                $.ajax({
+                    type: "GET",
+                    url: "/LeaveTravel/CheckBlockPeriod?Name=" + bp,
+                    dataType: "Json",
+                    success: function (response) {
+                        //$("#addedRows tr").remove();
+                        //$('#<%=addedRows%> tr').not(function () { return !!$(this).has('th').length; }).remove();
+                        $("#addedRows").find("tr:gt(0)").remove();
+                        //$("#addedRows > tbody").find("tr").remove();
+                        $("#addedRows > tbody").append("<tr><td class='Relation'></td><td class='Name'></td><td class='Age'></td><td class='Occupation'></td></tr>");
+                        console.log('success');
+                        //console.log(response);
+                        //console.log(response.lresponseArray_data);
+
+                        //document.getElementById("ControllingAuthority").value = '';
+                        //document.getElementById("SanctioningAuthority").value = '';
+                        //document.getElementById("TotalExperience").value = '';
+                        document.getElementById("Placeofvisit").value = '';
+                        document.getElementById("sdate").value = '';
+                        document.getElementById("edate").value = '';
+                        document.getElementById("subjects").value = '';
+                        document.getElementById("TravelAdvances").value = '';
+                        document.getElementById("Mtrans").value = '';
+                        document.getElementById("Type").value = '';
+
+                        if (response != null) {
+
+                            document.getElementById("ControllingAuthority").value = response.lControllingAuthorityAjax;
+                            document.getElementById("SanctioningAuthority").value = response.lSanctioningAuthorityAjax;
+                            document.getElementById("TotalExperience").value = response.lTotalexpAjax;
+                            document.getElementById("Placeofvisit").value = response.lplaceofvisit;
+                            document.getElementById("sdate").value = response.lsd;
+                            document.getElementById("edate").value = response.led;
+                            document.getElementById("subjects").value = response.lsubject;
+                            document.getElementById("TravelAdvances").value = response.ltraveladvance;
+                            document.getElementById("Mtrans").value = response.lmodeoftransport;
+                            document.getElementById("Type").value = response.lleavetype;
+
+
+                            //document.getElementById("rname").value = response.lRelationName;
+                            //document.getElementById("Relation__").value = response.lRelation;
+                            //document.getElementById("rage").value = response.lRelationAge;
+                            // document.getElementById("roocu").value = response.lOccupation;
+
+                            var testData = [''];
+                            testData = response.lresponseArray_data;
+                            console.log(testData);
+
+                            $.each(testData, function (i, v) {
+
+                                if (i == 0) {
+                                    //$("#addedRows tr").remove();
+                                    //setting the data in first row itself
+                                    setDataOnRow($("#addedRows tbody").find("tr").first(), v);
+
+                                } else {
+                                    //$("#addedRows tr").remove();.eq(1)
+                                    //clonning the first row and setting data over it and then appending in tbody
+                                    var clonnedRow = $($("#addedRows tbody").find("tr").first()).clone();
+                                    setDataOnRow(clonnedRow, v);
+
+                                    $("#addedRows tbody").append(clonnedRow);
+
+                                }
+                            });
+                            datescheckEncashment();
+
+                        }
+                        else {
+                            alert("No Data Found.");
+                            $("#addedRows").find("tr:gt(0)").remove();
+                            document.getElementById("Bperiod").value = '';
+
+                        }
+                    },
+                });
+            });
+
+            function setDataOnRow(rowObject, v) {
+                //console.log(rowObject);
+                //console.log(v);
+                //alert(v.Relation);
+                var Relation = v.Relation;
+                var rname = v.RelationName;
+                var RelationAge = v.RelationAge;
+                var Occupation = v.Occupation;
+                //alert(Relation);
+                $(rowObject).find(".Relation").html(Relation);
+                $(rowObject).find(".Name").html(rname);
+                $(rowObject).find(".Age").html(RelationAge);
+                $(rowObject).find(".Occupation").html(Occupation);
+            }
+        }
+        else if (selected == "Availment") {
+            blockperiodcheck();
+        }
+    }
+</script>
+
+
+

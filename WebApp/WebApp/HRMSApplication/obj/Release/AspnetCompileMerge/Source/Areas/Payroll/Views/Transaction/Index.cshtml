@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "MonthDetails";
+    Layout = "~/Areas/Payroll/Views/Shared/_PayrollLayout.cshtml";
+}
+<div class="page">
+    <div class="form-horizontal form-horizontal2">
+        <div class="page_start">
+			<div class="leftmenu-container">
+            <div class="sidebar-menu">
+                
+                    @{Html.RenderPartial("_PVPayrollMenu");}
+                
+            </div>
+            <div class="sidebar-content">
+                <div class="main_heading heading_main">
+                    <h1>Payroll Transactions</h1>
+                    <div class="col-md-12">
+                        <ul class="index-menus">
+                            <li><a href="@Url.Action("MonthDetails","Transaction", new { area="Payroll" })"><i class="fa fa-tachometer" data-toggle="tooltip" data-placement="right" title="Month Details" aria-hidden="true"></i><span> Month Details </span></a> <span> : This Page Consist of Financial Month,Year and we can give Week Holidays,Paid Holidays,DA slabs,DA Percent</span></li>
+                            <li><a href="@Url.Action("AttendenceMonthly","Transaction", new { area="Payroll" })"><i class="fa fa-exchange" data-toggle="tooltip" data-placement="right" title="Attendence" aria-hidden="true"></i> <span>Attendance </span></a> <span> : It is used to give the Attendance of the Employee,Lop and Absent Days</span></li>
+                            <li><a href="@Url.Action("Dateofleaving","Transaction", new { area="Payroll" })"><i class="fa fa-user" data-toggle="tooltip" data-placement="right" title="Date of leaving" aria-hidden="true"></i> <span>Date of leaving </span></a> <span> : It shows Retirement Date/month/year of the Employee and we can update the Retirement Date</span></li>
+                            <li><a href="@Url.Action("AdjustmentsLoans","Transaction", new { area="Payroll" })"><i class="fa fa-cogs" data-toggle="tooltip" data-placement="right" title="Loan Adjustment" aria-hidden="true"></i> <span>Loan Adjustment </span></a> <span> : It is used for doing the loan payments(Full Clearing & Part Payment)</span></li>
+                            <li><a href="@Url.Action("AdhocPaymetnsView","Transaction", new { area="Payroll" })"><i class="fa fa-file-text-o" data-toggle="tooltip" data-placement="right" title="Adhoc Payment" aria-hidden="true"></i><span> Adhoc Payments</span> </a> <span> : This Page is used to give the Adhoc Payments to the Employees present in Adhoc</span></li>
+                            <li><a href="@Url.Action("DeputationEntryFields","Transaction", new { area="Payroll" })"><i class="fa fa-pencil-square-o" data-toggle="tooltip" data-placement="right" title="Deputation" aria-hidden="true"></i><span> Deputation </span></a> <span> : It is Used to give the Deputation Payments to the Employees present in Deputation</span></li>
+                            <li><a href="@Url.Action("EmpAllowance","Transaction", new { area="Payroll" })"><i class="fa fa-exchange" data-toggle="tooltip" data-placement="right" title="Allowance" aria-hidden="true"></i><span> Allowance </span></a> <span> : This page is used to give Employee's branch allowance details</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+</div>
+        </div>
+    </div>
+</div>

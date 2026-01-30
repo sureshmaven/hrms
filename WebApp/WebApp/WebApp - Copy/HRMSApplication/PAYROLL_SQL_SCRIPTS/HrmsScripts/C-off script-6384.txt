@@ -1,0 +1,22 @@
+﻿
+--Credit leaves  of empid=6384 , 2 Days, Reason:C-Offs credited for May 2022
+
+INSERT INTO [dbo].[Leaves_CreditDebit]([EmpId],[LeaveTypeId],[CreditLeave],
+[DebitLeave],[UpdatedBy],[UpdatedDate],
+[LeaveBalance],[Comments],[EmpName],[Department],[Branch],
+[CurrentDesignation],[Type],[Head_Branch_Value],[TotalBalance],[Year]) 
+ values(	(select id from Employees where empid=6384 ),13,2,0,123456,GETDATE(),
+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=6384 ) and LeaveTypeId=13 and year=2022),
+' C-Offs credited for May 2022',---Reason
+(select ShortName from Employees where empid=6384 ),
+(select Department from Employees where empid=6384 ),
+(select Branch from Employees where empid=6384 ),
+(select CurrentDesignation from Employees where empid=6384 ),'Credit',
+(select branch_value1 from employees where empid=6384 ),
+(2	+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=6384 ) and LeaveTypeId=13 and year=2022)),2022);
+
+
+--Update leave balance
+update EmpLeaveBalance set LeaveBalance=
+(2+(select LeaveBalance from EmpLeaveBalance where empid=(select id from employees where empid=6384  and LeaveTypeId=13) and year=2022)) 
+where LeaveTypeId=13 and empid=(select id from employees where empid=6384 ) and year=2022;
