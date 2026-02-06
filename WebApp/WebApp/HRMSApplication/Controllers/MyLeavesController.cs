@@ -1604,18 +1604,87 @@ namespace HRMSApplication.Controllers
                         Leaves_CarryForward Yearbalance = db.Leaves_CarryForward.Where(a => a.EmpId == lempid && a.LeaveTypeId == lLeaveId && a.Year == lmodel.year).FirstOrDefault();
                         if (Yearbalance == null)
                         {
-
                             TempData["Status"] = "MedicalSick Leave Credited successfully";
                         }
                         else
                         {
-
                             TempData["Status"] = "MedicalSick Leave Credited successfully";
                         }
 
                     }
                 }
-                                
+                // Special Medical Leave (Code: SML) – treat similar to Medical Sick Leave
+
+                else if (lLeaveCode == "SML")
+                {
+                    var lcreditdebit = new leaves_CreditDebit();
+                    // Use the same underlying balance bucket as Medical/Sick leave
+                    lcreditdebit.LeaveBalance = lMedicalSickLeave;
+                    lcreditdebit.TotalBalance = lMedicalSickLeave + creditleavedays;
+                    lcreditdebit.UpdatedBy = lCredentials.EmpId;
+                    lcreditdebit.LeaveTypeId = lLeaveId;
+                    lcreditdebit.UpdatedDate = GetCurrentTime(DateTime.Now);
+                    lcreditdebit.CurrentDesignation = designation;
+                    lcreditdebit.type = lmodel.type;
+                    lcreditdebit.EmpId = lempid;
+                    lcreditdebit.year = lmodel.year;
+                    lcreditdebit.CreditLeave = creditleavedays;
+                    lcreditdebit.DebitLeave = debitleavedays;
+                    lcreditdebit.Comments = lcomments;
+                    lcreditdebit.EmpName = lshortname;
+                    lcreditdebit.Head_Branch_Value = Branch;
+                    if (lmodel.Head_Branch_Value == 42)
+                    {
+                        lcreditdebit.Department = Department;
+                        string lBvalue = "OtherBranch";
+                        int lBranch = db.Branches.Where(a => a.Name == lBvalue).Select(a => a.Id).FirstOrDefault();
+                        lcreditdebit.Branch = lBranch;
+                    }
+                    else
+                    {
+                        lcreditdebit.Branch = Branch;
+                        string lDvalue = "OtherDepartment";
+                        int ldept = db.Departments.Where(a => a.Name == lDvalue).Select(a => a.Id).FirstOrDefault();
+                        lcreditdebit.Department = ldept;
+                    }
+                    db.leaves_CreditDebit.Add(lcreditdebit);
+                    db.SaveChanges();
+                    int? smlBalanceCount = lEmpLeaveBalance
+                        .Where(a => a.EmpId == lempid && a.LeaveTypeId == lLeaveId && a.Year == lmodel.year)
+                        .Count();
+                    if (smlBalanceCount == 0)
+                    {
+                        var NewEmpbalance = new EmpLeaveBalance();
+                        NewEmpbalance.EmpId = lempid;
+                        NewEmpbalance.LeaveTypeId = lLeaveId;
+                        int totalleavebalances = lMedicalSickLeave + creditleavedays;
+                        NewEmpbalance.LeaveBalance = totalleavebalances;
+                        NewEmpbalance.UpdatedBy = lCredentials.EmpId;
+                        NewEmpbalance.Credits = NewEmpbalance.Credits + creditleavedays;
+                        NewEmpbalance.Year = lmodel.year;
+                        db.Entry(NewEmpbalance).State = EntityState.Added;
+                        db.SaveChanges();
+                        TempData["Status"] = "Special Medical Leave Credited successfully";
+                    }
+
+                    else
+                    {
+                        EmpLeaveBalance NewEmpbalance = lEmpLeaveBalance
+                            .Where(a => a.EmpId == lempid && a.LeaveTypeId == lLeaveId && a.Year == lmodel.year)
+                            .FirstOrDefault();
+                        NewEmpbalance.EmpId = lempid;
+                        NewEmpbalance.LeaveTypeId = lLeaveId;
+                        int totalleavebalances = lMedicalSickLeave + creditleavedays;
+                        NewEmpbalance.LeaveBalance = totalleavebalances;
+                        NewEmpbalance.Credits = NewEmpbalance.Credits + creditleavedays;
+                        NewEmpbalance.UpdatedBy = lCredentials.EmpId;
+                        db.Entry(NewEmpbalance).State = EntityState.Modified;
+                        db.SaveChanges();
+                        TempData["Status"] = "Special Medical Leave Credited successfully";
+                    }
+
+                }
+
             }
             if (lmodel.type == "Debit")
             {
@@ -2160,6 +2229,66 @@ namespace HRMSApplication.Controllers
                         TempData["Status"] = "CompOff Leave Debited successfully";
 
                     }
+                }
+                // Special Medical Leave (Code: SML) – treat similar to Medical Sick Leave for debits
+
+                else if (lLeaveCode == "SML")
+                {
+                    int totalLeaves = lMedicalSickLeave - debitleavedays;
+                    int lCount = lEmpLeaveBalance.Where(a => a.EmpId == lempid && a.LeaveTypeId == lLeaveId && a.Year == lmodel.year).Count();
+
+                    if (totalLeaves < 0)
+                    {
+                        string text = "Only";
+                        string text1 = " Special Medical Leaves are there to Debit";
+                        TempData["Status"] = text + " " + lMedicalSickLeave + " " + text1;
+                    }
+                    else if (lCount != 0)
+                    {
+                        var lcreditdebit = new leaves_CreditDebit();
+                        lcreditdebit.LeaveBalance = lMedicalSickLeave;
+                        lcreditdebit.TotalBalance = lMedicalSickLeave - debitleavedays;
+                        lcreditdebit.UpdatedBy = lCredentials.EmpId;
+                        lcreditdebit.LeaveTypeId = lLeaveId;
+                        lcreditdebit.UpdatedDate = GetCurrentTime(DateTime.Now);
+                        lcreditdebit.CurrentDesignation = designation;
+                        lcreditdebit.type = lmodel.type;
+                        lcreditdebit.EmpId = lempid;
+                        lcreditdebit.year = lmodel.year;
+                        lcreditdebit.CreditLeave = creditleavedays;
+                        lcreditdebit.DebitLeave = debitleavedays;
+                        lcreditdebit.Comments = lcomments;
+                        lcreditdebit.EmpName = lshortname;
+                        lcreditdebit.Head_Branch_Value = Branch;
+                        if (lmodel.Head_Branch_Value == 42)
+                        {
+                            lcreditdebit.Department = Department;
+                            string lBvalue = "OtherBranch";
+                            int lBranch = db.Branches.Where(a => a.Name == lBvalue).Select(a => a.Id).FirstOrDefault();
+                            lcreditdebit.Branch = lBranch;
+                        }
+
+                        else
+                        {
+                            lcreditdebit.Branch = Branch;
+                            string lDvalue = "OtherDepartment";
+                            int ldept = db.Departments.Where(a => a.Name == lDvalue).Select(a => a.Id).FirstOrDefault();
+                            lcreditdebit.Department = ldept;
+                        }
+                        db.leaves_CreditDebit.Add(lcreditdebit);
+                        db.SaveChanges();
+                        EmpLeaveBalance lbalance = lEmpLeaveBalance
+                            .Where(a => a.EmpId == lempid && a.LeaveTypeId == lLeaveId && a.Year == lmodel.year)
+                            .FirstOrDefault();
+                        lbalance.LeaveTypeId = lLeaveId;
+                        int totalleavebalances = lMedicalSickLeave - debitleavedays;
+                        lbalance.LeaveBalance = totalleavebalances;
+                        lbalance.Debits = lbalance.Debits + debitleavedays;
+                        db.Entry(lbalance).State = EntityState.Modified;
+                        db.SaveChanges();
+                        TempData["Status"] = "Special Medical Leave Debited successfully";
+                    }
+
                 }
 
             }

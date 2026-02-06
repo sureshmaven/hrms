@@ -764,7 +764,7 @@ namespace HRMSApplication.Helpers
                             LogInformation.Info("* 22 error * " + ex22.StackTrace);
                         }
 
-                        if (lResult.Success == true)
+                        if (lResult?.Success == true)
                         {
                             if (lCredentials.LoginMode == Constants.SuperAdmin || lCredentials.LoginMode == Constants.AdminHRDPayments ||
                             lCredentials.LoginMode == Constants.AdminHRDPolicy || lCredentials.LoginMode == Constants.Executive || lCredentials.LoginMode == Constants.Manager || lCredentials.LoginMode == Constants.Employee)
@@ -948,7 +948,8 @@ namespace HRMSApplication.Helpers
                                    s.CompensatoryOff,
                                    s.LOP,
                                    s.woff,
-                                   s.CWOFF
+                                   s.CWOFF,
+                                   s.SpecialMedicalLeave,
                                }).FirstOrDefault();
 
             //int lCasualLeave = lEmpBalance.Where(a => a.EmpId == lEmpId).Select(a => a.CasualLeave).FirstOrDefault();
@@ -974,6 +975,7 @@ namespace HRMSApplication.Helpers
             int lLOP = velb.LOP;
             int lwoff = velb.woff;
             int lCWOFF = velb.CWOFF;
+            int lSpecialMedicalLeave = velb.SpecialMedicalLeave;
             leavebalance = db.EmpLeaveBalance.Where(a => a.EmpId == lEmpId && a.LeaveTypeId == LeavetypeId && a.Year == DateTime.Now.Year).Select(a => a.LeaveBalance).FirstOrDefault();
             int lRetrieveleaveType = lTypes.Where(a => a.Id == LeavetypeId).Select(a => a.Id).FirstOrDefault();
             string lLeaveCode = lTypes.Where(a => a.Id == LeavetypeId).Select(a => a.Code).FirstOrDefault();
@@ -1739,6 +1741,50 @@ namespace HRMSApplication.Helpers
                     //    return lResult;
                     //}
 
+                }
+                else if (lLeaveCode == "SML")
+                {
+                    if (lSpecialMedicalLeave == 0)
+                    {
+                        lResult.Success = false;
+                        lResult.Message = string.Format("No Leave Balance available to apply Special Medical leave");
+                        //return lResult;
+                    }
+                    else
+                    {
+                        if (Startdate <= Endate)
+                        {
+                            int TotalDays = (Endate.Date - Startdate.Date).Days;
+                            TotalDays = TotalDays + 1; // to get total days
+                            int ldays = lSpecialMedicalLeave - TotalDays;
+                            int Count = db.HolidayList.Where(a => a.Date >= Startdate && a.Date <= Endate).Select(a => a.Date).Distinct().Count();
+                            // int lcount = lLeaveHistory.Where(a => a.LeaveType == LeavetypeId).Where(a => a.EmpId == lEmpId).Where(a => a.Status == "Approved").Sum(a => a.LeaveDays);
+                            if (Count != 0)
+                            {
+                                int lTotalLeaves = TotalDays - Count;
+                            }
+                            else
+                            {
+                                int lTotalLeaves = TotalDays;
+                            }
+                            
+                            if (TotalDays <= lSpecialMedicalLeave)
+                            {
+                                    lResult.LeaveDays = TotalDays - Count;
+                                    lResult.TotalLeaves = ldays;
+                                    lResult.TotalDays = TotalDays;
+                                    lResult.Success = true;
+                                    lResult.Message = string.Format(lType + " " + "applied successfully for " + lResult.LeaveDays + " days");
+                                    //return lResult;
+                            }
+                            else
+                            {
+                                    lResult.Success = false;
+                                    lResult.Message = string.Format(" Only " + lSpecialMedicalLeave + " Special Medical Leaves are available.");
+                                    //return lResult;
+                            }                            
+                        }
+                    }
                 }
             }
             db.Dispose();

@@ -232,7 +232,7 @@ namespace Entities
         public string Stage { get; set; }
         public int LeaveDays { get; set; }
         public int TotalDays { get; set; }
-        public int leave_balance { get; set; }
+        public int? leave_balance { get; set; }
         public string MaternityType { get; set; }
         //public string DocumentPath { get; set; }
         public DateTime LeaveTimeStamp { get; set; }
@@ -338,7 +338,7 @@ namespace Entities
         public int CompensatoryOff { get; set; }
         public int woff { get; set; }
         public int LOP { get; set; }
-      public int CWOFF { get; set; }
+        public int CWOFF { get; set; }
         public Int64 RowId { get; set; }
         public int SpecialMedicalLeave { get; set; }
         [NotMapped]
