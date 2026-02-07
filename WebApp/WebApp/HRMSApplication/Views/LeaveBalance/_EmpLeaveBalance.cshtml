@@ -166,6 +166,7 @@
                 { name: 'LOP', type: 'int' },
                 { name: 'CompensatoryOff', type: 'int' },
                 { name: 'CWOFF', type: 'int' },
+                { name: 'SpecialMedicalLeave', type: 'int' },
             ],
             async: false,
             url: url,
@@ -251,7 +252,7 @@
                     //{ text: 'Week-Off', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'woff', width: 65 },
                     { text: 'C-OFF', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'CompensatoryOff', width: 65 },
                     { text: 'CW-OFF', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'CWOFF', width: 65 },
-
+                    { text: 'SML', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'SpecialMedicalLeave', width: 65 },
                 ],
                 columngroups:
                     [
@@ -280,6 +281,7 @@
                 row.LOP = item.LOP || '';
                 row.CompensatoryOff = item.CompensatoryOff || '';
                 row.CWOFF = item.CWOFF || '';
+                row.SpecialMedicalLeave = item.SpecialMedicalLeave || '';
                 processedData.push(row);
             }
 
@@ -344,6 +346,7 @@
                     { name: 'LOP', type: 'int' },
                     { name: 'CompensatoryOff', type: 'int' },
                     { name: 'CWOFF', type: 'int' },
+                    { name: 'SpecialMedicalLeave', type: 'int' },
                 ],
                 async: false,
                 url: "/LeaveBalance/LeaveBalanceView?EmployeeCode=" + employeecode + "&FirstName=" + firstname + "&Branch=" + branch,
@@ -436,7 +439,7 @@
                         { text: 'LOP', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'LOP', width: 65 },
                         { text: 'C-OFF', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'CompensatoryOff', width: 65 },
                         { text: 'CW-OFF', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'CWOFF', width: 65 },
-
+                        { text: 'SML', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'SML', width: 65 },
                     ],
                     columngroups:
                         [
@@ -488,6 +491,7 @@
                 { name: 'LOP', type: 'int' },
                 { name: 'CompensatoryOff', type: 'int' },
                 { name: 'CWOFF', type: 'int' },
+                { name: 'SpecialMedicalLeave', type: 'int' },
             ],
             async: false,
             url: url,
@@ -572,6 +576,7 @@
                     { text: 'LOP', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'LOP', width: 65 },
                     { text: 'C-OFF', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'CompensatoryOff', width: 65 },
                     { text: 'CW-OFF', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'CWOFF', width: 65 },
+                    { text: 'SpecialMedicalLeave', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'SpecialMedicalLeave', width: 65 },
 
                 ],
                 columngroups:
@@ -622,6 +627,7 @@
                 { name: 'LOP', type: 'int' },
                 { name: 'CompensatoryOff', type: 'int' },
                 { name: 'CWOFF', type: 'int' },
+                { name: 'SpecialMedicalLeave', type: 'int' },
             ],
             async: false,
             url: url,
@@ -706,7 +712,7 @@
                     { text: 'LOP', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'LOP', width: 65 },
                     { text: 'C-OFF', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'CompensatoryOff', width: 65 },
                     { text: 'CW-OFF', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'CWOFF', width: 65 },
-
+                    { text: 'SML', editable: false, columngroup: 'LeaveBalance', cellsalign: 'center', align: 'center', datafield: 'SML', width: 65 },
                 ],
                 columngroups:
                     [

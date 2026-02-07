@@ -923,6 +923,7 @@ namespace HRMSApplication.Controllers
            // int lCompensatory = lEmpLeaveBalance.Where(a => a.EmpId == lempid).Where(a => a.LeaveTypeId == lLeaveId && a.Year == lmodel.year).Select(a => a.LeaveBalance).FirstOrDefault();
             int lSpecialCasualLeave = lEmpLeaveBalance.Where(a => a.EmpId == lempid).Where(a => a.LeaveTypeId == lLeaveId && a.Year == lmodel.year).Select(a => a.LeaveBalance).FirstOrDefault();
             int lCompOff = lEmpLeaveBalance.Where(a => a.EmpId == lempid).Where(a => a.LeaveTypeId == lLeaveId && a.Year == lmodel.year).Select(a => a.LeaveBalance).FirstOrDefault();
+            int lSpecialMedicalLeave = lEmpLeaveBalance.Where(a => a.EmpId == lempid).Where(a => a.LeaveTypeId == lLeaveId && a.Year == lmodel.year).Select(a => a.LeaveBalance).FirstOrDefault();
             string lLeaveCode = lTypes.Where(a => a.Id == lLeaveId).Select(a => a.Code).FirstOrDefault();
             string lType = lTypes.Where(a => a.Id == lLeaveId).Select(a => a.Type).FirstOrDefault();
             DateTime updatedate = DateTime.Now.Date;
@@ -1619,8 +1620,8 @@ namespace HRMSApplication.Controllers
                 {
                     var lcreditdebit = new leaves_CreditDebit();
                     // Use the same underlying balance bucket as Medical/Sick leave
-                    lcreditdebit.LeaveBalance = lMedicalSickLeave;
-                    lcreditdebit.TotalBalance = lMedicalSickLeave + creditleavedays;
+                    lcreditdebit.LeaveBalance = lSpecialMedicalLeave;
+                    lcreditdebit.TotalBalance = lSpecialMedicalLeave + creditleavedays;
                     lcreditdebit.UpdatedBy = lCredentials.EmpId;
                     lcreditdebit.LeaveTypeId = lLeaveId;
                     lcreditdebit.UpdatedDate = GetCurrentTime(DateTime.Now);
@@ -1657,7 +1658,7 @@ namespace HRMSApplication.Controllers
                         var NewEmpbalance = new EmpLeaveBalance();
                         NewEmpbalance.EmpId = lempid;
                         NewEmpbalance.LeaveTypeId = lLeaveId;
-                        int totalleavebalances = lMedicalSickLeave + creditleavedays;
+                        int totalleavebalances = lSpecialMedicalLeave + creditleavedays;
                         NewEmpbalance.LeaveBalance = totalleavebalances;
                         NewEmpbalance.UpdatedBy = lCredentials.EmpId;
                         NewEmpbalance.Credits = NewEmpbalance.Credits + creditleavedays;
@@ -1674,7 +1675,7 @@ namespace HRMSApplication.Controllers
                             .FirstOrDefault();
                         NewEmpbalance.EmpId = lempid;
                         NewEmpbalance.LeaveTypeId = lLeaveId;
-                        int totalleavebalances = lMedicalSickLeave + creditleavedays;
+                        int totalleavebalances = lSpecialMedicalLeave + creditleavedays;
                         NewEmpbalance.LeaveBalance = totalleavebalances;
                         NewEmpbalance.Credits = NewEmpbalance.Credits + creditleavedays;
                         NewEmpbalance.UpdatedBy = lCredentials.EmpId;
@@ -2234,20 +2235,20 @@ namespace HRMSApplication.Controllers
 
                 else if (lLeaveCode == "SML")
                 {
-                    int totalLeaves = lMedicalSickLeave - debitleavedays;
+                    int totalLeaves = lSpecialMedicalLeave - debitleavedays;
                     int lCount = lEmpLeaveBalance.Where(a => a.EmpId == lempid && a.LeaveTypeId == lLeaveId && a.Year == lmodel.year).Count();
 
                     if (totalLeaves < 0)
                     {
                         string text = "Only";
                         string text1 = " Special Medical Leaves are there to Debit";
-                        TempData["Status"] = text + " " + lMedicalSickLeave + " " + text1;
+                        TempData["Status"] = text + " " + lSpecialMedicalLeave + " " + text1;
                     }
                     else if (lCount != 0)
                     {
                         var lcreditdebit = new leaves_CreditDebit();
-                        lcreditdebit.LeaveBalance = lMedicalSickLeave;
-                        lcreditdebit.TotalBalance = lMedicalSickLeave - debitleavedays;
+                        lcreditdebit.LeaveBalance = lSpecialMedicalLeave;
+                        lcreditdebit.TotalBalance = lSpecialMedicalLeave - debitleavedays;
                         lcreditdebit.UpdatedBy = lCredentials.EmpId;
                         lcreditdebit.LeaveTypeId = lLeaveId;
                         lcreditdebit.UpdatedDate = GetCurrentTime(DateTime.Now);
@@ -2281,7 +2282,7 @@ namespace HRMSApplication.Controllers
                             .Where(a => a.EmpId == lempid && a.LeaveTypeId == lLeaveId && a.Year == lmodel.year)
                             .FirstOrDefault();
                         lbalance.LeaveTypeId = lLeaveId;
-                        int totalleavebalances = lMedicalSickLeave - debitleavedays;
+                        int totalleavebalances = lSpecialMedicalLeave - debitleavedays;
                         lbalance.LeaveBalance = totalleavebalances;
                         lbalance.Debits = lbalance.Debits + debitleavedays;
                         db.Entry(lbalance).State = EntityState.Modified;
